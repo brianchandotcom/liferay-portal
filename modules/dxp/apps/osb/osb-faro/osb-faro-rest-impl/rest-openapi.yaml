@@ -657,8 +657,11 @@ paths:
                 "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object
                 entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read,
                 and view counts along with their period-over-period trend percentages. Optionally narrow results to a
-                single channel (also known as property) or to a date range. Use this to answer 'what content is
-                performing best' and to pick assets for deeper drill-down via `getWorkspaceGroupPagesPage`."
+                single channel (also known as property) or to a date range. For date-range filtering pass `rangeKey` as
+                one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS,
+                LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this to
+                answer 'what content is performing best' and to pick assets for deeper drill-down via
+                `getWorkspaceGroupPagesPage`."
             operationId: getWorkspaceGroupAssetSummariesPage
             parameters:
                 -   in: path
@@ -689,25 +692,23 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
                     name: rangeEnd
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
-                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
-                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
-                        are ignored."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
+                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
+                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                    example: LAST_30_DAYS
                     name: rangeKey
                     schema:
-                        format: int32
-                        type: integer
+                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
+                        type: string
                 -   in: query
                     description:
-                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range start as datetime (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
                     name: rangeStart
                     schema:
                         type: string
@@ -816,8 +817,10 @@ paths:
         get:
             description:
                 "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a
-                date range. For aggregated metrics across events, prefer `getWorkspaceGroupAssetSummariesPage` or
-                `getWorkspaceGroupPagesPage`."
+                date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS,
+                LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and
+                `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer
+                `getWorkspaceGroupAssetSummariesPage` or `getWorkspaceGroupPagesPage`."
             operationId: getWorkspaceGroupChannelEventsPage
             parameters:
                 -   in: path
@@ -855,25 +858,23 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
                     name: rangeEnd
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
-                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
-                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
-                        are ignored."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
+                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
+                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                    example: LAST_30_DAYS
                     name: rangeKey
                     schema:
-                        format: int32
-                        type: integer
+                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
+                        type: string
                 -   in: query
                     description:
-                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range start as date (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
                     name: rangeStart
                     schema:
                         type: string
@@ -902,7 +903,9 @@ paths:
             description:
                 "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single
                 channel (also known as property). Results are ordered in descending order of number of times terms have
-                been searched. Use this for 'most searched words' style queries."
+                been searched. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS,
+                LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and
+                `rangeEnd` as dates for a custom window. Use this for 'most searched words' style queries."
             operationId: getWorkspaceGroupChannelSearchTermsPage
             parameters:
                 -   in: path
@@ -934,25 +937,23 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeStart as a rangeKey
-                        alternative."
+                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
                     name: rangeEnd
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
-                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
-                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
-                        are ignored."
+                        "Date-range preset. Use one of the listed enum values. Mutually exclusive with
+                        rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
+                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                    example: LAST_30_DAYS
                     name: rangeKey
                     schema:
-                        format: int32
-                        type: integer
+                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
+                        type: string
                 -   in: query
                     description:
-                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range start as date (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
                     name: rangeStart
                     schema:
                         type: string
@@ -1250,7 +1251,10 @@ paths:
             description:
                 "List analytics metrics for tracked pages on the workspace, ranked by views or another metric,
                 optionally narrowed to a single channel (also known as property) or data source. Returns flattened view,
-                visitor, bounce, exit, and access-path metrics for each page. Use this for 'top pages' style queries."
+                visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey`
+                as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS,
+                LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window.
+                Use this for 'top pages' style queries."
             operationId: getWorkspaceGroupPagesPage
             parameters:
                 -   in: path
@@ -1287,25 +1291,23 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Custom range end as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeStart as a rangeKey
-                        alternative."
+                        "Custom range end as date (e.g. 2026-01-01). Use with rangeStart as a rangeKey alternative."
                     name: rangeEnd
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Date-range preset code (0 = LAST_24_HOURS, 1 = YESTERDAY, 7 = LAST_7_DAYS, 28 = LAST_28_DAYS,
-                        30 = LAST_30_DAYS, 90 = LAST_90_DAYS, 180 = LAST_180_DAYS, 365 = LAST_YEAR). Otherwise, provide
-                        the rangeStart and rangeEnd. Mutually exclusive with rangeStart and rangeEnd; if provided, those
-                        are ignored."
+                        "Date-range preset. Use one of the listed enum values (e.g. LAST_30_DAYS). Mutually exclusive
+                        with rangeStart/rangeEnd. If rangeKey is set, rangeStart and rangeEnd are ignored. For custom
+                        windows, omit rangeKey and provide rangeStart and rangeEnd as dates."
+                    example: LAST_30_DAYS
                     name: rangeKey
                     schema:
-                        format: int32
-                        type: integer
+                        enum: [LAST_180_DAYS, LAST_24_HOURS, LAST_28_DAYS, LAST_30_DAYS, LAST_7_DAYS, LAST_90_DAYS, LAST_YEAR, YESTERDAY]
+                        type: string
                 -   in: query
                     description:
-                        "Custom range start as ISO datetime (e.g. 2026-01-01T00:00:00Z). Use with rangeEnd as a rangeKey
-                        alternative."
+                        "Custom range start as datetime (e.g. 2026-01-01). Use with rangeEnd as a rangeKey alternative."
                     name: rangeStart
                     schema:
                         type: string

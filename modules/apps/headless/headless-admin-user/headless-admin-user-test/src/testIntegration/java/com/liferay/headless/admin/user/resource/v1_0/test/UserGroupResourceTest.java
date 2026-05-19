@@ -597,7 +597,7 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 				TestPropsValues.getCompanyId());
 
 		List<com.liferay.portal.vulcan.permission.Permission> permissions =
-			Arrays.asList(
+			ListUtil.fromCollection(
 				PermissionUtil.getPermissions(
 					TestPropsValues.getCompanyId(),
 					_resourceActionLocalService.getResourceActions(
@@ -605,10 +605,7 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 							getName()),
 					serviceBuilderUserGroup.getUserGroupId(),
 					com.liferay.portal.kernel.model.UserGroup.class.getName(),
-					null
-				).toArray(
-					new com.liferay.portal.vulcan.permission.Permission[0]
-				));
+					null));
 
 		Assert.assertTrue(
 			ListUtil.exists(

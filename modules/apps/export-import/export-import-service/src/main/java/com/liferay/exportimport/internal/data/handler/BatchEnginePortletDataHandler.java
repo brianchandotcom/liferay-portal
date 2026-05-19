@@ -209,9 +209,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		Set<String> classNames = new LinkedHashSet<>();
 
 		for (Registration registration : _registrations) {
-			classNames.add(
-				registration.getExportImportDescriptor(
-				).getModelClassName());
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+					registration.getExportImportDescriptor();
+
+			classNames.add(exportImportDescriptor.getModelClassName());
 		}
 
 		return classNames.toArray(new String[0]);

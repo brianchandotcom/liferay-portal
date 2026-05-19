@@ -379,12 +379,10 @@ public class LocalizationImpl implements Localization {
 
 		Map<Locale, String> map = new HashMap<>();
 
-		String defaultValue = LanguageUtil.get(defaultLocale, key);
-
 		for (Locale locale : locales) {
-			String value = LanguageUtil.get(locale, key);
+			String value = LanguageUtil.get(locale, key, null);
 
-			if (!locale.equals(defaultLocale) && value.equals(defaultValue)) {
+			if (!locale.equals(defaultLocale) && (value == null)) {
 				continue;
 			}
 

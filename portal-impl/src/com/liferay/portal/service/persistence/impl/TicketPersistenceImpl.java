@@ -244,6 +244,113 @@ public class TicketPersistenceImpl
 	}
 
 	private CollectionPersistenceFinder<Ticket>
+		_collectionPersistenceFinderByC_T_EA;
+
+	/**
+	 * Returns an ordered range of all the tickets where companyId = &#63; and type = &#63; and emailAddress = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TicketModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param emailAddress the email address
+	 * @param start the lower bound of the range of tickets
+	 * @param end the upper bound of the range of tickets (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching tickets
+	 */
+	@Override
+	public List<Ticket> findByC_T_EA(
+		long companyId, int type, String emailAddress, int start, int end,
+		OrderByComparator<Ticket> orderByComparator, boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByC_T_EA.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, emailAddress}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first ticket in the ordered set where companyId = &#63; and type = &#63; and emailAddress = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param emailAddress the email address
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ticket
+	 * @throws NoSuchTicketException if a matching ticket could not be found
+	 */
+	@Override
+	public Ticket findByC_T_EA_First(
+			long companyId, int type, String emailAddress,
+			OrderByComparator<Ticket> orderByComparator)
+		throws NoSuchTicketException {
+
+		Ticket ticket = fetchByC_T_EA_First(
+			companyId, type, emailAddress, orderByComparator);
+
+		if (ticket != null) {
+			return ticket;
+		}
+
+		throw new NoSuchTicketException(
+			_collectionPersistenceFinderByC_T_EA.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {companyId, type, emailAddress}));
+	}
+
+	/**
+	 * Returns the first ticket in the ordered set where companyId = &#63; and type = &#63; and emailAddress = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param emailAddress the email address
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
+	 */
+	@Override
+	public Ticket fetchByC_T_EA_First(
+		long companyId, int type, String emailAddress,
+		OrderByComparator<Ticket> orderByComparator) {
+
+		return _collectionPersistenceFinderByC_T_EA.fetchFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, emailAddress}, orderByComparator);
+	}
+
+	/**
+	 * Removes all the tickets where companyId = &#63; and type = &#63; and emailAddress = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param emailAddress the email address
+	 */
+	@Override
+	public void removeByC_T_EA(long companyId, int type, String emailAddress) {
+		_collectionPersistenceFinderByC_T_EA.remove(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, emailAddress});
+	}
+
+	/**
+	 * Returns the number of tickets where companyId = &#63; and type = &#63; and emailAddress = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param emailAddress the email address
+	 * @return the number of matching tickets
+	 */
+	@Override
+	public int countByC_T_EA(long companyId, int type, String emailAddress) {
+		return _collectionPersistenceFinderByC_T_EA.count(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, emailAddress});
+	}
+
+	private CollectionPersistenceFinder<Ticket>
 		_collectionPersistenceFinderByC_C_T;
 
 	/**
@@ -709,6 +816,46 @@ public class TicketPersistenceImpl
 				"ticket.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Ticket::getClassPK));
 
+		_collectionPersistenceFinderByC_T_EA =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T_EA",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "type_", "emailAddress"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T_EA",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "type_", "emailAddress"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_T_EA",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "type_", "emailAddress"}, 0, 4,
+					false, null),
+				_SQL_SELECT_TICKET_WHERE, _SQL_COUNT_TICKET_WHERE,
+				TicketModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"ticket.", "companyId", FinderColumn.Type.LONG, "=", true,
+					true, Ticket::getCompanyId),
+				new FinderColumn<>(
+					"ticket.", "type", FinderColumn.Type.INTEGER, "=", true,
+					true, Ticket::getType),
+				new FinderColumn<>(
+					"ticket.", "emailAddress", FinderColumn.Type.STRING, "=",
+					true, true, Ticket::getEmailAddress));
+
 		_collectionPersistenceFinderByC_C_T = new CollectionPersistenceFinder<>(
 			this,
 			new FinderPath(
@@ -831,4 +978,4 @@ public class TicketPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1252553510
+// LIFERAY-SERVICE-BUILDER-HASH:-1448420254

@@ -200,7 +200,15 @@ public class LayoutContentVersionLocalServiceImpl
 	}
 
 	private int _generateVersion(long plid) {
-		return layoutContentVersionPersistence.countByPlid(plid) + 1;
+		LayoutContentVersion layoutContentVersion =
+			layoutContentVersionPersistence.fetchByPlid_First(
+				plid, LayoutContentVersionVersionComparator.getInstance(false));
+
+		if (layoutContentVersion == null) {
+			return 1;
+		}
+
+		return layoutContentVersion.getVersion() + 1;
 	}
 
 	private void _validateExternalReferenceCode(

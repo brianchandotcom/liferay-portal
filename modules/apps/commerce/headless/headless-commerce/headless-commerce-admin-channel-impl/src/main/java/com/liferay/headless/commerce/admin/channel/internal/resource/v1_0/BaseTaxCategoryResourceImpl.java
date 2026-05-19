@@ -74,6 +74,9 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/tax-categories'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists every tax category visible to the caller. Calls CPTaxCategoryService.findCPTaxCategoriesByCompanyId + CPTaxCategoryService.countCPTaxCategoriesByCompanyId. Validation -- None (returns empty page when no matches). List query support — page and pageSize paginate the related entries."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -112,6 +115,9 @@ public abstract class BaseTaxCategoryResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/tax-categories/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the tax category by its internal ID. Calls CPTaxCategoryService.getCPTaxCategory. Validation -- NoSuchCPTaxCategoryException -> 404 when tax category id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -868,4 +874,4 @@ public abstract class BaseTaxCategoryResourceImpl
 		LogFactoryUtil.getLog(BaseTaxCategoryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1072797471
+// LIFERAY-REST-BUILDER-HASH:125845884

@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxCategory")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
+@GraphQLName(
+	description = "Tax classification assigned to products to drive tax calculation at checkout. Read-only on this projection; full tax-category management lives in the Site Setting admin API.",
+	value = "TaxCategory"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Tax classification assigned to products to drive tax calculation at checkout. Read-only on this projection; full tax-category management lives in the Site Setting admin API.",
+	requiredProperties = {"name"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaxCategory")
 public class TaxCategory implements Serializable {
@@ -52,6 +58,7 @@ public class TaxCategory implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text. Map keys are locale codes; values are the translated strings.",
 		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
 	)
 	@Valid
@@ -89,7 +96,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
@@ -97,7 +106,10 @@ public class TaxCategory implements Serializable {
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Liferay site that owns this tax category (FK identifier); read-only.",
+		example = "30130"
+	)
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -131,7 +143,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the Liferay site that owns this tax category (FK identifier); read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
@@ -139,7 +153,10 @@ public class TaxCategory implements Serializable {
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the TaxCategory record; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -171,14 +188,17 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Internal long ID of the TaxCategory record; read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text. Map keys are locale codes; values are the translated strings.",
 		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
 	)
 	@Valid
@@ -215,7 +235,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
@@ -399,4 +421,4 @@ public class TaxCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1486893232
+// LIFERAY-REST-BUILDER-HASH:943305872

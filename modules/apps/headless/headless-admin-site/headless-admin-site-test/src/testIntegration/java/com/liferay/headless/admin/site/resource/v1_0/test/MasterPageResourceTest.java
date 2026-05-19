@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -192,6 +193,22 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			randomMasterPage);
 
 		MasterPageResource masterPageResource = _getMasterPageResource();
+
+		PollTestUtil.pollUntilNotNull(
+			() -> {
+				MasterPage getMasterPage = masterPageResource.getSiteMasterPage(
+					testGroup.getExternalReferenceCode(),
+					postMasterPage.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getMasterPage.getThumbnailURLReference();
+
+				if (thumbnailURLReference == null) {
+					return null;
+				}
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<MasterPage> page = masterPageResource.getSiteMasterPagesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);

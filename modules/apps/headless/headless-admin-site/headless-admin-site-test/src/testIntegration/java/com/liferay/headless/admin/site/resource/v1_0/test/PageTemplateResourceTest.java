@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -1140,6 +1141,23 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 			testPostSitePageTemplate_addPageTemplate(randomPageTemplate);
 
 		PageTemplateResource pageTemplateResource = _getPageTemplateResource();
+
+		PollTestUtil.pollUntilNotNull(
+			() -> {
+				PageTemplate getPageTemplate =
+					pageTemplateResource.getSitePageTemplate(
+						testGroup.getExternalReferenceCode(),
+						postPageTemplate.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getPageTemplate.getThumbnailURLReference();
+
+				if (thumbnailURLReference == null) {
+					return null;
+				}
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<PageTemplate> page = pageTemplateResource.getSitePageTemplatesPage(
 			testGroup.getExternalReferenceCode(), null, null, null, null, null);

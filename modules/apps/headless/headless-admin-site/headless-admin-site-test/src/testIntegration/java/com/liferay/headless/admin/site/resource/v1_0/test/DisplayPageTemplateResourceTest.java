@@ -81,6 +81,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.PollTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -1213,6 +1214,23 @@ public class DisplayPageTemplateResourceTest
 
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource("thumbnailURLReference");
+
+		PollTestUtil.pollUntilNotNull(
+			() -> {
+				DisplayPageTemplate getDisplayPageTemplate =
+					displayPageTemplateResource.getSiteDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						postDisplayPageTemplate.getExternalReferenceCode());
+
+				ThumbnailURLReference thumbnailURLReference =
+					getDisplayPageTemplate.getThumbnailURLReference();
+
+				if (thumbnailURLReference == null) {
+					return null;
+				}
+
+				return thumbnailURLReference.getUrl();
+			});
 
 		Page<DisplayPageTemplate> page =
 			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(

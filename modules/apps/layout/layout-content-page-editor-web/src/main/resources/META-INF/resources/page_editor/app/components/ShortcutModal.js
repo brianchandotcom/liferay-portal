@@ -41,7 +41,7 @@ export default function ShortcutModal({onCloseModal}) {
 
 				<KeyboardShortcut
 					description={Liferay.Language.get('delete-fragment')}
-					keyCombinations={['⌫']}
+					keyCombinations={[['⌫'], ['⌦']]}
 				/>
 
 				{canManageFragments ? (
@@ -113,25 +113,41 @@ export default function ShortcutModal({onCloseModal}) {
 }
 
 function KeyboardShortcut({description, keyCombinations}) {
+	const combinations = Array.isArray(keyCombinations[0])
+		? keyCombinations
+		: [keyCombinations];
+
 	return (
 		<div className="align-items-center d-flex mb-3">
 			<div className="page-editor__shortcut-modal__shortcut text-right">
-				<kbd className="c-kbd c-kbd-light">
-					{keyCombinations.map((key, index) => (
-						<React.Fragment key={index}>
-							{key}
+				{combinations.map((keys, index) => (
+					<React.Fragment key={index}>
+						{index > 0 ? <span className="mx-1">/</span> : null}
 
-							{index < keyCombinations.length - 1 ? (
-								<span className="c-kbd-separator">+</span>
-							) : null}
-						</React.Fragment>
-					))}
-				</kbd>
+						<Keys keys={keys} />
+					</React.Fragment>
+				))}
 			</div>
 
 			<p className="mb-0 ml-3 mr-2 page-editor__shortcut-modal__shortcut-description text-3 text-weight-semi-bold">
 				{description}
 			</p>
 		</div>
+	);
+}
+
+function Keys({keys}) {
+	return (
+		<kbd className="c-kbd c-kbd-light">
+			{keys.map((key, index) => (
+				<React.Fragment key={index}>
+					{index > 0 ? (
+						<span className="c-kbd-separator">+</span>
+					) : null}
+
+					{key}
+				</React.Fragment>
+			))}
+		</kbd>
 	);
 }

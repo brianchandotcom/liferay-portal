@@ -15,6 +15,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {createIndividuals, generateIndividual} from './utils/individuals';
+import {Nanites, runNanites} from './utils/nanites';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 import {searchByTerm} from './utils/utils';
@@ -121,7 +122,13 @@ test('View all blogs in the property in assets', async ({
 test(
 	'Blog overview surfaces appears-on, cards, comments, and audience metrics',
 	{
-		tag: ['@LRAC-8387', '@LRAC-8374', '@LRAC-8113', '@LRAC-12347'],
+		tag: [
+			'@LRAC-8387',
+			'@LRAC-8374',
+			'@LRAC-8113',
+			'@LRAC-12347',
+			'@LRAC-8351',
+		],
 	},
 	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 
@@ -215,6 +222,23 @@ test(
 			},
 		]);
 
+		// Create a batch segment that includes only knownIndividualA so the audience card second donut splits 1 segmented / 1 unsegmented (50% / 50%)
+
+		await apiHelpers.jsonWebServicesOSBFaro.createIndividualSegment({
+			channelId: channel.id,
+			filter: `(firstName eq 'ac')`,
+			groupId: project.groupId,
+			name: 'Audience Segment ' + getRandomString(),
+		});
+
+		// Run the membership nanite so the new batch segment picks up its only matching individual
+
+		await runNanites({
+			apiHelpers,
+			naniteNames: [Nanites.UpdateMembershipsNanite],
+			page,
+		});
+
 		// Open the blog overview
 
 		await navigateToACPageViaURL({
@@ -270,9 +294,15 @@ test(
 			})
 		).toBeVisible();
 
-		// Audience card splits 66.67% known / 33.33% anonymous
+		// Audience card first donut splits 66.67% known / 33.33% anonymous
 
 		await expect(page.getByText('66.67%')).toBeVisible();
 		await expect(page.getByText('33.33%')).toBeVisible();
+
+		// Audience card second donut splits 50% segmented / 50% unsegmented
+
+		await expect(
+			page.locator('.audience-report-chart-donut').nth(1).getByText('50%')
+		).toHaveCount(2);
 	}
 );

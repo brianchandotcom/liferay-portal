@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_AVAILABILITY_ENTERPRISE",
+	"name": "enterprise",
+	"name_i18n": {
+		"en_US": "Enterprise"
+	},
+	"viewableBy": "Anyone"
+}

@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_LIFERAY_PLATFORM_OFFERING_LIFERAY_SELF_HOSTED",
+	"name": "liferay-self-hosted",
+	"name_i18n": {
+		"en_US": "Liferay Self-Hosted"
+	},
+	"viewableBy": "Anyone"
+}

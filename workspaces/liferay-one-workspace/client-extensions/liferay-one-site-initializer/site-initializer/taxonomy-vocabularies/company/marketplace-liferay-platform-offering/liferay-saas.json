@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_LIFERAY_PLATFORM_OFFERING_LIFERAY_SAAS",
+	"name": "liferay-saas",
+	"name_i18n": {
+		"en_US": "Liferay SaaS"
+	},
+	"viewableBy": "Anyone"
+}

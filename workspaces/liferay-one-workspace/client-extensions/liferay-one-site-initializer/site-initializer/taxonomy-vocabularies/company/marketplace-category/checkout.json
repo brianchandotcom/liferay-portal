@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_CATEGORY_CHECKOUT",
+	"name": "checkout",
+	"name_i18n": {
+		"en_US": "Checkout"
+	},
+	"viewableBy": "Anyone"
+}

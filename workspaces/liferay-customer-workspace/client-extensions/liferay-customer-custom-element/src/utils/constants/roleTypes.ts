@@ -16,6 +16,11 @@ export const ROLE_TYPES = {
 		name: i18n.translate('user'),
 		raysourceName: 'Support User',
 	},
+	paasUser: {
+		key: 'PaaS User',
+		name: i18n.translate('paas-user'),
+		raysourceName: 'PaaS User',
+	},
 	partnerManager: {
 		key: 'Partner Manager',
 		name: i18n.translate('partner-manager'),

@@ -79,12 +79,12 @@ const SetupDXPCloudPage = ({
 	const hasPaaSExperience = useHasPaaSExperience(project?.accountKey);
 
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState({
-		cloudNative: [],
 		criticalIncident: [],
+		paasUser: [],
 	});
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState({
-		cloudNative: [],
 		criticalIncident: [],
+		paasUser: [],
 	});
 	const [isCriticalIncidentEmpty, setIsCriticalIncidentEmpty] =
 		useState(false);
@@ -590,18 +590,18 @@ const SetupDXPCloudPage = ({
 							addContactList={(contactList) =>
 								handleHighPriorityContacts(
 									contactList,
-									'cloudNative',
+									'paasUser',
 									setAddHighPriorityContact
 								)
 							}
 							disableSubmit={() => {}}
 							filter={
-								HIGH_PRIORITY_CONTACT_CATEGORIES.cloudNative
+								HIGH_PRIORITY_CONTACT_CATEGORIES.paasUser
 							}
 							removedContactList={(contactList) =>
 								handleHighPriorityContacts(
 									contactList,
-									'cloudNative',
+									'paasUser',
 									setRemoveHighPriorityContact
 								)
 							}

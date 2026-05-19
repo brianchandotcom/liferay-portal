@@ -66,7 +66,6 @@ const DSRLicenseKeyForm = () => {
 		register,
 	} = useForm<DSRForm>({
 		defaultValues: {
-			acceptEulaAgreement: false,
 			acceptTermsAndConditions: false,
 			dataCenterLocation: '',
 			hostname: '',

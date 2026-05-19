@@ -7,7 +7,7 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -31,11 +30,13 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -49,12 +50,18 @@ public class ViewContentRetrieversDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@AfterClass
+	public static void tearDownClass() {
+		_objectDefinitionLocalServiceUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_setUpGroupLocalService();
 		_setUpLanguageUtil();
 		_setUpMockHttpServletRequest();
-		_setUpObjectDefinitionLocalService();
+		_setUpObjectDefinition();
 		_setUpPortalUtil();
 	}
 
@@ -63,8 +70,7 @@ public class ViewContentRetrieversDisplayContextTest {
 		ViewContentRetrieversDisplayContext
 			viewContentRetrieversDisplayContext =
 				new ViewContentRetrieversDisplayContext(
-					_groupLocalService, _mockHttpServletRequest,
-					_objectDefinitionLocalService, _portal);
+					_groupLocalService, _mockHttpServletRequest);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			viewContentRetrieversDisplayContext.getFDSActionDropdownItems();
@@ -82,11 +88,11 @@ public class ViewContentRetrieversDisplayContextTest {
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1),
 			"/o/ai-hub/content-retrievers/by-external-reference-code" +
-				"/{externalReferenceCode}/object-actions/crawl",
+				"/{externalReferenceCode}/object-actions/crawler",
 			"reload", "put", "sync-now", "put", "async");
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2),
-			"/o/ai-hub/content-retrievers/by-external-reference-code" +
+			"/o/ai-hub/v1.0/content-retrievers/by-external-reference-code" +
 				"/{externalReferenceCode}",
 			"trash", "delete", "delete", "delete", "async");
 		_assertFDSActionDropdownItem(
@@ -169,7 +175,7 @@ public class ViewContentRetrieversDisplayContextTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
-	private void _setUpObjectDefinitionLocalService() throws Exception {
+	private void _setUpObjectDefinition() {
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);
 
@@ -185,18 +191,17 @@ public class ViewContentRetrieversDisplayContextTest {
 			RandomTestUtil.randomString()
 		);
 
-		Mockito.when(
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_CONTENT_RETRIEVER", _COMPANY_ID)
+		_objectDefinitionLocalServiceUtilMockedStatic.when(
+			() ->
+				ObjectDefinitionLocalServiceUtil.
+					getObjectDefinitionByExternalReferenceCode(
+						"L_AI_HUB_CONTENT_RETRIEVER", _COMPANY_ID)
 		).thenReturn(
 			objectDefinition
 		);
 	}
 
 	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
 		LiferayPortletURL liferayPortletURL = Mockito.mock(
 			LiferayPortletURL.class);
 
@@ -206,8 +211,8 @@ public class ViewContentRetrieversDisplayContextTest {
 			_PERMISSIONS_URL
 		);
 
-		Mockito.when(
-			_portal.getControlPanelPortletURL(
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getControlPanelPortletURL(
 				_mockHttpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
@@ -216,17 +221,14 @@ public class ViewContentRetrieversDisplayContextTest {
 			liferayPortletURL
 		);
 
-		Mockito.doAnswer(
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.stripURLAnchor(
+				Mockito.anyString(), Mockito.anyString())
+		).thenAnswer(
 			invocation -> new String[] {
 				invocation.getArgument(0, String.class), StringPool.BLANK
 			}
-		).when(
-			_portal
-		).stripURLAnchor(
-			Mockito.anyString(), Mockito.anyString()
 		);
-
-		portalUtil.setPortal(_portal);
 	}
 
 	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
@@ -235,17 +237,19 @@ public class ViewContentRetrieversDisplayContextTest {
 		"/" + RandomTestUtil.randomString();
 
 	private static final String _PERMISSIONS_URL =
-		"http://" + RandomTestUtil.randomString() + "/edit_permissions";
+		RandomTestUtil.randomString();
 
-	private static final String _PORTAL_URL =
-		"http://" + RandomTestUtil.randomString() + ".com";
+	private static final String _PORTAL_URL = RandomTestUtil.randomString();
+
+	private static final MockedStatic<ObjectDefinitionLocalServiceUtil>
+		_objectDefinitionLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			ObjectDefinitionLocalServiceUtil.class);
+	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
 
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService =
-		Mockito.mock(ObjectDefinitionLocalService.class);
-	private final Portal _portal = Mockito.mock(Portal.class);
 
 }

@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductDisplayPage")
+@GraphQLName(
+	description = "Per-product mapping that overrides the channel's default product site page, allowing a product to render through a different page (and optionally a page template) for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultProductDisplayPage when no mapping exists.",
+	value = "ProductDisplayPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductDisplayPage")
 public class ProductDisplayPage implements Serializable {
@@ -49,7 +52,9 @@ public class ProductDisplayPage implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductDisplayPage.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -85,7 +90,9 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -93,7 +100,10 @@ public class ProductDisplayPage implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the ProductDisplayPage record; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -125,14 +135,19 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal long ID of the ProductDisplayPage record; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "UUID of the Liferay page template used to render the resolved product page when set.",
+		example = "aabb9d9d-60a3-429b-0005-294945e2b957"
+	)
 	public String getPageTemplateUuid() {
 		if (_pageTemplateUuidSupplier != null) {
 			pageTemplateUuid = _pageTemplateUuidSupplier.get();
@@ -166,14 +181,19 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "UUID of the Liferay page template used to render the resolved product page when set."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageTemplateUuid;
 
 	@JsonIgnore
 	private Supplier<String> _pageTemplateUuidSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising.",
+		example = "aabb9d9d-60a3-429b-0005-294945e2b956"
+	)
 	public String getPageUuid() {
 		if (_pageUuidSupplier != null) {
 			pageUuid = _pageUuidSupplier.get();
@@ -207,14 +227,19 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageUuid;
 
 	@JsonIgnore
 	private Supplier<String> _pageUuidSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Product by its external reference code (FK alternate key).",
+		example = "AB-34098-789-N"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -252,7 +277,9 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the Product by its external reference code (FK alternate key)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
@@ -260,7 +287,10 @@ public class ProductDisplayPage implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Product (FK identifier).",
+		example = "30130"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -294,7 +324,7 @@ public class ProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the Product (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
@@ -513,4 +543,4 @@ public class ProductDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1816050538
+// LIFERAY-REST-BUILDER-HASH:1638648590

@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PaymentMethodGroupRelTerm")
+@GraphQLName(
+	description = "Binding that enables a payment-method group for a specific commerce Term; controls which payment options apply when that term is in effect. Created on POST and removed on DELETE; no update operation.",
+	value = "PaymentMethodGroupRelTerm"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Binding that enables a payment-method group for a specific commerce Term; controls which payment options apply when that term is in effect. Created on POST and removed on DELETE; no update operation.",
 	requiredProperties = {"paymentMethodGroupRelId", "termId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,9 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 			PaymentMethodGroupRelTerm.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,7 +97,9 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -99,7 +107,10 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the PaymentMethodGroupRel (FK identifier).",
+		example = "30130"
+	)
 	public Long getPaymentMethodGroupRelId() {
 		if (_paymentMethodGroupRelIdSupplier != null) {
 			paymentMethodGroupRelId = _paymentMethodGroupRelIdSupplier.get();
@@ -133,7 +144,9 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the PaymentMethodGroupRel (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long paymentMethodGroupRelId;
@@ -142,7 +155,10 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	private Supplier<Long> _paymentMethodGroupRelIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the PaymentMethodGroupRelTerm record; read-only.",
+		example = "30643"
+	)
 	public Long getPaymentMethodGroupRelTermId() {
 		if (_paymentMethodGroupRelTermIdSupplier != null) {
 			paymentMethodGroupRelTermId =
@@ -180,14 +196,18 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal long ID of the PaymentMethodGroupRelTerm record; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long paymentMethodGroupRelTermId;
 
 	@JsonIgnore
 	private Supplier<Long> _paymentMethodGroupRelTermIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Embedded snapshot of the linked Term; read-only."
+	)
 	@Valid
 	public Term getTerm() {
 		if (_termSupplier != null) {
@@ -220,14 +240,19 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Embedded snapshot of the linked Term; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Term term;
 
 	@JsonIgnore
 	private Supplier<Term> _termSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Term by its external reference code (FK alternate key).",
+		example = "AB-34098-789-N"
+	)
 	public String getTermExternalReferenceCode() {
 		if (_termExternalReferenceCodeSupplier != null) {
 			termExternalReferenceCode =
@@ -263,7 +288,9 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the Term by its external reference code (FK alternate key)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String termExternalReferenceCode;
 
@@ -271,7 +298,10 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	private Supplier<String> _termExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Term (FK identifier).",
+		example = "30130"
+	)
 	public Long getTermId() {
 		if (_termIdSupplier != null) {
 			termId = _termIdSupplier.get();
@@ -305,7 +335,7 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the Term (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long termId;
@@ -518,4 +548,4 @@ public class PaymentMethodGroupRelTerm implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1644541910
+// LIFERAY-REST-BUILDER-HASH:1855058708

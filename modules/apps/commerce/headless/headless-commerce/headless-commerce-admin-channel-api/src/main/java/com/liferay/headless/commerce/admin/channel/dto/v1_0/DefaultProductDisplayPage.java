@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("DefaultProductDisplayPage")
+@GraphQLName(
+	description = "Channel-level setting that names the fallback Liferay site page used to render any product that has no explicit ProductDisplayPage mapping. Backed by the channel's group settings under the `productLayoutUuid` key; written through POST.",
+	value = "DefaultProductDisplayPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DefaultProductDisplayPage")
 public class DefaultProductDisplayPage implements Serializable {
@@ -50,7 +53,9 @@ public class DefaultProductDisplayPage implements Serializable {
 			DefaultProductDisplayPage.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -86,14 +91,19 @@ public class DefaultProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising.",
+		example = "aabb9d9d-60a3-429b-0005-294945e2b956"
+	)
 	public String getPageUuid() {
 		if (_pageUuidSupplier != null) {
 			pageUuid = _pageUuidSupplier.get();
@@ -127,7 +137,9 @@ public class DefaultProductDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageUuid;
 
@@ -291,4 +303,4 @@ public class DefaultProductDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1784361509
+// LIFERAY-REST-BUILDER-HASH:1750562797

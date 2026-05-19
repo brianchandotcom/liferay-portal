@@ -74,7 +74,7 @@ public abstract class BaseShippingMethodResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-channel/v1.0/channels/{channelId}/shipping-methods'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves channel shipping methods."
+		description = "Lists the ShippingMethod entries belonging to the parent Channel, addressed by internal ID. Calls CommerceChannelService.getCommerceChannel + CommerceShippingMethodService.getCommerceShippingMethods + CommerceShippingMethodService.getCommerceShippingMethodsCount. Validation -- NoSuchChannelException -> 404 when channel id not found. Side effects -- falls back to the engine name and description and embeds the channel's shipping options. List query support — page and pageSize paginate the related entries."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -857,4 +857,4 @@ public abstract class BaseShippingMethodResourceImpl
 		LogFactoryUtil.getLog(BaseShippingMethodResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2059806098
+// LIFERAY-REST-BUILDER-HASH:461900140

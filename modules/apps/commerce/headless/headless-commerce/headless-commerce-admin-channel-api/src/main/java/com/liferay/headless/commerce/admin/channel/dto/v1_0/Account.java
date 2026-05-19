@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Account")
+@GraphQLName(
+	description = "Lightweight projection of a commerce account, returned by channel-relationship endpoints to identify the linked account; full account management is performed through the Account admin API.",
+	value = "Account"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Account")
 public class Account implements Serializable {
@@ -49,7 +52,10 @@ public class Account implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the linked account; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -81,14 +87,19 @@ public class Account implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Internal long ID of the linked account; read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Account Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the linked account; read-only.",
+		example = "Account Name"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -120,8 +131,10 @@ public class Account implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Display name of the linked account; read-only."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
 	@JsonIgnore
@@ -283,4 +296,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1089528375
+// LIFERAY-REST-BUILDER-HASH:-674026929

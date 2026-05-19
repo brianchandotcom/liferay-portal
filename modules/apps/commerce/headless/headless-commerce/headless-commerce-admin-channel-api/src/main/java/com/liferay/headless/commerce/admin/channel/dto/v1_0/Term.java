@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Term")
+@GraphQLName(
+	description = "Commerce term (delivery, payment, or warranty condition) that can be attached to orders, payment methods, or shipping options. Read-only on this projection; full term management lives in the Payment and Site Setting admin APIs.",
+	value = "Term"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Term")
 public class Term implements Serializable {
@@ -49,7 +52,10 @@ public class Term implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the Term record; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -81,14 +87,19 @@ public class Term implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal long ID of the Term record; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "simple")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier-style name of the commerce term; normalized server-side using the friendly-URL rules and unique per company. Read-only on this projection.",
+		example = "simple"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -120,7 +131,9 @@ public class Term implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier-style name of the commerce term; normalized server-side using the friendly-URL rules and unique per company. Read-only on this projection."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
 
@@ -283,4 +296,4 @@ public class Term implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1635430873
+// LIFERAY-REST-BUILDER-HASH:-416591512

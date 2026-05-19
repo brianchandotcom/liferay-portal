@@ -438,7 +438,7 @@ function main {
 	_set_test_integration_port
 	_set_tomcat_ports
 
-	"$(_find_tomcat_dir "${BUNDLES_DIR}")/bin/catalina.sh" jpda start >&2
+	[[ -z "${LIFERAY_PROVISION_SKIP_TOMCAT:-}" ]] && "$(_find_tomcat_dir "${BUNDLES_DIR}")/bin/catalina.sh" jpda start >&2
 
 	echo "${WORKTREE_DIR}"
 }

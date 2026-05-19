@@ -46,14 +46,15 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
 
+		String portletId = _portal.getPortletId(httpServletRequest);
+
+		ExtendedObjectClassDefinition.Scope scope =
+			ExtendedObjectClassDefinition.Scope.SYSTEM;
+		long scopePK = 0L;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		String portletId = _portal.getPortletId(httpServletRequest);
-
-		ExtendedObjectClassDefinition.Scope scope;
-		long scopePK;
 
 		if (ConfigurationAdminPortletKeys.INSTANCE_SETTINGS.equals(portletId)) {
 			scope = ExtendedObjectClassDefinition.Scope.COMPANY;
@@ -64,10 +65,6 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 
 			scope = ExtendedObjectClassDefinition.Scope.GROUP;
 			scopePK = themeDisplay.getScopeGroupId();
-		}
-		else {
-			scope = ExtendedObjectClassDefinition.Scope.SYSTEM;
-			scopePK = 0L;
 		}
 
 		if (!_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(

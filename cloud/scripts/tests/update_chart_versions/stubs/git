@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+echo "git ${*}" >> "${TEST_LOG}"
+
+case "${1}" in
+	blame)
+		echo "${STUB_GIT_BLAME_OUTPUT:-deadbeef (Someone 2025-01-01 00:00:00 +0000 1) version: 1.2.3}"
+		;;
+	rev-parse)
+		if [[ "${STUB_GIT_REV_PARSE_FAIL:-0}" == "1" ]]
+		then
+			exit 1
+		fi
+
+		echo "${STUB_GIT_REV_PARSE_OUTPUT:-deadbeef}"
+		;;
+	rev-list)
+		echo "${STUB_GIT_REV_LIST_OUTPUT:-1}"
+		;;
+	--no-pager)
+		echo "stub-log-output"
+		;;
+	*)
+		echo "stub-git-default-output"
+		;;
+esac

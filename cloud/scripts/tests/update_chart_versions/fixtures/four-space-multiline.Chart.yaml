@@ -1,0 +1,16 @@
+apiVersion: v2
+name: example
+description: |
+    A multi-line description
+    that spans several lines
+    and must be preserved verbatim.
+type: application
+version: 1.2.3
+appVersion: "9.9.9"
+dependencies:
+    - name: child
+      repository: file://../child
+      version: 0.1.0
+maintainers:
+    - name: someone
+      email: someone@example.com

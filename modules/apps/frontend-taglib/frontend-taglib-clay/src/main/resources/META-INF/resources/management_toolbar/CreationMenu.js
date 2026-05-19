@@ -23,19 +23,7 @@ const Item = ({item, onClick}) => {
 			symbolLeft={item.icon}
 			{...getDataAttributes(item.data)}
 		>
-			{item.deprecated ? (
-				<span className="creation-menu-item-deprecated">
-					{unescapeHTML(item.label)}
-
-					<span className="badge badge-translucent badge-warning text-uppercase">
-						<span className="badge-item badge-item-expand">
-							{Liferay.Language.get('deprecated')}
-						</span>
-					</span>
-				</span>
-			) : (
-				unescapeHTML(item.label)
-			)}
+			{unescapeHTML(item.label)}
 		</ClayDropDown.Item>
 	);
 };
@@ -180,7 +168,6 @@ const CreationMenu = ({
 				<ClayDropDown
 					active={active}
 					className="creation-menu"
-					menuElementAttrs={{className: 'creation-menu-dropdown'}}
 					onActiveChange={setActive}
 					trigger={
 						<LinkOrButton

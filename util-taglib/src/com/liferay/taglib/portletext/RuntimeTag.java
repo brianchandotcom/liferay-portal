@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
@@ -460,41 +459,11 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	public void setSettingsScope(String settingsScope) {
 	}
 
-	/**
-	 * @see com.liferay.portal.model.impl.LayoutTypePortletImpl#getStaticPortlets(
-	 *      String)
-	 */
 	protected static Portlet getPortlet(long companyId, String portletId)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			companyId, portletId);
-
-		// See LayoutTypePortletImpl#getStaticPortlets for why we only clone
-		// non-instanceable portlets
-
-		if (!portlet.isInstanceable()) {
-			portlet = new PortletWrapper(portlet) {
-
-				@Override
-				public boolean getStatic() {
-					return _staticPortlet;
-				}
-
-				@Override
-				public boolean isStatic() {
-					return _staticPortlet;
-				}
-
-				@Override
-				public void setStatic(boolean staticPortlet) {
-					_staticPortlet = staticPortlet;
-				}
-
-				private boolean _staticPortlet;
-
-			};
-		}
 
 		portlet.setStatic(true);
 

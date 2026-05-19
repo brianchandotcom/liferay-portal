@@ -58,6 +58,11 @@ components:
                     description:
                         A flag that indicates whether the fragment is read-only.
                     type: boolean
+                thumbnailURLReference:
+                    $ref: ../../headless-admin-site/headless-admin-site-impl/rest-openapi.yaml#ThumbnailURLReference
+                    description:
+                        The fragment's thumbnail. On read, returned only when `nestedFields=thumbnailURLReference` is
+                        requested. On POST or PUT, omitting `thumbnailURLReference` clears any previously bound preview.
                 type:
                     description:
                         The fragment's type.

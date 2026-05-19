@@ -14,6 +14,7 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {FormEvent, useState} from 'react';
 
 import {EditObjectRelationshipContent} from './EditObjectRelationshipContent';
+import {checkDisableInheritanceBlocked} from './checkDisableInheritanceBlocked';
 import {useObjectRelationshipForm} from './useObjectRelationshipForm';
 
 interface EditObjectRelationshipProps {
@@ -37,6 +38,7 @@ export default function EditObjectRelationship({
 	parameterRequired,
 	restContextPath,
 }: EditObjectRelationshipProps) {
+	const [isCheckingInheritance, setIsCheckingInheritance] = useState(false);
 	const [submitError, setSubmitError] = useState<SubmitError>(null);
 
 	const {errors, handleChange, handleValidate, setValues, values} =
@@ -86,7 +88,7 @@ export default function EditObjectRelationship({
 		values.reverse ||
 		initialValues.system;
 
-	const handleInheritanceCheckboxChange = ({
+	const handleInheritanceCheckboxChange = async ({
 		target,
 	}: React.ChangeEvent<HTMLInputElement>) => {
 		if (target.checked) {
@@ -94,19 +96,47 @@ export default function EditObjectRelationship({
 				...values,
 				edge: true,
 			});
-		}
-		else {
-			const parentWindow = Liferay.Util.getOpener();
 
-			parentWindow.Liferay.fire('openModalDisableInheritance', {
-				handleDisable: async () => {
-					setValues({
-						...values,
-						edge: false,
-					});
-				},
-			});
+			return;
 		}
+
+		setIsCheckingInheritance(true);
+
+		let isBlocked = false;
+
+		try {
+			isBlocked = await checkDisableInheritanceBlocked(values);
+		}
+		catch (error) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+
+			return;
+		}
+		finally {
+			setIsCheckingInheritance(false);
+		}
+
+		const parentWindow = Liferay.Util.getOpener();
+
+		if (isBlocked) {
+			parentWindow.Liferay.fire('openModalDisableInheritance', {
+				isBlocked: true,
+			});
+
+			return;
+		}
+
+		parentWindow.Liferay.fire('openModalDisableInheritance', {
+			handleDisable: async () => {
+				setValues({
+					...values,
+					edge: false,
+				});
+			},
+		});
 	};
 
 	return (
@@ -126,6 +156,7 @@ export default function EditObjectRelationship({
 				containerWrapper={Card}
 				errors={errors}
 				handleChange={handleChange}
+				inheritanceCheckboxDisabled={isCheckingInheritance}
 				learnResources={learnResources}
 				objectDefinitionExternalReferenceCode={
 					objectDefinitionExternalReferenceCode

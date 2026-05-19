@@ -8,8 +8,14 @@ import {Text} from '@clayui/core';
 import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
+interface OpenModalPayload {
+	handleDisable?: () => Promise<void>;
+	isBlocked?: boolean;
+}
+
 function ModalDisableInheritance() {
 	const [handleDisable, setHandleDisable] = useState<() => Promise<void>>();
+	const [isBlocked, setIsBlocked] = useState(false);
 	const [visible, setVisible] = useState(false);
 
 	const {observer, onClose} = useModal({
@@ -19,12 +25,9 @@ function ModalDisableInheritance() {
 	});
 
 	useEffect(() => {
-		const openModal = ({
-			handleDisable,
-		}: {
-			handleDisable: () => Promise<void>;
-		}) => {
+		const openModal = ({handleDisable, isBlocked}: OpenModalPayload) => {
 			setHandleDisable(() => handleDisable);
+			setIsBlocked(!!isBlocked);
 			setVisible(true);
 		};
 
@@ -37,56 +40,74 @@ function ModalDisableInheritance() {
 			);
 	}, []);
 
+	if (!visible) {
+		return null;
+	}
+
 	return (
-		<>
-			{visible && (
-				<ClayModalProvider>
-					<ClayModal center observer={observer} status="warning">
-						<ClayModal.Header
-							closeButtonAriaLabel={Liferay.Language.get('close')}
-						>
-							{Liferay.Language.get(
+		<ClayModalProvider>
+			<ClayModal
+				center
+				observer={observer}
+				status={isBlocked ? 'danger' : 'warning'}
+			>
+				<ClayModal.Header
+					closeButtonAriaLabel={Liferay.Language.get('close')}
+				>
+					{isBlocked
+						? Liferay.Language.get(
+								'disabling-inheritance-not-allowed'
+							)
+						: Liferay.Language.get(
 								'disable-inheritance-confirmation'
 							)}
-						</ClayModal.Header>
+				</ClayModal.Header>
 
-						<ClayModal.Body className="c-gap-4 d-flex flex-column">
-							<Text>
-								{Liferay.Language.get(
+				<ClayModal.Body className="c-gap-4 d-flex flex-column">
+					<Text>
+						{isBlocked
+							? Liferay.Language.get(
+									'this-object-requires-all-entries-to-have-a-parent'
+								)
+							: Liferay.Language.get(
 									'when-you-disable-inheritance-the-regular-relationship-is-restored'
 								)}
-							</Text>
-						</ClayModal.Body>
+					</Text>
+				</ClayModal.Body>
 
-						<ClayModal.Footer
-							last={
-								<ClayButton.Group spaced>
-									<ClayButton
-										displayType="secondary"
-										onClick={onClose}
-									>
-										{Liferay.Language.get('cancel')}
-									</ClayButton>
+				<ClayModal.Footer
+					last={
+						isBlocked ? (
+							<ClayButton displayType="primary" onClick={onClose}>
+								{Liferay.Language.get('done')}
+							</ClayButton>
+						) : (
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={onClose}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-									<ClayButton
-										displayType="warning"
-										onClick={async () => {
-											if (handleDisable) {
-												await handleDisable();
-											}
+								<ClayButton
+									displayType="warning"
+									onClick={async () => {
+										if (handleDisable) {
+											await handleDisable();
+										}
 
-											onClose();
-										}}
-									>
-										{Liferay.Language.get('disable')}
-									</ClayButton>
-								</ClayButton.Group>
-							}
-						></ClayModal.Footer>
-					</ClayModal>
-				</ClayModalProvider>
-			)}
-		</>
+										onClose();
+									}}
+								>
+									{Liferay.Language.get('disable')}
+								</ClayButton>
+							</ClayButton.Group>
+						)
+					}
+				></ClayModal.Footer>
+			</ClayModal>
+		</ClayModalProvider>
 	);
 }
 

@@ -14,6 +14,7 @@ import {isEdge, isNode} from 'react-flow-renderer';
 
 import {EditObjectRelationshipContent} from '../../ObjectRelationship/EditObjectRelationshipContent';
 import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
+import {checkDisableInheritanceBlocked} from '../../ObjectRelationship/checkDisableInheritanceBlocked';
 import {useObjectRelationshipForm} from '../../ObjectRelationship/useObjectRelationshipForm';
 import {getUpdatedModelBuilderStructurePayload} from '../../ViewObjectDefinitions/objectDefinitionUtil';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
@@ -42,6 +43,8 @@ export function RightSidebarObjectRelationshipDetails({
 		},
 		dispatch,
 	] = useObjectFolderContext();
+
+	const [isCheckingInheritance, setIsCheckingInheritance] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [
 		objectRelationshipParameterRequired,
@@ -52,7 +55,6 @@ export function RightSidebarObjectRelationshipDetails({
 		setObjectRelationshipRestContextPath,
 	] = useState('');
 	const [readOnly, setReadOnly] = useState(true);
-
 	const [showModal, setShowModal] = useState<Partial<ModelBuilderModals>>({
 		deleteObjectRelationship: false,
 	});
@@ -240,23 +242,51 @@ export function RightSidebarObjectRelationshipDetails({
 			await onSubmit({...values, edge: true});
 
 			await updateModelBuilderRootStructure();
+
+			return;
 		}
-		else {
-			const parentWindow = Liferay.Util.getOpener();
 
-			parentWindow.Liferay.fire('openModalDisableInheritance', {
-				handleDisable: async () => {
-					setValues({
-						...values,
-						edge: false,
-					});
+		setIsCheckingInheritance(true);
 
-					await onSubmit({...values, edge: false});
+		let isBlocked = false;
 
-					await updateModelBuilderRootStructure();
-				},
+		try {
+			isBlocked = await checkDisableInheritanceBlocked(values);
+		}
+		catch (error) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
 			});
+
+			return;
 		}
+		finally {
+			setIsCheckingInheritance(false);
+		}
+
+		const parentWindow = Liferay.Util.getOpener();
+
+		if (isBlocked) {
+			parentWindow.Liferay.fire('openModalDisableInheritance', {
+				isBlocked: true,
+			});
+
+			return;
+		}
+
+		parentWindow.Liferay.fire('openModalDisableInheritance', {
+			handleDisable: async () => {
+				setValues({
+					...values,
+					edge: false,
+				});
+
+				await onSubmit({...values, edge: false});
+
+				await updateModelBuilderRootStructure();
+			},
+		});
 	};
 
 	return (
@@ -295,6 +325,7 @@ export function RightSidebarObjectRelationshipDetails({
 						containerWrapper={ClayPanel}
 						errors={errors}
 						handleChange={handleChange}
+						inheritanceCheckboxDisabled={isCheckingInheritance}
 						learnResources={learnResourceContext}
 						objectDefinitionExternalReferenceCode={
 							values.objectDefinitionExternalReferenceCode1

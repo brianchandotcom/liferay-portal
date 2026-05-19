@@ -33,6 +33,7 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 	public FaroFDSResultsDisplay<AssetSummaryCategory>
 			getAssetSummaryCategoriesFaroFDSResultsDisplay(
 				@PathParam("groupId") long groupId,
+				@QueryParam("accountId") String accountId,
 				@QueryParam("channelId") long channelId,
 				@QueryParam("keywords") String keywords,
 				@QueryParam("page") int page,
@@ -40,6 +41,7 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 				@QueryParam("rangeEnd") String rangeEnd,
 				@QueryParam("rangeKey") int rangeKey,
 				@QueryParam("rangeStart") String rangeStart,
+				@QueryParam("selectedMetric") String selectedMetric,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 					sortString,
 				@QueryParam("vocabularyId") String vocabularyId)
@@ -48,8 +50,8 @@ public class AssetSummaryCategoryController extends BaseFaroController {
 		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAssetSummaryCategories(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, keywords, rangeEnd, rangeKey, rangeStart, sortString,
-				vocabularyId, page, pageSize),
+				accountId, channelId, keywords, rangeEnd, rangeKey, rangeStart,
+				selectedMetric, sortString, vocabularyId, page, pageSize),
 			AssetSummaryCategoryDisplay::new, page, pageSize);
 	}
 

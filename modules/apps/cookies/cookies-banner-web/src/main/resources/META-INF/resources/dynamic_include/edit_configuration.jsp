@@ -92,7 +92,7 @@
 					' />' +
 					'<label class="c-pl-2 custom-control-label" for="' +
 					checkboxId +
-					'"><liferay-ui:message key="check-if-you-want-to-force-re-consent-to-the-users" /></label>' +
+					'"><liferay-ui:message key="force-re-consent-for-all-users" /></label>' +
 					'</div>',
 				buttons: [
 					{

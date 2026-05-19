@@ -43,6 +43,13 @@ function _check_chart_yaml {
 
 	local helm_chart_yaml="${helm_dir}/Chart.yaml"
 
+	if [ ! -f "${helm_chart_yaml}" ]
+	then
+		echo "The chart file ${helm_chart_yaml} does not exist." >&2
+
+		exit 1
+	fi
+
 	local git_blame_sha
 
 	git_blame_sha=$(_git_blame_sha "^version: .*$" "${helm_chart_yaml}")

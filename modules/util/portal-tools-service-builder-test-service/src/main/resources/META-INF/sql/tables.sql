@@ -68,6 +68,18 @@ create table DefinedDefaultOrderEntry (
 	name VARCHAR(75) null
 );
 
+create table DynamicQueryEntry (
+	dynamicQueryEntryId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	createDate DATE null,
+	modifiedDate DATE null,
+	name VARCHAR(75) null,
+	description VARCHAR(75) null,
+	amount LONG,
+	status INTEGER
+);
+
 create table ERCCompanyEntry (
 	uuid_ VARCHAR(75) null,
 	externalReferenceCode VARCHAR(75) null,

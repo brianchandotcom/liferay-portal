@@ -187,7 +187,7 @@ export type NumericField = BaseField & {
 export type PhoneNumberField = BaseField & {
 	settings: {
 		fixedCountryCode?: string;
-		prefixType: 'defined-by-user' | 'fixed';
+		prefixType: 'definedByUser' | 'fixed';
 	};
 	type: 'phone-number';
 } & MaxLengthSettingsField &
@@ -304,7 +304,7 @@ export function getDefaultField({
 		return {
 			...base,
 			settings: {
-				prefixType: 'defined-by-user',
+				prefixType: 'definedByUser',
 			},
 			type: 'phone-number',
 		};

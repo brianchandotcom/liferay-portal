@@ -29,7 +29,7 @@ components:
                     type: string
                 id:
                     description:
-                        "Account ID. Use this with `getAccount` to fetch the account directly."
+                        "Account ID. Use this with `getWorkspaceGroupAccount` to fetch the account directly."
                     readOnly: true
                     type: string
                 industry:
@@ -53,7 +53,8 @@ components:
             description:
                 "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal,
                 object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date
-                range to the previous date range. Use `getSiteAssetSummariesPage` to list these sets of metrics."
+                range to the previous date range. Use `getWorkspaceGroupAssetSummariesPage` to list these sets of
+                metrics."
             properties:
                 assetId:
                     description:
@@ -139,7 +140,7 @@ components:
             description:
                 "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each
                 event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page
-                metadata. Use `getSiteChannelEventsPage` to retrieve a list of analytics events."
+                metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events."
             properties:
                 applicationId:
                     description:
@@ -253,7 +254,7 @@ components:
                     type: string
                 id:
                     description:
-                        "Individual ID. Use this with `getIndividual` to fetch a single individual."
+                        "Individual ID. Use this with `getWorkspaceGroupIndividual` to fetch a single individual."
                     readOnly: true
                     type: string
                 lastActivityDate:
@@ -340,7 +341,7 @@ components:
                     type: string
                 id:
                     description:
-                        "Segment id. Use this with `getIndividualSegment` to fetch a single segment."
+                        "Segment id. Use this with `getWorkspaceGroupIndividualSegment` to fetch a single segment."
                     readOnly: true
                     type: string
                 includeAnonymousUsers:
@@ -406,8 +407,8 @@ components:
                     type: string
                 individualId:
                     description:
-                        "Identifier of the individual whose membership this record describes. Use with `getIndividual`
-                        to fetch the individual."
+                        "Identifier of the individual whose membership this record describes. Use with
+                        `getWorkspaceGroupIndividual` to fetch the individual."
                     readOnly: true
                     type: string
                 individualSegmentId:
@@ -423,8 +424,8 @@ components:
             type: object
         PageMetric:
             description:
-                "Analytics metrics for a single tracked page over the selected date range. Use `getSitePagesPage` to
-                list these metrics for a site."
+                "Analytics metrics for a single tracked page over the selected date range. Use
+                `getWorkspaceGroupPagesPage` to list these metrics for a site."
             properties:
                 assetId:
                     description:
@@ -514,7 +515,8 @@ components:
             type: object
         SearchTerm:
             description:
-                "Search term metrics. Use `getSearchTerms` to list these metrics for a workspace."
+                "Search term metrics. Use `getWorkspaceGroupChannelSearchTermsPage` to list these metrics for a
+                workspace."
             properties:
                 count:
                     description:
@@ -608,7 +610,7 @@ paths:
         get:
             description:
                 "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an
-                account id. To search accounts by name or filter, use `getAccountsPage`."
+                account id. To search accounts by name or filter, use `getWorkspaceGroupAccountsPage`."
             operationId: getWorkspaceGroupAccount
             parameters:
                 -   in: path
@@ -643,7 +645,7 @@ paths:
                 entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read,
                 and view counts along with their period-over-period trend percentages. Optionally narrow results to a
                 single channel (also known as property) or to a date range. Use this to answer 'what content is
-                performing best' and to pick assets for deeper drill-down via `getSitePagesPage`."
+                performing best' and to pick assets for deeper drill-down via `getWorkspaceGroupPagesPage`."
             operationId: getWorkspaceGroupAssetSummariesPage
             parameters:
                 -   in: path
@@ -801,8 +803,8 @@ paths:
         get:
             description:
                 "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a
-                date range. For aggregated metrics across events, prefer `getSiteAssetSummariesPage` or
-                `getSitePagesPage`."
+                date range. For aggregated metrics across events, prefer `getWorkspaceGroupAssetSummariesPage` or
+                `getWorkspaceGroupPagesPage`."
             operationId: getWorkspaceGroupChannelEventsPage
             parameters:
                 -   in: path

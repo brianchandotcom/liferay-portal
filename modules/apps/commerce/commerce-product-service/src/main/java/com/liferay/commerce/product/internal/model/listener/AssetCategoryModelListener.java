@@ -61,7 +61,8 @@ public class AssetCategoryModelListener
 				AssetCategory.class, assetCategory.getCategoryId());
 
 			_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-				assetCategory.getGroupId(), AssetCategory.class,
+				assetCategory.getGroupId(),
+				_portal.getClassNameId(AssetCategory.class),
 				assetCategory.getCategoryId());
 		}
 		catch (PortalException portalException) {

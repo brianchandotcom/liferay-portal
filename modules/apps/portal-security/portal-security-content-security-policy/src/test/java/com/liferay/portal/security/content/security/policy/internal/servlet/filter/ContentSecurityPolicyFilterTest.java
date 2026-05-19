@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -20,6 +20,9 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
+/**
+ * @author Antonio Ortega
+ */
 public class ContentSecurityPolicyFilterTest {
 
 	@ClassRule
@@ -52,6 +55,7 @@ public class ContentSecurityPolicyFilterTest {
 		).thenReturn(
 			"/group/guest/home"
 		);
+
 		Mockito.when(
 			httpServletRequest.getRequestURI()
 		).thenReturn(
@@ -72,6 +76,7 @@ public class ContentSecurityPolicyFilterTest {
 		).thenReturn(
 			null
 		);
+
 		Mockito.when(
 			httpServletRequest.getRequestURI()
 		).thenReturn(
@@ -82,7 +87,7 @@ public class ContentSecurityPolicyFilterTest {
 	}
 
 	@Test
-	public void testNonExcludedPathDoesNotMatch() {
+	public void testNonexcludedPathDoesNotMatch() {
 		HttpServletRequest httpServletRequest = Mockito.mock(
 			HttpServletRequest.class);
 
@@ -92,6 +97,7 @@ public class ContentSecurityPolicyFilterTest {
 		).thenReturn(
 			null
 		);
+
 		Mockito.when(
 			httpServletRequest.getRequestURI()
 		).thenReturn(
@@ -101,9 +107,7 @@ public class ContentSecurityPolicyFilterTest {
 		Assert.assertFalse(_isExcludedURIPath(httpServletRequest));
 	}
 
-	private boolean _isExcludedURIPath(
-		HttpServletRequest httpServletRequest) {
-
+	private boolean _isExcludedURIPath(HttpServletRequest httpServletRequest) {
 		return ReflectionTestUtil.invoke(
 			_contentSecurityPolicyFilter, "_isExcludedURIPath",
 			new Class<?>[] {

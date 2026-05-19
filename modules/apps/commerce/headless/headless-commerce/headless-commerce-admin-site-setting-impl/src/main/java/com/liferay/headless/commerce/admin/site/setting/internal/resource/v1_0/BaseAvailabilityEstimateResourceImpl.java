@@ -76,6 +76,9 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the AvailabilityEstimate identified by id. Calls CommerceAvailabilityEstimateService.deleteCommerceAvailabilityEstimate. Validation -- 404 when no estimate matches the id."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -160,6 +163,9 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the AvailabilityEstimate identified by id. Calls CommerceAvailabilityEstimateService.getCommerceAvailabilityEstimate. Validation -- 404 when no estimate matches the id."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -194,6 +200,9 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for listing AvailabilityEstimate records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceAvailabilityEstimateService. The page and pageSize query parameters are accepted but ignored and have no effect on the response."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -238,8 +247,11 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate' -d $'{"id": ___, "priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/availabilityEstimate' -d $'{"priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for creating an AvailabilityEstimate under the supplied site (groupId). Calls -- none; returns 200 with an empty AvailabilityEstimate payload without invoking CommerceAvailabilityEstimateService, so no record is persisted."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -277,8 +289,11 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}' -d $'{"id": ___, "priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/availabilityEstimate/{id}' -d $'{"priority": ___, "title": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for replacing an AvailabilityEstimate identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceAvailabilityEstimateService, so the addressed record is not changed."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1083,4 +1098,4 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 		LogFactoryUtil.getLog(BaseAvailabilityEstimateResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:706659240
+// LIFERAY-REST-BUILDER-HASH:-885582577

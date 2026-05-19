@@ -77,6 +77,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the MeasurementUnit identified by id. Calls CPMeasurementUnitService.deleteCPMeasurementUnit. Validation -- NoSuchCPMeasurementUnitException -> 404 when id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -153,6 +156,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the MeasurementUnit identified by external reference code. Calls CPMeasurementUnitService.fetchCPMeasurementUnitByExternalReferenceCode + deleteCPMeasurementUnit. Validation -- NoSuchCPMeasurementUnitException -> 404 when ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -185,6 +191,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the MeasurementUnit identified by its stable string key. Calls CPMeasurementUnitService.fetchCPMeasurementUnit (companyId, key) + deleteCPMeasurementUnit. Validation -- NoSuchCPMeasurementUnitException -> 404 when key not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -215,6 +224,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the MeasurementUnit identified by id. Calls CPMeasurementUnitService.fetchCPMeasurementUnit. Validation -- NoSuchCPMeasurementUnitException -> 404 when id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -247,6 +259,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the MeasurementUnit identified by external reference code. Calls CPMeasurementUnitService.fetchCPMeasurementUnitByExternalReferenceCode. Validation -- NoSuchCPMeasurementUnitException -> 404 when ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -281,6 +296,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the MeasurementUnit identified by its stable string key. Calls CPMeasurementUnitService.fetchCPMeasurementUnit (companyId, key). Validation -- NoSuchCPMeasurementUnitException -> 404 when key not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -313,6 +331,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-type/{measurementUnitType}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns a page of MeasurementUnit records of the supplied type for the caller's company; type accepts either the integer code (0, 1, 2) or the human label (Dimensions, Weight, Unit). Calls CPMeasurementUnitService.getCPMeasurementUnits (companyId, type), applying the page and pageSize query parameters to bound the response. List query support -- the sort parameter is accepted on the wire but ignored, because the service is called with a null OrderByComparator. When the type cannot be resolved, returns an empty list (CPMeasurementUnitTypeException is swallowed at debug level)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -360,6 +381,9 @@ public abstract class BaseMeasurementUnitResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns a page of MeasurementUnit records scoped to the caller's company. Calls CPMeasurementUnitService.getCPMeasurementUnits, applying the page and pageSize query parameters to bound the response. List query support -- the filter (OData v4) and sort parameters are accepted on the wire but ignored, because the service is called with a null OrderByComparator and no entity model is registered for OData filtering."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -403,8 +427,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/{id}' -d $'{"externalReferenceCode": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the MeasurementUnit identified by id, applying JSON Merge Patch semantics (only fields present in the body are modified). Calls CPMeasurementUnitService.updateCPMeasurementUnit. Validation -- duplicate externalReferenceCode or key -> 409; domain validation failure such as unknown type -> 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -439,8 +466,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the MeasurementUnit identified by external reference code, applying JSON Merge Patch semantics (only fields present in the body are modified). Calls CPMeasurementUnitService.updateCPMeasurementUnit. Validation -- duplicate externalReferenceCode or key -> 409; domain validation failure such as unknown type -> 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -477,8 +507,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-key/{key}' -d $'{"externalReferenceCode": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the MeasurementUnit identified by its stable string key, applying JSON Merge Patch semantics (only fields present in the body are modified). Calls CPMeasurementUnitService.updateCPMeasurementUnit. Validation -- duplicate externalReferenceCode or key -> 409; domain validation failure such as unknown type -> 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -513,8 +546,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units' -d $'{"externalReferenceCode": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a MeasurementUnit for the caller's company. Calls CPMeasurementUnitService.addCPMeasurementUnit with the supplied name, key, rate, priority, and type. Validation -- unknown type (CPMeasurementUnitTypeException) -> 422; duplicate externalReferenceCode or key (DuplicateCPMeasurementUnitExternalReferenceCodeException, DuplicateCPMeasurementUnitKeyException) -> 409."
+	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "MeasurementUnit")
@@ -655,8 +691,11 @@ public abstract class BaseMeasurementUnitResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "id": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/measurement-units/by-externalReferenceCode/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name": ___, "primary": ___, "priority": ___, "rate": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Upserts the MeasurementUnit identified by external reference code -- replaces it with the request body when the ERC exists, otherwise creates a new entity by delegating to postMeasurementUnit. Validation -- duplicate externalReferenceCode or key -> 409; domain validation failure such as unknown type -> 422."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1493,4 +1532,4 @@ public abstract class BaseMeasurementUnitResourceImpl
 		LogFactoryUtil.getLog(BaseMeasurementUnitResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:190234547
+// LIFERAY-REST-BUILDER-HASH:1330689989

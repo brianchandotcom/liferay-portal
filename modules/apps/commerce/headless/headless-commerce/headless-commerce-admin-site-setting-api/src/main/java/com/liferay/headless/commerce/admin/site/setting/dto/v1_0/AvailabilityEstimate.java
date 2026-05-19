@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("AvailabilityEstimate")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"title"})
+@GraphQLName(
+	description = "Named restock-time window shown on out-of-stock storefront items to communicate when the merchant expects the product to become available again. Records are company-scoped; the localized `title` is the user-facing label and the `priority` orders estimates when more than one matches an item.",
+	value = "AvailabilityEstimate"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Named restock-time window shown on out-of-stock storefront items to communicate when the merchant expects the product to become available again. Records are company-scoped; the localized `title` is the user-facing label and the `priority` orders estimates when more than one matches an item.",
+	requiredProperties = {"title"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "AvailabilityEstimate")
 public class AvailabilityEstimate implements Serializable {
@@ -53,7 +59,10 @@ public class AvailabilityEstimate implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Wire-only site identifier accepted on input but ignored by the server and omitted from responses; availability estimates are company-scoped, not site-scoped.",
+		example = "23130"
+	)
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -87,7 +96,9 @@ public class AvailabilityEstimate implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Wire-only site identifier accepted on input but ignored by the server and omitted from responses; availability estimates are company-scoped, not site-scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
@@ -95,7 +106,10 @@ public class AvailabilityEstimate implements Serializable {
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Server-assigned identifier. Read-only; set when the record is first persisted.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -127,15 +141,20 @@ public class AvailabilityEstimate implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Server-assigned identifier. Read-only; set when the record is first persisted."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Ordering hint applied when more than one estimate matches an item; lower values are applied first. Defaults to 0 when omitted.",
+		example = "1.1"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -169,7 +188,9 @@ public class AvailabilityEstimate implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Ordering hint applied when more than one estimate matches an item; lower values are applied first. Defaults to 0 when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
@@ -177,7 +198,8 @@ public class AvailabilityEstimate implements Serializable {
 	private Supplier<Double> _prioritySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized restock-time label shown on out-of-stock items in the storefront. Map keys are locale codes; values are the translated strings. Required on create.",
+		example = "{en_US=Available in 1-3 weeks, hr_HR=Dostupno za 1-3 tjedna, hu_HU=1-3 héten belül elérhető}"
 	)
 	@Valid
 	public Map<String, String> getTitle() {
@@ -213,7 +235,9 @@ public class AvailabilityEstimate implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized restock-time label shown on out-of-stock items in the storefront. Map keys are locale codes; values are the translated strings. Required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> title;
@@ -398,4 +422,4 @@ public class AvailabilityEstimate implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-373902677
+// LIFERAY-REST-BUILDER-HASH:834223916

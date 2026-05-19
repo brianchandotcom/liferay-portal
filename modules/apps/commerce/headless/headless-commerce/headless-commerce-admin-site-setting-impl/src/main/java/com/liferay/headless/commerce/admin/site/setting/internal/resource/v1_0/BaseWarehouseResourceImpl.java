@@ -76,6 +76,9 @@ public abstract class BaseWarehouseResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the Warehouse definition identified by id. Calls CommerceInventoryWarehouseService.deleteCommerceInventoryWarehouse. Validation -- 404 when no entity matches the id. Side effects -- does not remove stock levels held in the admin-inventory API."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -152,6 +155,9 @@ public abstract class BaseWarehouseResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for listing Warehouse records under the supplied site (groupId). Calls -- none; returns an empty page without invoking CommerceInventoryWarehouseService. The active, page, and pageSize query parameters are accepted but ignored and have no effect on the response. For Warehouse list semantics that persist, use the inventory administration API."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -198,6 +204,9 @@ public abstract class BaseWarehouseResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Fetches the Warehouse definition identified by id. Calls CommerceInventoryWarehouseService.getCommerceInventoryWarehouse. Validation -- 404 when no entity matches the id."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -226,8 +235,11 @@ public abstract class BaseWarehouseResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/commerceAdminSiteSetting/{groupId}/warehouse' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for creating a Warehouse under the supplied site (groupId). Calls -- none; returns 200 with an empty Warehouse payload without invoking CommerceInventoryWarehouseService, so no record is persisted. For Warehouse writes that persist, including stock levels and per-account/group/channel scoping, use the inventory administration API."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -258,8 +270,11 @@ public abstract class BaseWarehouseResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "id": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-commerce-admin-site-setting/v1.0/warehouse/{id}' -d $'{"active": ___, "city": ___, "commerceCountryId": ___, "commerceRegionId": ___, "description": ___, "latitude": ___, "longitude": ___, "mvccVersion": ___, "name": ___, "primary": ___, "street1": ___, "street2": ___, "street3": ___, "zip": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Stub endpoint for replacing a Warehouse identified by id. Calls -- none; returns 200 with an empty body without invoking CommerceInventoryWarehouseService, so the addressed record is not changed. For Warehouse writes that persist, use the inventory administration API."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1045,4 +1060,4 @@ public abstract class BaseWarehouseResourceImpl
 		LogFactoryUtil.getLog(BaseWarehouseResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1693484216
+// LIFERAY-REST-BUILDER-HASH:-894424583

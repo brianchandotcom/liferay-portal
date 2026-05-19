@@ -8,7 +8,6 @@ package com.liferay.cookies.internal.consent;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.consent.CookiesConsentChecker;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
@@ -39,21 +38,9 @@ public class DefaultCookiesConsentChecker implements CookiesConsentChecker {
 			return true;
 		}
 
-		String consentCookieName = StringPool.BLANK;
-
-		if (consentType == CookiesConstants.CONSENT_TYPE_FUNCTIONAL) {
-			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_FUNCTIONAL;
-		}
-		else if (consentType == CookiesConstants.CONSENT_TYPE_PERFORMANCE) {
-			consentCookieName = CookiesConstants.NAME_CONSENT_TYPE_PERFORMANCE;
-		}
-		else if (consentType == CookiesConstants.CONSENT_TYPE_PERSONALIZATION) {
-			consentCookieName =
-				CookiesConstants.NAME_CONSENT_TYPE_PERSONALIZATION;
-		}
-
 		String consentCookieValue = CookiesManagerUtil.getCookieValue(
-			consentCookieName, httpServletRequest);
+			CookiesConstants.getConsentTypeName(consentType),
+			httpServletRequest);
 
 		if (Validator.isNotNull(consentCookieValue)) {
 			return GetterUtil.getBoolean(consentCookieValue);

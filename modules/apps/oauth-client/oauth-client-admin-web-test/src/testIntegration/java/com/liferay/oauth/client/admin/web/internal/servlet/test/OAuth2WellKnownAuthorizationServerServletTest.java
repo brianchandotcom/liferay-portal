@@ -26,6 +26,12 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URLEncoder;
 
 import java.nio.charset.StandardCharsets;
@@ -64,6 +70,105 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 					oAuthClientASLocalMetadata.
 						getOAuthClientASLocalMetadataId());
 		}
+	}
+
+	@Test
+	public void testDoGetHostRootWellKnown() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String hostRootURL = StringBundler.concat(
+			Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
+			":8080/.well-known/oauth-authorization-server");
+
+		HttpURLConnection notFoundHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			notFoundHttpURLConnection.getResponseCode());
+
+		notFoundHttpURLConnection.disconnect();
+
+		String issuer =
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+		String tokenEndpoint = issuer + "/o/oauth2/token";
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			_oAuthClientASLocalMetadataLocalService.
+				addOAuthClientASLocalMetadata(
+					null, TestPropsValues.getUserId(), issuer, issuer, issuer,
+					false, issuer,
+					new String[] {"authorization_code", "client_credentials"},
+					new String[] {"openid"}, new String[] {"public"},
+					tokenEndpoint, issuer);
+
+		HttpURLConnection disabledHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			disabledHttpURLConnection.getResponseCode());
+
+		disabledHttpURLConnection.disconnect();
+
+		_oAuthClientASLocalMetadataLocalService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+				issuer, issuer, issuer, true, issuer,
+				new String[] {"authorization_code", "client_credentials"},
+				new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
+				issuer);
+
+		HttpURLConnection getHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK,
+			getHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"*",
+			getHttpURLConnection.getHeaderField("Access-Control-Allow-Origin"));
+		Assert.assertEquals(
+			"public, max-age=300",
+			getHttpURLConnection.getHeaderField("Cache-Control"));
+
+		String getResponseBody = _readBody(getHttpURLConnection);
+
+		getHttpURLConnection.disconnect();
+
+		Assert.assertEquals(
+			oAuthClientASLocalMetadata.getOAuthASMetadataJSON(),
+			getResponseBody);
+
+		HttpURLConnection optionsHttpURLConnection = _openConnection(
+			hostRootURL, "OPTIONS");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NO_CONTENT,
+			optionsHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"*",
+			optionsHttpURLConnection.getHeaderField(
+				"Access-Control-Allow-Origin"));
+		Assert.assertEquals(
+			"GET, OPTIONS",
+			optionsHttpURLConnection.getHeaderField(
+				"Access-Control-Allow-Methods"));
+
+		optionsHttpURLConnection.disconnect();
+
+		HttpURLConnection postHttpURLConnection = _openConnection(
+			hostRootURL, "POST");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+			postHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"GET, OPTIONS",
+			postHttpURLConnection.getHeaderField("Allow"));
+
+		postHttpURLConnection.disconnect();
 	}
 
 	@Test
@@ -293,6 +398,41 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			HttpServletResponse.SC_OK, response.getResponseCode());
 		Assert.assertEquals(
 			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
+	}
+
+	private HttpURLConnection _openConnection(String urlString, String method)
+		throws Exception {
+
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)URI.create(urlString).toURL().openConnection();
+
+		httpURLConnection.setInstanceFollowRedirects(false);
+		httpURLConnection.setRequestMethod(method);
+
+		return httpURLConnection;
+	}
+
+	private String _readBody(HttpURLConnection httpURLConnection)
+		throws Exception {
+
+		InputStream inputStream = httpURLConnection.getInputStream();
+
+		if (inputStream == null) {
+			return null;
+		}
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+			StringBuilder stringBuilder = new StringBuilder();
+			String line;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuilder.append(line);
+			}
+
+			return stringBuilder.toString();
+		}
 	}
 
 	@Inject

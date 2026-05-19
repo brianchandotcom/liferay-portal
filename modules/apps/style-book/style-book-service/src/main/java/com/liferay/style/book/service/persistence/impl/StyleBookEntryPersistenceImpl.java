@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.service.persistence.impl;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
@@ -24,10 +25,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelper;
+import com.liferay.portal.kernel.service.persistence.impl.ArrayableFinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.CollectionPersistenceFinder;
 import com.liferay.portal.kernel.service.persistence.impl.FinderColumn;
 import com.liferay.portal.kernel.service.persistence.impl.UniquePersistenceFinder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -640,8 +643,8 @@ public class StyleBookEntryPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByGroupId.find(
-			finderCache, new Object[] {groupId}, start, end, orderByComparator,
-			useFinderCache);
+			finderCache, new Object[] {new long[] {groupId}}, start, end,
+			orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -657,8 +660,23 @@ public class StyleBookEntryPersistenceImpl
 			long groupId, OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		return _collectionPersistenceFinderByGroupId.findFirst(
-			finderCache, new Object[] {groupId}, orderByComparator);
+		StyleBookEntry styleBookEntry = fetchByGroupId_First(
+			groupId, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
 	}
 
 	/**
@@ -673,7 +691,33 @@ public class StyleBookEntryPersistenceImpl
 		long groupId, OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.fetchFirst(
-			finderCache, new Object[] {groupId}, orderByComparator);
+			finderCache, new Object[] {new long[] {groupId}},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByGroupId.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -684,7 +728,7 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public void removeByGroupId(long groupId) {
 		_collectionPersistenceFinderByGroupId.remove(
-			finderCache, new Object[] {groupId});
+			finderCache, new Object[] {new long[] {groupId}});
 	}
 
 	/**
@@ -696,7 +740,19 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public int countByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.count(
-			finderCache, new Object[] {groupId});
+			finderCache, new Object[] {new long[] {groupId}});
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByGroupId(long[] groupIds) {
+		return _collectionPersistenceFinderByGroupId.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds)});
 	}
 
 	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
@@ -724,7 +780,7 @@ public class StyleBookEntryPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByGroupId_Head.find(
-			finderCache, new Object[] {groupId, head}, start, end,
+			finderCache, new Object[] {new long[] {groupId}, head}, start, end,
 			orderByComparator, useFinderCache);
 	}
 
@@ -743,8 +799,26 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		return _collectionPersistenceFinderByGroupId_Head.findFirst(
-			finderCache, new Object[] {groupId, head}, orderByComparator);
+		StyleBookEntry styleBookEntry = fetchByGroupId_Head_First(
+			groupId, head, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", head=");
+		sb.append(head);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
 	}
 
 	/**
@@ -761,7 +835,34 @@ public class StyleBookEntryPersistenceImpl
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId_Head.fetchFirst(
-			finderCache, new Object[] {groupId, head}, orderByComparator);
+			finderCache, new Object[] {new long[] {groupId}, head},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and head = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param head the head
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByGroupId_Head(
+		long[] groupIds, boolean head, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByGroupId_Head.find(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), head},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -773,7 +874,7 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public void removeByGroupId_Head(long groupId, boolean head) {
 		_collectionPersistenceFinderByGroupId_Head.remove(
-			finderCache, new Object[] {groupId, head});
+			finderCache, new Object[] {new long[] {groupId}, head});
 	}
 
 	/**
@@ -786,7 +887,20 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public int countByGroupId_Head(long groupId, boolean head) {
 		return _collectionPersistenceFinderByGroupId_Head.count(
-			finderCache, new Object[] {groupId, head});
+			finderCache, new Object[] {new long[] {groupId}, head});
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = any &#63; and head = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param head the head
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByGroupId_Head(long[] groupIds, boolean head) {
+		return _collectionPersistenceFinderByGroupId_Head.count(
+			finderCache, new Object[] {ArrayUtil.sortedUnique(groupIds), head});
 	}
 
 	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
@@ -1661,8 +1775,8 @@ public class StyleBookEntryPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByG_T.find(
-			finderCache, new Object[] {groupId, themeId}, start, end,
-			orderByComparator, useFinderCache);
+			finderCache, new Object[] {new long[] {groupId}, themeId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1680,8 +1794,26 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		return _collectionPersistenceFinderByG_T.findFirst(
-			finderCache, new Object[] {groupId, themeId}, orderByComparator);
+		StyleBookEntry styleBookEntry = fetchByG_T_First(
+			groupId, themeId, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", themeId=");
+		sb.append(themeId);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
 	}
 
 	/**
@@ -1698,7 +1830,35 @@ public class StyleBookEntryPersistenceImpl
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T.fetchFirst(
-			finderCache, new Object[] {groupId, themeId}, orderByComparator);
+			finderCache, new Object[] {new long[] {groupId}, themeId},
+			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and themeId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param themeId the theme ID
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_T(
+		long[] groupIds, String themeId, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_T.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), themeId}, start,
+			end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1710,7 +1870,7 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public void removeByG_T(long groupId, String themeId) {
 		_collectionPersistenceFinderByG_T.remove(
-			finderCache, new Object[] {groupId, themeId});
+			finderCache, new Object[] {new long[] {groupId}, themeId});
 	}
 
 	/**
@@ -1723,7 +1883,21 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public int countByG_T(long groupId, String themeId) {
 		return _collectionPersistenceFinderByG_T.count(
-			finderCache, new Object[] {groupId, themeId});
+			finderCache, new Object[] {new long[] {groupId}, themeId});
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = any &#63; and themeId = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param themeId the theme ID
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByG_T(long[] groupIds, String themeId) {
+		return _collectionPersistenceFinderByG_T.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), themeId});
 	}
 
 	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
@@ -1752,8 +1926,8 @@ public class StyleBookEntryPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByG_T_Head.find(
-			finderCache, new Object[] {groupId, themeId, head}, start, end,
-			orderByComparator, useFinderCache);
+			finderCache, new Object[] {new long[] {groupId}, themeId, head},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1772,9 +1946,29 @@ public class StyleBookEntryPersistenceImpl
 			OrderByComparator<StyleBookEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		return _collectionPersistenceFinderByG_T_Head.findFirst(
-			finderCache, new Object[] {groupId, themeId, head},
-			orderByComparator);
+		StyleBookEntry styleBookEntry = fetchByG_T_Head_First(
+			groupId, themeId, head, orderByComparator);
+
+		if (styleBookEntry != null) {
+			return styleBookEntry;
+		}
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("groupId=");
+		sb.append(groupId);
+
+		sb.append(", themeId=");
+		sb.append(themeId);
+
+		sb.append(", head=");
+		sb.append(head);
+
+		sb.append("}");
+
+		throw new NoSuchEntryException(sb.toString());
 	}
 
 	/**
@@ -1792,8 +1986,36 @@ public class StyleBookEntryPersistenceImpl
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_Head.fetchFirst(
-			finderCache, new Object[] {groupId, themeId, head},
+			finderCache, new Object[] {new long[] {groupId}, themeId, head},
 			orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the style book entries where groupId = &#63; and themeId = &#63; and head = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param themeId the theme ID
+	 * @param head the head
+	 * @param start the lower bound of the range of style book entries
+	 * @param end the upper bound of the range of style book entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching style book entries
+	 */
+	@Override
+	public List<StyleBookEntry> findByG_T_Head(
+		long[] groupIds, String themeId, boolean head, int start, int end,
+		OrderByComparator<StyleBookEntry> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByG_T_Head.find(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), themeId, head},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1806,7 +2028,7 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public void removeByG_T_Head(long groupId, String themeId, boolean head) {
 		_collectionPersistenceFinderByG_T_Head.remove(
-			finderCache, new Object[] {groupId, themeId, head});
+			finderCache, new Object[] {new long[] {groupId}, themeId, head});
 	}
 
 	/**
@@ -1820,7 +2042,22 @@ public class StyleBookEntryPersistenceImpl
 	@Override
 	public int countByG_T_Head(long groupId, String themeId, boolean head) {
 		return _collectionPersistenceFinderByG_T_Head.count(
-			finderCache, new Object[] {groupId, themeId, head});
+			finderCache, new Object[] {new long[] {groupId}, themeId, head});
+	}
+
+	/**
+	 * Returns the number of style book entries where groupId = any &#63; and themeId = &#63; and head = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param themeId the theme ID
+	 * @param head the head
+	 * @return the number of matching style book entries
+	 */
+	@Override
+	public int countByG_T_Head(long[] groupIds, String themeId, boolean head) {
+		return _collectionPersistenceFinderByG_T_Head.count(
+			finderCache,
+			new Object[] {ArrayUtil.sortedUnique(groupIds), themeId, head});
 	}
 
 	private CollectionPersistenceFinder<StyleBookEntry, NoSuchEntryException>
@@ -2660,8 +2897,8 @@ public class StyleBookEntryPersistenceImpl
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
-				"styleBookEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
-				"=", true, true, StyleBookEntry::getUuid));
+				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
+				true, StyleBookEntry::getUuid));
 
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
@@ -2692,9 +2929,8 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", "uuid_",
-					FinderColumn.Type.STRING, "=", true, true,
-					StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -2722,9 +2958,8 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", "uuid_",
-					FinderColumn.Type.STRING, "=", true, true,
-					StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getGroupId));
@@ -2742,8 +2977,8 @@ public class StyleBookEntryPersistenceImpl
 				StyleBookEntry::getGroupId, StyleBookEntry::isHead),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, "",
 			new FinderColumn<>(
-				"styleBookEntry.", "uuid", "uuid_", FinderColumn.Type.STRING,
-				"=", true, true, StyleBookEntry::getUuid),
+				"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=", true,
+				true, StyleBookEntry::getUuid),
 			new FinderColumn<>(
 				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, StyleBookEntry::getGroupId),
@@ -2774,9 +3009,8 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", "uuid_",
-					FinderColumn.Type.STRING, "=", true, true,
-					StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId));
@@ -2815,9 +3049,8 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
-					"styleBookEntry.", "uuid", "uuid_",
-					FinderColumn.Type.STRING, "=", true, true,
-					StyleBookEntry::getUuid),
+					"styleBookEntry.", "uuid", FinderColumn.Type.STRING, "=",
+					true, true, StyleBookEntry::getUuid),
 				new FinderColumn<>(
 					"styleBookEntry.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, StyleBookEntry::getCompanyId),
@@ -2841,15 +3074,15 @@ public class StyleBookEntryPersistenceImpl
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, true),
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
 					new String[] {Long.class.getName()},
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, true, StyleBookEntry::getGroupId));
+					false, true, true, StyleBookEntry::getGroupId));
 
 		_collectionPersistenceFinderByGroupId_Head =
 			new CollectionPersistenceFinder<>(
@@ -2871,7 +3104,7 @@ public class StyleBookEntryPersistenceImpl
 					},
 					new String[] {"groupId", "head"}, true),
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 					"countByGroupId_Head",
 					new String[] {
 						Long.class.getName(), Boolean.class.getName()
@@ -2880,9 +3113,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, true, StyleBookEntry::getGroupId),
+					false, true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 					true, true, StyleBookEntry::isHead));
@@ -3159,14 +3392,14 @@ public class StyleBookEntryPersistenceImpl
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"groupId", "themeId"}, 0, 2, true, null),
 			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
 				new String[] {Long.class.getName(), String.class.getName()},
 				new String[] {"groupId", "themeId"}, 0, 2, false, null),
 			_SQL_SELECT_STYLEBOOKENTRY_WHERE, _SQL_COUNT_STYLEBOOKENTRY_WHERE,
 			StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-			new FinderColumn<>(
-				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
-				true, StyleBookEntry::getGroupId),
+			new ArrayableFinderColumn<>(
+				"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
+				false, true, true, StyleBookEntry::getGroupId),
 			new FinderColumn<>(
 				"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntry::getThemeId));
@@ -3192,8 +3425,7 @@ public class StyleBookEntryPersistenceImpl
 					new String[] {"groupId", "themeId", "head"}, 0, 2, true,
 					null),
 				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByG_T_Head",
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_Head",
 					new String[] {
 						Long.class.getName(), String.class.getName(),
 						Boolean.class.getName()
@@ -3203,9 +3435,9 @@ public class StyleBookEntryPersistenceImpl
 				_SQL_SELECT_STYLEBOOKENTRY_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRY_WHERE,
 				StyleBookEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"styleBookEntry.", "groupId", FinderColumn.Type.LONG, "=",
-					true, true, StyleBookEntry::getGroupId),
+					false, true, true, StyleBookEntry::getGroupId),
 				new FinderColumn<>(
 					"styleBookEntry.", "themeId", FinderColumn.Type.STRING, "=",
 					true, true, StyleBookEntry::getThemeId),
@@ -3444,4 +3676,4 @@ public class StyleBookEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1028648368
+// LIFERAY-SERVICE-BUILDER-HASH:1514538721

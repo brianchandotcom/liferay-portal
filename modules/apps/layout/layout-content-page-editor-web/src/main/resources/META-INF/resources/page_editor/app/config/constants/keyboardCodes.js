@@ -17,6 +17,8 @@ export const CONTROL_KEY_CODE = 'Control';
 
 export const C_KEY_CODE = 'KeyC';
 
+export const DELETE_KEY_CODE = 'Delete';
+
 export const D_KEY_CODE = 'KeyD';
 
 export const END_KEY_CODE = 'End';

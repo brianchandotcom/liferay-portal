@@ -16,10 +16,11 @@ function dataRemoteApiHelpersTest(
 		remoteApiHelpers: DataApiHelpers;
 	}>({
 		remoteApiHelpers: async ({remotePage}, use) => {
-			const remoteUrl = liferayConfig.environment.baseUrl.replace(
-				'8080',
-				port
-			);
+			const remoteBaseUrl = new URL(liferayConfig.environment.baseUrl);
+
+			remoteBaseUrl.port = port;
+
+			const remoteUrl = remoteBaseUrl.origin;
 
 			const dataApiHelpers = new DataApiHelpers(remotePage, remoteUrl);
 

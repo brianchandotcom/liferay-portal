@@ -480,7 +480,7 @@ test(
 		const html = `
 	    <html>
 	      <body>
-		<form action="http://localhost:8080/o/blogs-web/blogs/entry_cover_image_caption.jsp"
+		<form action="${liferayConfig.environment.baseUrl}/o/blogs-web/blogs/entry_cover_image_caption.jsp"
 		      method="POST" enctype="multipart/form-data">
 		  <input type="hidden" name="coverImageCaption" value="x" />
 		  <input type="hidden" name="coverImageURL" value="https://wwww.liferay.com" />

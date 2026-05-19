@@ -219,10 +219,8 @@ test(
 			);
 
 			try {
-				const {port} = new URL(liferayConfig.environment.baseUrl);
-
 				await registrationPage.goto(
-					`http://www.able.com:${port || '8080'}`
+					`http://www.able.com:${liferayConfig.environment.port}`
 				);
 
 				await userRegistrationPage.signInButton.click();

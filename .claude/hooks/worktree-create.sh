@@ -376,6 +376,17 @@ function _set_property {
 	echo "${key}=${value}" >> "${file}"
 }
 
+function _set_playwright_port {
+	local file="${WORKTREE_DIR}/modules/test/playwright/.env.local"
+	local http_port=$((8080 + OFFSET))
+
+	mkdir -p "$(dirname "${file}")"
+
+	_atomic_write "${file}" <<EOF
+PORTAL_URL=http://localhost:${http_port}
+EOF
+}
+
 function _set_test_integration_port {
 	local file="${WORKTREE_DIR}/.gradle/init.d/worktree-ports.gradle"
 
@@ -461,6 +472,7 @@ function main {
 	_set_glowroot_port
 	_set_gogo_shell_port
 	_set_gradle_paths
+	_set_playwright_port
 	_set_portal_home
 	_set_portal_http_address
 	_set_test_integration_port

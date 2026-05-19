@@ -18,6 +18,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {scriptManagementPagesTest} from '../../../fixtures/scriptManagementPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {
@@ -556,7 +557,9 @@ test.describe('Object Action CRUD', () => {
 			await editObjectActionPage.inputThenCombo.click();
 			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
+			await iframe
+				.getByLabel('URL')
+				.fill(liferayConfig.environment.baseUrl);
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
@@ -913,7 +916,9 @@ test.describe('Object Action Conditions and Triggers', () => {
 			await editObjectActionPage.inputThenCombo.click();
 			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
+			await iframe
+				.getByLabel('URL')
+				.fill(liferayConfig.environment.baseUrl);
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
@@ -1174,7 +1179,7 @@ test.describe('Object Action Conditions and Triggers', () => {
 					objectActionExecutorKey: 'webhook',
 					objectActionTriggerKey: 'onAfterAdd',
 					parameters: {
-						url: 'http://localhost:8080',
+						url: liferayConfig.environment.baseUrl,
 					},
 				}
 			);
@@ -1814,7 +1819,9 @@ test.describe('Object Action Required Field Validation', () => {
 			await editObjectActionPage.inputThenCombo.click();
 			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
+			await iframe
+				.getByLabel('URL')
+				.fill(liferayConfig.environment.baseUrl);
 
 			await iframe.getByRole('tab', {name: 'Basic Info'}).click();
 
@@ -1892,7 +1899,9 @@ test.describe('Object Action Required Field Validation', () => {
 			await editObjectActionPage.inputThenCombo.click();
 			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
+			await iframe
+				.getByLabel('URL')
+				.fill(liferayConfig.environment.baseUrl);
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 
@@ -1984,7 +1993,9 @@ test.describe('Object Action Required Field Validation', () => {
 			await editObjectActionPage.inputThenCombo.click();
 			await iframe.getByRole('option', {name: 'Webhook'}).click();
 
-			await iframe.getByLabel('URL').fill('http://localhost:8080');
+			await iframe
+				.getByLabel('URL')
+				.fill(liferayConfig.environment.baseUrl);
 
 			await iframe.getByRole('button', {name: 'Save'}).click();
 

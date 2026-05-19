@@ -57,7 +57,7 @@ test(
 
 		await page.goto(
 			href.replace(
-				'http://localhost:8080',
+				liferayConfig.environment.baseUrl,
 				faroConfig.environment.baseUrl
 			)
 		);

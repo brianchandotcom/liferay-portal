@@ -19,13 +19,13 @@ import {waitForAlert} from '../../../../utils/waitForAlert';
 import {connectSpAndIdp} from './samlProviderConnectionUtil';
 
 export const DEFAULT_IDP_NAME = 'www.able.com';
-export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:8080`;
+export const DEFAULT_IDP_URL = `http://${DEFAULT_IDP_NAME}:${liferayConfig.environment.port}`;
 export const DEFAULT_SP_NAME = 'www.baker.com';
-export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:8080`;
+export const DEFAULT_SP_URL = `http://${DEFAULT_SP_NAME}:${liferayConfig.environment.port}`;
 export const SECONDARY_IDP_NAME = 'www.charlie.com';
-export const SECONDARY_IDP_URL = `http://${SECONDARY_IDP_NAME}:8080`;
+export const SECONDARY_IDP_URL = `http://${SECONDARY_IDP_NAME}:${liferayConfig.environment.port}`;
 export const SECONDARY_SP_NAME = 'www.dog.com';
-export const SECONDARY_SP_URL = `http://${SECONDARY_SP_NAME}:8080`;
+export const SECONDARY_SP_URL = `http://${SECONDARY_SP_NAME}:${liferayConfig.environment.port}`;
 export const deleteAfterTestProviderConnections = new Set<string>();
 export const deleteAfterTestVirtualInstances = new Set<string>();
 
@@ -75,7 +75,7 @@ export async function createUser(
 ) {
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${instanceName}:8080`;
+	liferayConfig.environment.baseUrl = `http://${instanceName}:${liferayConfig.environment.port}`;
 
 	// Create apiHelper implementation for the given instance
 
@@ -126,7 +126,7 @@ export async function configureVirtualInstanceForSaml(
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${entityId}:8080`;
+	liferayConfig.environment.baseUrl = `http://${entityId}:${liferayConfig.environment.port}`;
 
 	const newPage = await performSamlSafeLogin(browser, entityId);
 
@@ -170,7 +170,7 @@ export async function performSamlSafeLogin(
 	screenName = 'test'
 ) {
 	const page = await browser.newPage({
-		baseURL: `http://${domain}:8080`,
+		baseURL: `http://${domain}:${liferayConfig.environment.port}`,
 	});
 
 	await performLogin(page, screenName, baseUrl, mailId, rememberMe);

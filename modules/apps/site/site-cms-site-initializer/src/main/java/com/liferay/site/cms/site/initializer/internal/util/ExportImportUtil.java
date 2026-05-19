@@ -169,6 +169,8 @@ public class ExportImportUtil {
 			return null;
 		}
 
+		String title = LanguageUtil.get(httpServletRequest, titleKey);
+
 		return JSONUtil.put(
 			"href",
 			PortletURLBuilder.create(
@@ -181,11 +183,11 @@ public class ExportImportUtil {
 				portletResource
 			).buildString()
 		).put(
-			"label", LanguageUtil.get(httpServletRequest, titleKey)
+			"label", title
 		).put(
 			"symbolLeft", symbolLeft
 		).put(
-			"title", LanguageUtil.get(httpServletRequest, titleKey)
+			"title", title
 		);
 	}
 

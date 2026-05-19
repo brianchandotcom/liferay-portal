@@ -84,6 +84,8 @@ jobs:
                         --timeout 10m \
                         --wait
                 working-directory: ./cloud/helm/default
+            -   name: Run Helm test
+                run: helm test liferay --timeout 6m
             -   if: failure()
                 name: Collect cluster diagnostics
                 run: |

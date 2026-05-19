@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 
@@ -77,14 +78,15 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 		PersistedModel persistedModel = null;
 
 		if (Objects.equals(type, JournalArticle.class.getName())) {
-			persistedModel = _journalArticleLocalService.getLatestArticle(
+			persistedModel = _journalArticleLocalService.fetchLatestArticle(
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.getProperty("classPK")));
 		}
 		else if (Objects.equals(type, KBArticle.class.getName())) {
-			persistedModel = _kbArticleLocalService.getLatestKBArticle(
+			persistedModel = _kbArticleLocalService.fetchLatestKBArticle(
 				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.getProperty("classPK")));
+					typeSettingsUnicodeProperties.getProperty("classPK")),
+				WorkflowConstants.STATUS_ANY);
 		}
 		else {
 			if (className.equals(FileEntry.class.getName())) {
@@ -98,7 +100,7 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 				PersistedModelLocalServiceRegistryUtil.
 					getPersistedModelLocalService(className);
 
-			persistedModel = persistedModelLocalService.getPersistedModel(
+			persistedModel = persistedModelLocalService.fetchPersistedModel(
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.getProperty("classPK")));
 		}

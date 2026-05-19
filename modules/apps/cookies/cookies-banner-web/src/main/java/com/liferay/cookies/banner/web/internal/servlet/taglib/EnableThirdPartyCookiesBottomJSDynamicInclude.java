@@ -65,8 +65,8 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 			return;
 		}
 
-		if (!cookiesPreferenceHandlingConfiguration.enabled() ||
-			!cookiesPreferenceHandlingConfiguration.active()) {
+		if (!cookiesPreferenceHandlingConfiguration.active() ||
+			!cookiesPreferenceHandlingConfiguration.enabled()) {
 
 			return;
 		}

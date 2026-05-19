@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -266,6 +267,14 @@ public class CPDefinitionSystemObjectDefinitionManager
 
 		return productResource.getProductsPage(
 			search, filter, pagination, sorts);
+	}
+
+	@Override
+	public PersistedModel getPersistedModel(long primaryKey)
+		throws PortalException {
+
+		return _cpDefinitionLocalService.getCPDefinitionByCProductId(
+			primaryKey);
 	}
 
 	@Override

@@ -226,7 +226,11 @@ public class ObjectDefinitionUtil {
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
 		).put(
+			"MCPServerDataMask", "/mcp/server-data-masks"
+		).put(
 			"MCPServerProfile", "/mcp/server-profiles"
+		).put(
+			"MCPServerProfileDataMask", "/mcp/server-profile-data-masks"
 		).put(
 			"MCPServerPrompt", "/mcp/server-prompts"
 		).put(

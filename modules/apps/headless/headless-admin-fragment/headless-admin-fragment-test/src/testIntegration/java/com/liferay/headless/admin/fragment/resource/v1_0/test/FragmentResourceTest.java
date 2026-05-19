@@ -221,6 +221,17 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		_testPostSiteFragmentFragmentSetNonexisting();
 		_testPostSiteFragmentFragmentSetNonexistingProblemException();
 		_testPostSiteFragmentFragmentSetNullProblemException();
+		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCode();
+		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeAndFileBase64();
+		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeEmptyAndFileBase64();
+		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeNullAndFileBase64();
+		_testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeNullAndURL();
+		_testPostSiteFragmentThumbnailURLReferenceFileBase64();
+		_testPostSiteFragmentThumbnailURLReferenceFileBase64AndURL();
+		_testPostSiteFragmentThumbnailURLReferenceNonexistingProblemException();
+		_testPostSiteFragmentThumbnailURLReferenceURL();
+		_testPostSiteFragmentThumbnailURLReferenceURLUnreachableProblemException();
+		_testPostSiteFragmentThumbnailURLReferenceURLUnsupportedProtocolProblemException();
 	}
 
 	@Override
@@ -568,6 +579,41 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 			testGroup.getExternalReferenceCode(), fragment);
 	}
 
+	private Fragment _postSiteFragment(Fragment fragment, String nestedFields)
+		throws Exception {
+
+		FragmentResource fragmentResource = _getFragmentResource(nestedFields);
+
+		return fragmentResource.postSiteFragment(
+			testGroup.getExternalReferenceCode(), fragment);
+	}
+
+	private Fragment _postSiteFragmentAndAssertThumbnailURLReference(
+			byte[] expectedBytes, String expectedExternalReferenceCode,
+			ThumbnailURLReference thumbnailURLReference)
+		throws Exception {
+
+		Fragment fragment = randomFragment();
+
+		fragment.setThumbnailURLReference(thumbnailURLReference);
+
+		Fragment postFragment = _postSiteFragment(
+			fragment, "thumbnailURLReference");
+
+		if (expectedExternalReferenceCode == null) {
+			ThumbnailURLReference postThumbnailURLReference =
+				postFragment.getThumbnailURLReference();
+
+			expectedExternalReferenceCode =
+				postThumbnailURLReference.getExternalReferenceCode();
+		}
+
+		_assertThumbnailURLReference(
+			expectedBytes, expectedExternalReferenceCode, postFragment);
+
+		return postFragment;
+	}
+
 	private Fragment _postSiteFragmentSetFragment(Fragment fragment)
 		throws Exception {
 
@@ -761,6 +807,34 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		throws Exception {
 
 		_testPostFragmentApproved(false, false, postFragmentUnsafeFunction);
+	}
+
+	private void _testPostFragmentThumbnailURLReferenceProblemException(
+			String expectedTitle, String externalReferenceCode, String url)
+		throws Exception {
+
+		Fragment fragment = randomFragment();
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		thumbnailURLReference.setUrl(url);
+
+		fragment.setThumbnailURLReference(thumbnailURLReference);
+
+		try {
+			_postSiteFragment(fragment);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(expectedTitle, problem.getTitle());
+		}
 	}
 
 	private void _testPostSiteFragmentApproved() throws Exception {
@@ -981,6 +1055,158 @@ public class FragmentResourceTest extends BaseFragmentResourceTestCase {
 		Fragment postFragment = _postSiteFragmentSetFragment(fragment);
 
 		_assertFragmentSet(_fragmentCollection, postFragment.getFragmentSet());
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceExternalReferenceCode()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+
+		String externalReferenceCode = fileEntry.getExternalReferenceCode();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeAndFileBase64()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		FileEntry fileEntry = _addPortletFileEntry("thumbnail1.png");
+
+		String externalReferenceCode = fileEntry.getExternalReferenceCode();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		thumbnailURLReference.setFileBase64(_thumbnail2Base64);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeEmptyAndFileBase64()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		thumbnailURLReference.setExternalReferenceCode(StringPool.BLANK);
+
+		thumbnailURLReference.setFileBase64(_thumbnail1Base64);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, null, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeNullAndFileBase64()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		thumbnailURLReference.setFileBase64(_thumbnail1Base64);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, null, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceExternalReferenceCodeNullAndURL()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		thumbnailURLReference.setUrl(_thumbnail1URL);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, null, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceFileBase64()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		thumbnailURLReference.setFileBase64(_thumbnail1Base64);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceFileBase64AndURL()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		thumbnailURLReference.setFileBase64(_thumbnail1Base64);
+
+		thumbnailURLReference.setUrl(_thumbnail2URL);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceNonexistingProblemException()
+		throws Exception {
+
+		_testPostFragmentThumbnailURLReferenceProblemException(
+			"Unable to resolve file", RandomTestUtil.randomString(), null);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceURL()
+		throws Exception {
+
+		ThumbnailURLReference thumbnailURLReference =
+			new ThumbnailURLReference();
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		thumbnailURLReference.setExternalReferenceCode(externalReferenceCode);
+
+		thumbnailURLReference.setUrl(_thumbnail1URL);
+
+		_postSiteFragmentAndAssertThumbnailURLReference(
+			_thumbnail1Bytes, externalReferenceCode, thumbnailURLReference);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceURLUnreachableProblemException()
+		throws Exception {
+
+		String url =
+			"http://invalid.example.test/" + RandomTestUtil.randomString();
+
+		_testPostFragmentThumbnailURLReferenceProblemException(
+			"Unable to download file from " + url,
+			RandomTestUtil.randomString(), url);
+	}
+
+	private void _testPostSiteFragmentThumbnailURLReferenceURLUnsupportedProtocolProblemException()
+		throws Exception {
+
+		String url =
+			"ftp://invalid.example.test/" + RandomTestUtil.randomString();
+
+		_testPostFragmentThumbnailURLReferenceProblemException(
+			"Unable to download file from " + url +
+				" because of unsupported protocol ftp",
+			RandomTestUtil.randomString(), url);
 	}
 
 	private void _testPutFragment(

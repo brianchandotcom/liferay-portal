@@ -127,7 +127,7 @@ components:
             properties:
                 id:
                     description:
-                        "Channel id."
+                        "Channel id. Use this with `getWorkspaceGroupChannel` to fetch the channel directly."
                     readOnly: true
                     type: string
                 name:
@@ -156,7 +156,8 @@ components:
                     additionalProperties:
                         type: string
                     description:
-                        "Free-form event properties as a key-value map."
+                        "Free-form event properties as a key-value map. Available keys depend on the event `name` (e.g.
+                        a `pageViewed` event carries different attributes than `formSubmitted`)."
                     readOnly: true
                     type: object
                 canonicalUrl:
@@ -172,12 +173,14 @@ components:
                     type: string
                 individualId:
                     description:
-                        "Identifier of known individuals. Null for anonymous individuals."
+                        "Identifier of the individual that emitted the event. Null for anonymous individuals. Use with
+                        `getWorkspaceGroupIndividual` to fetch the individual."
                     readOnly: true
                     type: string
                 name:
                     description:
-                        "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.)."
+                        "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names
+                        varies per channel and per integration."
                     readOnly: true
                     type: string
                 pageDescription:
@@ -297,7 +300,8 @@ components:
                     type: string
                 value:
                     description:
-                        "Attribute value. Use with `fieldType` to convert to the appropriate type."
+                        "Attribute value, always serialized as a string. Use `fieldType` to interpret/parse it as the
+                        underlying logical type."
                     readOnly: true
                     type: string
             type: object
@@ -429,7 +433,7 @@ components:
             properties:
                 assetId:
                     description:
-                        "The canonical URL of the page."
+                        "Identifier of the tracked page (the page's canonical URL)."
                     readOnly: true
                     type: string
                 assetTitle:
@@ -532,8 +536,8 @@ components:
 info:
     description:
         "Read-only headless REST API for Liferay Analytics Cloud. Exposes events, pages, and asset-summary metrics for
-        use as MCP tools and external integrations. All endpoints are scoped to a provisioned Analytics Cloud
-        workspace.. A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
+        use as MCP tools and external integrations. All endpoints are scoped to a provisioned Analytics Cloud workspace.
+        A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'com.liferay.osb.faro.rest.client', and version '1.0.0'."
     license:
         name: Apache 2.0
@@ -784,7 +788,7 @@ paths:
                         type: integer
                 -   in: path
                     description:
-                        "Channel id."
+                        "ID of the channel to fetch."
                     name: channelId
                     required: true
                     schema:
@@ -1041,7 +1045,7 @@ paths:
                         type: integer
                 -   in: path
                     description:
-                        "Individual segment id."
+                        "ID of the individual segment to fetch."
                     name: individualSegmentId
                     required: true
                     schema:
@@ -1210,7 +1214,7 @@ paths:
                         type: integer
                 -   in: path
                     description:
-                        "Individual id."
+                        "ID of the individual to fetch."
                     name: individualId
                     required: true
                     schema:

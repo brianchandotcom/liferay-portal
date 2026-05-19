@@ -9,16 +9,12 @@ import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.exception.NoSuchEntryException;
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
@@ -33,14 +29,8 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
@@ -167,80 +157,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		}
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
-		}
-	}
-
-	private void _addAssetVocabulariesByGroupRels(
-		List<AssetVocabulary> assetVocabularies, long classNameId,
-		long classTypePK, long groupId) {
-
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				_assetVocabularyGroupRelLocalService.
-					getAssetVocabularyGroupRelsByGroupId(groupId)) {
-
-			AssetVocabulary assetVocabulary =
-				_assetVocabularyLocalService.fetchAssetVocabulary(
-					assetVocabularyGroupRel.getVocabularyId());
-
-			if ((assetVocabulary == null) ||
-				!assetVocabulary.isAssociatedToClassNameIdAndClassTypePK(
-					classNameId, classTypePK) ||
-				assetVocabularies.contains(assetVocabulary)) {
-
-				continue;
-			}
-
-			assetVocabularies.add(assetVocabulary);
-		}
-	}
-
-	private void _addCMSAssetVocabularies(
-		List<AssetVocabulary> assetVocabularies, long[] groupsIds,
-		String itemClassName, long itemClassTypeId, long scopeGroupId) {
-
-		Group scopeGroup = _groupLocalService.fetchGroup(scopeGroupId);
-
-		if ((scopeGroup == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				scopeGroup.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
-		long classNameId = _classNameLocalService.getClassNameId(itemClassName);
-
-		long classTypePK = AssetCategoryConstants.ALL_CLASS_TYPE_PK;
-
-		if (itemClassTypeId > 0) {
-			classTypePK = itemClassTypeId;
-		}
-
-		boolean hasConnectedSpace = false;
-
-		for (long groupId : groupsIds) {
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group == null) {
-				continue;
-			}
-
-			int depotEntryType = GetterUtil.getInteger(
-				group.getTypeSettingsProperty("depotEntryType"));
-
-			if (depotEntryType != DepotConstants.TYPE_SPACE) {
-				continue;
-			}
-
-			hasConnectedSpace = true;
-
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, classNameId, classTypePK, groupId);
-		}
-
-		if (hasConnectedSpace) {
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, classNameId, classTypePK,
-				GroupConstants.ANY_PARENT_GROUP_ID);
 		}
 	}
 
@@ -398,25 +314,24 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			throw new RuntimeException(portalException);
 		}
 
-		List<AssetVocabulary> assetVocabularies;
-
 		if (itemClassTypeId > 0) {
-			assetVocabularies = new ArrayList<>(
+			List<AssetVocabulary> groupsAssetVocabularies =
 				_assetVocabularyLocalService.getGroupsVocabularies(
-					groupsIds, itemClassName, itemClassTypeId));
-		}
-		else {
-			assetVocabularies = new ArrayList<>(
-				_assetVocabularyLocalService.getGroupsVocabularies(
-					groupsIds, itemClassName));
+					groupsIds, itemClassName, itemClassTypeId);
+
+			return ListUtil.filter(
+				groupsAssetVocabularies,
+				assetVocabulary ->
+					!(assetVocabulary.getVisibilityType() ==
+						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		}
 
-		_addCMSAssetVocabularies(
-			assetVocabularies, groupsIds, itemClassName, itemClassTypeId,
-			scopeGroupId);
+		List<AssetVocabulary> groupsAssetVocabularies =
+			_assetVocabularyLocalService.getGroupsVocabularies(
+				groupsIds, itemClassName);
 
 		return ListUtil.filter(
-			assetVocabularies,
+			groupsAssetVocabularies,
 			assetVocabulary ->
 				!(assetVocabulary.getVisibilityType() ==
 					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
@@ -429,10 +344,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetEntryInfoItemFieldSetProviderImpl.class);
-
-	@Reference
-	private AssetVocabularyGroupRelLocalService
-		_assetVocabularyGroupRelLocalService;
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
@@ -450,12 +361,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		).multivalued(
 			true
 		).build();
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

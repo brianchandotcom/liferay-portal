@@ -2970,13 +2970,8 @@ public class DefaultObjectEntryManagerImpl
 			_systemObjectDefinitionManagerRegistry.
 				getSystemObjectDefinitionManager(objectDefinition.getName());
 
-		PersistedModelLocalService persistedModelLocalService =
-			PersistedModelLocalServiceRegistryUtil.
-				getPersistedModelLocalService(
-					systemObjectDefinitionManager.getModelClassName());
-
 		PersistedModel persistedModel =
-			persistedModelLocalService.getPersistedModel(objectEntryId);
+			systemObjectDefinitionManager.getPersistedModel(objectEntryId);
 
 		if (Objects.equals(
 				systemObjectDefinitionManager.getScope(),

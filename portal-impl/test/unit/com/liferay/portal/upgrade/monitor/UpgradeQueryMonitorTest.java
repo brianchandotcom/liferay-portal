@@ -243,7 +243,7 @@ public class UpgradeQueryMonitorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Long-running query \"", query1, "\" with ID ", id1,
+				"Long running query \"", query1, "\" with ID ", id1,
 				" in schema \"", schema1,
 				"\" has been running for 630 seconds"),
 			logEntry1.getMessage());
@@ -252,7 +252,7 @@ public class UpgradeQueryMonitorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Long-running query \"", query2, "\" with ID ", id2,
+				"Long running query \"", query2, "\" with ID ", id2,
 				" in schema \"", schema2,
 				"\" has been running for 720 seconds"),
 			logEntry2.getMessage());
@@ -261,7 +261,7 @@ public class UpgradeQueryMonitorTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"Long-running query \"", query3, "\" with ID ", id3,
+				"Long running query \"", query3, "\" with ID ", id3,
 				" in schema \"", schema3,
 				"\" has been running for 810 seconds"),
 			logEntry3.getMessage());

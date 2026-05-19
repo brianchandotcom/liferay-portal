@@ -131,7 +131,7 @@ public final class UpgradeQueryMonitor {
 			for (DB.QueryInfo longRunningQueryInfo : longRunningQueryInfos) {
 				_log.info(
 					StringBundler.concat(
-						"Long-running query \"",
+						"Long running query \"",
 						longRunningQueryInfo.getQuery(), "\" with ID ",
 						longRunningQueryInfo.getId(),
 						_getSchemaClause(

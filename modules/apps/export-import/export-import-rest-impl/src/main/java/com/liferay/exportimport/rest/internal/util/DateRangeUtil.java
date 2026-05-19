@@ -24,8 +24,8 @@ public class DateRangeUtil {
 		if (ExportImportDateUtil.RANGE_DATE_RANGE.equals(range)) {
 			if ((startDate == null) || (endDate == null)) {
 				throw new BadRequestException(
-					"startDate and endDate are required when range is \"" +
-						ExportImportDateUtil.RANGE_DATE_RANGE + "\"");
+					"A start date and an end date are required for a date " +
+						"range");
 			}
 
 			return new DateRange(startDate, endDate);
@@ -34,8 +34,7 @@ public class DateRangeUtil {
 		if (ExportImportDateUtil.RANGE_LAST.equals(range)) {
 			if (last == null) {
 				throw new BadRequestException(
-					"last is required when range is \"" +
-						ExportImportDateUtil.RANGE_LAST + "\"");
+					"A number of hours is required for a relative date range");
 			}
 
 			Date now = new Date();

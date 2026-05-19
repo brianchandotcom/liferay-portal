@@ -33,6 +33,8 @@ public class ExportImportReportEntryKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		queryHelper.addSearchTerm(
+			booleanQuery, searchContext, "classExternalReferenceCode", false);
+		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "errorMessage", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "errorStacktrace", false);

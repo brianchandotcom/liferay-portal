@@ -106,7 +106,10 @@ public class ExportProcessResourceTest
 	}
 
 	@After
-	public void tearDownExportProcessResourceTest() throws Exception {
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		for (long backgroundTaskId : _backgroundTaskIds) {
 			BackgroundTask backgroundTask =
 				_backgroundTaskLocalService.fetchBackgroundTask(

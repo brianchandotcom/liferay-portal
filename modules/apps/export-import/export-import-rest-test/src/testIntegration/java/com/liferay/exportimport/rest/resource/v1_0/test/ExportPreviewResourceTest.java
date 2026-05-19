@@ -84,7 +84,10 @@ public class ExportPreviewResourceTest
 	}
 
 	@After
-	public void tearDownObjectDefinitions() throws Exception {
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_companyObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(

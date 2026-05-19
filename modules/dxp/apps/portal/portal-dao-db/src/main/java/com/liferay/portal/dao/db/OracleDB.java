@@ -205,10 +205,13 @@ public class OracleDB extends BaseDB {
 		}
 		catch (SQLException sqlException) {
 			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
-				throw new RuntimeException(
-					"the database user lacks SELECT on sys.v_$session and " +
-						"sys.v_$sql. Grant SELECT on sys.v_$session and " +
-							"sys.v_$sql, SELECT_CATALOG_ROLE, or DBA.",
+				throw new SQLException(
+					StringBundler.concat(
+						"The database user lacks select privileges on ",
+						"\"sys.v_$session\" and \"sys.v_$sql\". To resolve ",
+						"this, grant the user select privileges on ",
+						"\"sys.v_$session\" and \"sys.v_$sql\", or assign ",
+						"them the \"SELECT_CATALOG_ROLE\" or \"DBA\" role."),
 					sqlException);
 			}
 

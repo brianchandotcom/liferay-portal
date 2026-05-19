@@ -1,0 +1,27 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    test-cloud-helm-chart-smoke:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Create kind cluster
+                uses: helm/kind-action@v1
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+            -   name: Validate Helm chart via server-side dry-run
+                run: helm install liferay . --dry-run=server
+                working-directory: ./cloud/helm/default
+on:
+    pull_request:
+        paths:
+            -   .github/workflows/ci-test-cloud-helm-chart-smoke.yaml
+            -   cloud/helm/default/templates/**
+    push:
+        branches:
+            -   master
+        paths:
+            -   .github/workflows/ci-test-cloud-helm-chart-smoke.yaml
+            -   cloud/helm/default/templates/**

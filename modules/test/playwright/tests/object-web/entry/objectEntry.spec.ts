@@ -5678,7 +5678,12 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const prefix = '+1';
 
 			const objectFields = generateObjectFields({
-				objectFieldBusinessTypes: ['PhoneNumber'],
+				objectFieldBusinessTypes: [
+					{
+						businessType: 'PhoneNumber',
+						required: true,
+					},
+				],
 			});
 
 			const objectFieldLabel = objectFields[0].label!['en_US'];
@@ -5686,6 +5691,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const fieldContainer = page.getByRole('group', {
 				name: objectFieldLabel,
 			});
+
+			const phoneNumberInput = fieldContainer.getByLabel('Phone Number');
 
 			let objectDefinition: ObjectDefinition;
 
@@ -5710,6 +5717,43 @@ test.describe('Manage object entries through View Object Entries', () => {
 				);
 			});
 
+			await test.step('Verify the validation error messages are displayed', async () => {
+				const formGroup = page.locator('.form-group', {
+					has: fieldContainer,
+				});
+
+				const formatErrorMessage = formGroup.getByText(
+					'Please enter a valid phone number.'
+				);
+				const requiredErrorMessage = formGroup.getByText(
+					'This field is required.'
+				);
+
+				await phoneNumberInput.focus();
+
+				await phoneNumberInput.blur();
+
+				await expect(requiredErrorMessage).toBeVisible();
+
+				await page.reload();
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(requiredErrorMessage).toBeVisible();
+
+				await phoneNumberInput.fill('1');
+
+				await phoneNumberInput.blur();
+
+				await expect(formatErrorMessage).toBeVisible();
+
+				await phoneNumberInput.clear();
+
+				await expect(formatErrorMessage).not.toBeVisible();
+
+				await expect(requiredErrorMessage).toBeVisible();
+			});
+
 			await test.step('Select the "United States" prefix, fill the phone number field, and save the entry', async () => {
 				await fieldContainer.getByLabel('Country Code').click();
 
@@ -5717,9 +5761,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
-				await fieldContainer
-					.getByLabel('Phone Number')
-					.fill(localNumber);
+				await phoneNumberInput.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
 
@@ -5739,9 +5781,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 					fieldContainer.getByLabel('Country Code')
 				).toHaveText(prefix);
 
-				await expect(
-					fieldContainer.getByLabel('Phone Number')
-				).toHaveValue(localNumber);
+				await expect(phoneNumberInput).toHaveValue(localNumber);
 			});
 
 			await test.step('Verify that the country code icon is correct for the local number entered', async () => {
@@ -5775,6 +5815,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 								value: prefix,
 							},
 						],
+						required: true,
 					},
 				],
 			});
@@ -5784,6 +5825,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 			const fieldContainer = page.getByRole('group', {
 				name: objectFieldLabel,
 			});
+
+			const phoneNumberInput = fieldContainer.getByLabel('Phone Number');
 
 			let objectDefinition: ObjectDefinition;
 
@@ -5808,28 +5851,47 @@ test.describe('Manage object entries through View Object Entries', () => {
 				);
 			});
 
-			await test.step('Verify the error message is displayed', async () => {
-				const errorMessage = page
-					.locator('.form-group', {has: fieldContainer})
-					.getByText('Please enter a valid phone number.');
+			await test.step('Verify the validation error messages are displayed', async () => {
+				const formGroup = page.locator('.form-group', {
+					has: fieldContainer,
+				});
 
-				await fieldContainer.getByLabel('Phone Number').fill('1');
+				const formatErrorMessage = formGroup.getByText(
+					'Please enter a valid phone number.'
+				);
+				const requiredErrorMessage = formGroup.getByText(
+					'This field is required.'
+				);
 
-				await fieldContainer.getByLabel('Phone Number').blur();
+				await phoneNumberInput.focus();
 
-				await expect(errorMessage).toBeVisible();
+				await phoneNumberInput.blur();
 
-				await fieldContainer.getByLabel('Phone Number').clear();
+				await expect(requiredErrorMessage).toBeVisible();
 
-				await expect(errorMessage).not.toBeVisible();
+				await page.reload();
+
+				await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+				await expect(requiredErrorMessage).toBeVisible();
+
+				await phoneNumberInput.fill('1');
+
+				await phoneNumberInput.blur();
+
+				await expect(formatErrorMessage).toBeVisible();
+
+				await phoneNumberInput.clear();
+
+				await expect(formatErrorMessage).not.toBeVisible();
+
+				await expect(requiredErrorMessage).toBeVisible();
 			});
 
 			await test.step('Fill the phone number field and save the entry', async () => {
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
-				await fieldContainer
-					.getByLabel('Phone Number')
-					.fill(localNumber);
+				await phoneNumberInput.fill(localNumber);
 
 				await viewObjectEntriesPage.saveObjectEntryButton.click();
 
@@ -5847,9 +5909,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 				await expect(fieldContainer.getByText(prefix)).toBeVisible();
 
-				await expect(
-					fieldContainer.getByLabel('Phone Number')
-				).toHaveValue(localNumber);
+				await expect(phoneNumberInput).toHaveValue(localNumber);
 			});
 		}
 	);

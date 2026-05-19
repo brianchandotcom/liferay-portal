@@ -9,6 +9,7 @@ import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -193,6 +194,25 @@ public class OracleDB extends BaseDB {
 		return databaseMetaData.getIndexInfo(
 			dbInspector.getCatalog(), dbInspector.getSchema(), tableName,
 			onlyUnique, true);
+	}
+
+	@Override
+	public List<DB.QueryInfo> getLockedQueryInfos(Connection connection)
+		throws SQLException {
+
+		try {
+			return super.getLockedQueryInfos(connection);
+		}
+		catch (SQLException sqlException) {
+			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
+				throw new SQLException(
+					"\"v$session\" \"v$sql\": " + sqlException.getMessage(),
+					sqlException.getSQLState(), sqlException.getErrorCode(),
+					sqlException);
+			}
+
+			throw sqlException;
+		}
 	}
 
 	@Override
@@ -564,6 +584,8 @@ public class OracleDB extends BaseDB {
 			return sb.toString();
 		}
 	}
+
+	private static final int _ORA_942_TABLE_NOT_FOUND = 942;
 
 	private static final String[] _ORACLE = {
 		"--", "1", "0",

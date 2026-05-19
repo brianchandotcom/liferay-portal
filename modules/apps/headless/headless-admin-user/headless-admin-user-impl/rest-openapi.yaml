@@ -926,6 +926,10 @@ components:
                     description:
                         The role's type.
                     type: string
+                subtype:
+                    description:
+                        The role's subtype.
+                    type: string
             type: object
         RoleBrief:
             description:

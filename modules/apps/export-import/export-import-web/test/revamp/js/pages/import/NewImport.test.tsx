@@ -40,6 +40,7 @@ const renderComponent = () =>
 		<NewImport
 			backURL="/some/back/url"
 			importPreviewAPIURL="/o/export-import/v1.0/import-preview"
+			importProcessAPIURL="/o/export-import/v1.0/import-processes"
 		/>
 	);
 

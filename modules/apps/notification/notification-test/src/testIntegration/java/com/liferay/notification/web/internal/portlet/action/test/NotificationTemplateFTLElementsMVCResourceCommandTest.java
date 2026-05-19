@@ -50,10 +50,10 @@ public class NotificationTemplateFTLElementsMVCResourceCommandTest {
 
 	@Test
 	public void testNotificationTemplateFTLElements() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			new MockLiferayResourceRequest();
+
+		long companyId = TestPropsValues.getCompanyId();
 
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
@@ -79,6 +79,8 @@ public class NotificationTemplateFTLElementsMVCResourceCommandTest {
 		_mvcResourceCommand.serveResource(
 			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
+		boolean hasParentOrganizationId = false;
+
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)
 				mockLiferayResourceResponse.getPortletOutputStream();
@@ -86,11 +88,9 @@ public class NotificationTemplateFTLElementsMVCResourceCommandTest {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			byteArrayOutputStream.toString());
 
-		boolean hasParentOrganizationId = false;
-
 		Iterator<JSONObject> iterator = jsonArray.iterator();
 
-		while (iterator.hasNext() && !hasParentOrganizationId) {
+		while (!hasParentOrganizationId && iterator.hasNext()) {
 			JSONObject groupJSONObject = iterator.next();
 
 			JSONArray itemsJSONArray = groupJSONObject.getJSONArray("items");

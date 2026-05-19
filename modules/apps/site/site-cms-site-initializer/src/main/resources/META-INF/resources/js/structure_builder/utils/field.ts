@@ -83,7 +83,7 @@ export function getFieldBusinessType(
 		case 'long-text':
 			return 'LongText';
 		case 'phone-number':
-			return 'Text';
+			return 'PhoneNumber';
 		case 'rich-text':
 			return 'RichText';
 		case 'text':

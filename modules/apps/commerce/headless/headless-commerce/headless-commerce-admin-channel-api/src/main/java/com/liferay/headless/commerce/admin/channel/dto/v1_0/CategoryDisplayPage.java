@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("CategoryDisplayPage")
+@GraphQLName(
+	description = "Per-category mapping that overrides the channel's default category site page, allowing a category to render through a different page for SEO or merchandising purposes. Created on POST and removed on DELETE; the channel falls back to its DefaultCategoryDisplayPage when no mapping exists.",
+	value = "CategoryDisplayPage"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "CategoryDisplayPage")
 public class CategoryDisplayPage implements Serializable {
@@ -50,7 +53,9 @@ public class CategoryDisplayPage implements Serializable {
 			CategoryDisplayPage.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -86,14 +91,19 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Category by its external reference code (FK alternate key).",
+		example = "AB-34098-789-N"
+	)
 	public String getCategoryExternalReferenceCode() {
 		if (_categoryExternalReferenceCodeSupplier != null) {
 			categoryExternalReferenceCode =
@@ -131,7 +141,9 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the Category by its external reference code (FK alternate key)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String categoryExternalReferenceCode;
 
@@ -139,7 +151,10 @@ public class CategoryDisplayPage implements Serializable {
 	private Supplier<String> _categoryExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Category (FK identifier).",
+		example = "30130"
+	)
 	public Long getCategoryId() {
 		if (_categoryIdSupplier != null) {
 			categoryId = _categoryIdSupplier.get();
@@ -173,14 +188,17 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the Category (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long categoryId;
 
 	@JsonIgnore
 	private Supplier<Long> _categoryIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference by external reference code to the Liferay site that owns the category mapping (FK alternate key).",
+		example = "AB-34098-789-N"
+	)
 	public String getGroupExternalReferenceCode() {
 		if (_groupExternalReferenceCodeSupplier != null) {
 			groupExternalReferenceCode =
@@ -218,7 +236,9 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference by external reference code to the Liferay site that owns the category mapping (FK alternate key)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String groupExternalReferenceCode;
 
@@ -226,7 +246,10 @@ public class CategoryDisplayPage implements Serializable {
 	private Supplier<String> _groupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the CategoryDisplayPage record; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -258,14 +281,19 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal long ID of the CategoryDisplayPage record; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising.",
+		example = "aabb9d9d-60a3-429b-0005-294945e2b956"
+	)
 	public String getPageUuid() {
 		if (_pageUuidSupplier != null) {
 			pageUuid = _pageUuidSupplier.get();
@@ -299,7 +327,9 @@ public class CategoryDisplayPage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "UUID of the Liferay site page used to render this mapping; drives the resolved URL for SEO and merchandising."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String pageUuid;
 
@@ -519,4 +549,4 @@ public class CategoryDisplayPage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:324162974
+// LIFERAY-REST-BUILDER-HASH:-602387835

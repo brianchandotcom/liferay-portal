@@ -37,8 +37,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("PaymentMethodGroupRelOrderType")
+@GraphQLName(
+	description = "Binding that enables a payment-method group for a specific OrderType; controls which payment options appear at checkout for that order kind. Created on POST and removed on DELETE; no update operation.",
+	value = "PaymentMethodGroupRelOrderType"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Binding that enables a payment-method group for a specific OrderType; controls which payment options appear at checkout for that order kind. Created on POST and removed on DELETE; no update operation.",
 	requiredProperties = {"paymentMethodGroupRelId", "orderTypeId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -55,7 +59,9 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 			PaymentMethodGroupRelOrderType.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,14 +97,18 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Embedded snapshot of the linked OrderType; read-only."
+	)
 	@Valid
 	public OrderType getOrderType() {
 		if (_orderTypeSupplier != null) {
@@ -133,14 +143,19 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Embedded snapshot of the linked OrderType; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected OrderType orderType;
 
 	@JsonIgnore
 	private Supplier<OrderType> _orderTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the OrderType by its external reference code (FK alternate key).",
+		example = "AB-34098-789-N"
+	)
 	public String getOrderTypeExternalReferenceCode() {
 		if (_orderTypeExternalReferenceCodeSupplier != null) {
 			orderTypeExternalReferenceCode =
@@ -178,7 +193,9 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the OrderType by its external reference code (FK alternate key)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String orderTypeExternalReferenceCode;
 
@@ -186,7 +203,10 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	private Supplier<String> _orderTypeExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the OrderType (FK identifier).",
+		example = "30130"
+	)
 	public Long getOrderTypeId() {
 		if (_orderTypeIdSupplier != null) {
 			orderTypeId = _orderTypeIdSupplier.get();
@@ -220,7 +240,7 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the OrderType (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long orderTypeId;
@@ -229,7 +249,10 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	private Supplier<Long> _orderTypeIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the PaymentMethodGroupRel (FK identifier).",
+		example = "30130"
+	)
 	public Long getPaymentMethodGroupRelId() {
 		if (_paymentMethodGroupRelIdSupplier != null) {
 			paymentMethodGroupRelId = _paymentMethodGroupRelIdSupplier.get();
@@ -263,7 +286,9 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the PaymentMethodGroupRel (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long paymentMethodGroupRelId;
@@ -272,7 +297,10 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	private Supplier<Long> _paymentMethodGroupRelIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30643")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal long ID of the PaymentMethodGroupRelOrderType record; read-only.",
+		example = "30643"
+	)
 	public Long getPaymentMethodGroupRelOrderTypeId() {
 		if (_paymentMethodGroupRelOrderTypeIdSupplier != null) {
 			paymentMethodGroupRelOrderTypeId =
@@ -311,7 +339,9 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal long ID of the PaymentMethodGroupRelOrderType record; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long paymentMethodGroupRelOrderTypeId;
 
@@ -319,7 +349,10 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	private Supplier<Long> _paymentMethodGroupRelOrderTypeIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reserved for future use; the converter does not currently populate this field and the runtime returns null.",
+		example = "1"
+	)
 	public Integer getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -353,8 +386,10 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Reserved for future use; the converter does not currently populate this field and the runtime returns null."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer priority;
 
 	@JsonIgnore
@@ -580,4 +615,4 @@ public class PaymentMethodGroupRelOrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-388539513
+// LIFERAY-REST-BUILDER-HASH:71345813

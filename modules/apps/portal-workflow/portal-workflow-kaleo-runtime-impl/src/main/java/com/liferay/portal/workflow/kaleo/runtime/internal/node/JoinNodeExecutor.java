@@ -67,7 +67,7 @@ public class JoinNodeExecutor extends BaseNodeExecutor {
 		parentKaleoInstanceToken =
 			_kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
 				parentKaleoInstanceToken.getKaleoInstanceTokenId(),
-				currentKaleoNode.getKaleoNodeId());
+				currentKaleoNode.getKaleoNodeId(), currentKaleoNode.getName());
 
 		KaleoTransition kaleoTransition =
 			currentKaleoNode.getDefaultKaleoTransition();

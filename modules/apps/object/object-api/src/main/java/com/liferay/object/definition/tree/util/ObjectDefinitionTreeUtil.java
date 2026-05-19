@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -352,6 +353,27 @@ public class ObjectDefinitionTreeUtil {
 		if (objectDefinition2.isRootNode() && objectDefinition2.isApproved()) {
 			objectDefinitionLocalService.deployObjectDefinition(
 				objectDefinition2);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectRelationship.getCompanyId(), "LPD-69877")) {
+
+			count = objectRelationshipPersistence.countByODI2_E(
+				objectRelationship.getObjectDefinitionId2(), true);
+
+			if (count == 0) {
+				ObjectDefinitionSetting objectDefinitionSetting =
+					objectDefinitionSettingLocalService.
+						fetchObjectDefinitionSetting(
+							objectRelationship.getObjectDefinitionId2(),
+							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+				if (objectDefinitionSetting != null) {
+					objectDefinitionSettingLocalService.
+						deleteObjectDefinitionSetting(objectDefinitionSetting);
+				}
+			}
 		}
 	}
 

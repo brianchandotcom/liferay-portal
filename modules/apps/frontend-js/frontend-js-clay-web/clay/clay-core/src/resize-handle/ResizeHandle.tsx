@@ -45,6 +45,11 @@ type Props = {
 	'aria-controls' | 'onKeyDown' | 'onKeyUp' | 'onPointerDown'
 >;
 
+const DEFAULT_ARIA_LABELS: Record<Position, string> = {
+	left: 'Resize left side',
+	right: 'Resize right side',
+};
+
 const MAIN_MOUSE_BUTTON = 0;
 
 let keyDownCounter = 0;
@@ -84,6 +89,7 @@ export function ResizeHandle({
 
 	return (
 		<div
+			aria-label={DEFAULT_ARIA_LABELS[position]}
 			aria-orientation="vertical"
 			aria-valuemax={maxWidth}
 			aria-valuemin={minWidth}

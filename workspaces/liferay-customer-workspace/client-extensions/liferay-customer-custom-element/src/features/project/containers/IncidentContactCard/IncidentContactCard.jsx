@@ -312,7 +312,7 @@ const IncidentContactCard = ({
 								<div className="customer-portal-card-footer-description">
 									<p>
 										{i18n.translate(
-											'team-members-who-will-have-access-to-cloud-native'
+											'paas-users-will-have-access-to-paas-experience-applications'
 										)}
 									</p>
 								</div>

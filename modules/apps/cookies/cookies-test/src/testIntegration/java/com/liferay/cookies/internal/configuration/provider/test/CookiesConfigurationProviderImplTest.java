@@ -68,8 +68,9 @@ public class CookiesConfigurationProviderImplTest {
 						"enabled", true
 					).build())) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.COMPANY, companyId));
 		}
 	}
 
@@ -84,8 +85,9 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_createCompanyDictionary(companyId, true))) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 		}
 	}
 
@@ -107,8 +109,9 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_createCompanyDictionary(companyId, false))) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, false);
+			Assert.assertFalse(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.COMPANY, companyId));
 
 			Assert.assertTrue(
 				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
@@ -130,8 +133,9 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_createGroupDictionary(companyId, groupId, true))) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 
 			Assert.assertFalse(
 				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
@@ -149,8 +153,9 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_createCompanyDictionary(companyId, true))) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.COMPANY, companyId, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.COMPANY, companyId));
 		}
 	}
 
@@ -165,8 +170,9 @@ public class CookiesConfigurationProviderImplTest {
 				new ScopedFactoryConfiguration(
 					_createGroupDictionary(companyId, groupId, true))) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.GROUP, groupId, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.GROUP, groupId));
 		}
 	}
 
@@ -183,20 +189,10 @@ public class CookiesConfigurationProviderImplTest {
 						"enabled", true
 					).build())) {
 
-			_assertActiveEventually(
-				ExtendedObjectClassDefinition.Scope.SYSTEM, 0, true);
+			Assert.assertTrue(
+				_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
+					ExtendedObjectClassDefinition.Scope.SYSTEM, 0));
 		}
-	}
-
-	private void _assertActiveEventually(
-			ExtendedObjectClassDefinition.Scope scope, long scopePK,
-			boolean expected)
-		throws Exception {
-
-		Assert.assertEquals(
-			expected,
-			_cookiesConfigurationProvider.isCookiesPreferenceHandlingActive(
-				scope, scopePK));
 	}
 
 	private Dictionary<String, Object> _createCompanyDictionary(

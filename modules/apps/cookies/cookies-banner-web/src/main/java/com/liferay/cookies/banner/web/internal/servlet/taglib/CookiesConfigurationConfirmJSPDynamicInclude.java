@@ -78,11 +78,16 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
-		for (Class<?> configurationClass : _CONFIGURATION_CLASSES) {
-			dynamicIncludeRegistry.register(
-				"com.liferay.configuration.admin.web#/edit_configuration.jsp#" +
-					configurationClass.getName() + "#post");
-		}
+		dynamicIncludeRegistry.register(
+			"com.liferay.configuration.admin.web#/edit_configuration.jsp#" +
+				CookiesBannerConfiguration.class.getName() + "#post");
+		dynamicIncludeRegistry.register(
+			"com.liferay.configuration.admin.web#/edit_configuration.jsp#" +
+				CookiesConsentConfiguration.class.getName() + "#post");
+		dynamicIncludeRegistry.register(
+			"com.liferay.configuration.admin.web#/edit_configuration.jsp#" +
+				CookiesPreferenceHandlingConfiguration.class.getName() +
+					"#post");
 	}
 
 	@Override
@@ -94,11 +99,6 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 	protected Log getLog() {
 		return _log;
 	}
-
-	private static final Class<?>[] _CONFIGURATION_CLASSES = {
-		CookiesBannerConfiguration.class, CookiesConsentConfiguration.class,
-		CookiesPreferenceHandlingConfiguration.class
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CookiesConfigurationConfirmJSPDynamicInclude.class);

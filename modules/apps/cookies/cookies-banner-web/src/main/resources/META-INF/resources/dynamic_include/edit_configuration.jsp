@@ -7,7 +7,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ include file="/force_reconsent_url.jspf" %>
+<%
+CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingConfigurationDisplayContext = (CookiesPreferenceHandlingConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT);
+%>
 
 <aui:script>
 	var form =
@@ -130,9 +132,12 @@
 							};
 
 							if (forceReconsent) {
-								Liferay.Util.fetch('<%= forceReconsentURL %>', {
-									method: 'POST',
-								}).then((response) => {
+								Liferay.Util.fetch(
+									'<%= (cookiesPreferenceHandlingConfigurationDisplayContext != null) ? cookiesPreferenceHandlingConfigurationDisplayContext.getForceReconsentURL(renderResponse) : StringPool.BLANK %>',
+									{
+										method: 'POST',
+									}
+								).then((response) => {
 									if (response.ok) {
 										submitForm();
 									}

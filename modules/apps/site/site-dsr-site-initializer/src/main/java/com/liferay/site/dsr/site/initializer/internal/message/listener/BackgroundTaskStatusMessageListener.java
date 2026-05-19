@@ -91,7 +91,7 @@ public class BackgroundTaskStatusMessageListener implements MessageListener {
 		}
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE, companyId);
+			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_SELLER, companyId);
 
 		if (role == null) {
 			return;

@@ -10,14 +10,14 @@ package com.liferay.site.dsr.site.initializer.constants;
  */
 public class DSRRoleConstants {
 
-	public static final String DSR_CONTRIBUTOR = "DSR Contributor";
-
-	public static final String DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE =
+	public static final String EXTERNAL_REFERENCE_CODE_DSR_CONTRIBUTOR =
 		"L_DSR_CONTRIBUTOR";
 
-	public static final String DSR_SELLER = "DSR Seller";
-
-	public static final String DSR_SELLER_EXTERNAL_REFERENCE_CODE =
+	public static final String EXTERNAL_REFERENCE_CODE_DSR_SELLER =
 		"L_DSR_SELLER";
+
+	public static final String NAME_DSR_CONTRIBUTOR = "DSR Contributor";
+
+	public static final String NAME_DSR_SELLER = "DSR Seller";
 
 }

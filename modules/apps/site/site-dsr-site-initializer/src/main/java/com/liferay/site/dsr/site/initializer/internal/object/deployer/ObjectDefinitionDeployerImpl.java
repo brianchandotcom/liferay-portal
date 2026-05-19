@@ -149,16 +149,17 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Group group = layoutSetPrototype.getGroup();
 
 		Role role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
+			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_CONTRIBUTOR,
 			companyId);
 
 		if (role == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
 			role = _roleLocalService.addRole(
-				DSRRoleConstants.DSR_CONTRIBUTOR_EXTERNAL_REFERENCE_CODE,
-				user.getUserId(), null, 0, DSRRoleConstants.DSR_CONTRIBUTOR,
-				null, null, RoleConstants.TYPE_SITE, null, null);
+				DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_CONTRIBUTOR,
+				user.getUserId(), null, 0,
+				DSRRoleConstants.NAME_DSR_CONTRIBUTOR, null, null,
+				RoleConstants.TYPE_SITE, null, null);
 		}
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -168,15 +169,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			role.getRoleId(), ActionKeys.ASSIGN_MEMBERS);
 
 		role = _roleLocalService.fetchRoleByExternalReferenceCode(
-			DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE, companyId);
+			DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_SELLER, companyId);
 
 		if (role == null) {
 			User user = _userLocalService.getGuestUser(companyId);
 
 			role = _roleLocalService.addRole(
-				DSRRoleConstants.DSR_SELLER_EXTERNAL_REFERENCE_CODE,
-				user.getUserId(), null, 0, DSRRoleConstants.DSR_SELLER, null,
-				null, RoleConstants.TYPE_REGULAR, null, null);
+				DSRRoleConstants.EXTERNAL_REFERENCE_CODE_DSR_SELLER,
+				user.getUserId(), null, 0, DSRRoleConstants.NAME_DSR_SELLER,
+				null, null, RoleConstants.TYPE_REGULAR, null, null);
 		}
 
 		_resourcePermissionLocalService.addResourcePermission(
@@ -217,13 +218,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			new String[] {ActionKeys.VIEW});
 
 		Map<String, String[]> permissionsMap = HashMapBuilder.put(
-			DSRRoleConstants.DSR_CONTRIBUTOR,
+			DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
 			new String[] {
 				ActionKeys.ADD_DOCUMENT, ActionKeys.ADVANCED_UPDATE,
 				ActionKeys.UPDATE, ActionKeys.SUBSCRIBE, ActionKeys.VIEW
 			}
 		).put(
-			DSRRoleConstants.DSR_SELLER, new String[] {ActionKeys.VIEW}
+			DSRRoleConstants.NAME_DSR_SELLER, new String[] {ActionKeys.VIEW}
 		).put(
 			RoleConstants.OWNER,
 			new String[] {

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -49,6 +50,15 @@ public class PortletLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@After
+	public void tearDown() throws Exception {
+		for (ServiceRegistration<?> serviceRegistration :
+				_serviceRegistrations) {
+
+			serviceRegistration.unregister();
+		}
+	}
+
 	@Test
 	public void testFetchPortletById() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
@@ -57,22 +67,17 @@ public class PortletLocalServiceTest {
 
 		String portletName = RandomTestUtil.randomString();
 
-		ServiceRegistration<Portlet> serviceRegistration =
+		_serviceRegistrations.add(
 			bundleContext.registerService(
 				Portlet.class, new TestPortlet(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"com.liferay.portlet.instanceable", "true"
 				).put(
 					"jakarta.portlet.name", portletName
-				).build());
+				).build()));
 
-		try {
-			_assertFetchPortletById(portletName, null);
-			_assertFetchPortletById(portletName, RandomTestUtil.randomString());
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		_assertFetchPortletById(portletName, null);
+		_assertFetchPortletById(portletName, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -86,82 +91,69 @@ public class PortletLocalServiceTest {
 		TestCustomAttributesDisplay disabledFFCustomAttributesDisplay =
 			new TestCustomAttributesDisplay(RandomTestUtil.randomString());
 		String portletName = RandomTestUtil.randomString();
-		List<ServiceRegistration<?>> serviceRegistrations = new ArrayList<>();
 
-		try {
-			serviceRegistrations.add(
-				bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					disabledFFCustomAttributesDisplay,
-					MapUtil.singletonDictionary(
-						"jakarta.portlet.name", portletName)));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				CustomAttributesDisplay.class,
+				disabledFFCustomAttributesDisplay,
+				MapUtil.singletonDictionary(
+					"jakarta.portlet.name", portletName)));
 
-			String enabledFFKey = RandomTestUtil.randomString();
+		String enabledFFKey = RandomTestUtil.randomString();
 
-			PropsUtil.set("feature.flag." + enabledFFKey, "true");
+		PropsUtil.set("feature.flag." + enabledFFKey, "true");
 
-			TestCustomAttributesDisplay enabledFFCustomAttributesDisplay =
-				new TestCustomAttributesDisplay(enabledFFKey);
+		TestCustomAttributesDisplay enabledFFCustomAttributesDisplay =
+			new TestCustomAttributesDisplay(enabledFFKey);
 
-			serviceRegistrations.add(
-				bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					enabledFFCustomAttributesDisplay,
-					MapUtil.singletonDictionary(
-						"jakarta.portlet.name", portletName)));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				CustomAttributesDisplay.class, enabledFFCustomAttributesDisplay,
+				MapUtil.singletonDictionary(
+					"jakarta.portlet.name", portletName)));
 
-			TestCustomAttributesDisplay nullFFCustomAttributesDisplay =
-				new TestCustomAttributesDisplay(null);
+		TestCustomAttributesDisplay nullFFCustomAttributesDisplay =
+			new TestCustomAttributesDisplay(null);
 
-			serviceRegistrations.add(
-				bundleContext.registerService(
-					CustomAttributesDisplay.class,
-					nullFFCustomAttributesDisplay,
-					MapUtil.singletonDictionary(
-						"jakarta.portlet.name", portletName)));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				CustomAttributesDisplay.class, nullFFCustomAttributesDisplay,
+				MapUtil.singletonDictionary(
+					"jakarta.portlet.name", portletName)));
 
-			serviceRegistrations.add(
-				bundleContext.registerService(
-					Portlet.class, new TestPortlet(),
-					MapUtil.singletonDictionary(
-						"jakarta.portlet.name", portletName)));
+		_serviceRegistrations.add(
+			bundleContext.registerService(
+				Portlet.class, new TestPortlet(),
+				MapUtil.singletonDictionary(
+					"jakarta.portlet.name", portletName)));
 
-			Thread.sleep(200);
+		Thread.sleep(200);
 
-			List<CustomAttributesDisplay> customAttributesDisplays =
-				TransformUtil.transform(
-					_portletLocalService.getCustomAttributesDisplays(),
-					customAttributesDisplay -> {
-						if (Objects.equals(
-								TestCustomAttributesDisplay.class.getName(),
-								customAttributesDisplay.getClassName())) {
+		List<CustomAttributesDisplay> customAttributesDisplays =
+			TransformUtil.transform(
+				_portletLocalService.getCustomAttributesDisplays(),
+				customAttributesDisplay -> {
+					if (Objects.equals(
+							TestCustomAttributesDisplay.class.getName(),
+							customAttributesDisplay.getClassName())) {
 
-							return customAttributesDisplay;
-						}
+						return customAttributesDisplay;
+					}
 
-						return null;
-					});
+					return null;
+				});
 
-			Assert.assertFalse(
-				customAttributesDisplays.contains(
-					disabledFFCustomAttributesDisplay));
-			Assert.assertTrue(
-				customAttributesDisplays.contains(
-					enabledFFCustomAttributesDisplay));
-			Assert.assertTrue(
-				customAttributesDisplays.contains(
-					nullFFCustomAttributesDisplay));
-			Assert.assertEquals(
-				customAttributesDisplays.toString(), 2,
-				customAttributesDisplays.size());
-		}
-		finally {
-			for (ServiceRegistration<?> serviceRegistration :
-					serviceRegistrations) {
-
-				serviceRegistration.unregister();
-			}
-		}
+		Assert.assertFalse(
+			customAttributesDisplays.contains(
+				disabledFFCustomAttributesDisplay));
+		Assert.assertTrue(
+			customAttributesDisplays.contains(
+				enabledFFCustomAttributesDisplay));
+		Assert.assertTrue(
+			customAttributesDisplays.contains(nullFFCustomAttributesDisplay));
+		Assert.assertEquals(
+			customAttributesDisplays.toString(), 2,
+			customAttributesDisplays.size());
 	}
 
 	private void _assertFetchPortletById(String portletName, String instanceId)
@@ -195,6 +187,9 @@ public class PortletLocalServiceTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
+	private final List<ServiceRegistration<?>> _serviceRegistrations =
+		new ArrayList<>();
 
 	private class TestCustomAttributesDisplay
 		extends BaseCustomAttributesDisplay {

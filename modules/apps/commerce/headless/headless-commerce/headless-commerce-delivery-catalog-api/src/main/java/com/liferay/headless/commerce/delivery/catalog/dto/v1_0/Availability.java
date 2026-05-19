@@ -37,7 +37,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Availability")
+@GraphQLName(
+	description = "Stock-availability snapshot for a SKU resolved in the active commerce channel and inventory engine. Computed at response time and never persisted.",
+	value = "Availability"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Availability")
 public class Availability implements Serializable {
@@ -50,7 +53,10 @@ public class Availability implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Availability.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "available")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Untranslated availability label key. Computed from the inventory engine's view of current stock against the SKU's thresholds.",
+		example = "available"
+	)
 	public String getLabel() {
 		if (_labelSupplier != null) {
 			label = _labelSupplier.get();
@@ -84,14 +90,19 @@ public class Availability implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Untranslated availability label key. Computed from the inventory engine's view of current stock against the SKU's thresholds."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label;
 
 	@JsonIgnore
 	private Supplier<String> _labelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Available")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized availability label resolved for the request locale.",
+		example = "Available"
+	)
 	public String getLabel_i18n() {
 		if (_label_i18nSupplier != null) {
 			label_i18n = _label_i18nSupplier.get();
@@ -125,14 +136,19 @@ public class Availability implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized availability label resolved for the request locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String label_i18n;
 
 	@JsonIgnore
 	private Supplier<String> _label_i18nSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Quantity currently available across the active inventory engine, expressed in the SKU's primary unit of measure.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getStockQuantity() {
 		if (_stockQuantitySupplier != null) {
@@ -167,7 +183,9 @@ public class Availability implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Quantity currently available across the active inventory engine, expressed in the SKU's primary unit of measure."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal stockQuantity;
 
@@ -346,4 +364,4 @@ public class Availability implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1548339300
+// LIFERAY-REST-BUILDER-HASH:-589263914

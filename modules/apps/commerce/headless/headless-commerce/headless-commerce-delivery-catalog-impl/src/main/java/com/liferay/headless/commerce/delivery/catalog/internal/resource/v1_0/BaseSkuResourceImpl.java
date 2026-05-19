@@ -74,7 +74,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-externalReferenceCode/{skuExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a product from selected channel."
+		description = "External-reference-code variant of getChannelProductSku addressed at /channels/by-externalReferenceCode/{...}/products/by-externalReferenceCode/{...}/skus/by-externalReferenceCode/{skuExternalReferenceCode}. Resolves CommerceChannel, CProduct and CPInstance by ERC and delegates to getChannelProductSku, applying CommerceProductViewPermission and the standard CommerceContext for pricing and availability. Validation -- NoSuchModelException -> 404 when any ERC is missing; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -140,7 +140,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves products from selected channel."
+		description = "External-reference-code variant of getChannelProductSkusPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -207,7 +207,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/skus/{skuId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a product from selected channel."
+		description = "Returns a single Sku under /channels/{channelId}/products/{productId}/skus/{skuId}. Resolves the CPDefinition and the channel; builds a CommerceContext that picks an AccountEntry from the explicit accountId, the user's eligible commerce accounts, or the guest account. Enforces CommerceProductViewPermission, fetches the CPInstance, resolves the default unit-of-measure key and converts via SkuDTOConverter. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when the skuId does not resolve; NoSuchEntryException -> 404 when the user has multiple eligible accounts and supplied none; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -272,7 +272,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/skus'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves products from selected channel."
+		description = "Lists CPInstance rows (status APPROVED) for /channels/{channelId}/products/{productId}/skus. Resolves the CPDefinition, the channel, the account via AccountUtil, and enforces CommerceProductViewPermission. Pages CPInstanceLocalService.getCPDefinitionInstances and converts each entry via SkuDTOConverter using a per-row CommerceContext. Exposed as the `skus` field of the Product DTO. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -336,7 +336,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Posts an SKU with selected channel and product external reference code."
+		description = "External-reference-code variant of postChannelProductSku. Resolves the CommerceChannel and CProduct by ERC and delegates. Not an upsert -- the underlying method throws UnsupportedOperationException for the DDMOption[] body shape, so callers must use the by-sku-option endpoint instead. Validation -- NoSuchModelException -> 404 when either ERC is missing; UnsupportedOperationException -> 500 for any request body."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -396,7 +396,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/skus/by-sku-option'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a SKU from selected channel and product using their external reference code."
+		description = "External-reference-code variant of postChannelProductSkuBySkuOption. Resolves channel and product by ERC and delegates. The endpoint is a SKU lookup (not a create) -- it serializes the SkuOption[] body and calls CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. Not an upsert -- nothing is persisted. Validation -- NoSuchModelException -> 404 when either ERC is missing; NoSuchCPInstanceException -> 404 when no SKU matches the option selection."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -470,7 +470,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/skus'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a SKU from selected channel and product ID."
+		description = "Endpoint declared on the base resource accepting a DDMOption[] body. Not an upsert -- the current implementation throws UnsupportedOperationException, so callers must use the by-sku-option endpoint to look up a SKU instead. Validation -- UnsupportedOperationException -> 500 for any request body."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -527,7 +527,7 @@ public abstract class BaseSkuResourceImpl
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/skus/by-sku-option'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves a SKU from selected channel and product ID."
+		description = "Looks up the SKU that matches a SkuOption[] selection under /channels/{channelId}/products/{productId}/skus/by-sku-option -- it is a search call, not a create. Resolves the CPDefinition, the channel, builds a CommerceContext and enforces CommerceProductViewPermission. Serializes the body to a JSONArray and calls CPInstanceHelper.fetchCPInstance to locate the matching CPInstance. When skuUnitOfMeasureKey is omitted the SKU's default unit of measure is used; quantity defaults to BigDecimal.ONE or the unit of measure's incremental order quantity. Not an upsert -- nothing is persisted. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when no SKU matches the option selection; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1248,4 +1248,4 @@ public abstract class BaseSkuResourceImpl
 		LogFactoryUtil.getLog(BaseSkuResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1490741798
+// LIFERAY-REST-BUILDER-HASH:-1663166332

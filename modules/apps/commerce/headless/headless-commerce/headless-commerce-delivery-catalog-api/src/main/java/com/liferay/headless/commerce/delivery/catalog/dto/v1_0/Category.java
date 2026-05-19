@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Category")
+@GraphQLName(
+	description = "Asset-vocabulary category tagged on a catalog product, used for storefront browsing and filtering.",
+	value = "Category"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
@@ -49,7 +52,10 @@ public class Category implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the asset category (FK identifier).",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -81,14 +87,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the asset category (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Untranslated category name. Matched by the search query parameter on the product list endpoint.",
+		example = "Hand Tools"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -120,14 +131,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Category Name")
+	@GraphQLField(
+		description = "Untranslated category name. Matched by the search query parameter on the product list endpoint."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the site that owns the vocabulary the category belongs to (FK identifier). Filterable via the OData query parameter.",
+		example = "20078"
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -161,14 +177,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the site that owns the vocabulary the category belongs to (FK identifier). Filterable via the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Title")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized category title resolved for the request locale. Read-only.",
+		example = "Hand Tools"
+	)
 	public String getTitle() {
 		if (_titleSupplier != null) {
 			title = _titleSupplier.get();
@@ -202,14 +223,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Category Title")
+	@GraphQLField(
+		description = "Localized category title resolved for the request locale. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String title;
 
 	@JsonIgnore
 	private Supplier<String> _titleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Default Vocabulary")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the asset vocabulary the category belongs to. Read-only.",
+		example = "Default Vocabulary"
+	)
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
 			vocabulary = _vocabularySupplier.get();
@@ -243,7 +269,9 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the asset vocabulary the category belongs to. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vocabulary;
 
@@ -450,4 +478,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-922681226
+// LIFERAY-REST-BUILDER-HASH:1799331487

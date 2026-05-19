@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Pin")
+@GraphQLName(
+	description = "Coordinates on a product-diagram image that locate a mapped product, used to render interactive shop-by-diagram views.",
+	value = "Pin"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Pin")
 public class Pin implements Serializable {
@@ -50,7 +53,10 @@ public class Pin implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the diagram pin (FK identifier).",
+		example = "33130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,7 +88,7 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Reference to the diagram pin (FK identifier).")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -131,7 +137,10 @@ public class Pin implements Serializable {
 	@JsonIgnore
 	private Supplier<MappedProduct> _mappedProductSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Horizontal coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image width.",
+		example = "33.54"
+	)
 	public Double getPositionX() {
 		if (_positionXSupplier != null) {
 			positionX = _positionXSupplier.get();
@@ -165,14 +174,19 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Horizontal coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image width."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionX;
 
 	@JsonIgnore
 	private Supplier<Double> _positionXSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Vertical coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image height.",
+		example = "33.54"
+	)
 	public Double getPositionY() {
 		if (_positionYSupplier != null) {
 			positionY = _positionYSupplier.get();
@@ -206,14 +220,19 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Vertical coordinate of the pin on the diagram image, expressed as a percentage (0-100) of the image height."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double positionY;
 
 	@JsonIgnore
 	private Supplier<Double> _positionYSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-form sequence identifier used to order pins within the diagram.",
+		example = "1"
+	)
 	public String getSequence() {
 		if (_sequenceSupplier != null) {
 			sequence = _sequenceSupplier.get();
@@ -247,7 +266,9 @@ public class Pin implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-form sequence identifier used to order pins within the diagram."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
@@ -446,4 +467,4 @@ public class Pin implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-221268437
+// LIFERAY-REST-BUILDER-HASH:-1509995215

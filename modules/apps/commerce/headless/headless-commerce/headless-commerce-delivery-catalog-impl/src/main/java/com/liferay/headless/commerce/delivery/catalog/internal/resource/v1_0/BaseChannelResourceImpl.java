@@ -72,6 +72,9 @@ public abstract class BaseChannelResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists CommerceChannel entries visible to the caller. Calls Vulcan SearchUtil.search over the CommerceChannel index scoped to the request company; converts each hit through ChannelDTOConverter. Validation -- None (returns empty page when no matches). List query support — filterable and sortable fields -- ChannelEntityModel (siteGroupId, name); search fields -- indexed channel fields."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -849,4 +852,4 @@ public abstract class BaseChannelResourceImpl
 		LogFactoryUtil.getLog(BaseChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:569445201
+// LIFERAY-REST-BUILDER-HASH:1338564980

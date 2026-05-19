@@ -15,7 +15,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -142,15 +141,12 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 			() -> {
 				Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				return !scopeGroup.isLayoutSetPrototype() &&
-					   FeatureFlagManagerUtil.isEnabled(
-						   _themeDisplay.getCompanyId(), "LPD-76864");
+				return !scopeGroup.isLayoutSetPrototype();
 			},
 			dropdownItem -> {
 				dropdownItem.putData("action", "addLayoutPageTemplateEntry");
 				dropdownItem.putData(
 					"addPageTemplateURL", _getAddLayoutPrototypeURL());
-				dropdownItem.setDeprecated(true);
 				dropdownItem.setLabel(
 					LanguageUtil.get(
 						httpServletRequest, "widget-page-template"));

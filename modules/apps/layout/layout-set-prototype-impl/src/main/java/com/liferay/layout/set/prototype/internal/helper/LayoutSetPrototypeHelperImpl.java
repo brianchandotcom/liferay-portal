@@ -17,8 +17,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
-import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncContextThreadLocal;
-import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManager;
+import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Serializable;
@@ -101,11 +99,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			}
 		}
 
-		String syncSessionId = PortalUUIDUtil.generate();
-
-		_layoutSetPrototypeSyncSessionManager.openSession(
+		LayoutSetPrototypeSyncSessionManagerUtil.openSession(
 			mergeableLayoutSets.size(),
-			layoutSetPrototype.getName(LocaleUtil.US), syncSessionId, userId);
+			layoutSetPrototype.getName(LocaleUtil.US), userId);
 
 		if (mergeableLayoutSets.isEmpty()) {
 			return;
@@ -113,9 +109,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 		for (LayoutSet layoutSet : mergeableLayoutSets) {
 			try {
-				LayoutSetPrototypeSyncContextThreadLocal.setSyncSessionId(
-					syncSessionId);
-
 				executeLayoutSetSync(false, layoutSet);
 			}
 			catch (Exception exception) {
@@ -124,12 +117,9 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 						layoutSet.getLayoutSetId(),
 					exception);
 
-				_layoutSetPrototypeSyncSessionManager.
+				LayoutSetPrototypeSyncSessionManagerUtil.
 					recordBackgroundTaskStatus(
-						BackgroundTaskConstants.STATUS_FAILED, syncSessionId);
-			}
-			finally {
-				LayoutSetPrototypeSyncContextThreadLocal.setSyncSessionId(null);
+						BackgroundTaskConstants.STATUS_FAILED);
 			}
 		}
 	}
@@ -146,7 +136,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		MergeLayoutPrototypesThreadLocal.setSkipMerge(false);
 
 		if (MergeLayoutPrototypesThreadLocal.isSkipMerge()) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -159,7 +150,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			layoutSet.getLayoutSetId());
 
 		if (!_isLayoutSetMergeable(group, layoutSet)) {
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -776,7 +768,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			ExportImportThreadLocal.isImportInProcess() ||
 			ExportImportThreadLocal.isStagingInProcess()) {
 
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -790,7 +783,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 						"set " + layoutSet.getLayoutSetId());
 			}
 
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -810,13 +804,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
 			});
 
-		String syncSessionId =
-			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
-
-		if (Validator.isNotNull(syncSessionId)) {
-			parameterMap.put("syncSessionId", new String[] {syncSessionId});
-		}
-
 		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
 
 		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
@@ -827,7 +814,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				buildExportLayoutSettingsMap(
 					user, layoutSetPrototype.getGroupId(), true,
 					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					parameterMap);
+					LayoutSetPrototypeSyncSessionManagerUtil.contribute(
+						parameterMap));
 
 		ExportImportConfiguration exportImportConfiguration = null;
 
@@ -844,7 +832,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				"Unable to add draft export-import configuration",
 				portalException);
 
-			_recordSyncResultIfTracked(BackgroundTaskConstants.STATUS_FAILED);
+			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -852,18 +841,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		_exportImportLocalService.mergeLayoutSetPrototypeInBackground(
 			user.getUserId(), layoutSet.getGroupId(),
 			exportImportConfiguration);
-	}
-
-	private void _recordSyncResultIfTracked(int backgroundTaskStatus) {
-		String syncSessionId =
-			LayoutSetPrototypeSyncContextThreadLocal.getSyncSessionId();
-
-		if (Validator.isNull(syncSessionId)) {
-			return;
-		}
-
-		_layoutSetPrototypeSyncSessionManager.recordBackgroundTaskStatus(
-			backgroundTaskStatus, syncSessionId);
 	}
 
 	/**
@@ -914,10 +891,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Reference
-	private LayoutSetPrototypeSyncSessionManager
-		_layoutSetPrototypeSyncSessionManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

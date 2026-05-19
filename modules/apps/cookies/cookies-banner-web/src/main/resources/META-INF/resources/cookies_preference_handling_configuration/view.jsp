@@ -7,10 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ include file="/force_reconsent_url.jspf" %>
-
 <%
 CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingConfigurationDisplayContext = (CookiesPreferenceHandlingConfigurationDisplayContext)request.getAttribute(CookiesBannerWebKeys.COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT);
+
+String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.getForceReconsentURL(renderResponse);
 %>
 
 <aui:link hashedFile="<%= true %>" href="cookies-banner-web/cookies_preference_handling_configuration/css/main.css" rel="stylesheet" type="text/css" />

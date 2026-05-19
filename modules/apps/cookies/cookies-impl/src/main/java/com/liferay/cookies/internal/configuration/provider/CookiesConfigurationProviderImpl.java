@@ -58,7 +58,7 @@ public class CookiesConfigurationProviderImpl
 			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws Exception {
 
-		Configuration configuration;
+		Configuration configuration = null;
 
 		if (scope == ExtendedObjectClassDefinition.Scope.SYSTEM) {
 			configuration = _configurationAdmin.getConfiguration(

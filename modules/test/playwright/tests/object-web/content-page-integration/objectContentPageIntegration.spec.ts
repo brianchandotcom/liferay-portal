@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
+import {
+	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
+} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
@@ -373,6 +376,142 @@ test.describe('Collection Display', () => {
 			});
 		}
 	);
+
+	test('relationship field is not displayed in collection display table when parent object is inactive', async ({
+		apiHelpers,
+		page,
+		pageEditorPage,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const objectDefinitionA =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const objectDefinitionB =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinitionA.id,
+			type: 'objectDefinition',
+		});
+
+		apiHelpers.data.push({
+			id: objectDefinitionB.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		const {body: objectRelationship} =
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinitionA.externalReferenceCode,
+				{
+					label: {en_US: 'Relationship'},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode1:
+						objectDefinitionA.externalReferenceCode,
+					objectDefinitionExternalReferenceCode2:
+						objectDefinitionB.externalReferenceCode,
+					objectDefinitionId1: objectDefinitionA.id,
+					objectDefinitionId2: objectDefinitionB.id,
+					objectDefinitionName2: objectDefinitionB.name,
+					type: 'oneToMany',
+				}
+			);
+
+		apiHelpers.data.push({
+			id: objectRelationship.id,
+			type: 'objectRelationship',
+		});
+
+		const restPathA = `c/${objectDefinitionA.name.toLowerCase()}s`;
+		const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+
+		const entryA = await apiHelpers.objectEntry.postObjectEntry(
+			{['textField']: 'Entry A'},
+			restPathA
+		);
+
+		const entryB = await apiHelpers.objectEntry.postObjectEntry(
+			{['textField']: 'Entry B'},
+			restPathB
+		);
+
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName: restPathA,
+				currentExternalReferenceCode: entryA.externalReferenceCode,
+				objectRelationshipName: objectRelationship.name,
+				relatedExternalReferenceCode: entryB.externalReferenceCode,
+			}
+		);
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.addFragment(
+			'Content Display',
+			'Collection Display'
+		);
+
+		await pageEditorPage.selectFragment(
+			await pageEditorPage.getFragmentId('Collection Display')
+		);
+
+		await pageEditorPage.chooseCollectionDisplayCollection(
+			'Collection Providers',
+			objectDefinitionB.label['en_US'],
+			{search: true}
+		);
+
+		await pageEditorPage.waitForChangesSaved();
+
+		const collectionId =
+			await pageEditorPage.getFragmentId('Collection Display');
+
+		await pageEditorPage.selectFragment(collectionId);
+
+		await pageEditorPage.changeConfiguration({
+			fieldLabel: 'Style Display',
+			tab: 'General',
+			value: 'Table',
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByRole('cell', {name: 'textField'})).toBeVisible();
+		await expect(
+			page.getByRole('cell', {name: 'Relationship'})
+		).toBeVisible();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.changeObjectActivateStatus(
+			objectDefinitionA.label['en_US']
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(page.getByRole('cell', {name: 'textField'})).toBeVisible();
+		await expect(
+			page.getByRole('cell', {name: 'Relationship'})
+		).not.toBeVisible();
+	});
 });
 
 test.describe('Content Pages Mapping', () => {
@@ -687,6 +826,140 @@ test.describe('Content Pages Mapping', () => {
 					page.locator('.component-image img')
 				).toBeVisible();
 			});
+		}
+	);
+
+	test(
+		'relationship field cannot be selected for page fragment mapping when parent object is inactive',
+		{tag: '@LPS-139005'},
+		async ({
+			apiHelpers,
+			page,
+			pageEditorPage,
+			site,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinitionA =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			const objectDefinitionB =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+					titleObjectFieldName: 'textField',
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinitionA.id,
+				type: 'objectDefinition',
+			});
+
+			apiHelpers.data.push({
+				id: objectDefinitionB.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinitionA.externalReferenceCode,
+					{
+						label: {en_US: 'Relationship'},
+						name: 'relationship' + getRandomInt(),
+						objectDefinitionExternalReferenceCode1:
+							objectDefinitionA.externalReferenceCode,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinitionB.externalReferenceCode,
+						objectDefinitionId1: objectDefinitionA.id,
+						objectDefinitionId2: objectDefinitionB.id,
+						objectDefinitionName2: objectDefinitionB.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			const restPathB = `c/${objectDefinitionB.name.toLowerCase()}s`;
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{['textField']: 'Entry B'},
+				restPathB
+			);
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([headingDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByRole('button', {name: 'Select Item'}).click();
+
+			const selectFrame = page.frameLocator('iframe[title="Select"]');
+
+			await selectFrame
+				.getByRole('menuitem', {
+					name: objectDefinitionB.label['en_US'],
+				})
+				.click();
+
+			await selectFrame
+				.getByText('Entry B', {exact: true})
+				.first()
+				.click();
+
+			await page.getByLabel('Field').click();
+
+			await expect(
+				page.getByRole('option', {
+					name: objectRelationship.label.en_US,
+				})
+			).toBeAttached();
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.changeObjectActivateStatus(
+				objectDefinitionA.label.en_US
+			);
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await page.getByText('Heading Example', {exact: true}).dblclick();
+
+			await page.getByRole('button', {name: 'Select Item'}).click();
+
+			await selectFrame
+				.getByRole('menuitem', {
+					name: objectDefinitionB.label['en_US'],
+				})
+				.click();
+
+			await selectFrame
+				.getByText('Entry B', {exact: true})
+				.first()
+				.click();
+
+			await page.getByLabel('Field').click();
+
+			await expect(
+				page.getByRole('option', {
+					name: objectRelationship.label.en_US,
+				})
+			).not.toBeAttached();
 		}
 	);
 });

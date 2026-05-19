@@ -78,7 +78,7 @@ test(
 		await page.getByLabel('Privacy Policy Link').fill(script);
 		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
 
-		await saveOrUpdateConfiguration(false, page);
+		await saveOrUpdateConfiguration(page);
 	}
 );
 
@@ -115,7 +115,7 @@ test(
 			.getByLabel('Personalization Cookies Description', {exact: true})
 			.fill(script);
 
-		await saveOrUpdateConfiguration(false, page);
+		await saveOrUpdateConfiguration(page);
 
 		const cookiesBanner = page.locator(
 			'div[role="dialog"][aria-modal="true"]'
@@ -312,7 +312,7 @@ test(
 			})
 			.click();
 
-		await saveOrUpdateConfiguration(false, systemSettingsPage.page);
+		await saveOrUpdateConfiguration(systemSettingsPage.page);
 
 		const imageButton = systemSettingsPage.page.locator(
 			'#_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_floatingIconButton'
@@ -609,10 +609,7 @@ test(
 
 		await controlPanelIcon.click();
 
-		await saveOrUpdateConfiguration(
-			true,
-			consentManagerConfigurationPage.page
-		);
+		await saveOrUpdateConfiguration(consentManagerConfigurationPage.page);
 
 		await expect(controlPanelIcon).toBeChecked();
 

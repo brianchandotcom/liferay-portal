@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -16,6 +17,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.util.ExecutionContextHelper;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoLogLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
@@ -62,6 +64,16 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoInstanceToken.getKaleoDefinitionVersionId());
+
+		if ((kaleoDefinitionVersion == null) ||
+			!kaleoDefinitionVersion.isKaleoTimerExists()) {
+
+			return;
+		}
 
 		List<KaleoTimerInstanceToken> kaleoTimerInstanceTokens =
 			_kaleoTimerInstanceTokenLocalService.getKaleoTimerInstanceTokens(
@@ -149,6 +161,16 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoInstanceToken.getKaleoDefinitionVersionId());
+
+		if ((kaleoDefinitionVersion == null) ||
+			!kaleoDefinitionVersion.isBlockingKaleoTimerExists()) {
+
+			return false;
+		}
+
 		int count =
 			_kaleoTimerInstanceTokenLocalService.
 				getKaleoTimerInstanceTokensCount(
@@ -164,6 +186,10 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;

@@ -20,7 +20,7 @@ query getWorkspaceGroupPagesPage(
         sort: $sort
         start: $start
     ) {
-        assetMetrics {
+        pageMetrics: assetMetrics {
             ... on PageMetric {
                 assetId
                 assetTitle

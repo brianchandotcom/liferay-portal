@@ -1,0 +1,99 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-90204",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "MCPServerDataMask"
+	},
+	"items": [
+		{
+			"active": true,
+			"description": "Detects credit card numbers using pattern matching with Luhn checksum validation.",
+			"detectionRegex": "\\b(?:\\d[ \\-]?){13,19}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_CREDIT_CARD",
+			"maskType": "system",
+			"name": "Credit card numbers",
+			"replacementValue": "[CREDIT_CARD]"
+		},
+		{
+			"active": true,
+			"description": "Detects email addresses using RFC-compliant pattern matching.",
+			"detectionRegex": "\\b[A-Za-z0-9._%+\\-]+@[A-Za-z0-9.\\-]+\\.[A-Za-z]{2,}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_EMAIL",
+			"maskType": "system",
+			"name": "Email addresses",
+			"replacementValue": "[EMAIL]"
+		},
+		{
+			"active": true,
+			"description": "Detects IBAN-formatted bank account numbers across all country formats. Allows optional whitespace between groups.",
+			"detectionRegex": "\\b[A-Z]{2}\\d{2}(?:\\s?[A-Z0-9]){11,30}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_IBAN",
+			"maskType": "system",
+			"name": "IBAN / Bank accounts",
+			"replacementValue": "[BANK_ACCOUNT]"
+		},
+		{
+			"active": true,
+			"description": "Detects IPv4 addresses and truncates to the /24 subnet.",
+			"detectionRegex": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_IPV4",
+			"maskType": "system",
+			"name": "IP addresses (IPv4)",
+			"replacementRegex": "\\.\\d{1,3}$",
+			"replacementValue": ".0/24"
+		},
+		{
+			"active": true,
+			"description": "Detects IPv6 addresses and truncates to the /48 prefix.",
+			"detectionRegex": "\\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_IPV6",
+			"maskType": "system",
+			"name": "IP addresses (IPv6)",
+			"replacementRegex": ":[0-9a-fA-F]{1,4}(:[0-9a-fA-F]{1,4}){4}$",
+			"replacementValue": "::/48"
+		},
+		{
+			"active": true,
+			"description": "Detects Dutch BSN identification numbers (9 digits, must not start with 0).",
+			"detectionRegex": "\\b[1-9]\\d{8}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_NATIONAL_ID_BSN",
+			"maskType": "system",
+			"name": "National IDs (BSN)",
+			"replacementValue": "[NATIONAL_ID]"
+		},
+		{
+			"active": true,
+			"description": "Detects Spanish DNI/NIF identification numbers.",
+			"detectionRegex": "\\b\\d{8}[A-Z]\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_NATIONAL_ID_DNI_NIF",
+			"maskType": "system",
+			"name": "National IDs (DNI/NIF)",
+			"replacementValue": "[NATIONAL_ID]"
+		},
+		{
+			"active": true,
+			"description": "Detects US Social Security Numbers.",
+			"detectionRegex": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_NATIONAL_ID_SSN",
+			"maskType": "system",
+			"name": "National IDs (SSN)",
+			"replacementValue": "[NATIONAL_ID]"
+		},
+		{
+			"active": true,
+			"description": "Detects phone numbers in international format (leading + required).",
+			"detectionRegex": "(?<!\\d)\\+\\d[\\d\\s\\-().]{6,19}(?!\\d)",
+			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_PHONE",
+			"maskType": "system",
+			"name": "Phone numbers",
+			"replacementValue": "[PHONE]"
+		}
+	]
+}

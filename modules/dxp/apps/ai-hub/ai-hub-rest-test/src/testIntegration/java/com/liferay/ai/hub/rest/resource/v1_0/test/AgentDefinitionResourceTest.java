@@ -13,6 +13,7 @@ import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.pagination.Pagination;
+import com.liferay.ai.hub.rest.client.resource.v1_0.AgentDefinitionResource;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.model.ObjectDefinition;
@@ -23,17 +24,27 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.NoSuchWorkflowDefinitionException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -112,12 +123,13 @@ public class AgentDefinitionResourceTest
 
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
-		AccountEntry aiHubAccountEntry =
+		_aiHubAccountEntry =
 			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
 				"L_AI_HUB", TestPropsValues.getCompanyId());
 
 		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			aiHubAccountEntry.getAccountEntryId(), TestPropsValues.getUserId());
+			_aiHubAccountEntry.getAccountEntryId(),
+			TestPropsValues.getUserId());
 	}
 
 	@AfterClass
@@ -175,6 +187,7 @@ public class AgentDefinitionResourceTest
 	@Test
 	public void testGetAgentDefinitionsPage() throws Exception {
 		_testGetAgentDefinitionsPage();
+		_testGetAgentDefinitionsPagePermissionsActions();
 		_testGetAgentDefinitionsPageWithFilter();
 	}
 
@@ -439,6 +452,76 @@ public class AgentDefinitionResourceTest
 			_systemAgentDefinitions, (List<AgentDefinition>)page.getItems());
 	}
 
+	private void _testGetAgentDefinitionsPagePermissionsActions()
+		throws Exception {
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			testCompany.getCompanyId(), TestPropsValues.getUserId(), password,
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			ServiceContextTestUtil.getServiceContext());
+
+		user.setEmailAddressVerified(true);
+
+		user = _userLocalService.updateUser(user);
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			_aiHubAccountEntry.getAccountEntryId(), user.getUserId());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_userLocalService.addRoleUser(role.getRoleId(), user.getUserId());
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			testCompany.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(testCompany.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		AgentDefinitionResource agentDefinitionResource =
+			AgentDefinitionResource.builder(
+			).authentication(
+				user.getEmailAddress(), password
+			).endpoint(
+				testCompany.getVirtualHostname(),
+				PortalUtil.getPortalServerPort(false), "http"
+			).locale(
+				LocaleUtil.getDefault()
+			).build();
+
+		Page<AgentDefinition> page =
+			agentDefinitionResource.getAgentDefinitionsPage(
+				null, null, Pagination.of(1, 10), null);
+
+		for (AgentDefinition agentDefinition : page.getItems()) {
+			Map<String, Map<String, String>> actions =
+				agentDefinition.getActions();
+
+			Assert.assertFalse(actions.containsKey("permissions"));
+		}
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			testCompany.getCompanyId(), objectDefinition.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(testCompany.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.PERMISSIONS, ActionKeys.VIEW});
+
+		page = agentDefinitionResource.getAgentDefinitionsPage(
+			null, null, Pagination.of(1, 10), null);
+
+		for (AgentDefinition agentDefinition : page.getItems()) {
+			Map<String, Map<String, String>> actions =
+				agentDefinition.getActions();
+
+			Assert.assertTrue(actions.containsKey("permissions"));
+		}
+	}
+
 	private void _testGetAgentDefinitionsPageWithFilter() throws Exception {
 
 		// Active as false
@@ -467,6 +550,7 @@ public class AgentDefinitionResourceTest
 	private static AccountEntryUserRelLocalService
 		_accountEntryUserRelLocalService;
 
+	private static AccountEntry _aiHubAccountEntry;
 	private static DTOConverterContext _dtoConverterContext;
 
 	@Inject
@@ -646,6 +730,12 @@ public class AgentDefinitionResourceTest
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject
 	private WorkflowDefinitionManager _workflowDefinitionManager;

@@ -18,6 +18,7 @@ const hubspotConfig: ConnectorConfig = {
 		}
 	],
 	languages: buildLanguages(displayName),
+	requiresLDP: true,
 	singleton: true,
 	slug: SLUG,
 	type: DataSourceTypes.Hubspot

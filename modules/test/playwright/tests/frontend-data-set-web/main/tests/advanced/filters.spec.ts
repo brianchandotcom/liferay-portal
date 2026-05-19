@@ -157,6 +157,7 @@ test(
 
 				await expect(group1.getByRole('menuitem')).toHaveText([
 					'Date Range',
+					'Date Time Range',
 					'Color',
 				]);
 
@@ -215,7 +216,13 @@ test(
 					page.getByRole('menuitem', {name: 'Color'})
 				).toBeVisible();
 				await expect(
-					page.getByRole('menuitem', {name: 'Date Range'})
+					page.getByRole('menuitem', {
+						exact: true,
+						name: 'Date Range',
+					})
+				).toBeVisible();
+				await expect(
+					page.getByRole('menuitem', {name: 'Date Time Range'})
 				).toBeVisible();
 				await expect(
 					page.getByRole('menuitem', {name: 'Client Extension'})
@@ -603,6 +610,40 @@ test(
 
 				await expect(creatorFilterSummaryButton).not.toBeVisible();
 			});
+		});
+	}
+);
+
+test(
+	'Behavior of Date Time Range filter',
+	{tag: ['@LPD-89563']},
+	async ({fdsSamplePage, page}) => {
+		await test.step('Open the Date Time Range filter from the dropdown', async () => {
+			await fdsSamplePage.managementToolbar.filterButton.click();
+
+			await fdsSamplePage.filterMenu
+				.getByRole('menuitem', {name: 'Date Time Range'})
+				.click();
+		});
+
+		await test.step('Check the date-time picker form renders with the From and To labels', async () => {
+			const filterForm = page.locator('.fds-date-time-range');
+
+			await expect(filterForm).toBeVisible();
+
+			await expect(
+				filterForm.locator('label', {hasText: 'From'})
+			).toBeVisible();
+
+			await expect(
+				filterForm.locator('label', {hasText: 'To'})
+			).toBeVisible();
+		});
+
+		await test.step('Check the Add Filter button is disabled while both fields are empty', async () => {
+			await expect(
+				fdsSamplePage.filterShowResultsOrAddButton
+			).toBeDisabled();
 		});
 	}
 );

@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useId, useState} from 'react';
 
 import '../../../../css/utilities.scss';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
@@ -39,6 +40,9 @@ export default function ContentSection({
 	showDeletions,
 	value,
 }: ContentSectionProps) {
+	const [expanded, setExpanded] = useState(false);
+	const bodyId = useId();
+
 	const portletContextsValue = value || {};
 
 	const controls =
@@ -49,6 +53,11 @@ export default function ContentSection({
 	const selected = controls.every((context) =>
 		isSelected(portletContextsValue[context.name], context)
 	);
+
+	const summary = controls
+		.filter((context) => portletContextsValue[context.name] !== undefined)
+		.map((context) => context.label)
+		.join(', ');
 
 	const handleSelectAll = () => {
 		if (selected) {
@@ -66,17 +75,22 @@ export default function ContentSection({
 	};
 
 	return (
-		<div className="mt-0 sheet">
-			<ClayLayout.ContentRow padded>
-				<ClayLayout.ContentCol expand={false}>
-					<ClayCheckbox
-						checked={selected}
-						indeterminate={
-							!!Object.keys(portletContextsValue).length &&
-							!selected
-						}
-						onChange={handleSelectAll}
-					/>
+		<div
+			className="cursor-pointer mt-0 sheet"
+			onClick={() => setExpanded((prev) => !prev)}
+		>
+			<ClayLayout.ContentRow>
+				<ClayLayout.ContentCol className="pr-2" expand={false}>
+					<div onClick={(event) => event.stopPropagation()}>
+						<ClayCheckbox
+							checked={selected}
+							indeterminate={
+								!!Object.keys(portletContextsValue).length &&
+								!selected
+							}
+							onChange={handleSelectAll}
+						/>
+					</div>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
@@ -92,29 +106,58 @@ export default function ContentSection({
 							}
 						/>
 					</div>
+
+					{summary && (
+						<small className="d-block mt-2 text-secondary">
+							{summary}
+						</small>
+					)}
+				</ClayLayout.ContentCol>
+
+				<ClayLayout.ContentCol expand={false}>
+					<ClayButtonWithIcon
+						aria-controls={bodyId}
+						aria-expanded={expanded}
+						aria-label={section.label}
+						className="text-secondary"
+						displayType="unstyled"
+						onClick={(event) => {
+							event.stopPropagation();
+							setExpanded((prev) => !prev);
+						}}
+						symbol={expanded ? 'angle-down' : 'angle-right'}
+					/>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
-			<div className="content-section-controls overflow-auto pl-4">
-				{controls.map((context) => (
-					<PortletDataControl
-						control={context}
-						key={context.name}
-						onChange={(controlValue) =>
-							onChange(
-								updateSelection(
-									portletContextsValue,
-									context.name,
-									controlValue
+			{expanded && (
+				<div
+					className="content-section-controls mt-2 overflow-auto pl-2"
+					id={bodyId}
+					onClick={(event) => event.stopPropagation()}
+				>
+					{controls.map((context) => (
+						<PortletDataControl
+							control={context}
+							key={context.name}
+							onChange={(controlValue) =>
+								onChange(
+									updateSelection(
+										portletContextsValue,
+										context.name,
+										controlValue
+									)
 								)
-							)
-						}
-						pageTreeModalConfiguration={pageTreeModalConfiguration}
-						showDeletions={showDeletions}
-						value={portletContextsValue[context.name]}
-					/>
-				))}
-			</div>
+							}
+							pageTreeModalConfiguration={
+								pageTreeModalConfiguration
+							}
+							showDeletions={showDeletions}
+							value={portletContextsValue[context.name]}
+						/>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

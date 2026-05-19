@@ -3,9 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import React from 'react';
+import React, {useId, useState} from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandler';
@@ -31,7 +33,7 @@ interface PortletDataControlProps {
 }
 
 export default function PortletDataControl({
-	className = 'mb-2',
+	className,
 	control,
 	level = 0,
 	onChange,
@@ -39,6 +41,9 @@ export default function PortletDataControl({
 	showDeletions,
 	value,
 }: PortletDataControlProps) {
+	const [expanded, setExpanded] = useState(false);
+	const bodyId = useId();
+
 	if (
 		control.name === LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY &&
 		pageTreeModalConfiguration
@@ -57,7 +62,7 @@ export default function PortletDataControl({
 	if (control.type === 'Choice') {
 		return (
 			<PortletDataControlChoice
-				className="mt-2 pl-2"
+				className="pl-2"
 				control={control}
 				onChange={onChange}
 				value={typeof value === 'string' ? value : ''}
@@ -66,72 +71,124 @@ export default function PortletDataControl({
 	}
 
 	const selected = isSelected(value, control);
-	const currentSelection = typeof value === 'object' ? value : {};
+	const currentSelection: Record<string, HandlerSelection> =
+		typeof value === 'object' ? value : {};
+
+	const nestedControls = control.previewPortletDataHandlerControls ?? [];
+
+	const expandable = !!nestedControls.length;
+
+	const childrenSummary = nestedControls
+		.filter((nested) => currentSelection[nested.name] !== undefined)
+		.map((nested) => nested.label)
+		.join(', ');
 
 	return (
-		<ClayLayout.ContentRow className={className}>
-			<ClayLayout.ContentCol className="pr-2" expand={false}>
-				<ClayCheckbox
-					checked={selected}
-					indeterminate={!!value && !selected}
-					onChange={() =>
-						onChange(
-							selected ? undefined : getInitialSelection(control)
-						)
-					}
-				/>
-			</ClayLayout.ContentCol>
-
-			<ClayLayout.ContentCol expand>
-				<div className="align-items-center d-flex">
-					<span
-						className={`small ${level === 0 ? 'font-weight-semi-bold' : ''}`}
-					>
-						{control.label}
-					</span>
-
-					{control.type === 'Boolean' && (
-						<SectionTags
-							additionCount={control.additionCount}
-							deletionCount={
-								showDeletions
-									? control.deletionCount
-									: undefined
+		<div
+			className={`${level === 0 ? 'p-3' : ''}${expandable ? ' cursor-pointer' : ''}`}
+			onClick={
+				expandable ? () => setExpanded((prev) => !prev) : undefined
+			}
+		>
+			<ClayLayout.ContentRow>
+				<ClayLayout.ContentCol className="pr-2" expand={false}>
+					<div onClick={(event) => event.stopPropagation()}>
+						<ClayCheckbox
+							checked={selected}
+							indeterminate={!!value && !selected}
+							onChange={() =>
+								onChange(
+									selected
+										? undefined
+										: getInitialSelection(control)
+								)
 							}
 						/>
-					)}
-				</div>
+					</div>
+				</ClayLayout.ContentCol>
 
-				{control.previewPortletDataHandlerControls?.map(
-					(nestedControl) =>
-						nestedControl.type === 'Choice' && !selected ? null : (
-							<PortletDataControl
-								className="mt-2"
-								control={nestedControl}
-								key={nestedControl.name}
-								level={level + 1}
-								onChange={(controlValue) =>
-									onChange(
-										updateSelection(
-											currentSelection,
-											nestedControl.name,
-											controlValue
-										)
-									)
-								}
-								pageTreeModalConfiguration={
-									pageTreeModalConfiguration
-								}
-								showDeletions={showDeletions}
-								value={
-									currentSelection[nestedControl.name] as
-										| HandlerSelection
-										| undefined
+				<ClayLayout.ContentCol expand>
+					<div className="align-items-center d-flex">
+						<span
+							className={`small ${level === 0 ? 'font-weight-semi-bold' : ''}`}
+						>
+							{control.label}
+						</span>
+
+						{control.type === 'Boolean' && (
+							<SectionTags
+								additionCount={control.additionCount}
+								deletionCount={
+									showDeletions
+										? control.deletionCount
+										: undefined
 								}
 							/>
-						)
+						)}
+					</div>
+
+					{expandable && childrenSummary && (
+						<small className="d-block mt-2 text-secondary">
+							{childrenSummary}
+						</small>
+					)}
+				</ClayLayout.ContentCol>
+
+				{expandable && (
+					<ClayLayout.ContentCol expand={false}>
+						<ClayButton
+							aria-controls={bodyId}
+							aria-expanded={expanded}
+							displayType="link"
+							onClick={(event) => {
+								event.stopPropagation();
+								setExpanded((prev) => !prev);
+							}}
+							small
+						>
+							{expanded
+								? Liferay.Language.get('hide-all')
+								: Liferay.Language.get('show-all')}
+
+							<ClayIcon
+								className="ml-1"
+								symbol={expanded ? 'angle-down' : 'angle-right'}
+							/>
+						</ClayButton>
+					</ClayLayout.ContentCol>
 				)}
-			</ClayLayout.ContentCol>
-		</ClayLayout.ContentRow>
+			</ClayLayout.ContentRow>
+
+			{expandable && expanded && (
+				<div
+					className="c-gap-1 d-flex flex-column mt-2"
+					id={bodyId}
+					onClick={(event) => event.stopPropagation()}
+					style={{paddingLeft: '44px'}}
+				>
+					{nestedControls.map((nestedControl) => (
+						<PortletDataControl
+							control={nestedControl}
+							key={nestedControl.name}
+							level={level + 1}
+							onChange={(controlValue) =>
+								onChange(
+									updateSelection(
+										currentSelection,
+										nestedControl.name,
+										controlValue
+									)
+								)
+							}
+							pageTreeModalConfiguration={
+								pageTreeModalConfiguration
+							}
+							showDeletions={showDeletions}
+							value={currentSelection[nestedControl.name]}
+						/>
+					))}
+				</div>
+			)}
+		</div>
 	);
 }

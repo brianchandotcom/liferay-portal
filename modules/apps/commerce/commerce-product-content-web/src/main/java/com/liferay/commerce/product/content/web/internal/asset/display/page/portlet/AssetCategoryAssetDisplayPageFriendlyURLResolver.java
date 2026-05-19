@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -83,7 +84,10 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				companyGroup.getGroupId(),
-				_portal.getClassNameId(AssetCategory.class), urlTitle);
+				_portal.getClassNameId(AssetCategory.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				urlTitle);
 
 		if (friendlyURLEntry == null) {
 			return null;
@@ -150,7 +154,10 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				companyGroup.getGroupId(),
-				_portal.getClassNameId(AssetCategory.class), urlTitle);
+				_portal.getClassNameId(AssetCategory.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				urlTitle);
 
 		if (friendlyURLEntry == null) {
 			return null;

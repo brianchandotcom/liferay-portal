@@ -6,6 +6,7 @@
 package com.liferay.staging.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -67,7 +68,10 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				stagingGroup.getGroupId(), layoutClassNameId, testFriendlyURL);
+				stagingGroup.getGroupId(), layoutClassNameId,
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				testFriendlyURL);
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLLocalizationEntry(
 			friendlyURLEntryLocalization.getFriendlyURLEntryId(),
@@ -110,13 +114,17 @@ public class StagingLayoutFriendlyURLTest extends BaseLocalStagingTestCase {
 
 		FriendlyURLEntryLocalization liveFriendlyURLEntryLocalization1 =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				liveGroup.getGroupId(), layoutClassNameId, "en_US",
-				originalFriendlyURL);
+				liveGroup.getGroupId(), layoutClassNameId,
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				"en_US", originalFriendlyURL);
 
 		FriendlyURLEntryLocalization liveFriendlyURLEntryLocalization2 =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				liveGroup.getGroupId(), layoutClassNameId, "en_US",
-				testFriendlyURL);
+				liveGroup.getGroupId(), layoutClassNameId,
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				"en_US", testFriendlyURL);
 
 		Assert.assertEquals(
 			liveLayout.getPlid(),

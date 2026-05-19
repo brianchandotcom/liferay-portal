@@ -6,6 +6,7 @@
 package com.liferay.document.library.internal.friendly.url.resolver;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,8 @@ public class FileEntryFriendlyURLResolverImpl
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId, _classNameLocalService.getClassNameId(FileEntry.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				friendlyURL);
 
 		if (friendlyURLEntry == null) {

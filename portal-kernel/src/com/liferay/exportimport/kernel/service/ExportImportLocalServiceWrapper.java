@@ -263,13 +263,13 @@ public class ExportImportLocalServiceWrapper
 	}
 
 	@Override
-	public long mergeLayoutSetPrototypeInBackground(
+	public long syncLayoutSetPrototypeInBackground(
 			long userId, long groupId,
 			com.liferay.exportimport.kernel.model.ExportImportConfiguration
 				exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _exportImportLocalService.mergeLayoutSetPrototypeInBackground(
+		return _exportImportLocalService.syncLayoutSetPrototypeInBackground(
 			userId, groupId, exportImportConfiguration);
 	}
 
@@ -336,4 +336,4 @@ public class ExportImportLocalServiceWrapper
 	private ExportImportLocalService _exportImportLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-315991513
+// LIFERAY-SERVICE-BUILDER-HASH:1971250427

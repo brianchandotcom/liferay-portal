@@ -163,7 +163,7 @@ public interface ExportImportLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@CTAware
-	public long mergeLayoutSetPrototypeInBackground(
+	public long syncLayoutSetPrototypeInBackground(
 			long userId, long groupId,
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
@@ -191,4 +191,4 @@ public interface ExportImportLocalService extends BaseLocalService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-211553404
+// LIFERAY-SERVICE-BUILDER-HASH:863161083

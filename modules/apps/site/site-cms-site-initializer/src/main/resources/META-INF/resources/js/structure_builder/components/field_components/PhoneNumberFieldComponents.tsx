@@ -32,11 +32,12 @@ export default function getPhoneNumberFieldComponents(): {
 	SecondSectionComponent?: React.FC<{disabled?: boolean; field: Field}>;
 } {
 	return {
+		FirstSectionComponent,
 		SecondSectionComponent,
 	};
 }
 
-function SecondSectionComponent({
+function FirstSectionComponent({
 	disabled,
 	field,
 }: {
@@ -46,9 +47,6 @@ function SecondSectionComponent({
 	const phoneNumberField = field as PhoneNumberField;
 
 	const dispatch = useStateDispatch();
-	const publishedChildren = useSelector(selectPublishedChildren);
-
-	const isPublished = publishedChildren.has(field.uuid);
 
 	const prefixTypeId = useId();
 	const prefixId = useId();
@@ -69,7 +67,7 @@ function SecondSectionComponent({
 
 				<Picker
 					aria-label={Liferay.Language.get('prefix-type')}
-					disabled={disabled || isPublished}
+					disabled={disabled}
 					id={prefixTypeId}
 					items={PREFIX_TYPE_OPTIONS}
 					onSelectionChange={(value: React.Key) => {
@@ -112,7 +110,7 @@ function SecondSectionComponent({
 					</label>
 
 					<PhonePrefixSelector
-						disabled={disabled || isPublished}
+						disabled={disabled}
 						id={prefixId}
 						onChange={(countryCode) => {
 							const country = config.countries.find(
@@ -138,25 +136,42 @@ function SecondSectionComponent({
 					/>
 				</ClayForm.Group>
 			)}
-
-			<ClayForm.Group className="mb-3">
-				<ClayCheckbox
-					checked={phoneNumberField.settings.uniqueValues || false}
-					disabled={disabled || isPublished}
-					label={Liferay.Language.get('accept-unique-values-only')}
-					onChange={(event) => {
-						dispatch({
-							settings: {
-								...phoneNumberField.settings,
-								uniqueValues: event.target.checked,
-							},
-							type: 'update-field',
-							uuid: field.uuid,
-						});
-					}}
-				/>
-			</ClayForm.Group>
 		</>
+	);
+}
+
+function SecondSectionComponent({
+	disabled,
+	field,
+}: {
+	disabled?: boolean;
+	field: Field;
+}) {
+	const phoneNumberField = field as PhoneNumberField;
+
+	const dispatch = useStateDispatch();
+	const publishedChildren = useSelector(selectPublishedChildren);
+
+	const isPublished = publishedChildren.has(field.uuid);
+
+	return (
+		<ClayForm.Group className="mb-3">
+			<ClayCheckbox
+				checked={phoneNumberField.settings.uniqueValues || false}
+				disabled={disabled || isPublished}
+				label={Liferay.Language.get('accept-unique-values-only')}
+				onChange={(event) => {
+					dispatch({
+						settings: {
+							...phoneNumberField.settings,
+							uniqueValues: event.target.checked,
+						},
+						type: 'update-field',
+						uuid: field.uuid,
+					});
+				}}
+			/>
+		</ClayForm.Group>
 	);
 }
 

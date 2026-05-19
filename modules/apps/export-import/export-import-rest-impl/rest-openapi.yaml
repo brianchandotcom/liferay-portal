@@ -132,6 +132,18 @@ components:
                         The import process's end status.
                     readOnly: true
             type: object
+        ImportRequest:
+            properties:
+                fileEntryId:
+                    format: int64
+                    type: integer
+                requestPortletDataHandlers:
+                    items:
+                        $ref: "#/components/schemas/RequestPortletDataHandler"
+                    type: array
+            required:
+                -   fileEntryId
+            type: object
         Origin:
             properties:
                 code:
@@ -501,6 +513,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/import-processes":
+        post:
+            operationId: postAssetLibraryImportProcess
+            parameters:
+                -   in: path
+                    name: assetLibraryExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+            tags: ["ImportProcess"]
     "/asset-libraries/{assetLibraryId}/import-processes":
         description:
             Retrieves the import process entries for the specified asset library.
@@ -698,6 +737,26 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ImportProcess"
                                 type: array
+            tags: ["ImportProcess"]
+        post:
+            operationId: postImportProcess
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
     "/import-processes/{importProcessId}":
         get:
@@ -920,6 +979,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportPreview"
             tags: ["ImportPreview"]
+    "/sites/{siteExternalReferenceCode}/import-processes":
+        post:
+            operationId: postSiteImportProcess
+            parameters:
+                -   in: path
+                    name: siteExternalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ImportRequest"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ImportProcess"
+            tags: ["ImportProcess"]
     "/sites/{siteId}/import-processes":
         description:
             Retrieves the import process entries for the specified site.

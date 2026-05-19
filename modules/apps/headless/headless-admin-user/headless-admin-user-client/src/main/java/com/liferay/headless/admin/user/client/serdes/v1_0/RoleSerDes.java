@@ -245,6 +245,20 @@ public class RoleSerDes {
 			sb.append("\"");
 		}
 
+		if (role.getSubtype() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"subtype\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(role.getSubtype()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -374,6 +388,13 @@ public class RoleSerDes {
 			map.put("roleType", String.valueOf(role.getRoleType()));
 		}
 
+		if (role.getSubtype() == null) {
+			map.put("subtype", null);
+		}
+		else {
+			map.put("subtype", String.valueOf(role.getSubtype()));
+		}
+
 		return map;
 	}
 
@@ -435,6 +456,9 @@ public class RoleSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleType")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
 				return false;
 			}
 
@@ -551,6 +575,11 @@ public class RoleSerDes {
 					role.setRoleType((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "subtype")) {
+				if (jsonParserFieldValue != null) {
+					role.setSubtype((String)jsonParserFieldValue);
+				}
+			}
 		}
 
 	}
@@ -632,4 +661,4 @@ public class RoleSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:559130957
+// LIFERAY-REST-BUILDER-HASH:1111972961

@@ -215,6 +215,9 @@ describe('NewImport', () => {
 		expect(screen.getByText('4 KB')).toBeInTheDocument();
 
 		expect(screen.getByText('Design')).toBeInTheDocument();
+
+		await user.click(screen.getByRole('button', {name: 'Design'}));
+
 		expect(screen.getByText('Theme Settings')).toBeInTheDocument();
 
 		expect(screen.getByLabelText('import-permissions')).toBeInTheDocument();

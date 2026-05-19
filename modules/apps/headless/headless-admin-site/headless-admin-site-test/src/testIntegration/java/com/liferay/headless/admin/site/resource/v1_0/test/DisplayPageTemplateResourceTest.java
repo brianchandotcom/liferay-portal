@@ -29,6 +29,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
@@ -1197,12 +1198,8 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate randomDisplayPageTemplate =
 			randomDisplayPageTemplate();
 
-		Repository repository = _portletFileRepository.addPortletRepository(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
-
-		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+		FileEntry fileEntry = FileEntryTestUtil.addPreviewFileEntry(
+			testGroup, _portletFileRepository, getClass());
 
 		randomDisplayPageTemplate.setThumbnailURLReference(
 			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(

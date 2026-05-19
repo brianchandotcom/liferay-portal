@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ThumbnailURLReferenceUtil;
@@ -738,12 +739,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		UtilityPage randomUtilityPage = randomUtilityPage();
 
-		Repository repository = _portletFileRepository.addPortletRepository(
-			testGroup.getGroupId(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
-
-		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+		FileEntry fileEntry = FileEntryTestUtil.addPreviewFileEntry(
+			testGroup, _portletFileRepository, getClass());
 
 		randomUtilityPage.setThumbnailURLReference(
 			() -> ThumbnailURLReferenceUtil.getThumbnailURLReference(

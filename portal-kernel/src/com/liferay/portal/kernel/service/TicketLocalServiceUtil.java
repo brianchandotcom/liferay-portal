@@ -55,6 +55,16 @@ public class TicketLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static Ticket addTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+
+		return getService().addTicket(
+			companyId, className, classPK, type, emailAddress, extraInfo,
+			expirationDate, serviceContext);
+	}
+
 	/**
 	 * Adds the ticket to the database. Also notifies the appropriate model listeners.
 	 *
@@ -295,6 +305,12 @@ public class TicketLocalServiceUtil {
 	}
 
 	public static List<Ticket> getTickets(
+		long companyId, int type, String emailAddress) {
+
+		return getService().getTickets(companyId, type, emailAddress);
+	}
+
+	public static List<Ticket> getTickets(
 		long companyId, String className, long classPK) {
 
 		return getService().getTickets(companyId, className, classPK);
@@ -355,4 +371,4 @@ public class TicketLocalServiceUtil {
 	private static volatile TicketLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2021983297
+// LIFERAY-SERVICE-BUILDER-HASH:815814338

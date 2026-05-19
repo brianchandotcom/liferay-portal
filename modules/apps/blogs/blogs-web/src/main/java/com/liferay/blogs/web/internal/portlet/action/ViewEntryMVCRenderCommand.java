@@ -108,7 +108,8 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 
 			FriendlyURLEntry mainFriendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
-					BlogsEntry.class, entry.getEntryId());
+					_portal.getClassNameId(BlogsEntry.class),
+					entry.getEntryId());
 
 			boolean redirectToLastFriendlyURL = ParamUtil.getBoolean(
 				renderRequest, "redirectToLastFriendlyURL", true);

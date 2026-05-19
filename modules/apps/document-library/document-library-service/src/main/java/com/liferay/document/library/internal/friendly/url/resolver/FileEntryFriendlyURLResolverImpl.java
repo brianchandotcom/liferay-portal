@@ -11,6 +11,7 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -28,7 +29,8 @@ public class FileEntryFriendlyURLResolverImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, FileEntry.class, friendlyURL);
+				groupId, _classNameLocalService.getClassNameId(FileEntry.class),
+				friendlyURL);
 
 		if (friendlyURLEntry == null) {
 			return null;
@@ -36,6 +38,9 @@ public class FileEntryFriendlyURLResolverImpl
 
 		return _dlAppLocalService.getFileEntry(friendlyURLEntry.getClassPK());
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

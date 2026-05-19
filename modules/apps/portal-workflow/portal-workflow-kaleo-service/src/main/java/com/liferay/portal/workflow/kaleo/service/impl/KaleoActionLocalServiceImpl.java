@@ -128,6 +128,14 @@ public class KaleoActionLocalServiceImpl
 				kaleoAction.getExecutionType()));
 	}
 
+	@Override
+	public List<KaleoAction> getKaleoDefinitionVersionKaleoActions(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return kaleoActionPersistence.findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId);
+	}
+
 	@Reference
 	private UserLocalService _userLocalService;
 

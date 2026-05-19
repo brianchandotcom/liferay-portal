@@ -1278,7 +1278,9 @@ public class MirrorsGetTask extends Task {
 	private boolean _skipChecksum;
 	private String _src;
 	private boolean _ssl;
-	private boolean _tryLocalNetwork = true;
+	private boolean _tryLocalNetwork =
+		(System.getenv("JENKINS_URL") != null) ||
+		(System.getenv("MASTER_NETWORK_NAME") != null);
 	private String _userAgent;
 	private String _username;
 	private boolean _verbose;

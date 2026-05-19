@@ -565,6 +565,57 @@ public class FragmentsImporterTest {
 	}
 
 	@Test
+	@TestInfo("LPD-91226")
+	public void testImportFragmentResourcesPreservesIdentifiersWithPropagation()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						_group.getCompanyId(),
+						FragmentServiceConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"propagateChanges", true
+						).build())) {
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
+				FragmentsImportStrategy.OVERWRITE, false);
+
+			List<FragmentCollection> fragmentCollections =
+				_fragmentCollectionLocalService.getFragmentCollections(
+					_group.getGroupId(), 0, 1);
+
+			FragmentCollection fragmentCollection = fragmentCollections.get(0);
+
+			List<FileEntry> resources = fragmentCollection.getResources();
+
+			Assert.assertEquals(resources.toString(), 1, resources.size());
+
+			FileEntry originalFileEntry = resources.get(0);
+
+			_fragmentsImporter.importFragmentEntries(
+				_user.getUserId(), _group.getGroupId(), 0, _resourcesFile,
+				FragmentsImportStrategy.OVERWRITE, false);
+
+			resources = fragmentCollection.getResources();
+
+			Assert.assertEquals(resources.toString(), 1, resources.size());
+
+			FileEntry reimportedFileEntry = resources.get(0);
+
+			Assert.assertEquals(
+				originalFileEntry.getUuid(), reimportedFileEntry.getUuid());
+			Assert.assertEquals(
+				originalFileEntry.getExternalReferenceCode(),
+				reimportedFileEntry.getExternalReferenceCode());
+			Assert.assertEquals(
+				originalFileEntry.getFileEntryId(),
+				reimportedFileEntry.getFileEntryId());
+		}
+	}
+
+	@Test
 	public void testImportInputFragmentEntriesWithTypeOptions()
 		throws Exception {
 

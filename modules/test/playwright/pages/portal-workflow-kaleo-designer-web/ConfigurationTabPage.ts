@@ -34,7 +34,13 @@ export class ConfigurationTabPage {
 		await this.page.waitForLoadState('networkidle');
 
 		const editButton = this.page
-			.getByRole('row', {name: assetType})
+			.getByRole('row')
+			.filter({
+				has: this.page.getByRole('cell', {
+					exact: true,
+					name: assetType,
+				}),
+			})
 			.getByRole('button', {name: 'Edit'});
 
 		await editButton.click();
@@ -81,7 +87,13 @@ export class ConfigurationTabPage {
 
 	getAssignWorkflowDropdown(assetType: string) {
 		return this.page
-			.getByRole('row', {name: assetType})
+			.getByRole('row')
+			.filter({
+				has: this.page.getByRole('cell', {
+					exact: true,
+					name: assetType,
+				}),
+			})
 			.getByTitle('Workflow Definition');
 	}
 }

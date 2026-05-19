@@ -15,10 +15,10 @@ interface IMetricCardTrend {
 }
 
 interface IMetricCardProps {
-	bodyClassName?: string;
 	className?: string;
 	description: string;
 	loading?: boolean;
+	minHeight?: number;
 	renderTrendLabel: (percentageNode: ReactNode) => ReactNode;
 	title: string;
 	trend?: IMetricCardTrend;
@@ -27,10 +27,10 @@ interface IMetricCardProps {
 }
 
 const MetricCard: React.FC<IMetricCardProps> = ({
-	bodyClassName,
 	className,
 	description,
 	loading = false,
+	minHeight,
 	renderTrendLabel,
 	title,
 	trend,
@@ -39,7 +39,10 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 }) => {
 	if (loading) {
 		return (
-			<Card className={classNames(className, 'flex-fill p-3 w-100')}>
+			<Card
+				className={classNames(className, 'flex-fill p-3 w-100')}
+				minHeight={minHeight}
+			>
 				<Card.Body>
 					<Loading />
 				</Card.Body>
@@ -50,45 +53,56 @@ const MetricCard: React.FC<IMetricCardProps> = ({
 	const percentageColor = getStatsColor(trend?.trendClassification || '');
 
 	return (
-		<Card className={classNames(className, 'flex-fill p-3 w-100')}>
+		<Card
+			className={classNames(className, 'flex-fill p-3 w-100')}
+			minHeight={minHeight}
+		>
 			<Card.Title>
 				<div className='text-uppercase text-weight-semi-bold'>
 					<Text>{title}</Text>
 				</div>
 			</Card.Title>
-			<Card.Body className={bodyClassName} noPadding>
-				<div className='mt-1'>
+
+			<Card.Body className='justify-content-between d-flex' noPadding>
+				<div className='mt-2'>
 					<Text color='secondary' size={3}>
 						{description}
 					</Text>
 				</div>
 
-				<span className='mt-3 text-lowercase text-weight-semi-bold'>
-					<Text size={7}>{value}</Text>
-				</span>
+				<div>
+					<div className='mt-2 text-lowercase text-weight-semi-bold'>
+						<Text size={7}>{value}</Text>
+					</div>
 
-				<span className={classNames('text-secondary', trendClassName)}>
-					{!isNil(trend?.trendClassification) &&
-						trend?.trendClassification !==
-							TrendClassification.Neutral && (
-							<ClayIcon
+					<div
+						className={classNames('text-secondary', trendClassName)}
+					>
+						{!isNil(trend?.trendClassification) &&
+							trend?.trendClassification !==
+								TrendClassification.Neutral && (
+								<ClayIcon
+									style={{color: percentageColor}}
+									symbol={
+										getIcon(trend?.percentage ?? 0) ?? ''
+									}
+								/>
+							)}
+
+						{renderTrendLabel(
+							<span
+								className='mr-1'
+								key='percentage'
 								style={{color: percentageColor}}
-								symbol={getIcon(trend?.percentage ?? 0) ?? ''}
-							/>
+							>
+								{`${toRounded(
+									Math.abs(trend?.percentage ?? 0),
+									2
+								)}%`}
+							</span>
 						)}
-					{renderTrendLabel(
-						<span
-							className='mr-1'
-							key='percentage'
-							style={{color: percentageColor}}
-						>
-							{`${toRounded(
-								Math.abs(trend?.percentage ?? 0),
-								2
-							)}%`}
-						</span>
-					)}
-				</span>
+					</div>
+				</div>
 			</Card.Body>
 		</Card>
 	);

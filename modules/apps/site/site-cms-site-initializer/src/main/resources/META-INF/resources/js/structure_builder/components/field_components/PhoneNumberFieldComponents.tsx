@@ -14,7 +14,6 @@ import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {Country} from '../../types/Country';
 import {Field, PhoneNumberField} from '../../utils/field';
-import MaxLengthInput from '../MaxLengthInput';
 import PhonePrefixSelector from '../settings/PhonePrefixSelector';
 
 const PREFIX_TYPE_OPTIONS = [
@@ -157,8 +156,6 @@ function SecondSectionComponent({
 					}}
 				/>
 			</ClayForm.Group>
-
-			<MaxLengthInput disabled={disabled} field={field} />
 		</>
 	);
 }

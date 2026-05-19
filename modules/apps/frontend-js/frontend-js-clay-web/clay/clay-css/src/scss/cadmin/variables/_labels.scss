@@ -1,7 +1,7 @@
 // .label
 
 $cadmin-label-border-color: $cadmin-gray-900 !default;
-$cadmin-label-border-radius: 2px !default; // 2px
+$cadmin-label-border-radius: $cadmin-border-radius !default; // 4px
 $cadmin-label-border-style: solid !default;
 $cadmin-label-border-width: 1px !default;
 $cadmin-label-color: null !default;
@@ -13,7 +13,7 @@ $cadmin-label-padding-x: 4px !default; // 4px
 $cadmin-label-padding-y: 2px !default; // 2px
 $cadmin-label-spacer-x: 4px !default; // 4px
 $cadmin-label-spacer-y: 2px !default; // 2px
-$cadmin-label-text-transform: uppercase !default;
+$cadmin-label-text-transform: none !default;
 
 // .label .sticker
 

@@ -590,7 +590,7 @@ public abstract class BaseRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___, "subtype": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Updates the role.")
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -648,6 +648,10 @@ public abstract class BaseRoleResourceImpl
 			existingRole.setRoleType(role.getRoleType());
 		}
 
+		if (role.getSubtype() != null) {
+			existingRole.setSubtype(role.getSubtype());
+		}
+
 		preparePatch(role, existingRole);
 
 		return putRole(roleId, existingRole);
@@ -656,7 +660,7 @@ public abstract class BaseRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___, "subtype": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the role by its external reference code."
@@ -717,6 +721,10 @@ public abstract class BaseRoleResourceImpl
 
 		if (role.getRoleType() != null) {
 			existingRole.setRoleType(role.getRoleType());
+		}
+
+		if (role.getSubtype() != null) {
+			existingRole.setSubtype(role.getSubtype());
 		}
 
 		preparePatch(role, existingRole);
@@ -827,7 +835,7 @@ public abstract class BaseRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/roles' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___, "subtype": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Creates a new role")
 	@io.swagger.v3.oas.annotations.tags.Tags(
@@ -1149,7 +1157,7 @@ public abstract class BaseRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/{roleId}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___, "subtype": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(description = "Updates the role.")
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -1226,7 +1234,7 @@ public abstract class BaseRoleResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/roles/by-external-reference-code/{externalReferenceCode}' -d $'{"description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "rolePermissions": ___, "roleType": ___, "subtype": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the role by its external reference code."
@@ -2045,4 +2053,4 @@ public abstract class BaseRoleResourceImpl
 		LogFactoryUtil.getLog(BaseRoleResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1491914655
+// LIFERAY-REST-BUILDER-HASH:1091266326

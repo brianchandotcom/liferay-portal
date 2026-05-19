@@ -329,6 +329,27 @@ public class Role implements Cloneable, Serializable {
 
 	protected String roleType;
 
+	public String getSubtype() {
+		return subtype;
+	}
+
+	public void setSubtype(String subtype) {
+		this.subtype = subtype;
+	}
+
+	public void setSubtype(
+		UnsafeSupplier<String, Exception> subtypeUnsafeSupplier) {
+
+		try {
+			subtype = subtypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String subtype;
+
 	@Override
 	public Role clone() throws CloneNotSupportedException {
 		return (Role)super.clone();
@@ -361,4 +382,4 @@ public class Role implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1619867192
+// LIFERAY-REST-BUILDER-HASH:1730995767

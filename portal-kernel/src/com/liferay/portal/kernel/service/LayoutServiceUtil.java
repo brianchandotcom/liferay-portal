@@ -898,6 +898,9 @@ public class LayoutServiceUtil {
 	 * @param iconBytes the byte array of the layout's new icon image
 	 * @param styleBookEntryERC the external reference code of the style book
 	 entry
+	 * @param styleBookEntryScopeERC the external reference code of the group
+	 that owns the style book entry, when the style book entry lives
+	 in a different group than the layout (cross-scope)
 	 * @param faviconFileEntryERC the file entry external reference code of the
 	 layout's new favicon
 	 * @param faviconFileEntryScopeERC the file entry scope external reference
@@ -918,7 +921,8 @@ public class LayoutServiceUtil {
 			Map<java.util.Locale, String> robotsMap, String type,
 			boolean hidden, Map<java.util.Locale, String> friendlyURLMap,
 			boolean hasIconImage, byte[] iconBytes, String styleBookEntryERC,
-			String faviconFileEntryERC, String faviconFileEntryScopeERC,
+			String styleBookEntryScopeERC, String faviconFileEntryERC,
+			String faviconFileEntryScopeERC,
 			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -927,8 +931,9 @@ public class LayoutServiceUtil {
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, hasIconImage, iconBytes, styleBookEntryERC,
-			faviconFileEntryERC, faviconFileEntryScopeERC,
-			masterLayoutPageTemplateEntryERC, serviceContext);
+			styleBookEntryScopeERC, faviconFileEntryERC,
+			faviconFileEntryScopeERC, masterLayoutPageTemplateEntryERC,
+			serviceContext);
 	}
 
 	/**
@@ -1137,4 +1142,4 @@ public class LayoutServiceUtil {
 	private static volatile LayoutService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2069132619
+// LIFERAY-SERVICE-BUILDER-HASH:850773462

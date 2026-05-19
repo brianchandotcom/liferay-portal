@@ -3235,6 +3235,10 @@
 				"name": "Liferay One Global CSS"
 			}
 		],
+		"styleBook": {
+			"key": "liferay-one",
+			"name": "Liferay One"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",

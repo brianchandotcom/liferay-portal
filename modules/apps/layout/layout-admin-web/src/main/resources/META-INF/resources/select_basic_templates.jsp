@@ -60,12 +60,7 @@ SelectLayoutPageTemplateEntryDisplayContext selectLayoutPageTemplateEntryDisplay
 												<p class="card-title">
 													<%= HtmlUtil.escape(selectBasicTemplatesNavigationCard.getTitle()) %>
 
-													<clay:badge
-														cssClass="c-ml-1 c-pl-0 text-uppercase"
-														displayType="warning"
-														label='<%= LanguageUtil.get(request, "deprecated") %>'
-														translucent="<%= true %>"
-													/>
+													<span class="badge badge-translucent badge-warning c-ml-1 c-pl-0 text-uppercase"><span class="badge-item badge-item-expand"><liferay-ui:message key="deprecated" /></span></span>
 												</p>
 											</div>
 										</div>

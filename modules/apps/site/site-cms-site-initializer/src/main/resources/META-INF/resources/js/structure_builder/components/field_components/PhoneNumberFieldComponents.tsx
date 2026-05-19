@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
-import {config} from '../../config';
+import {Country, config} from '../../config';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {Field, PhoneNumberField} from '../../utils/field';
@@ -79,11 +79,11 @@ function SecondSectionComponent({
 								value as PhoneNumberField['settings']['prefixType'],
 						};
 
-						if (value === 'fixed' && !settings.fixedCountryCode) {
-							settings.fixedCountryCode = config.countries[0]?.a2;
+						if (value === 'fixed' && !settings.prefix) {
+							settings.prefix = buildPrefix(config.countries[0]);
 						}
 						else if (value === 'definedByUser') {
-							delete settings.fixedCountryCode;
+							delete settings.prefix;
 						}
 
 						dispatch({
@@ -114,17 +114,27 @@ function SecondSectionComponent({
 					<PhonePrefixSelector
 						disabled={disabled || isPublished}
 						id={prefixId}
-						onChange={(fixedCountryCode) => {
+						onChange={(countryCode) => {
+							const country = config.countries.find(
+								({a2}) => a2 === countryCode
+							);
+
 							dispatch({
 								settings: {
 									...phoneNumberField.settings,
-									fixedCountryCode,
+									prefix: buildPrefix(country),
 								},
 								type: 'update-field',
 								uuid: field.uuid,
 							});
 						}}
-						value={phoneNumberField.settings.fixedCountryCode}
+						value={
+							config.countries.find(
+								(country) =>
+									buildPrefix(country) ===
+									phoneNumberField.settings.prefix
+							)?.a2
+						}
 					/>
 				</ClayForm.Group>
 			)}
@@ -150,4 +160,8 @@ function SecondSectionComponent({
 			<MaxLengthInput disabled={disabled} field={field} />
 		</>
 	);
+}
+
+function buildPrefix(country?: Country) {
+	return `+${country?.prefix}`;
 }

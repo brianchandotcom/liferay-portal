@@ -169,7 +169,7 @@ export type NumericField = BaseField & {
 
 export type PhoneNumberField = BaseField & {
 	settings: {
-		fixedCountryCode?: string;
+		prefix?: string;
 		prefixType: 'definedByUser' | 'fixed';
 	};
 	type: 'phone-number';

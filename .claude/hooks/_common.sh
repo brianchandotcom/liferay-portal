@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 function _atomic_write {
 	local file="${1}"
 
@@ -12,14 +16,14 @@ function _derive_db_name {
 	local suffix="${dir_name#liferay-portal}"
 	suffix="${suffix#-}"
 
-	if [[ -z "${suffix}" ]]
+	if [[ -z ${suffix} ]]
 	then
-		echo "lportal"
+		echo lportal
 
 		return
 	fi
 
-	suffix="$(echo "${suffix}" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/_/g; s/^_+|_+$//g')"
+	suffix="$(echo "${suffix}" | tr "[:upper:]" "[:lower:]" | sed --regexp-extended "s/[^a-z0-9]+/_/g; s/^_+|_+\$//g")"
 	suffix="${suffix:0:56}"
 
 	echo "lportal_${suffix}"
@@ -40,20 +44,20 @@ function _drop_database {
 	local db_name
 	db_name="$(_derive_db_name "$(basename "${worktree_path}")")"
 
-	[[ "${db_name}" != "lportal" ]] || return 0
+	[[ ${db_name} != lportal ]] || return 0
 
-	local user="root"
+	local user=root
 	local password=""
 
-	if [[ -n "${bundles_dir}" && -f "${bundles_dir}/portal-ext.properties" ]]
+	if [[ -n ${bundles_dir} && -f ${bundles_dir}/portal-ext.properties ]]
 	then
-		user="$(_get_property "${bundles_dir}/portal-ext.properties" 'jdbc\.default\.username' 'root')"
-		password="$(_get_property "${bundles_dir}/portal-ext.properties" 'jdbc\.default\.password')"
+		user="$(_get_property "${bundles_dir}/portal-ext.properties" "jdbc\.default\.username" root)"
+		password="$(_get_property "${bundles_dir}/portal-ext.properties" "jdbc\.default\.password")"
 	fi
 
 	local mysql_args=(--user "${user}")
 
-	if [[ -n "${password}" ]]
+	if [[ -n ${password} ]]
 	then
 		mysql_args+=(--password="${password}")
 	fi
@@ -67,21 +71,21 @@ function _find_app_server_parent_dir {
 	local default_props="${project_dir}/app.server.properties"
 	local raw=""
 
-	if [[ -f "${user_props}" ]]
+	if [[ -f ${user_props} ]]
 	then
-		raw="$(grep -E '^[[:space:]]*app\.server\.parent\.dir=' "${user_props}" | tail -1 | sed 's/^[[:space:]]*app\.server\.parent\.dir=//')"
+		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${user_props}" | tail --lines=1 | sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
 	fi
 
-	if [[ -z "${raw}" && -f "${default_props}" ]]
+	if [[ -z ${raw} && -f ${default_props} ]]
 	then
-		raw="$(grep -E '^[[:space:]]*app\.server\.parent\.dir=' "${default_props}" | tail -1 | sed 's/^[[:space:]]*app\.server\.parent\.dir=//')"
+		raw="$(grep --extended-regexp "^[[:space:]]*app\.server\.parent\.dir=" "${default_props}" | tail --lines=1 | sed "s/^[[:space:]]*app\.server\.parent\.dir=//")"
 	fi
 
-	[[ -n "${raw}" ]] || return 1
+	[[ -n ${raw} ]] || return 1
 
 	raw="${raw//\$\{project.dir\}/${project_dir}}"
 
-	(cd "$(dirname "${raw}")" 2>/dev/null && printf '%s/%s\n' "$(pwd)" "$(basename "${raw}")") || return 1
+	(cd "$(dirname "${raw}")" 2>/dev/null && printf "%s/%s\n" "$(pwd)" "$(basename "${raw}")") || return 1
 }
 
 function _find_tomcat_dir {
@@ -90,15 +94,15 @@ function _find_tomcat_dir {
 
 	for candidate in "${bundles_dir}"/tomcat-*
 	do
-		[[ -d "${candidate}" ]] || continue
+		[[ -d ${candidate} ]] || continue
 
-		if [[ -z "${latest}" || "${candidate}" > "${latest}" ]]
+		if [[ -z ${latest} || ${candidate} > ${latest} ]]
 		then
 			latest="${candidate}"
 		fi
 	done
 
-	[[ -n "${latest}" ]] || return 1
+	[[ -n ${latest} ]] || return 1
 
 	echo "${latest}"
 }
@@ -110,9 +114,9 @@ function _get_property {
 
 	local value="${default}"
 
-	if [[ -f "${file}" ]] && grep -Eq "^[[:space:]]*${key}=" "${file}"
+	if [[ -f ${file} ]] && grep --extended-regexp --quiet "^[[:space:]]*${key}=" "${file}"
 	then
-		value="$(grep -E "^[[:space:]]*${key}=" "${file}" | tail -1 | sed -E "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
+		value="$(grep --extended-regexp "^[[:space:]]*${key}=" "${file}" | tail --lines=1 | sed --regexp-extended "s/^[[:space:]]*${key}=[[:space:]]*//; s/[[:space:]]+\$//")"
 	fi
 
 	echo "${value}"

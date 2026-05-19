@@ -47,7 +47,7 @@ liferay-portal-hotfix     →  lportal_hotfix
 liferay-portal            →  lportal (main)
 ```
 
-Rule: strip the `liferay-portal-` prefix, lowercase, replace nonalphanumeric runs with `_`, collapse consecutive `_`, truncate to 56 characters, then prepend `lportal_`.
+Apply this rule: strip the `liferay-portal-` prefix, lowercase, replace nonalphanumeric runs with `_`, collapse consecutive `_`, truncate to 56 characters, then prepend `lportal_`.
 
 ## List All
 
@@ -65,7 +65,7 @@ Show a summary table of every Git worktree with its HTTP port, running status, o
 	ps -eo args | grep --only-matching '\-Dcatalina\.base=[^ ]*' | sed 's/-Dcatalina.base=//'
 	```
 
-Render output like:
+Render the output like this:
 
 ```
 Worktree                                 Port     Status     Offset    Database

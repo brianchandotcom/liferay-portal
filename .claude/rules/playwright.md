@@ -73,7 +73,7 @@ Avoid UI navigation. Use `page.goto(url)` (or a Page method that wraps it) to la
 
 Leaving the system as you found it is mandatory.
 
--   Anything created through `apiHelpers` is auto-cleaned by the `dataApiHelpersTest` fixture (it tracks creates and deletes them at the end of the test).
+-   Anything created through `apiHelpers` is automatically cleaned by the `dataApiHelpersTest` fixture (it tracks creates and deletes them at the end of the test).
 -   Anything created manually — directly via UI, raw API call, or any path outside `apiHelpers` — must be deleted explicitly at the end of the test.
 
 ### Isolated Fixtures
@@ -92,11 +92,11 @@ test('does something', {tag: '@LPD-12345'}, async ({site, page}) => {
 
 Other variants follow the same pattern for different resources — for example `isolatedLayoutTest({type: 'content'})` for a fresh page.
 
-**Default to an isolated fixture unless a dependency forbids it.** A test cannot use one when it relies on pre-seeded content from another resource — for example the `cmsSite` or `pageManagementSite` projects, which provision shared fixtures the test reads from. Those tests must run against the resource their project provides. Anything else — small UI checks, isolated flows, tests that build their own data — should run on an isolated fixture.
+**Default to an isolated fixture unless a dependency forbids it.** A test cannot use one when it relies on preseeded content from another resource — for example the `cmsSite` or `pageManagementSite` projects, which provision shared fixtures the test reads from. Those tests must run against the resource their project provides. Anything else — small UI checks, isolated flows, tests that build their own data — should run on an isolated fixture.
 
 ## Flaky-Proofing
 
-Liferay's JS often loads slower than Playwright fires actions. A naked `click()` after a navigation will frequently miss the handler.
+Liferay's JS often loads slower than Playwright fires actions. A naked `click()` after a navigation frequently misses the handler.
 
 Use these utilities from `modules/test/playwright/utils`:
 

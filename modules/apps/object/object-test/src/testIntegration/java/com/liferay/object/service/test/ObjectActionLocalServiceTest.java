@@ -4014,13 +4014,11 @@ public class ObjectActionLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build());
-
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build());
-
 		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
@@ -4045,7 +4043,6 @@ public class ObjectActionLocalServiceTest {
 					"values", objectEntry1.getValues()
 				).build()),
 			TestPropsValues.getUserId());
-
 		_objectActionEngine.executeObjectAction(
 			objectAction.getName(), ObjectActionTriggerConstants.KEY_STANDALONE,
 			objectDefinition.getObjectDefinitionId(),
@@ -4057,7 +4054,6 @@ public class ObjectActionLocalServiceTest {
 					"values", objectEntry2.getValues()
 				).build()),
 			TestPropsValues.getUserId());
-
 		_objectActionEngine.executeObjectAction(
 			objectAction.getName(), ObjectActionTriggerConstants.KEY_STANDALONE,
 			objectDefinition.getObjectDefinitionId(),

@@ -38,7 +38,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TierPrice")
+@GraphQLName(
+	description = "Quantity-based pricing breakpoint applied to a SKU; the unit price changes once the buyer's quantity reaches the breakpoint. Computed at response time.",
+	value = "TierPrice"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TierPrice")
 public class TierPrice implements Serializable {
@@ -51,7 +54,10 @@ public class TierPrice implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(TierPrice.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the channel's currency resolved for the request locale. This is the human-readable name, not the ISO code.",
+		example = "US Dollar"
+	)
 	public String getCurrency() {
 		if (_currencySupplier != null) {
 			currency = _currencySupplier.get();
@@ -85,14 +91,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the channel's currency resolved for the request locale. This is the human-readable name, not the ISO code."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currency;
 
 	@JsonIgnore
 	private Supplier<String> _currencySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Unit price applied at and above this breakpoint, as a numeric value in the channel currency. Read-only.",
+		example = "9.99"
+	)
 	public Double getPrice() {
 		if (_priceSupplier != null) {
 			price = _priceSupplier.get();
@@ -126,14 +137,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Unit price applied at and above this breakpoint, as a numeric value in the channel currency. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double price;
 
 	@JsonIgnore
 	private Supplier<Double> _priceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-formatted rendering of price including the currency symbol. Read-only.",
+		example = "$9.99"
+	)
 	public String getPriceFormatted() {
 		if (_priceFormattedSupplier != null) {
 			priceFormatted = _priceFormattedSupplier.get();
@@ -167,14 +183,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-formatted rendering of price including the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String priceFormatted;
 
 	@JsonIgnore
 	private Supplier<String> _priceFormattedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Unit price multiplied by the unit-of-measure incremental quantity at this breakpoint. Read-only.",
+		example = "9.99"
+	)
 	public Double getPricingQuantityPrice() {
 		if (_pricingQuantityPriceSupplier != null) {
 			pricingQuantityPrice = _pricingQuantityPriceSupplier.get();
@@ -208,14 +229,19 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Unit price multiplied by the unit-of-measure incremental quantity at this breakpoint. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Double pricingQuantityPrice;
 
 	@JsonIgnore
 	private Supplier<Double> _pricingQuantityPriceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Locale-formatted rendering of pricingQuantityPrice including the currency symbol. Read-only.",
+		example = "$9.99"
+	)
 	public String getPricingQuantityPriceFormatted() {
 		if (_pricingQuantityPriceFormattedSupplier != null) {
 			pricingQuantityPriceFormatted =
@@ -253,7 +279,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Locale-formatted rendering of pricingQuantityPrice including the currency symbol. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String pricingQuantityPriceFormatted;
 
@@ -261,7 +289,10 @@ public class TierPrice implements Serializable {
 	private Supplier<String> _pricingQuantityPriceFormattedSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "202.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Minimum quantity (in base units) at which this tier price activates.",
+		example = "202.1"
+	)
 	@Valid
 	public BigDecimal getQuantity() {
 		if (_quantitySupplier != null) {
@@ -296,7 +327,9 @@ public class TierPrice implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Minimum quantity (in base units) at which this tier price activates."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected BigDecimal quantity;
 
@@ -516,4 +549,4 @@ public class TierPrice implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1289991634
+// LIFERAY-REST-BUILDER-HASH:-1437367325

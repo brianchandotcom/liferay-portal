@@ -202,7 +202,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelAccounts(channelId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists AccountEntry rows eligible for the channel under /channels/{channelId}/accounts. Loads the CommerceChannel via CommerceChannelLocalService, gathers eligibility-typed CommerceChannelAccountEntryRel rows, and calls Vulcan SearchUtil.search on AccountEntry restricted to commerceChannelIds. Exposes ADD_ACCOUNT_ENTRY / VIEW HATEOAS actions. Validation -- NoSuchChannelException -> 404 when an eligibility rel exists and the caller lacks CommerceAccountActionKeys.VIEW_CHANNELS_ACCOUNTS or ownership of an eligible account. List query support — filterable and sortable fields -- AccountEntityModel (dateCreated, dateModified, name, type); search fields -- indexed AccountEntry fields."
+	)
 	public AccountPage channelAccounts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("search") String search,
@@ -228,7 +230,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductAttachments(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists non-image CPAttachmentFileEntry rows (TYPE_OTHER, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/attachments. Resolves the active CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, loads the CommerceChannel, resolves the effective accountId via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Also exposed as the `attachments` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	public AttachmentPage channelProductAttachments(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -251,7 +255,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductImages(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists image-type CPAttachmentFileEntry rows (TYPE_IMAGE, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/images. Resolves the active CPDefinition, loads the channel, resolves the account via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Exposed as the `images` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	public AttachmentPage channelProductImages(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -274,7 +280,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductCategories(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Gets a list of Category related to a Product.")
+	@GraphQLField(
+		description = "Lists AssetCategory entries tagged on the product under /channels/{channelId}/products/{productId}/categories. Resolves the active CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByCProductId and calls AssetCategoryService.getCategories using the CPDefinition classNameId and primary key. Exposed as the `categories` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	public CategoryPage channelProductCategories(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -295,7 +303,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channels(filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CommerceChannel entries visible to the caller. Calls Vulcan SearchUtil.search over the CommerceChannel index scoped to the request company; converts each hit through ChannelDTOConverter. Validation -- None (returns empty page when no matches). List query support — filterable and sortable fields -- ChannelEntityModel (siteGroupId, name); search fields -- indexed channel fields."
+	)
 	public ChannelPage channels(
 			@GraphQLName("search") String search,
 			@GraphQLName("filter") String filterString,
@@ -320,7 +330,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeCurrencies(externalReferenceCode: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves currencies from selected channel.")
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelCurrenciesPage addressed at /channels/by-externalReferenceCode/{externalReferenceCode}/currencies. Resolves the CommerceChannel through CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the numeric handler so search, filter and sort behave identically. Validation -- NoSuchChannelException -> 404 when the channel ERC is missing. List query support — filterable and sortable fields -- currency index fields; search fields -- indexed currency fields."
+	)
 	public CurrencyPage channelByExternalReferenceCodeCurrencies(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("search") String search,
@@ -348,7 +360,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelCurrencies(channelId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves currencies from selected channel.")
+	@GraphQLField(
+		description = "Lists CommerceCurrency entries visible to /channels/{channelId}/currencies. Loads the channel by ID; when one or more CommerceChannelRel rows restrict its currencies the result is filtered to those, otherwise every active currency on the company is returned. Validation -- None (returns empty page when no matches). List query support — filterable and sortable fields -- currency index fields; search fields -- indexed currency fields."
+	)
 	public CurrencyPage channelCurrencies(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("search") String search,
@@ -374,7 +388,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductLinkedProducts(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists products linked to a product as grouped entries or shop-by-diagram references under /channels/{channelId}/products/{productId}/linked-products. Resolves the channel, the effective accountId via AccountUtil and the CProduct, then enforces CommerceProductViewPermission. Concatenates results from CPDefinitionGroupedEntryLocalService.getEntryCProductCPDefinitionGroupedEntries (typed GroupedCPTypeConstants.NAME) and CSDiagramEntryLocalService.getCProductCSDiagramEntries (typed CSDiagramCPTypeConstants.NAME); pagination is applied to the merged list in memory. Exposed as the `linkedProducts` field of the Product DTO. Validation -- PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none."
+	)
 	public LinkedProductPage channelProductLinkedProducts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -397,7 +413,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductMappedProducts(accountId: ___, channelId: ___, currencyCode: ___, page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CSDiagramEntry shop-by-diagram mappings for /channels/{channelId}/products/{productId}/mapped-products. Resolves the active CPDefinition, the channel, and the account via AccountUtil, then enforces CommerceProductViewPermission. Builds a CommerceContext from the currencyCode and calls Vulcan SearchUtil.search on the CSDiagramEntry index filtered by CPField.CP_DEFINITION_ID. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support — sortable fields -- indexed CSDiagramEntry fields; search fields -- indexed CSDiagramEntry fields; filterable fields -- none (no OData filter and no published entity model)."
+	)
 	public MappedProductPage channelProductMappedProducts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -425,7 +443,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePins(accountId: ___, channelExternalReferenceCode: ___, page: ___, pageSize: ___, productExternalReferenceCode: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductPinsPage. Resolves both the CommerceChannel and the CProduct through their getByExternalReferenceCode lookups and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only (search and sort declared on the base but not wired); filterable fields -- none."
+	)
 	public PinPage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodePins(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -455,7 +475,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductPins(accountId: ___, channelId: ___, page: ___, pageSize: ___, productId: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CSDiagramPin coordinates for /channels/{channelId}/products/{productId}/pins. Resolves the active CPDefinition, the channel, and the effective account via AccountUtil; enforces CommerceProductViewPermission. Pages CSDiagramPinLocalService.getCSDiagramPins by CPDefinitionId. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only (search and sort declared on the base but not wired); filterable fields -- none."
+	)
 	public PinPage channelProductPins(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -480,7 +502,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProduct(accountId: ___, channelId: ___, productId: ___){attachments, catalogName, categories, createDate, customFields, description, expando, externalReferenceCode, id, images, linkedProducts, metaDescription, metaKeyword, metaTitle, modifiedDate, multipleOrderQuantity, name, productConfiguration, productId, productOptions, productSpecifications, productType, relatedProducts, shortDescription, skus, slug, tags, urlImage, urls}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves products from selected channel.")
+	@GraphQLField(
+		description = "Returns a single Product under /channels/{channelId}/products/{productId}. Resolves the active CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, the CommerceChannel, and the effective accountId through AccountUtil. Short-circuits and returns null when the resolved account is not on the channel's eligibility list and the channel has restrictions. Converts via ProductDTOConverter against a fresh CommerceContext for the requested locale and currency. Validation -- NoSuchCProductException -> 404 when the productId is missing; PrincipalException -> 403 when the caller lacks CommerceProductViewPermission."
+	)
 	public Product channelProduct(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -499,7 +523,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductByFriendlyUrlPath(accountId: ___, channelId: ___, friendlyUrlPath: ___){attachments, catalogName, categories, createDate, customFields, description, expando, externalReferenceCode, id, images, linkedProducts, metaDescription, metaKeyword, metaTitle, modifiedDate, multipleOrderQuantity, name, productConfiguration, productId, productOptions, productSpecifications, productType, relatedProducts, shortDescription, skus, slug, tags, urlImage, urls}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves products from selected channel.")
+	@GraphQLField(
+		description = "Returns a single Product under /channels/{channelId}/products/by-friendly-url-path/{friendlyUrlPath}. Loads the channel, resolves the account through AccountUtil, returns null when the account is not eligible, then resolves the CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByFriendlyURL against the company group. Enforces CommerceProductViewPermission and converts via ProductDTOConverter. Validation -- NoSuchCProductException -> 404 when the friendly URL does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
+	)
 	public Product channelProductByFriendlyUrlPath(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("friendlyUrlPath") String friendlyUrlPath,
@@ -519,7 +545,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProducts(accountId: ___, channelId: ___, filter: ___, page: ___, pageSize: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves products from selected channel.")
+	@GraphQLField(
+		description = "Lists products visible on /channels/{channelId}/products. Resolves the channel and the effective accountId via AccountUtil; when the account fails the channel's eligibility check an empty page is returned. Builds a SearchContext seeded with status=APPROVED, accountEntryId, commerceAccountGroupIds (from AccountGroupLocalService) and the channel group; merges the OData `filter` into a BooleanQuery and applies a CPQuery sorted by title ASC and modifiedDate DESC. Search runs through CPDefinitionHelper.search/searchCount; each CPCatalogEntry is converted via ProductDTOConverter. Validation -- None (returns empty page when no matches or account ineligible). List query support — filterable and sortable fields -- ProductEntityModel (categoryIds, categoryNames, gtins, specificationNames, specificationValues, tags, createDate, modifiedDate, catalogId, statusCode, externalReferenceCode, name, productType) plus every expando custom column exposed via EntityFieldsUtil; search fields -- indexed CPDefinition fields."
+	)
 	public ProductPage channelProducts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("accountId") Long accountId,
@@ -546,7 +574,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptions(channelExternalReferenceCode: ___, page: ___, pageSize: ___, productExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductProductOptionsPage. Resolves the CommerceChannel and CProduct via their ERC lookups and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductOptionPage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptions(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -573,7 +603,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductProductOptions(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CPDefinitionOptionRel rows for /channels/{channelId}/products/{productId}/product-options. Resolves the active CPDefinition through CPDefinitionLocalService.fetchCPDefinitionByCProductId and pages CPDefinitionOptionRelLocalService.getCPDefinitionOptionRels. No permission check is applied. Exposed as the `productOptions` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductOptionPage channelProductProductOptions(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -594,7 +626,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValues(accountId: ___, channelExternalReferenceCode: ___, currencyCode: ___, page: ___, pageSize: ___, productExternalReferenceCode: ___, productOptionExternalReferenceCode: ___, productOptionValueId: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductProductOptionProductOptionValuesPage. Resolves CommerceChannel, CProduct and CPOption through their ERC lookups and delegates to the numeric handler so permission checks, CommerceContext setup, and the returned option value list are identical. Validation -- NoSuchModelException -> 404 when any ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductOptionValuePage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValues(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -629,7 +663,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductProductOptionProductOptionValues(accountId: ___, channelId: ___, currencyCode: ___, page: ___, pageSize: ___, productId: ___, productOptionId: ___, productOptionValueId: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CPDefinitionOptionValueRel entries for /channels/{channelId}/products/{productId}/product-options/{productOptionId}/product-option-values. Resolves the CPDefinition, the channel, and the effective accountId through AccountUtil; enforces CommerceProductViewPermission; pushes a ServiceContext through ServiceContextHelper and builds a CommerceContext from currencyCode. Pages CPDefinitionOptionValueRelLocalService.getCPDefinitionOptionValueRels. Optional productOptionValueId and skuId parameters are forwarded to the DTO converter so the response reflects the candidate configuration's pricing and selectability. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductOptionValuePage
 			channelProductProductOptionProductOptionValues(
 				@GraphQLName("channelId") Long channelId,
@@ -659,7 +695,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecifications(channelExternalReferenceCode: ___, page: ___, pageSize: ___, productExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductProductSpecificationsPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductSpecificationPage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductSpecifications(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -686,7 +724,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductProductSpecifications(channelId: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField
+	@GraphQLField(
+		description = "Lists CPDefinitionSpecificationOptionValue rows (filterable=true) for /channels/{channelId}/products/{productId}/product-specifications. Resolves the active CPDefinition and pages CPDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValues. Exposed as the `productSpecifications` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	public ProductSpecificationPage channelProductProductSpecifications(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -708,7 +748,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductRelatedProducts(channelId: ___, page: ___, pageSize: ___, productId: ___, type: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Gets a list of Related Products of a Product.")
+	@GraphQLField(
+		description = "Lists CPDefinitionLink rows for /channels/{channelId}/products/{productId}/related-products. Resolves the active CPDefinition. When the `type` query parameter is omitted, every APPROVED link is returned; otherwise links are filtered to the supplied type (for example, up-sell, cross-sell). Exposed as the `relatedProducts` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination and `type` filter only; filterable fields -- type."
+	)
 	public RelatedProductPage channelProductRelatedProducts(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -731,7 +773,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(accountId: ___, channelExternalReferenceCode: ___, currencyCode: ___, productExternalReferenceCode: ___, skuExternalReferenceCode: ___){DDMOptions, allowedOrderQuantities, availability, backOrderAllowed, customFields, depth, discontinued, discontinuedDate, displayDate, displayDiscountLevels, expirationDate, externalReferenceCode, gtin, height, id, incomingQuantityLabel, manufacturerPartNumber, maxOrderQuantity, minOrderQuantity, neverExpire, price, productConfiguration, productId, published, purchasable, replacementSku, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, skuUnitOfMeasures, tierPrices, weight, width}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves a product from selected channel.")
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductSku addressed at /channels/by-externalReferenceCode/{...}/products/by-externalReferenceCode/{...}/skus/by-externalReferenceCode/{skuExternalReferenceCode}. Resolves CommerceChannel, CProduct and CPInstance by ERC and delegates to getChannelProductSku, applying CommerceProductViewPermission and the standard CommerceContext for pricing and availability. Validation -- NoSuchModelException -> 404 when any ERC is missing; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
+	)
 	public Sku
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -759,7 +803,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkus(accountId: ___, channelExternalReferenceCode: ___, currencyCode: ___, page: ___, pageSize: ___, productExternalReferenceCode: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves products from selected channel.")
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelProductSkusPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	public SkuPage
 			channelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkus(
 				@GraphQLName("channelExternalReferenceCode") String
@@ -787,7 +833,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductSku(accountId: ___, channelId: ___, currencyCode: ___, productId: ___, skuId: ___){DDMOptions, allowedOrderQuantities, availability, backOrderAllowed, customFields, depth, discontinued, discontinuedDate, displayDate, displayDiscountLevels, expirationDate, externalReferenceCode, gtin, height, id, incomingQuantityLabel, manufacturerPartNumber, maxOrderQuantity, minOrderQuantity, neverExpire, price, productConfiguration, productId, published, purchasable, replacementSku, replacementSkuExternalReferenceCode, replacementSkuId, sku, skuOptions, skuUnitOfMeasures, tierPrices, weight, width}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves a product from selected channel.")
+	@GraphQLField(
+		description = "Returns a single Sku under /channels/{channelId}/products/{productId}/skus/{skuId}. Resolves the CPDefinition and the channel; builds a CommerceContext that picks an AccountEntry from the explicit accountId, the user's eligible commerce accounts, or the guest account. Enforces CommerceProductViewPermission, fetches the CPInstance, resolves the default unit-of-measure key and converts via SkuDTOConverter. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; NoSuchCPInstanceException -> 404 when the skuId does not resolve; NoSuchEntryException -> 404 when the user has multiple eligible accounts and supplied none; PrincipalException -> 403 when the caller lacks VIEW permission on the product."
+	)
 	public Sku channelProductSku(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -807,7 +855,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelProductSkus(accountId: ___, channelId: ___, currencyCode: ___, page: ___, pageSize: ___, productId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves products from selected channel.")
+	@GraphQLField(
+		description = "Lists CPInstance rows (status APPROVED) for /channels/{channelId}/products/{productId}/skus. Resolves the CPDefinition, the channel, the account via AccountUtil, and enforces CommerceProductViewPermission. Pages CPInstanceLocalService.getCPDefinitionInstances and converts each entry via SkuDTOConverter using a per-row CommerceContext. Exposed as the `skus` field of the Product DTO. Validation -- NoSuchCProductException -> 404 when the productId does not resolve; PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none."
+	)
 	public SkuPage channelProductSkus(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
@@ -830,7 +880,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelByExternalReferenceCodeWishLists(accountId: ___, currencyCode: ___, externalReferenceCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves wishlists for a given channel.")
+	@GraphQLField(
+		description = "External-reference-code variant of getChannelWishListsPage. Resolves the CommerceChannel via CommerceChannelLocalService.getCommerceChannelByExternalReferenceCode and delegates to the numeric handler. Pagination behaves identically to the numeric variant; accountId and currencyCode are accepted for parity but not used in the query. Validation -- NoSuchChannelException -> 404 when the channel ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	public WishListPage channelByExternalReferenceCodeWishLists(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("accountId") Long accountId,
@@ -853,7 +905,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelWishLists(accountId: ___, channelId: ___, currencyCode: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves wishlists for a given channel.")
+	@GraphQLField(
+		description = "Lists CommerceWishList rows for /channels/{channelId}/wishlists. Loads the channel through fetchCommerceChannel and pages CommerceWishListService.getCommerceWishLists by the channel's site group. accountId and currencyCode are accepted on the request for parity with sibling endpoints but are not currently used in the query. Validation -- NoSuchChannelException -> 404 when the channelId does not resolve. List query support -- pagination only; filterable fields -- none."
+	)
 	public WishListPage channelWishLists(
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("accountId") Long accountId,
@@ -876,7 +930,9 @@ public class Query {
 	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wishList(wishListId: ___){defaultWishList, id, name, wishListItems}}"}' -u 'test@liferay.com:test'
 	 */
-	@GraphQLField(description = "Retrieves a wishlist by wishListId.")
+	@GraphQLField(
+		description = "Returns the wish list at /wishlists/{wishListId} via CommerceWishListService.getCommerceWishList. Validation -- NoSuchWishListException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks VIEW permission."
+	)
 	public WishList wishList(@GraphQLName("wishListId") Long wishListId)
 		throws Exception {
 
@@ -892,7 +948,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wishListItem(accountId: ___, currencyCode: ___, wishListItemId: ___){finalPrice, friendlyURL, icon, id, productId, productName, skuId}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieves wishlist item by wishListItemId for a specific channel and account"
+		description = "Returns a single WishListItem at /wishlist-items/{wishListItemId}. Loads the entity via CommerceWishListItemService, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, builds a CommerceContext from the resolved accountId and currencyCode, and converts through WishListItemDTOConverter. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListItemException -> 404 when the wishListItemId does not resolve."
 	)
 	public WishListItem wishListItem(
 			@GraphQLName("wishListItemId") Long wishListItemId,
@@ -913,7 +969,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {wishlistWishListWishListItems(accountId: ___, currencyCode: ___, page: ___, pageSize: ___, wishListId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Retrieves wishlist items by wishListId for a specific channel and account"
+		description = "Lists CommerceWishListItem rows for /wishlists/{wishListId}/wishlist-items. Loads the parent CommerceWishList, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, and pages CommerceWishListItemService.getCommerceWishListItems. Each row is converted through WishListItemDTOConverter against a shared CommerceContext for the resolved account and currency. Exposed as the `wishListItems` field of the WishList DTO. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve. List query support -- pagination only; filterable fields -- none."
 	)
 	public WishListItemPage wishlistWishListWishListItems(
 			@GraphQLName("wishListId") Long wishListId,
@@ -942,7 +998,7 @@ public class Query {
 		}
 
 		@GraphQLField(
-			description = "Retrieves wishlist items by wishListId for a specific channel and account"
+			description = "Lists CommerceWishListItem rows for /wishlists/{wishListId}/wishlist-items. Loads the parent CommerceWishList, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, and pages CommerceWishListItemService.getCommerceWishListItems. Each row is converted through WishListItemDTOConverter against a shared CommerceContext for the resolved account and currency. Exposed as the `wishListItems` field of the WishList DTO. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve. List query support -- pagination only; filterable fields -- none."
 		)
 		public WishListItemPage wishlistWishListWishListItems(
 				@GraphQLName("accountId") Long accountId,
@@ -1848,4 +1904,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1388197735
+// LIFERAY-REST-BUILDER-HASH:-884248961

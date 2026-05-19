@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("WishListItem")
+@GraphQLName(
+	description = "Single entry in a wish list referencing a product or SKU together with snapshot display fields the storefront uses to render the saved item.",
+	value = "WishListItem"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "WishListItem")
 public class WishListItem implements Serializable {
@@ -46,7 +49,10 @@ public class WishListItem implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(WishListItem.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Resolved final price of the referenced SKU at the time the response is built, formatted in the channel currency.",
+		example = "$8.99"
+	)
 	public String getFinalPrice() {
 		if (_finalPriceSupplier != null) {
 			finalPrice = _finalPriceSupplier.get();
@@ -80,14 +86,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Resolved final price of the referenced SKU at the time the response is built, formatted in the channel currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String finalPrice;
 
 	@JsonIgnore
 	private Supplier<String> _finalPriceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Resolved friendly URL of the referenced product in the active channel.",
+		example = "/hand-saw"
+	)
 	public String getFriendlyURL() {
 		if (_friendlyURLSupplier != null) {
 			friendlyURL = _friendlyURLSupplier.get();
@@ -121,14 +132,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Resolved friendly URL of the referenced product in the active channel."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String friendlyURL;
 
 	@JsonIgnore
 	private Supplier<String> _friendlyURLSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Resolved URL of the referenced product's thumbnail image.",
+		example = "https://example.com/thumbnail.png"
+	)
 	public String getIcon() {
 		if (_iconSupplier != null) {
 			icon = _iconSupplier.get();
@@ -160,14 +176,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Resolved URL of the referenced product's thumbnail image."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String icon;
 
 	@JsonIgnore
 	private Supplier<String> _iconSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the wish-list item (FK identifier). Read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -199,14 +220,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the wish-list item (FK identifier). Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the referenced product head (FK identifier).",
+		example = "30129"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -240,14 +266,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the referenced product head (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized display name of the referenced product, resolved for the request locale.",
+		example = "Hand Saw"
+	)
 	public String getProductName() {
 		if (_productNameSupplier != null) {
 			productName = _productNameSupplier.get();
@@ -281,14 +312,19 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized display name of the referenced product, resolved for the request locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productName;
 
 	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the referenced SKU (FK identifier).",
+		example = "30130"
+	)
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -320,7 +356,9 @@ public class WishListItem implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the referenced SKU (FK identifier)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
@@ -555,4 +593,4 @@ public class WishListItem implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1720336907
+// LIFERAY-REST-BUILDER-HASH:2035598686

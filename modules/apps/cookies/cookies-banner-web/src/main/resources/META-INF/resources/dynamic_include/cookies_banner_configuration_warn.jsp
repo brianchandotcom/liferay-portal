@@ -9,5 +9,5 @@
 
 <clay:alert
 	displayType="info"
-	message="consent-management-activation-notice"
+	message="consent-management-activation-warning"
 />

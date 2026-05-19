@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alvaro Saugar
  */
 @Component(service = DynamicInclude.class)
-public class CookiesConfigurationActivationNoticeJSPDynamicInclude
+public class CookiesConfigurationActivationWarnJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
 
 	@Override
@@ -41,7 +41,7 @@ public class CookiesConfigurationActivationNoticeJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/notice.jsp";
+		return "/dynamic_include/cookies_banner_configuration_warn.jsp";
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CookiesConfigurationActivationNoticeJSPDynamicInclude
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CookiesConfigurationActivationNoticeJSPDynamicInclude.class);
+		CookiesConfigurationActivationWarnJSPDynamicInclude.class);
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.cookies.banner.web)"

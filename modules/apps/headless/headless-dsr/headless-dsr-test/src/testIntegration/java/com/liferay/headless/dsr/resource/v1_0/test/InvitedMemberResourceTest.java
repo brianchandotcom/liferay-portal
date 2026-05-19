@@ -110,7 +110,7 @@ public class InvitedMemberResourceTest
 		_userLocalService.addGroupUser(groupId, user1.getUserId());
 
 		Role role = _roleLocalService.getRole(
-			_objectEntry.getCompanyId(), DSRRoleConstants.DSR_SELLER);
+			_objectEntry.getCompanyId(), DSRRoleConstants.NAME_DSR_SELLER);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {user1.getUserId()}, groupId, role.getRoleId());
@@ -143,7 +143,7 @@ public class InvitedMemberResourceTest
 			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
 
 		role = _roleLocalService.getRole(
-			_objectEntry.getCompanyId(), DSRRoleConstants.DSR_CONTRIBUTOR);
+			_objectEntry.getCompanyId(), DSRRoleConstants.NAME_DSR_CONTRIBUTOR);
 
 		_userGroupRoleLocalService.addUserGroupRoles(
 			new long[] {_user.getUserId()}, groupId, role.getRoleId());
@@ -241,7 +241,7 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember1.getId(),
 				new InvitedMember() {
 					{
-						roleKey = DSRRoleConstants.DSR_CONTRIBUTOR;
+						roleKey = DSRRoleConstants.NAME_DSR_CONTRIBUTOR;
 					}
 				});
 
@@ -250,7 +250,7 @@ public class InvitedMemberResourceTest
 		Assert.assertEquals(
 			Long.valueOf(_user.getUserId()), patchedInvitedMember.getOwnerId());
 		Assert.assertEquals(
-			DSRRoleConstants.DSR_CONTRIBUTOR,
+			DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
 			patchedInvitedMember.getRoleKey());
 
 		InvitedMember invitedMember2 = randomInvitedMember();
@@ -271,7 +271,7 @@ public class InvitedMemberResourceTest
 				_objectEntry.getObjectEntryId(), invitedMember2.getId(),
 				new InvitedMember() {
 					{
-						roleKey = DSRRoleConstants.DSR_CONTRIBUTOR;
+						roleKey = DSRRoleConstants.NAME_DSR_CONTRIBUTOR;
 					}
 				});
 

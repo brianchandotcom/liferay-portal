@@ -8,13 +8,14 @@ import {mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi} from '../../../utils/performLogin';
 import {localizationPagesTest} from '../../site-admin-web/main/fixtures/localizationPagesTest';
 
 const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const VIRTUAL_INSTANCE_DOMAIN = 'able.com';
-const VIRTUAL_INSTANCE_FULL_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
+const VIRTUAL_INSTANCE_FULL_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`;
 
 export const test = mergeTests(
 	dataApiHelpersTest,

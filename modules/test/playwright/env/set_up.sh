@@ -5,7 +5,7 @@ CURRENT_DIR_NAME=$(dirname ${BASH_SOURCE[0]})
 source ${CURRENT_DIR_NAME}/common.sh
 
 function main {
-	export PORTAL_URL=http://"$(hostname)":8080
+	export PORTAL_URL=${PORTAL_URL:-http://"$(hostname)":8080}
 
 	playwright_project_dir=$(get_playwright_project_dir)
 

@@ -11,6 +11,7 @@ import {appManagerPagesTest} from '../../../fixtures/appManagerPagesTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import performLogin from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {zipFolder} from '../../../utils/zip';
@@ -318,7 +319,7 @@ test(
 			);
 
 			newPage = await browser.newPage({
-				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`,
 			});
 
 			await performLogin(

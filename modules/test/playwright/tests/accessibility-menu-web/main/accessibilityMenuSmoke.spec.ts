@@ -14,6 +14,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import {AccessibilityMenuPage} from '../../../pages/accessibility-menu-web/AccessibilityMenuPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin from '../../../utils/performLogin';
@@ -142,7 +143,7 @@ test.describe('Accessibility Menu Configuration Override and Inheritance', () =>
 			);
 
 			virtualInstancePage = await browser.newPage({
-				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`,
 			});
 
 			await performLogin(

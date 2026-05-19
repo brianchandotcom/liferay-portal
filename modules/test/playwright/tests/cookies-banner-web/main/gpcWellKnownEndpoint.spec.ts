@@ -173,7 +173,7 @@ test(
 
 		await consentManagerConfigurationPage.globalPrivacyControlEnabledCheckbox.check();
 
-		await saveOrUpdateConfiguration(true, page);
+		await saveOrUpdateConfiguration(page);
 
 		await expect(
 			consentManagerConfigurationPage.globalPrivacyControlEnabledCheckbox

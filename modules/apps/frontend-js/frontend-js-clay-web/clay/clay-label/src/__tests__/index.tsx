@@ -27,6 +27,16 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
+	it('renders as inverse displayType ', () => {
+		const testRenderer = TestRenderer.create(
+			<ClayLabel displayType="success" inverse>
+				Success Label
+			</ClayLabel>
+		);
+
+		expect(testRenderer.toJSON()).toMatchSnapshot();
+	});
+
 	it('as a link ', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel href="#/foo/bar">Label w/ link</ClayLabel>

@@ -25,6 +25,10 @@ HomeDashboardDisplayContext homeDashboardDisplayContext = (HomeDashboardDisplayC
 					<liferay-ui:message key="start-building-ai-agents" />
 				</h2>
 
+				<p class="home-dashboard__hero-subtitle">
+					<liferay-ui:message key="create-ai-agents-that-help-teams-and-customers-work-more-efficiently" />
+				</p>
+
 				<a class="btn btn-primary home-dashboard__hero-btn rounded-pill" href="<%= homeDashboardDisplayContext.getCreateAgentURL() %>">
 					<liferay-ui:message key="create-new-agent" />
 				</a>

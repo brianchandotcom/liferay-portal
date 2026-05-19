@@ -6,11 +6,13 @@
 import ClayButton from '@clayui/button';
 
 import {NavbarProps} from '../../../../components/Navbar';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderTypes, orderTypeDocumentationURL} from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
+import {safeJSONParse} from '../../../../utils/util';
 import {BaseOutlet} from '../Apps/App/AppOutlet';
 
 type ProductAndOrderPayload = NonNullable<
@@ -47,96 +49,129 @@ const getTabs = (data: ProductAndOrderPayload): NavbarProps['routes'] => {
 	];
 };
 
-const LiferayProductsOutlet = () => (
-	<BaseOutlet
-		actionButtons={(props) => {
-			const appBeta =
-				props?.marketplaceDeliveryProduct?.specificationValues
-					?.APP_BETA;
+const LiferayProductsOutlet = () => {
+	const {properties} = useMarketplaceContext();
 
-			if (
-				[
-					OrderTypes.AI_HUB,
-					OrderTypes.CMP,
-					OrderTypes.DSR,
-					OrderTypes.DXP,
-				].includes(
-					props?.placedOrder
-						?.orderTypeExternalReferenceCode as OrderTypes
-				)
-			) {
+	return (
+		<BaseOutlet
+			actionButtons={(props) => {
+				const appBeta =
+					props?.marketplaceDeliveryProduct?.specificationValues
+						?.APP_BETA;
+
+				if (
+					[
+						OrderTypes.AI_HUB,
+						OrderTypes.CMP,
+						OrderTypes.DSR,
+						OrderTypes.DXP,
+					].includes(
+						props?.placedOrder
+							?.orderTypeExternalReferenceCode as OrderTypes
+					)
+				) {
+					return (
+						<div className="mt-6">
+							{appBeta && (
+								<ClayButton
+									className="mr-2"
+									displayType="secondary"
+									onClick={() => {
+										Liferay.Util.navigate(
+											`${getSiteURL()}/product-feedback?orderId=${String(props?.placedOrder?.id)}`
+										);
+									}}
+									outline
+									size="sm"
+								>
+									{i18n.translate('share-beta-feedback')}
+								</ClayButton>
+							)}
+
+							{[OrderTypes.CMP, OrderTypes.DXP].includes(
+								props?.placedOrder
+									?.orderTypeExternalReferenceCode as OrderTypes
+							) && (
+								<ClayButton
+									displayType="primary"
+									onClick={() => {
+										Liferay.Util.navigate(
+											`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
+										);
+									}}
+									outline
+									size={appBeta ? 'sm' : 'regular'}
+								>
+									{i18n.translate('new-activation-key')}
+								</ClayButton>
+							)}
+						</div>
+					);
+				}
+
+				if (
+					props.marketplaceDeliveryProduct?.specificationValues
+						?.SOLUTION_TYPE === 'liferay-data-platform'
+				) {
+					const orderMetadata = safeJSONParse(
+						props.placedOrder?.customFields?.ORDER_METADATA || '{}',
+						{
+							analyticsProject: {groupId: 0},
+						}
+					);
+
+					const groupId = orderMetadata?.analyticsProject?.groupId;
+
+					return (
+						<ClayButton
+							displayType="primary"
+							onClick={() => {
+								window.open(
+									`${properties.analyticsCloudURL}/workspace/${groupId}`
+								);
+							}}
+							outline
+							size="regular"
+						>
+							{i18n.translate('go-to-liferay-data-platform')}
+						</ClayButton>
+					);
+				}
+			}}
+			backTitle={i18n.translate('back-to-my-products')}
+			backURL="../../products"
+			description={(props) => {
+				const documentationURL =
+					orderTypeDocumentationURL[
+						props?.placedOrder
+							?.orderTypeExternalReferenceCode as OrderTypes
+					];
+
 				return (
-					<div className="mt-6">
-						{appBeta && (
-							<ClayButton
-								className="mr-2"
-								displayType="secondary"
-								onClick={() => {
-									Liferay.Util.navigate(
-										`${getSiteURL()}/product-feedback?orderId=${String(props?.placedOrder?.id)}`
-									);
-								}}
-								outline
-								size="sm"
-							>
-								{i18n.translate('share-beta-feedback')}
-							</ClayButton>
-						)}
+					<>
+						{props?.product?.shortDescription}
 
-						{[OrderTypes.CMP, OrderTypes.DXP].includes(
-							props?.placedOrder
-								?.orderTypeExternalReferenceCode as OrderTypes
-						) && (
-							<ClayButton
-								displayType="primary"
-								onClick={() => {
-									Liferay.Util.navigate(
-										`${getSiteURL()}/product-purchase?productId=${props?.product?.productId}#/activation-key-form`
-									);
-								}}
-								outline
-								size={appBeta ? 'sm' : 'regular'}
-							>
-								{i18n.translate('new-activation-key')}
-							</ClayButton>
+						{documentationURL && (
+							<span className="d-block mt-2">
+								{i18n.translate('need-help-getting-started?')}
+
+								<a
+									className="font-weight-bold ml-1"
+									href={documentationURL}
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									{i18n.translate('view-the-documentation')}
+								</a>
+							</span>
 						)}
-					</div>
+					</>
 				);
-			}
-		}}
-		backTitle={i18n.translate('back-to-my-products')}
-		backURL="../../products"
-		description={(props) => {
-			const documentationURL =
-				orderTypeDocumentationURL[
-					props?.placedOrder
-						?.orderTypeExternalReferenceCode as OrderTypes
-				];
-
-			return (
-				<>
-					{props?.product?.shortDescription}
-
-					{documentationURL && (
-						<span className="d-block mt-2">
-							{i18n.translate('need-help-getting-started?')}
-
-							<a
-								className="font-weight-bold ml-1"
-								href={documentationURL}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								{i18n.translate('view-the-documentation')}
-							</a>
-						</span>
-					)}
-				</>
-			);
-		}}
-		routes={getTabs}
-		showActions={false}
-	/>
-);
+			}}
+			routes={getTabs}
+			showActions={false}
+		/>
+	);
+};
 
 export default LiferayProductsOutlet;

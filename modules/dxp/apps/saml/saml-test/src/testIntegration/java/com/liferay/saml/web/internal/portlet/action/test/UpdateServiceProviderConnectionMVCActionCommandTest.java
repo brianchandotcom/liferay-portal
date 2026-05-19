@@ -74,7 +74,9 @@ public class UpdateServiceProviderConnectionMVCActionCommandTest
 		_name = RandomTestUtil.randomString();
 
 		return Map.of(
-			"currentURL", Collections.singletonList("http://localhost:" + PortalUtil.getPortalServerPort(false) + ""),
+			"currentURL",
+			Collections.singletonList(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)),
 			"name", Collections.singletonList(_name), "samlIdpSpConnectionId",
 			Collections.singletonList(
 				String.valueOf(samlIdpSpConnection.getSamlIdpSpConnectionId())),

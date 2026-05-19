@@ -146,7 +146,9 @@ public class EditSegmentsExperimentStatusMVCActionCommandTest {
 							"liferayAnalyticsFaroBackendURL",
 							"http://localhost:8086"
 						).put(
-							"liferayAnalyticsURL", "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/"
+							"liferayAnalyticsURL",
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false) + "/"
 						).build())) {
 
 			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(

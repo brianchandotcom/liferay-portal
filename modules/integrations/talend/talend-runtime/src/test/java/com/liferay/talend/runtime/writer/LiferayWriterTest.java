@@ -346,7 +346,7 @@ public class LiferayWriterTest extends BaseTestCase {
 	}
 
 	private static final String _OAS_URL =
-		"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless-commerce-admin-catalog/v1.0" +
-			"/openapi.json";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/headless-commerce-admin-catalog/v1.0/openapi.json";
 
 }

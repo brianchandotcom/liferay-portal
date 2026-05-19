@@ -68,7 +68,8 @@ public class InterestTermsCheckerTest {
 							RandomTestUtil.randomString()
 						).put(
 							"liferayAnalyticsFaroBackendURL",
-							"http://localhost:" + PortalUtil.getPortalServerPort(false) + ""
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false)
 						).build());
 			ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(

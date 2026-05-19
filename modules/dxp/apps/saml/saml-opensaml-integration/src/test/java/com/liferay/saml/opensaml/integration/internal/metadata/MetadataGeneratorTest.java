@@ -53,7 +53,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 		Assert.assertNotNull(
 			MetadataManagerUtil.getEntityDescriptor(
 				getMockHttpServletRequest(
-					"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/metadata"),
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/c/portal/saml/metadata"),
 				samlProviderConfigurationHelper, credentialResolver,
 				keyStoreLocalEntityManager));
 	}
@@ -72,7 +74,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 			_checkMatch(
 				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/metadata"),
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) +
+								"/c/portal/saml/metadata"),
 					samlProviderConfigurationHelper, credentialResolver,
 					keyStoreLocalEntityManager)));
 	}
@@ -97,7 +101,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 			_checkMatch(
 				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/c/portal/saml/metadata"),
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) +
+								"/c/portal/saml/metadata"),
 					samlProviderConfigurationHelper, credentialResolver,
 					keyStoreLocalEntityManager)));
 	}

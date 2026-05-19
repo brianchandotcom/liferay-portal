@@ -50,16 +50,16 @@ public class WikiDisplaySimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/wiki-display?p_p_id=com_liferay_wiki_web_portlet_Wiki",
+			"DisplayPortlet_INSTANCE_U7Z1QHX4C38N&");
+
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
-			"p_p_id=com_liferay_wiki_web_portlet_",
-			"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-			"_com_liferay_wiki_web_portlet_WikiDisplayPortlet_",
-			"INSTANCE_U7Z1QHX4C38N_redirect=http://localhost:" + PortalUtil.getPortalServerPort(false) + "",
-			"/wiki-display?p_p_id=com_liferay_wiki_web_portlet_",
-			"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-			"nodeName=Main&_com_liferay_wiki_web_portlet_",
-			"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N_title=page+1");
+			portalURL, "_com_liferay_wiki_web_portlet_WikiDisplayPortlet_",
+			"INSTANCE_U7Z1QHX4C38N_redirect=", portalURL, "nodeName=Main&_com",
+			"_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE_",
+			"U7Z1QHX4C38N_title=page+1");
 
 		_wikiDisplaySimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -101,19 +101,18 @@ public class WikiDisplaySimilarResultsContributorTest
 
 	@Test
 	public void testWriteDestination() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/wiki-display?p_p_id=com_liferay_wiki_web_portlet_WikiDisplay",
+			"Portlet_INSTANCE_U7Z1QHX4C38N");
+
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
-					"p_p_id=com_liferay_wiki_web_portlet_",
-					"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-					"_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
-					"_INSTANCE_U7Z1QHX4C38N_redirect",
-					"=http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
-					"p_p_id=com_liferay_wiki_web_portlet_",
-					"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-					"nodeName=Main&_com_liferay_wiki_web_portlet",
-					"_WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N_title=page+1"));
+					portalURL, "&_com_liferay_wiki_web_portlet_WikiDisplay",
+					"Portlet_INSTANCE_U7Z1QHX4C38N_redirect=", portalURL,
+					"&nodeName=Main&_com_liferay_wiki_web_portlet_WikiDisplay",
+					"Portlet_INSTANCE_U7Z1QHX4C38N_title=page+1"));
 
 		setUpDestinationHelper(WikiPage.class.getName());
 
@@ -127,18 +126,17 @@ public class WikiDisplaySimilarResultsContributorTest
 		_wikiDisplaySimilarResultsContributor.writeDestination(
 			destinationBuilderImpl, destinationHelper);
 
+		portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/wiki-display?p_p_id=com_liferay_wiki_web_portlet_WikiDisplay",
+			"Portlet_INSTANCE_U7Z1QHX4C38N");
+
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
-				"p_p_id=com_liferay_wiki_web_portlet_",
-				"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-				"_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
-				"_INSTANCE_U7Z1QHX4C38N_redirect",
-				"=http://localhost:" + PortalUtil.getPortalServerPort(false) + "/wiki-display?",
-				"p_p_id=com_liferay_wiki_web_portlet_",
-				"WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N&",
-				"nodeName=newMain&_com_liferay_wiki_web_portlet",
-				"_WikiDisplayPortlet_INSTANCE_U7Z1QHX4C38N_title=page 2"),
+				portalURL, "&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_",
+				"INSTANCE_U7Z1QHX4C38N_redirect=", portalURL, "&nodeName=new",
+				"Main&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_",
+				"INSTANCE_U7Z1QHX4C38N_title=page 2"),
 			destinationBuilderImpl.build());
 	}
 

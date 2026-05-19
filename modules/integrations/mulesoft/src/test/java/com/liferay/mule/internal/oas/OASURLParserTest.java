@@ -22,7 +22,8 @@ public class OASURLParserTest {
 		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "", oasURLParser.getAuthorityWithScheme());
+			"http://localhost:" + PortalUtil.getPortalServerPort(false),
+			oasURLParser.getAuthorityWithScheme());
 	}
 
 	@Test
@@ -68,7 +69,8 @@ public class OASURLParserTest {
 		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless-commerce-admin-catalog",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/headless-commerce-admin-catalog",
 			oasURLParser.getServerBaseURL());
 	}
 
@@ -79,7 +81,8 @@ public class OASURLParserTest {
 		OASURLParser oasURLParser = new OASURLParser(OPEN_API_URL);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/custom-jax-rs-app",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/custom-jax-rs-app",
 			oasURLParser.getServerBaseURL("/custom-jax-rs-app"));
 	}
 
@@ -88,12 +91,12 @@ public class OASURLParserTest {
 		throws MalformedURLException {
 
 		new OASURLParser(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless-commerce-admin-catalog/1.0" +
-				"/openapi.json");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/o/headless-commerce-admin-catalog/1.0/openapi.json");
 	}
 
 	private static final String OPEN_API_URL =
-		"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/o/headless-commerce-admin-catalog/v1.0" +
-			"/openapi.json";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/headless-commerce-admin-catalog/v1.0/openapi.json";
 
 }

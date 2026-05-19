@@ -8,6 +8,7 @@ package com.liferay.portal.search.rest.internal.util;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.search.rest.internal.resource.exception.IllegalScopeParameterException;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class ScopeUtil {
 			}
 			catch (NumberFormatException numberFormatException) {
 				throw new IllegalScopeParameterException(
-					"Invalid external reference code or group ID: " + part,
+					"Invalid external reference code or group ID: " +
+						HtmlUtil.escape(part),
 					numberFormatException);
 			}
 		}

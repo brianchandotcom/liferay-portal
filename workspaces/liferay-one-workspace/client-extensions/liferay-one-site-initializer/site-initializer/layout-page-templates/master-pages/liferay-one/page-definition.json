@@ -1,0 +1,30 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
+				"type": "DropZone"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"globalCSSClientExtensions": [
+			{
+				"externalReferenceCode": "LXC:liferay-one-global-css",
+				"name": "Liferay One Global CSS"
+			}
+		],
+		"styleBook": {
+			"key": "liferay-one",
+			"name": "Liferay One"
+		}
+	},
+	"version": 1.1
+}

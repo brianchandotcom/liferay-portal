@@ -158,6 +158,44 @@ const FDS_PROPS: Omit<
 
 			thumbnail: 'cards2',
 		},
+		{
+			contentRenderer: 'table',
+			label: Liferay.Language.get('table'),
+			name: 'table',
+			schema: {
+				fields: [
+					{
+						contentRenderer: 'cmsFilesTitleCellRenderer',
+						fieldName: 'embedded.title',
+						label: Liferay.Language.get('title'),
+						sortable: false,
+					},
+					{
+						fieldName: 'embedded.file.mimeType',
+						label: Liferay.Language.get('type'),
+						sortable: false,
+					},
+					{
+						fieldName: 'embedded.file.size',
+						label: Liferay.Language.get('size'),
+						sortable: false,
+					},
+					{
+						contentRenderer: 'dateTime',
+						fieldName: 'embedded.dateModified',
+						label: Liferay.Language.get('modified-date'),
+						sortable: false,
+					},
+					{
+						contentRenderer: 'dateTime',
+						fieldName: 'embedded.dateCreated',
+						label: Liferay.Language.get('create-date'),
+						sortable: false,
+					},
+				],
+			},
+			thumbnail: 'table',
+		},
 	],
 };
 

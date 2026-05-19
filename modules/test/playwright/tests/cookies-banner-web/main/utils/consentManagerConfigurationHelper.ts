@@ -93,7 +93,7 @@ export async function resetConsentManagerConfiguration(systemSettingsPage) {
 	await resetConfiguration(true, systemSettingsPage);
 }
 
-export async function saveOrUpdateConfiguration(_dialog: boolean, page) {
+export async function saveOrUpdateConfiguration(page) {
 	const saveButton = page.getByRole('button', {
 		name: 'Save',
 	});
@@ -176,28 +176,11 @@ export async function updateConsentManagerConfiguration(
 		desiredActive = true;
 	}
 
-	let dialog = false;
-
 	if (enabled === false) {
 		await consentManagerConfigurationPage.enabledCheckbox.setChecked(false);
 	}
-	else {
-		if (
-			(await consentManagerConfigurationPage.enabledCheckbox.isChecked()) &&
-			consentRenewalPeriod &&
-			consentRenewalPeriod !==
-				(await consentManagerConfigurationPage.consentRenewalPeriodInput.getAttribute(
-					'value'
-				))
-		) {
-			dialog = true;
-		}
-
-		if (enabled === true) {
-			await consentManagerConfigurationPage.enabledCheckbox.setChecked(
-				true
-			);
-		}
+	else if (enabled === true) {
+		await consentManagerConfigurationPage.enabledCheckbox.setChecked(true);
 	}
 
 	if (await consentManagerConfigurationPage.enabledCheckbox.isChecked()) {
@@ -251,7 +234,7 @@ export async function updateConsentManagerConfiguration(
 		}
 	}
 
-	await saveOrUpdateConfiguration(dialog, page);
+	await saveOrUpdateConfiguration(page);
 
 	if (desiredActive !== undefined && enabled !== false) {
 		const {toggleActivateButton, toggleDeactivateButton} =

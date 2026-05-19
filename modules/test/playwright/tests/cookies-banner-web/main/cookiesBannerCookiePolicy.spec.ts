@@ -156,7 +156,7 @@ test(
 
 			await cookiePolicyLink.fill('http://www.liferay.com');
 
-			await saveOrUpdateConfiguration(false, page);
+			await saveOrUpdateConfiguration(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
 				await expect(hideFromEndUserCheckbox).toBeChecked();
@@ -170,7 +170,7 @@ test(
 				await hideFromEndUserCheckbox.uncheck();
 			}
 
-			await saveOrUpdateConfiguration(false, page);
+			await saveOrUpdateConfiguration(page);
 
 			for (const hideFromEndUserCheckbox of await hideFromEndUserCheckboxes.all()) {
 				await expect(hideFromEndUserCheckbox).not.toBeChecked();

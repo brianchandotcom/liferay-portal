@@ -6,8 +6,8 @@
 		"/products/" + CPDefinition_cProductId.getData() + "/images?accountId=-1"
 	)
 
-	productImages = productImagesResponse.items![]
 	filteredProductImages = []
+	productImages = productImagesResponse.items![]
 >
 
 <#list productImages as image>

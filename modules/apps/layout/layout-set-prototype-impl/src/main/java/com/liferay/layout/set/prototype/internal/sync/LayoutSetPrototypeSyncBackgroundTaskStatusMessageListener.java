@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -81,17 +80,9 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-
-		String syncSessionId = MapUtil.getString(parameterMap, "syncSessionId");
-
-		if (Validator.isNull(syncSessionId)) {
-			return;
-		}
-
-		_layoutSetPrototypeSyncSessionManager.recordBackgroundTaskStatus(
-			backgroundTaskStatus, syncSessionId);
+		LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
+			backgroundTaskStatus,
+			(Map<String, String[]>)settingsMap.get("parameterMap"));
 	}
 
 	@Reference
@@ -100,9 +91,5 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
-
-	@Reference
-	private LayoutSetPrototypeSyncSessionManager
-		_layoutSetPrototypeSyncSessionManager;
 
 }

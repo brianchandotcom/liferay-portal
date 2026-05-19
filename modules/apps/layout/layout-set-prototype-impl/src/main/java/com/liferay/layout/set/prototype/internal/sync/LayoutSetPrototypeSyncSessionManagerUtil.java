@@ -6,72 +6,83 @@
 package com.liferay.layout.set.prototype.internal.sync;
 
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.NotificationEvent;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Carlos Correa
  */
-@Component(service = LayoutSetPrototypeSyncSessionManager.class)
-public class LayoutSetPrototypeSyncSessionManagerImpl
-	implements LayoutSetPrototypeSyncSessionManager {
+public class LayoutSetPrototypeSyncSessionManagerUtil {
 
-	@Override
-	public void openSession(
-		int expectedCount, String siteTemplateName, String syncSessionId,
-		long userId) {
+	public static Map<String, String[]> contribute(
+		Map<String, String[]> parameterMap) {
+
+		parameterMap.put("syncSessionId", new String[] {_syncSessionId.get()});
+
+		return parameterMap;
+	}
+
+	public static void openSession(
+		int expectedCount, String siteTemplateName, long userId) {
 
 		if (expectedCount < 0) {
 			return;
 		}
 
+		String syncSessionId = PortalUUIDUtil.generate();
+
+		_syncSessionId.set(syncSessionId);
+
 		SyncSession syncSession = new SyncSession(
 			expectedCount, siteTemplateName, userId);
 
 		if (expectedCount == 0) {
-			_postNotification(syncSessionId, syncSession);
+			_postNotification(syncSession, syncSessionId);
 		}
 		else {
 			_syncSessions.put(syncSessionId, syncSession);
 		}
 	}
 
-	@Override
-	public void recordBackgroundTaskStatus(
-		int backgroundTaskStatus, String syncSessionId) {
+	public static void recordBackgroundTaskStatus(int backgroundTaskStatus) {
+		String syncSessionId = _syncSessionId.get();
 
-		SyncSession syncSession = _syncSessions.get(syncSessionId);
-
-		if (syncSession == null) {
+		if (Validator.isNull(syncSessionId)) {
 			return;
 		}
 
-		syncSession._backgroundTaskStatuses.add(backgroundTaskStatus);
-
-		if (syncSession._remaining.decrementAndGet() > 0) {
-			return;
-		}
-
-		_syncSessions.remove(syncSessionId);
-
-		_postNotification(syncSessionId, syncSession);
+		_recordBackgroundTaskStatus(backgroundTaskStatus, syncSessionId);
 	}
 
-	private void _postNotification(
-		String syncSessionId, SyncSession syncSession) {
+	public static void recordBackgroundTaskStatus(
+		int backgroundTaskStatus, Map<String, String[]> parameterMap) {
+
+		String syncSessionId = MapUtil.getString(parameterMap, "syncSessionId");
+
+		if (Validator.isNull(syncSessionId)) {
+			return;
+		}
+
+		_recordBackgroundTaskStatus(backgroundTaskStatus, syncSessionId);
+	}
+
+	private static void _postNotification(
+		SyncSession syncSession, String syncSessionId) {
 
 		try {
 			Set<Integer> backgroundTaskStatuses =
@@ -107,7 +118,7 @@ public class LayoutSetPrototypeSyncSessionManagerImpl
 			notificationEvent.setDeliveryType(
 				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
-			_userNotificationEventLocalService.addUserNotificationEvent(
+			UserNotificationEventLocalServiceUtil.addUserNotificationEvent(
 				syncSession._userId, notificationEvent);
 		}
 		catch (Exception exception) {
@@ -118,15 +129,35 @@ public class LayoutSetPrototypeSyncSessionManagerImpl
 		}
 	}
 
+	private static void _recordBackgroundTaskStatus(
+		int backgroundTaskStatus, String syncSessionId) {
+
+		SyncSession syncSession = _syncSessions.get(syncSessionId);
+
+		if (syncSession == null) {
+			return;
+		}
+
+		syncSession._backgroundTaskStatuses.add(backgroundTaskStatus);
+
+		if (syncSession._remaining.decrementAndGet() > 0) {
+			return;
+		}
+
+		_syncSessions.remove(syncSessionId);
+
+		_postNotification(syncSession, syncSessionId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutSetPrototypeSyncSessionManagerImpl.class);
+		LayoutSetPrototypeSyncSessionManagerUtil.class);
 
-	private final ConcurrentMap<String, SyncSession> _syncSessions =
+	private static final ThreadLocal<String> _syncSessionId =
+		new CentralizedThreadLocal<>(
+			LayoutSetPrototypeSyncSessionManagerUtil.class + "._syncSessionId",
+			() -> null);
+	private static final ConcurrentMap<String, SyncSession> _syncSessions =
 		new ConcurrentHashMap<>();
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 	private static class SyncSession {
 

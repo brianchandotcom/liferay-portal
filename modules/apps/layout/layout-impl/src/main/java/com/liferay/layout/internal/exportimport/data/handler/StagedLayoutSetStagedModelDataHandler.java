@@ -902,14 +902,11 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		Map<String, String> defaultsMap = new HashMap<>();
 
-		for (Map.Entry<String, ThemeSetting> entry :
-				themeSettings.entrySet()) {
-
+		for (Map.Entry<String, ThemeSetting> entry : themeSettings.entrySet()) {
 			ThemeSetting themeSetting = entry.getValue();
 
 			defaultsMap.put(
-				ThemeSettingImpl.namespaceProperty(
-					"regular", entry.getKey()),
+				ThemeSettingImpl.namespaceProperty("regular", entry.getKey()),
 				themeSetting.getValue());
 		}
 

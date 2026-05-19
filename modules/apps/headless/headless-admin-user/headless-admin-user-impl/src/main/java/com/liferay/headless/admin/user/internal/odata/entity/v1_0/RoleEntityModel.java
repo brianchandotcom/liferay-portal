@@ -33,6 +33,7 @@ public class RoleEntityModel implements EntityModel {
 			new StringEntityField("description", locale -> Field.DESCRIPTION),
 			new StringEntityField(
 				"name", locale -> Field.getSortableFieldName(Field.NAME)),
+			new StringEntityField("subtype", locale -> "subtype"),
 			new StringEntityField("title", locale -> Field.TITLE));
 	}
 

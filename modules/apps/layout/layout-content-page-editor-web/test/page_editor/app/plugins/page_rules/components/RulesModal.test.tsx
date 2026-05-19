@@ -10,8 +10,6 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {LAYOUT_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutTypes';
-import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {RulesModalContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/RulesModalContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {State} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/reducers';
@@ -74,6 +72,19 @@ jest.mock('frontend-js-components-web', () => ({
 	),
 	openToast: jest.fn(),
 }));
+
+jest.mock(
+	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
+	() => ({
+		config: {
+			layoutType: '1',
+			selectedMappingTypes: {
+				formEnabled: true,
+				type: {id: 'mapping-id', label: 'Article'},
+			},
+		},
+	})
+);
 
 const DEFAULT_RULE: Rule = {
 	actions: [{id: 'action-1', type: undefined}],
@@ -257,12 +268,6 @@ describe('RulesSidebar', () => {
 	});
 
 	it('does not render a value input for is-empty', async () => {
-		(config as any).layoutType = LAYOUT_TYPES.display;
-		(config as any).selectedMappingTypes = {
-			formEnabled: true,
-			type: {id: 'mapping-id', label: 'Article'},
-		};
-
 		setCacheItem({
 			data: [
 				{

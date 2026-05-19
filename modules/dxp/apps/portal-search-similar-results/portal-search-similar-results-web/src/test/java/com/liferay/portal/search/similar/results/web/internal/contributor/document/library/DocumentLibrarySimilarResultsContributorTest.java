@@ -36,10 +36,10 @@ public class DocumentLibrarySimilarResultsContributorTest
 	@Test
 	public void testAssetNotFromDocumentLibrary() {
 		String urlString = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
-			"/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/39730",
-			"?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			"/guest/document-and-media/-/document_library/oagkfEivnD1J/view_",
+			"file/39730?_com_liferay_document_library_web_portlet_DLPortlet_",
+			"INSTANCE");
 
 		DocumentLibrarySimilarResultsContributor
 			documentLibrarySimilarResultsContributor =

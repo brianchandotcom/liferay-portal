@@ -5,6 +5,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
@@ -79,7 +80,9 @@ public class PortalImplEscapeRedirectTest {
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setPortalURL(
-			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":" + PortalUtil.getPortalServerPort(false) + "");
+			StringBundler.concat(
+				"https://", _HOSTNAME_PORTAL_DOMAIN, ":",
+				PortalUtil.getPortalServerPort(false)));
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
@@ -104,37 +107,46 @@ public class PortalImplEscapeRedirectTest {
 
 		// Allow request host header
 
-		Assert.assertEquals(
-			"https://" + _HOSTNAME_PORTAL_DOMAIN + ":" + PortalUtil.getPortalServerPort(false) + "",
-			_portalImpl.escapeRedirect(
-				"https://" + _HOSTNAME_PORTAL_DOMAIN + ":" + PortalUtil.getPortalServerPort(false) + ""));
+		String portalURL = StringBundler.concat(
+			"https://", _HOSTNAME_PORTAL_DOMAIN, ":",
+			PortalUtil.getPortalServerPort(false));
+
+		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
 
 		// Allow virtual host
 
-		Assert.assertEquals(
-			"https://" + _HOSTNAME_VIRTUAL_HOST + ":" + PortalUtil.getPortalServerPort(false) + "",
-			_portalImpl.escapeRedirect(
-				"https://" + _HOSTNAME_VIRTUAL_HOST + ":" + PortalUtil.getPortalServerPort(false) + ""));
+		portalURL = StringBundler.concat(
+			"https://", _HOSTNAME_VIRTUAL_HOST, ":",
+			PortalUtil.getPortalServerPort(false));
+
+		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
 
 		// Allowed domains
 
 		Assert.assertEquals(
 			"http://localhost", _portalImpl.escapeRedirect("http://localhost"));
-		Assert.assertEquals(
-			"https://localhost:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y",
-			_portalImpl.escapeRedirect(
-				"https://localhost:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+
+		portalURL =
+			"https://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/a/b;c=d?e=f&g=h#x=y";
+
+		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+
 		Assert.assertEquals(
 			"http://google.com",
 			_portalImpl.escapeRedirect("http://google.com"));
-		Assert.assertEquals(
-			"https://google.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y",
-			_portalImpl.escapeRedirect(
-				"https://google.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+
+		String url =
+			"https://google.com:" + PortalUtil.getPortalServerPort(false) +
+				"/a/b;c=d?e=f&g=h#x=y";
+
+		Assert.assertEquals(url, _portalImpl.escapeRedirect(url));
+
 		Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect(
-				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) +
+					"/a/b;c=d?e=f&g=h#x=y"));
 
 		// Disabled domains
 
@@ -185,10 +197,13 @@ public class PortalImplEscapeRedirectTest {
 			Assert.assertEquals(
 				"http://localhost",
 				_portalImpl.escapeRedirect("http://localhost"));
+
+			String portalURL =
+				"https://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/a/b;c=d?e=f&g=h#x=y";
+
 			Assert.assertEquals(
-				"https://localhost:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y",
-				_portalImpl.escapeRedirect(
-					"https://localhost:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+				portalURL, _portalImpl.escapeRedirect(portalURL));
 
 			Set<String> computerAddresses = _portalImpl.getComputerAddresses();
 
@@ -205,7 +220,9 @@ public class PortalImplEscapeRedirectTest {
 			Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 			Assert.assertNull(
 				_portalImpl.escapeRedirect(
-					"https://liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+					"https://liferay.com:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/a/b;c=d?e=f&g=h#x=y"));
 			Assert.assertNull(
 				_portalImpl.escapeRedirect("http://127.0.0.1suffix"));
 			Assert.assertNull(
@@ -303,28 +320,38 @@ public class PortalImplEscapeRedirectTest {
 		Assert.assertEquals(
 			"http://test.liferay.com",
 			_portalImpl.escapeRedirect("http://test.liferay.com"));
-		Assert.assertEquals(
-			"https://test.liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y",
-			_portalImpl.escapeRedirect(
-				"https://test.liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+
+		String portalURL =
+			"https://test.liferay.com:" +
+				PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y";
+
+		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+
 		Assert.assertEquals(
 			"http://second.test.liferay.com",
 			_portalImpl.escapeRedirect("http://second.test.liferay.com"));
-		Assert.assertEquals(
-			"https://second.test.liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a;c=d?e=f&g=h#x=y",
-			_portalImpl.escapeRedirect(
-				"https://second.test.liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a;c=d?e=f&g=h#x=y"));
+
+		portalURL =
+			"https://second.test.liferay.com:" +
+				PortalUtil.getPortalServerPort(false) + "/a;c=d?e=f&g=h#x=y";
+
+		Assert.assertEquals(portalURL, _portalImpl.escapeRedirect(portalURL));
+
 		Assert.assertEquals(
 			"http://google.com",
 			_portalImpl.escapeRedirect("http://google.com"));
-		Assert.assertEquals(
-			"https://google.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y",
-			_portalImpl.escapeRedirect(
-				"https://google.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+
+		String url =
+			"https://google.com:" + PortalUtil.getPortalServerPort(false) +
+				"/a/b;c=d?e=f&g=h#x=y";
+
+		Assert.assertEquals(url, _portalImpl.escapeRedirect(url));
+
 		Assert.assertNull(_portalImpl.escapeRedirect("http://liferay.com"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect(
-				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) + "/a/b;c=d?e=f&g=h#x=y"));
+				"https://liferay.com:" + PortalUtil.getPortalServerPort(false) +
+					"/a/b;c=d?e=f&g=h#x=y"));
 		Assert.assertNull(
 			_portalImpl.escapeRedirect("http://test.liferay.comsuffix"));
 		Assert.assertNull(

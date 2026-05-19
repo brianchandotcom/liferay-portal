@@ -96,7 +96,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 						TestPropsValues.getCompanyId(),
 						AnalyticsConfiguration.class.getName(),
 						HashMapDictionaryBuilder.<String, Object>put(
-							"liferayAnalyticsURL", "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/"
+							"liferayAnalyticsURL",
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false) + "/"
 						).build())) {
 
 			ReflectionTestUtil.invoke(
@@ -108,7 +110,8 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 	@Test
 	public void testAddSegmentsExperiment() throws Exception {
-		String liferayAnalyticsURL = "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/";
+		String liferayAnalyticsURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/";
 
 		String description = RandomTestUtil.randomString();
 
@@ -242,7 +245,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 							"liferayAnalyticsFaroBackendURL",
 							"http://localhost:8086"
 						).put(
-							"liferayAnalyticsURL", "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/"
+							"liferayAnalyticsURL",
+							"http://localhost:" +
+								PortalUtil.getPortalServerPort(false) + "/"
 						).build())) {
 
 			Object asahFaroBackendClient = ReflectionTestUtil.getFieldValue(
@@ -286,7 +291,8 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 	public void testAddSegmentsExperimentWithSecondarySegmentsExperienceSelected()
 		throws Exception {
 
-		String liferayAnalyticsURL = "http://localhost:" + PortalUtil.getPortalServerPort(false) + "/";
+		String liferayAnalyticsURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/";
 
 		String description = RandomTestUtil.randomString();
 

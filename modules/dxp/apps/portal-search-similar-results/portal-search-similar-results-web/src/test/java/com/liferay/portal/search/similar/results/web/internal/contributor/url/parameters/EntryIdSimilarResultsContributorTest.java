@@ -43,7 +43,9 @@ public class EntryIdSimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
-		RouteHelper routeHelper = () -> "http://localhost:" + PortalUtil.getPortalServerPort(false) + "?entryId=1234";
+		RouteHelper routeHelper = () ->
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"?entryId=1234";
 
 		_entryIdSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -77,7 +79,9 @@ public class EntryIdSimilarResultsContributorTest
 	@Test
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
-			new DestinationBuilderImpl("http://localhost:" + PortalUtil.getPortalServerPort(false) + "?entryId=1234");
+			new DestinationBuilderImpl(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"?entryId=1234");
 
 		setUpDestinationHelper(setUpAssetEntry(4321L));
 
@@ -87,7 +91,8 @@ public class EntryIdSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?entryId=4321",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"?entryId=4321",
 			destinationBuilderImpl.build());
 	}
 

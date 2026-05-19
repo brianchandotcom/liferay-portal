@@ -49,14 +49,15 @@ public class BlogsSimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/blog-page";
+
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
-			"/blog-page/-/blogs/blog-1?",
-			"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
-			"/blog-page?",
-			"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
-			"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view");
+			portalURL, "/-/blogs/blog-1?_com_liferay_blogs_web_portlet_Blogs",
+			"Portlet_redirect=", portalURL, "?p_p_id=com_liferay_blogs_web_",
+			"portlet_BlogsPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=",
+			"view");
 
 		_blogsSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -118,16 +119,17 @@ public class BlogsSimilarResultsContributorTest
 			assetRenderer
 		).getUrlTitle();
 
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/blog-page";
+
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:", PortalUtil.getPortalServerPort(false),
-					"/blog-page/-/blogs/blog-1?",
-					"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-					"http://localhost:", PortalUtil.getPortalServerPort(false),
-					"/blog-page?",
-					"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
-					"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"));
+					portalURL, "/-/blogs/blog-1?_com_liferay_blogs_web_portlet",
+					"_BlogsPortlet_redirect=", portalURL, "?p_p_id=com_liferay",
+					"_blogs_web_portlet_BlogsPortlet&p_p_lifecycle=0&p_p_state",
+					"=normal&p_p_mode=view"));
 
 		setUpDestinationHelper(assetRenderer);
 
@@ -138,13 +140,10 @@ public class BlogsSimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
-				"/blog-page/-/blogs/blog-2?",
-				"_com_liferay_blogs_web_portlet_BlogsPortlet_redirect=",
-				"http://localhost:", PortalUtil.getPortalServerPort(false),
-				"/blog-page?",
-				"p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&",
-				"p_p_lifecycle=0&p_p_state=normal&p_p_mode=view"),
+				portalURL, "/-/blogs/blog-2?_com_liferay_blogs_web_portlet_",
+				"BlogsPortlet_redirect=", portalURL, "?p_p_id=com_liferay_",
+				"blogs_web_portlet_BlogsPortlet&p_p_lifecycle=0&p_p_state=",
+				"normal&p_p_mode=view"),
 			destinationBuilderImpl.build());
 
 		_setUpDestinationHelper(1235L);

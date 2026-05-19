@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.similar.results.web.internal.contributor.url.parameters;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
@@ -42,9 +43,9 @@ public class ClassNameClassPKSimilarResultsContributorTest
 	public void testDetectRoute() {
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
-		RouteHelper routeHelper = () ->
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=uid&" +
-				"className=AssetClassName&classPK=112233";
+		RouteHelper routeHelper = () -> StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"?classUuid=uid&className=AssetClassName&classPK=112233");
 
 		_classNameClassPKSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -80,8 +81,9 @@ public class ClassNameClassPKSimilarResultsContributorTest
 	public void testWriteDestination() {
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=uid&" +
-					"className=AssetClassName&classPK=112233");
+				StringBundler.concat(
+					"http://localhost:", PortalUtil.getPortalServerPort(false),
+					"?classUuid=uid&className=AssetClassName&classPK=112233"));
 
 		setUpDestinationHelper(setUpAssetEntry("newAssetClassName", 54321L));
 
@@ -91,8 +93,9 @@ public class ClassNameClassPKSimilarResultsContributorTest
 			destinationBuilderImpl, destinationHelper);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) + "?classUuid=uid&" +
-				"className=newAssetClassName&classPK=54321",
+			StringBundler.concat(
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"?classUuid=uid&className=newAssetClassName&classPK=54321"),
 			destinationBuilderImpl.build());
 	}
 

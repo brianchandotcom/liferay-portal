@@ -62,7 +62,7 @@ function main {
 
 	restore_phase=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.restorePhase // \"none\"")
 
-	if [ "${restore_phase}" = "promoting" ] || [ "${restore_phase}" = "provisioning" ]
+	if [ "${restore_phase}" = "promoting" ] || [ "${restore_phase}" = "provisioning" ] || [ "${restore_phase}" = "provisioning-database-user" ]
 	then
 		echo "The LiferayInfrastructure spec.restorePhase is set to ${restore_phase}. A restore is in progress." >&2
 

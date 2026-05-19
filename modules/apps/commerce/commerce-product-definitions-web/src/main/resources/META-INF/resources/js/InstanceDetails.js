@@ -4,6 +4,7 @@
  */
 
 import {Autocomplete} from 'commerce-frontend-js';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
 
 function handleCPInstanceOptions({namespace}) {
 	const form = document.getElementById(`${namespace}fm`);
@@ -79,14 +80,69 @@ function handlePriceOnApplication({namespace}) {
 
 function handlePublish({WORKFLOW_ACTION_PUBLISH, namespace}) {
 	const publishButton = document.getElementById(`${namespace}publishButton`);
+	const form = document.getElementById(`${namespace}fm`);
 
-	publishButton.addEventListener('click', () => {
-		const workflowActionInput = document.getElementById(
-			`${namespace}workflowAction`
-		);
+	if (!publishButton || !form) {
+		return;
+	}
 
-		if (workflowActionInput) {
-			workflowActionInput.value = WORKFLOW_ACTION_PUBLISH;
+	publishButton.addEventListener('click', async (event) => {
+		event.preventDefault();
+
+		const handleSubmit = () => {
+			const workflowActionInput = document.getElementById(
+				`${namespace}workflowAction`
+			);
+
+			if (workflowActionInput) {
+				workflowActionInput.value = WORKFLOW_ACTION_PUBLISH;
+			}
+
+			submitForm(form);
+		};
+
+		const skuInput = document.getElementById(`${namespace}sku`);
+
+		if (!skuInput?.value) {
+			return handleSubmit();
+		}
+
+		try {
+			const sku = skuInput.value.replaceAll("'", "''");
+
+			const response = await Liferay.Util.fetch(
+				`/o/headless-commerce-admin-catalog/v1.0/skus?filter=${encodeURIComponent(`sku eq '${sku}'`)}`
+			);
+
+			if (!response.ok) {
+				throw new Error(response.statusText);
+			}
+
+			const {items} = await response.json();
+
+			const cpInstanceId = Number(
+				document.getElementById(`${namespace}cpInstanceId`)?.value || 0
+			);
+
+			const isDuplicate = items.some(
+				({id, sku}) => id !== cpInstanceId && sku === skuInput.value
+			);
+
+			if (!isDuplicate) {
+				handleSubmit();
+			}
+			else {
+				openConfirmModal({
+					message: Liferay.Language.get('the-sku-is-already-in-use'),
+					onConfirm: (isConfirmed) => isConfirmed && handleSubmit(),
+				});
+			}
+		}
+		catch (error) {
+			openToast({
+				message: Liferay.Language.get('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
 		}
 	});
 }

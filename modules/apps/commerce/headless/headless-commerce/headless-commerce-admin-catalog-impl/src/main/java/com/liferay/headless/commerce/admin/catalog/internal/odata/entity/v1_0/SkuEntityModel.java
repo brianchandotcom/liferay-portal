@@ -10,6 +10,7 @@ import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
+import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
 
@@ -23,7 +24,8 @@ public class SkuEntityModel implements EntityModel {
 			new BooleanEntityField(
 				CPField.HAS_CHILD_CP_DEFINITIONS,
 				locale -> CPField.HAS_CHILD_CP_DEFINITIONS),
-			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"));
+			new IntegerEntityField("catalogId", locale -> "commerceCatalogId"),
+			new StringEntityField("sku", locale -> CPField.SKU));
 	}
 
 	@Override

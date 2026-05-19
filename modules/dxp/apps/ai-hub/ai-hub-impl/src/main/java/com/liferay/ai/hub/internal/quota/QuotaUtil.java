@@ -16,7 +16,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
@@ -24,15 +23,17 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Feliphe Marinho
@@ -50,29 +51,23 @@ public class QuotaUtil {
 
 		long tokensCount = _countTokens(companyId, text);
 
-		_updateUsage(
-			objectEntry.getObjectEntryId(),
-			() -> {
-				ObjectEntry currentObjectEntry =
-					ObjectEntryLocalServiceUtil.getObjectEntry(
-						objectEntry.getObjectEntryId());
+		try (Closeable closeable = _lock(objectEntry.getObjectEntryId())) {
+			objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
+				objectEntry.getObjectEntryId());
 
-				Map<String, Serializable> values =
-					currentObjectEntry.getValues();
+			long usage =
+				MapUtil.getLong(objectEntry.getValues(), "usage") + tokensCount;
 
-				long currentUsage = GetterUtil.getLong(values.get("usage"));
+			if (usage > MapUtil.getLong(objectEntry.getValues(), "limit")) {
+				throw new UnsupportedOperationException(
+					"You have exceeded your token quota");
+			}
 
-				long limit = GetterUtil.getLong(values.get("limit"));
-
-				if ((currentUsage + tokensCount) > limit) {
-					throw new UnsupportedOperationException(
-						"You have exceeded your token quota");
-				}
-
-				_persistUsage(
-					companyId, currentObjectEntry, currentUsage + tokensCount,
-					userId);
-			});
+			_partialUpdateObjectEntry(companyId, objectEntry, usage, userId);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	public static void updateUsage(
@@ -85,54 +80,17 @@ public class QuotaUtil {
 			return;
 		}
 
-		_updateUsage(
-			objectEntry.getObjectEntryId(),
-			() -> {
-				ObjectEntry currentObjectEntry =
-					ObjectEntryLocalServiceUtil.getObjectEntry(
-						objectEntry.getObjectEntryId());
+		try (Closeable closeable = _lock(objectEntry.getObjectEntryId())) {
+			objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
+				objectEntry.getObjectEntryId());
 
-				long currentUsage = GetterUtil.getLong(
-					currentObjectEntry.getValues(
-					).get(
-						"usage"
-					));
-
-				_persistUsage(
-					companyId, currentObjectEntry, currentUsage + tokensCount,
-					userId);
-			});
-	}
-
-	private static void _acquireLock(String className, String key, String owner)
-		throws PortalException {
-
-		long deadline =
-			System.currentTimeMillis() + _LOCK_ACQUIRE_TIMEOUT_MILLIS;
-
-		while (true) {
-			Lock lock = LockManagerUtil.lock(className, key, null, owner);
-
-			if (Objects.equals(lock.getOwner(), owner)) {
-				return;
-			}
-
-			if (System.currentTimeMillis() >= deadline) {
-				throw new PortalException("Timed out acquiring quota lock");
-			}
-
-			try {
-				Thread.sleep(_LOCK_RETRY_INTERVAL_MILLIS);
-			}
-			catch (InterruptedException interruptedException) {
-				Thread currentThread = Thread.currentThread();
-
-				currentThread.interrupt();
-
-				throw new PortalException(
-					"Interrupted while waiting for quota lock",
-					interruptedException);
-			}
+			_partialUpdateObjectEntry(
+				companyId, objectEntry,
+				MapUtil.getLong(objectEntry.getValues(), "usage") + tokensCount,
+				userId);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
 		}
 	}
 
@@ -201,12 +159,43 @@ public class QuotaUtil {
 			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
 	}
 
-	private static String _getLockKey(long objectEntryId) {
-		return "ai-hub-quota-" + objectEntryId;
+	private static Closeable _lock(long objectEntryId) throws PortalException {
+		String updatedOwner = PortalUUIDUtil.generate();
+
+		long deadline = System.currentTimeMillis() + (10 * Time.SECOND);
+
+		while (true) {
+			Lock lock = LockManagerUtil.lock(
+				QuotaUtil.class.getName(), String.valueOf(objectEntryId), null,
+				updatedOwner);
+
+			if (Objects.equals(lock.getOwner(), updatedOwner)) {
+				break;
+			}
+
+			if (System.currentTimeMillis() >= deadline) {
+				throw new PortalException(new TimeoutException());
+			}
+
+			try {
+				Thread.sleep(50);
+			}
+			catch (InterruptedException interruptedException) {
+				Thread thread = Thread.currentThread();
+
+				thread.interrupt();
+
+				throw new PortalException(interruptedException);
+			}
+		}
+
+		return () -> LockManagerUtil.unlock(
+			QuotaUtil.class.getName(), String.valueOf(objectEntryId),
+			updatedOwner);
 	}
 
-	private static void _persistUsage(
-			long companyId, ObjectEntry objectEntry, long newUsage, long userId)
+	private static void _partialUpdateObjectEntry(
+			long companyId, ObjectEntry objectEntry, long usage, long userId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -217,31 +206,9 @@ public class QuotaUtil {
 		ObjectEntryLocalServiceUtil.partialUpdateObjectEntry(
 			userId, objectEntry.getObjectEntryId(), 0,
 			HashMapBuilder.<String, Serializable>put(
-				"usage", newUsage
+				"usage", usage
 			).build(),
 			serviceContext);
 	}
-
-	private static void _updateUsage(
-			long objectEntryId, UnsafeRunnable<PortalException> unsafeRunnable)
-		throws PortalException {
-
-		String className = QuotaUtil.class.getName();
-		String key = _getLockKey(objectEntryId);
-		String owner = PortalUUIDUtil.generate();
-
-		_acquireLock(className, key, owner);
-
-		try {
-			unsafeRunnable.run();
-		}
-		finally {
-			LockManagerUtil.unlock(className, key, owner);
-		}
-	}
-
-	private static final long _LOCK_ACQUIRE_TIMEOUT_MILLIS = 10_000L;
-
-	private static final long _LOCK_RETRY_INTERVAL_MILLIS = 50L;
 
 }

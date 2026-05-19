@@ -25,18 +25,20 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Juanjo Fernandez
  */
-@Component(
-	property = "model.class.name=com.liferay.object.model.ObjectDefinition#Z7H2",
-	service = SharingEntryInterpreter.class
-)
 public class DataSetSnapshotSharingEntryInterpreter
 	implements SharingEntryInterpreter {
+
+	public DataSetSnapshotSharingEntryInterpreter(
+		CompanyLocalService companyLocalService, Language language,
+		ObjectEntryLocalService objectEntryLocalService) {
+
+		_companyLocalService = companyLocalService;
+		_language = language;
+		_objectEntryLocalService = objectEntryLocalService;
+	}
 
 	@Override
 	public String getAssetTypeTitle(SharingEntry sharingEntry, Locale locale) {
@@ -122,13 +124,8 @@ public class DataSetSnapshotSharingEntryInterpreter
 	private static final Log _log = LogFactoryUtil.getLog(
 		DataSetSnapshotSharingEntryInterpreter.class);
 
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private ObjectEntryLocalService _objectEntryLocalService;
+	private final CompanyLocalService _companyLocalService;
+	private final Language _language;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 
 }

@@ -33,6 +33,7 @@ public class AssetSummaryTagController extends BaseFaroController {
 	public FaroFDSResultsDisplay<AssetSummaryTag>
 			getAssetSummaryTagsFaroFDSResultsDisplay(
 				@PathParam("groupId") long groupId,
+				@QueryParam("accountId") String accountId,
 				@QueryParam("channelId") long channelId,
 				@QueryParam("keywords") String keywords,
 				@QueryParam("page") int page,
@@ -40,6 +41,7 @@ public class AssetSummaryTagController extends BaseFaroController {
 				@QueryParam("rangeEnd") String rangeEnd,
 				@QueryParam("rangeKey") int rangeKey,
 				@QueryParam("rangeStart") String rangeStart,
+				@QueryParam("selectedMetric") String selectedMetric,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 					sortString)
 		throws Exception {
@@ -47,8 +49,8 @@ public class AssetSummaryTagController extends BaseFaroController {
 		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAssetSummaryTags(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId),
-				channelId, keywords, rangeEnd, rangeKey, rangeStart, sortString,
-				page, pageSize),
+				accountId, channelId, keywords, rangeEnd, rangeKey, rangeStart,
+				selectedMetric, sortString, page, pageSize),
 			AssetSummaryTagDisplay::new, page, pageSize);
 	}
 

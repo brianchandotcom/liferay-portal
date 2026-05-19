@@ -8,7 +8,9 @@ import ClayIcon from '@clayui/icon';
 import React, {useState} from 'react';
 
 import {Wizard, WizardStep} from '../../components/Wizard';
+import {postImportProcess} from '../../services/postImportProcess';
 import {ImportPreview} from '../../types/exportImportPreview';
+import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelectionStep from './steps/DataSelectionStep';
 import FileSelectionStep from './steps/FileSelectionStep';
 import SettingsStep, {SETTINGS_STEP_INITIAL_VALUES} from './steps/SettingsStep';
@@ -16,9 +18,11 @@ import SettingsStep, {SETTINGS_STEP_INITIAL_VALUES} from './steps/SettingsStep';
 export function NewImport({
 	backURL,
 	importPreviewAPIURL,
+	importProcessAPIURL,
 }: {
 	backURL: string;
 	importPreviewAPIURL: string;
+	importProcessAPIURL: string;
 }) {
 	const [importPreview, setImportPreview] = useState<
 		ImportPreview | undefined
@@ -76,8 +80,34 @@ export function NewImport({
 					'set-up-your-import-configuration'
 				)}
 				initialValues={SETTINGS_STEP_INITIAL_VALUES}
-				onSubmit={async () => {
-					alert('Import started!');
+				onSubmit={async (values) => {
+					if (!importPreview) {
+						return;
+					}
+
+					const result = await postImportProcess({
+						importRequest: {
+							fileEntryId: importPreview.fileEntryId,
+							requestPortletDataHandlers:
+								toRequestPortletDataHandlers(
+									importPreview.previewPortletDataHandlerSections ??
+										[],
+									values.contentSelection
+								),
+						},
+						url: importProcessAPIURL,
+					});
+
+					if (result.error) {
+						Liferay.Util.openToast({
+							message: result.error,
+							type: 'danger',
+						});
+
+						return;
+					}
+
+					window.location.href = backURL;
 				}}
 				title={Liferay.Language.get('settings')}
 			>

@@ -9,7 +9,6 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerWebKeys;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -70,12 +69,7 @@ public class FullPageApplicationLayoutTypeController
 		throws Exception {
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Layout ", layout.getPlid(),
-					" is a deprecated full page application page ",
-					"(type=full_page_application). Use a content page ",
-					"instead."));
+			_log.warn("Layout " + layout.getPlid() + " has a deprecated type");
 		}
 
 		return super.includeLayoutContent(

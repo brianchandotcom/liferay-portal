@@ -4,45 +4,44 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLayout from '@clayui/layout';
-import React, {useId, useState} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {ReactNode, useId} from 'react';
 
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {PreviewPortletDataHandlerControl} from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
 	LAYOUT_SET_LAYOUTS_PORTLET_DATA_KEY,
+	asNestedSelection,
 	getInitialSelection,
+	getSelectionSummary,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import CollapsibleGroup from './CollapsibleGroup';
+import ControlRow from './ControlRow';
 import LayoutSetControl from './LayoutSetControl';
 import PortletDataControlChoice from './PortletDataControlChoice';
 import SectionTags from './SectionTags';
 
-interface PortletDataControlProps {
-	className?: string;
-	control: PreviewPortletDataHandlerControl;
-	level?: number;
-	onChange: (value: HandlerSelection | undefined) => void;
-	pageTreeModalConfiguration?: PageTreeModalConfiguration;
-	showDeletions?: boolean;
-	value: HandlerSelection | undefined;
-}
-
 export default function PortletDataControl({
 	className,
 	control,
-	level = 0,
 	onChange,
 	pageTreeModalConfiguration,
 	showDeletions,
+	topLevel = false,
 	value,
-}: PortletDataControlProps) {
-	const [expanded, setExpanded] = useState(false);
-	const bodyId = useId();
+}: {
+	className?: string;
+	control: PreviewPortletDataHandlerControl;
+	onChange: (value: HandlerSelection | undefined) => void;
+	pageTreeModalConfiguration?: PageTreeModalConfiguration;
+	showDeletions?: boolean;
+	topLevel?: boolean;
+	value: HandlerSelection | undefined;
+}) {
 	const checkboxId = useId();
 
 	if (
@@ -63,7 +62,6 @@ export default function PortletDataControl({
 	if (control.type === 'Choice') {
 		return (
 			<PortletDataControlChoice
-				className="mt-3"
 				control={control}
 				onChange={onChange}
 				value={typeof value === 'string' ? value : ''}
@@ -72,69 +70,109 @@ export default function PortletDataControl({
 	}
 
 	const selected = isSelected(value, control);
-	const currentSelection: Record<string, HandlerSelection> =
-		typeof value === 'object' ? value : {};
-
+	const currentSelection = asNestedSelection(value);
 	const nestedControls = control.previewPortletDataHandlerControls ?? [];
-
 	const expandable = !!nestedControls.length;
 
-	const childrenSummary = nestedControls
-		.filter((nested) => currentSelection[nested.name] !== undefined)
-		.map((nested) => nested.label)
-		.join(', ');
+	const additionCount =
+		control.type === 'Boolean' ? control.additionCount : undefined;
+	const deletionCount =
+		control.type === 'Boolean' && showDeletions
+			? control.deletionCount
+			: undefined;
 
-	const collapsible = expandable && level === 0;
+	const rowProps = {
+		checkboxId,
+		indeterminate: !!value && !selected,
+		label: control.label,
+		labelClassName: topLevel ? 'font-weight-semi-bold' : '',
+		onToggle: () =>
+			onChange(selected ? undefined : getInitialSelection(control)),
+		selected,
+		tags: (
+			<SectionTags
+				additionCount={additionCount}
+				deletionCount={deletionCount}
+			/>
+		),
+	};
+
+	const body = nestedControls.map((nestedControl) => (
+		<PortletDataControl
+			control={nestedControl}
+			key={nestedControl.name}
+			onChange={(controlValue) =>
+				onChange(
+					updateSelection(
+						currentSelection,
+						nestedControl.name,
+						controlValue
+					)
+				)
+			}
+			pageTreeModalConfiguration={pageTreeModalConfiguration}
+			value={currentSelection[nestedControl.name]}
+		/>
+	));
+
+	if (topLevel) {
+		return (
+			<PortletDataHandlerPanel
+				bodyChildren={body}
+				currentSelection={currentSelection}
+				expandable={expandable}
+				nestedControls={nestedControls}
+				rowProps={rowProps}
+			/>
+		);
+	}
 
 	return (
-		<div className={level === 0 ? 'p-3' : ''}>
-			<ClayLayout.ContentRow className="align-items-center">
-				<ClayLayout.ContentCol className="pr-2" expand={false}>
-					<ClayCheckbox
-						checked={selected}
-						id={checkboxId}
-						indeterminate={!!value && !selected}
-						onChange={() =>
-							onChange(
-								selected
-									? undefined
-									: getInitialSelection(control)
-							)
-						}
-					/>
-				</ClayLayout.ContentCol>
+		<>
+			<ControlRow {...rowProps} />
 
-				<ClayLayout.ContentCol expand>
-					<span className="align-items-center d-inline-flex">
-						<label
-							className={`cursor-pointer mb-0 ${
-								level === 0 ? 'font-weight-bold' : 'small'
-							}`}
-							htmlFor={checkboxId}
-						>
-							{control.label}
-						</label>
+			{expandable && (
+				<div className="c-gap-1 d-flex flex-column pl-4">{body}</div>
+			)}
+		</>
+	);
+}
 
-						{control.type === 'Boolean' && (
-							<SectionTags
-								additionCount={control.additionCount}
-								deletionCount={
-									showDeletions
-										? control.deletionCount
-										: undefined
-								}
-							/>
-						)}
-					</span>
-				</ClayLayout.ContentCol>
-
-				{collapsible && (
-					<ClayLayout.ContentCol expand={false}>
+function PortletDataHandlerPanel({
+	bodyChildren,
+	currentSelection,
+	expandable,
+	nestedControls,
+	rowProps,
+}: {
+	bodyChildren: ReactNode;
+	currentSelection: Record<string, HandlerSelection>;
+	expandable: boolean;
+	nestedControls: PreviewPortletDataHandlerControl[];
+	rowProps: React.ComponentProps<typeof ControlRow>;
+}) {
+	return (
+		<div className="p-3">
+			{expandable ? (
+				<CollapsibleGroup
+					{...rowProps}
+					bodyClassName="c-gap-1 mt-2 pl-4"
+					bodyVisibleClassName="d-flex flex-column"
+					disclosure={({expanded, ...disclosureProps}) => (
 						<ClayButton
-							aria-controls={bodyId}
-							aria-expanded={expanded}
+							{...disclosureProps}
+							aria-label={
+								expanded
+									? sub(
+											Liferay.Language.get('hide-all-x'),
+											rowProps.label
+										)
+									: sub(
+											Liferay.Language.get('show-all-x'),
+											rowProps.label
+										)
+							}
 							displayType="link"
-							onClick={() => setExpanded((prev) => !prev)}
 							small
 						>
 							{expanded
@@ -146,43 +184,16 @@ export default function PortletDataControl({
 								symbol={expanded ? 'angle-down' : 'angle-right'}
 							/>
 						</ClayButton>
-					</ClayLayout.ContentCol>
-				)}
-			</ClayLayout.ContentRow>
-
-			{collapsible && (
-				<small className="d-block pl-4 text-secondary">
-					{childrenSummary || <>&nbsp;</>}
-				</small>
-			)}
-
-			{expandable && (!collapsible || expanded) && (
-				<div
-					className={`c-gap-1 d-flex flex-column pl-4${collapsible ? ' mt-2' : ''}`}
-					id={bodyId}
+					)}
+					summary={getSelectionSummary(
+						nestedControls,
+						currentSelection
+					)}
 				>
-					{nestedControls.map((nestedControl) => (
-						<PortletDataControl
-							control={nestedControl}
-							key={nestedControl.name}
-							level={level + 1}
-							onChange={(controlValue) =>
-								onChange(
-									updateSelection(
-										currentSelection,
-										nestedControl.name,
-										controlValue
-									)
-								)
-							}
-							pageTreeModalConfiguration={
-								pageTreeModalConfiguration
-							}
-							showDeletions={showDeletions}
-							value={currentSelection[nestedControl.name]}
-						/>
-					))}
-				</div>
+					{bodyChildren}
+				</CollapsibleGroup>
+			) : (
+				<ControlRow {...rowProps} />
 			)}
 		</div>
 	);

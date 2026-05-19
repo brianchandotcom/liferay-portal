@@ -4,9 +4,9 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import React, {useId, useState} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {useId} from 'react';
 
 import '../../../../css/utilities.scss';
 import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
@@ -16,10 +16,12 @@ import {
 } from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
-	getInitialSelection,
+	getInitialSelections,
+	getSelectionSummary,
 	isSelected,
 	updateSelection,
 } from '../../../utils/contentSelection';
+import CollapsibleGroup from './CollapsibleGroup';
 import PortletDataControl from './PortletDataControl';
 import SectionTags from './SectionTags';
 
@@ -40,8 +42,6 @@ export default function ContentSection({
 	showDeletions,
 	value,
 }: ContentSectionProps) {
-	const [expanded, setExpanded] = useState(false);
-	const bodyId = useId();
 	const checkboxId = useId();
 
 	const portletContextsValue = value || {};
@@ -55,105 +55,71 @@ export default function ContentSection({
 		isSelected(portletContextsValue[context.name], context)
 	);
 
-	const summary = controls
-		.filter((context) => portletContextsValue[context.name] !== undefined)
-		.map((context) => context.label)
-		.join(', ');
-
-	const handleSelectAll = () => {
-		if (selected) {
-			onChange(undefined);
-		}
-		else {
-			const newValue: SectionSelection = {};
-
-			controls.forEach((context) => {
-				newValue[context.name] = getInitialSelection(context);
-			});
-
-			onChange(newValue);
-		}
-	};
-
 	return (
 		<ClayLayout.Sheet className="mt-0">
-			<ClayLayout.ContentRow className="align-items-center">
-				<ClayLayout.ContentCol className="pr-2" expand={false}>
-					<ClayCheckbox
-						checked={selected}
-						id={checkboxId}
-						indeterminate={
-							!!Object.keys(portletContextsValue).length &&
-							!selected
-						}
-						onChange={handleSelectAll}
-					/>
-				</ClayLayout.ContentCol>
-
-				<ClayLayout.ContentCol expand>
-					<span className="align-items-center d-inline-flex">
-						<label
-							className="cursor-pointer font-weight-bold h3 mb-0"
-							htmlFor={checkboxId}
-						>
-							{section.label}
-						</label>
-
-						<SectionTags
-							additionCount={section.additionCount}
-							deletionCount={
-								showDeletions
-									? section.deletionCount
-									: undefined
-							}
-						/>
-					</span>
-				</ClayLayout.ContentCol>
-
-				<ClayLayout.ContentCol expand={false}>
+			<CollapsibleGroup
+				bodyClassName="content-section-controls mt-2 overflow-auto pl-2"
+				checkboxId={checkboxId}
+				disclosure={({expanded, ...disclosureProps}) => (
 					<ClayButtonWithIcon
-						aria-controls={bodyId}
-						aria-expanded={expanded}
-						aria-label={section.label}
+						{...disclosureProps}
+						aria-label={
+							expanded
+								? sub(
+										Liferay.Language.get('collapse-x'),
+										section.label
+									)
+								: sub(
+										Liferay.Language.get('expand-x'),
+										section.label
+									)
+						}
 						className="text-secondary"
 						displayType="unstyled"
-						onClick={() => setExpanded((prev) => !prev)}
 						symbol={expanded ? 'angle-down' : 'angle-right'}
 					/>
-				</ClayLayout.ContentCol>
-			</ClayLayout.ContentRow>
-
-			<small className="d-block pl-4 text-secondary">
-				{summary || <>&nbsp;</>}
-			</small>
-
-			{expanded && (
-				<div
-					className="content-section-controls mt-2 overflow-auto pl-2"
-					id={bodyId}
-				>
-					{controls.map((context) => (
-						<PortletDataControl
-							control={context}
-							key={context.name}
-							onChange={(controlValue) =>
-								onChange(
-									updateSelection(
-										portletContextsValue,
-										context.name,
-										controlValue
-									)
+				)}
+				indeterminate={
+					!!Object.keys(portletContextsValue).length && !selected
+				}
+				label={section.label}
+				labelClassName="font-weight-bold h3"
+				onToggle={() =>
+					onChange(
+						selected ? undefined : getInitialSelections(controls)
+					)
+				}
+				selected={selected}
+				summary={getSelectionSummary(controls, portletContextsValue)}
+				tags={
+					<SectionTags
+						additionCount={section.additionCount}
+						deletionCount={
+							showDeletions ? section.deletionCount : undefined
+						}
+					/>
+				}
+			>
+				{controls.map((context) => (
+					<PortletDataControl
+						control={context}
+						key={context.name}
+						onChange={(controlValue) =>
+							onChange(
+								updateSelection(
+									portletContextsValue,
+									context.name,
+									controlValue
 								)
-							}
-							pageTreeModalConfiguration={
-								pageTreeModalConfiguration
-							}
-							showDeletions={showDeletions}
-							value={portletContextsValue[context.name]}
-						/>
-					))}
-				</div>
-			)}
+							)
+						}
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
+						showDeletions={showDeletions}
+						topLevel
+						value={portletContextsValue[context.name]}
+					/>
+				))}
+			</CollapsibleGroup>
 		</ClayLayout.Sheet>
 	);
 }

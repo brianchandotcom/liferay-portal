@@ -66,7 +66,35 @@ const uploadFile = async (fileName = 'site.lar') => {
 	jest.useRealTimers();
 };
 
+const goToDataSelectionStep = async () => {
+	const result = renderComponent();
+
+	await user.type(screen.getByLabelText(/^name/i), 'My import');
+
+	await uploadFile('site.lar');
+
+	await waitFor(() => {
+		expect(screen.getByRole('button', {name: /continue/i})).toBeEnabled();
+	});
+
+	await user.click(screen.getByRole('button', {name: /continue/i}));
+
+	return result;
+};
+
 describe('NewImport', () => {
+	beforeAll(() => {
+		(Liferay.Language.get as jest.Mock).mockImplementation(
+			(key: string) =>
+				({
+					'collapse-x': 'Collapse {0}',
+					'expand-x': 'Expand {0}',
+					'hide-all-x': 'Hide All {0}',
+					'show-all-x': 'Show All {0}',
+				})[key] ?? key
+		);
+	});
+
 	beforeEach(() => {
 		user = userEvent.setup();
 	});
@@ -194,19 +222,7 @@ describe('NewImport', () => {
 			})
 		);
 
-		renderComponent();
-
-		await user.type(screen.getByLabelText(/^name/i), 'My import');
-
-		await uploadFile('site.lar');
-
-		await waitFor(() => {
-			expect(
-				screen.getByRole('button', {name: /continue/i})
-			).toBeEnabled();
-		});
-
-		await user.click(screen.getByRole('button', {name: /continue/i}));
+		const {container} = await goToDataSelectionStep();
 
 		expect(screen.getByText('file-summary')).toBeInTheDocument();
 		expect(screen.getAllByText('site.lar').length).toBeGreaterThan(0);
@@ -216,13 +232,66 @@ describe('NewImport', () => {
 
 		expect(screen.getByText('Design')).toBeInTheDocument();
 
-		await user.click(screen.getByRole('button', {name: 'Design'}));
+		await user.click(screen.getByRole('checkbox', {name: 'Design'}));
 
-		expect(screen.getByText('Theme Settings')).toBeInTheDocument();
+		await user.click(screen.getByRole('button', {name: 'Expand Design'}));
+
+		expect(
+			screen.getByRole('checkbox', {name: 'Theme Settings'})
+		).toBeChecked();
+		expect(screen.getByRole('checkbox', {name: 'Logo'})).toBeChecked();
+		expect(screen.getByRole('checkbox', {name: 'Fragments'})).toBeChecked();
 
 		expect(screen.getByLabelText('import-permissions')).toBeInTheDocument();
 		expect(
 			screen.queryByLabelText('replicate-selected-deletions')
+		).not.toBeInTheDocument();
+
+		await checkAccessibility({context: container});
+	});
+
+	it('shows the section as indeterminate and summarizes the selected handlers when the selection is partial', async () => {
+		await goToDataSelectionStep();
+
+		await user.click(screen.getByRole('button', {name: 'Expand Design'}));
+
+		await user.click(
+			screen.getByRole('checkbox', {name: 'Theme Settings'})
+		);
+		await user.click(screen.getByRole('checkbox', {name: 'Logo'}));
+
+		expect(
+			screen.getByRole('checkbox', {name: 'Design'})
+		).toBePartiallyChecked();
+
+		expect(screen.getByText('Theme Settings, Logo')).toBeInTheDocument();
+	});
+
+	it('reveals and hides the nested handler controls through the Show all and Hide all toggle', async () => {
+		await goToDataSelectionStep();
+
+		await user.click(
+			screen.getByRole('button', {name: 'Expand Content & Data'})
+		);
+
+		expect(
+			screen.queryByRole('checkbox', {name: 'Version History'})
+		).not.toBeInTheDocument();
+
+		await user.click(
+			screen.getByRole('button', {name: 'Show All Web Content'})
+		);
+
+		expect(
+			screen.getByRole('checkbox', {name: 'Version History'})
+		).toBeInTheDocument();
+
+		await user.click(
+			screen.getByRole('button', {name: 'Hide All Web Content'})
+		);
+
+		expect(
+			screen.queryByRole('checkbox', {name: 'Version History'})
 		).not.toBeInTheDocument();
 	});
 

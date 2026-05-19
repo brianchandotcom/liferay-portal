@@ -8,12 +8,16 @@ package com.liferay.asset.categories.internal.layout.display.page.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -29,6 +33,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.HashMap;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -55,6 +61,33 @@ public class AssetCategoryLayoutDisplayPageProviderTest {
 
 	@Test
 	public void testGetLayoutDisplayPageObjectProvider() throws Exception {
+		_testGetLayoutDisplayPageObjectProviderERCInfoItemIdentifier();
+		_testGetLayoutDisplayPageObjectProviderNestedAssetCategory();
+	}
+
+	private AssetCategory _addAssetCategory(
+			long assetVocabularyId, long parentAssetCategoryId, String title)
+		throws Exception {
+
+		return _assetCategoryLocalService.addCategory(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			parentAssetCategoryId,
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), title
+			).build(),
+			new HashMap<>(), assetVocabularyId, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+	}
+
+	private AssetVocabulary _addAssetVocabulary() throws Exception {
+		return AssetTestUtil.addVocabulary(
+			_group.getGroupId(),
+			StringUtil.toLowerCase(StringUtil.randomString()));
+	}
+
+	private void _testGetLayoutDisplayPageObjectProviderERCInfoItemIdentifier()
+		throws Exception {
+
 		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
@@ -104,6 +137,56 @@ public class AssetCategoryLayoutDisplayPageProviderTest {
 						assetCategory.getExternalReferenceCode())));
 
 		Assert.assertNull(layoutDisplayPageObjectProvider);
+	}
+
+	private void _testGetLayoutDisplayPageObjectProviderNestedAssetCategory()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+
+		String urlTitle1 = StringUtil.toLowerCase(StringUtil.randomString());
+
+		AssetCategory assetCategory1 = _addAssetCategory(
+			assetVocabulary.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, urlTitle1);
+
+		String urlTitle2 = StringUtil.toLowerCase(StringUtil.randomString());
+
+		AssetCategory assetCategory2 = _addAssetCategory(
+			assetVocabulary.getVocabularyId(),
+			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, urlTitle2);
+
+		String urlTitle3 = StringUtil.toLowerCase(StringUtil.randomString());
+
+		AssetCategory assetCategory3 = _addAssetCategory(
+			assetVocabulary.getVocabularyId(), assetCategory1.getCategoryId(),
+			urlTitle3);
+
+		AssetCategory assetCategory4 = _addAssetCategory(
+			assetVocabulary.getVocabularyId(), assetCategory2.getCategoryId(),
+			urlTitle3);
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider1 =
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				_group.getGroupId(),
+				StringBundler.concat(
+					assetVocabulary.getName(), StringPool.SLASH, urlTitle1,
+					StringPool.SLASH, urlTitle3));
+
+		Assert.assertEquals(
+			assetCategory3,
+			layoutDisplayPageObjectProvider1.getDisplayObject());
+
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider2 =
+			_layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				_group.getGroupId(),
+				StringBundler.concat(
+					assetVocabulary.getName(), StringPool.SLASH, urlTitle2,
+					StringPool.SLASH, urlTitle3));
+
+		Assert.assertEquals(
+			assetCategory4,
+			layoutDisplayPageObjectProvider2.getDisplayObject());
 	}
 
 	@Inject

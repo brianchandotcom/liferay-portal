@@ -1413,6 +1413,64 @@ public abstract class BaseImportProcessResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryImportProcess() throws Exception {
+		ImportProcess randomImportProcess = randomImportProcess();
+
+		ImportProcess postImportProcess =
+			testPostAssetLibraryImportProcess_addImportProcess(
+				randomImportProcess);
+
+		assertEquals(randomImportProcess, postImportProcess);
+		assertValid(postImportProcess);
+	}
+
+	protected ImportProcess testPostAssetLibraryImportProcess_addImportProcess(
+			ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostImportProcess() throws Exception {
+		ImportProcess randomImportProcess = randomImportProcess();
+
+		ImportProcess postImportProcess =
+			testPostImportProcess_addImportProcess(randomImportProcess);
+
+		assertEquals(randomImportProcess, postImportProcess);
+		assertValid(postImportProcess);
+	}
+
+	protected ImportProcess testPostImportProcess_addImportProcess(
+			ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostSiteImportProcess() throws Exception {
+		ImportProcess randomImportProcess = randomImportProcess();
+
+		ImportProcess postImportProcess =
+			testPostSiteImportProcess_addImportProcess(randomImportProcess);
+
+		assertEquals(randomImportProcess, postImportProcess);
+		assertValid(postImportProcess);
+	}
+
+	protected ImportProcess testPostSiteImportProcess_addImportProcess(
+			ImportProcess importProcess)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
 	}
@@ -2241,4 +2299,4 @@ public abstract class BaseImportProcessResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:457733597
+// LIFERAY-REST-BUILDER-HASH:-1862664561

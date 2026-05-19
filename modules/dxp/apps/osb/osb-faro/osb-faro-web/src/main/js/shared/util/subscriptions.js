@@ -437,3 +437,7 @@ export function isBasicPlan(currentPlan) {
 		PLAN_TYPES[currentPlan.name] === 'lxcPro'
 	);
 }
+
+export function isLDPPlan(subscriptionName) {
+	return subscriptionName?.includes('Data Platform') ?? false;
+}

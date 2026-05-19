@@ -165,10 +165,11 @@ public class ConnectedSiteResourceTest
 	private void _testPutAssetLibraryConnectedSiteReturnsTypeSite()
 		throws Exception {
 
+		Group group = testDepotEntry.getGroup();
+
 		ConnectedSite connectedSite =
 			connectedSiteResource.putAssetLibraryConnectedSite(
-				testDepotEntry.getGroup(
-				).getExternalReferenceCode(),
+				group.getExternalReferenceCode(),
 				_testConnectedSite.getExternalReferenceCode(),
 				new ConnectedSite());
 
@@ -186,13 +187,13 @@ public class ConnectedSiteResourceTest
 				).build(),
 				new HashMap<>(), true, true, new ServiceContext());
 
+		Group group1 = testDepotEntry.getGroup();
+		Group group2 = layoutSetPrototype.getGroup();
+
 		ConnectedSite connectedSite =
 			connectedSiteResource.putAssetLibraryConnectedSite(
-				testDepotEntry.getGroup(
-				).getExternalReferenceCode(),
-				layoutSetPrototype.getGroup(
-				).getExternalReferenceCode(),
-				new ConnectedSite());
+				group1.getExternalReferenceCode(),
+				group2.getExternalReferenceCode(), new ConnectedSite());
 
 		Assert.assertEquals(
 			ConnectedSite.Type.SITE_TEMPLATE, connectedSite.getType());

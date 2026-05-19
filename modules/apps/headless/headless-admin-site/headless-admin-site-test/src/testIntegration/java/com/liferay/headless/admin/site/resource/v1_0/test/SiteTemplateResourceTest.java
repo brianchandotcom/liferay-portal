@@ -57,20 +57,18 @@ public class SiteTemplateResourceTest extends BaseSiteTemplateResourceTestCase {
 
 		Map<Locale, String> names = new HashMap<>();
 
-		for (Map.Entry<String, String> entry :
-				siteTemplate.getName_i18n(
-				).entrySet()) {
+		Map<String, String> nameMap = siteTemplate.getName_i18n();
 
+		for (Map.Entry<String, String> entry : nameMap.entrySet()) {
 			names.put(
 				LocaleUtil.fromLanguageId(entry.getKey()), entry.getValue());
 		}
 
 		Map<Locale, String> descriptions = new HashMap<>();
 
-		for (Map.Entry<String, String> entry :
-				siteTemplate.getDescription_i18n(
-				).entrySet()) {
+		Map<String, String> descriptionMap = siteTemplate.getDescription_i18n();
 
+		for (Map.Entry<String, String> entry : descriptionMap.entrySet()) {
 			descriptions.put(
 				LocaleUtil.fromLanguageId(entry.getKey()), entry.getValue());
 		}

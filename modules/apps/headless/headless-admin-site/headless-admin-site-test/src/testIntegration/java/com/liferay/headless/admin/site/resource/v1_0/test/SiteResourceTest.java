@@ -555,12 +555,10 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		Page<Site> page = siteResource.getSitesPage(
 			null, null, Pagination.of(1, 100));
 
+		Collection<Site> sites = page.getItems();
+
 		Assert.assertEquals(
-			page.getItems(
-			).toString(),
-			page.getItems(
-			).size(),
-			page.getTotalCount());
+			sites.toString(), sites.size(), page.getTotalCount());
 	}
 
 	private void _testGetSitesPageWithSearch() throws Exception {

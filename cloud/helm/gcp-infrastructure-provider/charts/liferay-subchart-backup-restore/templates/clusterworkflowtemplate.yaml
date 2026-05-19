@@ -264,15 +264,6 @@ spec:
                         template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
-                                -   name: database-snapshot-uuid
-                                    value: "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
-                                -   name: restore-instance
-                                    value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
-                        depends: get-inactive-cloudsql-instance
-                        name: restore-cloudsql-backup
-                        template: restore-cloudsql-backup
-                    -   arguments:
-                            parameters:
                                 -   name: restore-instance
                                     value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
                                 -   name: root-password-secret-name
@@ -280,6 +271,15 @@ spec:
                         depends: restore-cloudsql-backup
                         name: reset-postgres-password
                         template: reset-postgres-password
+                    -   arguments:
+                            parameters:
+                                -   name: database-snapshot-uuid
+                                    value: "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
+                                -   name: restore-instance
+                                    value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
+                        depends: get-inactive-cloudsql-instance
+                        name: restore-cloudsql-backup
+                        template: restore-cloudsql-backup
                     -   arguments:
                             parameters:
                                 -   name: dl-bucket-inactive
@@ -300,6 +300,33 @@ spec:
                     -   name: vault-bucket
                     -   name: vault-path
             name: prepare-target-data-plane
+        -   container:
+                args:
+                    -   sql
+                    -   users
+                    -   set-password
+                    -   postgres
+                    -   --instance={{ "{{" }}inputs.parameters.restore-instance}}
+                    -   --password=$(PGPASSWORD)
+                    -   --project={{ .Values.global.gcp.projectId }}
+                    -   --quiet
+                command: [gcloud]
+                env:
+                    -   name: CLOUDSDK_CONFIG
+                        value: /tmp/gcloud
+                    -   name: PGPASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                key: password
+                                name: "{{ "{{" }}inputs.parameters.root-password-secret-name}}"
+                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
+                resources:
+                    {{- .Values.resources.default | toYaml | nindent 20 }}
+            inputs:
+                parameters:
+                    -   name: restore-instance
+                    -   name: root-password-secret-name
+            name: reset-postgres-password
         -   inputs:
                 parameters:
                     -   name: liferay-workload-name
@@ -339,33 +366,6 @@ spec:
                     -   name: database-snapshot-uuid
                     -   name: restore-instance
             name: restore-cloudsql-backup
-        -   container:
-                args:
-                    -   sql
-                    -   users
-                    -   set-password
-                    -   postgres
-                    -   --instance={{ "{{" }}inputs.parameters.restore-instance}}
-                    -   --password=$(PGPASSWORD)
-                    -   --project={{ .Values.global.gcp.projectId }}
-                    -   --quiet
-                command: [gcloud]
-                env:
-                    -   name: CLOUDSDK_CONFIG
-                        value: /tmp/gcloud
-                    -   name: PGPASSWORD
-                        valueFrom:
-                            secretKeyRef:
-                                key: password
-                                name: "{{ "{{" }}inputs.parameters.root-password-secret-name}}"
-                image: "{{ .Values.images.gcloud.repository }}:{{ .Values.images.gcloud.tag }}"
-                resources:
-                    {{- .Values.resources.default | toYaml | nindent 20 }}
-            inputs:
-                parameters:
-                    -   name: restore-instance
-                    -   name: root-password-secret-name
-            name: reset-postgres-password
         -   container:
                 args:
                     -   transfer

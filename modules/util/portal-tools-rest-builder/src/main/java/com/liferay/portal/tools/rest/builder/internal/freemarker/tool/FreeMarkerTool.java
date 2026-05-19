@@ -869,6 +869,26 @@ public class FreeMarkerTool {
 				continue;
 			}
 
+			List<JavaMethodParameter> bodyJavaMethodParameters =
+				getBodyJavaMethodParameters(javaMethodSignature);
+
+			if (bodyJavaMethodParameters.isEmpty()) {
+				continue;
+			}
+
+			JavaMethodParameter bodyJavaMethodParameter =
+				bodyJavaMethodParameters.get(0);
+
+			String parameterType = bodyJavaMethodParameter.getParameterType();
+
+			if (!hasRequestBodyMediaType(
+					javaMethodSignature, "multipart/form-data") &&
+				!parameterType.equals(schemaName) &&
+				!parameterType.endsWith("." + schemaName)) {
+
+				continue;
+			}
+
 			return javaMethodSignature;
 		}
 

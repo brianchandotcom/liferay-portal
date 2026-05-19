@@ -205,9 +205,10 @@ public class OracleDB extends BaseDB {
 		}
 		catch (SQLException sqlException) {
 			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
-				throw new SQLException(
-					"\"v$session\" \"v$sql\": " + sqlException.getMessage(),
-					sqlException.getSQLState(), sqlException.getErrorCode(),
+				throw new RuntimeException(
+					"the database user lacks SELECT on sys.v_$session and " +
+						"sys.v_$sql. Grant SELECT on sys.v_$session and " +
+							"sys.v_$sql, SELECT_CATALOG_ROLE, or DBA.",
 					sqlException);
 			}
 

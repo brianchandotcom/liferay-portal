@@ -13,9 +13,11 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,38 +36,70 @@ public class FileEntryUtil {
 			ThumbnailURLReference thumbnailURLReference)
 		throws Exception {
 
-		if ((thumbnailURLReference == null) ||
-			Validator.isNull(
-				thumbnailURLReference.getExternalReferenceCode())) {
+		if (thumbnailURLReference == null) {
+			return 0;
+		}
+
+		String externalReferenceCode =
+			thumbnailURLReference.getExternalReferenceCode();
+		String fileBase64 = thumbnailURLReference.getFileBase64();
+		String url = thumbnailURLReference.getUrl();
+
+		if (Validator.isNull(externalReferenceCode) &&
+			Validator.isNull(fileBase64) && Validator.isNull(url)) {
 
 			return 0;
 		}
 
-		FileEntry fileEntry =
-			PortletFileRepositoryUtil.
-				fetchPortletFileEntryByExternalReferenceCode(
-					thumbnailURLReference.getExternalReferenceCode(), groupId);
+		FileEntry fileEntry = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			fileEntry =
+				PortletFileRepositoryUtil.
+					fetchPortletFileEntryByExternalReferenceCode(
+						externalReferenceCode, groupId);
+		}
 
 		if (fileEntry == null) {
 			fileEntry = _getFileEntry(
-				groupId, portletId, resourceName, serviceContext,
-				thumbnailURLReference, serviceContext.getUserId());
+				externalReferenceCode, fileBase64, groupId, portletId,
+				resourceName, serviceContext, url);
 		}
 
 		return fileEntry.getFileEntryId();
 	}
 
+	private static byte[] _decodeOrGetByteArray(String fileBase64, String url)
+		throws Exception {
+
+		if (Validator.isNotNull(fileBase64)) {
+			return Base64.decode(fileBase64);
+		}
+
+		if (Validator.isNotNull(url)) {
+			try {
+				return URLUtil.getByteArray(url);
+			}
+			catch (IOException ioException) {
+				throw new IllegalArgumentException(
+					"Unable to download file from " + url, ioException);
+			}
+		}
+
+		throw new IllegalArgumentException("Unable to resolve file");
+	}
+
 	private static FileEntry _getFileEntry(
-			long groupId, String portletId, String resourceName,
-			ServiceContext serviceContext,
-			ThumbnailURLReference thumbnailURLReference, long userId)
+			String externalReferenceCode, String fileBase64, long groupId,
+			String portletId, String resourceName,
+			ServiceContext serviceContext, String url)
 		throws Exception {
 
 		File file = null;
 
 		try {
 			file = FileUtil.createTempFile(
-				URLUtil.getByteArray(thumbnailURLReference.getUrl()));
+				_decodeOrGetByteArray(fileBase64, url));
 
 			String mimeType = MimeTypesUtil.getContentType(file);
 
@@ -87,22 +121,20 @@ public class FileEntryUtil {
 				PortletFileRepositoryUtil.addPortletRepository(
 					groupId, portletId, serviceContext);
 
-			String fileName =
-				thumbnailURLReference.getExternalReferenceCode() + "_preview" +
-					extension;
+			String fileNamePrefix = externalReferenceCode;
+
+			if (Validator.isNull(externalReferenceCode)) {
+				fileNamePrefix = PortalUUIDUtil.generate();
+			}
+
+			String fileName = fileNamePrefix + "_preview" + extension;
 
 			return DLAppLocalServiceUtil.addFileEntry(
-				thumbnailURLReference.getExternalReferenceCode(), userId,
+				externalReferenceCode, serviceContext.getUserId(),
 				repository.getRepositoryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				resourceName + "_" + fileName, mimeType, fileName, null, null,
 				null, file, null, null, null, serviceContext);
-		}
-		catch (IOException ioException) {
-			throw new IllegalArgumentException(
-				"Unable to download file from " +
-					thumbnailURLReference.getUrl(),
-				ioException);
 		}
 		finally {
 			if (file != null) {

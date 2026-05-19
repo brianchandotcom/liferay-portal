@@ -866,7 +866,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Free-text keyword search across asset titles. Empty or null returns all matching assets."
+                        "Free-text keyword search across event fields. Empty or null returns all matching events."
                     name: search
                     schema:
                         type: string

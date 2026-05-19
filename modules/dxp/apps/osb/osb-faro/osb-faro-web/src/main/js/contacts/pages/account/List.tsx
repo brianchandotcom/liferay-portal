@@ -115,7 +115,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<TotalAccounts groupId={groupId} />
 
 						<AccountsDataSet
-							apiURL={`/o/faro/contacts/${groupId}/account/search`}
+							apiURL={`/o/faro/contacts/${groupId}/account/search?channelId=${channelId}`}
 							channelId={channelId}
 							groupId={groupId}
 							loading={dataSourceLoading}

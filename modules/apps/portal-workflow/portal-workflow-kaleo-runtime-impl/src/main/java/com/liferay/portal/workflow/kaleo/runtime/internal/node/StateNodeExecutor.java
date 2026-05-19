@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.constants.KaleoInstanceTokenConstants;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
+import com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTransition;
@@ -19,9 +21,11 @@ import com.liferay.portal.workflow.kaleo.runtime.constants.WorkflowInstanceDesti
 import com.liferay.portal.workflow.kaleo.runtime.graph.PathElement;
 import com.liferay.portal.workflow.kaleo.runtime.node.BaseNodeExecutor;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,7 +58,10 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();
 
-		if (!currentKaleoNode.hasKaleoTransition()) {
+		List<KaleoTransition> kaleoTransitions = _getKaleoTransitions(
+			currentKaleoNode, executionContext);
+
+		if (kaleoTransitions.isEmpty()) {
 			kaleoInstanceToken =
 				_kaleoInstanceTokenLocalService.completeKaleoInstanceToken(
 					kaleoInstanceToken.getKaleoInstanceTokenId());
@@ -85,7 +92,19 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 		KaleoTransition kaleoTransition = null;
 
 		if (Validator.isNull(transitionName)) {
-			kaleoTransition = currentKaleoNode.getDefaultKaleoTransition();
+			for (KaleoTransition currentKaleoTransition : kaleoTransitions) {
+				if (currentKaleoTransition.isDefaultTransition()) {
+					kaleoTransition = currentKaleoTransition;
+
+					break;
+				}
+			}
+
+			if (kaleoTransition == null) {
+				throw new NoSuchTransitionException(
+					"No default KaleoTransition for KaleoNode id: " +
+						currentKaleoNode.getKaleoNodeId());
+			}
 		}
 		else {
 			kaleoTransition = currentKaleoNode.getKaleoTransition(
@@ -108,6 +127,28 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 		KaleoNode currentKaleoNode, ExecutionContext executionContext,
 		List<PathElement> remainingPathElements) {
 	}
+
+	private List<KaleoTransition> _getKaleoTransitions(
+		KaleoNode currentKaleoNode, ExecutionContext executionContext) {
+
+		KaleoInstanceToken kaleoInstanceToken =
+			executionContext.getKaleoInstanceToken();
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoInstanceToken.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion == null) {
+			return Collections.emptyList();
+		}
+
+		return kaleoDefinitionVersion.getKaleoNodeKaleoTransitions(
+			currentKaleoNode.getKaleoNodeId());
+	}
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private KaleoInstanceLocalService _kaleoInstanceLocalService;

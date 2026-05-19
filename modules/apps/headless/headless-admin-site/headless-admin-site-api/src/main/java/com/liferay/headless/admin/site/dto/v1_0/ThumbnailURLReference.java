@@ -34,7 +34,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A unique reference to a URL which remains constant across environments.",
+	description = "A reference to a thumbnail file. On read, `externalReferenceCode` and `url` are populated from the underlying file entry; during a staging export, `url` is a `lar://` URL pointing at bytes embedded in the LAR archive. On write, the binary source is resolved by the precedence `externalReferenceCode` → `fileBase64` → `url`. An `externalReferenceCode` that resolves to an existing file binds it; otherwise a new file is materialized from `fileBase64` (or downloaded from `url` when `fileBase64` is absent), carrying the supplied or server-generated `externalReferenceCode`.",
 	value = "ThumbnailURLReference"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -50,7 +50,9 @@ public class ThumbnailURLReference implements Serializable {
 			ThumbnailURLReference.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The thumbnail file's external reference code. On write, the canonical identifier of the file to bind."
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -84,14 +86,63 @@ public class ThumbnailURLReference implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The thumbnail file's external reference code. On write, the canonical identifier of the file to bind."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Base64-encoded file content. Used to create a new file when `externalReferenceCode` does not resolve in the destination."
+	)
+	public String getFileBase64() {
+		if (_fileBase64Supplier != null) {
+			fileBase64 = _fileBase64Supplier.get();
+
+			_fileBase64Supplier = null;
+		}
+
+		return fileBase64;
+	}
+
+	public void setFileBase64(String fileBase64) {
+		this.fileBase64 = fileBase64;
+
+		_fileBase64Supplier = null;
+	}
+
+	@JsonIgnore
+	public void setFileBase64(
+		UnsafeSupplier<String, Exception> fileBase64UnsafeSupplier) {
+
+		_fileBase64Supplier = () -> {
+			try {
+				return fileBase64UnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Base64-encoded file content. Used to create a new file when `externalReferenceCode` does not resolve in the destination."
+	)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	protected String fileBase64;
+
+	@JsonIgnore
+	private Supplier<String> _fileBase64Supplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A URL the thumbnail can be fetched from. On read, the canonical URL of the stored file. On write, used to download bytes (supports `http://`, `https://` and `lar://`) when `externalReferenceCode` does not resolve and `fileBase64` is absent."
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -123,7 +174,9 @@ public class ThumbnailURLReference implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "A URL the thumbnail can be fetched from. On read, the canonical URL of the stored file. On write, used to download bytes (supports `http://`, `https://` and `lar://`) when `externalReferenceCode` does not resolve and `fileBase64` is absent."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
@@ -170,6 +223,22 @@ public class ThumbnailURLReference implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String fileBase64 = getFileBase64();
+
+		if (fileBase64 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileBase64\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileBase64));
 
 			sb.append("\"");
 		}
@@ -291,4 +360,4 @@ public class ThumbnailURLReference implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:523528375
+// LIFERAY-REST-BUILDER-HASH:791786340

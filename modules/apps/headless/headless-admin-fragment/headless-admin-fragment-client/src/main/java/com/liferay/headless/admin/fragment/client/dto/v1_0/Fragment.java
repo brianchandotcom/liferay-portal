@@ -273,6 +273,30 @@ public class Fragment implements Cloneable, Serializable {
 
 	protected Boolean readOnly;
 
+	public ThumbnailURLReference getThumbnailURLReference() {
+		return thumbnailURLReference;
+	}
+
+	public void setThumbnailURLReference(
+		ThumbnailURLReference thumbnailURLReference) {
+
+		this.thumbnailURLReference = thumbnailURLReference;
+	}
+
+	public void setThumbnailURLReference(
+		UnsafeSupplier<ThumbnailURLReference, Exception>
+			thumbnailURLReferenceUnsafeSupplier) {
+
+		try {
+			thumbnailURLReference = thumbnailURLReferenceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected ThumbnailURLReference thumbnailURLReference;
+
 	public Type getType() {
 		return type;
 	}
@@ -365,4 +389,4 @@ public class Fragment implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1435204289
+// LIFERAY-REST-BUILDER-HASH:276754114

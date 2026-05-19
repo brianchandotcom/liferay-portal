@@ -753,6 +753,16 @@ public abstract class BaseFragmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"thumbnailURLReference", additionalAssertFieldName)) {
+
+				if (fragment.getThumbnailURLReference() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (fragment.getType() == null) {
 					valid = false;
@@ -1000,6 +1010,19 @@ public abstract class BaseFragmentResourceTestCase {
 			if (Objects.equals("readOnly", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						fragment1.getReadOnly(), fragment2.getReadOnly())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"thumbnailURLReference", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						fragment1.getThumbnailURLReference(),
+						fragment2.getThumbnailURLReference())) {
 
 					return false;
 				}
@@ -1396,6 +1419,11 @@ public abstract class BaseFragmentResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("thumbnailURLReference")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("type")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1705,4 +1733,4 @@ public abstract class BaseFragmentResourceTestCase {
 		_fragmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:574904257
+// LIFERAY-REST-BUILDER-HASH:15180889

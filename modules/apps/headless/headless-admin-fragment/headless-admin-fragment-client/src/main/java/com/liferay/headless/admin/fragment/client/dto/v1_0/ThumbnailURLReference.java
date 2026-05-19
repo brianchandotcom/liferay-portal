@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.admin.site.client.dto.v1_0;
+package com.liferay.headless.admin.fragment.client.dto.v1_0;
 
-import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ThumbnailURLReferenceSerDes;
+import com.liferay.headless.admin.fragment.client.function.UnsafeSupplier;
+import com.liferay.headless.admin.fragment.client.serdes.v1_0.ThumbnailURLReferenceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -119,4 +119,4 @@ public class ThumbnailURLReference implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1770941589
+// LIFERAY-REST-BUILDER-HASH:716595498

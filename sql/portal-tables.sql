@@ -693,6 +693,7 @@ create table Layout (
 	themeId VARCHAR(75) null,
 	colorSchemeId VARCHAR(75) null,
 	styleBookEntryERC VARCHAR(75) null,
+	styleBookEntryScopeERC VARCHAR(75) null,
 	css TEXT null,
 	priority INTEGER,
 	faviconFileEntryERC VARCHAR(75) null,

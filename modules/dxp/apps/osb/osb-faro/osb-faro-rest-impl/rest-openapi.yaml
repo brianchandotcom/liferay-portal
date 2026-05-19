@@ -671,7 +671,7 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Optional id to scope results to a single channel."
+                        "Optional channel id to scope results to a single channel."
                     name: channelId
                     schema:
                         type: string
@@ -837,7 +837,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Include events from anonymous individuals if set to true."
+                        "If true, events from anonymous (browser-tracked) individuals are included. Defaults to false."
                     name: includeAnonymousUsers
                     schema:
                         type: boolean
@@ -922,7 +922,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Page number (Starts at 1)."
+                        "Page number (starts at 1)."
                     name: page
                     schema:
                         type: integer
@@ -1000,7 +1000,7 @@ paths:
                         type: string
                 -   in: query
                     description:
-                        "Page number. Starts at 1."
+                        "Page number (starts at 1)."
                     name: page
                     schema:
                         type: integer
@@ -1263,19 +1263,19 @@ paths:
                         type: integer
                 -   in: query
                     description:
-                        "Optional channel ID to scope results to a single channel."
+                        "Optional channel id to scope results to a single channel."
                     name: channelId
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Optional data source ID to scope results to a single data source."
+                        "Optional data source id to scope results to a single data source."
                     name: dataSourceId
                     schema:
                         type: string
                 -   in: query
                     description:
-                        "Page number."
+                        "Page number (starts at 1)."
                     name: page
                     schema:
                         type: integer

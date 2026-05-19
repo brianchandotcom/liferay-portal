@@ -38,7 +38,7 @@
 
 {{- if (eq $restorePhase "promoting") -}}
     {{- $dataPlanes = list "blue" "green" -}}
-{{- else if (eq $restorePhase "provisioning") -}}
+{{- else if or (eq $restorePhase "provisioning") (eq $restorePhase "provisioning-database-user") -}}
     {{- $activeDataPlane = $targetInactiveDataPlane -}}
     {{- $dataPlanes = list "blue" "green" -}}
 {{- end }}

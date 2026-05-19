@@ -492,10 +492,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
-		if (portletId.equals(rootPortletId)) {
-			return companyPortletsMap.get(portletId);
-		}
-
 		Portlet portlet = companyPortletsMap.get(rootPortletId);
 
 		if (portlet != null) {

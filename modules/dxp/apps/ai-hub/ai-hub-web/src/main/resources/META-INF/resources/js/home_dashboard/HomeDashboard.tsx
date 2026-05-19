@@ -92,6 +92,12 @@ export default function HomeDashboard({
 					{Liferay.Language.get('start-building-ai-agents')}
 				</h2>
 
+				<p className="home-dashboard__hero-subtitle">
+					{Liferay.Language.get(
+						'create-ai-agents-that-help-teams-and-customers-work-more-efficiently'
+					)}
+				</p>
+
 				<a
 					className="btn btn-primary home-dashboard__hero-btn rounded-pill"
 					href={appendBackURL(agentURL, backURL)}

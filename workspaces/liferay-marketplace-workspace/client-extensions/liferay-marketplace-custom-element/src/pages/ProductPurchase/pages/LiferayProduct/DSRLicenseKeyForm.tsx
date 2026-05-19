@@ -48,7 +48,7 @@ const DSRLicenseKeyForm = () => {
 		error,
 		isLoading,
 	} = useSWR(
-		accountKey ? `/ac-plan/${accountKey}` : null,
+		accountKey ? `/project-corp-project-uuid/${accountKey}` : null,
 		async () => {
 			return analyticsOAuth2.getProjectCorpProjectUuid(accountKey);
 		},
@@ -245,7 +245,6 @@ const DSRLicenseKeyForm = () => {
 					<RequiredMask />
 				</label>
 			</div>
-
 		</ProductPurchase.Shell>
 	);
 };

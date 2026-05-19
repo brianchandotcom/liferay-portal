@@ -135,7 +135,7 @@ public class DisplayPageTemplateDTOConverter
 					});
 				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
-						"thumbnail",
+						"thumbnailURLReference",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
 								getFileEntryThumbnailURLReference(

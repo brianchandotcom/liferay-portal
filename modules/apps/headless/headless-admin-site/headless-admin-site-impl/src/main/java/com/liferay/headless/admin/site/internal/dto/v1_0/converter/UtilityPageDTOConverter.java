@@ -82,7 +82,7 @@ public class UtilityPageDTOConverter
 				setName(layoutUtilityPageEntry::getName);
 				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
-						"thumbnail",
+						"thumbnailURLReference",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
 								getFileEntryThumbnailURLReference(

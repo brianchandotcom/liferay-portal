@@ -123,7 +123,7 @@ public class PageTemplateDTOConverter
 						layoutPageTemplateEntry.getGroupId()));
 				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
-						"thumbnail",
+						"thumbnailURLReference",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
 								getFileEntryThumbnailURLReference(
@@ -224,7 +224,7 @@ public class PageTemplateDTOConverter
 						layoutPageTemplateEntry.getGroupId()));
 				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(
-						"thumbnail",
+						"thumbnailURLReference",
 						fieldName ->
 							ThumbnailURLReferenceUtil.
 								getFileEntryThumbnailURLReference(

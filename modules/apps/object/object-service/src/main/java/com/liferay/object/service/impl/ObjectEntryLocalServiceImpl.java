@@ -33,6 +33,7 @@ import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.list.type.exception.NoSuchListTypeEntryException;
@@ -1051,6 +1052,8 @@ public class ObjectEntryLocalServiceImpl
 				groupId,
 				_classNameLocalService.getClassNameId(
 					objectDefinition.getClassName()),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry == null) {

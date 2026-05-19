@@ -14,6 +14,7 @@ import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
@@ -653,6 +654,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				group.getGroupId(),
 				_layoutFriendlyURLEntryHelper.getClassNameId(
 					layoutA.isPrivateLayout()),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				friendlyURLA);
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
@@ -669,6 +672,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			group.getGroupId(),
 			_layoutFriendlyURLEntryHelper.getClassNameId(
 				layoutB.isPrivateLayout()),
+			FriendlyURLEntryConstants.
+				FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 			friendlyURLB);
 
 		_friendlyURLEntryLocalService.deleteFriendlyURLEntry(
@@ -783,6 +788,8 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				importedGroup.getGroupId(),
 				_layoutFriendlyURLEntryHelper.getClassNameId(
 					importedLayout.isPrivateLayout()),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				friendlyURL + "-1");
 
 		Assert.assertEquals(

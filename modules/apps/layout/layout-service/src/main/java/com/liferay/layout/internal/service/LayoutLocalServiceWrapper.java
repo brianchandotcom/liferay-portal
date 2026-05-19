@@ -14,6 +14,7 @@ import com.liferay.fragment.cache.FragmentEntryLinkCache;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
@@ -733,6 +734,8 @@ public class LayoutLocalServiceWrapper
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_layoutFriendlyURLEntryHelper.getClassNameId(privateLayout),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				friendlyURL);
 
 		if (friendlyURLEntry == null) {

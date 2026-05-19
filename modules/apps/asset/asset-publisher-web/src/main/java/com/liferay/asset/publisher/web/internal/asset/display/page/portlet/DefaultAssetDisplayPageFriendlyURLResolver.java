@@ -16,6 +16,7 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -298,6 +299,8 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntryLocalization != null) {

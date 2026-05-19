@@ -8,6 +8,7 @@ package com.liferay.blogs.internal.upgrade.v3_1_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.test.util.BaseFriendlyURLFormatUpgradeProcessTestCase;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -113,7 +114,10 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntryLocalization(
-				group.getGroupId(), _classNameId, _blogsEntry.getUrlTitle());
+				group.getGroupId(), _classNameId,
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+				_blogsEntry.getUrlTitle());
 
 		Assert.assertEquals(
 			urlTitle, friendlyURLEntryLocalization.getUrlTitle());

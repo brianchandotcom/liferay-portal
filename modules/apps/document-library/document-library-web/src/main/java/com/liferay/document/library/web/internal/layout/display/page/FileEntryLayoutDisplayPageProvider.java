@@ -6,6 +6,7 @@
 package com.liferay.document.library.web.internal.layout.display.page;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -84,6 +85,8 @@ public class FileEntryLayoutDisplayPageProvider
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId, _classNameLocalService.getClassNameId(FileEntry.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {

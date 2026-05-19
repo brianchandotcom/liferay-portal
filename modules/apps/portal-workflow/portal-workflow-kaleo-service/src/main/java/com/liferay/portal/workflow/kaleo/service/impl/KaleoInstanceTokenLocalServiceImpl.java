@@ -136,6 +136,8 @@ public class KaleoInstanceTokenLocalServiceImpl
 			kaleoInstanceTokenPersistence.findByPrimaryKey(
 				kaleoInstanceTokenId);
 
+		kaleoInstanceTokenPersistence.reassociateIfAbsent(kaleoInstanceToken);
+
 		kaleoInstanceToken.setCompleted(true);
 		kaleoInstanceToken.setCompletionDate(new Date());
 
@@ -334,14 +336,18 @@ public class KaleoInstanceTokenLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public KaleoInstanceToken updateKaleoInstanceToken(
-			long kaleoInstanceTokenId, long currentKaleoNodeId)
+			long kaleoInstanceTokenId, long currentKaleoNodeId,
+			String currentKaleoNodeName)
 		throws PortalException {
 
 		KaleoInstanceToken kaleoInstanceToken =
 			kaleoInstanceTokenPersistence.findByPrimaryKey(
 				kaleoInstanceTokenId);
 
-		_setCurrentKaleoNode(kaleoInstanceToken, currentKaleoNodeId);
+		kaleoInstanceTokenPersistence.reassociateIfAbsent(kaleoInstanceToken);
+
+		kaleoInstanceToken.setCurrentKaleoNodeId(currentKaleoNodeId);
+		kaleoInstanceToken.setCurrentKaleoNodeName(currentKaleoNodeName);
 
 		return kaleoInstanceTokenPersistence.update(kaleoInstanceToken);
 	}

@@ -39,9 +39,13 @@ export interface Condition {
 	id: string;
 	options?: {
 		type:
+			| 'contains'
+			| 'does-not-contain'
 			| 'equal'
 			| 'greater-than'
 			| 'greater-than-or-equals'
+			| 'is-empty'
+			| 'is-not-empty'
 			| 'less-than'
 			| 'less-than-or-equals'
 			| 'not-equal';

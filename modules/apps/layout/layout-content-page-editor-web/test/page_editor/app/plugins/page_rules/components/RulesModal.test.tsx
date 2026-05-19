@@ -10,6 +10,8 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {LAYOUT_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutTypes';
+import {config} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 import {RulesModalContext} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/RulesModalContext';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {State} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/reducers';
@@ -17,11 +19,34 @@ import addRule from '../../../../../../src/main/resources/META-INF/resources/pag
 import {
 	CACHE_KEYS,
 	disposeCache,
+	getCacheKey,
 	initializeCache,
 	setCacheItem,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/cache';
 import RulesModal from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_rules/components/RulesModal';
 import {Rule} from '../../../../../../src/main/resources/META-INF/resources/page_editor/types/Rule';
+
+const mockSendMessage = jest.fn();
+
+jest.mock('@liferay/layout-js-components-web', () => {
+	const React = require('react');
+	const actual = jest.requireActual('@liferay/layout-js-components-web');
+
+	return {
+		...actual,
+		ScreenReaderAnnouncerContextProvider: ({
+			children,
+		}: {
+			children: React.ReactNode;
+		}) => (
+			<actual.ScreenReaderAnnouncerContext.Provider
+				value={{sendMessage: mockSendMessage}}
+			>
+				{children}
+			</actual.ScreenReaderAnnouncerContext.Provider>
+		),
+	};
+});
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
@@ -217,6 +242,60 @@ describe('RulesSidebar', () => {
 		expect(
 			screen.getByText('user1', {selector: '[role="combobox"]'})
 		).toBeInTheDocument();
+	});
+
+	it('announces condition completion to screen readers', async () => {
+		mockSendMessage.mockClear();
+
+		renderComponent();
+
+		await selectPickerOption('select-item-for-the-condition', 'user');
+		await selectPickerOption('select-condition', 'is-the-user');
+		await selectPickerOption('select-user', 'user1');
+
+		expect(mockSendMessage).toHaveBeenCalledWith('condition-completed');
+	});
+
+	it('does not render a value input for is-empty', async () => {
+		(config as any).layoutType = LAYOUT_TYPES.display;
+		(config as any).selectedMappingTypes = {
+			formEnabled: true,
+			type: {id: 'mapping-id', label: 'Article'},
+		};
+
+		setCacheItem({
+			data: [
+				{
+					key: 'title',
+					label: 'Title',
+					localizable: false,
+					name: 'title',
+					required: false,
+					type: 'text',
+				},
+			],
+			key: getCacheKey([CACHE_KEYS.mappingFields, 'mapping-id']) ?? '',
+			status: 'saved',
+		});
+
+		renderComponent({
+			editingRule: {
+				actions: [{id: 'action-1', type: undefined}],
+				conditionType: 'all',
+				conditions: [
+					{
+						field: 'title',
+						id: 'condition-1',
+						options: {type: 'is-empty'},
+						type: 'field',
+					},
+				],
+				id: '',
+				name: 'Rule',
+			},
+		});
+
+		expect(screen.queryByLabelText('value')).not.toBeInTheDocument();
 	});
 
 	it('does allow completing a action', async () => {

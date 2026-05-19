@@ -68,6 +68,22 @@ function _toFieldComparison(
 	value: string,
 	fieldType?: string
 ) {
+	if (type === 'is-empty') {
+		return `isEmpty(${field})`;
+	}
+
+	if (type === 'is-not-empty') {
+		return `NOT(isEmpty(${field}))`;
+	}
+
+	if (type === 'contains') {
+		return `contains(${field}, "${value}")`;
+	}
+
+	if (type === 'does-not-contain') {
+		return `NOT(contains(${field}, "${value}"))`;
+	}
+
 	if (fieldType === 'number') {
 		const operator = _toNumericOperator(type);
 

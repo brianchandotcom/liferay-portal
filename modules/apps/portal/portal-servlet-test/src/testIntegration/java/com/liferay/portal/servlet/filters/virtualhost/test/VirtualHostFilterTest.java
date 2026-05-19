@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -97,7 +98,7 @@ public class VirtualHostFilterTest {
 					false)) {
 
 			MockHttpServletRequest mockHttpServletRequest = _processFilter(
-				null, "/lpd82451-no-such-group");
+				null, StringPool.SLASH + RandomTestUtil.randomString());
 
 			Assert.assertNull(
 				mockHttpServletRequest.getAttribute(
@@ -240,21 +241,23 @@ public class VirtualHostFilterTest {
 		String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
 
 		MockHttpServletRequest mockHttpServletRequest = _processFilter(
-			_publicLayoutSet, groupFriendlyURL + "/home");
+			_publicLayoutSet,
+			groupFriendlyURL + StringPool.SLASH +
+				RandomTestUtil.randomString());
 
-		ObjectValuePair<Group, String> stashedFriendlyURLGroup =
-			(ObjectValuePair<Group, String>)mockHttpServletRequest.getAttribute(
+		ObjectValuePair<String, Group> friendlyURLGroupObjectValuePair =
+			(ObjectValuePair<String, Group>)mockHttpServletRequest.getAttribute(
 				WebKeys.FRIENDLY_URL_GROUP);
 
-		Assert.assertNotNull(stashedFriendlyURLGroup);
+		Assert.assertNotNull(friendlyURLGroupObjectValuePair);
 
-		Group stashedGroup = stashedFriendlyURLGroup.getKey();
+		Group stashedGroup = friendlyURLGroupObjectValuePair.getValue();
 
 		Assert.assertEquals(
 			_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
 
 		Assert.assertEquals(
-			groupFriendlyURL, stashedFriendlyURLGroup.getValue());
+			groupFriendlyURL, friendlyURLGroupObjectValuePair.getKey());
 	}
 
 	@Test
@@ -269,22 +272,24 @@ public class VirtualHostFilterTest {
 			String groupFriendlyURL = _getGroupFriendlyURL(_publicLayoutSet);
 
 			MockHttpServletRequest mockHttpServletRequest = _processFilter(
-				null, groupFriendlyURL + "/home");
+				null,
+				groupFriendlyURL + StringPool.SLASH +
+					RandomTestUtil.randomString());
 
-			ObjectValuePair<Group, String> stashedFriendlyURLGroup =
-				(ObjectValuePair<Group, String>)
+			ObjectValuePair<String, Group> friendlyURLGroupObjectValuePair =
+				(ObjectValuePair<String, Group>)
 					mockHttpServletRequest.getAttribute(
 						WebKeys.FRIENDLY_URL_GROUP);
 
-			Assert.assertNotNull(stashedFriendlyURLGroup);
+			Assert.assertNotNull(friendlyURLGroupObjectValuePair);
 
-			Group stashedGroup = stashedFriendlyURLGroup.getKey();
+			Group stashedGroup = friendlyURLGroupObjectValuePair.getValue();
 
 			Assert.assertEquals(
 				_publicLayoutSet.getGroupId(), stashedGroup.getGroupId());
 
 			Assert.assertEquals(
-				groupFriendlyURL, stashedFriendlyURLGroup.getValue());
+				groupFriendlyURL, friendlyURLGroupObjectValuePair.getKey());
 		}
 	}
 

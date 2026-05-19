@@ -261,13 +261,13 @@ public class VirtualHostFilter extends BasePortalFilter {
 		}
 
 		if (layoutSet == null) {
-			ObjectValuePair<Group, String> friendlyURLGroup =
+			ObjectValuePair<String, Group> friendlyURLGroupObjectValuePair =
 				PortalUtil.fetchFriendlyURLGroup(
 					CompanyThreadLocal.getCompanyId(), friendlyURL);
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
-				(friendlyURLGroup != null)) {
+				(friendlyURLGroupObjectValuePair != null)) {
 
 				StringBundler sb = new StringBundler(3);
 
@@ -283,7 +283,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				}
 
 				httpServletRequest.setAttribute(
-					WebKeys.FRIENDLY_URL_GROUP, friendlyURLGroup);
+					WebKeys.FRIENDLY_URL_GROUP,
+					friendlyURLGroupObjectValuePair);
 
 				RequestDispatcher requestDispatcher =
 					_servletContext.getRequestDispatcher(sb.toString());
@@ -350,17 +351,19 @@ public class VirtualHostFilter extends BasePortalFilter {
 					StringPool.BLANK);
 			}
 
-			ObjectValuePair<Group, String> friendlyURLGroup =
+			ObjectValuePair<String, Group> friendlyURLGroupObjectValuePair =
 				PortalUtil.fetchFriendlyURLGroup(companyId, friendlyURL);
 
-			if (friendlyURLGroup != null) {
+			if (friendlyURLGroupObjectValuePair != null) {
 				httpServletRequest.setAttribute(
-					WebKeys.FRIENDLY_URL_GROUP, friendlyURLGroup);
+					WebKeys.FRIENDLY_URL_GROUP,
+					friendlyURLGroupObjectValuePair);
 			}
 
 			if (!PropsValues.
 					LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING_ENABLED &&
-				!layoutSet.isPrivateLayout() && (friendlyURLGroup != null)) {
+				!layoutSet.isPrivateLayout() &&
+				(friendlyURLGroupObjectValuePair != null)) {
 
 				sb.append(_PUBLIC_GROUP_SERVLET_MAPPING);
 			}

@@ -129,18 +129,20 @@ public class FriendlyURLServlet extends HttpServlet {
 
 		long companyId = PortalInstances.getCompanyId(httpServletRequest);
 
-		ObjectValuePair<Group, String> friendlyURLGroup =
-			(ObjectValuePair<Group, String>)httpServletRequest.getAttribute(
+		ObjectValuePair<String, Group> friendlyURLGroupObjectValuePair =
+			(ObjectValuePair<String, Group>)httpServletRequest.getAttribute(
 				WebKeys.FRIENDLY_URL_GROUP);
 
-		if (friendlyURLGroup == null) {
-			friendlyURLGroup = portal.fetchFriendlyURLGroup(companyId, path);
+		if (friendlyURLGroupObjectValuePair == null) {
+			friendlyURLGroupObjectValuePair = portal.fetchFriendlyURLGroup(
+				companyId, path);
 		}
 
-		Group group =
-			(friendlyURLGroup == null) ? null : friendlyURLGroup.getKey();
+		Group group = (friendlyURLGroupObjectValuePair == null) ? null :
+			friendlyURLGroupObjectValuePair.getValue();
 		String groupFriendlyURL =
-			(friendlyURLGroup == null) ? path : friendlyURLGroup.getValue();
+			(friendlyURLGroupObjectValuePair == null) ? path :
+				friendlyURLGroupObjectValuePair.getKey();
 
 		if ((group == null) ||
 			(!group.isActive() && !groupLocalService.isMaintenanceMode(group) &&

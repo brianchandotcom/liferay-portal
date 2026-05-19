@@ -245,11 +245,11 @@ public interface Portal {
 	 *
 	 * @param  companyId the primary key of the company
 	 * @param  path the request path beginning with a slash
-	 * @return a pair of the matching group (key) and the path-typed group
-	 *         friendly URL prefix (value), or <code>null</code> if the path is
-	 *         just a slash or no group nor user matches
+	 * @return a pair of the path-typed group friendly URL prefix (key) and the
+	 *         matching group (value), or <code>null</code> if the path is just
+	 *         a slash or no group nor user matches
 	 */
-	public ObjectValuePair<Group, String> fetchFriendlyURLGroup(
+	public ObjectValuePair<String, Group> fetchFriendlyURLGroup(
 		long companyId, String path);
 
 	/**

@@ -1028,7 +1028,7 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public ObjectValuePair<Group, String> fetchFriendlyURLGroup(
+	public ObjectValuePair<String, Group> fetchFriendlyURLGroup(
 		long companyId, String path) {
 
 		if ((path == null) || path.equals(StringPool.SLASH)) {
@@ -1066,14 +1066,14 @@ public class PortalImpl implements Portal {
 			companyId, groupFriendlyURL);
 
 		if (group != null) {
-			return new ObjectValuePair<>(group, groupFriendlyURL);
+			return new ObjectValuePair<>(groupFriendlyURL, group);
 		}
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
 			companyId, groupFriendlyURL.substring(1));
 
 		if (user != null) {
-			return new ObjectValuePair<>(user.getGroup(), groupFriendlyURL);
+			return new ObjectValuePair<>(groupFriendlyURL, user.getGroup());
 		}
 
 		return null;

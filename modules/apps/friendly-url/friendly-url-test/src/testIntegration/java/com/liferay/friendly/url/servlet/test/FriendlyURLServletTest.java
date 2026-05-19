@@ -486,12 +486,13 @@ public class FriendlyURLServletTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.FRIENDLY_URL_GROUP,
-			new ObjectValuePair<>(_group, _group.getFriendlyURL()));
+			new ObjectValuePair<>(_group.getFriendlyURL(), _group));
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		testGetRedirect(
 			mockHttpServletRequest,
-			"/lpd82451-no-such-group" + _layout.getFriendlyURL(),
+			StringPool.SLASH + RandomTestUtil.randomString() +
+				_layout.getFriendlyURL(),
 			_redirectConstructor1.newInstance(getURL(_layout)));
 	}
 

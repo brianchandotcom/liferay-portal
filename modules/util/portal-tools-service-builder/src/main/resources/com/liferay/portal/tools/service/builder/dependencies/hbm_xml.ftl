@@ -154,10 +154,12 @@
 				<one-to-one
 					<#if serviceBuilder.isVersionGTE_7_4_0()>
 						access="com.liferay.portal.dao.orm.hibernate.PrivateFieldPropertyAccessor"
+						cascade="merge, persist, save-update"
 					<#else>
 						access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor"
+						cascade="save-update"
 					</#if>
-					cascade="save-update" class="${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel" constrained="${constrained}" name="${entityColumn.name}BlobModel" outer-join="false" />
+					class="${apiPackagePath}.model.${entity.name}${entityColumn.methodName}BlobModel" constrained="${constrained}" name="${entityColumn.name}BlobModel" outer-join="false" />
 			</#if>
 		</#list>
 	</class>

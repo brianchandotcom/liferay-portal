@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-	DataSourceName,
-	disableRow,
-	isDataSourceVisible,
-	StatusRenderer
-} from '../DataSourceList';
+import {DataSourceName, disableRow, StatusRenderer} from '../DataSourceList';
 import {DataSourceStates, DataSourceTypes} from 'shared/util/constants';
 import {MemoryRouter} from 'react-router-dom';
 import {render} from '@testing-library/react';
-import {SubscriptionNames} from 'shared/util/subscriptions';
 
 jest.unmock('react-dom');
 
@@ -28,61 +22,6 @@ describe('DataSourceList exports', () => {
 			expect(disableRow({state: DataSourceStates.Disconnected})).toBe(
 				false
 			);
-		});
-	});
-
-	describe('isDataSourceVisible', () => {
-		it('always shows data source types with no subscription rule', () => {
-			expect(
-				isDataSourceVisible(
-					DataSourceTypes.Liferay,
-					SubscriptionNames.LiferayDataPlatform
-				)
-			).toBe(true);
-			expect(
-				isDataSourceVisible(
-					DataSourceTypes.Csv,
-					SubscriptionNames.LiferayAnalyticsCloudEnterprise
-				)
-			).toBe(true);
-		});
-
-		it('returns true when the subscription name is null', () => {
-			expect(isDataSourceVisible(DataSourceTypes.Demandbase, null)).toBe(
-				true
-			);
-		});
-
-		it.each([
-			DataSourceTypes.Demandbase,
-			DataSourceTypes.Hubspot,
-			DataSourceTypes.Salesforce
-		])('shows %s when the subscription is Liferay Data Platform', type => {
-			expect(
-				isDataSourceVisible(type, SubscriptionNames.LiferayDataPlatform)
-			).toBe(true);
-		});
-
-		it.each([
-			[
-				DataSourceTypes.Demandbase,
-				SubscriptionNames.LiferayAnalyticsCloudBasic
-			],
-			[
-				DataSourceTypes.Hubspot,
-				SubscriptionNames.LiferayAnalyticsCloudBusiness
-			],
-			[
-				DataSourceTypes.Salesforce,
-				SubscriptionNames.LiferayAnalyticsCloudEnterprise
-			],
-			[
-				DataSourceTypes.Demandbase,
-				SubscriptionNames.LiferaySaasEnterprisePlan
-			],
-			[DataSourceTypes.Hubspot, SubscriptionNames.LxcBusinessPlan]
-		])('hides %s for non-LDP subscription %s', (type, subscription) => {
-			expect(isDataSourceVisible(type, subscription)).toBe(false);
 		});
 	});
 

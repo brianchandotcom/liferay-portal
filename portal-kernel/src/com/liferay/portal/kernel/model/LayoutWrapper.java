@@ -65,6 +65,7 @@ public class LayoutWrapper
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
 		attributes.put("styleBookEntryERC", getStyleBookEntryERC());
+		attributes.put("styleBookEntryScopeERC", getStyleBookEntryScopeERC());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("faviconFileEntryERC", getFaviconFileEntryERC());
@@ -281,6 +282,13 @@ public class LayoutWrapper
 
 		if (styleBookEntryERC != null) {
 			setStyleBookEntryERC(styleBookEntryERC);
+		}
+
+		String styleBookEntryScopeERC = (String)attributes.get(
+			"styleBookEntryScopeERC");
+
+		if (styleBookEntryScopeERC != null) {
+			setStyleBookEntryScopeERC(styleBookEntryScopeERC);
 		}
 
 		String css = (String)attributes.get("css");
@@ -1384,6 +1392,16 @@ public class LayoutWrapper
 	@Override
 	public String getStyleBookEntryERC() {
 		return model.getStyleBookEntryERC();
+	}
+
+	/**
+	 * Returns the style book entry scope erc of this layout.
+	 *
+	 * @return the style book entry scope erc of this layout
+	 */
+	@Override
+	public String getStyleBookEntryScopeERC() {
+		return model.getStyleBookEntryScopeERC();
 	}
 
 	/**
@@ -2659,6 +2677,16 @@ public class LayoutWrapper
 	}
 
 	/**
+	 * Sets the style book entry scope erc of this layout.
+	 *
+	 * @param styleBookEntryScopeERC the style book entry scope erc of this layout
+	 */
+	@Override
+	public void setStyleBookEntryScopeERC(String styleBookEntryScopeERC) {
+		model.setStyleBookEntryScopeERC(styleBookEntryScopeERC);
+	}
+
+	/**
 	 * Sets whether this layout is system.
 	 *
 	 * @param system the system of this layout
@@ -2838,4 +2866,4 @@ public class LayoutWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:297716866
+// LIFERAY-SERVICE-BUILDER-HASH:1482886270

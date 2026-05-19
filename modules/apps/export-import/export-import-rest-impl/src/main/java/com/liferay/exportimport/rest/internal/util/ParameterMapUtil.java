@@ -5,9 +5,7 @@
 
 package com.liferay.exportimport.rest.internal.util;
 
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandler;
 import com.liferay.exportimport.rest.dto.v1_0.RequestPortletDataHandlerControl;
 import com.liferay.portal.kernel.util.Validator;
@@ -18,15 +16,12 @@ import java.util.Map;
 /**
  * @author Daniel Raposo
  */
-public class ExportRequestParameterMapUtil {
+public class ParameterMapUtil {
 
 	public static Map<String, String[]> toParameterMap(
-		ExportRequest exportRequest) {
+		RequestPortletDataHandler[] requestPortletDataHandlers) {
 
 		Map<String, String[]> parameterMap = new HashMap<>();
-
-		RequestPortletDataHandler[] requestPortletDataHandlers =
-			exportRequest.getRequestPortletDataHandlers();
 
 		if (requestPortletDataHandlers != null) {
 			for (RequestPortletDataHandler requestPortletDataHandler :
@@ -35,14 +30,6 @@ public class ExportRequestParameterMapUtil {
 				_addToParameterMap(requestPortletDataHandler, parameterMap);
 			}
 		}
-
-		String range = exportRequest.getRangeAsString();
-
-		if (range == null) {
-			range = ExportImportDateUtil.RANGE_ALL;
-		}
-
-		parameterMap.put("range", new String[] {range});
 
 		parameterMap.putIfAbsent(
 			PortletDataHandlerKeys.DELETIONS,

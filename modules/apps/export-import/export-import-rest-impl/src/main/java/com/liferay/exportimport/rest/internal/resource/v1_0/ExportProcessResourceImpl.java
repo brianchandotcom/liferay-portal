@@ -15,7 +15,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ExportProcess;
 import com.liferay.exportimport.rest.dto.v1_0.ExportRequest;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
-import com.liferay.exportimport.rest.internal.util.ExportRequestParameterMapUtil;
+import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportProcessResource;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
@@ -102,8 +102,8 @@ public class ExportProcessResourceImpl extends BaseExportProcessResourceImpl {
 		PermissionUtil.checkExportPermission(
 			contextCompany.getCompanyId(), groupId);
 
-		Map<String, String[]> parameterMap =
-			ExportRequestParameterMapUtil.toParameterMap(exportRequest);
+		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
+			exportRequest.getRequestPortletDataHandlers());
 
 		long[] layoutIds = GetterUtil.getLongValues(
 			parameterMap.get("layoutIds"));

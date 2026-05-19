@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaxCategory")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
+@GraphQLName(
+	description = "Classification used to group products that share the same tax treatment. Records are company-scoped and referenced by pricing and tax engines to resolve the applicable rate. Saving a category triggers a search reindex; deleting one resets the tax-category reference on every product definition that points to it.",
+	value = "TaxCategory"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Classification used to group products that share the same tax treatment. Records are company-scoped and referenced by pricing and tax engines to resolve the applicable rate. Saving a category triggers a search reindex; deleting one resets the tax-category reference on every product definition that points to it.",
+	requiredProperties = {"name"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "TaxCategory")
 public class TaxCategory implements Serializable {
@@ -52,7 +58,8 @@ public class TaxCategory implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized free-form description shown in the back-office UI. Map keys are locale codes; values are the translated strings.",
+		example = "{en_US=Standard goods, hr_HR=Standardna roba, hu_HU=Általános áru}"
 	)
 	@Valid
 	public Map<String, String> getDescription() {
@@ -89,7 +96,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized free-form description shown in the back-office UI. Map keys are locale codes; values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
@@ -97,7 +106,10 @@ public class TaxCategory implements Serializable {
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "23130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Wire-only site identifier accepted on input but ignored by the server and omitted from responses; tax categories are company-scoped, not site-scoped.",
+		example = "23130"
+	)
 	public Long getGroupId() {
 		if (_groupIdSupplier != null) {
 			groupId = _groupIdSupplier.get();
@@ -131,7 +143,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Wire-only site identifier accepted on input but ignored by the server and omitted from responses; tax categories are company-scoped, not site-scoped."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long groupId;
 
@@ -139,7 +153,10 @@ public class TaxCategory implements Serializable {
 	private Supplier<Long> _groupIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Server-assigned identifier. Read-only; set when the record is first persisted.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -171,15 +188,18 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@GraphQLField(
+		description = "Server-assigned identifier. Read-only; set when the record is first persisted."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized human-readable name shown in the back office and on product wiring. Map keys are locale codes; values are the translated strings. Required on create; the entry for the site-default locale must be non-empty.",
+		example = "{en_US=Standard, hr_HR=Standardno, hu_HU=Általános}"
 	)
 	@Valid
 	public Map<String, String> getName() {
@@ -215,7 +235,9 @@ public class TaxCategory implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized human-readable name shown in the back office and on product wiring. Map keys are locale codes; values are the translated strings. Required on create; the entry for the site-default locale must be non-empty."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
@@ -399,4 +421,4 @@ public class TaxCategory implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-464612439
+// LIFERAY-REST-BUILDER-HASH:2042396573

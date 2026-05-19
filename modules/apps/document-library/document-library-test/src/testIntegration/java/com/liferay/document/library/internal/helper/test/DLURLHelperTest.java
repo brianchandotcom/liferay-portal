@@ -388,13 +388,19 @@ public class DLURLHelperTest {
 	private ThemeDisplay _getThemeDisplay() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setPortalURL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false));
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
+		themeDisplay.setPortalURL("http://localhost:" + portalServerPort);
+
 		themeDisplay.setRequest(new MockHttpServletRequest());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		long groupId = _group.getGroupId();
+
+		themeDisplay.setScopeGroupId(groupId);
+
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
-		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setServerPort(portalServerPort);
+		themeDisplay.setSiteGroupId(groupId);
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;

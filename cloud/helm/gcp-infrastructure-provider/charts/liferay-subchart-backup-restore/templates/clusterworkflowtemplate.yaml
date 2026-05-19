@@ -160,28 +160,38 @@ spec:
                         template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: none
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
+                        depends: "!prepare-target-data-plane.Omitted && !prepare-target-data-plane.Skipped && !promote-target-data-plane.Succeeded"
+                        name: clean-up-target-data-plane
+                        template: apply-wait-infrastructure
+                    -   arguments:
+                            parameters:
                                 -   name: liferay-backup-namespace
                                     value: "{{ "{{" }}workflow.parameters.liferay-backup-namespace}}"
                         name: get-current-infrastructure-state
                         template: get-current-infrastructure-state
                     -   arguments:
                             parameters:
+                                -   name: database-snapshot-uuid
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.database-snapshot-uuid}}"
                                 -   name: data-inactive
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                                -   name: resource-type
-                                    value: databaseinstances.sql.gcp.m.upbound.io
-                        depends: provision-target-data-plane
-                        name: get-inactive-cloudsql-instance
-                        template: get-inactive-resource
-                    -   arguments:
-                            parameters:
-                                -   name: data-inactive
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                                -   name: resource-type
-                                    value: buckets.storage.gcp.m.upbound.io
-                        depends: provision-target-data-plane
-                        name: get-inactive-dl-bucket
-                        template: get-inactive-resource
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
+                                -   name: root-password-secret-name
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.root-password-secret-name}}"
+                                -   name: vault-bucket
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-bucket}}"
+                                -   name: vault-path
+                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-path}}"
+                        depends: get-current-infrastructure-state
+                        name: prepare-target-data-plane
+                        template: prepare-target-data-plane
                     -   arguments:
                             parameters:
                                 -   name: liferay-infrastructure-name
@@ -190,19 +200,8 @@ spec:
                                     value: promoting
                                 -   name: target-active-data-plane
                                     value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                        depends: restore-cloudsql-backup && restore-dl-bucket
+                        depends: prepare-target-data-plane
                         name: promote-target-data-plane
-                        template: apply-wait-infrastructure
-                    -   arguments:
-                            parameters:
-                                -   name: liferay-infrastructure-name
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
-                                -   name: restore-phase
-                                    value: provisioning
-                                -   name: target-active-data-plane
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-inactive}}"
-                        depends: get-current-infrastructure-state
-                        name: provision-target-data-plane
                         template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
@@ -211,39 +210,6 @@ spec:
                         depends: promote-target-data-plane
                         name: restart-liferay
                         template: restart-liferay
-                    -   arguments:
-                            parameters:
-                                -   name: database-snapshot-uuid
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.database-snapshot-uuid}}"
-                                -   name: restore-instance
-                                    value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
-                                -   name: root-password-secret-name
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.root-password-secret-name}}"
-                        depends: get-inactive-cloudsql-instance
-                        name: restore-cloudsql-backup
-                        template: restore-cloudsql-backup
-                    -   arguments:
-                            parameters:
-                                -   name: dl-bucket-inactive
-                                    value: "{{ "{{" }}tasks.get-inactive-dl-bucket.outputs.result}}"
-                                -   name: vault-bucket
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-bucket}}"
-                                -   name: vault-path
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.vault-path}}"
-                        depends: get-inactive-dl-bucket
-                        name: restore-dl-bucket
-                        template: restore-dl-bucket
-                    -   arguments:
-                            parameters:
-                                -   name: liferay-infrastructure-name
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.liferay-infrastructure-name}}"
-                                -   name: restore-phase
-                                    value: none
-                                -   name: target-active-data-plane
-                                    value: "{{ "{{" }}tasks.get-current-infrastructure-state.outputs.parameters.data-active}}"
-                        depends: "(!provision-target-data-plane.Omitted && !provision-target-data-plane.Skipped || !restore-cloudsql-backup.Omitted && !restore-cloudsql-backup.Skipped || !restore-dl-bucket.Omitted && !restore-dl-bucket.Skipped) && !promote-target-data-plane.Succeeded"
-                        name: clean-up-target-data-plane
-                        template: apply-wait-infrastructure
                     -   arguments:
                             parameters:
                                 -   name: liferay-infrastructure-name
@@ -256,6 +222,78 @@ spec:
                         name: roll-back-restart
                         template: roll-back-restart
             name: main
+        -   dag:
+                tasks:
+                    -   arguments:
+                            parameters:
+                                -   name: data-inactive
+                                    value: "{{ "{{" }}inputs.parameters.data-inactive}}"
+                                -   name: resource-type
+                                    value: databaseinstances.sql.gcp.m.upbound.io
+                        depends: provision-target-data-plane
+                        name: get-inactive-cloudsql-instance
+                        template: get-inactive-resource
+                    -   arguments:
+                            parameters:
+                                -   name: data-inactive
+                                    value: "{{ "{{" }}inputs.parameters.data-inactive}}"
+                                -   name: resource-type
+                                    value: buckets.storage.gcp.m.upbound.io
+                        depends: provision-target-data-plane
+                        name: get-inactive-dl-bucket
+                        template: get-inactive-resource
+                    -   arguments:
+                            parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: provisioning-database-user
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.data-inactive}}"
+                        depends: restore-cloudsql-backup && restore-dl-bucket
+                        name: provision-database-user
+                        template: apply-wait-infrastructure
+                    -   arguments:
+                            parameters:
+                                -   name: liferay-infrastructure-name
+                                    value: "{{ "{{" }}inputs.parameters.liferay-infrastructure-name}}"
+                                -   name: restore-phase
+                                    value: provisioning
+                                -   name: target-active-data-plane
+                                    value: "{{ "{{" }}inputs.parameters.data-inactive}}"
+                        name: provision-target-data-plane
+                        template: apply-wait-infrastructure
+                    -   arguments:
+                            parameters:
+                                -   name: database-snapshot-uuid
+                                    value: "{{ "{{" }}inputs.parameters.database-snapshot-uuid}}"
+                                -   name: restore-instance
+                                    value: "{{ "{{" }}tasks.get-inactive-cloudsql-instance.outputs.result}}"
+                                -   name: root-password-secret-name
+                                    value: "{{ "{{" }}inputs.parameters.root-password-secret-name}}"
+                        depends: get-inactive-cloudsql-instance
+                        name: restore-cloudsql-backup
+                        template: restore-cloudsql-backup
+                    -   arguments:
+                            parameters:
+                                -   name: dl-bucket-inactive
+                                    value: "{{ "{{" }}tasks.get-inactive-dl-bucket.outputs.result}}"
+                                -   name: vault-bucket
+                                    value: "{{ "{{" }}inputs.parameters.vault-bucket}}"
+                                -   name: vault-path
+                                    value: "{{ "{{" }}inputs.parameters.vault-path}}"
+                        depends: get-inactive-dl-bucket
+                        name: restore-dl-bucket
+                        template: restore-dl-bucket
+            inputs:
+                parameters:
+                    -   name: database-snapshot-uuid
+                    -   name: data-inactive
+                    -   name: liferay-infrastructure-name
+                    -   name: root-password-secret-name
+                    -   name: vault-bucket
+                    -   name: vault-path
+            name: prepare-target-data-plane
         -   name: reset-restore-phase
             script:
                 command: [sh]

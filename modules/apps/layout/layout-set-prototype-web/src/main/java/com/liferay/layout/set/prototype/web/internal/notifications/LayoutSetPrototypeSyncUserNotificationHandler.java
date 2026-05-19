@@ -14,9 +14,11 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -45,10 +47,27 @@ public class LayoutSetPrototypeSyncUserNotificationHandler
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String result = jsonObject.getString("result");
-		String siteTemplateName = HtmlUtil.escape(
-			jsonObject.getString("siteTemplateName"));
+		Locale locale = _portal.getLocale(serviceContext.getRequest());
 
+		JSONObject layoutSetPrototypeNameMapJSONObject =
+			jsonObject.getJSONObject("layoutSetPrototypeNameMap");
+
+		String layoutSetPrototypeName =
+			layoutSetPrototypeNameMapJSONObject.getString(
+				LocaleUtil.toLanguageId(locale));
+
+		if (Validator.isNull(layoutSetPrototypeName)) {
+			layoutSetPrototypeName =
+				layoutSetPrototypeNameMapJSONObject.getString(
+					LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+		}
+
+		return _language.format(
+			locale, _getLanguageKey(jsonObject.getString("result")),
+			layoutSetPrototypeName);
+	}
+
+	private String _getLanguageKey(String result) {
 		String key = "";
 
 		if (Objects.equals(
@@ -69,9 +88,7 @@ public class LayoutSetPrototypeSyncUserNotificationHandler
 			key = "sync-of-x-site-template-finished-successfully";
 		}
 
-		return _language.format(
-			_portal.getLocale(serviceContext.getRequest()), key,
-			siteTemplateName);
+		return key;
 	}
 
 	@Reference

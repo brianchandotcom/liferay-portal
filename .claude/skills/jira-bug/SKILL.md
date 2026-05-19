@@ -30,8 +30,8 @@ The LPD project requires the following fields. Apply these defaults unless the u
 
 - **Affects Version**: `Master` (ID: `16660`).
 - **Component**: Select from the list below, or infer from the code area. Common components include:
-	- `Content Publishing > Resource Importer` (ID: `15805`)
-	- `Data Integration > Export/Import` (ID: `16131`)
+	- `Content Publishing > Resource Importer` (ID: `16131`)
+	- `Data Integration > Export/Import` (ID: `15805`)
 	- `Headless Batch Engine API` (ID: `16022`)
 - **Cross Cutting Properties** (`customfield_10979`): `None` (ID: `14468`).
 

@@ -27,8 +27,8 @@ Request any missing details from the user:
 The LPD project requires the following fields. Apply these defaults unless the user specifies otherwise:
 
 - **Component**: Select from the list below, or infer from the code area. Common components include:
-	- `Content Publishing > Resource Importer` (ID: `15805`)
-	- `Data Integration > Export/Import` (ID: `16131`)
+	- `Content Publishing > Resource Importer` (ID: `16131`)
+	- `Data Integration > Export/Import` (ID: `15805`)
 	- `Headless Batch Engine API` (ID: `16022`)
 - **Issue Type**: `Task` (ID: `10002`).
 

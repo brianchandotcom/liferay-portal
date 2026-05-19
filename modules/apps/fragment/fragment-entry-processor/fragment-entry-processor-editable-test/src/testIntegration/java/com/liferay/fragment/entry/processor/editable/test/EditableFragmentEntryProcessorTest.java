@@ -1350,6 +1350,9 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			assetVocabulary.getVocabularyId(),
 			jsonObject.getLong("vocabularyId"));
+		Assert.assertEquals(
+			assetVocabulary.getTitle(LocaleUtil.US),
+			jsonObject.getString("vocabularyName"));
 
 		jsonObject = jsonArray.getJSONObject(1);
 
@@ -1361,6 +1364,9 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertEquals(
 			assetVocabulary.getVocabularyId(),
 			jsonObject.getLong("vocabularyId"));
+		Assert.assertEquals(
+			assetVocabulary.getTitle(LocaleUtil.US),
+			jsonObject.getString("vocabularyName"));
 
 		jsonArray = JSONFactoryUtil.createJSONArray(
 			element.attr("data-analytics-asset-tags"));

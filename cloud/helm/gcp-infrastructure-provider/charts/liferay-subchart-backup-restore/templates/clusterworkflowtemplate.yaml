@@ -279,7 +279,7 @@ spec:
                     -   name: root-password-secret-name
             name: restore-cloudsql-backup
             script:
-                command: [sh]
+                command: [bash]
                 env:
                     -   name: CLOUDSDK_CONFIG
                         value: /tmp/gcloud

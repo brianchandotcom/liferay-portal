@@ -1,0 +1,120 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.security.content.security.policy.internal.servlet.filter;
+
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.mockito.Mockito;
+
+public class ContentSecurityPolicyFilterTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		_contentSecurityPolicyConfiguration = Mockito.mock(
+			ContentSecurityPolicyConfiguration.class);
+
+		Mockito.when(
+			_contentSecurityPolicyConfiguration.excludedPaths()
+		).thenReturn(
+			new String[] {"/group"}
+		);
+
+		_contentSecurityPolicyFilter = new ContentSecurityPolicyFilter();
+	}
+
+	@Test
+	public void testExcludedPathMatchesOriginalForwardedURI() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
+		).thenReturn(
+			"/group/guest/home"
+		);
+		Mockito.when(
+			httpServletRequest.getRequestURI()
+		).thenReturn(
+			"/c/portal/layout"
+		);
+
+		Assert.assertTrue(_isExcludedURIPath(httpServletRequest));
+	}
+
+	@Test
+	public void testExcludedPathMatchesRequestURIWhenNoForward() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
+		).thenReturn(
+			null
+		);
+		Mockito.when(
+			httpServletRequest.getRequestURI()
+		).thenReturn(
+			"/group/guest/home"
+		);
+
+		Assert.assertTrue(_isExcludedURIPath(httpServletRequest));
+	}
+
+	@Test
+	public void testNonExcludedPathDoesNotMatch() {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI)
+		).thenReturn(
+			null
+		);
+		Mockito.when(
+			httpServletRequest.getRequestURI()
+		).thenReturn(
+			"/c/portal/layout"
+		);
+
+		Assert.assertFalse(_isExcludedURIPath(httpServletRequest));
+	}
+
+	private boolean _isExcludedURIPath(
+		HttpServletRequest httpServletRequest) {
+
+		return ReflectionTestUtil.invoke(
+			_contentSecurityPolicyFilter, "_isExcludedURIPath",
+			new Class<?>[] {
+				ContentSecurityPolicyConfiguration.class,
+				HttpServletRequest.class
+			},
+			_contentSecurityPolicyConfiguration, httpServletRequest);
+	}
+
+	private ContentSecurityPolicyConfiguration
+		_contentSecurityPolicyConfiguration;
+	private ContentSecurityPolicyFilter _contentSecurityPolicyFilter;
+
+}

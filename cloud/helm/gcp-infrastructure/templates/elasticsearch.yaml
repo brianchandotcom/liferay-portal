@@ -5,6 +5,7 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
     annotations:
+        argocd.argoproj.io/sync-wave: "-25"
         {{- $search.annotations | toYaml | nindent 8 }}
     name: {{ include "elasticsearch.name" . }}
     namespace: {{ $elasticsearchNamespace }}
@@ -80,6 +81,8 @@ spec:
 apiVersion: v1
 kind: Namespace
 metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-25"
     labels:
         name: {{ $elasticsearchNamespace }}
         pod-security.kubernetes.io/enforce: restricted

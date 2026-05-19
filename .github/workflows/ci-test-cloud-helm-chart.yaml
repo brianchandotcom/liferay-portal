@@ -64,12 +64,42 @@ jobs:
                     -   gcp
                     -   gcp-infrastructure
                     -   gcp-infrastructure-provider
+    test-cloud-helm-chart-smoke:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Create kind cluster
+                uses: helm/kind-action@v1.10.0
+            -   name: Install Helm
+                uses: azure/setup-helm@v4
+            -   name: Install Liferay chart
+                run: |
+                    helm upgrade --install liferay . \
+                        --set resources.limits.cpu=2000m \
+                        --set resources.limits.memory=4Gi \
+                        --set resources.requests.cpu=500m \
+                        --set resources.requests.memory=2Gi \
+                        --set startupProbe.failureThreshold=180 \
+                        --timeout 10m \
+                        --wait
+                working-directory: ./cloud/helm/default
+            -   if: failure()
+                name: Collect cluster diagnostics
+                run: |
+                    kubectl get all --all-namespaces
+                    kubectl describe pods
+                    kubectl logs --all-containers --tail=300 --selector=app.kubernetes.io/name=liferay-default || true
+                    kubectl logs --all-containers --previous --tail=300 --selector=app.kubernetes.io/name=liferay-default || true
+                    kubectl get events --sort-by=.lastTimestamp
 on:
     pull_request:
         paths:
+            -   .github/workflows/ci-test-cloud-helm-chart.yaml
             -   cloud/helm/**
     push:
         branches:
             -   master
         paths:
+            -   .github/workflows/ci-test-cloud-helm-chart.yaml
             -   cloud/**

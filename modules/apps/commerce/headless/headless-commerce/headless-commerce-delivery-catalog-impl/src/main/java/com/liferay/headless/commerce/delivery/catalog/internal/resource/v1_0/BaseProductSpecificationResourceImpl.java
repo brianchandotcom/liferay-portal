@@ -71,6 +71,9 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/by-externalReferenceCode/{channelExternalReferenceCode}/products/by-externalReferenceCode/{productExternalReferenceCode}/product-specifications'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "External-reference-code variant of getChannelProductProductSpecificationsPage. Resolves the CommerceChannel and CProduct by ERC and delegates to the numeric handler. Validation -- NoSuchModelException -> 404 when either ERC is missing. List query support -- pagination only; filterable fields -- none."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -125,6 +128,9 @@ public abstract class BaseProductSpecificationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/product-specifications'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists CPDefinitionSpecificationOptionValue rows (filterable=true) for /channels/{channelId}/products/{productId}/product-specifications. Resolves the active CPDefinition and pages CPDefinitionSpecificationOptionValueLocalService.getCPDefinitionSpecificationOptionValues. Exposed as the `productSpecifications` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -836,4 +842,4 @@ public abstract class BaseProductSpecificationResourceImpl
 		LogFactoryUtil.getLog(BaseProductSpecificationResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-295706831
+// LIFERAY-REST-BUILDER-HASH:-2023851117

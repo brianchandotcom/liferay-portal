@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("LinkedProduct")
+@GraphQLName(
+	description = "Lightweight reference linking a product to another product without inlining the linked product's full payload.",
+	value = "LinkedProduct"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "LinkedProduct")
 public class LinkedProduct implements Serializable {
@@ -48,7 +51,10 @@ public class LinkedProduct implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(LinkedProduct.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the linked product. Read-only.",
+		example = "AB-34098-789-N"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -86,7 +92,9 @@ public class LinkedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the linked product. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
@@ -94,7 +102,10 @@ public class LinkedProduct implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the linked product (FK identifier). Read-only.",
+		example = "33131"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -128,14 +139,19 @@ public class LinkedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the linked product (FK identifier). Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Product-type discriminator of the linked product. Read-only.",
+		example = "simple"
+	)
 	public String getType() {
 		if (_typeSupplier != null) {
 			type = _typeSupplier.get();
@@ -167,7 +183,9 @@ public class LinkedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Product-type discriminator of the linked product. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String type;
 
@@ -346,4 +364,4 @@ public class LinkedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-639155545
+// LIFERAY-REST-BUILDER-HASH:1087395379

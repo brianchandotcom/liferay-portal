@@ -43,8 +43,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Currency")
+@GraphQLName(
+	description = "Commerce currency definition including its ISO code, locale-specific formatting rules, exchange rate, and rounding behavior.",
+	value = "Currency"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "Commerce currency definition including its ISO code, locale-specific formatting rules, exchange rate, and rounding behavior.",
 	requiredProperties = {"code", "name"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -59,7 +63,10 @@ public class Currency implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Currency.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the currency is enabled for use in commerce flows. A non-active currency supplied as a request parameter is rejected.",
+		example = "true"
+	)
 	public Boolean getActive() {
 		if (_activeSupplier != null) {
 			active = _activeSupplier.get();
@@ -93,14 +100,19 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the currency is enabled for use in commerce flows. A non-active currency supplied as a request parameter is rejected."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean active;
 
 	@JsonIgnore
 	private Supplier<Boolean> _activeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 4217 currency code. Required on create; must be a 3-letter code.",
+		example = "USD"
+	)
 	public String getCode() {
 		if (_codeSupplier != null) {
 			code = _codeSupplier.get();
@@ -132,7 +144,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 4217 currency code. Required on create; must be a 3-letter code."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String code;
@@ -140,7 +154,10 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _codeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per currency within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -174,7 +191,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per currency within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -182,7 +201,8 @@ public class Currency implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+		description = "Localized text. Map keys are locale codes; values are decimal-format patterns applied when rendering monetary amounts for the locale.",
+		example = "{en_US=¤#,##0.00, hr_HR=#,##0.00 ¤, hu_HU=#,##0.00 ¤}"
 	)
 	@Valid
 	public Map<String, String> getFormatPattern() {
@@ -219,7 +239,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are decimal-format patterns applied when rendering monetary amounts for the locale."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> formatPattern;
 
@@ -227,7 +249,10 @@ public class Currency implements Serializable {
 	private Supplier<Map<String, String>> _formatPatternSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the commerce currency (FK identifier). Read-only; assigned on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -259,7 +284,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the commerce currency (FK identifier). Read-only; assigned on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -267,7 +294,10 @@ public class Currency implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Upper bound on the number of fractional digits rendered when formatting monetary values in this currency.",
+		example = "2"
+	)
 	public Integer getMaxFractionDigits() {
 		if (_maxFractionDigitsSupplier != null) {
 			maxFractionDigits = _maxFractionDigitsSupplier.get();
@@ -301,7 +331,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Upper bound on the number of fractional digits rendered when formatting monetary values in this currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxFractionDigits;
 
@@ -309,7 +341,10 @@ public class Currency implements Serializable {
 	private Supplier<Integer> _maxFractionDigitsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Lower bound on the number of fractional digits rendered when formatting monetary values in this currency.",
+		example = "2"
+	)
 	public Integer getMinFractionDigits() {
 		if (_minFractionDigitsSupplier != null) {
 			minFractionDigits = _minFractionDigitsSupplier.get();
@@ -343,7 +378,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Lower bound on the number of fractional digits rendered when formatting monetary values in this currency."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer minFractionDigits;
 
@@ -351,7 +388,8 @@ public class Currency implements Serializable {
 	private Supplier<Integer> _minFractionDigitsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
+		description = "Localized text. Map keys are locale codes; values are the translated currency names.",
+		example = "{en_US=US Dollar, hr_HR=Američki dolar, hu_HU=USA dollár}"
 	)
 	@Valid
 	public Map<String, String> getName() {
@@ -387,7 +425,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated currency names."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
@@ -395,7 +435,10 @@ public class Currency implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, this is the company-wide primary currency used as the base for exchange-rate conversions. At most one currency per company is primary; its rate is always 1.",
+		example = "true"
+	)
 	public Boolean getPrimary() {
 		if (_primarySupplier != null) {
 			primary = _primarySupplier.get();
@@ -429,14 +472,19 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, this is the company-wide primary currency used as the base for exchange-rate conversions. At most one currency per company is primary; its rate is always 1."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean primary;
 
 	@JsonIgnore
 	private Supplier<Boolean> _primarySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sort priority among currencies; lower values sort first. Sortable via the OData query parameter.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -470,14 +518,19 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sort priority among currencies; lower values sort first. Sortable via the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33.54")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Exchange rate relative to the primary currency. The primary currency itself always carries the rate 1.",
+		example = "33.54"
+	)
 	@Valid
 	public BigDecimal getRate() {
 		if (_rateSupplier != null) {
@@ -512,14 +565,19 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Exchange rate relative to the primary currency. The primary currency itself always carries the rate 1."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal rate;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _rateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "HALF_EVEN")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Rounding strategy applied to monetary calculations. One of UP, DOWN, CEILING, FLOOR, HALF_UP, HALF_DOWN, HALF_EVEN, UNNECESSARY. Defaults to HALF_EVEN.",
+		example = "HALF_EVEN"
+	)
 	@JsonGetter("roundingMode")
 	@Valid
 	public RoundingMode getRoundingMode() {
@@ -566,14 +624,19 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Rounding strategy applied to monetary calculations. One of UP, DOWN, CEILING, FLOOR, HALF_UP, HALF_DOWN, HALF_EVEN, UNNECESSARY. Defaults to HALF_EVEN."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected RoundingMode roundingMode;
 
 	@JsonIgnore
 	private Supplier<RoundingMode> _roundingModeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "$")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display symbol shown next to formatted amounts.",
+		example = "$"
+	)
 	public String getSymbol() {
 		if (_symbolSupplier != null) {
 			symbol = _symbolSupplier.get();
@@ -607,7 +670,9 @@ public class Currency implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display symbol shown next to formatted amounts."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String symbol;
 
@@ -952,4 +1017,4 @@ public class Currency implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1777135056
+// LIFERAY-REST-BUILDER-HASH:-7359715

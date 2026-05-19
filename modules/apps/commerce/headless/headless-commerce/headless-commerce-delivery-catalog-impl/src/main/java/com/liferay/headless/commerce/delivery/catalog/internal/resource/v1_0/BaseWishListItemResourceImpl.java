@@ -75,7 +75,7 @@ public abstract class BaseWishListItemResourceImpl
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/wishlist-items/{wishListItemId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes a wishlist item by wishListItemId."
+		description = "Deletes the CommerceWishListItem at /wishlist-items/{wishListItemId} via CommerceWishListItemService.deleteCommerceWishListItem. Validation -- NoSuchWishListItemException -> 404 when the row is missing; PrincipalException -> 403 when the caller lacks UPDATE permission on the parent wish list."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -150,7 +150,7 @@ public abstract class BaseWishListItemResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/wishlist-items/{wishListItemId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves wishlist item by wishListItemId for a specific channel and account"
+		description = "Returns a single WishListItem at /wishlist-items/{wishListItemId}. Loads the entity via CommerceWishListItemService, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, builds a CommerceContext from the resolved accountId and currencyCode, and converts through WishListItemDTOConverter. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListItemException -> 404 when the wishListItemId does not resolve."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -197,7 +197,7 @@ public abstract class BaseWishListItemResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/wishlists/{wishListId}/wishlist-items'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves wishlist items by wishListId for a specific channel and account"
+		description = "Lists CommerceWishListItem rows for /wishlists/{wishListId}/wishlist-items. Loads the parent CommerceWishList, resolves its CommerceChannel through fetchCommerceChannelBySiteGroupId, and pages CommerceWishListItemService.getCommerceWishListItems. Each row is converted through WishListItemDTOConverter against a shared CommerceContext for the resolved account and currency. Exposed as the `wishListItems` field of the WishList DTO. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve. List query support -- pagination only; filterable fields -- none."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -252,6 +252,9 @@ public abstract class BaseWishListItemResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/wishlists/{wishListId}/wishlist-items' -d $'{"finalPrice": ___, "friendlyURL": ___, "icon": ___, "id": ___, "productId": ___, "productName": ___, "skuId": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Adds or updates a line item on the wish list at /wishlists/{wishListId}/wishlist-items. Reads skuId from the body, fetches the matching CPInstance through CPInstanceLocalService (falls back to a blank cpInstanceUuid when not found), loads the wish list and its channel, resolves the accountId through AccountUtil and calls CommerceWishListItemService.addOrUpdateCommerceWishListItem. POST is upsert by (accountId, wishListId, cpInstanceUuid, productId) -- creates a new entity when the tuple is unknown, otherwise updates the existing one. Validation -- NoSuchChannelException -> 404 when the parent channel is missing; NoSuchWishListException -> 404 when the wishListId does not resolve."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -968,4 +971,4 @@ public abstract class BaseWishListItemResourceImpl
 		LogFactoryUtil.getLog(BaseWishListItemResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:257566092
+// LIFERAY-REST-BUILDER-HASH:1240207721

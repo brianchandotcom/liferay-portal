@@ -325,11 +325,11 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntry fetchFriendlyURLEntry(
-		long groupId, long classNameId, String urlTitle) {
+		long groupId, long classNameId, long parentClassPK, String urlTitle) {
 
 		FriendlyURLEntryLocalization friendlyURLEntryLocalization =
-			friendlyURLEntryLocalizationPersistence.fetchByG_C_U_First(
-				groupId, classNameId,
+			friendlyURLEntryLocalizationPersistence.fetchByG_C_P_U_First(
+				groupId, classNameId, parentClassPK,
 				_friendlyURLNormalizer.normalizeWithEncoding(urlTitle), null);
 
 		if (friendlyURLEntryLocalization == null) {
@@ -342,25 +342,22 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long groupId, long classNameId, String urlTitle) {
+		long groupId, long classNameId, long parentClassPK, String urlTitle) {
 
 		return friendlyURLEntryLocalizationPersistence.fetchByG_C_P_L_U(
-			groupId, classNameId,
-			FriendlyURLEntryConstants.
-				FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+			groupId, classNameId, parentClassPK,
 			LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
 			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
 	@Override
 	public FriendlyURLEntryLocalization fetchFriendlyURLEntryLocalization(
-		long groupId, long classNameId, String languageId, String urlTitle) {
+		long groupId, long classNameId, long parentClassPK, String languageId,
+		String urlTitle) {
 
 		return friendlyURLEntryLocalizationPersistence.fetchByG_C_P_L_U(
-			groupId, classNameId,
-			FriendlyURLEntryConstants.
-				FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
-			languageId, _friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
+			groupId, classNameId, parentClassPK, languageId,
+			_friendlyURLNormalizer.normalizeWithEncoding(urlTitle));
 	}
 
 	@Override

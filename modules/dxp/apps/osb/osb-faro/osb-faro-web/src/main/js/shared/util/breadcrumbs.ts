@@ -54,15 +54,21 @@ export const getAccounts = ({channelId, groupId}: IBasicSidebarRouteArgs) => ({
 	label: Liferay.Language.get('accounts')
 });
 
-export const getKnownIndividuals = ({
+export const getIndividuals = ({
+	LDPEnabled,
 	channelId,
 	groupId
-}: IBasicSidebarRouteArgs) => ({
-	href: toRoute(Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS, {
-		channelId,
-		groupId
-	}),
-	label: Liferay.Language.get('known-individuals')
+}: IBasicSidebarRouteArgs & {LDPEnabled: boolean}) => ({
+	href: toRoute(
+		LDPEnabled
+			? Routes.CONTACTS_INDIVIDUALS
+			: Routes.CONTACTS_INDIVIDUALS_KNOWN_INDIVIDUALS,
+		{
+			channelId,
+			groupId
+		}
+	),
+	label: Liferay.Language.get('individuals')
 });
 
 export const getSegments = ({channelId, groupId}: IBasicSidebarRouteArgs) => ({

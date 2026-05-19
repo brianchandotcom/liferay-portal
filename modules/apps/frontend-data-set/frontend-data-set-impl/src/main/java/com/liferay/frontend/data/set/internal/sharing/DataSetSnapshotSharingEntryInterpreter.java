@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -8,8 +8,12 @@ package com.liferay.frontend.data.set.internal.sharing;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.renderer.SharingEntryEditRenderer;
@@ -18,7 +22,6 @@ import com.liferay.sharing.renderer.SharingEntryViewRenderer;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -60,10 +63,22 @@ public class DataSetSnapshotSharingEntryInterpreter
 		String label = _getLabel(sharingEntry);
 
 		if (label.isEmpty()) {
-			return new HashMap<>();
+			return Collections.emptyMap();
 		}
 
-		return Collections.singletonMap(LocaleUtil.getDefault(), label);
+		try {
+			Company company = _companyLocalService.getCompany(
+				sharingEntry.getCompanyId());
+
+			return Collections.singletonMap(company.getLocale(), label);
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			return Collections.emptyMap();
+		}
 	}
 
 	@Override
@@ -103,6 +118,12 @@ public class DataSetSnapshotSharingEntryInterpreter
 	private static final SharingEntryViewRenderer _VIEW_RENDERER =
 		(sharingEntry, httpServletRequest, httpServletResponse) -> {
 		};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DataSetSnapshotSharingEntryInterpreter.class);
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private Language _language;

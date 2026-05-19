@@ -56,14 +56,18 @@ export default function DateValueInput({
 					<DatePicker
 						{...datePickerProps}
 						inputName={`${property.name}-from-${index}`}
-						onChange={(newValue: any) => onChange([newValue, to])}
+						onChange={(newValue: string) =>
+							onChange([newValue, to])
+						}
 						value={from}
 					/>
 
 					<DatePicker
 						{...datePickerProps}
 						inputName={`${property.name}-to-${index}`}
-						onChange={(newValue: any) => onChange([from, newValue])}
+						onChange={(newValue: string) =>
+							onChange([from, newValue])
+						}
 						value={to}
 					/>
 				</div>
@@ -75,10 +79,9 @@ export default function DateValueInput({
 				<DatePicker
 					{...datePickerProps}
 					inputName={`${property.name}-${index}`}
-					onChange={(newValue: any) => {
-						const [newFrom = '', newTo = ''] = (
-							newValue as string
-						).split(' - ');
+					onChange={(newValue: string) => {
+						const [newFrom = '', newTo = ''] =
+							newValue.split(' - ');
 
 						onChange([newFrom, newTo]);
 					}}
@@ -96,7 +99,7 @@ export default function DateValueInput({
 				<DatePicker
 					{...datePickerProps}
 					inputName={`${property.name}-${index}`}
-					onChange={(newValue: any) => onChange(newValue as string)}
+					onChange={(newValue: string) => onChange(newValue)}
 					value={valueStr}
 				/>
 			</div>
@@ -147,9 +150,7 @@ export default function DateValueInput({
 					<DatePicker
 						{...datePickerProps}
 						inputName={`${property.name}-${index}`}
-						onChange={(newValue: any) =>
-							onChange(newValue as string)
-						}
+						onChange={(newValue: string) => onChange(newValue)}
 						value={valueStr}
 					/>
 				)}

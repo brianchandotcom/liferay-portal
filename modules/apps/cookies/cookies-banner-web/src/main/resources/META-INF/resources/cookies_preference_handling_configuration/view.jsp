@@ -32,13 +32,14 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 		<div class="col-sm-12 form-group">
 			<div class="form-group__inner">
 				<clay:checkbox
+					aria-describedby='<%= liferayPortletResponse.getNamespace() + "enabledHelp" %>'
 					checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
 					id='<%= liferayPortletResponse.getNamespace() + "enabled" %>'
 					label="enabled"
 					name='<%= liferayPortletResponse.getNamespace() + "enabled" %>'
 				/>
 
-				<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-feedback-group" id="<portlet:namespace />enabledHelp">
 					<div class="form-text text-weight-normal"><liferay-ui:message key="cookie-enabled-help" /></div>
 				</div>
 			</div>
@@ -49,6 +50,7 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 		<div class="col-sm-12 form-group">
 			<div class="form-group__inner">
 				<clay:checkbox
+					aria-describedby='<%= liferayPortletResponse.getNamespace() + "explicitConsentModeHelp" %>'
 					checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingExplicitConsentMode() %>"
 					disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
 					id='<%= liferayPortletResponse.getNamespace() + "explicitConsentMode" %>'
@@ -56,7 +58,7 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 					name='<%= liferayPortletResponse.getNamespace() + "explicitConsentMode" %>'
 				/>
 
-				<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-feedback-group" id="<portlet:namespace />explicitConsentModeHelp">
 					<div class="form-text text-weight-normal">
 						<liferay-ui:message key="cookie-explicit-consent-mode-help" />
 					</div>
@@ -73,7 +75,18 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 
 			<div class="form-group-autofit">
 				<div class="form-group-item">
-					<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' label="" max="12" min="1" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>" />
+					<input
+						aria-describedby="<portlet:namespace />consentRenewalPeriodHelp"
+						class="form-control"
+						<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>
+						id="<portlet:namespace />consentRenewalPeriod"
+						max="12"
+						min="1"
+						name="<portlet:namespace />consentRenewalPeriod"
+						<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "required" : "" %>
+						type="number"
+						value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>"
+					/>
 				</div>
 
 				<div class="form-group-item">
@@ -82,15 +95,21 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 					String consentRenewalPeriodTimeUnit = cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriodTimeUnit();
 					%>
 
-					<aui:select disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriodTimeUnit" %>' label="" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriodTimeUnit" %>' title="time-unit" useNamespace="<%= false %>" value="<%= consentRenewalPeriodTimeUnit %>">
-						<aui:option label="days" value="days" />
-						<aui:option label="weeks" value="weeks" />
-						<aui:option label="months" selected="<%= true %>" value="months" />
-					</aui:select>
+					<select
+						aria-label='<%= HtmlUtil.escape(LanguageUtil.get(request, "time-unit")) %>'
+						class="form-control"
+						<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>
+						id="<portlet:namespace />consentRenewalPeriodTimeUnit"
+						name="<portlet:namespace />consentRenewalPeriodTimeUnit"
+					>
+						<option <%= Objects.equals("days", consentRenewalPeriodTimeUnit) ? "selected" : "" %> value="days"><liferay-ui:message key="days" /></option>
+						<option <%= Objects.equals("weeks", consentRenewalPeriodTimeUnit) ? "selected" : "" %> value="weeks"><liferay-ui:message key="weeks" /></option>
+						<option <%= Objects.equals("months", consentRenewalPeriodTimeUnit) ? "selected" : "" %> value="months"><liferay-ui:message key="months" /></option>
+					</select>
 				</div>
 			</div>
 
-			<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="c-mb-1 form-feedback-group" id="<portlet:namespace />consentRenewalPeriodHelp">
 				<div class="form-text text-weight-normal">
 					<liferay-ui:message key="cookie-consent-renewal-period-help" />
 				</div>
@@ -106,7 +125,18 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 
 			<div class="form-group-autofit">
 				<div class="form-group-item">
-					<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' label="" max="12" min="0" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>" />
+					<input
+						aria-describedby="<portlet:namespace />dissentRenewalPeriodHelp"
+						class="form-control"
+						<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>
+						id="<portlet:namespace />dissentRenewalPeriod"
+						max="12"
+						min="0"
+						name="<portlet:namespace />dissentRenewalPeriod"
+						<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "required" : "" %>
+						type="number"
+						value="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriod() %>"
+					/>
 				</div>
 
 				<div class="form-group-item">
@@ -115,15 +145,21 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 					String dissentRenewalPeriodTimeUnit = cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingDissentRenewalPeriodTimeUnit();
 					%>
 
-					<aui:select disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriodTimeUnit" %>' label="" name='<%= liferayPortletResponse.getNamespace() + "dissentRenewalPeriodTimeUnit" %>' title="time-unit" useNamespace="<%= false %>" value="<%= dissentRenewalPeriodTimeUnit %>">
-						<aui:option label="days" value="days" />
-						<aui:option label="weeks" value="weeks" />
-						<aui:option label="months" selected="<%= true %>" value="months" />
-					</aui:select>
+					<select
+						aria-label='<%= HtmlUtil.escape(LanguageUtil.get(request, "time-unit")) %>'
+						class="form-control"
+						<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>
+						id="<portlet:namespace />dissentRenewalPeriodTimeUnit"
+						name="<portlet:namespace />dissentRenewalPeriodTimeUnit"
+					>
+						<option <%= Objects.equals("days", dissentRenewalPeriodTimeUnit) ? "selected" : "" %> value="days"><liferay-ui:message key="days" /></option>
+						<option <%= Objects.equals("weeks", dissentRenewalPeriodTimeUnit) ? "selected" : "" %> value="weeks"><liferay-ui:message key="weeks" /></option>
+						<option <%= Objects.equals("months", dissentRenewalPeriodTimeUnit) ? "selected" : "" %> value="months"><liferay-ui:message key="months" /></option>
+					</select>
 				</div>
 			</div>
 
-			<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="c-mb-1 form-feedback-group" id="<portlet:namespace />dissentRenewalPeriodHelp">
 				<div class="form-text text-weight-normal">
 					<liferay-ui:message key="cookie-dissent-renewal-period-help" />
 				</div>
@@ -133,11 +169,11 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 
 	<div class="row">
 		<div class="col-sm-12 form-group">
-			<button class="btn btn-secondary <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />forcedReconsentButton" type="button">
+			<button aria-describedby="<portlet:namespace />forcedReconsentHelp" class="btn btn-secondary <%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() ? "disabled" : "" %>" id="<portlet:namespace />forcedReconsentButton" type="button">
 				<liferay-ui:message key="forced-reconsent" />
 			</button>
 
-			<div aria-hidden="true" class="c-mb-1 form-feedback-group">
+			<div class="c-mb-1 form-feedback-group" id="<portlet:namespace />forcedReconsentHelp">
 				<div class="form-text text-weight-normal">
 					<liferay-ui:message key="forced-reconsent-help" />
 				</div>
@@ -153,6 +189,7 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 		<div class="col-sm-12 form-group">
 			<div class="form-group__inner">
 				<clay:checkbox
+					aria-describedby='<%= liferayPortletResponse.getNamespace() + "storeConsentHelp" %>'
 					checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingStoreConsent() %>"
 					disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
 					id='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
@@ -160,7 +197,7 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 					name='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
 				/>
 
-				<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-feedback-group" id="<portlet:namespace />storeConsentHelp">
 					<div class="form-text text-weight-normal">
 						<liferay-ui:message key="cookie-store-consent-help" />
 					</div>

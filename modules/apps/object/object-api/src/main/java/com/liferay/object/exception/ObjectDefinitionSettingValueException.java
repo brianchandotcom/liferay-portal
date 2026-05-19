@@ -7,7 +7,7 @@ package com.liferay.object.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +51,7 @@ public class ObjectDefinitionSettingValueException extends PortalException {
 					"Standalone object entries already exist for object " +
 						"definition \"%s\"",
 					objectDefinitionName),
-				Arrays.asList(objectDefinitionName),
+				Collections.singletonList(objectDefinitionName),
 				"standalone-object-entries-already-exist-for-object-" +
 					"definition-x");
 		}

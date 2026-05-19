@@ -10,6 +10,8 @@ package com.liferay.layout.set.prototype.constants;
  */
 public class LayoutSetPrototypeConstants {
 
+	public static final String KEY_SYNC_SESSION_ID = "syncSessionId";
+
 	public static final String STATUS_COMPLETED_WITH_ERRORS =
 		"completed-with-errors";
 

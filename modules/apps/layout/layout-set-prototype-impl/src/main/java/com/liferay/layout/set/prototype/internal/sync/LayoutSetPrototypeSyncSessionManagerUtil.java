@@ -33,7 +33,9 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	public static Map<String, String[]> contribute(
 		Map<String, String[]> parameterMap) {
 
-		parameterMap.put("syncSessionId", new String[] {_syncSessionId.get()});
+		parameterMap.put(
+			LayoutSetPrototypeSyncConstants.KEY_SYNC_SESSION_ID,
+			new String[] {_syncSessionId.get()});
 
 		return parameterMap;
 	}
@@ -73,7 +75,8 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	public static void recordBackgroundTaskStatus(
 		int backgroundTaskStatus, Map<String, String[]> parameterMap) {
 
-		String syncSessionId = MapUtil.getString(parameterMap, "syncSessionId");
+		String syncSessionId = MapUtil.getString(
+			parameterMap, LayoutSetPrototypeSyncConstants.KEY_SYNC_SESSION_ID);
 
 		if (Validator.isNull(syncSessionId)) {
 			return;

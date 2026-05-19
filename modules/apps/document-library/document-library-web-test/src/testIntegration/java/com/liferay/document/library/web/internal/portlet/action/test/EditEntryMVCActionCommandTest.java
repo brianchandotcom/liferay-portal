@@ -285,10 +285,14 @@ public class EditEntryMVCActionCommandTest {
 			themeDisplay.setPermissionChecker(
 				PermissionThreadLocal.getPermissionChecker());
 			themeDisplay.setRequest(new MockHttpServletRequest());
-			themeDisplay.setScopeGroupId(_group.getGroupId());
+
+			long groupId = _group.getGroupId();
+
+			themeDisplay.setScopeGroupId(groupId);
+
 			themeDisplay.setServerName("localhost");
 			themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
-			themeDisplay.setSiteGroupId(_group.getGroupId());
+			themeDisplay.setSiteGroupId(groupId);
 			themeDisplay.setUser(TestPropsValues.getUser());
 
 			return themeDisplay;

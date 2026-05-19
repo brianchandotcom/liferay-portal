@@ -365,9 +365,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		long messageId = 123456;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:", PortalUtil.getPortalServerPort(false),
-			messageId, "?_com_liferay_message_boards_web_portlet_MBPortlet_",
-			"redirect=/web/guest/assetpublisher");
+			portalURL, messageId, "?_com_liferay_message_boards_web_portlet_",
+			"MBPortlet_redirect=/web/guest/assetpublisher");
 
 		String expectedUID = className + "_PORTLET_" + 123456;
 

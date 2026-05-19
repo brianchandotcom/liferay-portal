@@ -207,12 +207,16 @@ public class DLAppHelperLocalServiceTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setPortalURL(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false));
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setPortalURL("http://localhost:" + portalServerPort);
+
+		long groupId = TestPropsValues.getGroupId();
+
+		themeDisplay.setScopeGroupId(groupId);
+		themeDisplay.setSiteGroupId(groupId);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -222,8 +226,7 @@ public class DLAppHelperLocalServiceTest {
 		_addFileEntry(fileEntryContent, null, "test.txt", serviceContext);
 
 		Assert.assertEquals(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/web/guest/d/test-txt",
+			"http://localhost:" + portalServerPort + "/web/guest/d/test-txt",
 			serviceContext.getAttribute("friendlyURL"));
 	}
 

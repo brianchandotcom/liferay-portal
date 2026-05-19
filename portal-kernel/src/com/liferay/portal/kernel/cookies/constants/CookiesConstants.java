@@ -44,6 +44,9 @@ public class CookiesConstants {
 
 	public static final String NAME_JSESSIONID = "JSESSIONID";
 
+	public static final String NAME_LIFERAY_CONSENT_STATE =
+		"LIFERAY_CONSENT_STATE";
+
 	public static final String NAME_LOGIN = "LOGIN";
 
 	public static final String NAME_PASSWORD = "PASSWORD";
@@ -60,5 +63,22 @@ public class CookiesConstants {
 		"USER_CONSENT_CONFIGURED";
 
 	public static final String NAME_USER_UUID = "USER_UUID";
+
+	public static String getConsentTypeName(int consentType) {
+		if (consentType == CONSENT_TYPE_FUNCTIONAL) {
+			return NAME_CONSENT_TYPE_FUNCTIONAL;
+		}
+		else if (consentType == CONSENT_TYPE_NECESSARY) {
+			return NAME_CONSENT_TYPE_NECESSARY;
+		}
+		else if (consentType == CONSENT_TYPE_PERFORMANCE) {
+			return NAME_CONSENT_TYPE_PERFORMANCE;
+		}
+		else if (consentType == CONSENT_TYPE_PERSONALIZATION) {
+			return NAME_CONSENT_TYPE_PERSONALIZATION;
+		}
+
+		return null;
+	}
 
 }

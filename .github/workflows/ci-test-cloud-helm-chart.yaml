@@ -70,7 +70,7 @@ jobs:
             -   name: Checkout code
                 uses: actions/checkout@v4
             -   name: Create kind cluster
-                uses: helm/kind-action@v1.10.0
+                uses: helm/kind-action@v1
             -   name: Install Helm
                 uses: azure/setup-helm@v4
             -   name: Install Liferay chart

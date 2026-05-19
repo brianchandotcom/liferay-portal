@@ -8,26 +8,17 @@ package com.liferay.asset.taglib.internal.display.context;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -119,20 +110,10 @@ public class AssetCategoriesNavigationDisplayContext {
 		List<AssetVocabulary> assetVocabularies = new ArrayList<>();
 
 		if (_vocabularyIds == null) {
-			long[] groupIds =
+			assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
 				SiteConnectedGroupGroupProviderUtil.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
-						_themeDisplay.getScopeGroupId());
-
-			assetVocabularies = new ArrayList<>(
-				AssetVocabularyServiceUtil.getGroupVocabularies(
-					groupIds,
-					new int[] {
-						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC
-					}));
-
-			_addCMSAssetVocabularies(
-				assetVocabularies, _themeDisplay.getCompanyId(), groupIds,
+						_themeDisplay.getScopeGroupId()),
 				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
 		}
 		else {
@@ -167,67 +148,6 @@ public class AssetCategoriesNavigationDisplayContext {
 
 	public boolean hidePortletWhenEmpty() {
 		return _hidePortletWhenEmpty;
-	}
-
-	private void _addAssetVocabulariesByGroupRels(
-		List<AssetVocabulary> assetVocabularies, long groupId,
-		int[] visibilityTypes) {
-
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				AssetVocabularyGroupRelLocalServiceUtil.
-					getAssetVocabularyGroupRelsByGroupId(groupId)) {
-
-			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-					assetVocabularyGroupRel.getVocabularyId());
-
-			if ((assetVocabulary == null) ||
-				!ArrayUtil.contains(
-					visibilityTypes, assetVocabulary.getVisibilityType()) ||
-				assetVocabularies.contains(assetVocabulary)) {
-
-				continue;
-			}
-
-			assetVocabularies.add(assetVocabulary);
-		}
-	}
-
-	private void _addCMSAssetVocabularies(
-		List<AssetVocabulary> assetVocabularies, long companyId,
-		long[] groupIds, int[] visibilityTypes) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			return;
-		}
-
-		boolean hasConnectedSpace = false;
-
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if (group == null) {
-				continue;
-			}
-
-			int depotEntryType = GetterUtil.getInteger(
-				group.getTypeSettingsProperty("depotEntryType"));
-
-			if (depotEntryType != DepotConstants.TYPE_SPACE) {
-				continue;
-			}
-
-			hasConnectedSpace = true;
-
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, groupId, visibilityTypes);
-		}
-
-		if (hasConnectedSpace) {
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, GroupConstants.ANY_PARENT_GROUP_ID,
-				visibilityTypes);
-		}
 	}
 
 	private JSONArray _getCategoriesJSONArray(long groupId, long vocabularyId)

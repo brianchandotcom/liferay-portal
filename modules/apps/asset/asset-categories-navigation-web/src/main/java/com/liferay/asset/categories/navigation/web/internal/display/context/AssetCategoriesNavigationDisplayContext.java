@@ -8,21 +8,16 @@ package com.liferay.asset.categories.navigation.web.internal.display.context;
 import com.liferay.asset.categories.navigation.web.internal.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
-import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -94,16 +89,9 @@ public class AssetCategoriesNavigationDisplayContext {
 			_log.error(portalException);
 		}
 
-		List<AssetVocabulary> assetVocabularies = new ArrayList<>(
-			AssetVocabularyServiceUtil.getGroupVocabularies(
-				groupIds,
-				new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC}));
-
-		_addCMSAssetVocabularies(
-			assetVocabularies, themeDisplay.getCompanyId(), groupIds,
+		_assetVocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(
+			groupIds,
 			new int[] {AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC});
-
-		_assetVocabularies = assetVocabularies;
 
 		return _assetVocabularies;
 	}
@@ -232,67 +220,6 @@ public class AssetCategoriesNavigationDisplayContext {
 		_displayStyleGroupId = displayStyleGroupId;
 
 		return _displayStyleGroupId;
-	}
-
-	private void _addAssetVocabulariesByGroupRels(
-		List<AssetVocabulary> assetVocabularies, long groupId,
-		int[] visibilityTypes) {
-
-		for (AssetVocabularyGroupRel assetVocabularyGroupRel :
-				AssetVocabularyGroupRelLocalServiceUtil.
-					getAssetVocabularyGroupRelsByGroupId(groupId)) {
-
-			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-					assetVocabularyGroupRel.getVocabularyId());
-
-			if ((assetVocabulary == null) ||
-				!ArrayUtil.contains(
-					visibilityTypes, assetVocabulary.getVisibilityType()) ||
-				assetVocabularies.contains(assetVocabulary)) {
-
-				continue;
-			}
-
-			assetVocabularies.add(assetVocabulary);
-		}
-	}
-
-	private void _addCMSAssetVocabularies(
-		List<AssetVocabulary> assetVocabularies, long companyId,
-		long[] groupIds, int[] visibilityTypes) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564")) {
-			return;
-		}
-
-		boolean hasConnectedSpace = false;
-
-		for (long groupId : groupIds) {
-			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-			if (group == null) {
-				continue;
-			}
-
-			int depotEntryType = GetterUtil.getInteger(
-				group.getTypeSettingsProperty("depotEntryType"));
-
-			if (depotEntryType != DepotConstants.TYPE_SPACE) {
-				continue;
-			}
-
-			hasConnectedSpace = true;
-
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, groupId, visibilityTypes);
-		}
-
-		if (hasConnectedSpace) {
-			_addAssetVocabulariesByGroupRels(
-				assetVocabularies, GroupConstants.ANY_PARENT_GROUP_ID,
-				visibilityTypes);
-		}
 	}
 
 	private String[] _getAssetVocabularyIds() {

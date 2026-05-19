@@ -33,7 +33,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("DDMOption")
+@GraphQLName(
+	description = "Dynamic-data-mapping form option captured against a configurable SKU. Represents either a free-form or a selected value supplied by the buyer when ordering.",
+	value = "DDMOption"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "DDMOption")
 public class DDMOption implements Serializable {
@@ -46,7 +49,10 @@ public class DDMOption implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(DDMOption.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable key identifying the form field on the SKU's option structure.",
+		example = "engraving"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -78,14 +84,19 @@ public class DDMOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable key identifying the form field on the SKU's option structure."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String key;
 
 	@JsonIgnore
 	private Supplier<String> _keySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true, the option must be supplied to order the SKU.",
+		example = "true"
+	)
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -119,14 +130,19 @@ public class DDMOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true, the option must be supplied to order the SKU."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Submitted values for the option. The array shape supports multi-valued fields; single-valued fields carry one element.",
+		example = "[Happy Birthday]"
+	)
 	public String[] getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
@@ -160,7 +176,9 @@ public class DDMOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Submitted values for the option. The array shape supports multi-valued fields; single-valued fields carry one element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] value;
 
@@ -349,4 +367,4 @@ public class DDMOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1526781033
+// LIFERAY-REST-BUILDER-HASH:541973863

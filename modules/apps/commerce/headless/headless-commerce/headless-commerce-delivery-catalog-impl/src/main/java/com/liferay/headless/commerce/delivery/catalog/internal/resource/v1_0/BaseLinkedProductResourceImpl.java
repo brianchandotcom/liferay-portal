@@ -71,6 +71,9 @@ public abstract class BaseLinkedProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/linked-products'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists products linked to a product as grouped entries or shop-by-diagram references under /channels/{channelId}/products/{productId}/linked-products. Resolves the channel, the effective accountId via AccountUtil and the CProduct, then enforces CommerceProductViewPermission. Concatenates results from CPDefinitionGroupedEntryLocalService.getEntryCProductCPDefinitionGroupedEntries (typed GroupedCPTypeConstants.NAME) and CSDiagramEntryLocalService.getCProductCSDiagramEntries (typed CSDiagramCPTypeConstants.NAME); pagination is applied to the merged list in memory. Exposed as the `linkedProducts` field of the Product DTO. Validation -- PrincipalException -> 403 when the caller lacks VIEW permission on the product. List query support -- pagination only; filterable fields -- none."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -784,4 +787,4 @@ public abstract class BaseLinkedProductResourceImpl
 		LogFactoryUtil.getLog(BaseLinkedProductResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1268802158
+// LIFERAY-REST-BUILDER-HASH:482128651

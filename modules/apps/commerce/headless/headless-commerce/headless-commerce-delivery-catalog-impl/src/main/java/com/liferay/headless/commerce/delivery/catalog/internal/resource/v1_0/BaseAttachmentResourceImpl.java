@@ -71,6 +71,9 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/attachments'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists non-image CPAttachmentFileEntry rows (TYPE_OTHER, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/attachments. Resolves the active CPDefinition via CPDefinitionLocalService.fetchCPDefinitionByCProductId, loads the CommerceChannel, resolves the effective accountId via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Also exposed as the `attachments` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -127,6 +130,9 @@ public abstract class BaseAttachmentResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-delivery-catalog/v1.0/channels/{channelId}/products/{productId}/images'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists image-type CPAttachmentFileEntry rows (TYPE_IMAGE, status APPROVED) attached to the product under /channels/{channelId}/products/{productId}/images. Resolves the active CPDefinition, loads the channel, resolves the account via AccountUtil and pages CPAttachmentFileEntryLocalService.getCPAttachmentFileEntries scoped to the CPDefinition. Exposed as the `images` field of the Product DTO. Validation -- NoSuchCPDefinitionException -> 404 when the productId does not resolve to an active CPDefinition. List query support -- pagination only; filterable fields -- none."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -835,4 +841,4 @@ public abstract class BaseAttachmentResourceImpl
 		LogFactoryUtil.getLog(BaseAttachmentResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1426790679
+// LIFERAY-REST-BUILDER-HASH:975799996

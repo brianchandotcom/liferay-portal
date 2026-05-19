@@ -118,6 +118,7 @@ export default function ExperienceSelector({
 				onSelectionChange={onChangeExperience || handleExperienceChange}
 				selectedItem={selectedSegmentsExperience}
 				selectedKey={selectedSegmentsExperience.segmentsExperienceId}
+				width={280}
 			>
 				{({
 					active,

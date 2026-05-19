@@ -83,11 +83,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		throws Exception {
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Layout ", layout.getPlid(),
-					" is a deprecated widget page (type=portlet). Migrate it ",
-					"to a content page."));
+			_log.warn("Layout " + layout.getPlid() + " has a deprecated type");
 		}
 
 		RequestDispatcher requestDispatcher =

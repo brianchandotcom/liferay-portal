@@ -70,12 +70,7 @@ public class FullPageApplicationLayoutTypeController
 		throws Exception {
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Layout ", layout.getPlid(),
-					" is a deprecated full page application page ",
-					"(type=full_page_application). Use a content page ",
-					"instead."));
+			_log.warn("Layout " + layout.getPlid() + " has a deprecated type");
 		}
 
 		return super.includeLayoutContent(

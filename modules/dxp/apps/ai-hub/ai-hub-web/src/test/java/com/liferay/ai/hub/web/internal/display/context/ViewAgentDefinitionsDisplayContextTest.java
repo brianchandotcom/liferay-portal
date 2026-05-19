@@ -9,16 +9,16 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.test.portlet.MockLiferayPortletURL;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -44,7 +44,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Mario Gomes
  */
-public class ViewInstructionDefinitionsDisplayContextTest {
+public class ViewAgentDefinitionsDisplayContextTest {
 
 	@ClassRule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
@@ -58,40 +58,51 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpGroupLocalService();
+		_setUpHttpServletRequest();
 		_setUpLanguageUtil();
-		_setUpMockHttpServletRequest();
 		_setUpObjectDefinition();
 		_setUpPortalUtil();
 	}
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
-		ViewInstructionDefinitionsDisplayContext
-			viewInstructionDefinitionsDisplayContext =
-				new ViewInstructionDefinitionsDisplayContext(
-					_mockHttpServletRequest);
+		ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext =
+			new ViewAgentDefinitionsDisplayContext(
+				_groupLocalService, _httpServletRequest);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			viewInstructionDefinitionsDisplayContext.
-				getFDSActionDropdownItems();
+			viewAgentDefinitionsDisplayContext.getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 3,
+			fdsActionDropdownItems.toString(), 6,
 			fdsActionDropdownItems.size());
+
+		String href =
+			"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code" +
+				"/{externalReferenceCode}";
 
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0),
 			StringBundler.concat(
-				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL, "/instruction",
-				"?externalReferenceCode={externalReferenceCode}"),
+				_PORTAL_URL, "/web", _GROUP_FRIENDLY_URL,
+				"/agent?externalReferenceCode=%7BexternalReferenceCode%7D",
+				"&workflowDefinitionName=%7BworkflowDefinitionName%7D"),
 			"view", "view", "view", "get", null);
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(1),
-			"/o/ai-hub/instruction-definitions/by-external-reference-code" +
-				"/{externalReferenceCode}",
-			"trash", "delete", "delete", "delete", "async");
+			fdsActionDropdownItems.get(1), href + "/copy", "copy", "copy",
+			"duplicate", "post", "async");
 		_assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(2), _PERMISSIONS_URL,
+			fdsActionDropdownItems.get(2), href, "trash", "delete", "delete",
+			"delete", "async");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(3), href + "/update-active?active=false",
+			"block", "deactivate", "deactivate", "patch", "async");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(4), href + "/update-active?active=true",
+			"logout", "activate", "activate", "patch", "async");
+		_assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(5), _PERMISSIONS_URL,
 			"password-policies", "permissions", "permissions", "get",
 			"modal-permissions");
 	}
@@ -100,46 +111,41 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 		FDSActionDropdownItem fdsActionDropdownItem, String href, String icon,
 		String id, String label, String method, String target) {
 
-		Assert.assertNotNull(fdsActionDropdownItem);
-
 		Map<String, String> data =
 			(Map<String, String>)fdsActionDropdownItem.get("data");
 
 		Assert.assertEquals(id, data.get("id"));
 		Assert.assertEquals(method, data.get("method"));
 
-		if (Validator.isNotNull(href)) {
-			Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
-		}
-		else {
-			Assert.assertNull(fdsActionDropdownItem.get("href"));
-		}
-
+		Assert.assertEquals(href, fdsActionDropdownItem.get("href"));
 		Assert.assertEquals(icon, fdsActionDropdownItem.get("icon"));
 		Assert.assertEquals(label, fdsActionDropdownItem.get("label"));
 		Assert.assertEquals(target, fdsActionDropdownItem.get("target"));
 	}
 
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(Mockito.mock(Language.class));
+	private void _setUpGroupLocalService() throws Exception {
+		Group group = Mockito.mock(Group.class);
 
 		Mockito.when(
-			LanguageUtil.get(
-				Mockito.any(HttpServletRequest.class), Mockito.anyString())
-		).thenAnswer(
-			invocation -> invocation.getArgument(1)
+			group.getFriendlyURL()
+		).thenReturn(
+			_GROUP_FRIENDLY_URL
+		);
+
+		Mockito.when(
+			_groupLocalService.getGroup(Mockito.anyLong())
+		).thenReturn(
+			group
 		);
 	}
 
-	private void _setUpMockHttpServletRequest() throws Exception {
+	private void _setUpHttpServletRequest() throws Exception {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Company company = Mockito.mock(Company.class);
 
 		Mockito.when(
-			company.getPortalURL(GroupConstants.DEFAULT_PARENT_GROUP_ID)
+			company.getPortalURL(Mockito.anyLong())
 		).thenReturn(
 			_PORTAL_URL
 		);
@@ -156,22 +162,20 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 			_COMPANY_ID
 		);
 
-		Group group = Mockito.mock(Group.class);
+		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+	}
+
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(Mockito.mock(Language.class));
 
 		Mockito.when(
-			group.getFriendlyURL()
-		).thenReturn(
-			_GROUP_FRIENDLY_URL
+			LanguageUtil.get(
+				Mockito.any(HttpServletRequest.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1)
 		);
-
-		Mockito.when(
-			themeDisplay.getScopeGroup()
-		).thenReturn(
-			group
-		);
-
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	private void _setUpObjectDefinition() {
@@ -194,27 +198,39 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 			() ->
 				ObjectDefinitionLocalServiceUtil.
 					getObjectDefinitionByExternalReferenceCode(
-						"L_AI_HUB_INSTRUCTION_DEFINITION", _COMPANY_ID)
+						"L_AI_HUB_AGENT_DEFINITION", _COMPANY_ID)
 		).thenReturn(
 			objectDefinition
 		);
 	}
 
 	private void _setUpPortalUtil() {
+		LiferayPortletURL liferayPortletURL = Mockito.mock(
+			LiferayPortletURL.class);
+
 		Mockito.when(
-			_mockLiferayPortletURL.toString()
+			liferayPortletURL.toString()
 		).thenReturn(
 			_PERMISSIONS_URL
 		);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getControlPanelPortletURL(
-				_mockHttpServletRequest,
+				_httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
 					"PortletConfigurationPortlet",
 				ActionRequest.RENDER_PHASE)
 		).thenReturn(
-			_mockLiferayPortletURL
+			liferayPortletURL
+		);
+
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.stripURLAnchor(
+				Mockito.anyString(), Mockito.anyString())
+		).thenAnswer(
+			invocation -> new String[] {
+				invocation.getArgument(0, String.class), StringPool.BLANK
+			}
 		);
 	}
 
@@ -234,9 +250,9 @@ public class ViewInstructionDefinitionsDisplayContextTest {
 	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
 		Mockito.mockStatic(PortalUtil.class);
 
-	private final MockHttpServletRequest _mockHttpServletRequest =
+	private final GroupLocalService _groupLocalService = Mockito.mock(
+		GroupLocalService.class);
+	private final HttpServletRequest _httpServletRequest =
 		new MockHttpServletRequest();
-	private final MockLiferayPortletURL _mockLiferayPortletURL = Mockito.spy(
-		new MockLiferayPortletURL());
 
 }

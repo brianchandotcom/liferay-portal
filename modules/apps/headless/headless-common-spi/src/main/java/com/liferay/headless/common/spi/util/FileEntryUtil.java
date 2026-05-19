@@ -8,7 +8,6 @@ package com.liferay.headless.common.spi.util;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -30,7 +29,8 @@ import java.util.Set;
 public class FileEntryUtil {
 
 	public static long getPreviewFileEntryId(
-			long groupId, String resourceName, ServiceContext serviceContext,
+			long groupId, String portletId, String resourceName,
+			ServiceContext serviceContext,
 			ThumbnailURLReference thumbnailURLReference)
 		throws Exception {
 
@@ -48,15 +48,16 @@ public class FileEntryUtil {
 
 		if (fileEntry == null) {
 			fileEntry = _getFileEntry(
-				groupId, resourceName, serviceContext, thumbnailURLReference,
-				serviceContext.getUserId());
+				groupId, portletId, resourceName, serviceContext,
+				thumbnailURLReference, serviceContext.getUserId());
 		}
 
 		return fileEntry.getFileEntryId();
 	}
 
 	private static FileEntry _getFileEntry(
-			long groupId, String resourceName, ServiceContext serviceContext,
+			long groupId, String portletId, String resourceName,
+			ServiceContext serviceContext,
 			ThumbnailURLReference thumbnailURLReference, long userId)
 		throws Exception {
 
@@ -84,8 +85,7 @@ public class FileEntryUtil {
 
 			Repository repository =
 				PortletFileRepositoryUtil.addPortletRepository(
-					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
-					serviceContext);
+					groupId, portletId, serviceContext);
 
 			String fileName =
 				thumbnailURLReference.getExternalReferenceCode() + "_preview" +

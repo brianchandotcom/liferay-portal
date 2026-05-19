@@ -15,21 +15,25 @@ interface ExecItemActionArgs {
 
 export class TasksPage {
 	readonly addTaskKanbanButton: Locator;
+	readonly allTasksTab: Locator;
 	readonly assetTagNameField: Locator;
 	readonly assignTaskToDialog: Locator;
 	readonly dataSetFragmentPage: DataSetPage;
-	readonly deleteButton: Locator;
+	readonly dialogDeleteButton: Locator;
 	readonly dropdownKanbanViewButton: Locator;
 	readonly dropdownTableViewButton: Locator;
 	readonly kanbanViewButton: Locator;
 	readonly page: Page;
+	readonly projectTasksTab: Locator;
 	readonly projectTitleButton: Locator;
 	readonly saveButton: Locator;
 	readonly tableViewButton: Locator;
 	readonly titleInput: Locator;
+	readonly viewSelectorButton: Locator;
 	readonly updateDueDateDialog: Locator;
 	readonly updateStateDialog: Locator;
 	readonly updateStateSelector: Locator;
+	readonly workflowTasksTab: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -37,6 +41,7 @@ export class TasksPage {
 		this.addTaskKanbanButton = page
 			.getByRole('button', {name: 'Add Task'})
 			.first();
+		this.allTasksTab = page.getByRole('tab', {name: 'All Tasks'});
 		this.assetTagNameField = page
 			.locator('span')
 			.filter({hasText: 'L_CMP_TASK_'})
@@ -46,13 +51,16 @@ export class TasksPage {
 			name: 'Assign Tasks to',
 		});
 		this.dataSetFragmentPage = new DataSetPage(page);
-		this.deleteButton = page.getByRole('button', {name: 'Delete'});
+		this.dialogDeleteButton = page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Delete'});
 		this.dropdownKanbanViewButton = page.getByRole('option', {
 			name: 'Kanban',
 		});
 		this.dropdownTableViewButton = page.getByRole('option', {
 			name: 'Table',
 		});
+		this.projectTasksTab = page.getByRole('tab', {name: 'Project Tasks'});
 		this.kanbanViewButton = page.getByRole('combobox', {
 			name: 'Kanban View Selected',
 		});
@@ -71,10 +79,16 @@ export class TasksPage {
 			name: 'Update State',
 		});
 		this.updateStateSelector = this.updateStateDialog.getByRole('combobox');
+		this.viewSelectorButton = page.getByRole('combobox', {
+			name: /View Selected$/,
+		});
+		this.workflowTasksTab = page.getByRole('tab', {name: 'Workflow'});
 	}
 
 	getItem(filter: string) {
-		return this.dataSetFragmentPage.getRow(filter);
+		return this.page
+			.getByRole('tabpanel')
+			.locator(this.dataSetFragmentPage.getRow(filter));
 	}
 
 	async execBulkItemAction(action: string) {

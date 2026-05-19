@@ -1000,3 +1000,14 @@ The same applies when renaming a method or its parameter to match the vocabulary
 ```
 
 When you rename a local, propagate the new name to every call site, every parameter that passes it on, and every private helper that receives it.
+
+### Rule 48: Chicago Title Case for Titles in Language Properties
+
+**Why:** Titles in `Language.properties` — labels, headings, button text, dropdown options, filter values — follow the Chicago Manual of Style: capitalize the first word, the last word, and every major word (nouns, verbs, adjectives, adverbs, pronouns), and keep articles, coordinating conjunctions, and prepositions lowercase. Sentences and inline phrases stay in sentence case; full sentences fall under Rule 18.
+
+**Examples:**
+
+```diff
+-some-key=Alpha of the bravo
++some-key=Alpha of the Bravo
+```

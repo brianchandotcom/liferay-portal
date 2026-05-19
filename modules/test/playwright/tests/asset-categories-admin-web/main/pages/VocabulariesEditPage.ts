@@ -116,12 +116,16 @@ export class VocabulariesEditPage {
 	}
 
 	async goto(name: string) {
+		await this.page.getByRole('menuitem', {name}).click();
+
+		const heading = this.page.getByRole('heading', {name});
+
+		await expect(heading).toBeVisible();
+
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page.getByRole('menuitem', {name: 'Edit'}),
-			trigger: this.page
-				.getByRole('heading', {name})
-				.getByLabel('Show Actions'),
+			trigger: heading.getByLabel('Show Actions'),
 		});
 	}
 

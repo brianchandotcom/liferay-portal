@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -82,7 +83,8 @@ public class FileEntryLayoutDisplayPageProvider
 
 		FriendlyURLEntry friendlyURLEntry =
 			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, FileEntry.class, urlTitle);
+				groupId, _classNameLocalService.getClassNameId(FileEntry.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			return getLayoutDisplayPageObjectProvider(
@@ -153,6 +155,9 @@ public class FileEntryLayoutDisplayPageProvider
 			throw new RuntimeException(portalException);
 		}
 	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;

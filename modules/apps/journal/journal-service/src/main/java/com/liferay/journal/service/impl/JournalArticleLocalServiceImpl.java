@@ -1156,7 +1156,8 @@ public class JournalArticleLocalServiceImpl
 
 			if (!friendlyURLEntries.isEmpty()) {
 				friendlyURLEntryLocalService.deleteFriendlyURLEntry(
-					article.getGroupId(), JournalArticle.class,
+					article.getGroupId(),
+					_classNameLocalService.getClassNameId(JournalArticle.class),
 					article.getResourcePrimKey());
 			}
 
@@ -1630,7 +1631,9 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, JournalArticle.class, urlTitle);
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			JournalArticle article = fetchLatestArticle(
@@ -1869,7 +1872,9 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, JournalArticle.class, urlTitle);
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			JournalArticle article = fetchLatestArticle(
@@ -2060,7 +2065,9 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, JournalArticle.class, urlTitle);
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			return getLatestArticle(
@@ -3153,7 +3160,9 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, JournalArticle.class, urlTitle);
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			articles = journalArticlePersistence.findByR_ST(
@@ -3464,7 +3473,9 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				groupId, JournalArticle.class, urlTitle);
+				groupId,
+				_classNameLocalService.getClassNameId(JournalArticle.class),
+				urlTitle);
 
 		if (friendlyURLEntry != null) {
 			article = fetchLatestArticle(friendlyURLEntry.getClassPK(), status);
@@ -4272,7 +4283,8 @@ public class JournalArticleLocalServiceImpl
 
 		FriendlyURLEntry friendlyURLEntry =
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
-				article.getGroupId(), JournalArticle.class,
+				article.getGroupId(),
+				_classNameLocalService.getClassNameId(JournalArticle.class),
 				article.getUrlTitle());
 
 		if (friendlyURLEntry == null) {

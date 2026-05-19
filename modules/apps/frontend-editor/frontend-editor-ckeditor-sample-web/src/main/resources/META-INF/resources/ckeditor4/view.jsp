@@ -18,31 +18,31 @@ String innerNavigation = ParamUtil.getString(request, "innerNavigation", "classi
 				add(
 					navigationItem -> {
 						navigationItem.setActive(innerNavigation.equals("classic"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor4");
+						navigationItem.setHref(renderResponse.createRenderURL());
 						navigationItem.setLabel("Classic");
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(innerNavigation.equals("react"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor4", "innerNavigation", "react");
+						navigationItem.setHref(renderResponse.createRenderURL(), "innerNavigation", "react");
 						navigationItem.setLabel("React");
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(innerNavigation.equals("legacy"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor4", "innerNavigation", "legacy");
+						navigationItem.setHref(renderResponse.createRenderURL(), "innerNavigation", "legacy");
 						navigationItem.setLabel("Legacy");
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(innerNavigation.equals("alloy"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor4", "innerNavigation", "alloy");
+						navigationItem.setHref(renderResponse.createRenderURL(), "innerNavigation", "alloy");
 						navigationItem.setLabel("Alloy");
 					});
 				add(
 					navigationItem -> {
 						navigationItem.setActive(innerNavigation.equals("balloon"));
-						navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "ckeditor4", "innerNavigation", "balloon");
+						navigationItem.setHref(renderResponse.createRenderURL(), "innerNavigation", "balloon");
 						navigationItem.setLabel("Balloon");
 					});
 			}

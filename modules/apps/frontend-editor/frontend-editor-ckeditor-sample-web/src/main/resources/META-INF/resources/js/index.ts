@@ -4,5 +4,3 @@
  */
 
 export {default as CKEditor4ReactClassicEditor} from './CKEditor4ReactClassicEditor';
-
-export {default as CKEditor5ReactClassicEditor} from './CKEditor5ReactClassicEditor';

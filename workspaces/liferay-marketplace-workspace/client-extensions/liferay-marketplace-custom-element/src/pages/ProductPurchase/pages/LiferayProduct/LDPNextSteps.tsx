@@ -6,12 +6,13 @@
 import React from 'react';
 
 import Loading from '../../../../components/Loading';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 import i18n from '../../../../i18n';
-import {getSiteURL} from '../../../../utils/site';
 
 import './LDPNextSteps.scss';
+import {safeJSONParse} from '../../../../utils/util';
 
 const Content = ({
 	description,
@@ -51,6 +52,8 @@ const LDPNextSteps: React.FC<{
 	description: string;
 	title: string;
 }> = ({description, title}) => {
+	const {properties} = useMarketplaceContext();
+
 	const searchParams = new URLSearchParams(window.location.search);
 
 	const orderId = searchParams.get('orderId') as string;
@@ -59,13 +62,20 @@ const LDPNextSteps: React.FC<{
 		refreshInterval: 30000,
 	});
 
+	const orderMetadata = safeJSONParse(
+		order?.customFields?.ORDER_METADATA || '{}',
+		{
+			analyticsProject: {groupId: 0},
+		}
+	);
+
+	const groupId = orderMetadata?.analyticsProject?.groupId;
+
 	if (order?.orderStatusInfo.label === OrderStatus.COMPLETED) {
-		sendRedirect(
-			`${getSiteURL()}/customer-dashboard/#/products/${orderId}`
-		);
+		sendRedirect(`${properties.analyticsCloudURL}/workspace/${groupId}`);
 	}
 
-	if (error) {
+	if (error || order?.orderStatusInfo.label === OrderStatus.CANCELLED) {
 		return (
 			<Content
 				description={i18n.translate(

@@ -169,60 +169,6 @@ public class InvitedMemberResourceTest
 	@Override
 	@Test
 	public void testPatchRoomInvitedMember() throws Exception {
-		_testPatchRoomInvitedMember();
-	}
-
-	@Override
-	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"emailAddress"};
-	}
-
-	@Override
-	protected InvitedMember randomInvitedMember() throws Exception {
-		return new InvitedMember() {
-			{
-				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-			}
-		};
-	}
-
-	@Override
-	protected InvitedMember testDeleteRoomInvitedMember_addInvitedMember()
-		throws Exception {
-
-		return testGetRoomInvitedMembersPage_addInvitedMember(
-			_objectEntry.getObjectEntryId(), randomInvitedMember());
-	}
-
-	@Override
-	protected Long testDeleteRoomInvitedMember_getRoomId() throws Exception {
-		return _objectEntry.getObjectEntryId();
-	}
-
-	@Override
-	protected InvitedMember testGetRoomInvitedMembersPage_addInvitedMember(
-			Long roomId, InvitedMember invitedMember)
-		throws Exception {
-
-		UserAccount userAccount = _userAccountAdminResource.postRoomUserAccount(
-			_objectEntry.getObjectEntryId(),
-			new UserAccount() {
-				{
-					setEmailAddress(invitedMember::getEmailAddress);
-				}
-			});
-
-		invitedMember.setId(userAccount.getId());
-
-		return invitedMember;
-	}
-
-	@Override
-	protected Long testGetRoomInvitedMembersPage_getRoomId() throws Exception {
-		return _objectEntry.getObjectEntryId();
-	}
-
-	private void _testPatchRoomInvitedMember() throws Exception {
 		InvitedMember invitedMember1 = randomInvitedMember();
 
 		UserAccount userAccount1 =
@@ -298,6 +244,56 @@ public class InvitedMemberResourceTest
 			Long.valueOf(_user.getUserId()), patchedInvitedMember.getOwnerId());
 		Assert.assertEquals(
 			RoleConstants.SITE_MEMBER, patchedInvitedMember.getRoleKey());
+	}
+
+	@Override
+	protected String[] getAdditionalAssertFieldNames() {
+		return new String[] {"emailAddress"};
+	}
+
+	@Override
+	protected InvitedMember randomInvitedMember() throws Exception {
+		return new InvitedMember() {
+			{
+				emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+			}
+		};
+	}
+
+	@Override
+	protected InvitedMember testDeleteRoomInvitedMember_addInvitedMember()
+		throws Exception {
+
+		return testGetRoomInvitedMembersPage_addInvitedMember(
+			_objectEntry.getObjectEntryId(), randomInvitedMember());
+	}
+
+	@Override
+	protected Long testDeleteRoomInvitedMember_getRoomId() throws Exception {
+		return _objectEntry.getObjectEntryId();
+	}
+
+	@Override
+	protected InvitedMember testGetRoomInvitedMembersPage_addInvitedMember(
+			Long roomId, InvitedMember invitedMember)
+		throws Exception {
+
+		UserAccount userAccount = _userAccountAdminResource.postRoomUserAccount(
+			_objectEntry.getObjectEntryId(),
+			new UserAccount() {
+				{
+					setEmailAddress(invitedMember::getEmailAddress);
+				}
+			});
+
+		invitedMember.setId(userAccount.getId());
+
+		return invitedMember;
+	}
+
+	@Override
+	protected Long testGetRoomInvitedMembersPage_getRoomId() throws Exception {
+		return _objectEntry.getObjectEntryId();
 	}
 
 	@Inject

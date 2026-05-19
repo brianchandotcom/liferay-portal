@@ -9,13 +9,16 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -87,6 +90,44 @@ public final class UpgradeQueryMonitor {
 		return StringBundler.concat(" in schema \"", schema, "\"");
 	}
 
+	private static boolean _isOraclePermissionError(Exception exception) {
+		if (DBManagerUtil.getDBType() != DBType.ORACLE) {
+			return false;
+		}
+
+		String message = exception.getMessage();
+
+		if (message == null) {
+			return false;
+		}
+
+		String upperCaseMessage = message.toUpperCase(LocaleUtil.ROOT);
+
+		if (!upperCaseMessage.contains("V$SESSION") &&
+			!upperCaseMessage.contains("V$SQL") &&
+			!upperCaseMessage.contains("V_$SESSION") &&
+			!upperCaseMessage.contains("V_$SQL")) {
+
+			return false;
+		}
+
+		Throwable causeThrowable = exception;
+
+		while (causeThrowable != null) {
+			if (causeThrowable instanceof SQLException) {
+				SQLException sqlException = (SQLException)causeThrowable;
+
+				if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
+					return true;
+				}
+			}
+
+			causeThrowable = causeThrowable.getCause();
+		}
+
+		return false;
+	}
+
 	private static void _poll() {
 		DataSource dataSource = InfrastructureUtil.getDataSource();
 
@@ -149,6 +190,21 @@ public final class UpgradeQueryMonitor {
 				return;
 			}
 
+			if (_isOraclePermissionError(exception)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Upgrade query monitoring is disabled because the database user lacks ",
+							"SELECT on sys.v_$session and sys.v_$sql. Grant one of the following ",
+							"(from least to most permissive): SELECT on sys.v_$session and ",
+							"sys.v_$sql, SELECT_CATALOG_ROLE, or DBA."));
+				}
+
+				stop();
+
+				return;
+			}
+
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Upgrade query monitoring is disabled: " +
@@ -165,6 +221,8 @@ public final class UpgradeQueryMonitor {
 
 	private UpgradeQueryMonitor() {
 	}
+
+	private static final int _ORA_942_TABLE_NOT_FOUND = 942;
 
 	private static final long _POLLING_INTERVAL_SECONDS = 60;
 

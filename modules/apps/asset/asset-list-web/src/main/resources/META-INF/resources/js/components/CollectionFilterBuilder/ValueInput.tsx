@@ -157,7 +157,7 @@ export default function ValueInput({
 			const [from, to] = (value as string[]) || [];
 
 			return (
-				<div className={VALUE_INPUT_CLASSNAME}>
+				<div className={`c-gap-2 ${VALUE_INPUT_CLASSNAME}`}>
 					<ClayInput
 						aria-label={Liferay.Language.get('from')}
 						className="form-control-sm"
@@ -222,7 +222,7 @@ export default function ValueInput({
 		<div className={VALUE_INPUT_CLASSNAME}>
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
-				className="d-flex form-control-sm"
+				className="form-control-sm"
 				id={`${property.name}-${index}`}
 				onChange={(event) => onChange(event.target.value)}
 				onKeyDown={_handlePreventEnterSubmit}

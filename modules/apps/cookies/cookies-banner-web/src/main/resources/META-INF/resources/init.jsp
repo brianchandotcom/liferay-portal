@@ -22,6 +22,7 @@ page import="com.liferay.cookies.banner.web.internal.display.context.CookiesBann
 page import="com.liferay.cookies.banner.web.internal.display.context.CookiesBannerDisplayContext" %><%@
 page import="com.liferay.cookies.banner.web.internal.display.context.CookiesPreferenceHandlingConfigurationDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition" %><%@
 page import="com.liferay.portal.kernel.cookies.ConsentCookieType" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.User" %><%@

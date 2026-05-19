@@ -1,11 +1,11 @@
 // .label
 
-$label-border-radius: 0.125rem !default; // 2px
+$label-border-radius: $border-radius !default; // 4px
 $label-font-size: 0.625rem !default; // 10px
 $label-font-weight: $font-weight-semi-bold !default;
 $label-padding-x: 0.25rem !default; // 4px
 $label-padding-y: 0.125rem !default; // 2px
-$label-text-transform: uppercase !default;
+$label-text-transform: none !default;
 
 // .label[href], .label[type], .label[tabindex='0']
 

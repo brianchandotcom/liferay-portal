@@ -910,11 +910,25 @@ public class KaleoDefinitionVersionModelImpl
 		_statusDate = statusDate;
 	}
 
+	public boolean isBlockingKaleoTimerExists() {
+		return false;
+	}
+
+	public void setBlockingKaleoTimerExists(Boolean blockingKaleoTimerExists) {
+	}
+
 	public String getContentAsXML() {
 		return null;
 	}
 
 	public void setContentAsXML(String contentAsXML) {
+	}
+
+	public boolean isKaleoTimerExists() {
+		return false;
+	}
+
+	public void setKaleoTimerExists(Boolean kaleoTimerExists) {
 	}
 
 	@Override
@@ -1217,7 +1231,12 @@ public class KaleoDefinitionVersionModelImpl
 		KaleoDefinitionVersionModelImpl sourceModelImpl =
 			(KaleoDefinitionVersionModelImpl)source;
 
+		setBlockingKaleoTimerExists(
+			sourceModelImpl.isBlockingKaleoTimerExists());
+
 		setContentAsXML(sourceModelImpl.getContentAsXML());
+
+		setKaleoTimerExists(sourceModelImpl.isKaleoTimerExists());
 	}
 
 	@Override
@@ -1271,8 +1290,6 @@ public class KaleoDefinitionVersionModelImpl
 		_columnOriginalValues = Collections.emptyMap();
 
 		_setModifiedDate = false;
-
-		setContentAsXML(null);
 
 		_columnBitmask = 0;
 	}
@@ -1392,10 +1409,16 @@ public class KaleoDefinitionVersionModelImpl
 		}
 
 		try {
-			setContentAsXML(null);
+			kaleoDefinitionVersionCacheModel.blockingKaleoTimerExists =
+				(Boolean)_blockingKaleoTimerExistsMethodHandle.invokeExact(
+					(KaleoDefinitionVersionImpl)this);
 
 			kaleoDefinitionVersionCacheModel.contentAsXML =
 				(String)_contentAsXMLMethodHandle.invokeExact(
+					(KaleoDefinitionVersionImpl)this);
+
+			kaleoDefinitionVersionCacheModel.kaleoTimerExists =
+				(Boolean)_kaleoTimerExistsMethodHandle.invokeExact(
 					(KaleoDefinitionVersionImpl)this);
 		}
 		catch (Throwable throwable) {
@@ -1594,6 +1617,27 @@ public class KaleoDefinitionVersionModelImpl
 
 	private long _columnBitmask;
 
+	protected static final BiConsumer<KaleoDefinitionVersion, Boolean>
+		blockingKaleoTimerExistsUpdateEntityCacheBiConsumer =
+			(kaleoDefinitionVersion, blockingKaleoTimerExists) -> {
+				KaleoDefinitionVersionCacheModel
+					kaleoDefinitionVersionCacheModel =
+						EntityCacheUtil.fetchCacheModel(
+							KaleoDefinitionVersionImpl.class,
+							kaleoDefinitionVersion.getPrimaryKey(),
+							KaleoDefinitionVersionCacheModel.class);
+
+				if ((kaleoDefinitionVersionCacheModel != null) &&
+					(kaleoDefinitionVersionCacheModel.getMvccVersion() ==
+						kaleoDefinitionVersion.getMvccVersion())) {
+
+					kaleoDefinitionVersionCacheModel.blockingKaleoTimerExists =
+						blockingKaleoTimerExists;
+				}
+			};
+
+	private static final MethodHandle _blockingKaleoTimerExistsMethodHandle;
+
 	protected static final BiConsumer<KaleoDefinitionVersion, String>
 		contentAsXMLUpdateEntityCacheBiConsumer =
 			(kaleoDefinitionVersion, contentAsXML) -> {
@@ -1615,13 +1659,42 @@ public class KaleoDefinitionVersionModelImpl
 
 	private static final MethodHandle _contentAsXMLMethodHandle;
 
+	protected static final BiConsumer<KaleoDefinitionVersion, Boolean>
+		kaleoTimerExistsUpdateEntityCacheBiConsumer =
+			(kaleoDefinitionVersion, kaleoTimerExists) -> {
+				KaleoDefinitionVersionCacheModel
+					kaleoDefinitionVersionCacheModel =
+						EntityCacheUtil.fetchCacheModel(
+							KaleoDefinitionVersionImpl.class,
+							kaleoDefinitionVersion.getPrimaryKey(),
+							KaleoDefinitionVersionCacheModel.class);
+
+				if ((kaleoDefinitionVersionCacheModel != null) &&
+					(kaleoDefinitionVersionCacheModel.getMvccVersion() ==
+						kaleoDefinitionVersion.getMvccVersion())) {
+
+					kaleoDefinitionVersionCacheModel.kaleoTimerExists =
+						kaleoTimerExists;
+				}
+			};
+
+	private static final MethodHandle _kaleoTimerExistsMethodHandle;
+
 	static {
 		MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();
 
 		try {
+			_blockingKaleoTimerExistsMethodHandle = lookup.findGetter(
+				KaleoDefinitionVersionImpl.class, "_blockingKaleoTimerExists",
+				Boolean.class);
+
 			_contentAsXMLMethodHandle = lookup.findGetter(
 				KaleoDefinitionVersionImpl.class, "_contentAsXML",
 				String.class);
+
+			_kaleoTimerExistsMethodHandle = lookup.findGetter(
+				KaleoDefinitionVersionImpl.class, "_kaleoTimerExists",
+				Boolean.class);
 		}
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			throw new ExceptionInInitializerError(reflectiveOperationException);
@@ -1631,4 +1704,4 @@ public class KaleoDefinitionVersionModelImpl
 	private KaleoDefinitionVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-137438477
+// LIFERAY-SERVICE-BUILDER-HASH:42480213

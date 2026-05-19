@@ -674,7 +674,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory,pageSpecifications,thumbnail"
+			"nestedFields",
+			"friendlyUrlHistory,pageSpecifications,thumbnailURLReference"
 		).build();
 	}
 

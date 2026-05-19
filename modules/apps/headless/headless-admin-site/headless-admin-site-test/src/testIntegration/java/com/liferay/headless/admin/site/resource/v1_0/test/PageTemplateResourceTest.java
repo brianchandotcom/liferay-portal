@@ -837,7 +837,7 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "pageSpecifications,thumbnail"
+			"nestedFields", "pageSpecifications,thumbnailURLReference"
 		).build();
 	}
 

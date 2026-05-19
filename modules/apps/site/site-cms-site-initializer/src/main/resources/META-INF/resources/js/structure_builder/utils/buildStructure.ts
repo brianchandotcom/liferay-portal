@@ -348,6 +348,17 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 			settings.uniqueValues = objectFieldSettings.uniqueValues;
 		}
 	}
+	else if (objectField.businessType === 'PhoneNumber') {
+		settings.prefixType = objectFieldSettings.prefixType;
+
+		if (objectFieldSettings.prefix) {
+			settings.prefix = objectFieldSettings.prefix;
+		}
+
+		if (objectFieldSettings.uniqueValues) {
+			settings.uniqueValues = objectFieldSettings.uniqueValues;
+		}
+	}
 
 	return settings as Field['settings'];
 }
@@ -368,6 +379,7 @@ function getFieldType(objectField: ObjectField): FieldType {
 		Decimal: 'decimal',
 		Integer: 'integer',
 		LongText: 'long-text',
+		PhoneNumber: 'phone-number',
 		RichText: 'rich-text',
 		Text: 'text',
 	} as const;

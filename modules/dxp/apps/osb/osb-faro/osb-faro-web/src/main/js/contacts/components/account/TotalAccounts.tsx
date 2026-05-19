@@ -7,6 +7,7 @@ import {
 	Metric
 } from '../../pages/account/utils/types';
 import {sub} from 'shared/util/lang';
+import {toThousands} from 'shared/util/numbers';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const renderAccountValue = (metric?: Metric) =>
@@ -14,7 +15,7 @@ const renderAccountValue = (metric?: Metric) =>
 		metric?.value === 1
 			? Liferay.Language.get('x-account')
 			: Liferay.Language.get('x-accounts'),
-		[metric?.value ?? 0]
+		[toThousands(metric?.value ?? 0)]
 	);
 
 const TotalAccounts = ({groupId}: {groupId: string}) => {

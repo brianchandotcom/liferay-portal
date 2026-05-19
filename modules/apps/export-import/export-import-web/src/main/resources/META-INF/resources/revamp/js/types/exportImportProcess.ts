@@ -22,3 +22,16 @@ export interface ExportProcess {
 	name?: string;
 	status?: {code: number; label: string};
 }
+
+export interface ImportRequest {
+	fileEntryId: number;
+	requestPortletDataHandlers?: RequestPortletDataHandler[];
+}
+
+export interface ImportProcess {
+	dateCreated?: string;
+	dateModified?: string;
+	id?: number;
+	name?: string;
+	status?: {code: number; label: string};
+}

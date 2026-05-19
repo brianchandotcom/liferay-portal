@@ -100,6 +100,16 @@ public class ExportImportPreviewDisplayContext {
 		return _importPreviewAPIURL;
 	}
 
+	public String getImportProcessAPIURL() {
+		if (_importProcessAPIURL != null) {
+			return _importProcessAPIURL;
+		}
+
+		_importProcessAPIURL = _getResourceAPIURL("/import-processes");
+
+		return _importProcessAPIURL;
+	}
+
 	private String _encode(String value) {
 		if (Validator.isBlank(value)) {
 			return "";
@@ -134,6 +144,7 @@ public class ExportImportPreviewDisplayContext {
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private String _importPreviewAPIURL;
+	private String _importProcessAPIURL;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final long _liveGroupId;
 	private final boolean _privateLayout;

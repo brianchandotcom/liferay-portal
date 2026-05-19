@@ -5,6 +5,7 @@
 
 package com.liferay.layout.set.prototype.internal.sync;
 
+import com.liferay.layout.set.prototype.constants.LayoutSetPrototypeConstants;
 import com.liferay.layout.set.prototype.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
@@ -88,29 +89,29 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 			Set<Integer> backgroundTaskStatuses =
 				syncSession._backgroundTaskStatuses;
 
-			String result;
-
-			if (backgroundTaskStatuses.contains(
-					BackgroundTaskConstants.STATUS_CANCELLED) ||
-				backgroundTaskStatuses.contains(
-					BackgroundTaskConstants.STATUS_FAILED)) {
-
-				result = "failed";
-			}
-			else if (backgroundTaskStatuses.contains(
-						BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS)) {
-
-				result = "completed_with_errors";
-			}
-			else {
-				result = "successful";
-			}
-
 			NotificationEvent notificationEvent = new NotificationEvent(
 				System.currentTimeMillis(),
 				LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE,
 				JSONUtil.put(
-					"result", result
+					"result",
+					() -> {
+						if (backgroundTaskStatuses.contains(
+								BackgroundTaskConstants.STATUS_CANCELLED) ||
+							backgroundTaskStatuses.contains(
+								BackgroundTaskConstants.STATUS_FAILED)) {
+
+							return LayoutSetPrototypeConstants.STATUS_FAILED;
+						}
+						else if (backgroundTaskStatuses.contains(
+									BackgroundTaskConstants.
+										STATUS_COMPLETED_WITH_ERRORS)) {
+
+							return LayoutSetPrototypeConstants.
+								STATUS_COMPLETED_WITH_ERRORS;
+						}
+
+						return LayoutSetPrototypeConstants.STATUS_SUCCESSFUL;
+					}
 				).put(
 					"siteTemplateName", syncSession._siteTemplateName
 				));

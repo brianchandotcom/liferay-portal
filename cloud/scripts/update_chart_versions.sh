@@ -9,9 +9,16 @@ _SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 _ROOT_CLOUD_DIR=$(cd "${_SCRIPTS_DIR}/.." && pwd)
 
 function main {
-	find "${_ROOT_CLOUD_DIR}" -name "Chart.yaml" -type f | while read -r chart_yaml_file;
+	if [[ "${#}" -eq 0 ]]
+	then
+		echo "Usage: ${0##*/} <chart-dir> [<chart-dir> ...]" >&2
+
+		exit 1
+	fi
+
+	for chart_dir in "${@}"
 	do
-		_check_chart_yaml "$(dirname "${chart_yaml_file}")"
+		_check_chart_yaml "${chart_dir}"
 	done
 }
 
@@ -26,7 +33,13 @@ function _bump_chart_yaml_version {
 
 	new_version=$(echo "${current_version}" | awk -F"." -v OFS="." '{$NF += 1; print}')
 
-	yq --inplace ".version = \"${new_version}\"" "${helm_chart_yaml}"
+	local tmp_file
+
+	tmp_file=$(mktemp)
+
+	sed "s/^version: .*/version: ${new_version}/" "${helm_chart_yaml}" > "${tmp_file}"
+
+	mv "${tmp_file}" "${helm_chart_yaml}"
 
 	echo "${new_version}"
 }
@@ -39,6 +52,13 @@ function _check_chart_yaml {
 	local git_blame_sha
 
 	git_blame_sha=$(_git_blame_sha "^version: .*$" "${helm_chart_yaml}")
+
+	if [[ -z "${git_blame_sha}" ]] || ! git rev-parse --quiet --verify "${git_blame_sha}^{commit}" > /dev/null
+	then
+		echo "Skipping ${helm_chart_yaml}: unable to resolve blame boundary commit." >&2
+
+		return
+	fi
 
 	local commit_count
 
@@ -101,7 +121,13 @@ function _update_chart_dependency_version {
 			continue
 		fi
 
-		sed --in-place "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}"
+		local tmp_file
+
+		tmp_file=$(mktemp)
+
+		sed "/name: ${chart_name}$/,/version: / s/version: .*/version: ${new_version}/" "${chart_yaml_file}" > "${tmp_file}"
+
+		mv "${tmp_file}" "${chart_yaml_file}"
 	done
 }
 
@@ -111,7 +137,7 @@ function _git_blame_line {
 
 	local blame_line
 
-	blame_line=$(grep --extended-regexp --line-number "${pattern}" "${git_path}" | cut --delimiter=':' --fields=1)
+	blame_line=$(grep --extended-regexp --line-number "${pattern}" "${git_path}" | cut -d ':' -f 1)
 
 	echo "${blame_line}"
 }
@@ -126,9 +152,12 @@ function _git_blame_sha {
 
 	local target_sha
 
-	target_sha=$(git blame -L "${git_blame_line}","${git_blame_line}" -- "${git_path}" | cut --delimiter=' ' --fields=1)
+	target_sha=$(git blame -L "${git_blame_line}","${git_blame_line}" -- "${git_path}" | cut -d ' ' -f 1)
 
-	echo "${target_sha}"
+	echo "${target_sha#^}"
 }
 
-main "$@"
+if [[ -z "${_NO_MAIN:-}" ]]
+then
+	main ${1+"$@"}
+fi

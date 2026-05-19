@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+echo "yq ${*}" >> "${TEST_LOG}"
+
+for arg in "${@}"
+do
+	if [[ "${arg}" == "--inplace" ]] || [[ "${arg}" == "-i" ]]
+	then
+		echo "STUB-FAIL: yq invoked with in-place flag (${arg})" >> "${TEST_LOG}"
+
+		exit 1
+	fi
+done
+
+last_arg=""
+
+for arg in "${@}"
+do
+	last_arg="${arg}"
+done
+
+case "${1}" in
+	".version")
+		grep "^version: " "${last_arg}" | awk '{print $2}'
+		;;
+	*dependencies*)
+		query_chart_name=$(echo "${1}" | sed -E 's/.*\.name == "([^"]+)".*/\1/')
+
+		awk -v target="${query_chart_name}" '
+			/^[[:space:]]*-[[:space:]]*name:[[:space:]]*/ {
+				current_name = $NF
+				current_repo = ""
+			}
+			/^[[:space:]]*repository:[[:space:]]*file:\/\// {
+				current_repo = $NF
+
+				if (current_name == target)
+				{
+					print current_repo
+
+					exit
+				}
+			}
+		' "${last_arg}"
+		;;
+	*)
+		echo ""
+		;;
+esac

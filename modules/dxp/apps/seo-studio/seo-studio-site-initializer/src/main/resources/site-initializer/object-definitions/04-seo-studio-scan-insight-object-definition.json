@@ -16,7 +16,6 @@
 			"businessType": "Integer",
 			"externalReferenceCode": "AFFECTED_PAGE_COUNT",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Affected Page Count"
 			},
@@ -82,7 +81,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "DETECTED_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Detected Date"
 			},
@@ -183,7 +181,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "RESOLVED_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Resolved Date"
 			},

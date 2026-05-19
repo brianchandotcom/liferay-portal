@@ -40,7 +40,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "REQUEST_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Request Date"
 			},
@@ -129,7 +128,6 @@
 			"businessType": "DateTime",
 			"externalReferenceCode": "START_DATE",
 			"indexed": true,
-			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Start Date"
 			},
@@ -229,7 +227,6 @@
 			"businessType": "LongInteger",
 			"externalReferenceCode": "TRIGGERING_USER_ID",
 			"indexed": true,
-			"indexedAsKeyword": true,
 			"label": {
 				"en_US": "Triggering User ID"
 			},

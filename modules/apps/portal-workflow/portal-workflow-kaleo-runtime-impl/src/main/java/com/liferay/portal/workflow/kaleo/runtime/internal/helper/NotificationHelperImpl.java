@@ -10,20 +10,27 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
+import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotification;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationHelper;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationMessageGenerator;
 import com.liferay.portal.workflow.kaleo.runtime.notification.NotificationSender;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoNotificationRecipientLocalService;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -43,11 +50,11 @@ public class NotificationHelperImpl implements NotificationHelper {
 			ExecutionType executionType, ExecutionContext executionContext)
 		throws PortalException {
 
-		List<KaleoNotification> kaleoNotifications =
-			_kaleoNotificationLocalService.getKaleoNotifications(
-				kaleoClassName, kaleoClassPK, executionType.getValue());
+		for (KaleoNotification kaleoNotification :
+				_getKaleoNotifications(
+					kaleoClassName, kaleoClassPK, executionType,
+					executionContext)) {
 
-		for (KaleoNotification kaleoNotification : kaleoNotifications) {
 			_sendKaleoNotification(kaleoNotification, executionContext);
 		}
 	}
@@ -81,6 +88,33 @@ public class NotificationHelperImpl implements NotificationHelper {
 		_notificationMessageGeneratorServiceTrackerMap.close();
 
 		_notificationSenderServiceTrackerMap.close();
+	}
+
+	private List<KaleoNotification> _getKaleoNotifications(
+		String kaleoClassName, long kaleoClassPK, ExecutionType executionType,
+		ExecutionContext executionContext) {
+
+		if (!Objects.equals(KaleoNode.class.getName(), kaleoClassName)) {
+			return _kaleoNotificationLocalService.getKaleoNotifications(
+				kaleoClassName, kaleoClassPK, executionType.getValue());
+		}
+
+		KaleoInstanceToken kaleoInstanceToken =
+			executionContext.getKaleoInstanceToken();
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.fetchKaleoDefinitionVersion(
+				kaleoInstanceToken.getKaleoDefinitionVersionId());
+
+		if (kaleoDefinitionVersion == null) {
+			return Collections.emptyList();
+		}
+
+		return ListUtil.filter(
+			kaleoDefinitionVersion.getKaleoNodeKaleoNotifications(kaleoClassPK),
+			kaleoNotification -> Objects.equals(
+				executionType.getValue(),
+				kaleoNotification.getExecutionType()));
 	}
 
 	private void _sendKaleoNotification(
@@ -140,6 +174,10 @@ public class NotificationHelperImpl implements NotificationHelper {
 				notificationMessage, executionContext);
 		}
 	}
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private KaleoNotificationLocalService _kaleoNotificationLocalService;

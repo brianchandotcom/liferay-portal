@@ -4,23 +4,23 @@ set -o errexit
 set -o nounset
 
 function main {
-	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${ELASTICSEARCH_URL}/_cluster/health\"."
+	_log_json "Waiting for Elasticsearch health to be \"green\" or \"yellow\" at \"${SEARCH_URL}/_cluster/health\"."
 
 	local protocol="http"
 
-	case "${ELASTICSEARCH_URL}" in
+	case "${SEARCH_URL}" in
 		https://*) protocol="https" ;;
 	esac
 
 	local auth_header_value
 
-	auth_header_value=$(printf '%s:%s' "${ELASTICSEARCH_USERNAME}" "${ELASTICSEARCH_PASSWORD}" | base64 | tr -d '\n')
+	auth_header_value=$(printf '%s:%s' "${SEARCH_USERNAME}" "${SEARCH_PASSWORD}" | base64 | tr -d '\n')
 
-	local health_url="${protocol}://${ELASTICSEARCH_URL#*//}/_cluster/health"
+	local health_url="${protocol}://${SEARCH_URL#*//}/_cluster/health"
 
 	local wget_args=""
 
-	if [ "${protocol}" = "https" ] && [ "${ELASTICSEARCH_TLS_INSECURE:-false}" = "true" ]
+	if [ "${protocol}" = "https" ] && [ "${SEARCH_TLS_INSECURE:-false}" = "true" ]
 	then
 		wget_args="--no-check-certificate"
 	fi

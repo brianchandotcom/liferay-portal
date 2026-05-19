@@ -1,32 +1,43 @@
 {{- $engine := index .Values "liferay-default" "search" "engine" -}}
 apiVersion: v1
 data:
-    {{- if eq $engine "elasticsearch" }}
+    com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config: |
+        {{- if eq $engine "opensearch" }}
+        blacklistBundleSymbolicNames=["com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl","com.liferay.portal.search.elasticsearch.monitoring.web","com.liferay.portal.search.elasticsearch7.api","com.liferay.portal.search.elasticsearch7.impl","com.liferay.portal.search.learning.to.rank.api","com.liferay.portal.search.learning.to.rank.impl"]
+        {{- end }}
     com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config: |
+        {{- if eq $engine "elasticsearch" }}
         authenticationEnabled=B"true"
         httpSSLEnabled=B"false"
-        networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
+        networkHostAddresses=["$[env:SEARCH_URL]"]
         operationMode="REMOTE"
-        password="$[env:ELASTICSEARCH_PASSWORD]"
+        password="$[env:SEARCH_PASSWORD]"
         productionModeEnabled=B"true"
-        username="$[env:ELASTICSEARCH_USERNAME]"
+        username="$[env:SEARCH_USERNAME]"
+        {{- end }}
     com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config: |
+        {{- if eq $engine "elasticsearch" }}
         authenticationEnabled=B"true"
         httpSSLEnabled=B"false"
-        networkHostAddresses=["$[env:ELASTICSEARCH_URL]"]
-        password="$[env:ELASTICSEARCH_PASSWORD]"
+        networkHostAddresses=["$[env:SEARCH_URL]"]
+        password="$[env:SEARCH_PASSWORD]"
         productionModeEnabled=B"true"
-        username="$[env:ELASTICSEARCH_USERNAME]"
-    {{- else if eq $engine "opensearch" }}
+        username="$[env:SEARCH_USERNAME]"
+        {{- end }}
+    com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config: |
+        {{- if eq $engine "opensearch" }}
+        remoteClusterConnectionId="REMOTE"
+        {{- end }}
     com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config: |
+        {{- if eq $engine "opensearch" }}
         active=B"true"
         authenticationEnabled=B"true"
         connectionId="REMOTE"
         httpSSLEnabled=B"false"
-        networkHostAddresses=["https://$[env:OPENSEARCH_ENDPOINT]"]
-        password="$[env:OPENSEARCH_PASSWORD]"
-        username="$[env:OPENSEARCH_USERNAME]"
-    {{- end }}
+        networkHostAddresses=["$[env:SEARCH_URL]"]
+        password="$[env:SEARCH_PASSWORD]"
+        username="$[env:SEARCH_USERNAME]"
+        {{- end }}
 kind: ConfigMap
 metadata:
     name: liferay-search-config-aws

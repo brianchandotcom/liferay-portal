@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+    LIFERAY_OPENSEARCH_ENABLED: {{ ternary "true" "false" (eq (index .Values "liferay-default" "search" "engine") "opensearch") | quote }}
+kind: ConfigMap
+metadata:
+    name: liferay-search-env-aws
+    namespace: {{ .Release.Namespace }}

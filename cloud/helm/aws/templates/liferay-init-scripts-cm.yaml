@@ -1,4 +1,3 @@
-{{- if eq (index .Values "liferay-default" "search" "engine") "elasticsearch" }}
 apiVersion: v1
 data:
     wait-for-elasticsearch.sh: |
@@ -7,4 +6,3 @@ kind: ConfigMap
 metadata:
     name: liferay-init-scripts-aws
     namespace: {{ .Release.Namespace }}
-{{- end }}

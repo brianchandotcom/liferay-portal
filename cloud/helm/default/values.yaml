@@ -396,7 +396,6 @@ startupProbe:
     initialDelaySeconds: 60
     periodSeconds: 10
     timeoutSeconds: 5
-templates: {}
 tolerations: []
 updateStrategy:
     type: RollingUpdate

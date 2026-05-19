@@ -33,6 +33,10 @@ liferay-default:
                 value: jdbc:postgresql://${env.DATABASE_ENDPOINT}:${env.DATABASE_PORT}/lportal?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false
             -   name: LIFERAY_JDBC_PERIOD_DEFAULT_PERIOD_USERNAME
                 value: ${env.DATABASE_USERNAME}
+            -   name: LIFERAY_NETWORK_HOST_ADDRESSES
+                value: $(SEARCH_URL)
+            -   name: LIFERAY_OPENSEARCH_PASSWORD
+                value: $(SEARCH_PASSWORD)
             -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PORT_PERIOD_ENABLED
                 value: "true"
             -   name: LIFERAY_WEB_PERIOD_SERVER_PERIOD_FORWARDED_PERIOD_PROTOCOL_PERIOD_ENABLED
@@ -44,6 +48,12 @@ liferay-default:
         x-liferay-aws-doclib:
             -   secretRef:
                     name: doclib-connection-details
+        x-liferay-aws-search-config:
+            -   configMapRef:
+                    name: liferay-search-env-aws
+        x-liferay-aws-search-credentials:
+            -   secretRef:
+                    name: search-connection-details
     customInitContainers:
         x-liferay-install-opensearch-modules:
             -   containerTemplate: |
@@ -142,7 +152,7 @@ liferay-default:
                         -   /liferay-init-scripts/wait-for-elasticsearch.sh
                         envFrom:
                         -   secretRef:
-                                name: elasticsearch-connection-details
+                                name: search-connection-details
                         image: busybox:1.36
                         name: wait-for-elasticsearch
                         securityContext:
@@ -166,7 +176,28 @@ liferay-default:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+        x-liferay-aws-search-config:
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config
+                name: liferay-search-config-aws
+                subPath: com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
+                name: liferay-search-config-aws
+                subPath: com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
+                name: liferay-search-config-aws
+                subPath: com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+                name: liferay-search-config-aws
+                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration.config
+            -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
+                name: liferay-search-config-aws
+                subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
     customVolumes:
+        x-liferay-aws-init-scripts:
+            -   configMap:
+                    defaultMode: 0755
+                    name: liferay-init-scripts-aws
+                name: liferay-init-scripts-aws
         x-liferay-aws-search-config:
             -   configMap:
                     name: liferay-search-config-aws
@@ -203,7 +234,6 @@ liferay-default:
                             cidr: 0.0.0.0/0
                             except:
                                 -   169.254.169.254/32
-    portalBundleDenyList: []
     resources:
         limits:
             cpu: 4000m
@@ -214,67 +244,6 @@ liferay-default:
     search:
         engine: opensearch
         opensearch2DownloadBaseURL: https://releases.liferay.com/opensearch2
-    templates:
-        customEnv:
-            x-liferay-aws-opensearch: |
-                {{- if eq .Values.search.engine "opensearch" }}
-                -   name: LIFERAY_NETWORK_HOST_ADDRESSES
-                    value: https://$(OPENSEARCH_ENDPOINT):443
-                -   name: LIFERAY_OPENSEARCH_ENABLED
-                    value: "true"
-                -   name: LIFERAY_OPENSEARCH_PASSWORD
-                    value: $(OPENSEARCH_PASSWORD)
-                {{- end }}
-        customEnvFrom:
-            x-liferay-aws-elasticsearch: |
-                {{- if eq .Values.search.engine "elasticsearch" }}
-                -   secretRef:
-                        name: elasticsearch-connection-details
-                {{- end }}
-            x-liferay-aws-opensearch: |
-                {{- if eq .Values.search.engine "opensearch" }}
-                -   secretRef:
-                        name: opensearch-connection-details
-                {{- end }}
-        customVolumeMounts:
-            x-liferay-aws-elasticsearch: |
-                {{- if eq .Values.search.engine "elasticsearch" }}
-                -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
-                    name: liferay-search-config-aws
-                    subPath: com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config
-                -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
-                    name: liferay-search-config-aws
-                    subPath: com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config
-                {{- end }}
-            x-liferay-aws-opensearch: |
-                {{- if eq .Values.search.engine "opensearch" }}
-                -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-                    name: liferay-search-config-aws
-                    subPath: com.liferay.portal.search.opensearch2.configuration.OpenSearchConnectionConfiguration-REMOTE.config
-                {{- end }}
-        customVolumes:
-            x-liferay-init-scripts-aws: |
-                {{- if eq .Values.search.engine "elasticsearch" }}
-                -   configMap:
-                        defaultMode: 0755
-                        name: liferay-init-scripts-aws
-                    name: liferay-init-scripts-aws
-                {{- end }}
-        dependencies:
-            opensearch2:
-                portalProperties: |
-                    {{- if eq .Values.search.engine "opensearch" }}
-                    configuration.override.com.liferay.portal.search.opensearch2.configuration.OpenSearchConfiguration_remoteClusterConnectionId="REMOTE"
-                    {{- end }}
-        portalBundleDenyList: |
-            {{- if eq .Values.search.engine "opensearch" }}
-            -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
-            -   com.liferay.portal.search.elasticsearch.monitoring.web
-            -   com.liferay.portal.search.elasticsearch7.api
-            -   com.liferay.portal.search.elasticsearch7.impl
-            -   com.liferay.portal.search.learning.to.rank.api
-            -   com.liferay.portal.search.learning.to.rank.impl
-            {{- end }}
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

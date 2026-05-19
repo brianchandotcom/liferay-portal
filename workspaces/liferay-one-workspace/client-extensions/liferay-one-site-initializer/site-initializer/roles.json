@@ -1,7 +1,7 @@
 [
 	{
-		"externalReferenceCode": "ROLE_ACCOUNT_BUYER",
-		"name": "Account Buyer",
+		"externalReferenceCode": "ROLE_ACCOUNT_ADMIN",
+		"name": "Account Administrator",
 		"type": 6
 	},
 	{

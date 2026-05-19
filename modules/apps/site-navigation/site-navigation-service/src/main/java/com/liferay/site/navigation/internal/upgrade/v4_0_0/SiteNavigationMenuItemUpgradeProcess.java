@@ -74,7 +74,7 @@ public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 				getPersistedModelLocalService(className);
 
 		PersistedModel persistedModel =
-			persistedModelLocalService.getPersistedModel(
+			persistedModelLocalService.fetchPersistedModel(
 				GetterUtil.getLong(
 					typeSettingsUnicodeProperties.getProperty("classPK")));
 

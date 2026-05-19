@@ -3345,6 +3345,7 @@
 		<exception>RoleAssignment</exception>
 		<exception>RoleName</exception>
 		<exception>RolePermissions</exception>
+		<exception>RoleSubtype</exception>
 		<exception>SendPassword</exception>
 		<exception>SitemapChangeFrequency</exception>
 		<exception>SitemapInclude</exception>

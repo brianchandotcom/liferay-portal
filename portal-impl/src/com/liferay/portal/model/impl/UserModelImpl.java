@@ -1552,7 +1552,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	public void setGroupId(long groupId) {
 	}
 
-	public boolean getLayoutsUpdated() {
+	public boolean isLayoutsUpdated() {
 		return false;
 	}
 
@@ -1775,7 +1775,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		setGroupId(sourceModelImpl.getGroupId());
 
-		setLayoutsUpdated(sourceModelImpl.getLayoutsUpdated());
+		setLayoutsUpdated(sourceModelImpl.isLayoutsUpdated());
 
 		setUserGroupIds(sourceModelImpl.getUserGroupIds());
 	}
@@ -2483,4 +2483,4 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private User _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1664379508
+// LIFERAY-SERVICE-BUILDER-HASH:1936073110

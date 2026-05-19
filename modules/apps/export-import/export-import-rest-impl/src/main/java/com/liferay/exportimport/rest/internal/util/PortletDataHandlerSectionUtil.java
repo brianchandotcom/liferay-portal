@@ -149,11 +149,13 @@ public class PortletDataHandlerSectionUtil {
 					setDeletionCount(() -> finalDeletionCount);
 					setLabel(() -> LanguageUtil.get(locale, entry.getKey()));
 					setName(entry::getKey);
+
+					List<PreviewPortletDataHandler> previewPortletDataHandlers =
+						entry.getValue();
+
 					setPreviewPortletDataHandlers(
-						() -> entry.getValue(
-						).toArray(
-							new PreviewPortletDataHandler[0]
-						));
+						() -> previewPortletDataHandlers.toArray(
+							new PreviewPortletDataHandler[0]));
 				}
 			},
 			PreviewPortletDataHandlerSection.class);

@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -234,15 +235,16 @@ public class AssetStatisticsResourceTest
 			DepotEntry depotEntry, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		return _objectEntryLocalService.addObjectEntry(
-			depotEntry.getGroupId(), depotEntry.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
+		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
 					"L_CONTENTS", depotEntry.getGroupId(),
-					depotEntry.getCompanyId()
-				).getObjectEntryFolderId(),
-			"en_US",
+					depotEntry.getCompanyId());
+
+		return _objectEntryLocalService.addObjectEntry(
+			depotEntry.getGroupId(), depotEntry.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectEntryFolder.getObjectEntryFolderId(), "en_US",
 			HashMapBuilder.<String, Serializable>put(
 				"content_i18n",
 				HashMapBuilder.put(

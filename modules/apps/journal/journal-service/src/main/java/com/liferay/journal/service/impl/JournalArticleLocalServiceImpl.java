@@ -52,6 +52,7 @@ import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeUtil;
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.exception.NoSuchFriendlyURLEntryLocalizationException;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
@@ -1633,6 +1634,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {
@@ -1874,6 +1877,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {
@@ -2067,6 +2072,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {
@@ -3162,6 +3169,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {
@@ -3475,6 +3484,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				groupId,
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				urlTitle);
 
 		if (friendlyURLEntry != null) {
@@ -4285,6 +4296,8 @@ public class JournalArticleLocalServiceImpl
 			friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 				article.getGroupId(),
 				_classNameLocalService.getClassNameId(JournalArticle.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				article.getUrlTitle());
 
 		if (friendlyURLEntry == null) {

@@ -77,6 +77,34 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testAddFriendlyURLEntryAllowsSameUrlTitleForDifferentParentClassPK()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
+
+		String urlTitle = _getRandomURLTitle();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, 1L, TestPropsValues.getUserId(),
+			defaultLanguageId,
+			Collections.singletonMap(defaultLanguageId, urlTitle),
+			_getServiceContext());
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.addFriendlyURLEntry(
+				_group.getGroupId(), classNameId, 2L, _user.getUserId(),
+				defaultLanguageId,
+				Collections.singletonMap(defaultLanguageId, urlTitle),
+				_getServiceContext());
+
+		Assert.assertEquals(urlTitle, friendlyURLEntry.getUrlTitle());
+		Assert.assertEquals(2L, friendlyURLEntry.getParentClassPK());
+	}
+
+	@Test
 	public void testAddFriendlyURLEntryKeepsOldLocalizedValues()
 		throws Exception {
 
@@ -107,6 +135,30 @@ public class FriendlyURLEntryLocalServiceTest {
 			"url-title-zh",
 			finalFriendlyURL.getUrlTitle(
 				_language.getLanguageId(LocaleUtil.CHINA)));
+	}
+
+	@Test(expected = DuplicateFriendlyURLEntryException.class)
+	public void testAddFriendlyURLEntryRejectsDuplicateUrlTitleForSameParentClassPK()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
+
+		String urlTitle = _getRandomURLTitle();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, 1L, TestPropsValues.getUserId(),
+			defaultLanguageId,
+			Collections.singletonMap(defaultLanguageId, urlTitle),
+			_getServiceContext());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, 1L, _user.getUserId(),
+			defaultLanguageId,
+			Collections.singletonMap(defaultLanguageId, urlTitle),
+			_getServiceContext());
 	}
 
 	@Test
@@ -316,6 +368,30 @@ public class FriendlyURLEntryLocalServiceTest {
 			_friendlyURLEntryLocalService.getUniqueUrlTitle(
 				_group.getGroupId(), classNameId, _user.getUserId(), urlTitle,
 				null));
+	}
+
+	@Test
+	public void testGetUniqueUrlTitleReturnsSameTitleAcrossDifferentParentClassPK()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(User.class);
+
+		String urlTitle = _getRandomURLTitle();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId, 1L, TestPropsValues.getUserId(),
+			defaultLanguageId,
+			Collections.singletonMap(defaultLanguageId, urlTitle),
+			_getServiceContext());
+
+		String uniqueUrlTitle = _friendlyURLEntryLocalService.getUniqueUrlTitle(
+			_group.getGroupId(), classNameId, 2L, _user.getUserId(), urlTitle,
+			_language.getLanguageId(LocaleUtil.getDefault()));
+
+		Assert.assertEquals(urlTitle, uniqueUrlTitle);
 	}
 
 	@Test

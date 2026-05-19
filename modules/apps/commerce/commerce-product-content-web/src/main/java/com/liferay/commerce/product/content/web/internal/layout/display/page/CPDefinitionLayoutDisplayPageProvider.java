@@ -10,6 +10,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
 import com.liferay.commerce.product.url.CPFriendlyURL;
+import com.liferay.friendly.url.constants.FriendlyURLEntryConstants;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -78,7 +79,10 @@ public class CPDefinitionLayoutDisplayPageProvider
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
 					companyGroup.getGroupId(),
-					_portal.getClassNameId(CProduct.class), urlTitle);
+					_portal.getClassNameId(CProduct.class),
+					FriendlyURLEntryConstants.
+						FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
+					urlTitle);
 
 			if (friendlyURLEntry == null) {
 				return null;

@@ -118,7 +118,7 @@ const NotificationAlertList: React.FC<INotificationAlertListProps> = ({
 	stripe = false,
 	subtypes = [NotificationSubtypes.TimeZoneChanged]
 }) => {
-	if (loading || !data.length) return null;
+	if (loading || !data?.length) return null;
 
 	const removeNotification = (notificationId: string) => {
 		API.notifications

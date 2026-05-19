@@ -999,6 +999,21 @@ public interface LayoutModel
 	public void setStyleBookEntryERC(String styleBookEntryERC);
 
 	/**
+	 * Returns the style book entry scope erc of this layout.
+	 *
+	 * @return the style book entry scope erc of this layout
+	 */
+	@AutoEscape
+	public String getStyleBookEntryScopeERC();
+
+	/**
+	 * Sets the style book entry scope erc of this layout.
+	 *
+	 * @param styleBookEntryScopeERC the style book entry scope erc of this layout
+	 */
+	public void setStyleBookEntryScopeERC(String styleBookEntryScopeERC);
+
+	/**
 	 * Returns the css of this layout.
 	 *
 	 * @return the css of this layout
@@ -1339,4 +1354,4 @@ public interface LayoutModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:821665297
+// LIFERAY-SERVICE-BUILDER-HASH:176912927

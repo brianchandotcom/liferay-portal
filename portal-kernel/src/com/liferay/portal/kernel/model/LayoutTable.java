@@ -88,6 +88,10 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 		"colorSchemeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> styleBookEntryERC = createColumn(
 		"styleBookEntryERC", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String> styleBookEntryScopeERC =
+		createColumn(
+			"styleBookEntryScopeERC", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Clob> css = createColumn(
 		"css", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Integer> priority = createColumn(
@@ -134,4 +138,4 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:888440814
+// LIFERAY-SERVICE-BUILDER-HASH:932250876

@@ -12,6 +12,9 @@ export class ObjectRelationshipsPage {
 	readonly addObjectRelationshipButton: Locator;
 	readonly cancelButton: Locator;
 	readonly deleteObjectRelationshipOption: Locator;
+	readonly disableInheritanceNotAllowedModalBody: Locator;
+	readonly disableInheritanceNotAllowedModalDoneButton: Locator;
+	readonly disableInheritanceNotAllowedModalHeader: Locator;
 	readonly editObjectRelationshipOption: Locator;
 	readonly inheritanceCheckbox: Locator;
 	readonly inheritanceModalConfirmationMessage: Locator;
@@ -34,6 +37,21 @@ export class ObjectRelationshipsPage {
 		this.deleteObjectRelationshipOption = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
+		this.disableInheritanceNotAllowedModalBody = page.getByText(
+			'This object requires all entries to have a parent. To disable inheritance, you must first delete linked entries or enable standalone entries for this object.'
+		);
+		this.disableInheritanceNotAllowedModalDoneButton = page.getByRole(
+			'button',
+			{
+				name: 'Done',
+			}
+		);
+		this.disableInheritanceNotAllowedModalHeader = page.getByRole(
+			'heading',
+			{
+				name: 'Disabling Inheritance Not Allowed',
+			}
+		);
 		this.editObjectRelationshipOption = page.getByRole('menuitem', {
 			name: 'Edit',
 		});

@@ -557,7 +557,9 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testGetRedirectURL() throws Exception {
-		String redirectURL = "http://localhost:8080/page";
+		String redirectURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/page";
 
 		_mockDDMFormInstance(_mockDDMFormInstanceSettings(redirectURL));
 
@@ -833,7 +835,8 @@ public class DDMFormDisplayContextTest {
 	public void testIsShowSuccessPageWithRedirectURL() throws Exception {
 		_mockDDMFormInstance(
 			_mockDDMFormInstanceSettings(
-				"http://localhost:8080/web/forms/shared/-/form/123"));
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/web/forms/shared/-/form/123"));
 
 		RenderRequest renderRequest = _mockRenderRequest();
 
@@ -1158,7 +1161,8 @@ public class DDMFormDisplayContextTest {
 		Mockito.when(
 			themeDisplay.getURLCurrent()
 		).thenReturn(
-			"http://localhost:8080/web/forms/shared?form=123"
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/forms/shared?form=123"
 		);
 
 		User user = Mockito.mock(User.class);

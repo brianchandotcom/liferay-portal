@@ -404,8 +404,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 						"Increase the timeout or check it manually."));
 			_assertLogContext(
 				"upgrade.report.document.library.storage.size",
-				"Unable to determine");
-			_assertReport("Document library storage size: Unable to determine");
+				"unable to determine");
+			_assertReport("Document library storage size: unable to determine");
 		}
 	}
 
@@ -419,8 +419,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_appender.stop();
 
 			_assertLogContext(
-				"upgrade.report.document.library.storage.size", "Disabled");
-			_assertReport("Document library storage size: Disabled");
+				"upgrade.report.document.library.storage.size", "disabled");
+			_assertReport("Document library storage size: disabled");
 		}
 	}
 

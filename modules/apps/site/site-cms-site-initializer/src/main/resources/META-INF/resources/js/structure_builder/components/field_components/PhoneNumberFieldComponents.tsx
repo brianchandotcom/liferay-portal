@@ -9,9 +9,10 @@ import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
-import {Country, config} from '../../config';
+import {config} from '../../config';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
+import {Country} from '../../types/Country';
 import {Field, PhoneNumberField} from '../../utils/field';
 import MaxLengthInput from '../MaxLengthInput';
 import PhonePrefixSelector from '../settings/PhonePrefixSelector';

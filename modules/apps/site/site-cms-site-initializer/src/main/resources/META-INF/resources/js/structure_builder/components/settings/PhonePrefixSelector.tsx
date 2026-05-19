@@ -9,7 +9,8 @@ import ClayLayout from '@clayui/layout';
 import {getFlagSymbol} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {Country, config} from '../../config';
+import {config} from '../../config';
+import {Country} from '../../types/Country';
 
 const Trigger = React.forwardRef(
 	(

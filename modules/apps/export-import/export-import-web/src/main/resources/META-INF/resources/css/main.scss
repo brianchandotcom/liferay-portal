@@ -346,6 +346,12 @@
 	}
 }
 
+.selected-elements-wrapper {
+	.label {
+		text-transform: none;
+	}
+}
+
 .export-import-options {
 	.alert-dismissible {
 		z-index: 100000;

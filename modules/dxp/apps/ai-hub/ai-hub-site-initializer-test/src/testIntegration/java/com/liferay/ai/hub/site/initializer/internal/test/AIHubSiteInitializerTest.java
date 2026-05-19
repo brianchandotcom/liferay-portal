@@ -16,6 +16,7 @@ import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -95,6 +96,43 @@ public class AIHubSiteInitializerTest {
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 		_assertObjectDefinitionExists("L_AI_HUB_MODEL_ARMOR_TEMPLATE");
+
+		_assertObjectFieldsExist(
+			"L_AI_HUB_AGENT_DEFINITION", "active", "description",
+			"inputVariables", "outputVariable",
+			"r_accountToAIHubAgentDefinitions_accountEntryId", "title",
+			"workflowDefinitionName");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CHATBOT", "active", "companyLogo", "description",
+			"introMessage", "notificationMessage", "placeholderMessage",
+			"r_accountToAIHubChatbots_accountEntryId", "showCompanyLogo",
+			"title");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CONTENT_RETRIEVER", "crawlDate", "description",
+			"indexName", "r_accountToAIHubContentRetrievers_accountEntryId",
+			"title", "type", "url");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_CRAWLER_JOB", "crawlerJobStatus", "endDate",
+			"errorMessage", "executionId", "indexedDocumentCount",
+			"r_accountToAIHubCrawlerJobs_accountEntryId",
+			"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+			"startDate");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_INSTRUCTION_DEFINITION", "active", "description",
+			"instruction", "occasion",
+			"r_accountToAIHubInstructionDefinitions_accountEntryId", "scope",
+			"title");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_MCP_SERVER", "r_accountToAIHubMCPServers_accountEntryId",
+			"title", "url");
+		_assertObjectFieldsExist(
+			"L_AI_HUB_MODEL_ARMOR_TEMPLATE", "active", "description",
+			"guardrailType", "location", "maliciousUriFilterEnabled",
+			"multilanguageDetectionEnabled", "piAndJailbreakConfidenceLevel",
+			"piAndJailbreakFilterEnabled",
+			"r_accountToAIHubModelArmorTemplates_accountEntryId",
+			"raiDangerousLevel", "raiHarassmentLevel", "raiHateSpeechLevel",
+			"raiSexuallyExplicitLevel", "sdpFilterEnabled", "title");
 
 		_assertObjectRelationshipExists(
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
@@ -184,6 +222,24 @@ public class AIHubSiteInitializerTest {
 		Assert.assertTrue(objectDefinition.isSystem());
 	}
 
+	private void _assertObjectFieldsExist(
+			String objectDefinitionExternalReferenceCode,
+			String... objectFieldNames)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				fetchObjectDefinitionByExternalReferenceCode(
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
+
+		for (String objectFieldName : objectFieldNames) {
+			Assert.assertNotNull(
+				_objectFieldLocalService.fetchObjectField(
+					objectDefinition.getObjectDefinitionId(), objectFieldName));
+		}
+	}
+
 	private void _assertObjectRelationshipExists(
 			String deletionType, String externalReferenceCode,
 			String objectDefinitionExternalReferenceCode, String type)
@@ -235,6 +291,9 @@ public class AIHubSiteInitializerTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

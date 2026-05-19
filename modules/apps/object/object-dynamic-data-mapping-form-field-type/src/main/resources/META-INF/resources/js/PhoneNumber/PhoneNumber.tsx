@@ -35,6 +35,7 @@ interface BasePhoneNumberProps {
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
 	onFocus?: (event: React.FocusEvent) => void;
+	pageValidationFailed?: boolean;
 	predefinedValue?: string;
 	prefix?: string;
 	prefixType?: PrefixType;
@@ -93,7 +94,7 @@ const LocalizablePhoneNumber = ({
 	const disabled = readOnly || otherProps.disabled;
 
 	const validationState =
-		touched || otherProps.displayErrors
+		touched || otherProps.pageValidationFailed
 			? getValidationState(currentValue)
 			: {};
 
@@ -167,7 +168,7 @@ const NonLocalizablePhoneNumber = ({
 	const disabled = readOnly || otherProps.disabled;
 
 	const validationState =
-		touched || otherProps.displayErrors
+		touched || otherProps.pageValidationFailed
 			? getValidationState(combinedValue)
 			: {};
 

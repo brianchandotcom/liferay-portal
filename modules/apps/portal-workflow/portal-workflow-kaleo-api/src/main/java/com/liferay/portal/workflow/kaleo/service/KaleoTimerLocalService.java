@@ -211,6 +211,10 @@ public interface KaleoTimerLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoTimer> getKaleoDefinitionVersionKaleoTimers(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
 	/**
 	 * Returns the kaleo timer with the primary key.
 	 *
@@ -295,4 +299,4 @@ public interface KaleoTimerLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1568978832
+// LIFERAY-SERVICE-BUILDER-HASH:1632933328

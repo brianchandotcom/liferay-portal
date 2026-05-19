@@ -6,20 +6,28 @@
 package com.liferay.object.rest.internal.vulcan.extension.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CommerceCatalog;
+import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -28,6 +36,7 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
@@ -201,6 +210,105 @@ public class ObjectEntryExtensionProviderTest {
 
 	@Test
 	public void testSetAndGetExtendedProperties() throws Exception {
+		_testSetAndGetExtendedPropertiesWithCommerceProduct();
+		_testSetAndGetExtendedPropertiesWithUserAccount();
+	}
+
+	private void _assertPropertyDefinition(
+		String expectedPropertyName,
+		PropertyDefinition.PropertyType expectedPropertyType,
+		boolean expectedRequired, PropertyDefinition propertyDefinition) {
+
+		Assert.assertEquals(
+			expectedPropertyName, propertyDefinition.getPropertyName());
+		Assert.assertEquals(
+			expectedPropertyType, propertyDefinition.getPropertyType());
+		Assert.assertEquals(expectedRequired, propertyDefinition.isRequired());
+	}
+
+	private void _assertSetAndGetExtendedPropertiesWithCommerceProduct(
+			String customFieldName, Object entity)
+		throws Exception {
+
+		String customFieldValue = RandomTestUtil.randomString();
+
+		_extensionProvider.setExtendedProperties(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			Product.class.getName(), entity,
+			HashMapBuilder.<String, Serializable>put(
+				customFieldName, customFieldValue
+			).build());
+
+		Map<String, Serializable> extendedProperties =
+			_extensionProvider.getExtendedProperties(
+				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				Product.class.getName(), entity);
+
+		Assert.assertEquals(
+			customFieldValue, extendedProperties.get(customFieldName));
+	}
+
+	private void _testSetAndGetExtendedPropertiesWithCommerceProduct()
+		throws Exception {
+
+		CommerceCatalog commerceCatalog = CPTestUtil.getSystemCommerceCatalog(
+			TestPropsValues.getCompanyId());
+
+		ObjectDefinition cpDefinitionObjectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+				TestPropsValues.getCompanyId(), CPDefinition.class.getName());
+
+		String customFieldName = "x" + RandomTestUtil.randomString();
+
+		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
+			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
+			true);
+
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).userId(
+				TestPropsValues.getUserId()
+			).objectDefinitionId(
+				cpDefinitionObjectDefinition.getObjectDefinitionId()
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				customFieldName
+			).build());
+
+		try {
+			Product product = new Product() {
+				{
+					id = cpDefinition.getCPDefinitionId();
+					productId = cpDefinition.getCProductId();
+				}
+			};
+
+			_assertSetAndGetExtendedPropertiesWithCommerceProduct(
+				customFieldName, product);
+
+			_assertSetAndGetExtendedPropertiesWithCommerceProduct(
+				customFieldName,
+				HashMapBuilder.<String, Object>put(
+					"id", cpDefinition.getCPDefinitionId()
+				).put(
+					"productId", cpDefinition.getCProductId()
+				).build());
+		}
+		finally {
+			PersistedModelLocalService persistedModelLocalService =
+				PersistedModelLocalServiceRegistryUtil.
+					getPersistedModelLocalService(CPDefinition.class.getName());
+
+			persistedModelLocalService.deletePersistedModel(cpDefinition);
+
+			_objectFieldLocalService.deleteObjectField(objectField);
+		}
+	}
+
+	private void _testSetAndGetExtendedPropertiesWithUserAccount()
+		throws Exception {
+
 		UserAccount userAccount = new UserAccount() {
 			{
 				id = _user.getUserId();
@@ -229,18 +337,6 @@ public class ObjectEntryExtensionProviderTest {
 			).put(
 				"precisionDecimal", 20.55
 			).build());
-	}
-
-	private void _assertPropertyDefinition(
-		String expectedPropertyName,
-		PropertyDefinition.PropertyType expectedPropertyType,
-		boolean expectedRequired, PropertyDefinition propertyDefinition) {
-
-		Assert.assertEquals(
-			expectedPropertyName, propertyDefinition.getPropertyName());
-		Assert.assertEquals(
-			expectedPropertyType, propertyDefinition.getPropertyType());
-		Assert.assertEquals(expectedRequired, propertyDefinition.isRequired());
 	}
 
 	private void _testSetExtendedProperties(

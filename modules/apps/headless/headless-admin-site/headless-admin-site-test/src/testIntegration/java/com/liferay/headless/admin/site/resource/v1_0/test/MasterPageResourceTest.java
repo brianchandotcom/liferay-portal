@@ -738,7 +738,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "pageSpecifications,thumbnail"
+			"nestedFields", "pageSpecifications,thumbnailURLReference"
 		).build();
 	}
 

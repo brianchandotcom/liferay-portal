@@ -1212,7 +1212,7 @@ public class DisplayPageTemplateResourceTest
 				randomDisplayPageTemplate);
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource("thumbnail");
+			_getDisplayPageTemplateResource("thumbnailURLReference");
 
 		Page<DisplayPageTemplate> page =
 			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
@@ -1435,7 +1435,7 @@ public class DisplayPageTemplateResourceTest
 				fileEntry, RandomTestUtil.randomString()));
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource("thumbnail");
+			_getDisplayPageTemplateResource("thumbnailURLReference");
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(

@@ -284,7 +284,9 @@ public class RoleResourceImpl
 			_roleService.getRole(roleId);
 
 		serviceBuilderRole = _roleService.updateRole(
-			serviceBuilderRole.getExternalReferenceCode(),
+			GetterUtil.get(
+				role.getExternalReferenceCode(),
+				serviceBuilderRole.getExternalReferenceCode()),
 			serviceBuilderRole.getRoleId(),
 			GetterUtil.get(role.getName(), serviceBuilderRole.getName()),
 			(Map<Locale, String>)GetterUtil.getObject(
@@ -292,14 +294,8 @@ public class RoleResourceImpl
 			(Map<Locale, String>)GetterUtil.getObject(
 				_getDescriptionMap(role),
 				serviceBuilderRole.getDescriptionMap()),
-			serviceBuilderRole.getSubtype(),
+			GetterUtil.get(role.getSubtype(), serviceBuilderRole.getSubtype()),
 			ServiceContextFactory.getInstance(contextHttpServletRequest));
-
-		serviceBuilderRole = _roleService.updateExternalReferenceCode(
-			serviceBuilderRole,
-			GetterUtil.get(
-				role.getExternalReferenceCode(),
-				serviceBuilderRole.getExternalReferenceCode()));
 
 		_addResourcePermission(role, serviceBuilderRole);
 
@@ -382,7 +378,8 @@ public class RoleResourceImpl
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			_roleService.addRole(
 				role.getExternalReferenceCode(), className, 0, role.getName(),
-				_getTitleMap(role), _getDescriptionMap(role), type, null,
+				_getTitleMap(role), _getDescriptionMap(role), type,
+				role.getSubtype(),
 				ServiceContextFactory.getInstance(contextHttpServletRequest));
 
 		_addResourcePermission(role, serviceBuilderRole);
@@ -476,22 +473,20 @@ public class RoleResourceImpl
 		if (serviceBuilderRole == null) {
 			serviceBuilderRole = _roleService.addRole(
 				role.getExternalReferenceCode(), className, 0, role.getName(),
-				_getTitleMap(role), _getDescriptionMap(role), type, null,
-				serviceContext);
+				_getTitleMap(role), _getDescriptionMap(role), type,
+				role.getSubtype(), serviceContext);
 		}
 		else {
 			serviceBuilderRole = _roleService.updateRole(
-				serviceBuilderRole.getExternalReferenceCode(),
-				serviceBuilderRole.getRoleId(),
-				GetterUtil.get(role.getName(), serviceBuilderRole.getName()),
-				_getTitleMap(role), _getDescriptionMap(role), null,
-				serviceContext);
-
-			serviceBuilderRole = _roleService.updateExternalReferenceCode(
-				serviceBuilderRole,
 				GetterUtil.get(
 					role.getExternalReferenceCode(),
-					serviceBuilderRole.getExternalReferenceCode()));
+					serviceBuilderRole.getExternalReferenceCode()),
+				serviceBuilderRole.getRoleId(),
+				GetterUtil.get(role.getName(), serviceBuilderRole.getName()),
+				_getTitleMap(role), _getDescriptionMap(role),
+				GetterUtil.get(
+					role.getSubtype(), serviceBuilderRole.getSubtype()),
+				serviceContext);
 		}
 
 		_addResourcePermission(role, serviceBuilderRole);

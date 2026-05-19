@@ -122,6 +122,7 @@ public class RoleDTOConverter
 							RolePermission.class);
 					});
 				setRoleType(role::getTypeLabel);
+				setSubtype(role::getSubtype);
 			}
 		};
 	}

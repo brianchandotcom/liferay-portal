@@ -11,15 +11,18 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.exportimport.test.rule.LazyReferencing;
 import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.admin.user.client.dto.v1_0.Role;
+import com.liferay.headless.admin.user.client.http.HttpInvoker;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.permission.Permission;
 import com.liferay.headless.admin.user.client.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -49,6 +52,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
@@ -264,6 +268,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
 	@LazyReferencing
 	@Override
 	@Test
@@ -271,6 +276,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		super.testPostRole();
 
 		_testPostRoleBatch();
+		_testPostRoleWithSubtype();
 	}
 
 	@Override
@@ -431,7 +437,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"externalReferenceCode", "name"};
+		return new String[] {"externalReferenceCode", "name", "subtype"};
 	}
 
 	@Override
@@ -763,8 +769,9 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		com.liferay.portal.kernel.model.Role serviceBuilderRole =
 			_roleLocalService.addRole(
 				role.getExternalReferenceCode(), _user.getUserId(), null, 0,
-				role.getName(), null, null, _toRoleType(role.getRoleType()),
-				null,
+				role.getName(), null, null,
+				RoleConstants.getLabelType(role.getRoleType()),
+				role.getSubtype(),
 				new ServiceContext() {
 					{
 						setCompanyId(testCompany.getCompanyId());
@@ -1055,6 +1062,31 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 			WorkflowConstants.STATUS_EMPTY, serviceBuilderRole3.getStatus());
 	}
 
+	private void _testPostRoleWithSubtype() throws Exception {
+		Role randomRole = randomRole();
+
+		randomRole.setRoleType(RoleConstants.TYPE_DEPOT_LABEL);
+		randomRole.setSubtype(RandomTestUtil.randomString());
+
+		HttpInvoker.HttpResponse httpResponse =
+			roleResource.postRoleHttpResponse(randomRole);
+
+		assertHttpResponseStatusCode(400, httpResponse);
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			httpResponse.getContent());
+
+		Assert.assertEquals(
+			"The role subtype is invalid", jsonObject.getString("title"));
+
+		randomRole.setSubtype(DepotRolesConstants.SUBTYPE_SPACE);
+
+		Role postRole = testPostRole_addRole(randomRole);
+
+		assertEquals(randomRole, postRole);
+		assertValid(postRole);
+	}
+
 	private Role _toRole(com.liferay.portal.kernel.model.Role role) {
 		return new Role() {
 			{
@@ -1064,23 +1096,10 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 				externalReferenceCode = role.getExternalReferenceCode();
 				id = role.getRoleId();
 				name = role.getName();
+				roleType = RoleConstants.getTypeLabel(role.getType());
+				subtype = role.getSubtype();
 			}
 		};
-	}
-
-	private int _toRoleType(String roleTypeLabel) {
-		if (roleTypeLabel.equals(RoleConstants.TYPE_ORGANIZATION_LABEL)) {
-			return RoleConstants.TYPE_ORGANIZATION;
-		}
-		else if (roleTypeLabel.equals(RoleConstants.TYPE_SITE_LABEL)) {
-			return RoleConstants.TYPE_SITE;
-		}
-		else if (roleTypeLabel.equals(RoleConstants.TYPE_REGULAR_LABEL)) {
-			return RoleConstants.TYPE_REGULAR;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid role type label " + roleTypeLabel);
 	}
 
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =

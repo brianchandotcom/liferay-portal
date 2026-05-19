@@ -1205,12 +1205,17 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort,
-		String vocabularyId, int cur, int delta) {
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, String vocabularyId, int cur,
+		int delta) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
+
+		if (Validator.isNotNull(accountId)) {
+			uriVariables.put("accountId", accountId);
+		}
 
 		uriVariables.put("channelId", channelId);
 
@@ -1224,6 +1229,10 @@ public class ContactsEngineClientImpl
 		}
 		else {
 			uriVariables.put("rangeKey", rangeKey);
+		}
+
+		if (Validator.isNotNull(selectedMetric)) {
+			uriVariables.put("selectedMetric", selectedMetric);
 		}
 
 		if (Validator.isNotNull(sort)) {
@@ -1277,12 +1286,16 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryTag> getAssetSummaryTags(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta) {
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, int cur, int delta) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, null);
+
+		if (Validator.isNotNull(accountId)) {
+			uriVariables.put("accountId", accountId);
+		}
 
 		uriVariables.put("channelId", channelId);
 
@@ -1296,6 +1309,10 @@ public class ContactsEngineClientImpl
 		}
 		else {
 			uriVariables.put("rangeKey", rangeKey);
+		}
+
+		if (Validator.isNotNull(selectedMetric)) {
+			uriVariables.put("selectedMetric", selectedMetric);
 		}
 
 		if (Validator.isNotNull(sort)) {

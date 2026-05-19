@@ -90,7 +90,8 @@ public class KaleoInstanceTokenImpl
 		setCurrentKaleoNodeId(kaleoNode.getKaleoNodeId());
 
 		KaleoInstanceTokenLocalServiceUtil.updateKaleoInstanceToken(
-			getKaleoInstanceTokenId(), kaleoNode.getKaleoNodeId());
+			getKaleoInstanceTokenId(), kaleoNode.getKaleoNodeId(),
+			kaleoNode.getName());
 	}
 
 	@Override

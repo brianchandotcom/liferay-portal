@@ -123,7 +123,7 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		String requestURI = (String)httpServletRequest.getAttribute(
 			JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI);
 
-		if (requestURI == null) {
+		if (Validator.isNull(requestURI)) {
 			requestURI = httpServletRequest.getRequestURI();
 		}
 

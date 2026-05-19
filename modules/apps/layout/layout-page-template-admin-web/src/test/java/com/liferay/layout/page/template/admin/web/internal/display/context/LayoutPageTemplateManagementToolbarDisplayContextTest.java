@@ -143,11 +143,13 @@ public class LayoutPageTemplateManagementToolbarDisplayContextTest {
 					(List<DropdownItem>)creationMenu.get("primaryItems");
 
 				if (featureFlagEnabled) {
-					DropdownItem primaryDropdownItem = primaryDropdownItems.get(
-						1);
-
 					Assert.assertEquals(
-						Boolean.TRUE, primaryDropdownItem.get("deprecated"));
+						Boolean.TRUE,
+						primaryDropdownItems.get(
+							1
+						).get(
+							"deprecated"
+						));
 
 					Assert.assertEquals(
 						primaryDropdownItems.toString(), 2,

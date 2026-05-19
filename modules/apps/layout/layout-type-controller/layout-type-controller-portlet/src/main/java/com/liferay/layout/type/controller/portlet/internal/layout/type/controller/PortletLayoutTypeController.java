@@ -10,7 +10,6 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys;
 import com.liferay.layout.type.controller.portlet.internal.display.context.PortletLayoutDisplayContext;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -83,11 +82,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		throws Exception {
 
 		if (_log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Layout ", layout.getPlid(),
-					" is a deprecated widget page (type=portlet). Migrate it ",
-					"to a content page."));
+			_log.warn("Layout " + layout.getPlid() + " has a deprecated type");
 		}
 
 		RequestDispatcher requestDispatcher =

@@ -6,7 +6,7 @@ import {Event} from 'event-analysis/utils/types';
 
 interface IEventChipProps {
 	event: Event;
-	onEventChange: (event?: Event) => void;
+	onEventChange: (event: Event | null) => void;
 }
 
 const EventChip: React.FC<IEventChipProps> = React.forwardRef<
@@ -15,7 +15,7 @@ const EventChip: React.FC<IEventChipProps> = React.forwardRef<
 >(({event: {displayName, name}, onClick, onEventChange}, ref) => (
 	<Chip
 		className='event-chip-root'
-		onCloseClick={() => onEventChange()}
+		onCloseClick={() => onEventChange(null)}
 		ref={ref}
 	>
 		<ClayButton

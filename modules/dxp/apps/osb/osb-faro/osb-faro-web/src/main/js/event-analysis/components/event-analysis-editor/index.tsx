@@ -14,7 +14,7 @@ interface IEventAnalysisEditorProps extends React.HTMLAttributes<HTMLElement> {
 	compareToPrevious: boolean;
 	event: Event;
 	onCompareToPreviousChange: (compareToPrevious: boolean) => void;
-	onEventChange: (event: Event) => void;
+	onEventChange: (event: Event | null) => void;
 	onRangeSelectorsChange: (rangeSelectors: RangeSelectors) => void;
 	onTypeChange: (type: CalculationTypes) => void;
 	type: CalculationTypes;

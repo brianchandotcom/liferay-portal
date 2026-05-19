@@ -6,7 +6,7 @@ import {Event} from 'event-analysis/utils/types';
 
 interface IEventAnalysisBuilderProps {
 	event?: Event;
-	onEventChange: (event: Event) => void;
+	onEventChange: (event: Event | null) => void;
 }
 
 const EventAnalysisBuilder: React.FC<IEventAnalysisBuilderProps> = ({

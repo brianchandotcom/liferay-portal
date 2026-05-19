@@ -33,6 +33,7 @@ const Activities = () => {
 				headerProps={{showRangeKey: true}}
 				label={Liferay.Language.get('activity-stream').toUpperCase()}
 				legacyDropdownRangeKey={false}
+				minHeight={500}
 				showInterval
 			>
 				{({

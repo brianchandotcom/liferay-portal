@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import ClayLayout from '@clayui/layout';
 import MetricCard from 'shared/components/MetricCard';
 import React from 'react';
 import {
@@ -37,16 +38,15 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 			false
 		);
 
-	const cardContainerClassName = 'col-12 col-lg-4 d-flex';
-
 	return (
-		<div className='row g-4'>
-			<div className={cardContainerClassName}>
+		<ClayLayout.Row>
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('total-accounts')}
 					trend={getMetric(AccountMetricType.Total)?.trend}
@@ -54,25 +54,29 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 						getMetric(AccountMetricType.Total)
 					)}
 				/>
-			</div>
-			<div className={cardContainerClassName}>
+			</ClayLayout.Col>
+
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-new-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('new-accounts')}
 					trend={getMetric(AccountMetricType.New)?.trend}
 					value={renderAccountValue(getMetric(AccountMetricType.New))}
 				/>
-			</div>
-			<div className={cardContainerClassName}>
+			</ClayLayout.Col>
+
+			<ClayLayout.Col lg={4} md={12}>
 				<MetricCard
 					description={Liferay.Language.get(
 						'displays-all-active-accounts-included-in-this-property'
 					)}
 					loading={loading}
+					minHeight={160}
 					renderTrendLabel={renderTrendLabel}
 					title={Liferay.Language.get('active-accounts')}
 					trend={getMetric(AccountMetricType.Active)?.trend}
@@ -80,8 +84,8 @@ const TotalAccounts = ({groupId}: {groupId: string}) => {
 						getMetric(AccountMetricType.Active)
 					)}
 				/>
-			</div>
-		</div>
+			</ClayLayout.Col>
+		</ClayLayout.Row>
 	);
 };
 

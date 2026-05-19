@@ -94,6 +94,7 @@ export function ResizeHandle({
 			aria-valuemax={maxWidth}
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
+			aria-valuetext={`${width}px`}
 			className={classnames('c-horizontal-resizer', {
 				'c-horizontal-resizer-end':
 					document.dir === 'rtl' ? positionLeft : !positionLeft,

@@ -64,6 +64,9 @@ public class UserTrackerPathPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUserTrackerId;
+	private FinderPath _finderPathWithoutPaginationFindByUserTrackerId;
+	private FinderPath _finderPathCountByUserTrackerId;
 	private CollectionPersistenceFinder<UserTrackerPath>
 		_collectionPersistenceFinderByUserTrackerId;
 
@@ -398,26 +401,29 @@ public class UserTrackerPathPersistenceImpl
 	 * Initializes the user tracker path persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByUserTrackerId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserTrackerId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"userTrackerId"}, true);
+
+		_finderPathWithoutPaginationFindByUserTrackerId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserTrackerId",
+			new String[] {Long.class.getName()}, new String[] {"userTrackerId"},
+			true);
+
+		_finderPathCountByUserTrackerId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserTrackerId",
+			new String[] {Long.class.getName()}, new String[] {"userTrackerId"},
+			false);
+
 		_collectionPersistenceFinderByUserTrackerId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findByUserTrackerId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"userTrackerId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByUserTrackerId", new String[] {Long.class.getName()},
-					new String[] {"userTrackerId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByUserTrackerId", new String[] {Long.class.getName()},
-					new String[] {"userTrackerId"}, false),
+				this, _finderPathWithPaginationFindByUserTrackerId,
+				_finderPathWithoutPaginationFindByUserTrackerId,
+				_finderPathCountByUserTrackerId,
 				_SQL_SELECT_USERTRACKERPATH_WHERE,
 				_SQL_COUNT_USERTRACKERPATH_WHERE,
 				UserTrackerPathModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -459,4 +465,4 @@ public class UserTrackerPathPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:672951602
+// LIFERAY-SERVICE-BUILDER-HASH:-385870074

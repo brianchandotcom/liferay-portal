@@ -61,6 +61,9 @@ public class OrgLaborPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByOrganizationId;
+	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
+	private FinderPath _finderPathCountByOrganizationId;
 	private CollectionPersistenceFinder<OrgLabor>
 		_collectionPersistenceFinderByOrganizationId;
 
@@ -375,29 +378,31 @@ public class OrgLaborPersistenceImpl
 	 * Initializes the org labor persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"organizationId"}, true);
+
+		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
+			new String[] {Long.class.getName()},
+			new String[] {"organizationId"}, true);
+
+		_finderPathCountByOrganizationId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
+			new String[] {Long.class.getName()},
+			new String[] {"organizationId"}, false);
+
 		_collectionPersistenceFinderByOrganizationId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findByOrganizationId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"organizationId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByOrganizationId", new String[] {Long.class.getName()},
-					new String[] {"organizationId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByOrganizationId",
-					new String[] {Long.class.getName()},
-					new String[] {"organizationId"}, false),
-				_SQL_SELECT_ORGLABOR_WHERE, _SQL_COUNT_ORGLABOR_WHERE,
-				OrgLaborModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByOrganizationId,
+				_finderPathWithoutPaginationFindByOrganizationId,
+				_finderPathCountByOrganizationId, _SQL_SELECT_ORGLABOR_WHERE,
+				_SQL_COUNT_ORGLABOR_WHERE, OrgLaborModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"orgLabor.", "organizationId", FinderColumn.Type.LONG, "=",
 					true, true, OrgLabor::getOrganizationId));
@@ -432,4 +437,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-525793661
+// LIFERAY-SERVICE-BUILDER-HASH:895216703

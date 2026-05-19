@@ -70,6 +70,9 @@ public class LayoutSetBranchPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<LayoutSetBranch>
 		_collectionPersistenceFinderByGroupId;
 
@@ -280,6 +283,9 @@ public class LayoutSetBranchPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_P;
+	private FinderPath _finderPathWithoutPaginationFindByG_P;
+	private FinderPath _finderPathCountByG_P;
 	private FilterCollectionPersistenceFinder<LayoutSetBranch>
 		_collectionPersistenceFinderByG_P;
 
@@ -515,6 +521,7 @@ public class LayoutSetBranchPersistenceImpl
 			new Object[] {groupId, privateLayout}, groupId);
 	}
 
+	private FinderPath _finderPathFetchByG_P_N;
 	private UniquePersistenceFinder<LayoutSetBranch>
 		_uniquePersistenceFinderByG_P_N;
 
@@ -619,6 +626,9 @@ public class LayoutSetBranchPersistenceImpl
 			new Object[] {groupId, privateLayout, name});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_P_M;
+	private FinderPath _finderPathWithoutPaginationFindByG_P_M;
+	private FinderPath _finderPathCountByG_P_M;
 	private FilterCollectionPersistenceFinder<LayoutSetBranch>
 		_collectionPersistenceFinderByG_P_M;
 
@@ -1090,78 +1100,81 @@ public class LayoutSetBranchPersistenceImpl
 	 * Initializes the layout set branch persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId"}, true);
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
+
+		_finderPathCountByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
+
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"groupId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-					new String[] {Long.class.getName()},
-					new String[] {"groupId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-					new String[] {Long.class.getName()},
-					new String[] {"groupId"}, false),
-				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId));
 
+		_finderPathWithPaginationFindByG_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "privateLayout"}, true);
+
+		_finderPathWithoutPaginationFindByG_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "privateLayout"}, true);
+
+		_finderPathCountByG_P = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"groupId", "privateLayout"}, false);
+
 		_collectionPersistenceFinderByG_P =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"groupId", "privateLayout"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName()
-					},
-					new String[] {"groupId", "privateLayout"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName()
-					},
-					new String[] {"groupId", "privateLayout"}, false),
+				this, _finderPathWithPaginationFindByG_P,
+				_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
 				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1172,18 +1185,19 @@ public class LayoutSetBranchPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					LayoutSetBranch::isPrivateLayout));
 
+		_finderPathFetchByG_P_N = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"groupId", "privateLayout", "name"}, 0, 4, false,
+			LayoutSetBranch::getGroupId, LayoutSetBranch::isPrivateLayout,
+			convertNullFunction(LayoutSetBranch::getName));
+
 		_uniquePersistenceFinderByG_P_N = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_N",
-				new String[] {
-					Long.class.getName(), Boolean.class.getName(),
-					String.class.getName()
-				},
-				new String[] {"groupId", "privateLayout", "name"}, 0, 4, false,
-				LayoutSetBranch::getGroupId, LayoutSetBranch::isPrivateLayout,
-				convertNullFunction(LayoutSetBranch::getName)),
-			_SQL_SELECT_LAYOUTSETBRANCH_WHERE, "",
+			this, _finderPathFetchByG_P_N, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+			"",
 			new FinderColumn<>(
 				"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, LayoutSetBranch::getGroupId),
@@ -1194,44 +1208,47 @@ public class LayoutSetBranchPersistenceImpl
 				"layoutSetBranch.", "name", FinderColumn.Type.STRING, "=", true,
 				true, LayoutSetBranch::getName));
 
+		_finderPathWithPaginationFindByG_P_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "privateLayout", "master"}, true);
+
+		_finderPathWithoutPaginationFindByG_P_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"groupId", "privateLayout", "master"}, true);
+
+		_finderPathCountByG_P_M = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_M",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"groupId", "privateLayout", "master"}, false);
+
 		_collectionPersistenceFinderByG_P_M =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"groupId", "privateLayout", "master"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"groupId", "privateLayout", "master"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_M",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"groupId", "privateLayout", "master"}, false),
-				_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+				this, _finderPathWithPaginationFindByG_P_M,
+				_finderPathWithoutPaginationFindByG_P_M,
+				_finderPathCountByG_P_M, _SQL_SELECT_LAYOUTSETBRANCH_WHERE,
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
+					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
+					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL,
 					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -1266,6 +1283,27 @@ public class LayoutSetBranchPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTSETBRANCH_WHERE =
 		"SELECT COUNT(layoutSetBranch) FROM LayoutSetBranch layoutSetBranch WHERE ";
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"layoutSetBranch.layoutSetBranchId";
+
+	private static final String _FILTER_SQL_SELECT_LAYOUTSETBRANCH_WHERE =
+		"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_LAYOUTSETBRANCH_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId";
+
+	private static final String _FILTER_SQL_COUNT_LAYOUTSETBRANCH_WHERE =
+		"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ";
+
+	private static final String _FILTER_ENTITY_ALIAS = "layoutSetBranch";
+
+	private static final String _FILTER_ENTITY_TABLE = "LayoutSetBranch";
+
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutSetBranch exists with the key {";
 
@@ -1281,4 +1319,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2126588874
+// LIFERAY-SERVICE-BUILDER-HASH:1576025667

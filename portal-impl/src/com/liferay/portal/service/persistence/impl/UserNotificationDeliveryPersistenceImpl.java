@@ -65,6 +65,9 @@ public class UserNotificationDeliveryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<UserNotificationDelivery>
 		_collectionPersistenceFinderByUserId;
 
@@ -210,6 +213,7 @@ public class UserNotificationDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
+	private FinderPath _finderPathFetchByU_P_C_N_D;
 	private UniquePersistenceFinder<UserNotificationDelivery>
 		_uniquePersistenceFinderByU_P_C_N_D;
 
@@ -529,25 +533,28 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * Initializes the user notification delivery persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"userId"}, true);
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+
+		_finderPathCountByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"},
+			false);
+
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"userId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-					new String[] {Long.class.getName()},
-					new String[] {"userId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-					new String[] {Long.class.getName()},
-					new String[] {"userId"}, false),
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId,
 				_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE,
 				UserNotificationDeliveryModelImpl.ORDER_BY_JPQL,
@@ -557,24 +564,25 @@ public class UserNotificationDeliveryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					UserNotificationDelivery::getUserId));
 
+		_finderPathFetchByU_P_C_N_D = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {
+				"userId", "portletId", "classNameId", "notificationType",
+				"deliveryType"
+			},
+			0, 2, false, UserNotificationDelivery::getUserId,
+			convertNullFunction(UserNotificationDelivery::getPortletId),
+			UserNotificationDelivery::getClassNameId,
+			UserNotificationDelivery::getNotificationType,
+			UserNotificationDelivery::getDeliveryType);
+
 		_uniquePersistenceFinderByU_P_C_N_D = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
-				new String[] {
-					Long.class.getName(), String.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName()
-				},
-				new String[] {
-					"userId", "portletId", "classNameId", "notificationType",
-					"deliveryType"
-				},
-				0, 2, false, UserNotificationDelivery::getUserId,
-				convertNullFunction(UserNotificationDelivery::getPortletId),
-				UserNotificationDelivery::getClassNameId,
-				UserNotificationDelivery::getNotificationType,
-				UserNotificationDelivery::getDeliveryType),
+			this, _finderPathFetchByU_P_C_N_D,
 			_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE, "",
 			new FinderColumn<>(
 				"userNotificationDelivery.", "userId", FinderColumn.Type.LONG,
@@ -630,4 +638,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1068841722
+// LIFERAY-SERVICE-BUILDER-HASH:-858695043

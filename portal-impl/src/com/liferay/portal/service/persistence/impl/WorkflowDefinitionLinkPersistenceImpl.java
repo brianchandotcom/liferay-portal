@@ -89,6 +89,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByUuid;
 
@@ -234,6 +237,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
+	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<WorkflowDefinitionLink>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -326,6 +330,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -483,6 +490,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -629,6 +639,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByC_C;
 
@@ -790,6 +803,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_C_C;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
+	private FinderPath _finderPathCountByG_C_C;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByG_C_C;
 
@@ -961,6 +977,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_C_CPK;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_CPK;
+	private FinderPath _finderPathCountByG_C_CPK;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByG_C_CPK;
 
@@ -1131,6 +1150,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classPK});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_W_W;
+	private FinderPath _finderPathWithoutPaginationFindByC_W_W;
+	private FinderPath _finderPathCountByC_W_W;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByC_W_W;
 
@@ -1328,6 +1350,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_C_C_C;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_C_C;
+	private FinderPath _finderPathCountByG_C_C_C;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByG_C_C_C;
 
@@ -1514,6 +1539,9 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, classPK});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_C_C_C_T;
+	private FinderPath _finderPathWithoutPaginationFindByG_C_C_C_T;
+	private FinderPath _finderPathCountByG_C_C_C_T;
 	private CollectionPersistenceFinder<WorkflowDefinitionLink>
 		_collectionPersistenceFinderByG_C_C_C_T;
 
@@ -1718,6 +1746,7 @@ public class WorkflowDefinitionLinkPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, classPK, typePK});
 	}
 
+	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<WorkflowDefinitionLink>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2201,23 +2230,27 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	 * Initializes the workflow definition link persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_"}, true);
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
+
+		_finderPathCountByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
+
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-				new String[] {
-					String.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"uuid_"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-				new String[] {String.class.getName()}, new String[] {"uuid_"},
-				0, 1, true, null),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-				new String[] {String.class.getName()}, new String[] {"uuid_"},
-				0, 1, false, null),
+			this, _finderPathWithPaginationFindByUuid,
+			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2226,14 +2259,15 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, WorkflowDefinitionLink::getUuid));
 
+		_finderPathFetchByUUID_G = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "groupId"}, 0, 1, false,
+			convertNullFunction(WorkflowDefinitionLink::getUuid),
+			WorkflowDefinitionLink::getGroupId);
+
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-				new String[] {String.class.getName(), Long.class.getName()},
-				new String[] {"uuid_", "groupId"}, 0, 1, false,
-				convertNullFunction(WorkflowDefinitionLink::getUuid),
-				WorkflowDefinitionLink::getGroupId),
+			this, _finderPathFetchByUUID_G,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "uuid", FinderColumn.Type.STRING,
@@ -2242,25 +2276,30 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				"workflowDefinitionLink.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, WorkflowDefinitionLink::getGroupId));
 
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_", "companyId"}, true);
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
+
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-					new String[] {
-						String.class.getName(), Long.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_", "companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C,
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
@@ -2273,25 +2312,29 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowDefinitionLink::getCompanyId));
 
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId"}, true);
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, false),
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId,
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
@@ -2301,24 +2344,28 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowDefinitionLink::getCompanyId));
 
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "classNameId"}, true);
+
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"companyId", "classNameId"}, true);
+
+		_finderPathCountByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"companyId", "classNameId"}, false);
+
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"companyId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"companyId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"companyId", "classNameId"}, false),
+			this, _finderPathWithPaginationFindByC_C,
+			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2331,30 +2378,32 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowDefinitionLink::getClassNameId));
 
+		_finderPathWithPaginationFindByG_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId"}, true);
+
+		_finderPathWithoutPaginationFindByG_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId"}, true);
+
+		_finderPathCountByG_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId"}, false);
+
 		_collectionPersistenceFinderByG_C_C = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"groupId", "companyId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName()
-				},
-				new String[] {"groupId", "companyId", "classNameId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName()
-				},
-				new String[] {"groupId", "companyId", "classNameId"}, false),
+			this, _finderPathWithPaginationFindByG_C_C,
+			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2370,32 +2419,34 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				WorkflowDefinitionLink::getClassNameId));
 
+		_finderPathWithPaginationFindByG_C_CPK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_CPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classPK"}, true);
+
+		_finderPathWithoutPaginationFindByG_C_CPK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_CPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classPK"}, true);
+
+		_finderPathCountByG_C_CPK = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_CPK",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classPK"}, false);
+
 		_collectionPersistenceFinderByG_C_CPK =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_CPK",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"groupId", "companyId", "classPK"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_CPK",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {"groupId", "companyId", "classPK"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_CPK",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {"groupId", "companyId", "classPK"}, false),
+				this, _finderPathWithPaginationFindByG_C_CPK,
+				_finderPathWithoutPaginationFindByG_C_CPK,
+				_finderPathCountByG_C_CPK,
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
@@ -2413,42 +2464,46 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowDefinitionLink::getClassPK));
 
+		_finderPathWithPaginationFindByC_W_W = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_W_W",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"companyId", "workflowDefinitionName",
+				"workflowDefinitionVersion"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_W_W = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_W_W",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "workflowDefinitionName",
+				"workflowDefinitionVersion"
+			},
+			0, 2, true, null);
+
+		_finderPathCountByC_W_W = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_W_W",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "workflowDefinitionName",
+				"workflowDefinitionVersion"
+			},
+			0, 2, false, null);
+
 		_collectionPersistenceFinderByC_W_W = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_W_W",
-				new String[] {
-					Long.class.getName(), String.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {
-					"companyId", "workflowDefinitionName",
-					"workflowDefinitionVersion"
-				},
-				true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_W_W",
-				new String[] {
-					Long.class.getName(), String.class.getName(),
-					Integer.class.getName()
-				},
-				new String[] {
-					"companyId", "workflowDefinitionName",
-					"workflowDefinitionVersion"
-				},
-				0, 2, true, null),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_W_W",
-				new String[] {
-					Long.class.getName(), String.class.getName(),
-					Integer.class.getName()
-				},
-				new String[] {
-					"companyId", "workflowDefinitionName",
-					"workflowDefinitionVersion"
-				},
-				0, 2, false, null),
+			this, _finderPathWithPaginationFindByC_W_W,
+			_finderPathWithoutPaginationFindByC_W_W, _finderPathCountByC_W_W,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 			_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 			WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2465,41 +2520,40 @@ public class WorkflowDefinitionLinkPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				WorkflowDefinitionLink::getWorkflowDefinitionVersion));
 
+		_finderPathWithPaginationFindByG_C_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId", "classPK"},
+			true);
+
+		_finderPathWithoutPaginationFindByG_C_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId", "classPK"},
+			true);
+
+		_finderPathCountByG_C_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"groupId", "companyId", "classNameId", "classPK"},
+			false);
+
 		_collectionPersistenceFinderByG_C_C_C =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK"
-					},
-					false),
+				this, _finderPathWithPaginationFindByG_C_C_C,
+				_finderPathWithoutPaginationFindByG_C_C_C,
+				_finderPathCountByG_C_C_C,
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
@@ -2521,49 +2575,46 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					WorkflowDefinitionLink::getClassPK));
 
+		_finderPathWithPaginationFindByG_C_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"groupId", "companyId", "classNameId", "classPK", "typePK"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByG_C_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {
+				"groupId", "companyId", "classNameId", "classPK", "typePK"
+			},
+			true);
+
+		_finderPathCountByG_C_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {
+				"groupId", "companyId", "classNameId", "classPK", "typePK"
+			},
+			false);
+
 		_collectionPersistenceFinderByG_C_C_C_T =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK",
-						"typePK"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByG_C_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK",
-						"typePK"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByG_C_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {
-						"groupId", "companyId", "classNameId", "classPK",
-						"typePK"
-					},
-					false),
+				this, _finderPathWithPaginationFindByG_C_C_C_T,
+				_finderPathWithoutPaginationFindByG_C_C_C_T,
+				_finderPathCountByG_C_C_C_T,
 				_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE,
 				_SQL_COUNT_WORKFLOWDEFINITIONLINK_WHERE,
 				WorkflowDefinitionLinkModelImpl.ORDER_BY_JPQL,
@@ -2588,15 +2639,16 @@ public class WorkflowDefinitionLinkPersistenceImpl
 					"workflowDefinitionLink.", "typePK", FinderColumn.Type.LONG,
 					"=", true, true, WorkflowDefinitionLink::getTypePK));
 
+		_finderPathFetchByERC_G = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+			convertNullFunction(
+				WorkflowDefinitionLink::getExternalReferenceCode),
+			WorkflowDefinitionLink::getGroupId);
+
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-				new String[] {String.class.getName(), Long.class.getName()},
-				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-				convertNullFunction(
-					WorkflowDefinitionLink::getExternalReferenceCode),
-				WorkflowDefinitionLink::getGroupId),
+			this, _finderPathFetchByERC_G,
 			_SQL_SELECT_WORKFLOWDEFINITIONLINK_WHERE, "",
 			new FinderColumn<>(
 				"workflowDefinitionLink.", "externalReferenceCode",
@@ -2642,4 +2694,4 @@ public class WorkflowDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1528003068
+// LIFERAY-SERVICE-BUILDER-HASH:1337393864

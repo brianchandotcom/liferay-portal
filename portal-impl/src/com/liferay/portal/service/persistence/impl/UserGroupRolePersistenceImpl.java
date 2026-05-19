@@ -72,6 +72,9 @@ public class UserGroupRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUserId;
+	private FinderPath _finderPathWithoutPaginationFindByUserId;
+	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<UserGroupRole>
 		_collectionPersistenceFinderByUserId;
 
@@ -213,6 +216,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByGroupId;
+	private FinderPath _finderPathWithoutPaginationFindByGroupId;
+	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<UserGroupRole>
 		_collectionPersistenceFinderByGroupId;
 
@@ -355,6 +361,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByRoleId;
+	private FinderPath _finderPathWithoutPaginationFindByRoleId;
+	private FinderPath _finderPathCountByRoleId;
 	private CollectionPersistenceFinder<UserGroupRole>
 		_collectionPersistenceFinderByRoleId;
 
@@ -496,6 +505,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByU_G;
+	private FinderPath _finderPathWithoutPaginationFindByU_G;
+	private FinderPath _finderPathCountByU_G;
 	private CollectionPersistenceFinder<UserGroupRole>
 		_collectionPersistenceFinderByU_G;
 
@@ -650,6 +662,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, groupId});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByG_R;
+	private FinderPath _finderPathWithoutPaginationFindByG_R;
+	private FinderPath _finderPathCountByG_R;
 	private CollectionPersistenceFinder<UserGroupRole>
 		_collectionPersistenceFinderByG_R;
 
@@ -804,6 +819,7 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, roleId});
 	}
 
+	private FinderPath _finderPathFetchByU_G_R;
 	private UniquePersistenceFinder<UserGroupRole>
 		_uniquePersistenceFinderByU_G_R;
 
@@ -1144,99 +1160,113 @@ public class UserGroupRolePersistenceImpl
 	 * Initializes the user group role persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"userId"}, true);
+
+		_finderPathWithoutPaginationFindByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
+
+		_finderPathCountByUserId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+			new String[] {Long.class.getName()}, new String[] {"userId"},
+			false);
+
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"userId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-					new String[] {Long.class.getName()},
-					new String[] {"userId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-					new String[] {Long.class.getName()},
-					new String[] {"userId"}, false),
-				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
+				this, _finderPathWithPaginationFindByUserId,
+				_finderPathWithoutPaginationFindByUserId,
+				_finderPathCountByUserId, _SQL_SELECT_USERGROUPROLE_WHERE,
+				_SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getUserId));
 
+		_finderPathWithPaginationFindByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"groupId"}, true);
+
+		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			true);
+
+		_finderPathCountByGroupId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			new String[] {Long.class.getName()}, new String[] {"groupId"},
+			false);
+
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"groupId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-					new String[] {Long.class.getName()},
-					new String[] {"groupId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-					new String[] {Long.class.getName()},
-					new String[] {"groupId"}, false),
-				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
+				this, _finderPathWithPaginationFindByGroupId,
+				_finderPathWithoutPaginationFindByGroupId,
+				_finderPathCountByGroupId, _SQL_SELECT_USERGROUPROLE_WHERE,
+				_SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getGroupId));
 
+		_finderPathWithPaginationFindByRoleId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"roleId"}, true);
+
+		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
+			new String[] {Long.class.getName()}, new String[] {"roleId"}, true);
+
+		_finderPathCountByRoleId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
+			new String[] {Long.class.getName()}, new String[] {"roleId"},
+			false);
+
 		_collectionPersistenceFinderByRoleId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"roleId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
-					new String[] {Long.class.getName()},
-					new String[] {"roleId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-					new String[] {Long.class.getName()},
-					new String[] {"roleId"}, false),
-				_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
+				this, _finderPathWithPaginationFindByRoleId,
+				_finderPathWithoutPaginationFindByRoleId,
+				_finderPathCountByRoleId, _SQL_SELECT_USERGROUPROLE_WHERE,
+				_SQL_COUNT_USERGROUPROLE_WHERE,
 				UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroupRole::getRoleId));
 
+		_finderPathWithPaginationFindByU_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_G",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"userId", "groupId"}, true);
+
+		_finderPathWithoutPaginationFindByU_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_G",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"userId", "groupId"}, true);
+
+		_finderPathCountByU_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_G",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"userId", "groupId"}, false);
+
 		_collectionPersistenceFinderByU_G = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_G",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"userId", "groupId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_G",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"userId", "groupId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_G",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"userId", "groupId"}, false),
+			this, _finderPathWithPaginationFindByU_G,
+			_finderPathWithoutPaginationFindByU_G, _finderPathCountByU_G,
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1246,24 +1276,28 @@ public class UserGroupRolePersistenceImpl
 				"userGroupRole.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getGroupId));
 
+		_finderPathWithPaginationFindByG_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"groupId", "roleId"}, true);
+
+		_finderPathWithoutPaginationFindByG_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_R",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "roleId"}, true);
+
+		_finderPathCountByG_R = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"groupId", "roleId"}, false);
+
 		_collectionPersistenceFinderByG_R = new CollectionPersistenceFinder<>(
-			this,
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Integer.class.getName(), Integer.class.getName(),
-					OrderByComparator.class.getName()
-				},
-				new String[] {"groupId", "roleId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_R",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"groupId", "roleId"}, true),
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"groupId", "roleId"}, false),
+			this, _finderPathWithPaginationFindByG_R,
+			_finderPathWithoutPaginationFindByG_R, _finderPathCountByG_R,
 			_SQL_SELECT_USERGROUPROLE_WHERE, _SQL_COUNT_USERGROUPROLE_WHERE,
 			UserGroupRoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1273,18 +1307,17 @@ public class UserGroupRolePersistenceImpl
 				"userGroupRole.", "roleId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getRoleId));
 
+		_finderPathFetchByU_G_R = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByU_G_R",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"userId", "groupId", "roleId"}, 0, 0, false,
+			UserGroupRole::getUserId, UserGroupRole::getGroupId,
+			UserGroupRole::getRoleId);
+
 		_uniquePersistenceFinderByU_G_R = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByU_G_R",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName()
-				},
-				new String[] {"userId", "groupId", "roleId"}, 0, 0, false,
-				UserGroupRole::getUserId, UserGroupRole::getGroupId,
-				UserGroupRole::getRoleId),
-			_SQL_SELECT_USERGROUPROLE_WHERE, "",
+			this, _finderPathFetchByU_G_R, _SQL_SELECT_USERGROUPROLE_WHERE, "",
 			new FinderColumn<>(
 				"userGroupRole.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroupRole::getUserId),
@@ -1328,4 +1361,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:395673706
+// LIFERAY-SERVICE-BUILDER-HASH:-382899469

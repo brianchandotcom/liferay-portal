@@ -97,6 +97,9 @@ public class RolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByUuid;
 
@@ -300,6 +303,9 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -524,6 +530,9 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -731,6 +740,9 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByName;
+	private FinderPath _finderPathWithoutPaginationFindByName;
+	private FinderPath _finderPathCountByName;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByName;
 
@@ -934,6 +946,9 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByType;
+	private FinderPath _finderPathWithoutPaginationFindByType;
+	private FinderPath _finderPathCountByType;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByType;
 
@@ -1137,6 +1152,9 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
+	private FinderPath _finderPathWithPaginationFindBySubtype;
+	private FinderPath _finderPathWithoutPaginationFindBySubtype;
+	private FinderPath _finderPathCountBySubtype;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderBySubtype;
 
@@ -1341,6 +1359,7 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {subtype});
 	}
 
+	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_N;
 
 	/**
@@ -1430,6 +1449,9 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_T;
+	private FinderPath _finderPathCountByC_T;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByC_T;
 
@@ -1835,6 +1857,9 @@ public class RolePersistenceImpl
 			0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByT_S;
+	private FinderPath _finderPathWithoutPaginationFindByT_S;
+	private FinderPath _finderPathCountByT_S;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByT_S;
 
@@ -2053,6 +2078,10 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type, subtype});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_C_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_C;
+	private FinderPath _finderPathFetchByC_C_C;
+	private FinderPath _finderPathCountByC_C_C;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByC_C_C;
 	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C;
@@ -2319,6 +2348,10 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_C_C_T;
+	private FinderPath _finderPathWithoutPaginationFindByC_C_C_T;
+	private FinderPath _finderPathFetchByC_C_C_T;
+	private FinderPath _finderPathCountByC_C_C_T;
 	private FilterCollectionPersistenceFinder<Role>
 		_collectionPersistenceFinderByC_C_C_T;
 	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C_T;
@@ -2609,6 +2642,7 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -3719,69 +3753,75 @@ public class RolePersistenceImpl
 			"Users_Roles", "companyId", "roleId", "userId", this,
 			userPersistence);
 
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_"}, true);
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
+
+		_finderPathCountByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
+
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, false, null),
+				this, _finderPathWithPaginationFindByUuid,
+				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 					Role::getUuid));
 
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_", "companyId"}, true);
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
+
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-					new String[] {
-						String.class.getName(), Long.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_", "companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
-				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
@@ -3790,150 +3830,160 @@ public class RolePersistenceImpl
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
 
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId"}, true);
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, false),
-				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Role::getCompanyId));
 
+		_finderPathWithPaginationFindByName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"name"}, true);
+
+		_finderPathWithoutPaginationFindByName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			true, null);
+
+		_finderPathCountByName = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
+			false, null);
+
 		_collectionPersistenceFinderByName =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"name"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-					new String[] {String.class.getName()},
-					new String[] {"name"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-					new String[] {String.class.getName()},
-					new String[] {"name"}, 0, 1, false, null),
+				this, _finderPathWithPaginationFindByName,
+				_finderPathWithoutPaginationFindByName, _finderPathCountByName,
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "name", FinderColumn.Type.STRING, "=", true, true,
 					Role::getName));
 
+		_finderPathWithPaginationFindByType = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+			new String[] {
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"type_"}, true);
+
+		_finderPathWithoutPaginationFindByType = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+			new String[] {Integer.class.getName()}, new String[] {"type_"},
+			true);
+
+		_finderPathCountByType = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+			new String[] {Integer.class.getName()}, new String[] {"type_"},
+			false);
+
 		_collectionPersistenceFinderByType =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-					new String[] {
-						Integer.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"type_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-					new String[] {Integer.class.getName()},
-					new String[] {"type_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-					new String[] {Integer.class.getName()},
-					new String[] {"type_"}, false),
+				this, _finderPathWithPaginationFindByType,
+				_finderPathWithoutPaginationFindByType, _finderPathCountByType,
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
 					true, Role::getType));
 
+		_finderPathWithPaginationFindBySubtype = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySubtype",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"subtype"}, true);
+
+		_finderPathWithoutPaginationFindBySubtype = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySubtype",
+			new String[] {String.class.getName()}, new String[] {"subtype"}, 0,
+			1, true, null);
+
+		_finderPathCountBySubtype = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySubtype",
+			new String[] {String.class.getName()}, new String[] {"subtype"}, 0,
+			1, false, null);
+
 		_collectionPersistenceFinderBySubtype =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findBySubtype",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"subtype"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findBySubtype",
-					new String[] {String.class.getName()},
-					new String[] {"subtype"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countBySubtype",
-					new String[] {String.class.getName()},
-					new String[] {"subtype"}, 0, 1, false, null),
-				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindBySubtype,
+				_finderPathWithoutPaginationFindBySubtype,
+				_finderPathCountBySubtype, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
 
+		_finderPathFetchByC_N = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, 2, 2, true, Role::getCompanyId,
+			convertCaseFunction(Role::getName));
+
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "name"}, 2, 2, true,
-				Role::getCompanyId, convertCaseFunction(Role::getName)),
-			_SQL_SELECT_ROLE__WHERE, "",
+			this, _finderPathFetchByC_N, _SQL_SELECT_ROLE__WHERE, "",
 			new FinderColumn<>(
 				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Role::getCompanyId),
@@ -3941,39 +3991,38 @@ public class RolePersistenceImpl
 				"role_.", "name", FinderColumn.Type.STRING, "=", false, true,
 				Role::getName));
 
+		_finderPathWithPaginationFindByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "type_"}, true);
+
+		_finderPathWithoutPaginationFindByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"companyId", "type_"}, true);
+
+		_finderPathCountByC_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_T",
+			new String[] {Long.class.getName(), Integer.class.getName()},
+			new String[] {"companyId", "type_"}, false);
+
 		_collectionPersistenceFinderByC_T =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId", "type_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_T",
-					new String[] {
-						Long.class.getName(), Integer.class.getName()
-					},
-					new String[] {"companyId", "type_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_T",
-					new String[] {
-						Long.class.getName(), Integer.class.getName()
-					},
-					new String[] {"companyId", "type_"}, false),
+				this, _finderPathWithPaginationFindByC_T,
+				_finderPathWithoutPaginationFindByC_T, _finderPathCountByC_T,
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -3982,39 +4031,38 @@ public class RolePersistenceImpl
 					"role_.", "type", FinderColumn.Type.INTEGER, "=", false,
 					true, true, Role::getType));
 
+		_finderPathWithPaginationFindByT_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
+			new String[] {
+				Integer.class.getName(), String.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"type_", "subtype"}, true);
+
+		_finderPathWithoutPaginationFindByT_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
+			new String[] {Integer.class.getName(), String.class.getName()},
+			new String[] {"type_", "subtype"}, 0, 2, true, null);
+
+		_finderPathCountByT_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
+			new String[] {Integer.class.getName(), String.class.getName()},
+			new String[] {"type_", "subtype"}, 0, 2, false, null);
+
 		_collectionPersistenceFinderByT_S =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
-					new String[] {
-						Integer.class.getName(), String.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"type_", "subtype"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
-					new String[] {
-						Integer.class.getName(), String.class.getName()
-					},
-					new String[] {"type_", "subtype"}, 0, 2, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
-					new String[] {
-						Integer.class.getName(), String.class.getName()
-					},
-					new String[] {"type_", "subtype"}, 0, 2, false, null),
+				this, _finderPathWithPaginationFindByT_S,
+				_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
 				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
 				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "type", FinderColumn.Type.INTEGER, "=", true,
@@ -4023,43 +4071,51 @@ public class RolePersistenceImpl
 					"role_.", "subtype", FinderColumn.Type.STRING, "=", true,
 					true, Role::getSubtype));
 
+		_finderPathWithPaginationFindByC_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK"}, true);
+
+		_finderPathWithoutPaginationFindByC_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK"}, true);
+
+		_finderPathFetchByC_C_C = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK"}, 0, 0, false,
+			Role::getCompanyId, Role::getClassNameId, Role::getClassPK);
+
+		_finderPathCountByC_C_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK"}, false);
+
 		_collectionPersistenceFinderByC_C_C =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId", "classNameId", "classPK"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {"companyId", "classNameId", "classPK"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName()
-					},
-					new String[] {"companyId", "classNameId", "classPK"},
-					false),
-				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_C_C,
+				_finderPathWithoutPaginationFindByC_C_C,
+				_finderPathCountByC_C_C, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -4072,17 +4128,7 @@ public class RolePersistenceImpl
 					true, true, Role::getClassPK));
 
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName()
-				},
-				new String[] {"companyId", "classNameId", "classPK"}, 0, 0,
-				false, Role::getCompanyId, Role::getClassNameId,
-				Role::getClassPK),
-			_SQL_SELECT_ROLE__WHERE, "",
+			this, _finderPathFetchByC_C_C, _SQL_SELECT_ROLE__WHERE, "",
 			new FinderColumn<>(
 				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Role::getCompanyId),
@@ -4093,51 +4139,59 @@ public class RolePersistenceImpl
 				"role_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Role::getClassPK));
 
+		_finderPathWithPaginationFindByC_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			true);
+
+		_finderPathWithoutPaginationFindByC_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			true);
+
+		_finderPathFetchByC_C_C_T = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK", "type_"}, 0, 0,
+			false, Role::getCompanyId, Role::getClassNameId, Role::getClassPK,
+			Role::getType);
+
+		_finderPathCountByC_C_C_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_T",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Integer.class.getName()
+			},
+			new String[] {"companyId", "classNameId", "classPK", "type_"},
+			false);
+
 		_collectionPersistenceFinderByC_C_C_T =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"companyId", "classNameId", "classPK", "type_"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName()
-					},
-					new String[] {
-						"companyId", "classNameId", "classPK", "type_"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_C_T",
-					new String[] {
-						Long.class.getName(), Long.class.getName(),
-						Long.class.getName(), Integer.class.getName()
-					},
-					new String[] {
-						"companyId", "classNameId", "classPK", "type_"
-					},
-					false),
-				_SQL_SELECT_ROLE__WHERE, _SQL_COUNT_ROLE__WHERE,
-				RoleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_C_C_T,
+				_finderPathWithoutPaginationFindByC_C_C_T,
+				_finderPathCountByC_C_C_T, _SQL_SELECT_ROLE__WHERE,
+				_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RoleImpl.class, Role.class, "role_", "Role_",
-					"role_.roleId",
-					"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ",
-					"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ",
-					") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId",
-					"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ",
-					RoleModelImpl.ORDER_BY_SQL,
+					RoleImpl.class, Role.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_ROLE__WHERE,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_ROLE__WHERE, RoleModelImpl.ORDER_BY_SQL,
 					RoleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"role_.", "companyId", FinderColumn.Type.LONG, "=", true,
@@ -4153,17 +4207,7 @@ public class RolePersistenceImpl
 					true, Role::getType));
 
 		_uniquePersistenceFinderByC_C_C_T = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C_T",
-				new String[] {
-					Long.class.getName(), Long.class.getName(),
-					Long.class.getName(), Integer.class.getName()
-				},
-				new String[] {"companyId", "classNameId", "classPK", "type_"},
-				0, 0, false, Role::getCompanyId, Role::getClassNameId,
-				Role::getClassPK, Role::getType),
-			_SQL_SELECT_ROLE__WHERE, "",
+			this, _finderPathFetchByC_C_C_T, _SQL_SELECT_ROLE__WHERE, "",
 			new FinderColumn<>(
 				"role_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Role::getCompanyId),
@@ -4177,15 +4221,15 @@ public class RolePersistenceImpl
 				"role_.", "type", FinderColumn.Type.INTEGER, "=", true, true,
 				Role::getType));
 
+		_finderPathFetchByERC_C = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
+			convertNullFunction(Role::getExternalReferenceCode),
+			Role::getCompanyId);
+
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-				new String[] {String.class.getName(), Long.class.getName()},
-				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
-				false, convertNullFunction(Role::getExternalReferenceCode),
-				Role::getCompanyId),
-			_SQL_SELECT_ROLE__WHERE, "",
+			this, _finderPathFetchByERC_C, _SQL_SELECT_ROLE__WHERE, "",
 			new FinderColumn<>(
 				"role_.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, Role::getExternalReferenceCode),
@@ -4229,6 +4273,27 @@ public class RolePersistenceImpl
 	private static final String _SQL_COUNT_ROLE__WHERE =
 		"SELECT COUNT(role_) FROM Role role_ WHERE ";
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"role_.roleId";
+
+	private static final String _FILTER_SQL_SELECT_ROLE__WHERE =
+		"SELECT DISTINCT {role_.*} FROM Role_ role_ WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {Role_.*} FROM (SELECT DISTINCT role_.roleId FROM Role_ role_ WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_ROLE__NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN Role_ ON TEMP_TABLE.roleId = Role_.roleId";
+
+	private static final String _FILTER_SQL_COUNT_ROLE__WHERE =
+		"SELECT COUNT(DISTINCT role_.roleId) AS COUNT_VALUE FROM Role_ role_ WHERE ";
+
+	private static final String _FILTER_ENTITY_ALIAS = "role_";
+
+	private static final String _FILTER_ENTITY_TABLE = "Role_";
+
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Role exists with the key {";
 
@@ -4244,4 +4309,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-801049753
+// LIFERAY-SERVICE-BUILDER-HASH:-534513239

@@ -47,6 +47,17 @@ public class TicketLocalServiceWrapper
 			serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Ticket addTicket(
+		long companyId, String className, long classPK, int type,
+		String emailAddress, String extraInfo, java.util.Date expirationDate,
+		ServiceContext serviceContext) {
+
+		return _ticketLocalService.addTicket(
+			companyId, className, classPK, type, emailAddress, extraInfo,
+			expirationDate, serviceContext);
+	}
+
 	/**
 	 * Adds the ticket to the database. Also notifies the appropriate model listeners.
 	 *
@@ -331,6 +342,13 @@ public class TicketLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
+		long companyId, int type, String emailAddress) {
+
+		return _ticketLocalService.getTickets(companyId, type, emailAddress);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Ticket> getTickets(
 		long companyId, String className, long classPK) {
 
 		return _ticketLocalService.getTickets(companyId, className, classPK);
@@ -406,4 +424,4 @@ public class TicketLocalServiceWrapper
 	private TicketLocalService _ticketLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-338077197
+// LIFERAY-SERVICE-BUILDER-HASH:-2109147802

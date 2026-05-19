@@ -90,6 +90,9 @@ public class CountryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByUuid;
 
@@ -293,6 +296,9 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByUuid_C;
 
@@ -518,6 +524,9 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -725,6 +734,9 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByActive;
+	private FinderPath _finderPathWithoutPaginationFindByActive;
+	private FinderPath _finderPathCountByActive;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByActive;
 
@@ -930,6 +942,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {active});
 	}
 
+	private FinderPath _finderPathFetchByC_A2;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_A2;
 
 	/**
@@ -1019,6 +1032,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a2});
 	}
 
+	private FinderPath _finderPathFetchByC_A3;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_A3;
 
 	/**
@@ -1108,6 +1122,9 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, a3});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_Active;
+	private FinderPath _finderPathWithoutPaginationFindByC_Active;
+	private FinderPath _finderPathCountByC_Active;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_Active;
 
@@ -1333,6 +1350,7 @@ public class CountryPersistenceImpl
 			companyId, 0);
 	}
 
+	private FinderPath _finderPathFetchByC_Name;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_Name;
 
 	/**
@@ -1422,6 +1440,7 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
+	private FinderPath _finderPathFetchByC_Number;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByC_Number;
 
 	/**
@@ -1511,6 +1530,9 @@ public class CountryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, number});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_A_B;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_B;
+	private FinderPath _finderPathCountByC_A_B;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B;
 
@@ -1771,6 +1793,9 @@ public class CountryPersistenceImpl
 			new Object[] {companyId, active, billingAllowed}, companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_A_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_S;
+	private FinderPath _finderPathCountByC_A_S;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_S;
 
@@ -2032,6 +2057,9 @@ public class CountryPersistenceImpl
 			new Object[] {companyId, active, shippingAllowed}, companyId, 0);
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_A_B_G;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_B_G;
+	private FinderPath _finderPathCountByC_A_B_G;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B_G;
 
@@ -2331,6 +2359,9 @@ public class CountryPersistenceImpl
 			});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_A_G_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_G_S;
+	private FinderPath _finderPathCountByC_A_G_S;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_G_S;
 
@@ -2629,6 +2660,9 @@ public class CountryPersistenceImpl
 			});
 	}
 
+	private FinderPath _finderPathWithPaginationFindByC_A_B_G_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_A_B_G_S;
+	private FinderPath _finderPathCountByC_A_B_G_S;
 	private FilterCollectionPersistenceFinder<Country>
 		_collectionPersistenceFinderByC_A_B_G_S;
 
@@ -2949,6 +2983,7 @@ public class CountryPersistenceImpl
 			});
 	}
 
+	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<Country> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -3416,68 +3451,76 @@ public class CountryPersistenceImpl
 	 * Initializes the country persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_"}, true);
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			true, null);
+
+		_finderPathCountByUuid = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
+			false, null);
+
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-					new String[] {
-						String.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-					new String[] {String.class.getName()},
-					new String[] {"uuid_"}, 0, 1, false, null),
+				this, _finderPathWithPaginationFindByUuid,
+				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
 				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
 				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Country::getUuid));
 
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"uuid_", "companyId"}, true);
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
+
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-					new String[] {
-						String.class.getName(), Long.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"uuid_", "companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-					new String[] {String.class.getName(), Long.class.getName()},
-					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByUuid_C,
+				_finderPathWithoutPaginationFindByUuid_C,
+				_finderPathCountByUuid_C, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3487,82 +3530,90 @@ public class CountryPersistenceImpl
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
 
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId"}, true);
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Country::getCompanyId));
 
+		_finderPathWithPaginationFindByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
+			new String[] {
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"active_"}, true);
+
+		_finderPathWithoutPaginationFindByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
+			new String[] {Boolean.class.getName()}, new String[] {"active_"},
+			true);
+
+		_finderPathCountByActive = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
+			new String[] {Boolean.class.getName()}, new String[] {"active_"},
+			false);
+
 		_collectionPersistenceFinderByActive =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByActive",
-					new String[] {
-						Boolean.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"active_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByActive",
-					new String[] {Boolean.class.getName()},
-					new String[] {"active_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByActive",
-					new String[] {Boolean.class.getName()},
-					new String[] {"active_"}, false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByActive,
+				_finderPathWithoutPaginationFindByActive,
+				_finderPathCountByActive, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
 
+		_finderPathFetchByC_A2 = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a2"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getA2));
+
 		_uniquePersistenceFinderByC_A2 = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_A2",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "a2"}, 0, 2, false,
-				Country::getCompanyId, convertNullFunction(Country::getA2)),
-			_SQL_SELECT_COUNTRY_WHERE, "",
+			this, _finderPathFetchByC_A2, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Country::getCompanyId),
@@ -3570,14 +3621,14 @@ public class CountryPersistenceImpl
 				"country.", "a2", FinderColumn.Type.STRING, "=", true, true,
 				Country::getA2));
 
+		_finderPathFetchByC_A3 = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "a3"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getA3));
+
 		_uniquePersistenceFinderByC_A3 = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_A3",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "a3"}, 0, 2, false,
-				Country::getCompanyId, convertNullFunction(Country::getA3)),
-			_SQL_SELECT_COUNTRY_WHERE, "",
+			this, _finderPathFetchByC_A3, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Country::getCompanyId),
@@ -3585,39 +3636,39 @@ public class CountryPersistenceImpl
 				"country.", "a3", FinderColumn.Type.STRING, "=", true, true,
 				Country::getA3));
 
+		_finderPathWithPaginationFindByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Active",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "active_"}, true);
+
+		_finderPathWithoutPaginationFindByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_Active",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "active_"}, true);
+
+		_finderPathCountByC_Active = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_Active",
+			new String[] {Long.class.getName(), Boolean.class.getName()},
+			new String[] {"companyId", "active_"}, false);
+
 		_collectionPersistenceFinderByC_Active =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_Active",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId", "active_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_Active",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByC_Active",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_"}, false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_Active,
+				_finderPathWithoutPaginationFindByC_Active,
+				_finderPathCountByC_Active, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3627,14 +3678,14 @@ public class CountryPersistenceImpl
 					"country.", "active", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Country::isActive));
 
+		_finderPathFetchByC_Name = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_Name",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "name"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getName));
+
 		_uniquePersistenceFinderByC_Name = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_Name",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "name"}, 0, 2, false,
-				Country::getCompanyId, convertNullFunction(Country::getName)),
-			_SQL_SELECT_COUNTRY_WHERE, "",
+			this, _finderPathFetchByC_Name, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Country::getCompanyId),
@@ -3642,14 +3693,14 @@ public class CountryPersistenceImpl
 				"country.", "name", FinderColumn.Type.STRING, "=", true, true,
 				Country::getName));
 
+		_finderPathFetchByC_Number = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "number_"}, 0, 2, false,
+			Country::getCompanyId, convertNullFunction(Country::getNumber));
+
 		_uniquePersistenceFinderByC_Number = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_Number",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "number_"}, 0, 2, false,
-				Country::getCompanyId, convertNullFunction(Country::getNumber)),
-			_SQL_SELECT_COUNTRY_WHERE, "",
+			this, _finderPathFetchByC_Number, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Country::getCompanyId),
@@ -3657,44 +3708,45 @@ public class CountryPersistenceImpl
 				"country.", "number", FinderColumn.Type.STRING, "=", true, true,
 				Country::getNumber));
 
+		_finderPathWithPaginationFindByC_A_B = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "active_", "billingAllowed"}, true);
+
+		_finderPathWithoutPaginationFindByC_A_B = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_B",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"companyId", "active_", "billingAllowed"}, true);
+
+		_finderPathCountByC_A_B = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_B",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"companyId", "active_", "billingAllowed"}, false);
+
 		_collectionPersistenceFinderByC_A_B =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId", "active_", "billingAllowed"},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_B",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_", "billingAllowed"},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_B",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_", "billingAllowed"},
-					false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_A_B,
+				_finderPathWithoutPaginationFindByC_A_B,
+				_finderPathCountByC_A_B, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3707,44 +3759,45 @@ public class CountryPersistenceImpl
 					"country.", "billingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isBillingAllowed));
 
+		_finderPathWithPaginationFindByC_A_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId", "active_", "shippingAllowed"}, true);
+
+		_finderPathWithoutPaginationFindByC_A_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"companyId", "active_", "shippingAllowed"}, true);
+
+		_finderPathCountByC_A_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {"companyId", "active_", "shippingAllowed"}, false);
+
 		_collectionPersistenceFinderByC_A_S =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId", "active_", "shippingAllowed"},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_", "shippingAllowed"},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {"companyId", "active_", "shippingAllowed"},
-					false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_A_S,
+				_finderPathWithoutPaginationFindByC_A_S,
+				_finderPathCountByC_A_S, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3757,53 +3810,55 @@ public class CountryPersistenceImpl
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
 
+		_finderPathWithPaginationFindByC_A_B_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B_G",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_A_B_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_B_G",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled"
+			},
+			true);
+
+		_finderPathCountByC_A_B_G = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_B_G",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled"
+			},
+			false);
+
 		_collectionPersistenceFinderByC_A_B_G =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B_G",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_B_G",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_B_G",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled"
-					},
-					false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_A_B_G,
+				_finderPathWithoutPaginationFindByC_A_B_G,
+				_finderPathCountByC_A_B_G, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3819,53 +3874,55 @@ public class CountryPersistenceImpl
 					"country.", "groupFilterEnabled", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isGroupFilterEnabled));
 
+		_finderPathWithPaginationFindByC_A_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "groupFilterEnabled", "shippingAllowed"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_A_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "groupFilterEnabled", "shippingAllowed"
+			},
+			true);
+
+		_finderPathCountByC_A_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "groupFilterEnabled", "shippingAllowed"
+			},
+			false);
+
 		_collectionPersistenceFinderByC_A_G_S =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName(),
-						Integer.class.getName(), Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "groupFilterEnabled",
-						"shippingAllowed"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "groupFilterEnabled",
-						"shippingAllowed"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "groupFilterEnabled",
-						"shippingAllowed"
-					},
-					false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_A_G_S,
+				_finderPathWithoutPaginationFindByC_A_G_S,
+				_finderPathCountByC_A_G_S, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3881,58 +3938,60 @@ public class CountryPersistenceImpl
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
 
+		_finderPathWithPaginationFindByC_A_B_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled",
+				"shippingAllowed"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_A_B_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_B_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled",
+				"shippingAllowed"
+			},
+			true);
+
+		_finderPathCountByC_A_B_G_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_B_G_S",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName()
+			},
+			new String[] {
+				"countryId", "active_", "billingAllowed", "groupFilterEnabled",
+				"shippingAllowed"
+			},
+			false);
+
 		_collectionPersistenceFinderByC_A_B_G_S =
 			new FilterCollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_B_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled", "shippingAllowed"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByC_A_B_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled", "shippingAllowed"
-					},
-					true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByC_A_B_G_S",
-					new String[] {
-						Long.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName(), Boolean.class.getName(),
-						Boolean.class.getName()
-					},
-					new String[] {
-						"countryId", "active_", "billingAllowed",
-						"groupFilterEnabled", "shippingAllowed"
-					},
-					false),
-				_SQL_SELECT_COUNTRY_WHERE, _SQL_COUNT_COUNTRY_WHERE,
-				CountryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByC_A_B_G_S,
+				_finderPathWithoutPaginationFindByC_A_B_G_S,
+				_finderPathCountByC_A_B_G_S, _SQL_SELECT_COUNTRY_WHERE,
+				_SQL_COUNT_COUNTRY_WHERE, CountryModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CountryImpl.class, Country.class, "country", "Country",
-					"country.countryId",
-					"SELECT DISTINCT {country.*} FROM Country country WHERE ",
-					"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ",
-					") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId",
-					"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ",
+					CountryImpl.class, Country.class, _FILTER_ENTITY_ALIAS,
+					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
+					_FILTER_SQL_SELECT_COUNTRY_WHERE,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1,
+					_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2,
+					_FILTER_SQL_COUNT_COUNTRY_WHERE,
 					CountryModelImpl.ORDER_BY_SQL,
 					CountryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3951,15 +4010,15 @@ public class CountryPersistenceImpl
 					"country.", "shippingAllowed", FinderColumn.Type.BOOLEAN,
 					"=", true, true, Country::isShippingAllowed));
 
+		_finderPathFetchByERC_C = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
+			convertNullFunction(Country::getExternalReferenceCode),
+			Country::getCompanyId);
+
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-				new String[] {String.class.getName(), Long.class.getName()},
-				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
-				false, convertNullFunction(Country::getExternalReferenceCode),
-				Country::getCompanyId),
-			_SQL_SELECT_COUNTRY_WHERE, "",
+			this, _finderPathFetchByERC_C, _SQL_SELECT_COUNTRY_WHERE, "",
 			new FinderColumn<>(
 				"country.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, Country::getExternalReferenceCode),
@@ -3991,6 +4050,27 @@ public class CountryPersistenceImpl
 	private static final String _SQL_COUNT_COUNTRY_WHERE =
 		"SELECT COUNT(country) FROM Country country WHERE ";
 
+	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
+		"country.countryId";
+
+	private static final String _FILTER_SQL_SELECT_COUNTRY_WHERE =
+		"SELECT DISTINCT {country.*} FROM Country country WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_1 =
+			"SELECT {Country.*} FROM (SELECT DISTINCT country.countryId FROM Country country WHERE ";
+
+	private static final String
+		_FILTER_SQL_SELECT_COUNTRY_NO_INLINE_DISTINCT_WHERE_2 =
+			") TEMP_TABLE INNER JOIN Country ON TEMP_TABLE.countryId = Country.countryId";
+
+	private static final String _FILTER_SQL_COUNT_COUNTRY_WHERE =
+		"SELECT COUNT(DISTINCT country.countryId) AS COUNT_VALUE FROM Country country WHERE ";
+
+	private static final String _FILTER_ENTITY_ALIAS = "country";
+
+	private static final String _FILTER_ENTITY_TABLE = "Country";
+
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No Country exists with the key {";
 
@@ -4006,4 +4086,4 @@ public class CountryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:106308678
+// LIFERAY-SERVICE-BUILDER-HASH:-719524126

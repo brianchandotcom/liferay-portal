@@ -74,6 +74,8 @@ public class ImagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByLtSize;
+	private FinderPath _finderPathWithPaginationCountByLtSize;
 	private CollectionPersistenceFinder<Image>
 		_collectionPersistenceFinderByLtSize;
 
@@ -473,24 +475,25 @@ public class ImagePersistenceImpl
 	 * Initializes the image persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByLtSize = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSize",
+			new String[] {
+				Integer.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"size_"}, true);
+
+		_finderPathWithPaginationCountByLtSize = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSize",
+			new String[] {Integer.class.getName()}, new String[] {"size_"},
+			false);
+
 		_collectionPersistenceFinderByLtSize =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSize",
-					new String[] {
-						Integer.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"size_"}, true),
-				null,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSize",
-					new String[] {Integer.class.getName()},
-					new String[] {"size_"}, false),
-				_SQL_SELECT_IMAGE_WHERE, _SQL_COUNT_IMAGE_WHERE,
-				ImageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByLtSize, null,
+				_finderPathWithPaginationCountByLtSize, _SQL_SELECT_IMAGE_WHERE,
+				_SQL_COUNT_IMAGE_WHERE, ImageModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"image.", "size", FinderColumn.Type.INTEGER, "<", true,
 					true, Image::getSize));
@@ -528,4 +531,4 @@ public class ImagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1576347909
+// LIFERAY-SERVICE-BUILDER-HASH:-241274120

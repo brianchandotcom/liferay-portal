@@ -67,6 +67,9 @@ public class PortletPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByCompanyId;
+	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
+	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<Portlet>
 		_collectionPersistenceFinderByCompanyId;
 
@@ -207,6 +210,7 @@ public class PortletPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
+	private FinderPath _finderPathFetchByC_P;
 	private UniquePersistenceFinder<Portlet> _uniquePersistenceFinderByC_P;
 
 	/**
@@ -478,40 +482,43 @@ public class PortletPersistenceImpl
 	 * Initializes the portlet persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"companyId"}, true);
+
+		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			true);
+
+		_finderPathCountByCompanyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] {Long.class.getName()}, new String[] {"companyId"},
+			false);
+
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCompanyId", new String[] {Long.class.getName()},
-					new String[] {"companyId"}, false),
-				_SQL_SELECT_PORTLET_WHERE, _SQL_COUNT_PORTLET_WHERE,
-				PortletModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				this, _finderPathWithPaginationFindByCompanyId,
+				_finderPathWithoutPaginationFindByCompanyId,
+				_finderPathCountByCompanyId, _SQL_SELECT_PORTLET_WHERE,
+				_SQL_COUNT_PORTLET_WHERE, PortletModelImpl.ORDER_BY_JPQL,
+				_ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"portlet.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Portlet::getCompanyId));
 
+		_finderPathFetchByC_P = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"companyId", "portletId"}, 0, 2, true,
+			Portlet::getCompanyId, convertNullFunction(Portlet::getPortletId));
+
 		_uniquePersistenceFinderByC_P = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_P",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"companyId", "portletId"}, 0, 2, true,
-				Portlet::getCompanyId,
-				convertNullFunction(Portlet::getPortletId)),
-			_SQL_SELECT_PORTLET_WHERE, "",
+			this, _finderPathFetchByC_P, _SQL_SELECT_PORTLET_WHERE, "",
 			new FinderColumn<>(
 				"portlet.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, Portlet::getCompanyId),
@@ -555,4 +562,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1761908527
+// LIFERAY-SERVICE-BUILDER-HASH:-1303258446

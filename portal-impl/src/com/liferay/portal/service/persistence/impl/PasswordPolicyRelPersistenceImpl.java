@@ -65,6 +65,9 @@ public class PasswordPolicyRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByPasswordPolicyId;
+	private FinderPath _finderPathWithoutPaginationFindByPasswordPolicyId;
+	private FinderPath _finderPathCountByPasswordPolicyId;
 	private CollectionPersistenceFinder<PasswordPolicyRel>
 		_collectionPersistenceFinderByPasswordPolicyId;
 
@@ -215,6 +218,7 @@ public class PasswordPolicyRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {passwordPolicyId});
 	}
 
+	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<PasswordPolicyRel>
 		_uniquePersistenceFinderByC_C;
 
@@ -485,28 +489,29 @@ public class PasswordPolicyRelPersistenceImpl
 	 * Initializes the password policy rel persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByPasswordPolicyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPasswordPolicyId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"passwordPolicyId"}, true);
+
+		_finderPathWithoutPaginationFindByPasswordPolicyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPasswordPolicyId",
+			new String[] {Long.class.getName()},
+			new String[] {"passwordPolicyId"}, true);
+
+		_finderPathCountByPasswordPolicyId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByPasswordPolicyId", new String[] {Long.class.getName()},
+			new String[] {"passwordPolicyId"}, false);
+
 		_collectionPersistenceFinderByPasswordPolicyId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findByPasswordPolicyId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"passwordPolicyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByPasswordPolicyId",
-					new String[] {Long.class.getName()},
-					new String[] {"passwordPolicyId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByPasswordPolicyId",
-					new String[] {Long.class.getName()},
-					new String[] {"passwordPolicyId"}, false),
+				this, _finderPathWithPaginationFindByPasswordPolicyId,
+				_finderPathWithoutPaginationFindByPasswordPolicyId,
+				_finderPathCountByPasswordPolicyId,
 				_SQL_SELECT_PASSWORDPOLICYREL_WHERE,
 				_SQL_COUNT_PASSWORDPOLICYREL_WHERE,
 				PasswordPolicyRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -516,15 +521,15 @@ public class PasswordPolicyRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PasswordPolicyRel::getPasswordPolicyId));
 
+		_finderPathFetchByC_C = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {"classNameId", "classPK"}, 0, 0, false,
+			PasswordPolicyRel::getClassNameId, PasswordPolicyRel::getClassPK);
+
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this,
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-				new String[] {Long.class.getName(), Long.class.getName()},
-				new String[] {"classNameId", "classPK"}, 0, 0, false,
-				PasswordPolicyRel::getClassNameId,
-				PasswordPolicyRel::getClassPK),
-			_SQL_SELECT_PASSWORDPOLICYREL_WHERE, "",
+			this, _finderPathFetchByC_C, _SQL_SELECT_PASSWORDPOLICYREL_WHERE,
+			"",
 			new FinderColumn<>(
 				"passwordPolicyRel.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, PasswordPolicyRel::getClassNameId),
@@ -565,4 +570,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-889227273
+// LIFERAY-SERVICE-BUILDER-HASH:1870090225

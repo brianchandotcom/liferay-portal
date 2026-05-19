@@ -73,6 +73,9 @@ public class CountryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
+	private FinderPath _finderPathWithPaginationFindByCountryId;
+	private FinderPath _finderPathWithoutPaginationFindByCountryId;
+	private FinderPath _finderPathCountByCountryId;
 	private CollectionPersistenceFinder<CountryLocalization>
 		_collectionPersistenceFinderByCountryId;
 
@@ -219,6 +222,7 @@ public class CountryLocalizationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
+	private FinderPath _finderPathFetchByCountryId_LanguageId;
 	private UniquePersistenceFinder<CountryLocalization>
 		_uniquePersistenceFinderByCountryId_LanguageId;
 
@@ -566,25 +570,29 @@ public class CountryLocalizationPersistenceImpl
 	 * Initializes the country localization persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"countryId"}, true);
+
+		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
+			new String[] {Long.class.getName()}, new String[] {"countryId"},
+			true);
+
+		_finderPathCountByCountryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
+			new String[] {Long.class.getName()}, new String[] {"countryId"},
+			false);
+
 		_collectionPersistenceFinderByCountryId =
 			new CollectionPersistenceFinder<>(
-				this,
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-					new String[] {
-						Long.class.getName(), Integer.class.getName(),
-						Integer.class.getName(),
-						OrderByComparator.class.getName()
-					},
-					new String[] {"countryId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"findByCountryId", new String[] {Long.class.getName()},
-					new String[] {"countryId"}, true),
-				new FinderPath(
-					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					"countByCountryId", new String[] {Long.class.getName()},
-					new String[] {"countryId"}, false),
+				this, _finderPathWithPaginationFindByCountryId,
+				_finderPathWithoutPaginationFindByCountryId,
+				_finderPathCountByCountryId,
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_COUNTRYLOCALIZATION_WHERE,
 				CountryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -593,15 +601,16 @@ public class CountryLocalizationPersistenceImpl
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
 					"=", true, true, CountryLocalization::getCountryId));
 
+		_finderPathFetchByCountryId_LanguageId = createUniqueFinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByCountryId_LanguageId",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"countryId", "languageId"}, 0, 2, false,
+			CountryLocalization::getCountryId,
+			convertNullFunction(CountryLocalization::getLanguageId));
+
 		_uniquePersistenceFinderByCountryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this,
-				createUniqueFinderPath(
-					FINDER_CLASS_NAME_ENTITY, "fetchByCountryId_LanguageId",
-					new String[] {Long.class.getName(), String.class.getName()},
-					new String[] {"countryId", "languageId"}, 0, 2, false,
-					CountryLocalization::getCountryId,
-					convertNullFunction(CountryLocalization::getLanguageId)),
+				this, _finderPathFetchByCountryId_LanguageId,
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
@@ -644,4 +653,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:16331969
+// LIFERAY-SERVICE-BUILDER-HASH:-565484216

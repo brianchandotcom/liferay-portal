@@ -40,6 +40,8 @@ public class TicketTable extends BaseTable<TicketTable> {
 		"key_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<TicketTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
+	public final Column<TicketTable, String> emailAddress = createColumn(
+		"emailAddress", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<TicketTable, Clob> extraInfo = createColumn(
 		"extraInfo", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<TicketTable, Date> expirationDate = createColumn(
@@ -50,4 +52,4 @@ public class TicketTable extends BaseTable<TicketTable> {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1325508359
+// LIFERAY-SERVICE-BUILDER-HASH:-1420567643

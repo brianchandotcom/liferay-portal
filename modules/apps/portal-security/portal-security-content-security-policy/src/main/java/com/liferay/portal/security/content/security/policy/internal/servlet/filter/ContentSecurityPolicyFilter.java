@@ -9,6 +9,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -119,7 +120,12 @@ public class ContentSecurityPolicyFilter extends BasePortalFilter {
 		ContentSecurityPolicyConfiguration contentSecurityPolicyConfiguration,
 		HttpServletRequest httpServletRequest) {
 
-		String requestURI = httpServletRequest.getRequestURI();
+		String requestURI = (String)httpServletRequest.getAttribute(
+			JavaConstants.JAKARTA_SERVLET_FORWARD_REQUEST_URI);
+
+		if (requestURI == null) {
+			requestURI = httpServletRequest.getRequestURI();
+		}
 
 		if (Validator.isNull(requestURI)) {
 			return false;

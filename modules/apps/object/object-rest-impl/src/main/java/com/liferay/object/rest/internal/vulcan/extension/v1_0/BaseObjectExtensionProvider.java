@@ -7,8 +7,12 @@ package com.liferay.object.rest.internal.vulcan.extension.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.system.SystemObjectDefinitionManager;
+import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOMapper;
 import com.liferay.portal.vulcan.extension.ExtensionProvider;
 
@@ -64,14 +68,38 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 			companyId, internalDTOClassName);
 	}
 
-	protected long getPrimaryKey(Object entity) throws Exception {
+	protected long getPrimaryKey(
+			Object entity, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		String idPropertyName = "id";
+
+		if ((objectDefinition != null) &&
+			objectDefinition.isUnmodifiableSystemObject()) {
+
+			SystemObjectDefinitionManager systemObjectDefinitionManager =
+				systemObjectDefinitionManagerRegistry.
+					getSystemObjectDefinitionManager(
+						objectDefinition.getName());
+
+			if (systemObjectDefinitionManager != null) {
+				String restDTOIdPropertyName =
+					systemObjectDefinitionManager.getRESTDTOIdPropertyName();
+
+				if (Validator.isNotNull(restDTOIdPropertyName)) {
+					idPropertyName = restDTOIdPropertyName;
+				}
+			}
+		}
+
 		if (entity instanceof Map) {
-			return MapUtil.getLong((Map<String, Object>)entity, "id");
+			return MapUtil.getLong((Map<String, Object>)entity, idPropertyName);
 		}
 
 		Class<?> clazz = entity.getClass();
 
-		Method method = clazz.getMethod("getId");
+		Method method = clazz.getMethod(
+			"get" + StringUtil.upperCaseFirstLetter(idPropertyName));
 
 		return GetterUtil.getLong(method.invoke(entity));
 	}
@@ -81,5 +109,9 @@ public abstract class BaseObjectExtensionProvider implements ExtensionProvider {
 
 	@Reference
 	protected ObjectDefinitionLocalService objectDefinitionLocalService;
+
+	@Reference
+	protected SystemObjectDefinitionManagerRegistry
+		systemObjectDefinitionManagerRegistry;
 
 }

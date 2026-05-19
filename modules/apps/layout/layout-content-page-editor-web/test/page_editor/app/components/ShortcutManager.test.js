@@ -450,4 +450,40 @@ describe('ShortcutManager', () => {
 			})
 		);
 	});
+
+	it('calls deleteItem when pressing Backspace', () => {
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'Backspace',
+			})
+		);
+
+		expect(deleteItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01'],
+			})
+		);
+	});
+
+	it('calls deleteItem when pressing Delete', () => {
+		renderComponent({
+			activeItemIds: ['fragment01'],
+		});
+
+		document.body.dispatchEvent(
+			new KeyboardEvent('keydown', {
+				code: 'Delete',
+			})
+		);
+
+		expect(deleteItem).toBeCalledWith(
+			expect.objectContaining({
+				itemIds: ['fragment01'],
+			})
+		);
+	});
 });

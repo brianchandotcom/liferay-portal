@@ -310,7 +310,7 @@ public class ObjectEntryKeywordQueryContributor
 				for (String localizedFieldName : localizedFieldNames) {
 					localizedNestedBooleanQuery.add(
 						_createMatchQuery(
-							localizedFieldName, token, searchContext),
+							localizedFieldName, searchContext, token),
 						BooleanClauseOccur.SHOULD);
 
 					queryConfig.addHighlightFieldNames(localizedFieldName);
@@ -330,7 +330,7 @@ public class ObjectEntryKeywordQueryContributor
 
 			if (!objectField.isLocalized()) {
 				nestedBooleanQuery.add(
-					_createMatchQuery(fieldName, token, searchContext),
+					_createMatchQuery(fieldName, searchContext, token),
 					BooleanClauseOccur.MUST);
 
 				queryConfig.addHighlightFieldNames(fieldName);
@@ -427,7 +427,7 @@ public class ObjectEntryKeywordQueryContributor
 	}
 
 	private MatchQuery _createMatchQuery(
-		String field, String value, SearchContext searchContext) {
+		String field, SearchContext searchContext, String value) {
 
 		MatchQuery matchQuery = new MatchQuery(field, value);
 

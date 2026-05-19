@@ -499,3 +499,52 @@
 	mask-type: alpha;
 }
 
+/* ── Primary Navigation ── */
+.lfr-nav-item.nav-item {
+	border-radius: 8px;
+	margin-right: 0.5rem;
+	transition: all 0.3s ease-in-out;
+}
+
+.lfr-nav-item.nav-item .nav-link {
+	padding: 14px 18px;
+}
+
+.lfr-nav-item.nav-item:hover {
+	background-color: #ffffff !important;
+	font-weight: none !important;
+}
+
+.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
+	.nav-link {
+	color: #0053f0 !important;
+	font-weight: 600;
+}
+
+.lfr-nav-item.nav-item.selected.active .nav-link {
+	border-bottom: #004ad7 solid 3px !important;
+	color: #0053f0 !important;
+	font-weight: 600;
+}
+
+.lfr-nav-item.nav-item.selected.active .nav-link:hover {
+	background-color: #ffffff !important;
+	border-bottom: #004ad7 solid 3px !important;
+	font-weight: 600;
+}
+
+/* ── Dropdowns ── */
+.child-menu.dropdown-menu {
+	border-radius: 8px !important;
+	padding: 0 !important;
+}
+
+/* ── Liferay One chrome layout ── */
+.liferay-one-nav {
+	position: relative;
+}
+
+.liferay-one-nav .nav-mobile-class {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}

@@ -1,0 +1,76 @@
+.menu-item-wrapper {
+	border-radius: var(--border-radius-sm);
+}
+
+.f-navigation-menu-item p {
+	color: #54555f !important;
+	font-size: 0.8125rem !important;
+	font-weight: 600 !important;
+	margin-bottom: var(--spacer-1, 0.25rem) !important;
+	margin-left: var(--spacer-3, 1rem) !important;
+	margin-top: var(--spacer-3, 1rem) !important;
+	padding-left: var(--spacer-1, 0.25rem) !important;
+}
+
+.menu-item-wrapper .arrow-hover-icon {
+	display: none;
+}
+
+.menu-item-wrapper .menu-item {
+	border-radius: 4px;
+	padding: 0.75rem;
+	width: 100%;
+}
+
+.menu-item-wrapper .menu-item:hover,
+.menu-item-wrapper .menu-item:active,
+.menu-item-wrapper .menu-item:focus {
+	background: #0053f012;
+	color: #0b5fff;
+}
+
+.menu-item-wrapper .menu-item:hover .arrow-hover-icon,
+.menu-item-wrapper .menu-item:active .arrow-hover-icon,
+.menu-item-wrapper .menu-item:focus .arrow-hover-icon {
+	display: block;
+}
+
+.menu-item-wrapper .menu-item .menu-item-text {
+	color: #272833;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.menu-item-wrapper .menu-item-icon-liferay {
+	background: #0b5fff;
+	border-radius: 4px;
+}
+
+.menu-item-wrapper .lexicon-icon {
+	margin-top: 0;
+}
+
+.menu-item-wrapper .menu-item-icon-help-center {
+	background: var(--color-state-success, #4aab3b);
+	border-radius: 4px;
+}
+
+.menu-item-wrapper .menu-item-icon-customer-portal {
+	background: var(--accent-accent-3, #e55e75);
+	border-radius: 4px;
+}
+
+.menu-item-wrapper .menu-item-icon-partner-portal {
+	background: var(--status-info-lighten-2, #42bfc2);
+	border-radius: 4px;
+}
+
+.menu-item-wrapper .menu-item-icon-community {
+	background: var(--status-info-lighten-2, #503690);
+	border-radius: 4px;
+}
+
+.menu-item-wrapper .menu-item-icon-liferay-learn {
+	background: var(--color-chart-2, #fdcc4a);
+	border-radius: 4px;
+}

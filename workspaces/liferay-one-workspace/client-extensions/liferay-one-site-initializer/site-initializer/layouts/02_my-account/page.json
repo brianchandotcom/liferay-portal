@@ -5,7 +5,7 @@
 	"name_i18n": {
 		"en_US": "My Account"
 	},
-	"private": false,
+	"private": true,
 	"system": false,
 	"type": "Content"
 }

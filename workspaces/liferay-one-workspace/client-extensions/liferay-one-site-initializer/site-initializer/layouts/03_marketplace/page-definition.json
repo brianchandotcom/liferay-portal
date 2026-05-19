@@ -3,5 +3,10 @@
 		"pageElements": [
 		],
 		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-one-master"
+		}
 	}
 }

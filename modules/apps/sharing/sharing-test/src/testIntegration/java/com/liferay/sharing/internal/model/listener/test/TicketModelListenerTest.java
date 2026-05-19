@@ -58,18 +58,21 @@ public class TicketModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testDeleteTicket() throws Exception {
+	public void testOnBeforeRemove() throws Exception {
 		Ticket ticket1 = _addTicket();
-		Ticket ticket2 = _addTicket();
 
-		_addTicketSharingEntry(ticket1.getTicketId());
-		_addTicketSharingEntry(ticket2.getTicketId());
+		_addSharingEntry(ticket1.getTicketId());
 
 		Assert.assertNotNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				ticket1.getTicketId(), 0, 0,
 				_classNameLocalService.getClassNameId(Group.class.getName()),
 				_group.getGroupId()));
+
+		Ticket ticket2 = _addTicket();
+
+		_addSharingEntry(ticket2.getTicketId());
+
 		Assert.assertNotNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				ticket2.getTicketId(), 0, 0,
@@ -101,7 +104,7 @@ public class TicketModelListenerTest {
 			new ServiceContext());
 	}
 
-	private SharingEntry _addTicketSharingEntry(long toTicketId)
+	private SharingEntry _addSharingEntry(long toTicketId)
 		throws Exception {
 
 		return _sharingEntryLocalService.addSharingEntry(

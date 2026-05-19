@@ -44,10 +44,13 @@ export class ModelBuilderLeftSidebarPage {
 	async clickObjectDefinitionActionsButtonInSidebar(
 		objectDefinitionLabel: string
 	) {
-		await this.sidebarItems
-			.filter({hasText: objectDefinitionLabel})
-			.getByLabel('Actions')
-			.click();
+		const sidebarItem = this.sidebarItems.filter({
+			hasText: objectDefinitionLabel,
+		});
+
+		await sidebarItem.hover();
+
+		await sidebarItem.getByLabel('Actions').click();
 	}
 
 	getOtherObjectFolderLocator(objectFolderLabel: string) {

@@ -829,9 +829,7 @@ public class SectionDisplayContextHelper {
 			).build(
 				"copy-to"
 			),
-			FDSActionDropdownItemBuilder.setHighlighted(
-				true
-			).setHref(
+			FDSActionDropdownItemBuilder.setHref(
 				"#"
 			).setIcon(
 				"copy"

@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.sample.web.internal.filter;
 
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
@@ -26,6 +27,11 @@ import org.osgi.service.component.annotations.Component;
 	service = FDSFilter.class
 )
 public class ColorSelectionFDSFilter extends BaseSelectionFDSFilter {
+
+	@Override
+	public String getEntityFieldType() {
+		return FDSEntityFieldTypes.STRING;
+	}
 
 	@Override
 	public String getId() {

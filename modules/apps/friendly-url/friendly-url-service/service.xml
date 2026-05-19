@@ -36,9 +36,10 @@
 
 			<!-- Finder methods -->
 
-			<finder name="G_C_U" return-type="Collection">
+			<finder name="G_C_P_U" return-type="Collection">
 				<finder-column name="groupId" />
 				<finder-column name="classNameId" />
+				<finder-column name="parentClassPK" />
 				<finder-column name="urlTitle" />
 			</finder>
 			<finder name="C_C_U_C" return-type="Collection">

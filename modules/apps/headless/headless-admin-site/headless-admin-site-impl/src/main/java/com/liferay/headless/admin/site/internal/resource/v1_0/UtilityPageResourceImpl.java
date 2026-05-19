@@ -16,11 +16,11 @@ import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.UtilityPageEntityModel;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.UtilityPageResource;
+import com.liferay.headless.common.spi.util.FileEntryUtil;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -323,8 +323,8 @@ public class UtilityPageResourceImpl
 		}
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
-			groupId, getResourceName(), serviceContext,
-			utilityPage.getThumbnailURLReference());
+			groupId, LayoutAdminPortletKeys.GROUP_PAGES, getResourceName(),
+			serviceContext, utilityPage.getThumbnailURLReference());
 
 		if (previewFileEntryId !=
 				layoutUtilityPageEntry.getPreviewFileEntryId()) {
@@ -395,7 +395,8 @@ public class UtilityPageResourceImpl
 				utilityPage.getExternalReferenceCode(), groupId,
 				_getLayoutPlid(groupId, utilityPage, serviceContext),
 				FileEntryUtil.getPreviewFileEntryId(
-					groupId, getResourceName(), serviceContext,
+					groupId, LayoutAdminPortletKeys.GROUP_PAGES,
+					getResourceName(), serviceContext,
 					utilityPage.getThumbnailURLReference()),
 				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
 				_getType(utilityPage.getType()), null, serviceContext);

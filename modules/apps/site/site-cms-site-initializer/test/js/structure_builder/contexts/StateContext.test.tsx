@@ -11,6 +11,10 @@ import StateContextProvider, {
 	useSelector,
 	useStateDispatch,
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
+import {
+	RepeatableGroup,
+	StructureChild,
+} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/types/Structure';
 import {Field} from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/field';
 import getUuid from '../../../../src/main/resources/META-INF/resources/js/structure_builder/utils/getUuid';
 
@@ -42,10 +46,10 @@ function buildField(overrides: Partial<Field> = {}): Field {
 	};
 }
 
-function buildInitialState(field: Field): State {
+function buildInitialState(child: StructureChild): State {
 	const children = new Map();
 
-	children.set(field.uuid, field);
+	children.set(child.uuid, child);
 
 	return {
 		clipboard: null,
@@ -76,9 +80,9 @@ function buildInitialState(field: Field): State {
 	};
 }
 
-function renderReducerHook(field: Field) {
+function renderReducerHook<T extends StructureChild>(child: T) {
 	const wrapper = ({children}: {children: ReactNode}) => (
-		<StateContextProvider initialState={buildInitialState(field)}>
+		<StateContextProvider initialState={buildInitialState(child)}>
 			{children}
 		</StateContextProvider>
 	);
@@ -87,8 +91,9 @@ function renderReducerHook(field: Field) {
 		() => ({
 			dispatch: useStateDispatch(),
 			field: useSelector(
-				(state) => state.structure.children.get(field.uuid) as Field
+				(state) => state.structure.children.get(child.uuid) as T
 			),
+			structure: useSelector((state) => state.structure),
 		}),
 		{wrapper}
 	);
@@ -132,5 +137,41 @@ describe('StateContext reducer', () => {
 			expect(result.current.field.label).toEqual({en_US: 'Headline'});
 			expect(result.current.field.name).toBe('headline');
 		});
+	});
+
+	it('reparents nested children when a repeatable group is duplicated', () => {
+		const group: RepeatableGroup = {
+			children: new Map(),
+			erc: 'group-erc',
+			label: {en_US: 'Group'},
+			name: 'group',
+			parent: STRUCTURE_UUID,
+			relationshipERC: 'group-relationship-erc',
+			relationshipName: 'groupRelationship',
+			type: 'repeatable-group',
+			uuid: getUuid(),
+		};
+
+		const nestedField = buildField({parent: group.uuid});
+
+		group.children.set(nestedField.uuid, nestedField);
+
+		const {result} = renderReducerHook(group);
+
+		act(() => {
+			result.current.dispatch({
+				type: 'duplicate-children',
+				uuids: [group.uuid],
+			});
+		});
+
+		const [, duplicate] = Array.from(
+			result.current.structure.children.values()
+		) as RepeatableGroup[];
+
+		const [duplicateNested] = Array.from(duplicate.children.values());
+
+		expect(duplicate.uuid).not.toBe(group.uuid);
+		expect(duplicateNested.parent).toBe(duplicate.uuid);
 	});
 });

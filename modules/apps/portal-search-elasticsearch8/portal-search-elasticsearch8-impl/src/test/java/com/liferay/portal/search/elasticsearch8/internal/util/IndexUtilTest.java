@@ -24,7 +24,7 @@ public class IndexUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testMergeToJsonObjectWithDynamicTemplates() {
+	public void testMergeToJSONObjectWithDynamicTemplates() {
 		JSONObject jsonObject = _createMappingsJSONObject(
 			JSONUtil.putAll(
 				_createDynamicTemplateJSONObject("template_a", "text"),
@@ -68,7 +68,7 @@ public class IndexUtilTest {
 	}
 
 	@Test
-	public void testMergeToJsonObjectWithStemmerOverrideRules() {
+	public void testMergeToJSONObjectWithStemmerOverrideRules() {
 		JSONObject jsonObject = _createDutchOverrideSettingsJSONObject(
 			JSONUtil.putAll("old=>old"));
 

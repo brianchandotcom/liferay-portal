@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
 import {ViewObjectDefinitionsPage} from '../ViewObjectDefinitionsPage';
 
 export class ObjectRelationshipsPage {
@@ -103,6 +104,14 @@ export class ObjectRelationshipsPage {
 		await modal.getByRole('textbox').fill(name);
 
 		await modal.getByRole('button', {exact: true, name: 'Delete'}).click();
+	}
+
+	async saveObjectRelationship() {
+		await this.saveObjectRelationshipButton.click();
+
+		await this.page.locator('.fds-side-panel').waitFor({state: 'hidden'});
+
+		await waitForPageToBeLoaded(this.page);
 	}
 
 	async goto(objectDefinitionLabel: string, objectFolderLabel?: string) {

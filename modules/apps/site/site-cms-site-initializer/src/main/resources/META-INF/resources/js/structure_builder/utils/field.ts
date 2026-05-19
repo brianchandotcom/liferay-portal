@@ -173,8 +173,7 @@ export type PhoneNumberField = BaseField & {
 		prefixType: 'definedByUser' | 'fixed';
 	};
 	type: 'phone-number';
-} & MaxLengthSettingsField &
-	UniqueValuesSettingsField;
+} & UniqueValuesSettingsField;
 
 export type SelectFromListField = BaseField & {
 	multiselection: boolean;

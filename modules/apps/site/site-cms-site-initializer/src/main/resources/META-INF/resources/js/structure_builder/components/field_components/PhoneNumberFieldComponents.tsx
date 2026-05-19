@@ -19,7 +19,7 @@ import PhonePrefixSelector from '../settings/PhonePrefixSelector';
 const PREFIX_TYPE_OPTIONS = [
 	{
 		label: Liferay.Language.get('defined-by-user'),
-		value: 'defined-by-user',
+		value: 'definedByUser',
 	},
 	{
 		label: Liferay.Language.get('fixed'),
@@ -82,7 +82,7 @@ function SecondSectionComponent({
 						if (value === 'fixed' && !settings.fixedCountryCode) {
 							settings.fixedCountryCode = config.countries[0]?.a2;
 						}
-						else if (value === 'defined-by-user') {
+						else if (value === 'definedByUser') {
 							delete settings.fixedCountryCode;
 						}
 

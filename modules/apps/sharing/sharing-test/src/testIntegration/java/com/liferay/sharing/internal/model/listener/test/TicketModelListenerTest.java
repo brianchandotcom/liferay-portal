@@ -58,18 +58,21 @@ public class TicketModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testDeleteTicket() throws Exception {
+	public void testOnBeforeRemove() throws Exception {
 		Ticket ticket1 = _addTicket();
-		Ticket ticket2 = _addTicket();
 
-		_addTicketSharingEntry(ticket1.getTicketId());
-		_addTicketSharingEntry(ticket2.getTicketId());
+		_addSharingEntry(ticket1.getTicketId());
 
 		Assert.assertNotNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				ticket1.getTicketId(), 0, 0,
 				_classNameLocalService.getClassNameId(Group.class.getName()),
 				_group.getGroupId()));
+
+		Ticket ticket2 = _addTicket();
+
+		_addSharingEntry(ticket2.getTicketId());
+
 		Assert.assertNotNull(
 			_sharingEntryLocalService.fetchSharingEntry(
 				ticket2.getTicketId(), 0, 0,
@@ -90,6 +93,16 @@ public class TicketModelListenerTest {
 				_group.getGroupId()));
 	}
 
+	private SharingEntry _addSharingEntry(long toTicketId) throws Exception {
+		return _sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), toTicketId, 0, 0,
+			_classNameLocalService.getClassNameId(Group.class.getName()),
+			_group.getGroupId(), _group.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
 	private Ticket _addTicket() throws Exception {
 		return _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
@@ -99,18 +112,6 @@ public class TicketModelListenerTest {
 			).toString(),
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
-	}
-
-	private SharingEntry _addTicketSharingEntry(long toTicketId)
-		throws Exception {
-
-		return _sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), toTicketId, 0, 0,
-			_classNameLocalService.getClassNameId(Group.class.getName()),
-			_group.getGroupId(), _group.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject

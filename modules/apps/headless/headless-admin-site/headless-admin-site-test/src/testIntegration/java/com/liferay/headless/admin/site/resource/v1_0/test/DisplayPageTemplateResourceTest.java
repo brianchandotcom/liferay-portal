@@ -29,6 +29,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.BasicAuthorizationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FileEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
@@ -1250,6 +1251,10 @@ public class DisplayPageTemplateResourceTest
 
 				HttpURLConnection httpURLConnection =
 					(HttpURLConnection)url.openConnection();
+
+				httpURLConnection.setRequestProperty(
+					"Authorization",
+					BasicAuthorizationTestUtil.getBasicAuthorization());
 
 				Assert.assertEquals(
 					HttpURLConnection.HTTP_OK,

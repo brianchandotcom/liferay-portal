@@ -56,8 +56,8 @@
 	},
 	{
 		"categories": [
-			"Fragments",
-			"Analytics and Optimization"
+			"Analytics and Optimization",
+			"Fragments"
 		],
 		"description": "Sample Marketplace app used to verify the App Detail Display Page Template renders end-to-end.",
 		"displayAvailability": true,

@@ -191,6 +191,27 @@
 			"name": "Entitlement Status"
 		},
 		{
+			"externalReferenceCode": "LT_ENVIRONMENT_TYPE",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_BACKUP",
+					"key": "backup",
+					"name": "Backup"
+				},
+				{
+					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_NON_PRODUCTION",
+					"key": "nonProduction",
+					"name": "Non-Production"
+				},
+				{
+					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_PRODUCTION",
+					"key": "production",
+					"name": "Production"
+				}
+			],
+			"name": "Environment Type"
+		},
+		{
 			"externalReferenceCode": "LT_PRODUCT_FAMILY",
 			"listTypeEntries": [
 				{
@@ -250,27 +271,6 @@
 				}
 			],
 			"name": "Product Family"
-		},
-		{
-			"externalReferenceCode": "LT_ENVIRONMENT_TYPE",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_PRODUCTION",
-					"key": "production",
-					"name": "Production"
-				},
-				{
-					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_NON_PRODUCTION",
-					"key": "nonProduction",
-					"name": "Non-Production"
-				},
-				{
-					"externalReferenceCode": "LT_ENVIRONMENT_TYPE_BACKUP",
-					"key": "backup",
-					"name": "Backup"
-				}
-			],
-			"name": "Environment Type"
 		}
 	]
 }

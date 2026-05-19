@@ -255,7 +255,7 @@ resource "kubernetes_secret" "managed_service_details" {
 resource "kubernetes_secret" "search_connection_details" {
 	data={
 		"SEARCH_PASSWORD"=random_password.opensearch_password.result
-		"SEARCH_URL"="https://${aws_opensearch_domain.os.endpoint}"
+		"SEARCH_URL"="https://${aws_opensearch_domain.os.endpoint}:443"
 		"SEARCH_USERNAME"=random_string.opensearch_username.result
 	}
 	metadata {

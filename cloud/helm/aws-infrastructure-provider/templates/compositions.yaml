@@ -1505,7 +1505,7 @@ spec:
                                     apiVersion: v1
                                     data:
                                         SEARCH_PASSWORD: {{ $searchPassword | b64enc | quote }}
-                                        SEARCH_URL: {{ printf "https://%s" $searchEndpoint | b64enc | quote }}
+                                        SEARCH_URL: {{ printf "https://%s:443" $searchEndpoint | b64enc | quote }}
                                         SEARCH_USERNAME: {{ $search.resource.spec.forProvider.advancedSecurityOptions.masterUserOptions.masterUserName | b64enc | quote }}
                                     kind: Secret
                                     metadata:

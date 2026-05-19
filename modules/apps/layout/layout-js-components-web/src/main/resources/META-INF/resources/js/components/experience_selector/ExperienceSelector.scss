@@ -4,5 +4,6 @@
 html#{$cadmin-selector}
 	.cadmin
 	.layout__experience-selector.btn:not(.btn-unstyled) {
+	max-width: 240px;
 	padding-right: 2em;
 }

@@ -194,9 +194,9 @@ public final class UpgradeQueryMonitor {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"Upgrade query monitoring is disabled because the database user lacks ",
-							"SELECT on sys.v_$session and sys.v_$sql. Grant one of the following ",
-							"(from least to most permissive): SELECT on sys.v_$session and ",
+							"Upgrade query monitoring is disabled because the ",
+							"database user lacks SELECT on sys.v_$session and ",
+							"sys.v_$sql. Grant SELECT on sys.v_$session and ",
 							"sys.v_$sql, SELECT_CATALOG_ROLE, or DBA."));
 				}
 

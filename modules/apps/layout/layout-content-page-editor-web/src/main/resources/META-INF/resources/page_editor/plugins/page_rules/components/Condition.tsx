@@ -5,7 +5,10 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
-import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
+import {
+	ScreenReaderAnnouncerContext,
+	isNullOrUndefined,
+} from '@liferay/layout-js-components-web';
 import {useId} from 'frontend-js-components-web';
 import {dateUtils, sub} from 'frontend-js-web';
 import moment from 'moment';
@@ -88,6 +91,16 @@ export const USER_CONDITION_ITEMS = [
 
 const DEFAULT_OPERATORS = [OPERATORS.EQUAL, OPERATORS.NOT_EQUAL] as const;
 
+export function hasValueInput(
+	type: NonNullable<ConditionType['options']>['type'] | undefined
+): boolean {
+	return (
+		!isNullOrUndefined(type) &&
+		type !== 'is-empty' &&
+		type !== 'is-not-empty'
+	);
+}
+
 export function getOperators(type: string | undefined): ReadonlyArray<{
 	label: string;
 	value: NonNullable<ConditionType['options']>['type'];
@@ -103,6 +116,16 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.GREATER_THAN_OR_EQUALS,
 				OPERATORS.LESS_THAN,
 				OPERATORS.LESS_THAN_OR_EQUALS,
+			];
+
+		case 'text':
+			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
+				OPERATORS.CONTAINS,
+				OPERATORS.DOES_NOT_CONTAIN,
+				OPERATORS.IS_EMPTY,
+				OPERATORS.IS_NOT_EMPTY,
 			];
 
 		default:
@@ -363,7 +386,7 @@ function FieldFragmentTypeSelectors({
 				/>
 			) : null}
 
-			{condition.options?.type ? (
+			{hasValueInput(condition.options?.type) ? (
 				<RuleSelect
 					aria-label={sub(
 						Liferay.Language.get('select-x'),
@@ -381,7 +404,7 @@ function FieldFragmentTypeSelectors({
 				/>
 			) : null}
 
-			{condition.options?.type ? (
+			{hasValueInput(condition.options?.type) ? (
 				<ConditionValueInput
 					fieldType={selectedItem?.type}
 					onBlur={() => {

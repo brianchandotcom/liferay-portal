@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -185,6 +187,21 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		return jsonArray;
+	}
+
+	private boolean _contains(Object fieldValue, Object value) {
+		if ((fieldValue == null) || (value == null)) {
+			return false;
+		}
+
+		String fieldString = StringUtil.toLowerCase(fieldValue.toString());
+		String valueString = StringUtil.toLowerCase(value.toString());
+
+		if (Validator.isNull(fieldString) || Validator.isNull(valueString)) {
+			return false;
+		}
+
+		return fieldString.contains(valueString);
 	}
 
 	private boolean _evaluateLayoutStructureRule(
@@ -461,6 +478,15 @@ public class LayoutStructureRulesHelperImpl
 			String fieldName = conditionJSONObject.getString("field");
 
 			Object fieldValue = fieldValuesMap.get(fieldName);
+
+			if (Objects.equals(optionsType, "contains")) {
+				return _contains(fieldValue, value);
+			}
+
+			if (Objects.equals(optionsType, "does-not-contain")) {
+				return !_contains(fieldValue, value);
+			}
+
 			String fieldType = fieldTypesMap.get(fieldName);
 
 			if (Objects.equals(optionsType, "greater-than")) {
@@ -469,6 +495,14 @@ public class LayoutStructureRulesHelperImpl
 
 			if (Objects.equals(optionsType, "greater-than-or-equals")) {
 				return _isGreaterThanOrEqual(fieldType, fieldValue, value);
+			}
+
+			if (Objects.equals(optionsType, "is-empty")) {
+				return _isEmpty(fieldValue);
+			}
+
+			if (Objects.equals(optionsType, "is-not-empty")) {
+				return !_isEmpty(fieldValue);
 			}
 
 			if (Objects.equals(optionsType, "less-than")) {
@@ -495,6 +529,14 @@ public class LayoutStructureRulesHelperImpl
 		}
 
 		return false;
+	}
+
+	private boolean _isEmpty(Object fieldValue) {
+		if (fieldValue == null) {
+			return true;
+		}
+
+		return Validator.isNull(fieldValue.toString());
 	}
 
 	private boolean _isGreaterThan(

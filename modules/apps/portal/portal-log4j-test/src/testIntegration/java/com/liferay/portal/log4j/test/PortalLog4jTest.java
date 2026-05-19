@@ -321,9 +321,9 @@ public class PortalLog4jTest {
 
 		Assert.assertTrue(outputLines.length > 0);
 
-		String messageLine = outputLines[0];
-
 		// Timestamp
+
+		String messageLine = outputLines[0];
 
 		Matcher dateMatcher = _datePattern.matcher(
 			messageLine.substring(0, _DATE_FORMAT.length()));

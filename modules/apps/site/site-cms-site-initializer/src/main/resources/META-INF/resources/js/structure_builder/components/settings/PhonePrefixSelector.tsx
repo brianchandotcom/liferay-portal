@@ -38,7 +38,7 @@ const Trigger = React.forwardRef(
 							symbol={getFlagSymbol(selectedCountry.a2)}
 						/>
 
-						{`+${selectedCountry.prefix}`}
+						{`+${selectedCountry.idd}`}
 					</>
 				)}
 			</button>
@@ -82,8 +82,8 @@ export default function PhonePrefixSelector({
 			selectedCountry={selectedCountry}
 			selectedKey={value}
 		>
-			{({a2, name, prefix}: Country) => (
-				<Option key={a2} textValue={`+${prefix} ${name}`}>
+			{({a2, idd, name}: Country) => (
+				<Option key={a2} textValue={`+${idd} ${name}`}>
 					<ClayLayout.ContentRow containerElement="span">
 						<ClayLayout.ContentCol containerElement="span">
 							<ClayLayout.ContentSection>
@@ -96,7 +96,7 @@ export default function PhonePrefixSelector({
 									className="d-inline-block"
 									style={{minWidth: '3.5rem'}}
 								>
-									{`+${prefix}`}
+									{`+${idd}`}
 								</span>
 							</ClayLayout.ContentSection>
 						</ClayLayout.ContentCol>

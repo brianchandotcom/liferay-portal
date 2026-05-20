@@ -7,7 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.depot.service.DepotEntryServiceUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
@@ -18,7 +18,6 @@ import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,13 +37,14 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
@@ -66,27 +65,9 @@ import java.util.Objects;
 /**
  * @author Daniel Sanz
  */
-public class SectionDisplayContextHelper {
+public class SectionDisplayContextUtil {
 
-	public SectionDisplayContextHelper(
-		DepotEntryLocalService depotEntryLocalService,
-		GroupLocalService groupLocalService, Language language,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
-		Portal portal) {
-
-		_depotEntryLocalService = depotEntryLocalService;
-		_groupLocalService = groupLocalService;
-		_language = language;
-		_objectDefinitionSettingLocalService =
-			objectDefinitionSettingLocalService;
-		_objectEntryFolderModelResourcePermission =
-			objectEntryFolderModelResourcePermission;
-		_portal = portal;
-	}
-
-	public String appendGroupIds(
+	public static String appendGroupIds(
 		String filterString, HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -110,20 +91,20 @@ public class SectionDisplayContextHelper {
 		return StringBundler.concat(
 			filterString, " and groupIds/any(g:g in (",
 			StringUtil.merge(
-				_depotEntryLocalService.getDepotEntryGroupIds(
+				DepotEntryLocalServiceUtil.getDepotEntryGroupIds(
 					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 					DepotConstants.TYPE_SPACE),
 				StringPool.COMMA),
 			"))");
 	}
 
-	public String appendStatus(String filterString) {
+	public static String appendStatus(String filterString) {
 		return StringBundler.concat(
 			filterString, " and status in (", _CMS_WORKFLOW_STATUSES_STRING,
 			")");
 	}
 
-	public String getAdditionalAPIURLParameters(
+	public static String getAdditionalAPIURLParameters(
 		String filterString, HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
 
@@ -170,7 +151,7 @@ public class SectionDisplayContextHelper {
 		return sb.toString();
 	}
 
-	public List<DropdownItem> getAllSectionBulkActionDropdownItems(
+	public static List<DropdownItem> getAllSectionBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		List<DropdownItem> bulkActionDropdownItems =
@@ -220,8 +201,9 @@ public class SectionDisplayContextHelper {
 		return bulkActionDropdownItems;
 	}
 
-	public List<FDSActionDropdownItem> getAllSectionFDSActionDropdownItems(
-		HttpServletRequest httpServletRequest) {
+	public static List<FDSActionDropdownItem>
+		getAllSectionFDSActionDropdownItems(
+			HttpServletRequest httpServletRequest) {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			getFDSActionDropdownItems(httpServletRequest);
@@ -245,7 +227,7 @@ public class SectionDisplayContextHelper {
 		return fdsActionDropdownItems;
 	}
 
-	public List<DropdownItem> getContentsBulkActionDropdownItems(
+	public static List<DropdownItem> getContentsBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		List<DropdownItem> bulkActionDropdownItems =
@@ -271,13 +253,13 @@ public class SectionDisplayContextHelper {
 		return bulkActionDropdownItems;
 	}
 
-	public List<FDSActionDropdownItem> getContentsFDSActionDropdownItems(
+	public static List<FDSActionDropdownItem> getContentsFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		return getFDSActionDropdownItems(httpServletRequest);
 	}
 
-	public CreationMenu getCreationMenu(
+	public static CreationMenu getCreationMenu(
 		List<DropdownItem> dropdownItems, HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
 
@@ -300,7 +282,7 @@ public class SectionDisplayContextHelper {
 			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder != null) {
-			if (_modelResourcePermissionContains(
+			if (_contains(
 					ActionKeys.ADD_ENTRY,
 					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
 
@@ -308,7 +290,7 @@ public class SectionDisplayContextHelper {
 					objectEntryFolder.getGroupId());
 			}
 
-			if (_modelResourcePermissionContains(
+			if (_contains(
 					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
 					objectEntryFolder.getObjectEntryFolderId(), themeDisplay)) {
 
@@ -368,7 +350,7 @@ public class SectionDisplayContextHelper {
 		return creationMenu;
 	}
 
-	public JSONArray getDepotEntriesJSONArray(
+	public static JSONArray getDepotEntriesJSONArray(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -382,7 +364,7 @@ public class SectionDisplayContextHelper {
 			themeDisplay.getLocale());
 	}
 
-	public JSONArray getDepotEntriesJSONArray(
+	public static JSONArray getDepotEntriesJSONArray(
 		HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
 
@@ -408,7 +390,7 @@ public class SectionDisplayContextHelper {
 			themeDisplay.getLocale());
 	}
 
-	public List<Long> getDepotEntryGroupIds(
+	public static List<Long> getDepotEntryGroupIds(
 		String actionId, Map<Long, List<Long>> objectEntryFolderIdsMap,
 		ThemeDisplay themeDisplay) {
 
@@ -418,7 +400,7 @@ public class SectionDisplayContextHelper {
 				objectEntryFolderIdsMap.entrySet()) {
 
 			for (long objectEntryFolderId : entry.getValue()) {
-				if (_modelResourcePermissionContains(
+				if (_contains(
 						actionId, objectEntryFolderId, themeDisplay)) {
 
 					depotEntryGroupIds.add(entry.getKey());
@@ -431,7 +413,7 @@ public class SectionDisplayContextHelper {
 		return depotEntryGroupIds;
 	}
 
-	public List<FDSActionDropdownItem> getFDSActionDropdownItems(
+	public static List<FDSActionDropdownItem> getFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay =
@@ -460,7 +442,7 @@ public class SectionDisplayContextHelper {
 				StringBundler.concat(
 					themeDisplay.getPathFriendlyURLPublic(),
 					GroupConstants.CMS_FRIENDLY_URL, "/e/edit-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
+					PortalUtil.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent())
 			).setIcon(
 				"pencil"
@@ -598,7 +580,7 @@ public class SectionDisplayContextHelper {
 			FDSActionDropdownItemBuilder.setIcon(
 				"move-folder"
 			).setLabel(
-				_language.get(httpServletRequest, "move")
+				LanguageUtil.get(httpServletRequest, "move")
 			).setPermissionKey(
 				"update"
 			).build(
@@ -607,7 +589,7 @@ public class SectionDisplayContextHelper {
 			_getCopyFDSActionDropdownItem(httpServletRequest),
 			FDSActionDropdownItemBuilder.setHref(
 				PortletURLBuilder.create(
-					_portal.getControlPanelPortletURL(
+					PortalUtil.getControlPanelPortletURL(
 						httpServletRequest, TranslationPortletKeys.TRANSLATION,
 						ActionRequest.RENDER_PHASE)
 				).setMVCRenderCommandName(
@@ -650,7 +632,7 @@ public class SectionDisplayContextHelper {
 			FDSActionDropdownItemBuilder.setIcon(
 				"trash"
 			).setLabel(
-				_language.get(httpServletRequest, "delete")
+				LanguageUtil.get(httpServletRequest, "delete")
 			).setPermissionKey(
 				"delete"
 			).build(
@@ -658,7 +640,7 @@ public class SectionDisplayContextHelper {
 			));
 	}
 
-	public List<DropdownItem> getFilesBulkActionDropdownItems(
+	public static List<DropdownItem> getFilesBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		List<DropdownItem> bulkActionDropdownItems =
@@ -682,7 +664,7 @@ public class SectionDisplayContextHelper {
 		return bulkActionDropdownItems;
 	}
 
-	public List<FDSActionDropdownItem> getFilesFDSActionDropdownItems(
+	public static List<FDSActionDropdownItem> getFilesFDSActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
@@ -708,7 +690,7 @@ public class SectionDisplayContextHelper {
 			FDSActionDropdownItemBuilder.setHref(
 				StringBundler.concat(
 					"/o", GroupConstants.CMS_FRIENDLY_URL, "/download-folder/",
-					_portal.getClassNameId(ObjectEntryFolder.class),
+					PortalUtil.getClassNameId(ObjectEntryFolder.class),
 					"/{embedded.id}")
 			).setIcon(
 				"download"
@@ -729,7 +711,7 @@ public class SectionDisplayContextHelper {
 		return fdsActionDropdownItems;
 	}
 
-	public Map<Long, List<Long>> getObjectEntryFolderIdsMap(
+	public static Map<Long, List<Long>> getObjectEntryFolderIdsMap(
 		long companyId, String rootObjectEntryFolderExternalReferenceCode,
 		long userId) {
 
@@ -763,7 +745,7 @@ public class SectionDisplayContextHelper {
 		return objectEntryFolderIdsMap;
 	}
 
-	private void _addEditCategoriesAndTagsBulkActions(
+	private static void _addEditCategoriesAndTagsBulkActions(
 		List<DropdownItem> bulkActionDropdownItems,
 		HttpServletRequest httpServletRequest) {
 
@@ -793,7 +775,7 @@ public class SectionDisplayContextHelper {
 			));
 	}
 
-	private void _addPermissionsBulkActions(
+	private static void _addPermissionsBulkActions(
 		List<DropdownItem> bulkActionDropdownItems,
 		HttpServletRequest httpServletRequest) {
 
@@ -851,7 +833,7 @@ public class SectionDisplayContextHelper {
 			));
 	}
 
-	private List<DropdownItem> _getBulkActionDropdownItems(
+	private static List<DropdownItem> _getBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
 		return ListUtil.fromArray(
@@ -908,7 +890,7 @@ public class SectionDisplayContextHelper {
 			));
 	}
 
-	private FDSActionDropdownItem _getCopyFDSActionDropdownItem(
+	private static FDSActionDropdownItem _getCopyFDSActionDropdownItem(
 		HttpServletRequest httpServletRequest) {
 
 		return FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
@@ -918,7 +900,7 @@ public class SectionDisplayContextHelper {
 				).setIcon(
 					"copy"
 				).setLabel(
-					_language.get(httpServletRequest, "copy-to")
+					LanguageUtil.get(httpServletRequest, "copy-to")
 				).setPermissionKey(
 					"update"
 				).build(
@@ -929,7 +911,7 @@ public class SectionDisplayContextHelper {
 				).setIcon(
 					"copy"
 				).setLabel(
-					_language.get(httpServletRequest, "duplicate")
+					LanguageUtil.get(httpServletRequest, "duplicate")
 				).setPermissionKey(
 					"update"
 				).build(
@@ -938,7 +920,7 @@ public class SectionDisplayContextHelper {
 		).setIcon(
 			"copy"
 		).setLabel(
-			_language.get(httpServletRequest, "copy")
+			LanguageUtil.get(httpServletRequest, "copy")
 		).setPermissionKey(
 			"update"
 		).setType(
@@ -948,7 +930,7 @@ public class SectionDisplayContextHelper {
 		);
 	}
 
-	private JSONArray _getDepotEntriesJSONArray(
+	private static JSONArray _getDepotEntriesJSONArray(
 		List<Long> depotEntryGroupIds, DropdownItem dropdownItem,
 		Locale locale) {
 
@@ -968,7 +950,7 @@ public class SectionDisplayContextHelper {
 		return _getDepotEntriesJSONArray(depotEntryGroupIds, locale);
 	}
 
-	private JSONArray _getDepotEntriesJSONArray(
+	private static JSONArray _getDepotEntriesJSONArray(
 		List<Long> groupIds, Locale locale) {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -984,8 +966,8 @@ public class SectionDisplayContextHelper {
 		return jsonArray;
 	}
 
-	private JSONObject _getJSONObject(long groupId, Locale locale) {
-		Group group = _groupLocalService.fetchGroup(groupId);
+	private static JSONObject _getJSONObject(long groupId, Locale locale) {
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 		if (group == null) {
 			return null;
@@ -1000,7 +982,7 @@ public class SectionDisplayContextHelper {
 		);
 	}
 
-	private ObjectEntryFolder _getObjectEntryFolder(
+	private static ObjectEntryFolder _getObjectEntryFolder(
 		long companyId, Object object,
 		String rootObjectEntryFolderExternalReferenceCode) {
 
@@ -1019,14 +1001,14 @@ public class SectionDisplayContextHelper {
 		return null;
 	}
 
-	private FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(
+	private static FDSActionDropdownItem _getPermissionsFDSActionDropdownItem(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
 
 		return FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
 			FDSActionDropdownItemList.of(
 				FDSActionDropdownItemBuilder.setHref(
 					PortletURLBuilder.create(
-						_portal.getControlPanelPortletURL(
+						PortalUtil.getControlPanelPortletURL(
 							httpServletRequest,
 							"com_liferay_portlet_configuration_web_portlet_" +
 								"PortletConfigurationPortlet",
@@ -1049,7 +1031,7 @@ public class SectionDisplayContextHelper {
 				).setIcon(
 					"password-policies"
 				).setLabel(
-					_language.get(httpServletRequest, "permissions")
+					LanguageUtil.get(httpServletRequest, "permissions")
 				).setMethod(
 					"get"
 				).setPermissionKey(
@@ -1106,7 +1088,7 @@ public class SectionDisplayContextHelper {
 		).setIcon(
 			"password-policies"
 		).setLabel(
-			_language.get(httpServletRequest, "permissions")
+			LanguageUtil.get(httpServletRequest, "permissions")
 		).setPermissionKey(
 			"permissions"
 		).setType(
@@ -1116,7 +1098,7 @@ public class SectionDisplayContextHelper {
 		);
 	}
 
-	private String[] _getRootObjectEntryFolderExternalReferenceCodes(
+	private static String[] _getRootObjectEntryFolderExternalReferenceCodes(
 		String rootObjectEntryFolderExternalReferenceCode) {
 
 		if (rootObjectEntryFolderExternalReferenceCode == null) {
@@ -1129,11 +1111,19 @@ public class SectionDisplayContextHelper {
 		return new String[] {rootObjectEntryFolderExternalReferenceCode};
 	}
 
-	private boolean _modelResourcePermissionContains(
+	private static boolean _contains(
 		String actionId, long objectEntryFolderId, ThemeDisplay themeDisplay) {
 
 		try {
-			return _objectEntryFolderModelResourcePermission.contains(
+			ModelResourcePermission<ObjectEntryFolder> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					ObjectEntryFolder.class.getName());
+
+			if (modelResourcePermission == null) {
+				return false;
+			}
+
+			return modelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), objectEntryFolderId,
 				actionId);
 		}
@@ -1150,15 +1140,6 @@ public class SectionDisplayContextHelper {
 		StringUtil.merge(CMSWorkflowConstants.STATUSES, ", ");
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SectionDisplayContextHelper.class);
-
-	private final DepotEntryLocalService _depotEntryLocalService;
-	private final GroupLocalService _groupLocalService;
-	private final Language _language;
-	private final ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-	private final ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
-	private final Portal _portal;
+		SectionDisplayContextUtil.class);
 
 }

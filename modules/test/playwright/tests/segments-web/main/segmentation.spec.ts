@@ -1789,6 +1789,56 @@ test(
 );
 
 test(
+	'Can validate a segment can be created using "Email Address" with each supported operator (Contains, Equals, Not Contains, Not Equals)',
+	{
+		tag: '@LPS-130291',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Create a user whose email address contains "liferay"
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+		});
+
+		// Create one segment per supported Email Address operator
+
+		for (const operator of [
+			'Contains',
+			'Equals',
+			'Not Contains',
+			'Not Equals',
+		]) {
+			const segmentName = `AddSegmentByUserEmailAddress ${operator} Test`;
+
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSegmentField(
+				'Email Address',
+				'User',
+				segmentName
+			);
+
+			await segmentsPage.changeCriterionInput(operator);
+
+			await segmentsPage.fillField('liferay');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewCriterionValue('liferay');
+
+			await expect(page.locator('.operator')).toContainText(operator);
+		}
+	}
+);
+
+test(
 	'Segment member preview count shows the correct number of users when segments are combined',
 	{
 		tag: '@LPS-130344',

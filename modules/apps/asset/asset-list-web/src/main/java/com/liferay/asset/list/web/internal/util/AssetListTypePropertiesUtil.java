@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -35,6 +37,13 @@ public class AssetListTypePropertiesUtil {
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-74731")) {
 			return jsonArray;
 		}
+
+		jsonArray.put(
+			JSONUtil.put(
+				"items", _getCommonFieldsItemsJSONArray(locale)
+			).put(
+				"label", LanguageUtil.get(locale, "common-fields")
+			));
 
 		for (int i = 0; i < classNameIds.length; i++) {
 			long classTypeId = 0;
@@ -77,6 +86,80 @@ public class AssetListTypePropertiesUtil {
 		}
 
 		return jsonArray;
+	}
+
+	private static JSONArray _getCommonFieldsItemsJSONArray(Locale locale) {
+		return JSONUtil.putAll(
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "title")
+			).put(
+				"name", Field.TITLE
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "description")
+			).put(
+				"name", Field.DESCRIPTION
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "author-name")
+			).put(
+				"name", Field.USER_NAME
+			).put(
+				"type", "text"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "created-date")
+			).put(
+				"name", Field.CREATE_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "modified-date")
+			).put(
+				"name", Field.MODIFIED_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "display-date")
+			).put(
+				"name", Field.DISPLAY_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "publish-date")
+			).put(
+				"name", Field.PUBLISH_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "expiration-date")
+			).put(
+				"name", Field.EXPIRATION_DATE
+			).put(
+				"type", "date"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "priority")
+			).put(
+				"name", Field.PRIORITY
+			).put(
+				"type", "decimal"
+			),
+			JSONUtil.put(
+				"label", LanguageUtil.get(locale, "view-count")
+			).put(
+				"name", "viewCount"
+			).put(
+				"type", "integer"
+			));
 	}
 
 	private static ObjectDefinition _resolveObjectDefinition(

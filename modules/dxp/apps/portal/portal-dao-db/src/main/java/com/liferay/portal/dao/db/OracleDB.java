@@ -197,29 +197,6 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	public List<DB.QueryInfo> getLockedQueryInfos(Connection connection)
-		throws SQLException {
-
-		try {
-			return super.getLockedQueryInfos(connection);
-		}
-		catch (SQLException sqlException) {
-			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
-				throw new SQLException(
-					StringBundler.concat(
-						"The database user lacks select privileges on ",
-						"\"sys.v_$session\" and \"sys.v_$sql\". To resolve ",
-						"this, grant the user select privileges on ",
-						"\"sys.v_$session\" and \"sys.v_$sql\", or assign ",
-						"them the \"SELECT_CATALOG_ROLE\" or \"DBA\" role."),
-					sqlException);
-			}
-
-			throw sqlException;
-		}
-	}
-
-	@Override
 	public String getPopulateSQL(String databaseName, String sqlContent) {
 		return "connect &1/&2;\nset define off;\n\n" + sqlContent + "quit";
 	}
@@ -427,6 +404,30 @@ public class OracleDB extends BaseDB {
 			"'ACTIVE' and v$session.type = 'USER' and (v$session.event is ",
 			"null or (v$session.event not like 'enq:%' and v$session.event ",
 			"not like '%library cache%'))");
+	}
+
+	@Override
+	protected List<DB.QueryInfo> getQueryInfos(
+			Connection connection, String sql, long threshold)
+		throws SQLException {
+
+		try {
+			return super.getQueryInfos(connection, sql, threshold);
+		}
+		catch (SQLException sqlException) {
+			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
+				throw new SQLException(
+					StringBundler.concat(
+						"Grant select privileges on \"sys.v_$session\" and ",
+						"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
+						"\"DBA\", because the database user lacks the required ",
+						"select privileges"),
+					sqlException.getSQLState(), sqlException.getErrorCode(),
+					sqlException);
+			}
+
+			throw sqlException;
+		}
 	}
 
 	@Override

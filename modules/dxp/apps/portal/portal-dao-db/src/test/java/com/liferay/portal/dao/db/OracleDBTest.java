@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -14,10 +15,16 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Shinn Lok
@@ -335,6 +342,50 @@ public class OracleDBTest extends BaseDBTestCase {
 				db,
 				"create index IX on Test (cola, colb[$COLUMN_LENGTH:4000$], " +
 					"colc[$COLUMN_LENGTH:4000$]);"));
+	}
+
+	@Test
+	public void testGetQueryInfosORA942() throws Exception {
+		OracleDB oracleDB = new OracleDB(0, 0);
+
+		SQLException originalException = new SQLException(
+			"ORA-00942: table or view does not exist", "42000", 942);
+
+		Connection connection = Mockito.mock(Connection.class);
+
+		PreparedStatement preparedStatement = Mockito.mock(
+			PreparedStatement.class);
+
+		Mockito.when(
+			connection.prepareStatement(Mockito.anyString())
+		).thenReturn(
+			preparedStatement
+		);
+
+		Mockito.when(
+			preparedStatement.executeQuery()
+		).thenThrow(
+			originalException
+		);
+
+		try {
+			oracleDB.getQueryInfos(connection, "select 1 from dual", 0);
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException) {
+			Assert.assertEquals(
+				originalException.getErrorCode(), sqlException.getErrorCode());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Grant select privileges on \"sys.v_$session\" and ",
+					"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
+					"\"DBA\", because the database user lacks the required ",
+					"select privileges"),
+				sqlException.getMessage());
+			Assert.assertEquals(
+				originalException.getSQLState(), sqlException.getSQLState());
+		}
 	}
 
 	@Test

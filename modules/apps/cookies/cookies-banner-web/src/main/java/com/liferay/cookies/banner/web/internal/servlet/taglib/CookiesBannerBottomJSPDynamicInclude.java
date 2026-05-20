@@ -62,7 +62,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 		}
 
 		boolean previewMode = ParamUtil.getBoolean(
-			httpServletRequest, CookiesBannerWebKeys.COOKIES_PREVIEW);
+			httpServletRequest, CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW);
 
 		if (previewMode) {
 			PermissionChecker permissionChecker =
@@ -89,7 +89,7 @@ public class CookiesBannerBottomJSPDynamicInclude
 			}
 
 			httpServletRequest.setAttribute(
-				CookiesBannerWebKeys.COOKIES_PREVIEW, previewMode);
+				CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW, previewMode);
 			httpServletRequest.setAttribute(
 				CookiesBannerWebKeys.CUSTOM_FLOATING_ICON_IMAGE_ID,
 				cookiesPreferenceHandlingConfiguration.

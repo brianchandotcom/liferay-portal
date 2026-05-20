@@ -13,10 +13,13 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
 import {liferayConfig} from '../../../liferay.config';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
 import {segmentsPageTest} from './fixtures/segmentsPageTest';
@@ -256,6 +259,120 @@ test(
 
 			await segmentsPage.viewCriterionValue('organization');
 		});
+	}
+);
+
+test(
+	`Can validate a segment can be created using the "Organization > Category" criterion`,
+	{
+		tag: '@LPS-187282',
+	},
+	async ({apiHelpers, editOrganizationPage, page, segmentsPage, site}) => {
+
+		// Create a global vocabulary with a category
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const globalGroup = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+			companyId,
+			companyId
+		);
+
+		const categoryName = 'Category' + getRandomInt();
+		const vocabularyName = 'Vocabulary' + getRandomInt();
+
+		await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			siteId: globalGroup.groupId,
+			vocabularyName,
+		});
+
+		// Create an organization, a user, and assign the user to the organization
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: getRandomString(),
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		// Tag the organization with the global category
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.organizations}`
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.getByRole('button', {name: 'Show Actions'}),
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: editOrganizationPage.categoryOption(categoryName),
+			trigger: editOrganizationPage.categoryInput(vocabularyName),
+		});
+
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Add a segment with the Organization Category criterion
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		const segmentName = 'AddSegmentByOrganizationCategory Test';
+
+		await segmentsPage.addSegmentField(
+			'Category',
+			'Organization',
+			segmentName
+		);
+
+		const iframe = page
+			.locator('iframe[title="Select Category"]')
+			.contentFrame();
+
+		await clickAndExpectToBeVisible({
+			target: iframe.getByText(`${vocabularyName} (Global)`),
+			trigger: page.getByRole('button', {name: 'Select'}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: iframe.getByText(categoryName),
+			trigger: iframe.getByText(`${vocabularyName} (Global)`),
+		});
+
+		await iframe.getByText(categoryName).click();
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the user is a member and the criterion is persisted
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewMembers({expectedEmail: userEmailAddress});
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue(categoryName);
 	}
 );
 

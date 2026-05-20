@@ -188,7 +188,7 @@ describe('NewExport', () => {
 		await screen.findByText('loaded');
 
 		expect(
-			screen.queryByLabelText('export-individual-deletions')
+			screen.queryByLabelText(/^export-individual-deletions/)
 		).not.toBeInTheDocument();
 	});
 
@@ -196,7 +196,7 @@ describe('NewExport', () => {
 		renderComponent();
 
 		const deletionsCheckbox = await screen.findByLabelText(
-			'export-individual-deletions'
+			/^export-individual-deletions/
 		);
 
 		expect(deletionsCheckbox).not.toBeChecked();

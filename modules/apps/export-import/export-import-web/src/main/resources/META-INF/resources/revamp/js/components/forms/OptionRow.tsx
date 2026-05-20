@@ -11,6 +11,7 @@ export function OptionRow({
 	bordered = false,
 	description,
 	descriptionId,
+	inline = false,
 	input,
 	label,
 	labelId,
@@ -18,10 +19,38 @@ export function OptionRow({
 	bordered?: boolean;
 	description?: string;
 	descriptionId?: string;
+	inline?: boolean;
 	input: React.ReactNode;
 	label: string;
 	labelId: string;
 }) {
+	const labelSpan = (
+		<span
+			className={classnames(
+				'font-weight-semi-bold text-dark',
+				!inline && 'd-block'
+			)}
+			id={labelId}
+		>
+			{label}
+
+			{inline && description && ':'}
+		</span>
+	);
+
+	const descriptionSpan = description && (
+		<span
+			className={
+				inline
+					? 'font-weight-normal ml-1 text-dark'
+					: 'd-block small text-secondary'
+			}
+			id={descriptionId}
+		>
+			{description}
+		</span>
+	);
+
 	return (
 		<label
 			className={classnames(
@@ -35,20 +64,17 @@ export function OptionRow({
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div
-						className="font-weight-semi-bold mb-0 text-dark"
-						id={labelId}
-					>
-						{label}
-					</div>
+					{inline ? (
+						<span>
+							{labelSpan}
 
-					{description && (
-						<div
-							className="small text-secondary"
-							id={descriptionId}
-						>
-							{description}
-						</div>
+							{descriptionSpan}
+						</span>
+					) : (
+						<>
+							{labelSpan}
+							{descriptionSpan}
+						</>
 					)}
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>

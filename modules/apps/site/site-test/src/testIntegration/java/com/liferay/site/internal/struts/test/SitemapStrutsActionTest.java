@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -80,7 +81,9 @@ public class SitemapStrutsActionTest {
 			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		mockHttpServletRequest.setParameter(
-			"currentURL", "http://localhost:8080/sitemap.xml");
+			"currentURL",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/sitemap.xml");
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();

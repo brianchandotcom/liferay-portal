@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -224,7 +225,8 @@ public class WorkflowTaskDisplayContextTest {
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setRealUser(user);
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setServerName("localhost");

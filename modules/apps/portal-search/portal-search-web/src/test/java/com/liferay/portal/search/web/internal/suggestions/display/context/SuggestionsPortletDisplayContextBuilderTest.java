@@ -443,7 +443,8 @@ public class SuggestionsPortletDisplayContextBuilderTest {
 		return _URL_PREFIX + parameters;
 	}
 
-	private static final String _URL_PREFIX = "http://localhost:8080/?";
+	private static final String _URL_PREFIX =
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) + "/?";
 
 	private SuggestionsPortletDisplayContextBuilder _displayContextBuilder;
 	private MockedStatic<HtmlUtil> _htmlUtilMockedStatic;

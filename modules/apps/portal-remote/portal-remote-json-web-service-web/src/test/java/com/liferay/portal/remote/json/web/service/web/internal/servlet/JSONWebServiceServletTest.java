@@ -7,6 +7,7 @@ package com.liferay.portal.remote.json.web.service.web.internal.servlet;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -44,7 +45,8 @@ public class JSONWebServiceServletTest {
 	@Test
 	public void testGetPathInfo() throws Exception {
 		_setCurrentURL(
-			"http://localhost:8080/api/jsonws/methodName/paramName/paramValue");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/api/jsonws/methodName/paramName/paramValue");
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
@@ -62,7 +64,8 @@ public class JSONWebServiceServletTest {
 		throws Exception {
 
 		_setCurrentURL(
-			"http://localhost:8080/api/jsonws/methodName/paramName/user%27ea1");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/api/jsonws/methodName/paramName/user%27ea1");
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 

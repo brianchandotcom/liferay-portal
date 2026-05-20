@@ -174,7 +174,8 @@ public class ObjectUserNotificationsHandlerTest {
 				Mockito.any(InfoItemReference.class),
 				Mockito.any(ThemeDisplay.class))
 		).thenReturn(
-			"http://localhost:8080/web/l/54321"
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/l/54321"
 		);
 
 		Mockito.when(
@@ -190,7 +191,8 @@ public class ObjectUserNotificationsHandlerTest {
 		);
 
 		Assert.assertEquals(
-			"http://localhost:8080/web/l/54321",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/l/54321",
 			_objectUserNotificationsHandler.getLink(
 				_userNotificationEvent, _serviceContext));
 	}

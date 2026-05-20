@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -128,8 +129,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE",
 					"/portal/portlet_error.jsp")) {
 
-			_testErrorPage(true, false, false, "http://localhost:8080");
-			_testErrorPage(true, false, false, "http://localhost:8080/c");
+			_testErrorPage(
+				true, false, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
+			_testErrorPage(
+				true, false, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -144,8 +150,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE_ERROR_PAGE",
 					"/portal/portlet_error.jsp")) {
 
-			_testErrorPage(false, true, false, "http://localhost:8080");
-			_testErrorPage(false, true, false, "http://localhost:8080/c");
+			_testErrorPage(
+				false, true, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
+			_testErrorPage(
+				false, true, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -156,8 +167,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE",
 					new String[] {TestLifecycleAction.class.getName()})) {
 
-			_testErrorPage(false, false, false, "http://localhost:8080");
-			_testErrorPage(false, false, false, "http://localhost:8080/c");
+			_testErrorPage(
+				false, false, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
+			_testErrorPage(
+				false, false, false,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 
@@ -170,8 +186,13 @@ public class ServicePreActionTest {
 					"SERVLET_SERVICE_EVENTS_PRE",
 					new String[] {TestLifecycleAction.class.getName()})) {
 
-			_testErrorPage(false, false, true, "http://localhost:8080");
-			_testErrorPage(false, false, true, "http://localhost:8080/c");
+			_testErrorPage(
+				false, false, true,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
+			_testErrorPage(
+				false, false, true,
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/c");
 		}
 	}
 

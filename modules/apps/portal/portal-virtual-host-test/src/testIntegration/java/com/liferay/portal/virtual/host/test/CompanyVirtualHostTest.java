@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -54,7 +55,8 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 					body.contains(layout.getName(LocaleUtil.getDefault())));
 			},
 			StringBundler.concat(
-				"http://", company1.getVirtualHostname(), ":8080/web",
+				"http://", company1.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false), "/web",
 				group.getFriendlyURL()));
 
 		assertURLtoString(
@@ -63,7 +65,8 @@ public class CompanyVirtualHostTest extends BaseVirtualHostTestCase {
 				Assert.assertTrue(body.contains(company2.getVirtualHostname()));
 			},
 			StringBundler.concat(
-				"http://", company2.getVirtualHostname(), ":8080/web",
+				"http://", company2.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false), "/web",
 				group.getFriendlyURL()));
 	}
 

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -236,7 +237,8 @@ public class PortalImplAlternateURLTest {
 		portletPreferences.store();
 
 		String canonicalURL = StringBundler.concat(
-			"http://", defaultVirtualHostname, ":8080",
+			"http://", defaultVirtualHostname, ":",
+			PortalUtil.getPortalServerPort(false),
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			_group.getFriendlyURL(), layout.getFriendlyURL());
 
@@ -245,21 +247,24 @@ public class PortalImplAlternateURLTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://", defaultVirtualHostname, ":8080/fr",
+				"http://", defaultVirtualHostname, ":",
+				PortalUtil.getPortalServerPort(false), "/fr",
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_group.getFriendlyURL(),
 				layout.getFriendlyURL(LocaleUtil.FRANCE)),
 			alternateURLs.get(LocaleUtil.FRANCE));
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://", germanVirtualHostname, ":8080/de",
+				"http://", germanVirtualHostname, ":",
+				PortalUtil.getPortalServerPort(false), "/de",
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_group.getFriendlyURL(),
 				layout.getFriendlyURL(LocaleUtil.GERMANY)),
 			alternateURLs.get(LocaleUtil.GERMANY));
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://", spanishVirtualHostname, ":8080/es",
+				"http://", spanishVirtualHostname, ":",
+				PortalUtil.getPortalServerPort(false), "/es",
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_group.getFriendlyURL(),
 				layout.getFriendlyURL(LocaleUtil.SPAIN)),
@@ -521,7 +526,8 @@ public class PortalImplAlternateURLTest {
 		}
 
 		return StringBundler.concat(
-			"http://", virtualHostnames.firstKey(), ":8080",
+			"http://", virtualHostnames.firstKey(), ":",
+			PortalUtil.getPortalServerPort(false),
 			_getI18nPath(defaultLocale, locale, portletPreferences),
 			friendlyURL);
 	}
@@ -607,7 +613,7 @@ public class PortalImplAlternateURLTest {
 		themeDisplay.setPortalDomain("localhost");
 		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

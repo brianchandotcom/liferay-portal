@@ -10,6 +10,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -57,19 +58,19 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.GET, false, "::1");
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.GET, false,
-			"http://127.0.0.1:8080");
+			"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.GET, false,
-			"http://localhost:8080");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl("/user/get-current-user", HttpMethod.OPTIONS, false);
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true,
-			"http://127.0.0.1:8080");
+			"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 		assertJsonWSUrl(
 			"/user/get-current-user", HttpMethod.OPTIONS, true,
-			"http://localhost:8080");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 	}
 
 	@Test
@@ -83,20 +84,20 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 				"/user/get-current-user", HttpMethod.GET, true, "::1");
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.GET, true,
-				"http://127.0.0.1:8080");
+				"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.GET, true,
-				"http://localhost:8080");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, false);
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true, "::1");
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true,
-				"http://127.0.0.1:8080");
+				"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 			assertJsonWSUrl(
 				"/user/get-current-user", HttpMethod.OPTIONS, true,
-				"http://localhost:8080");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		}
 	}
 
@@ -196,7 +197,9 @@ public class PortalConfigurationCORSClientTest extends BaseCORSClientTestCase {
 
 		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
 
-		return client.target(uriBuilder.uri("http://localhost:8080"));
+		return client.target(
+			uriBuilder.uri(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	private WebTarget _getWebTarget(String... paths) {

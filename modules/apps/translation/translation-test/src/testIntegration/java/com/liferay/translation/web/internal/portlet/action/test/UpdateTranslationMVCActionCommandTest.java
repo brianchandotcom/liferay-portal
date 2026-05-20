@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -347,7 +348,9 @@ public class UpdateTranslationMVCActionCommandTest {
 		mockActionRequest.setParameter("classPK", String.valueOf(classPK));
 		mockActionRequest.setParameter("groupId", String.valueOf(groupId));
 		mockActionRequest.setParameter(
-			"redirect", "http://localhost:8080/content-list");
+			"redirect",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/content-list");
 		mockActionRequest.setParameter(
 			"sourceLanguageId", LocaleUtil.US.toString());
 		mockActionRequest.setParameter(

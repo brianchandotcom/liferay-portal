@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -190,14 +191,17 @@ public class SharingUserNotificationHandlerTest {
 
 		if (hasUpdatePermission) {
 			expectedURL = StringBundler.concat(
-				"http://localhost:8080/c/portal/cms",
-				"/edit_content_item?objectEntryId=", classPK,
-				"&p_l_mode=edit&redirect=http://localhost:8080");
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/c/portal/cms", "/edit_content_item?objectEntryId=", classPK,
+				"&p_l_mode=edit&redirect=http://localhost:",
+				PortalUtil.getPortalServerPort(false));
 		}
 		else {
 			expectedURL = StringBundler.concat(
-				"http://localhost:8080/web/cms/view-asset?objectEntryId=",
-				classPK, "&backURL=http://localhost:8080");
+				"http://localhost:", PortalUtil.getPortalServerPort(false),
+				"/web/cms/view-asset?objectEntryId=", classPK,
+				"&backURL=http://localhost:",
+				PortalUtil.getPortalServerPort(false));
 		}
 
 		Mockito.when(

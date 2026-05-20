@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -253,8 +254,9 @@ public class PortalImplCanonicalURLTest {
 
 		themeDisplay.setLayoutSet(layoutSet);
 
-		String completeURL =
-			Http.HTTP_WITH_SLASH + "test.com:8080" + _layout4.getFriendlyURL();
+		String completeURL = StringBundler.concat(
+			Http.HTTP_WITH_SLASH, "test.com:",
+			PortalUtil.getPortalServerPort(false), _layout4.getFriendlyURL());
 
 		Assert.assertEquals(
 			completeURL,
@@ -463,9 +465,9 @@ public class PortalImplCanonicalURLTest {
 		throws Exception {
 
 		_testCanonicalURL(
-			"liferay.com", "localhost:8080", _defaultGroup,
-			_defaultGrouplayout1, null, null, "/en", StringPool.BLANK, false,
-			false);
+			"liferay.com", "localhost:" + PortalUtil.getPortalServerPort(false),
+			_defaultGroup, _defaultGrouplayout1, null, null, "/en",
+			StringPool.BLANK, false, false);
 	}
 
 	@Test
@@ -473,9 +475,9 @@ public class PortalImplCanonicalURLTest {
 		throws Exception {
 
 		_testCanonicalURL(
-			"liferay.com", "localhost:8080", _defaultGroup,
-			_defaultGrouplayout1, null, null, "/en", StringPool.BLANK, false,
-			true);
+			"liferay.com", "localhost:" + PortalUtil.getPortalServerPort(false),
+			_defaultGroup, _defaultGrouplayout1, null, null, "/en",
+			StringPool.BLANK, false, true);
 	}
 
 	@Test

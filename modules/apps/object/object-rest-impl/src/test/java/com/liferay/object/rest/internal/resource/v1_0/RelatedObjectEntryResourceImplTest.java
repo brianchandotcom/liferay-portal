@@ -12,6 +12,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.ws.rs.core.UriInfo;
@@ -133,7 +134,9 @@ public class RelatedObjectEntryResourceImplTest {
 		Mockito.when(
 			_uriInfo.getBaseUri()
 		).thenReturn(
-			URI.create("http://localhost:8080" + basePath)
+			URI.create(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					basePath)
 		);
 	}
 

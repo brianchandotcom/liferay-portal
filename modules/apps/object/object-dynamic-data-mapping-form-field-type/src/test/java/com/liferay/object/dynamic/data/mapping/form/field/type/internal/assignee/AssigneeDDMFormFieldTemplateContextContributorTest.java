@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.portlet.MockResourceURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.internal.PortalContextImpl;
 
@@ -82,7 +83,8 @@ public class AssigneeDDMFormFieldTemplateContextContributorTest {
 			new MockHttpServletRequest());
 
 		Assert.assertEquals(
-			"http://localhost:8080/object_entries/autocomplete_assignee",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/object_entries/autocomplete_assignee",
 			MapUtil.getString(
 				_assigneeDDMFormFieldTemplateContextContributor.getParameters(
 					ddmFormField, ddmFormFieldRenderingContext),
@@ -108,7 +110,8 @@ public class AssigneeDDMFormFieldTemplateContextContributorTest {
 
 		@Override
 		public String toString() {
-			return "http://localhost:8080" + getResourceID();
+			return "http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				getResourceID();
 		}
 
 	}

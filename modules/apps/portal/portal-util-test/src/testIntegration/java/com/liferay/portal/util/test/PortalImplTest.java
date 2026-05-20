@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upload.UploadServletRequest;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -228,7 +229,7 @@ public class PortalImplTest {
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setPortalDomain(virtualHostname);
 		themeDisplay.setServerName(virtualHostname);
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -251,7 +252,8 @@ public class PortalImplTest {
 
 		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());

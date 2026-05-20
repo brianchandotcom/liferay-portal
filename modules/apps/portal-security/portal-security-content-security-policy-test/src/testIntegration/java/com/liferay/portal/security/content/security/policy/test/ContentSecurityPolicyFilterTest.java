@@ -6,6 +6,7 @@
 package com.liferay.portal.security.content.security.policy.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -52,7 +54,8 @@ public class ContentSecurityPolicyFilterTest {
 						false, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://localhost:8080/html/common/null.html");
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/html/common/null.html");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -75,7 +78,9 @@ public class ContentSecurityPolicyFilterTest {
 						false, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -92,7 +97,9 @@ public class ContentSecurityPolicyFilterTest {
 						false, null, "", true)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -110,7 +117,9 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, "", false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -133,7 +142,9 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Assert.assertEquals(
 				httpURLConnection.getHeaderField("Content-Security-Policy"),
@@ -148,7 +159,9 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, policy, true)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Assert.assertEquals(
 				httpURLConnection.getHeaderField(
@@ -168,7 +181,9 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -214,7 +229,9 @@ public class ContentSecurityPolicyFilterTest {
 						policy, false)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + company.getVirtualHostname() + ":8080/web/guest");
+				StringBundler.concat(
+					"http://", company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web/guest"));
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();

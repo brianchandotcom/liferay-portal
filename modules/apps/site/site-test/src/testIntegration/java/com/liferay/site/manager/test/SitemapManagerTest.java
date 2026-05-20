@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -1299,7 +1300,10 @@ public class SitemapManagerTest {
 			_company, group, layout);
 
 		_themeDisplay.setPortalDomain(serverName);
-		_themeDisplay.setPortalURL("http://" + serverName + ":8080");
+		_themeDisplay.setPortalURL(
+			StringBundler.concat(
+				"http://", serverName, ":",
+				PortalUtil.getPortalServerPort(false)));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
@@ -1311,7 +1315,7 @@ public class SitemapManagerTest {
 		_themeDisplay.setRequest(mockHttpServletRequest);
 
 		_themeDisplay.setServerName(serverName);
-		_themeDisplay.setServerPort(8080);
+		_themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 	}
 
 	private void _testCompanySitemapIncludePages(

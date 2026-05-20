@@ -62,6 +62,24 @@ public class BasePortletLayoutSEOCanonicalURLContributorTest {
 	}
 
 	@Test
+	public void testContributeURLParametersFeatureFlagDisabled() {
+		PropsUtil.set("feature.flag.LPD-71164", "false");
+
+		_mockFetchPreferences(1, "PORTLET_ID");
+		_mockSEOPortletPreferences("categoryId", true);
+
+		HttpServletRequest httpServletRequest = _createHttpServletRequest(
+			Collections.singletonMap(
+				"categoryId", new String[] {"100", "200"}));
+
+		Map<String, String[]> parameters =
+			_basePortletLayoutSEOCanonicalURLContributor.
+				contributeURLParameters(httpServletRequest, 1, "PORTLET_ID");
+
+		Assert.assertTrue(parameters.toString(), parameters.isEmpty());
+	}
+
+	@Test
 	public void testContributeURLParametersIndexingDisabled() {
 		_mockFetchPreferences(1, "PORTLET_ID");
 		_mockSEOPortletPreferences("categoryId", false);

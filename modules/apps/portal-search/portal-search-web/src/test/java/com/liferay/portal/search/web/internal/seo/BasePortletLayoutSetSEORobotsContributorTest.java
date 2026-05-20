@@ -70,6 +70,44 @@ public class BasePortletLayoutSetSEORobotsContributorTest {
 	}
 
 	@Test
+	public void testContributeDisallowURLEntriesDraftLayout() {
+		LayoutSet layoutSet = _createLayoutSet();
+
+		_mockPortletPreferences(layoutSet, 1);
+
+		_mockLayout(true, "/search-page", 1, true, false);
+
+		_mockSEOPortletPreferences("categoryId", false);
+
+		Set<String> disallowURLEntries =
+			_basePortletLayoutSetSEORobotsContributor.
+				contributeDisallowURLEntries(layoutSet);
+
+		Assert.assertTrue(
+			disallowURLEntries.toString(), disallowURLEntries.isEmpty());
+	}
+
+	@Test
+	public void testContributeDisallowURLEntriesFeatureFlagDisabled() {
+		PropsUtil.set("feature.flag.LPD-71164", "false");
+
+		LayoutSet layoutSet = _createLayoutSet();
+
+		_mockPortletPreferences(layoutSet, 1);
+
+		_mockLayout(false, "/search-page", 1, true, false);
+
+		_mockSEOPortletPreferences("categoryId", false);
+
+		Set<String> disallowURLEntries =
+			_basePortletLayoutSetSEORobotsContributor.
+				contributeDisallowURLEntries(layoutSet);
+
+		Assert.assertTrue(
+			disallowURLEntries.toString(), disallowURLEntries.isEmpty());
+	}
+
+	@Test
 	public void testContributeDisallowURLEntriesIndexingDisabled() {
 		LayoutSet layoutSet = _createLayoutSet();
 
@@ -108,12 +146,64 @@ public class BasePortletLayoutSetSEORobotsContributorTest {
 	}
 
 	@Test
+	public void testContributeDisallowURLEntriesNullLayout() {
+		LayoutSet layoutSet = _createLayoutSet();
+
+		_mockPortletPreferences(layoutSet, 1);
+
+		_mockSEOPortletPreferences("categoryId", false);
+
+		Set<String> disallowURLEntries =
+			_basePortletLayoutSetSEORobotsContributor.
+				contributeDisallowURLEntries(layoutSet);
+
+		Assert.assertTrue(
+			disallowURLEntries.toString(), disallowURLEntries.isEmpty());
+	}
+
+	@Test
 	public void testContributeDisallowURLEntriesNullParameterName() {
 		LayoutSet layoutSet = _createLayoutSet();
 
 		_mockPortletPreferences(layoutSet, 1);
 
 		_mockSEOPortletPreferences(null, false);
+
+		Set<String> disallowURLEntries =
+			_basePortletLayoutSetSEORobotsContributor.
+				contributeDisallowURLEntries(layoutSet);
+
+		Assert.assertTrue(
+			disallowURLEntries.toString(), disallowURLEntries.isEmpty());
+	}
+
+	@Test
+	public void testContributeDisallowURLEntriesSystemLayout() {
+		LayoutSet layoutSet = _createLayoutSet();
+
+		_mockPortletPreferences(layoutSet, 1);
+
+		_mockLayout(false, "/search-page", 1, true, true);
+
+		_mockSEOPortletPreferences("categoryId", false);
+
+		Set<String> disallowURLEntries =
+			_basePortletLayoutSetSEORobotsContributor.
+				contributeDisallowURLEntries(layoutSet);
+
+		Assert.assertTrue(
+			disallowURLEntries.toString(), disallowURLEntries.isEmpty());
+	}
+
+	@Test
+	public void testContributeDisallowURLEntriesUnpublishedLayout() {
+		LayoutSet layoutSet = _createLayoutSet();
+
+		_mockPortletPreferences(layoutSet, 1);
+
+		_mockLayout(false, "/search-page", 1, false, false);
+
+		_mockSEOPortletPreferences("categoryId", false);
 
 		Set<String> disallowURLEntries =
 			_basePortletLayoutSetSEORobotsContributor.

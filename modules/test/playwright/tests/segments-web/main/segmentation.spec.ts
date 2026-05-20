@@ -2264,6 +2264,50 @@ test(
 );
 
 test(
+	'Can see the back-button tooltip in the segments admin and in the page editor new experience flow',
+	{
+		tag: '@LPS-177714',
+	},
+	async ({apiHelpers, page, pageEditorPage, segmentsPage, site}) => {
+
+		// Open the segment editor from segments admin and assert the back link targets Segments
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await expect(
+			page.getByRole('link', {name: 'Go to Segments'})
+		).toBeVisible();
+
+		// Open a content page in the editor
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Test Page Name',
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create a new segment from a new experience
+
+		await pageEditorPage.openExperienceSelector();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText('New Segment'),
+			trigger: page.getByRole('button', {name: 'New Experience'}),
+		});
+
+		// Assert the back link targets the originating content page
+
+		await expect(
+			page.getByRole('link', {name: 'Go to Test Page Name'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can expand each segment editor sidebar section to view its own properties',
 	{
 		tag: '@LPS-135969',

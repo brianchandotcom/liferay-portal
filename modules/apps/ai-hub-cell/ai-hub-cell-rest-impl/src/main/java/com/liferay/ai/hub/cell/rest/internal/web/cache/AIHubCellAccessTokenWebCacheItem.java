@@ -52,6 +52,7 @@ public class AIHubCellAccessTokenWebCacheItem implements WebCacheItem {
 			options.addPart(
 				"client_secret", _aiHubCellConfiguration.clientSecret());
 			options.addPart("grant_type", "client_credentials");
+			options.addPart("scope", "Liferay.AI.Hub.REST.everything");
 			options.setLocation(
 				_aiHubCellConfiguration.serviceURL() + "/o/oauth2/token");
 			options.setPost(true);

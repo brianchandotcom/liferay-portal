@@ -13,7 +13,7 @@
 					"fragmentStyle": {
 						"backgroundFragmentImage": {
 							"url": {
-								"value": "/documents/d/one/hero_banner_background.svg"
+								"value": "/documents/d/one/hero_banner_background-svg"
 							}
 						},
 						"paddingBottom": "6",
@@ -302,7 +302,7 @@
 																"fragmentImage": {
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/one/hero_banner_illustration_image.svg"
+																			"en_US": "/documents/d/one/hero_banner_illustration_image-svg"
 																		}
 																	}
 																},
@@ -339,6 +339,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] > .row {\n\talign-items: stretch !important;\n}",
 							"gutters": true,
 							"indexed": true,
 							"modulesPerRow": 4,
@@ -1119,7 +1120,7 @@
 									"fragmentStyle": {
 										"fontWeight": "fontWeightNormal",
 										"marginBottom": "4",
-										"textColor": "brandColor2"
+										"textColor": "colorNeutral6"
 									},
 									"indexed": true
 								},
@@ -1190,7 +1191,7 @@
 														}
 													},
 													"fragmentStyle": {
-														"backgroundColor": "colorBrandPrimaryLighten5",
+														"backgroundColor": "colorBrandPrimaryLighten6",
 														"borderRadius": "borderRadiusLg",
 														"marginBottom": "3",
 														"marginLeft": "1",
@@ -1284,7 +1285,7 @@
 																	"fragmentStyle": {
 																		"fontWeight": "fontWeightNormal",
 																		"marginBottom": "3",
-																		"textColor": "brandColor2"
+																		"textColor": "colorNeutral6"
 																	},
 																	"indexed": true
 																},
@@ -1323,7 +1324,7 @@
 																			"fragmentStyle": {
 																				"fontWeight": "fontWeightNormal",
 																				"marginRight": "3",
-																				"textColor": "brandColor2"
+																				"textColor": "colorNeutral6"
 																			},
 																			"indexed": true
 																		},
@@ -1332,7 +1333,7 @@
 																	{
 																		"definition": {
 																			"fragment": {
-																				"key": "liferay-one-category-badges",
+																				"key": "category-badges",
 																				"siteKey": "One"
 																			},
 																			"fragmentConfig": {
@@ -1384,6 +1385,5 @@
 		"masterPage": {
 			"key": "liferay-one"
 		}
-	},
-	"version": 1.1
+	}
 }

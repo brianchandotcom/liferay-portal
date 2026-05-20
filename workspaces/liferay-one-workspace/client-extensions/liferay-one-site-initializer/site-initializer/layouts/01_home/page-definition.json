@@ -820,8 +820,7 @@
 									"layout": {
 										"align": "Center",
 										"contentDisplay": "FlexRow",
-										"justify": "SpaceBetween",
-										"marginBottom": 4
+										"justify": "SpaceBetween"
 									}
 								},
 								"pageElements": [
@@ -841,7 +840,10 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "Announcements"
+																"en_US": "Announcements",
+																"es_ES": "Anuncios",
+																"ja_JP": "アナウンスメント",
+																"pt_BR": "Avisos"
 															}
 														}
 													}
@@ -869,14 +871,20 @@
 															"value": {
 																"href": {
 																	"value_i18n": {
-																		"en_US": "/web/one/support/announcements"
+																		"en_US": "/web/one/support/announcements",
+																		"es_ES": "/web/one/support/announcements",
+																		"ja_JP": "/web/one/support/announcements",
+																		"pt_BR": "/web/one/support/announcements"
 																	}
 																}
 															}
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "View All"
+																"en_US": "View All →",
+																"es_ES": "Ver todos →",
+																"ja_JP": "全てを見る →",
+																"pt_BR": "Ver tudo →"
 															}
 														}
 													}
@@ -888,6 +896,37 @@
 									}
 								],
 								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "BASIC_COMPONENT-paragraph"
+									},
+									"fragmentFields": [
+										{
+											"id": "element-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "See what's new with Liferay",
+														"es_ES": "Descubre las novedades de Liferay",
+														"ja_JP": "Liferayの最新情報をチェック",
+														"pt_BR": "Veja as novidades da Liferay"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"fontWeight": "fontWeightNormal",
+										"marginBottom": "4",
+										"textColor": "brandColor2"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
 							},
 							{
 								"definition": {
@@ -926,8 +965,8 @@
 									"listItemStyle": "",
 									"listStyle": "",
 									"numberOfColumns": 1,
-									"numberOfItems": 4,
-									"numberOfItemsPerPage": 4,
+									"numberOfItems": 3,
+									"numberOfItemsPerPage": 3,
 									"numberOfPages": 5,
 									"paginationType": "None",
 									"showAllItems": false,
@@ -942,6 +981,7 @@
 										"pageElements": [
 											{
 												"definition": {
+													"customCSS": ".[$FRAGMENT_CLASS$]:hover {\n\toutline: 2px solid var(--color-action-primary-hover);\n\toutline-offset: 2px;\n}",
 													"fragmentLink": {
 														"href": {
 															"mapping": {
@@ -956,6 +996,9 @@
 														"backgroundColor": "colorBrandPrimaryLighten5",
 														"borderRadius": "borderRadiusLg",
 														"marginBottom": "3",
+														"marginLeft": "1",
+														"marginRight": "1",
+														"marginTop": "1",
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -966,6 +1009,7 @@
 														"align": "End",
 														"contentDisplay": "FlexRow",
 														"justify": "SpaceBetween",
+														"marginBottom": 1,
 														"paddingBottom": 2,
 														"paddingLeft": 2,
 														"paddingRight": 2,
@@ -975,6 +1019,9 @@
 												"pageElements": [
 													{
 														"definition": {
+															"fragmentStyle": {
+																"backgroundColor": ""
+															},
 															"indexed": true,
 															"layout": {
 															}
@@ -1005,14 +1052,20 @@
 																			}
 																		}
 																	],
+																	"fragmentStyle": {
+																		"marginBottom": "3"
+																	},
 																	"indexed": true
 																},
 																"type": "Fragment"
 															},
 															{
 																"definition": {
+																	"customCSS": ".[$FRAGMENT_CLASS$] {\n\tdisplay: -webkit-box;\n\tline-clamp: 1;\n\toverflow: hidden;\n\t-webkit-box-orient: vertical;\n\t-webkit-line-clamp: 1;\n}",
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
+																	},
+																	"fragmentConfig": {
 																	},
 																	"fragmentFields": [
 																		{
@@ -1022,33 +1075,7 @@
 																				},
 																				"text": {
 																					"mapping": {
-																						"fieldKey": "description",
-																						"itemReference": {
-																							"contextSource": "CollectionItem"
-																						}
-																					}
-																				}
-																			}
-																		}
-																	],
-																	"indexed": true
-																},
-																"type": "Fragment"
-															},
-															{
-																"definition": {
-																	"fragment": {
-																		"key": "BASIC_COMPONENT-date"
-																	},
-																	"fragmentFields": [
-																		{
-																			"id": "element-date",
-																			"value": {
-																				"fragmentLink": {
-																				},
-																				"text": {
-																					"mapping": {
-																						"fieldKey": "publishDate",
+																						"fieldKey": "content",
 																						"itemReference": {
 																							"contextSource": "CollectionItem"
 																						}
@@ -1058,52 +1085,85 @@
 																		}
 																	],
 																	"fragmentStyle": {
-																		"fontWeight": "fontWeightBold"
+																		"fontWeight": "fontWeightNormal",
+																		"marginBottom": "3",
+																		"textColor": "brandColor2"
 																	},
 																	"indexed": true
 																},
 																"type": "Fragment"
-															}
-														],
-														"type": "Section"
-													},
-													{
-														"definition": {
-															"fragment": {
-																"key": "BASIC_COMPONENT-button"
 															},
-															"fragmentConfig": {
-																"buttonSize": "nm",
-																"buttonType": "link",
-																"type": "link"
-															},
-															"fragmentFields": [
-																{
-																	"id": "link",
-																	"value": {
-																		"fragmentLink": {
-																			"value": {
-																				"href": {
-																					"mapping": {
-																						"fieldKey": "displayPageURL",
-																						"itemReference": {
-																							"contextSource": "CollectionItem"
+															{
+																"definition": {
+																	"indexed": true,
+																	"layout": {
+																		"contentDisplay": "FlexRow"
+																	}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "BASIC_COMPONENT-date"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "element-date",
+																					"value": {
+																						"date": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_publishDate",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
 																						}
 																					}
 																				}
-																			}
+																			],
+																			"fragmentStyle": {
+																				"fontWeight": "fontWeightNormal",
+																				"marginRight": "3",
+																				"textColor": "brandColor2"
+																			},
+																			"indexed": true
 																		},
-																		"text": {
-																			"value_i18n": {
-																				"en_US": "Read more →"
-																			}
-																		}
+																		"type": "Fragment"
+																	},
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "liferay-one-category-badges",
+																				"siteKey": "One"
+																			},
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																				{
+																					"id": "categories",
+																					"value": {
+																						"html": {
+																							"mapping": {
+																								"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Article Categories$]",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
 																	}
-																}
-															],
-															"indexed": true
-														},
-														"type": "Fragment"
+																],
+																"type": "Section"
+															}
+														],
+														"type": "Section"
 													}
 												],
 												"type": "Section"

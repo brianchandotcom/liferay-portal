@@ -549,7 +549,7 @@ public abstract class BaseDB implements DB {
 	public List<QueryInfo> getLockedQueryInfos(Connection connection)
 		throws SQLException {
 
-		return _getQueryInfos(
+		return getQueryInfos(
 			connection, getLockedQueryInfosSQL(),
 			PropsValues.UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD);
 	}
@@ -558,7 +558,7 @@ public abstract class BaseDB implements DB {
 	public List<QueryInfo> getLongRunningQueryInfos(Connection connection)
 		throws SQLException {
 
-		return _getQueryInfos(
+		return getQueryInfos(
 			connection, getLongRunningQueryInfosSQL(),
 			PropsValues.UPGRADE_QUERY_MONITOR_LONG_RUNNING_THRESHOLD);
 	}
@@ -1771,7 +1771,7 @@ public abstract class BaseDB implements DB {
 		return primaryKeys;
 	}
 
-	private List<QueryInfo> _getQueryInfos(
+	protected List<QueryInfo> getQueryInfos(
 			Connection connection, String sql, long threshold)
 		throws SQLException {
 

@@ -17,6 +17,7 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
@@ -97,27 +98,20 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			}
 		}
 
-		LayoutSetPrototypeSyncSessionManagerUtil.openSession(
-			mergeableLayoutSets.size(), layoutSetPrototype.getNameMap(),
-			userId);
+		try (SafeCloseable safeCloseable =
+				LayoutSetPrototypeSyncSessionManagerUtil.openSession(
+					mergeableLayoutSets, layoutSetPrototype, userId)) {
 
-		if (mergeableLayoutSets.isEmpty()) {
-			return;
-		}
-
-		for (LayoutSet layoutSet : mergeableLayoutSets) {
-			try {
-				executeLayoutSetSync(false, layoutSet);
-			}
-			catch (Exception exception) {
-				_log.error(
-					"Unable to start site template sync for layout set " +
-						layoutSet.getLayoutSetId(),
-					exception);
-
-				LayoutSetPrototypeSyncSessionManagerUtil.
-					recordBackgroundTaskStatus(
-						BackgroundTaskConstants.STATUS_FAILED);
+			for (LayoutSet layoutSet : mergeableLayoutSets) {
+				try {
+					executeLayoutSetSync(false, layoutSet);
+				}
+				catch (Exception exception) {
+					_log.error(
+						"Unable to start site template sync for layout set " +
+							layoutSet.getLayoutSetId(),
+						exception);
+				}
 			}
 		}
 	}
@@ -132,9 +126,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			layoutSet.getLayoutSetId());
 
 		if (!_isLayoutSetMergeable(group, layoutSet)) {
-			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
-				BackgroundTaskConstants.STATUS_FAILED);
-
 			return;
 		}
 
@@ -762,9 +753,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			ExportImportThreadLocal.isImportInProcess() ||
 			ExportImportThreadLocal.isStagingInProcess()) {
 
-			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
-				BackgroundTaskConstants.STATUS_FAILED);
-
 			return;
 		}
 
@@ -776,9 +764,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					"Layout set prototype merge is in progress for layout " +
 						"set " + layoutSet.getLayoutSetId());
 			}
-
-			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
-				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}
@@ -808,8 +793,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 				buildExportLayoutSettingsMap(
 					user, layoutSetPrototype.getGroupId(), true,
 					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					LayoutSetPrototypeSyncSessionManagerUtil.contribute(
-						parameterMap));
+					parameterMap);
 
 		ExportImportConfiguration exportImportConfiguration = null;
 
@@ -825,9 +809,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			_log.error(
 				"Unable to add draft export-import configuration",
 				portalException);
-
-			LayoutSetPrototypeSyncSessionManagerUtil.recordBackgroundTaskStatus(
-				BackgroundTaskConstants.STATUS_FAILED);
 
 			return;
 		}

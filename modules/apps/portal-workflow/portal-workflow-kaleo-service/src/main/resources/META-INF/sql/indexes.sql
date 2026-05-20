@@ -1,5 +1,7 @@
-create index IX_40EB8D2A on KaleoAction (companyId, kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK);
+create index IX_50E9112C on KaleoAction (companyId);
+create index IX_A35E3DDC on KaleoAction (kaleoClassName[$COLUMN_LENGTH:200$], companyId, kaleoClassPK);
 create index IX_170EFD7A on KaleoAction (kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK);
+create index IX_C4A72947 on KaleoAction (kaleoClassName[$COLUMN_LENGTH:200$], kaleoDefinitionVersionId);
 create index IX_F8808C50 on KaleoAction (kaleoDefinitionVersionId);
 
 create index IX_FEE46067 on KaleoCondition (companyId);
@@ -39,6 +41,7 @@ create unique index IX_905A7776 on KaleoNodeSetting (kaleoNodeId, name[$COLUMN_L
 
 create index IX_38829497 on KaleoNotification (companyId);
 create index IX_902D342F on KaleoNotification (kaleoClassName[$COLUMN_LENGTH:200$], kaleoClassPK);
+create index IX_C6C7F87C on KaleoNotification (kaleoClassName[$COLUMN_LENGTH:200$], kaleoDefinitionVersionId);
 create index IX_B8486585 on KaleoNotification (kaleoDefinitionVersionId);
 
 create index IX_2C8C4AF4 on KaleoNotificationRecipient (companyId);

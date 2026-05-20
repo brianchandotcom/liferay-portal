@@ -541,6 +541,25 @@ components:
                     readOnly: true
                     type: string
             type: object
+        Workspace:
+            description:
+                "An Analytics Cloud workspace synced from a Liferay site. Each workspace owns its own channels,
+                individuals, accounts, segments, and asset analytics. Workspaces are scoped to the Liferay group
+                identified by `groupId`."
+            properties:
+                groupId:
+                    description:
+                        "Identifier of the Liferay site that owns the Analytics Cloud workspace. Use this with other
+                        endpoints to scope requests to this workspace."
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        "Display name of the workspace."
+                    readOnly: true
+                    type: string
+            type: object
 info:
     description:
         "Read-only headless REST API for Liferay Analytics Cloud. Exposes accounts, asset-summary metrics, events,
@@ -1339,3 +1358,24 @@ paths:
                                     $ref: "#/components/schemas/PageMetric"
                                 type: array
             tags: ["PageMetric"]
+    "/workspaces":
+        get:
+            description:
+                "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with
+                other endpoints (e.g. `getWorkspaceGroupAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope
+                requests to a specific workspace."
+            operationId: getWorkspacesPage
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Workspace"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Workspace"
+                                type: array
+            tags: ["Workspace"]

@@ -20,7 +20,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
 
@@ -98,14 +97,6 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "groupId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "page"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "pageSize"
 			)
 		}
 	)
@@ -120,8 +111,7 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("groupId")
-			Long groupId,
-			@jakarta.ws.rs.core.Context Pagination pagination)
+			Long groupId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -572,4 +562,4 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 		LogFactoryUtil.getLog(BaseChannelResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1141544072
+// LIFERAY-REST-BUILDER-HASH:2079461276

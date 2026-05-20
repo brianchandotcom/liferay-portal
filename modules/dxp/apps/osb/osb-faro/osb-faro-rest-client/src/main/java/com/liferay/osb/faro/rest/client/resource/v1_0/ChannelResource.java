@@ -8,7 +8,6 @@ package com.liferay.osb.faro.rest.client.resource.v1_0;
 import com.liferay.osb.faro.rest.client.dto.v1_0.Channel;
 import com.liferay.osb.faro.rest.client.http.HttpInvoker;
 import com.liferay.osb.faro.rest.client.pagination.Page;
-import com.liferay.osb.faro.rest.client.pagination.Pagination;
 import com.liferay.osb.faro.rest.client.problem.Problem;
 import com.liferay.osb.faro.rest.client.serdes.v1_0.ChannelSerDes;
 
@@ -41,12 +40,11 @@ public interface ChannelResource {
 			Long groupId, String channelId)
 		throws Exception;
 
-	public Page<Channel> getWorkspaceGroupChannelsPage(
-			Long groupId, Pagination pagination)
+	public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkspaceGroupChannelsPageHttpResponse(
-			Long groupId, Pagination pagination)
+			Long groupId)
 		throws Exception;
 
 	public static class Builder {
@@ -263,12 +261,11 @@ public interface ChannelResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Channel> getWorkspaceGroupChannelsPage(
-				Long groupId, Pagination pagination)
+		public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkspaceGroupChannelsPageHttpResponse(groupId, pagination);
+				getWorkspaceGroupChannelsPageHttpResponse(groupId);
 
 			String content = httpResponse.getContent();
 
@@ -330,8 +327,7 @@ public interface ChannelResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkspaceGroupChannelsPageHttpResponse(
-					Long groupId, Pagination pagination)
+				getWorkspaceGroupChannelsPageHttpResponse(Long groupId)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -354,13 +350,6 @@ public interface ChannelResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (pagination != null) {
-				httpInvoker.parameter(
-					"page", String.valueOf(pagination.getPage()));
-				httpInvoker.parameter(
-					"pageSize", String.valueOf(pagination.getPageSize()));
-			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
@@ -389,4 +378,4 @@ public interface ChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:605604902
+// LIFERAY-REST-BUILDER-HASH:-929472869

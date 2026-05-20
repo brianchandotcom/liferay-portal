@@ -34,14 +34,14 @@ public interface AssetSummaryMetricResource {
 		return new Builder();
 	}
 
-	public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
+	public Page<AssetSummaryMetric> getWorkspaceGroupChannelAssetSummariesPage(
 			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, String search, Pagination pagination,
 			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			getWorkspaceGroupAssetSummariesPageHttpResponse(
+			getWorkspaceGroupChannelAssetSummariesPageHttpResponse(
 				Long groupId, String channelId, String rangeEnd,
 				String rangeKey, String rangeStart, String search,
 				Pagination pagination, String sortString)
@@ -156,14 +156,15 @@ public interface AssetSummaryMetricResource {
 	public static class AssetSummaryMetricResourceImpl
 		implements AssetSummaryMetricResource {
 
-		public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
-				Long groupId, String channelId, String rangeEnd,
-				String rangeKey, String rangeStart, String search,
-				Pagination pagination, String sortString)
+		public Page<AssetSummaryMetric>
+				getWorkspaceGroupChannelAssetSummariesPage(
+					Long groupId, String channelId, String rangeEnd,
+					String rangeKey, String rangeStart, String search,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkspaceGroupAssetSummariesPageHttpResponse(
+				getWorkspaceGroupChannelAssetSummariesPageHttpResponse(
 					groupId, channelId, rangeEnd, rangeKey, rangeStart, search,
 					pagination, sortString);
 
@@ -227,7 +228,7 @@ public interface AssetSummaryMetricResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getWorkspaceGroupAssetSummariesPageHttpResponse(
+				getWorkspaceGroupChannelAssetSummariesPageHttpResponse(
 					Long groupId, String channelId, String rangeEnd,
 					String rangeKey, String rangeStart, String search,
 					Pagination pagination, String sortString)
@@ -253,10 +254,6 @@ public interface AssetSummaryMetricResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (channelId != null) {
-				httpInvoker.parameter("channelId", String.valueOf(channelId));
-			}
 
 			if (rangeEnd != null) {
 				httpInvoker.parameter("rangeEnd", String.valueOf(rangeEnd));
@@ -288,9 +285,10 @@ public interface AssetSummaryMetricResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/faro-rest/v1.0/workspace/{groupId}/asset-summaries");
+						"/o/faro-rest/v1.0/workspace/{groupId}/channels/{channelId}/asset-summaries");
 
 			httpInvoker.path("groupId", groupId);
+			httpInvoker.path("channelId", channelId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -312,4 +310,4 @@ public interface AssetSummaryMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-227258013
+// LIFERAY-REST-BUILDER-HASH:-1855853979

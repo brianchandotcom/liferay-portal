@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ModelArmorTemplateItemTitle from './ModelArmorTemplateItemTitle';
+import FDSItemTitle from './FDSItemTitle';
 
 import type {
 	IInternalRenderer,
@@ -11,9 +11,12 @@ import type {
 	IView,
 } from '@liferay/frontend-data-set-web';
 
-export default function propsTransformer({itemsActions, ...otherProps}: any) {
+export default function listTitlePropsTransformer({
+	itemsActions,
+	...otherProps
+}: any) {
 	const customListTitleRenderer: IInternalRenderer = {
-		component: ModelArmorTemplateItemTitle,
+		component: FDSItemTitle,
 		name: 'customListTitleRenderer',
 		type: 'internal',
 	};
@@ -24,17 +27,13 @@ export default function propsTransformer({itemsActions, ...otherProps}: any) {
 
 	const listSchema = listView.schema as IListSchema;
 
-	listView.setItemComponentProps = ({props}: {props: any}) => {
-		const updatedProps = {
-			...props,
-			schema: {
-				...listSchema,
-				titleRendererName: 'customListTitleRenderer',
-			},
-		};
-
-		return updatedProps;
-	};
+	listView.setItemComponentProps = ({props}: {props: any}) => ({
+		...props,
+		schema: {
+			...listSchema,
+			titleRendererName: 'customListTitleRenderer',
+		},
+	});
 
 	return {
 		...otherProps,

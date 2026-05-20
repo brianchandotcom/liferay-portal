@@ -24,18 +24,14 @@ export default function propsTransformer({itemsActions, ...otherProps}: any) {
 
 	const listSchema = listView.schema as IListSchema;
 
-	listView.setItemComponentProps = ({props}: {props: any}) => {
-		const updatedProps = {
-			...props,
-			schema: {
-				...listSchema,
-				description: '',
-				titleRendererName: 'customListTitleRenderer',
-			},
-		};
-
-		return updatedProps;
-	};
+	listView.setItemComponentProps = ({props}: {props: any}) => ({
+		...props,
+		schema: {
+			...listSchema,
+			description: '',
+			titleRendererName: 'customListTitleRenderer',
+		},
+	});
 
 	return {
 		...otherProps,

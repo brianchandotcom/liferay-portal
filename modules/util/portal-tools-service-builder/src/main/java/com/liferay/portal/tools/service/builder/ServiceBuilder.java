@@ -1058,7 +1058,7 @@ public class ServiceBuilder {
 	public String getCacheFieldGetterPrefix(JavaField javaField) {
 		String typeName = getTypeGenericsName(javaField.getType());
 
-		if (typeName.equals("boolean") || typeName.equals("Boolean") ||
+		if (typeName.equals("Boolean") || typeName.equals("boolean") ||
 			typeName.equals("java.lang.Boolean")) {
 
 			return "is";

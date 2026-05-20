@@ -37,7 +37,7 @@ export default function GeneralPanel({id, type, version}: Props) {
 			</Row>
 
 			<Row label={Liferay.Language.get('version')}>
-				<ClayLabel displayType="info">
+				<ClayLabel displayType="info" inverse>
 					{sub(Liferay.Language.get('version-x'), version)}
 				</ClayLabel>
 			</Row>

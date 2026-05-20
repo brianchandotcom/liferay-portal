@@ -93,7 +93,7 @@ function GeneralTab({
 					{Liferay.Language.get('field-type')}
 				</p>
 
-				<ClayLabel displayType="info">
+				<ClayLabel displayType="info" inverse>
 					{FIELD_TYPE_LABEL[field.type]}
 				</ClayLabel>
 			</div>

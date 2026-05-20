@@ -258,6 +258,10 @@ public interface KaleoActionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKaleoActionsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoAction> getKaleoDefinitionVersionKaleoActions(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -302,4 +306,4 @@ public interface KaleoActionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1805254589
+// LIFERAY-SERVICE-BUILDER-HASH:-971587447

@@ -64,9 +64,7 @@ public class StartPaymentAuthorizeNetServletTest {
 	}
 
 	@Test
-	public void testStartPaymentAuthorizeNetServletWithGuestUser()
-		throws Exception {
-
+	public void testDoGet() throws Exception {
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				_user, PermissionCheckerFactoryUtil.create(_user));
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(

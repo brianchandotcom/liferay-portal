@@ -17,14 +17,14 @@ const DEVICE_ICONS_MAP = {
 		symbol: 'devices',
 		title: Liferay.Language.get('unknown-device')
 	},
-	desktop: {symbol: 'ac_display', title: Liferay.Language.get('desktop')},
+	desktop: {symbol: 'desktop', title: Liferay.Language.get('desktop')},
 	mobile: {symbol: 'mobile-portrait', title: Liferay.Language.get('mobile')},
 	smartphone: {
 		symbol: 'mobile-portrait',
 		title: Liferay.Language.get('mobile')
 	},
 	tablet: {
-		symbol: 'ac_tablet_landscape',
+		symbol: 'tablet-landscape',
 		title: Liferay.Language.get('tablet')
 	}
 };
@@ -211,18 +211,19 @@ const TimelinePanelBodyContentDetails: FC<{
 	const {title: deviceIconTitle, ...otherIconAttributes} =
 		(DEVICE_ICONS_MAP as any)[device.toLowerCase()] || DEVICE_ICONS_MAP.any;
 
+	const isWebhook = userAgent?.toLowerCase().includes('webhook');
+
 	return (
 		<div className='timeline-panel-body-content-details'>
-			<div className='icon-group'>
+			<div className='align-items-center d-flex icon-group'>
 				{applicationId && (
-					<div className='align-items-center d-flex'>
+					<div>
 						<ClayLabel
-							className='label-lg mr-3'
-							displayType={
-								userAgent?.toLowerCase().includes('webhook')
-									? 'success'
-									: 'info'
-							}
+							className={getCN('label-lg mr-5', {
+								'label-info': !isWebhook,
+								'label-success': isWebhook
+							})}
+							displayType={isWebhook ? 'success' : 'info'}
 						>
 							<strong>
 								{normalizeApplicationId(
@@ -232,22 +233,25 @@ const TimelinePanelBodyContentDetails: FC<{
 						</ClayLabel>
 
 						<ClayIcon
-							className='event-icon icon-root'
-							symbol='ac_event_icon'
+							className='icon-root text-secondary'
+							fontSize={16}
+							symbol='click'
 						/>
 					</div>
 				)}
 
-				<span className='item-count'>{itemCount}</span>
+				<span className='font-weight-semibold item-count text-secondary'>
+					{itemCount}
+				</span>
 
 				<span
-					className='device-icon mr-2'
+					className='device-icon mr-6'
 					data-tooltip
 					data-tooltip-align='bottom'
 					title={`${deviceIconTitle}\n${browserName}`}
 				>
 					<ClayIcon
-						className={getCN('icon-root', Colors.MainLighten28)}
+						className='icon-root text-secondary'
 						{...otherIconAttributes}
 					/>
 				</span>

@@ -402,9 +402,8 @@ public class UpgradeReport {
 					if (!rootDirFile.isDirectory()) {
 						if (_log.isInfoEnabled()) {
 							_log.info(
-								"Unable to determine the document library " +
-									"size. Directory does not exist: " +
-										_rootDir);
+								"Document library directory does not exist: " +
+									_rootDir);
 						}
 
 						return "unable to determine";

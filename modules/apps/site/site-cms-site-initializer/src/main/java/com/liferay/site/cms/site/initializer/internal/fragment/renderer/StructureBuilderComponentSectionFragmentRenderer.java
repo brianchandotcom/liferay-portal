@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.site.cms.site.initializer.internal.display.context.StructureBuilderDisplayContext;
@@ -75,7 +76,8 @@ public class StructureBuilderComponentSectionFragmentRenderer
 		StructureBuilderDisplayContext structureBuilderDisplayContext =
 			new StructureBuilderDisplayContext(
 				httpServletRequest, _jsonFactory,
-				_objectDefinitionResourceFactory);
+				_objectDefinitionResourceFactory,
+				_objectFieldBusinessTypeRegistry);
 
 		return structureBuilderDisplayContext.getProps();
 	}
@@ -85,5 +87,8 @@ public class StructureBuilderComponentSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	@Reference
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 }

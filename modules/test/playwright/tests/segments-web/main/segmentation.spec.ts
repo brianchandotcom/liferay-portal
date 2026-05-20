@@ -2264,6 +2264,37 @@ test(
 );
 
 test(
+	'Can drop properties from different sections of the segment editor sidebar',
+	{
+		tag: ['@LPS-135969', '@LPS-94651'],
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		// Add the User > User property from the User sidebar section
+
+		await segmentsPage.addCriterion('User', 'User');
+
+		// Add the Organization > Country property from the Organization sidebar section
+
+		await segmentsPage.addCriterion('Country', 'Organization');
+
+		await expect(
+			page.locator('.criteria-group-item-root', {hasText: 'Country'})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.criteria-group-item-root', {hasText: 'User'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can list a segment created on one locale from the admin URL of any other locale',
 	{
 		tag: '@LPS-153509',

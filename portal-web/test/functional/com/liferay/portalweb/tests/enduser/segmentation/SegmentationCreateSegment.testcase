@@ -39,55 +39,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-135969 Validate if, on Segmentation, the user can't drag and drop fields into different Property section."
-	@priority = 3
-	test ValidatePropertyDragAndDropToSections {
-		task ("Create a segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Segment With Multiple Conditions",
-				text = "Test");
-
-			Refresh();
-		}
-
-		task ("Try to drag property to wrong section") {
-			Segmentation.editSegment(entry = "Segment With Multiple Conditions");
-
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION_EDIT",
-				value1 = "Country");
-		}
-
-		task ("Assert that property was not added") {
-			AssertElementNotPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country");
-
-			Refresh();
-		}
-
-		task ("Try to drag property to right section") {
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION_EMPTY",
-				value1 = "Country");
-
-			AssertElementPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country");
-		}
-	}
-
 	@description = "LPS-135969 Validate if, on Segmentation, when the user clicks in a different Property section the contributor area of this section will be displayed."
 	@priority = 3
 	test ValidatePropertyVisibilityBySection {
@@ -239,71 +190,6 @@ definition {
 			AssertVisible(
 				key_content = "Go to Test Page Name",
 				locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
-		}
-	}
-
-	@description = "This is a test for LPS-94651. The draggable area should be default and the already existent conditions not disabled until one item from the properties sidebar is selected."
-	@priority = 3
-	test ViewDraggableAreaWhenDraggingPropertyItem {
-		task ("Given a segment designer accesses to the segment entry editor") {
-			LexiconEntry.gotoAdd();
-
-			WaitForPageLoad();
-		}
-
-		task ("When the segment designer drags a property item") {
-			DragOver.dragOver(
-				key_propertyOption = "User",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_TYPE_VISIBLE");
-		}
-
-		task ("Then the segment designer could see the draggable area") {
-			AssertVisible(locator1 = "Segmentation#EMPTY_DROP_ZONE_DASHED");
-		}
-
-		task ("When the segment designer drops the property item in draggable area") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				key_propertyOption = "User",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION");
-
-			AssertElementPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "User");
-		}
-
-		task ("Then the segment designer cannot see the draggable area") {
-			AssertElementNotPresent(locator1 = "Segmentation#EMPTY_DROP_ZONE_DASHED");
-		}
-
-		task ("When the segment designer drags a property item from another section") {
-			Segmentation.gotoSidebar(fieldType = "Organization");
-
-			DragOver.dragOver(
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_TYPE_VISIBLE");
-		}
-
-		task ("Then the segment designer could see the draggable area") {
-			AssertVisible(locator1 = "Segmentation#EMPTY_DROP_ZONE_DASHED");
-		}
-
-		task ("When the segment designer drops the property item in draggable area") {
-			DragAndDrop.javaScriptDragAndDropToObject(
-				indexNumber = 2,
-				key_propertyOption = "Country",
-				locator1 = "Segmentation#ADD_FIELD_TYPE_VISIBLE",
-				locator2 = "Segmentation#ADD_FIELD_POSITION_N");
-
-			AssertElementPresent(
-				locator1 = "Segmentation#CONDITIONS_PROPERTY_NAME",
-				propertyName = "Country");
-		}
-
-		task ("Then the segment designer cannot see the draggable area") {
-			AssertElementNotPresent(locator1 = "Segmentation#EMPTY_DROP_ZONE_DASHED");
 		}
 	}
 

@@ -22,6 +22,7 @@ import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
 import RuleDatePickerField from './RuleDatePickerField';
+import RuleMultiSelectField from './RuleMultiSelectField';
 import RuleSelect from './RuleSelect';
 import RuleTextField from './RuleTextField';
 import OPERATORS from './operators';
@@ -29,7 +30,12 @@ import OPERATORS from './operators';
 interface ConditionProps {
 	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
-	mappingFieldItems: {label: string; type: string; value: string}[];
+	mappingFieldItems: {
+		attributes?: ObjectFieldAttributes;
+		label: string;
+		type: string;
+		value: string;
+	}[];
 	onConditionChange: (condition: ConditionType) => void;
 }
 
@@ -113,6 +119,22 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.GREATER_THAN_OR_EQUALS,
 				OPERATORS.LESS_THAN,
 				OPERATORS.LESS_THAN_OR_EQUALS,
+			];
+
+		case 'multiselect':
+			return [
+				OPERATORS.CONTAINS,
+				OPERATORS.DOES_NOT_CONTAIN,
+				OPERATORS.IS_EMPTY,
+				OPERATORS.IS_NOT_EMPTY,
+			];
+
+		case 'select':
+			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
+				OPERATORS.IS_EMPTY,
+				OPERATORS.IS_NOT_EMPTY,
 			];
 
 		case 'text':
@@ -269,7 +291,7 @@ function FormFragmentTypeSelectors({
 							options: {
 								type,
 							},
-						});
+						} as ConditionType);
 					}}
 					selectedKey={condition.options?.type}
 				/>
@@ -314,13 +336,17 @@ function FormFragmentTypeSelectors({
 								...condition.options!,
 								value,
 							},
-						});
+						} as ConditionType);
 
 						sendMessage(
 							Liferay.Language.get('condition-completed')
 						);
 					}}
-					selectedKey={condition.options?.value}
+					selectedKey={
+						Array.isArray(condition.options?.value)
+							? undefined
+							: condition.options?.value
+					}
 				/>
 			) : null}
 		</>
@@ -382,7 +408,7 @@ function FieldFragmentTypeSelectors({
 							options: {
 								type,
 							},
-						});
+						} as ConditionType);
 					}}
 					selectedKey={condition.options?.type}
 				/>
@@ -422,7 +448,7 @@ function FieldFragmentTypeSelectors({
 								...condition.options!,
 								value,
 							},
-						});
+						} as ConditionType);
 					}}
 					onErrorChange={onErrorChange}
 					value={condition.options?.value}
@@ -443,14 +469,28 @@ function ConditionValueInput({
 	attributes?: ObjectFieldAttributes;
 	fieldType: string | undefined;
 	onBlur: () => void;
-	onChange: (value: string) => void;
+	onChange: (value: string | string[]) => void;
 	onErrorChange: (error: RuleError | null) => void;
-	value: string | undefined;
+	value: string | string[] | undefined;
 }) {
+	const stringValue = typeof value === 'string' ? value : '';
+
+	if (fieldType === 'multiselect' && attributes?.options) {
+		return (
+			<RuleMultiSelectField
+				onBlur={onBlur}
+				onChange={onChange}
+				onErrorChange={onErrorChange}
+				options={attributes.options}
+				value={Array.isArray(value) ? value : []}
+			/>
+		);
+	}
+
 	if (fieldType === 'select' && attributes?.options) {
 		return (
 			<RuleSelect
-				aria-label={Liferay.Language.get('value')}
+				aria-label={Liferay.Language.get('select-a-value')}
 				items={attributes.options}
 				onErrorChange={onErrorChange}
 				onSelectionChange={(selectedValue) => {
@@ -458,7 +498,7 @@ function ConditionValueInput({
 
 					onBlur();
 				}}
-				selectedKey={value}
+				selectedKey={stringValue || undefined}
 			/>
 		);
 	}
@@ -470,7 +510,7 @@ function ConditionValueInput({
 				onBlur={onBlur}
 				onChange={onChange}
 				onErrorChange={onErrorChange}
-				value={value ?? ''}
+				value={stringValue}
 			/>
 		);
 	}
@@ -480,7 +520,8 @@ function ConditionValueInput({
 			isNumber={fieldType === 'number'}
 			onBlur={onBlur}
 			onChange={onChange}
-			value={value ?? ''}
+			onErrorChange={onErrorChange}
+			value={stringValue}
 		/>
 	);
 }
@@ -514,7 +555,7 @@ function UserTypeSelectors({
 					onConditionChange({
 						...condition,
 						...convertConditionValueToOptions(selectedCondition),
-					});
+					} as ConditionType);
 				}}
 				selectedKey={convertOptionsToConditionValue(condition)}
 			/>
@@ -529,13 +570,17 @@ function UserTypeSelectors({
 								...condition.options!,
 								value,
 							},
-						});
+						} as ConditionType);
 
 						sendMessage(
 							Liferay.Language.get('condition-completed')
 						);
 					}}
-					value={condition.options?.value}
+					value={
+						typeof condition.options?.value === 'string'
+							? condition.options.value
+							: undefined
+					}
 				/>
 			) : null}
 		</>

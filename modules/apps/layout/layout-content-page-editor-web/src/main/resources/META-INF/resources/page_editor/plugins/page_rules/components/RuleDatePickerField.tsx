@@ -7,7 +7,7 @@ import ClayDatePicker from '@clayui/date-picker';
 import {useId} from 'frontend-js-components-web';
 import {dateUtils} from 'frontend-js-web';
 import moment from 'moment';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
 import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
 import {RuleError} from '../../../types/Rule';
@@ -36,27 +36,29 @@ export default function RuleDatePickerField({
 	const id = useId();
 	const inputRef = useRef<HTMLInputElement | null>(null);
 
-	const errorMessage = Liferay.Language.get('please-enter-a-valid-date');
+	const errorMessage = useMemo(() => {
+		if (!value) {
+			return Liferay.Language.get('select-a-value');
+		}
 
-	const handleError = useCallback(
-		(value: string) => {
-			const isValid =
-				!value || moment(value, dateFormat, true).isValid();
+		if (!moment(value, dateFormat, true).isValid()) {
+			return Liferay.Language.get('please-enter-a-valid-date');
+		}
 
-			setHasError(!isValid);
+		return '';
+	}, [dateFormat, value]);
 
-			if (inputRef.current) {
-				onErrorChange(
-					isValid
-						? null
-						: {element: inputRef.current, message: errorMessage}
-				);
-			}
-		},
-		[dateFormat, errorMessage, onErrorChange]
-	);
+	useEffect(() => {
+		if (inputRef.current) {
+			onErrorChange(
+				errorMessage
+					? {element: inputRef.current, message: errorMessage}
+					: null
+			);
+		}
+	}, [errorMessage, onErrorChange]);
 
-	useRuleValidation(() => handleError(value));
+	useRuleValidation(() => setHasError(Boolean(errorMessage)));
 
 	return (
 		<RuleField
@@ -69,15 +71,11 @@ export default function RuleDatePickerField({
 				firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
 				id={id}
 				months={dateUtils.getMonthsLong()}
-				onBlur={() => {
-					handleError(value);
-
-					onBlur();
-				}}
+				onBlur={onBlur}
 				onChange={(nextValue) => {
-					handleError(nextValue as string);
-
 					onChange(nextValue as string);
+
+					setHasError(false);
 				}}
 				placeholder={dateFormat}
 				ref={inputRef}

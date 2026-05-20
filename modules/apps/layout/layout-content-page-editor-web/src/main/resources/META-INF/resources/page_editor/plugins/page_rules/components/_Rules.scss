@@ -38,6 +38,10 @@ html#{$cadmin-selector} .cadmin {
 		white-space: nowrap;
 	}
 
+	.page-editor__rule-builder-multi-select {
+		min-width: 180px;
+	}
+
 	.page-editor__rule-builder-section {
 		.lexicon-icon {
 			margin-top: 0;

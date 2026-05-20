@@ -1789,6 +1789,59 @@ test(
 );
 
 test(
+	'Can validate a segment can be created using each User string property (First Name, Last Name, User Name, Screen Name, Job Title)',
+	{
+		tag: '@LPS-130286',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Create a user with a custom name, screen name and job title
+
+		const alternateName = 'usersn' + getRandomString();
+		const emailAddress = getRandomString() + '@liferay.com';
+		const familyName = 'userln' + getRandomString();
+		const givenName = 'userfn' + getRandomString();
+		const jobTitle = 'QA' + getRandomString();
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName,
+			emailAddress,
+			familyName,
+			givenName,
+			jobTitle,
+		});
+
+		// Create one segment per User string property and assert the user is a member
+
+		for (const {property, value} of [
+			{property: 'First Name', value: givenName},
+			{property: 'Last Name', value: familyName},
+			{property: 'User Name', value: `${givenName} ${familyName}`},
+			{property: 'Screen Name', value: alternateName},
+			{property: 'Job Title', value: jobTitle},
+		]) {
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			const segmentName = getRandomString();
+
+			await segmentsPage.addSegmentField(property, 'User', segmentName);
+
+			await segmentsPage.fillField(value);
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewCriterionValue(value);
+		}
+	}
+);
+
+test(
 	'Can validate a segment can be created using "Email Address" with each supported operator (Contains, Equals, Not Contains, Not Equals)',
 	{
 		tag: '@LPS-130291',

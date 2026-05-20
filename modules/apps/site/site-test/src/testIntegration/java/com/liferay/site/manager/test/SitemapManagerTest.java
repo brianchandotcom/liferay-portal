@@ -1838,8 +1838,6 @@ public class SitemapManagerTest {
 			_group.getGroupId(), uuid, urls);
 	}
 
-	private static final String _INDEX_MODE_ASSET_TYPE = "asset-type";
-
 	private static final String _CLASS_NAME_ASSET_CATEGORY =
 		AssetCategory.class.getName();
 
@@ -1850,6 +1848,8 @@ public class SitemapManagerTest {
 
 	private static final String _CLASS_NAME_OBJECT_ENTRY =
 		ObjectEntry.class.getName();
+
+	private static final String _INDEX_MODE_ASSET_TYPE = "asset-type";
 
 	private static final String _PID_SITEMAP_COMPANY_CONFIGURATION =
 		"com.liferay.site.internal.configuration.SitemapCompanyConfiguration";

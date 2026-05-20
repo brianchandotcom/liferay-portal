@@ -2264,6 +2264,51 @@ test(
 );
 
 test(
+	'Can refresh the members count when conjunctions between conditions change',
+	{
+		tag: ['@LPS-153507', '@LPS-95412'],
+	},
+	async ({apiHelpers, page, pageEditorPage, segmentsPage, site}) => {
+
+		// Create a Developer user
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+			familyName: 'userln',
+			givenName: 'userfn',
+			jobTitle: 'Developer',
+		});
+
+		// Build a segment with Job Title=Developer And First Name=Test
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await pageEditorPage.segmentEditorPage.createSegment(
+			'SegmentationCheckMembersWithConditions Test',
+			{
+				user: ['Job Title', 'First Name'],
+			}
+		);
+
+		await page.getByLabel('Job Title: Input a value.').fill('Developer');
+
+		await page.getByLabel('First Name: Input a value.').fill('Test');
+
+		// Assert And matches no user
+
+		await segmentsPage.viewMemberCount('0 Members');
+
+		// Switch the conjunction to Or and assert the count refreshes to the union
+
+		await segmentsPage.chooseLogic('Or');
+
+		await segmentsPage.viewMemberCount('2 Members');
+	}
+);
+
+test(
 	'Can translate a segment title and edit it only after enabling edit mode',
 	{
 		tag: '@LPS-135495',

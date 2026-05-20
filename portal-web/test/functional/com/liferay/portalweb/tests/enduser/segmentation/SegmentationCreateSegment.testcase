@@ -39,51 +39,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-153507 - Test Automation for LPS-95412: Members count is not updated when conjunctions are changed"
-	@priority = 4
-	test SegmentationCheckMembersWithConditions {
-		task ("Add user with devoleper job title") {
-			JSONUser.addUser(
-				jobTitle = "Developer",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Add segment with conditions") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Job Title");
-
-			Segmentation.fillProperty(criterionValue = "Developer");
-
-			Segmentation.addSecondProperty(propertyOption = "First Name");
-
-			Segmentation.fillProperty(
-				criterionValue = "Test",
-				indexNumber = 2);
-
-			Segmentation.fillTitle(titleField = "SegmentationCheckMembersWithConditions Test");
-		}
-
-		task ("Check the number of members") {
-			AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "0 Members");
-		}
-
-		task ("Change the conjunction and check the number of members") {
-			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#MEMBERS_MATCHED",
-				value1 = "2 Members");
-		}
-	}
-
 	@description = "LPS-153509 Bug: Segment name is not localizable but it works as if it were"
 	@priority = 4
 	@uitest

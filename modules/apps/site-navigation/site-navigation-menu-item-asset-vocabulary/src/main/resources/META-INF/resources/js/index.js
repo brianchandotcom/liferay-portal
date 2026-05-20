@@ -8,14 +8,58 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
-import {
-	TranslationAdminSelector,
-	openSelectionModal,
-} from 'frontend-js-components-web';
+import {TranslationAdminSelector} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
+
+const HEADLESS_TAXONOMY_VOCABULARIES_BASE =
+	'/o/headless-admin-taxonomy/v1.0/sites';
+
+function buildVocabulariesURL(currentSiteId) {
+	const url = new URL(
+		`${HEADLESS_TAXONOMY_VOCABULARIES_BASE}/${String(
+			currentSiteId
+		)}/taxonomy-vocabularies`,
+		window.location.origin
+	);
+
+	url.searchParams.set('filter', 'visibilityType eq 0');
+
+	return url.toString();
+}
+
+function resolveScope(vocabulary, context) {
+	if (vocabulary.assetLibraryKey) {
+		const assetLibrary = context.assetLibrariesByKey.get(
+			vocabulary.assetLibraryKey
+		);
+
+		return {
+			scopeExternalReferenceCode:
+				assetLibrary?.externalReferenceCode ??
+				vocabulary.assetLibraryKey,
+			scopeName: assetLibrary?.name ?? vocabulary.assetLibraryKey,
+		};
+	}
+
+	if (
+		vocabulary.siteId !== undefined &&
+		String(vocabulary.siteId) === context.companyGroupId
+	) {
+		return {
+			scopeExternalReferenceCode: context.companyExternalReferenceCode,
+			scopeName: Liferay.Language.get('global'),
+		};
+	}
+
+	return {
+		scopeExternalReferenceCode: context.siteExternalReferenceCode,
+		scopeName: context.siteName,
+	};
+}
 
 function AssetVocabularyContextualSidebar({
 	assetVocabulary,
@@ -48,9 +92,13 @@ function AssetVocabularyContextualSidebar({
 	const nameRef = useRef(null);
 
 	const {
-		assetVocabularySelectorURL,
-		eventName,
+		assetLibraries,
+		companyExternalReferenceCode,
+		companyGroupId,
+		currentSiteId,
 		getAssetVocabularyDetailsURL,
+		siteExternalReferenceCode,
+		siteName: chooseAssetVocabularySiteName,
 	} = chooseAssetVocabularyProps;
 
 	useEffect(() => {
@@ -104,59 +152,113 @@ function AssetVocabularyContextualSidebar({
 		};
 	}, [assetVocabulary.title, customName, defaultLanguageId, translations]);
 
-	const openChooseItemModal = () =>
-		openSelectionModal({
-			onSelect: (selectedItem) => {
-				if (selectedItem) {
-					let item = {
-						...selectedItem,
-					};
+	const openChooseItemModal = () => {
+		const scopeContext = {
+			assetLibrariesByKey: new Map(
+				(assetLibraries || []).map((assetLibrary) => [
+					assetLibrary.externalReferenceCode,
+					assetLibrary,
+				])
+			),
+			companyExternalReferenceCode,
+			companyGroupId: String(companyGroupId),
+			siteExternalReferenceCode,
+			siteName: chooseAssetVocabularySiteName,
+		};
 
-					let value;
+		const TitleCell = ({itemData}) => {
+			const {scopeName} = resolveScope(itemData, scopeContext);
 
-					if (typeof selectedItem.value === 'string') {
-						try {
-							value = JSON.parse(selectedItem.value);
-						}
-						catch (error) {}
-					}
-					else if (
-						selectedItem.value &&
-						typeof selectedItem.value === 'object'
-					) {
-						value = selectedItem.value;
-					}
+			return `${itemData.name} (${scopeName})`;
+		};
 
-					if (value) {
-						delete item.value;
-						item = {...value};
-					}
-
-					setSelectedVocabulary({
-						...item,
-						externalReferenceCode: item.externalReferenceCode,
-					});
-
-					const namespacedItem = Liferay.Util.ns(namespace, item);
-
-					fetch(getAssetVocabularyDetailsURL, {
-						body: objectToFormData(namespacedItem),
-						method: 'POST',
-					})
-						.then((response) => response.json())
-						.then((jsonResponse) => {
-							setNumberOfCategories(
-								jsonResponse.numberOfCategories
-							);
-							setSiteName(jsonResponse.siteName);
-						})
-						.catch(() => {});
-				}
+		openItemSelectorModal({
+			apiURL: buildVocabulariesURL(currentSiteId),
+			fdsProps: {
+				configInURLBehavior: 'OFF',
+				customRenderers: {
+					tableCell: [
+						{
+							component: TitleCell,
+							name: 'titleWithScope',
+							type: 'internal',
+						},
+					],
+				},
+				id: 'siteNavVocabularySelectorFDS',
+				pagination: {
+					deltas: [{label: 20}, {label: 50}],
+					initialDelta: 20,
+				},
+				views: [
+					{
+						contentRenderer: 'table',
+						label: '',
+						name: 'list',
+						schema: {
+							fields: [
+								{
+									contentRenderer: 'titleWithScope',
+									fieldName: 'name',
+									label: Liferay.Language.get('title'),
+								},
+								{
+									fieldName: 'creator.name',
+									label: Liferay.Language.get('user'),
+								},
+								{
+									contentRenderer: 'dateTime',
+									fieldName: 'dateModified',
+									label: Liferay.Language.get(
+										'modified-date'
+									),
+									sortable: true,
+								},
+							],
+						},
+					},
+				],
 			},
-			selectEventName: eventName,
+			itemTypeLabel: Liferay.Language.get('vocabulary'),
+			items: [],
+			locator: {id: 'id', label: 'name', value: 'id'},
+			multiSelect: false,
+			onItemsChange: (selected) => {
+				const [vocabulary] = selected;
+
+				if (!vocabulary) {
+					return;
+				}
+
+				const {scopeExternalReferenceCode} = resolveScope(
+					vocabulary,
+					scopeContext
+				);
+
+				const item = {
+					externalReferenceCode: vocabulary.externalReferenceCode,
+					scopeExternalReferenceCode,
+					title: vocabulary.name,
+					type: 'AssetVocabulary',
+				};
+
+				setSelectedVocabulary(item);
+
+				fetch(getAssetVocabularyDetailsURL, {
+					body: objectToFormData(Liferay.Util.ns(namespace, item)),
+					method: 'POST',
+				})
+					.then((response) => response.json())
+					.then((jsonResponse) => {
+						setNumberOfCategories(jsonResponse.numberOfCategories);
+						setSiteName(jsonResponse.siteName);
+					})
+					.catch(() => {});
+			},
+			size: 'lg',
 			title: Liferay.Language.get('select-vocabulary'),
-			url: assetVocabularySelectorURL,
 		});
+	};
 
 	return (
 		<>
@@ -375,9 +477,19 @@ AssetVocabularyContextualSidebar.propTypes = {
 		type: PropTypes.string,
 	}).isRequired,
 	chooseAssetVocabularyProps: PropTypes.shape({
-		assetVocabularySelectorURL: PropTypes.string,
-		eventName: PropTypes.string,
+		assetLibraries: PropTypes.arrayOf(
+			PropTypes.shape({
+				externalReferenceCode: PropTypes.string,
+				id: PropTypes.string,
+				name: PropTypes.string,
+			})
+		),
+		companyExternalReferenceCode: PropTypes.string,
+		companyGroupId: PropTypes.string,
+		currentSiteId: PropTypes.string,
 		getAssetVocabularyDetailsURL: PropTypes.string,
+		siteExternalReferenceCode: PropTypes.string,
+		siteName: PropTypes.string,
 	}).isRequired,
 	defaultLanguageId: PropTypes.string.isRequired,
 	locales: PropTypes.array.isRequired,

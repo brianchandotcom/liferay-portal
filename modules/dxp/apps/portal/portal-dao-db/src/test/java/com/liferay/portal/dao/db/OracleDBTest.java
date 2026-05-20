@@ -345,10 +345,15 @@ public class OracleDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testGetLongDefaultValue() {
+		Assert.assertEquals("10", db.getDefaultValue("10 "));
+	}
+
+	@Test
 	public void testGetQueryInfosORA942() throws Exception {
 		OracleDB oracleDB = new OracleDB(0, 0);
 
-		SQLException originalException = new SQLException(
+		SQLException sqlException1 = new SQLException(
 			"ORA-00942: table or view does not exist", "42000", 942);
 
 		Connection connection = Mockito.mock(Connection.class);
@@ -365,7 +370,7 @@ public class OracleDBTest extends BaseDBTestCase {
 		Mockito.when(
 			preparedStatement.executeQuery()
 		).thenThrow(
-			originalException
+			sqlException1
 		);
 
 		try {
@@ -373,24 +378,19 @@ public class OracleDBTest extends BaseDBTestCase {
 
 			Assert.fail();
 		}
-		catch (SQLException sqlException) {
+		catch (SQLException sqlException2) {
 			Assert.assertEquals(
-				originalException.getErrorCode(), sqlException.getErrorCode());
+				sqlException1.getErrorCode(), sqlException2.getErrorCode());
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Grant select privileges on \"sys.v_$session\" and ",
 					"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
 					"\"DBA\", because the database user lacks the required ",
 					"select privileges"),
-				sqlException.getMessage());
+				sqlException2.getMessage());
 			Assert.assertEquals(
-				originalException.getSQLState(), sqlException.getSQLState());
+				sqlException1.getSQLState(), sqlException2.getSQLState());
 		}
-	}
-
-	@Test
-	public void testGetLongDefaultValue() {
-		Assert.assertEquals("10", db.getDefaultValue("10 "));
 	}
 
 	@Test

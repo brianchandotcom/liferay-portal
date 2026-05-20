@@ -14,3 +14,22 @@ export function search({
 		path: `contacts/${groupId}/asset-summary-categories`
 	});
 }
+
+export function fetchAccountTopCategories({
+	accountId,
+	channelId,
+	groupId,
+	selectedMetric
+}) {
+	return sendRequest({
+		data: {
+			accountId,
+			channelId,
+			pageSize: 5,
+			selectedMetric,
+			sort: `${selectedMetric},desc`
+		},
+		method: 'GET',
+		path: `contacts/${groupId}/asset-summary-categories`
+	});
+}

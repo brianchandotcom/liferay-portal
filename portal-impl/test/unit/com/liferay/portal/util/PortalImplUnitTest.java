@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LayoutTypePortletFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -150,6 +151,56 @@ public class PortalImplUnitTest {
 		portalUtilMockedStatic.close();
 
 		_assertActionResponse(actionResponse, params);
+	}
+
+	@Test
+	@TestInfo("LPD-90275")
+	public void testGetCanonicalDomain() {
+		String defaultVirtualHostname = "localhost";
+
+		String hostname = "z-" + RandomTestUtil.randomString();
+
+		String portalDomain = hostname + ":8080";
+
+		LayoutSet layoutSet = new LayoutSetImpl();
+
+		layoutSet.setVirtualHostnames(Collections.emptyNavigableMap());
+
+		Assert.assertEquals(
+			defaultVirtualHostname,
+			_portalImpl.getCanonicalDomain(
+				defaultVirtualHostname, layoutSet, portalDomain,
+				Collections.emptyNavigableMap()));
+
+		Assert.assertEquals(
+			hostname,
+			_portalImpl.getCanonicalDomain(
+				defaultVirtualHostname, layoutSet, portalDomain,
+				TreeMapBuilder.put(
+					hostname, StringPool.BLANK
+				).build()));
+
+		String languageSpecificHostname = "a-" + RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			hostname,
+			_portalImpl.getCanonicalDomain(
+				defaultVirtualHostname, layoutSet, portalDomain,
+				TreeMapBuilder.put(
+					hostname, StringPool.BLANK
+				).put(
+					languageSpecificHostname,
+					LocaleUtil.toLanguageId(LocaleUtil.US)
+				).build()));
+
+		Assert.assertEquals(
+			defaultVirtualHostname,
+			_portalImpl.getCanonicalDomain(
+				defaultVirtualHostname, layoutSet, portalDomain,
+				TreeMapBuilder.put(
+					languageSpecificHostname,
+					LocaleUtil.toLanguageId(LocaleUtil.US)
+				).build()));
 	}
 
 	@Test

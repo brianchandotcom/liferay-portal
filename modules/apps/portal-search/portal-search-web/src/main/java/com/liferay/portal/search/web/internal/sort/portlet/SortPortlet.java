@@ -65,7 +65,7 @@ public class SortPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String metaRobotsContent = _layoutMetaRobotsProvider.getContent(
+		String metaRobotsContent = _layoutSEOMetaRobotsProvider.getContent(
 			renderRequest);
 
 		if (Validator.isNotNull(metaRobotsContent)) {
@@ -152,7 +152,7 @@ public class SortPortlet extends MVCPortlet {
 		target = "(jakarta.portlet.name=" + SortPortletKeys.SORT + ")",
 		unbind = "-"
 	)
-	private LayoutSEOMetaRobotsProvider _layoutMetaRobotsProvider;
+	private LayoutSEOMetaRobotsProvider _layoutSEOMetaRobotsProvider;
 
 	@Reference
 	private PortletSharedSearchRequest _portletSharedSearchRequest;

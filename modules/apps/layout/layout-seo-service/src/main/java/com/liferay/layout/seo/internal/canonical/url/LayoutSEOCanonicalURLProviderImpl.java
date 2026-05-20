@@ -17,6 +17,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -65,10 +66,16 @@ public class LayoutSEOCanonicalURLProviderImpl
 				layout, locale, canonicalURL, themeDisplay);
 		}
 
-		layoutCanonicalURL = _appendContributedParameters(
-			layoutCanonicalURL, layout);
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-71164")) {
 
-		return HttpComponentsUtil.sortParameters(layoutCanonicalURL);
+			layoutCanonicalURL = _appendContributedParameters(
+				layoutCanonicalURL, layout);
+
+			return HttpComponentsUtil.sortParameters(layoutCanonicalURL);
+		}
+
+		return layoutCanonicalURL;
 	}
 
 	@Override
@@ -141,7 +148,7 @@ public class LayoutSEOCanonicalURLProviderImpl
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
-		if (httpServletRequest == null) {
+		if ((httpServletRequest == null) || !layout.isTypePortlet()) {
 			return canonicalURL;
 		}
 

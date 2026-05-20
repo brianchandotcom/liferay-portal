@@ -44,20 +44,12 @@ public class LayoutSetSEORobotsProviderImpl
 
 	@Override
 	public String getRobots(LayoutSet layoutSet, boolean secure)
-		throws PortalException {
+		throws IOException, PortalException {
 
 		if (layoutSet == null) {
-			try {
-				return StringUtil.read(
-					PortalClassLoaderUtil.getClassLoader(),
-					PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
-			}
-			catch (IOException ioException) {
-				_log.error(
-					"Unable to read the content for " +
-						PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP,
-					ioException);
-			}
+			return StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITHOUT_SITEMAP);
 		}
 
 		int portalServerPort = PortalUtil.getPortalServerPort(secure);
@@ -65,22 +57,12 @@ public class LayoutSetSEORobotsProviderImpl
 		String virtualHostname = GetterUtil.getString(
 			PortalUtil.getDefaultVirtualHostname(true, layoutSet));
 
-		String robotsTxt = null;
-
-		try {
-			robotsTxt = GetterUtil.getString(
-				layoutSet.getSettingsProperty(
-					layoutSet.isPrivateLayout() + "-robots.txt"),
-				StringUtil.read(
-					PortalClassLoaderUtil.getClassLoader(),
-					PropsValues.ROBOTS_TXT_WITH_SITEMAP));
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to read the content for " +
-					PropsValues.ROBOTS_TXT_WITH_SITEMAP,
-				ioException);
-		}
+		String robotsTxt = GetterUtil.getString(
+			layoutSet.getSettingsProperty(
+				layoutSet.isPrivateLayout() + "-robots.txt"),
+			StringUtil.read(
+				PortalClassLoaderUtil.getClassLoader(),
+				PropsValues.ROBOTS_TXT_WITH_SITEMAP));
 
 		robotsTxt = _replaceWildcards(
 			robotsTxt, virtualHostname, secure, portalServerPort);

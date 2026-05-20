@@ -8,13 +8,15 @@ package com.liferay.layout.seo.provider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutSet;
 
+import java.io.IOException;
+
 /**
  * @author Amos Fong
  */
 public interface LayoutSetSEORobotsProvider {
 
 	public String getRobots(LayoutSet layoutSet, boolean secure)
-		throws PortalException;
+		throws IOException, PortalException;
 
 	public String getRobotsContributions(LayoutSet layoutSet);
 

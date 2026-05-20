@@ -73,7 +73,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(
 				_itemSelector, layoutActionsHelper, _layoutService,
-				_layoutSetPrototypeHelper, _layoutSetRobotsProvider,
+				_layoutSetPrototypeHelper, _layoutSetSEORobotsProvider,
 				_portal.getLiferayPortletRequest(resourceRequest),
 				_portal.getLiferayPortletResponse(resourceResponse));
 
@@ -108,7 +108,7 @@ public class GetLayoutActionsMVCResourceCommand extends BaseMVCResourceCommand {
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
-	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
+	private LayoutSetSEORobotsProvider _layoutSetSEORobotsProvider;
 
 	@Reference
 	private Portal _portal;

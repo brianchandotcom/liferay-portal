@@ -212,7 +212,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutService,
-					_layoutSetPrototypeHelper, _layoutSetRobotsProvider,
+					_layoutSetPrototypeHelper, _layoutSetSEORobotsProvider,
 					_portal.getLiferayPortletRequest(renderRequest),
 					_portal.getLiferayPortletResponse(renderResponse));
 
@@ -317,7 +317,7 @@ public class GroupPagesPortlet extends MVCPortlet {
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
-	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
+	private LayoutSetSEORobotsProvider _layoutSetSEORobotsProvider;
 
 	private volatile LayoutUtilityPageThumbnailConfiguration
 		_layoutUtilityPageThumbnailConfiguration;

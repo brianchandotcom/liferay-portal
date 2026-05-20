@@ -10,8 +10,11 @@ import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ContactRole;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
+import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -45,7 +48,9 @@ public class ProvisioningHubService extends BaseService {
 
 		Product product = productPurchase.getProduct();
 
-		if (Objects.equals(product.getName(), "Liferay Data Platform")) {
+		if (Objects.equals(
+				product.getName(), _LIFERAY_DATA_PLATFORM_PRIVATE_BETA)) {
+
 			_provisionLDP(koroneikiAccount, order);
 		}
 	}
@@ -67,6 +72,23 @@ public class ProvisioningHubService extends BaseService {
 		}
 
 		return response;
+	}
+
+	private Contact _getContact(String key) throws Exception {
+		Page<Contact> contactsPage = _koroneikiService.getContactsPage(
+			key, null);
+
+		for (Contact contact : contactsPage.getItems()) {
+			for (ContactRole contactRole : contact.getContactRoles()) {
+				if (Objects.equals(
+						contactRole.getName(), "LDP Administrator")) {
+
+					return contact;
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private String _getServerLocation(String dataCenterLocation) {
@@ -121,6 +143,14 @@ public class ProvisioningHubService extends BaseService {
 				securityContactEmailAddress.split(","));
 		}
 
+		String emailAddress = securityContactEmailAddress;
+
+		Contact contact = _getContact(koroneikiAccount.getKey());
+
+		if (contact != null) {
+			emailAddress = contact.getEmailAddress();
+		}
+
 		String analyticsProject = _analyticsService.provision(
 			new JSONObject(
 			).put(
@@ -133,8 +163,7 @@ public class ProvisioningHubService extends BaseService {
 			).put(
 				"name", properties.get("ldpWorkspaceName")
 			).put(
-				"ownerEmailAddress",
-				properties.get("securityContactEmailAddress")
+				"ownerEmailAddress", emailAddress
 			).put(
 				"serverLocation",
 				_getServerLocation(properties.get("dataCenterLocation"))
@@ -151,6 +180,9 @@ public class ProvisioningHubService extends BaseService {
 			).build(),
 			order.getId(), order.getPaymentStatus());
 	}
+
+	private static final String _LIFERAY_DATA_PLATFORM_PRIVATE_BETA =
+		"Liferay Data Platform (Private Beta)";
 
 	private static final Log _log = LogFactory.getLog(
 		ProvisioningHubService.class);

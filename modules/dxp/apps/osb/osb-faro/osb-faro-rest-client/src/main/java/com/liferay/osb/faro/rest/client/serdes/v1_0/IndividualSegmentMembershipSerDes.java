@@ -125,9 +125,7 @@ public class IndividualSegmentMembershipSerDes {
 			sb.append("\"status\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individualSegmentMembership.getStatus()));
-
+			sb.append(individualSegmentMembership.getStatus());
 			sb.append("\"");
 		}
 
@@ -277,7 +275,8 @@ public class IndividualSegmentMembershipSerDes {
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					individualSegmentMembership.setStatus(
-						(String)jsonParserFieldValue);
+						IndividualSegmentMembership.Status.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -361,4 +360,4 @@ public class IndividualSegmentMembershipSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:550629319
+// LIFERAY-REST-BUILDER-HASH:-1394395308

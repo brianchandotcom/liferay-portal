@@ -5,9 +5,12 @@
 
 package com.liferay.osb.faro.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +20,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -34,7 +39,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getSiteAssetSummariesPage` to list these sets of metrics.",
+	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupAssetSummariesPage` to list these sets of metrics.",
 	value = "AssetSummaryMetric"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -137,10 +142,10 @@ public class AssetSummaryMetric implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _assetTitleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Asset category (e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE')."
-	)
-	public String getAssetType() {
+	@io.swagger.v3.oas.annotations.media.Schema(description = "Asset category.")
+	@JsonGetter("assetType")
+	@Valid
+	public AssetType getAssetType() {
 		if (_assetTypeSupplier != null) {
 			assetType = _assetTypeSupplier.get();
 
@@ -150,7 +155,18 @@ public class AssetSummaryMetric implements Serializable {
 		return assetType;
 	}
 
-	public void setAssetType(String assetType) {
+	@JsonIgnore
+	public String getAssetTypeAsString() {
+		AssetType assetType = getAssetType();
+
+		if (assetType == null) {
+			return null;
+		}
+
+		return assetType.toString();
+	}
+
+	public void setAssetType(AssetType assetType) {
 		this.assetType = assetType;
 
 		_assetTypeSupplier = null;
@@ -158,7 +174,7 @@ public class AssetSummaryMetric implements Serializable {
 
 	@JsonIgnore
 	public void setAssetType(
-		UnsafeSupplier<String, Exception> assetTypeUnsafeSupplier) {
+		UnsafeSupplier<AssetType, Exception> assetTypeUnsafeSupplier) {
 
 		_assetTypeSupplier = () -> {
 			try {
@@ -173,14 +189,12 @@ public class AssetSummaryMetric implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "Asset category (e.g. 'BLOG', 'DOCUMENT', 'FORM', 'JOURNAL', 'OBJECT_ENTRY', 'PAGE')."
-	)
+	@GraphQLField(description = "Asset category.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String assetType;
+	protected AssetType assetType;
 
 	@JsonIgnore
-	private Supplier<String> _assetTypeSupplier;
+	private Supplier<AssetType> _assetTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Download count over the selected date range. Null when the asset type doesn't track downloads."
@@ -606,7 +620,7 @@ public class AssetSummaryMetric implements Serializable {
 			sb.append("\"");
 		}
 
-		String assetType = getAssetType();
+		AssetType assetType = getAssetType();
 
 		if (assetType != null) {
 			if (sb.length() > 1) {
@@ -616,9 +630,7 @@ public class AssetSummaryMetric implements Serializable {
 			sb.append("\"assetType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(assetType));
-
+			sb.append(assetType);
 			sb.append("\"");
 		}
 
@@ -730,6 +742,45 @@ public class AssetSummaryMetric implements Serializable {
 	)
 	public String xClassName;
 
+	@GraphQLName("AssetType")
+	public static enum AssetType {
+
+		BLOG("BLOG"), DOCUMENT("DOCUMENT"), FORM("FORM"), JOURNAL("JOURNAL"),
+		OBJECT_ENTRY("OBJECT_ENTRY"), PAGE("PAGE");
+
+		@JsonCreator
+		public static AssetType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (AssetType assetType : values()) {
+				if (Objects.equals(assetType.getValue(), value)) {
+					return assetType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private AssetType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 	private static String _escape(Object object) {
 		return StringUtil.replace(
 			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
@@ -819,4 +870,4 @@ public class AssetSummaryMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1513253024
+// LIFERAY-REST-BUILDER-HASH:2020623730

@@ -58,9 +58,7 @@ public class IndividualDemographicFieldSerDes {
 			sb.append("\"fieldType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individualDemographicField.getFieldType()));
-
+			sb.append(individualDemographicField.getFieldType());
 			sb.append("\"");
 		}
 
@@ -203,7 +201,8 @@ public class IndividualDemographicFieldSerDes {
 			if (Objects.equals(jsonParserFieldName, "fieldType")) {
 				if (jsonParserFieldValue != null) {
 					individualDemographicField.setFieldType(
-						(String)jsonParserFieldValue);
+						IndividualDemographicField.FieldType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "label")) {
@@ -305,4 +304,4 @@ public class IndividualDemographicFieldSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1950215764
+// LIFERAY-REST-BUILDER-HASH:-1209298091

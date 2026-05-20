@@ -175,9 +175,6 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		individualSegment.setFilter(regex);
 		individualSegment.setId(regex);
 		individualSegment.setName(regex);
-		individualSegment.setSegmentType(regex);
-		individualSegment.setState(regex);
-		individualSegment.setStatus(regex);
 
 		String json = IndividualSegmentSerDes.toJSON(individualSegment);
 
@@ -189,9 +186,6 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		Assert.assertEquals(regex, individualSegment.getFilter());
 		Assert.assertEquals(regex, individualSegment.getId());
 		Assert.assertEquals(regex, individualSegment.getName());
-		Assert.assertEquals(regex, individualSegment.getSegmentType());
-		Assert.assertEquals(regex, individualSegment.getState());
-		Assert.assertEquals(regex, individualSegment.getStatus());
 	}
 
 	@Test
@@ -1459,141 +1453,18 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("segmentType")) {
-			Object object = individualSegment.getSegmentType();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("state")) {
-			Object object = individualSegment.getState();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("status")) {
-			Object object = individualSegment.getStatus();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -1656,10 +1527,6 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 				knownIndividualCount = RandomTestUtil.randomLong();
 				lastActivityDate = RandomTestUtil.nextDate();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				segmentType = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				state = StringUtil.toLowerCase(RandomTestUtil.randomString());
-				status = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -1889,4 +1756,4 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		_individualSegmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1405607046
+// LIFERAY-REST-BUILDER-HASH:276908838

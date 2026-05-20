@@ -35,7 +35,7 @@ public interface AssetSummaryMetricResource {
 	}
 
 	public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
-			Long groupId, String channelId, String rangeEnd, Integer rangeKey,
+			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, String search, Pagination pagination,
 			String sortString)
 		throws Exception;
@@ -43,7 +43,7 @@ public interface AssetSummaryMetricResource {
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupAssetSummariesPageHttpResponse(
 				Long groupId, String channelId, String rangeEnd,
-				Integer rangeKey, String rangeStart, String search,
+				String rangeKey, String rangeStart, String search,
 				Pagination pagination, String sortString)
 		throws Exception;
 
@@ -158,7 +158,7 @@ public interface AssetSummaryMetricResource {
 
 		public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
 				Long groupId, String channelId, String rangeEnd,
-				Integer rangeKey, String rangeStart, String search,
+				String rangeKey, String rangeStart, String search,
 				Pagination pagination, String sortString)
 			throws Exception {
 
@@ -229,7 +229,7 @@ public interface AssetSummaryMetricResource {
 		public HttpInvoker.HttpResponse
 				getWorkspaceGroupAssetSummariesPageHttpResponse(
 					Long groupId, String channelId, String rangeEnd,
-					Integer rangeKey, String rangeStart, String search,
+					String rangeKey, String rangeStart, String search,
 					Pagination pagination, String sortString)
 			throws Exception {
 
@@ -312,4 +312,4 @@ public interface AssetSummaryMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-442690175
+// LIFERAY-REST-BUILDER-HASH:-227258013

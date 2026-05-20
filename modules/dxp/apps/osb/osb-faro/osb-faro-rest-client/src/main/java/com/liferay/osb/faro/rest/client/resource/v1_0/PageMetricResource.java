@@ -36,13 +36,13 @@ public interface PageMetricResource {
 
 	public Page<PageMetric> getWorkspaceGroupPagesPage(
 			Long groupId, String channelId, String dataSourceId,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkspaceGroupPagesPageHttpResponse(
 			Long groupId, String channelId, String dataSourceId,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination, String sortString)
 		throws Exception;
 
@@ -156,7 +156,7 @@ public interface PageMetricResource {
 
 		public Page<PageMetric> getWorkspaceGroupPagesPage(
 				Long groupId, String channelId, String dataSourceId,
-				String rangeEnd, Integer rangeKey, String rangeStart,
+				String rangeEnd, String rangeKey, String rangeStart,
 				String search, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -226,7 +226,7 @@ public interface PageMetricResource {
 
 		public HttpInvoker.HttpResponse getWorkspaceGroupPagesPageHttpResponse(
 				Long groupId, String channelId, String dataSourceId,
-				String rangeEnd, Integer rangeKey, String rangeStart,
+				String rangeEnd, String rangeKey, String rangeStart,
 				String search, Pagination pagination, String sortString)
 			throws Exception {
 
@@ -314,4 +314,4 @@ public interface PageMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-235486370
+// LIFERAY-REST-BUILDER-HASH:-1545140586

@@ -174,7 +174,6 @@ public abstract class BaseIndividualResourceTestCase {
 		individual.setAccountName(regex);
 		individual.setId(regex);
 		individual.setLastSessionCountry(regex);
-		individual.setProfileType(regex);
 
 		String json = IndividualSerDes.toJSON(individual);
 
@@ -185,7 +184,6 @@ public abstract class BaseIndividualResourceTestCase {
 		Assert.assertEquals(regex, individual.getAccountName());
 		Assert.assertEquals(regex, individual.getId());
 		Assert.assertEquals(regex, individual.getLastSessionCountry());
-		Assert.assertEquals(regex, individual.getProfileType());
 	}
 
 	@Test
@@ -1412,49 +1410,8 @@ public abstract class BaseIndividualResourceTestCase {
 		}
 
 		if (entityFieldName.equals("profileType")) {
-			Object object = individual.getProfileType();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		throw new IllegalArgumentException(
@@ -1513,8 +1470,6 @@ public abstract class BaseIndividualResourceTestCase {
 				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				lastActivityDate = RandomTestUtil.nextDate();
 				lastSessionCountry = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				profileType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 			}
 		};
@@ -1740,4 +1695,4 @@ public abstract class BaseIndividualResourceTestCase {
 		_individualResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:731572012
+// LIFERAY-REST-BUILDER-HASH:-466916587

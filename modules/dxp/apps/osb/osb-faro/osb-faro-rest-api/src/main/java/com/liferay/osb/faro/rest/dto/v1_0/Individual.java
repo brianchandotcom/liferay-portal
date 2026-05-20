@@ -5,9 +5,12 @@
 
 package com.liferay.osb.faro.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -328,7 +331,7 @@ public class Individual implements Serializable {
 	private Supplier<Date> _firstActivityDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Individual ID. Use this with `getIndividual` to fetch a single individual."
+		description = "Individual ID. Use this with `getWorkspaceGroupIndividual` to fetch a single individual."
 	)
 	public String getId() {
 		if (_idSupplier != null) {
@@ -362,7 +365,7 @@ public class Individual implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Individual ID. Use this with `getIndividual` to fetch a single individual."
+		description = "Individual ID. Use this with `getWorkspaceGroupIndividual` to fetch a single individual."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
@@ -461,9 +464,11 @@ public class Individual implements Serializable {
 	private Supplier<String> _lastSessionCountrySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Either 'KNOWN' (identified by email/account) or 'ANONYMOUS' (browser-tracked only)."
+		description = "Profile classification. KNOWN individuals are identified by email/account; ANONYMOUS individuals are browser-tracked only."
 	)
-	public String getProfileType() {
+	@JsonGetter("profileType")
+	@Valid
+	public ProfileType getProfileType() {
 		if (_profileTypeSupplier != null) {
 			profileType = _profileTypeSupplier.get();
 
@@ -473,7 +478,18 @@ public class Individual implements Serializable {
 		return profileType;
 	}
 
-	public void setProfileType(String profileType) {
+	@JsonIgnore
+	public String getProfileTypeAsString() {
+		ProfileType profileType = getProfileType();
+
+		if (profileType == null) {
+			return null;
+		}
+
+		return profileType.toString();
+	}
+
+	public void setProfileType(ProfileType profileType) {
 		this.profileType = profileType;
 
 		_profileTypeSupplier = null;
@@ -481,7 +497,7 @@ public class Individual implements Serializable {
 
 	@JsonIgnore
 	public void setProfileType(
-		UnsafeSupplier<String, Exception> profileTypeUnsafeSupplier) {
+		UnsafeSupplier<ProfileType, Exception> profileTypeUnsafeSupplier) {
 
 		_profileTypeSupplier = () -> {
 			try {
@@ -497,13 +513,13 @@ public class Individual implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Either 'KNOWN' (identified by email/account) or 'ANONYMOUS' (browser-tracked only)."
+		description = "Profile classification. KNOWN individuals are identified by email/account; ANONYMOUS individuals are browser-tracked only."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String profileType;
+	protected ProfileType profileType;
 
 	@JsonIgnore
-	private Supplier<String> _profileTypeSupplier;
+	private Supplier<ProfileType> _profileTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -682,7 +698,7 @@ public class Individual implements Serializable {
 			sb.append("\"");
 		}
 
-		String profileType = getProfileType();
+		ProfileType profileType = getProfileType();
 
 		if (profileType != null) {
 			if (sb.length() > 1) {
@@ -692,9 +708,7 @@ public class Individual implements Serializable {
 			sb.append("\"profileType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(profileType));
-
+			sb.append(profileType);
 			sb.append("\"");
 		}
 
@@ -709,6 +723,44 @@ public class Individual implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("ProfileType")
+	public static enum ProfileType {
+
+		ANONYMOUS("ANONYMOUS"), KNOWN("KNOWN");
+
+		@JsonCreator
+		public static ProfileType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (ProfileType profileType : values()) {
+				if (Objects.equals(profileType.getValue(), value)) {
+					return profileType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ProfileType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -799,4 +851,4 @@ public class Individual implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:188401493
+// LIFERAY-REST-BUILDER-HASH:-1604303267

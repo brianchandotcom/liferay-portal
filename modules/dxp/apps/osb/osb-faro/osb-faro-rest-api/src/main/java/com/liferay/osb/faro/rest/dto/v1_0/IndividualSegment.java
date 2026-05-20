@@ -5,9 +5,12 @@
 
 package com.liferay.osb.faro.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +20,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -323,7 +328,7 @@ public class IndividualSegment implements Serializable {
 	private Supplier<String> _filterSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Segment id. Use this with `getIndividualSegment` to fetch a single segment."
+		description = "Segment id. Use this with `getWorkspaceGroupIndividualSegment` to fetch a single segment."
 	)
 	public String getId() {
 		if (_idSupplier != null) {
@@ -357,7 +362,7 @@ public class IndividualSegment implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Segment id. Use this with `getIndividualSegment` to fetch a single segment."
+		description = "Segment id. Use this with `getWorkspaceGroupIndividualSegment` to fetch a single segment."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
@@ -584,9 +589,11 @@ public class IndividualSegment implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Segment type. Either 'BATCH' or 'REAL_TIME'."
+		description = "Segment evaluation cadence."
 	)
-	public String getSegmentType() {
+	@JsonGetter("segmentType")
+	@Valid
+	public SegmentType getSegmentType() {
 		if (_segmentTypeSupplier != null) {
 			segmentType = _segmentTypeSupplier.get();
 
@@ -596,7 +603,18 @@ public class IndividualSegment implements Serializable {
 		return segmentType;
 	}
 
-	public void setSegmentType(String segmentType) {
+	@JsonIgnore
+	public String getSegmentTypeAsString() {
+		SegmentType segmentType = getSegmentType();
+
+		if (segmentType == null) {
+			return null;
+		}
+
+		return segmentType.toString();
+	}
+
+	public void setSegmentType(SegmentType segmentType) {
 		this.segmentType = segmentType;
 
 		_segmentTypeSupplier = null;
@@ -604,7 +622,7 @@ public class IndividualSegment implements Serializable {
 
 	@JsonIgnore
 	public void setSegmentType(
-		UnsafeSupplier<String, Exception> segmentTypeUnsafeSupplier) {
+		UnsafeSupplier<SegmentType, Exception> segmentTypeUnsafeSupplier) {
 
 		_segmentTypeSupplier = () -> {
 			try {
@@ -619,17 +637,19 @@ public class IndividualSegment implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Segment type. Either 'BATCH' or 'REAL_TIME'.")
+	@GraphQLField(description = "Segment evaluation cadence.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String segmentType;
+	protected SegmentType segmentType;
 
 	@JsonIgnore
-	private Supplier<String> _segmentTypeSupplier;
+	private Supplier<SegmentType> _segmentTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "State of the segment: 'READY', 'IN_PROGRESS', or 'DISABLED'."
+		description = "Lifecycle state of the segment."
 	)
-	public String getState() {
+	@JsonGetter("state")
+	@Valid
+	public State getState() {
 		if (_stateSupplier != null) {
 			state = _stateSupplier.get();
 
@@ -639,16 +659,25 @@ public class IndividualSegment implements Serializable {
 		return state;
 	}
 
-	public void setState(String state) {
+	@JsonIgnore
+	public String getStateAsString() {
+		State state = getState();
+
+		if (state == null) {
+			return null;
+		}
+
+		return state.toString();
+	}
+
+	public void setState(State state) {
 		this.state = state;
 
 		_stateSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setState(
-		UnsafeSupplier<String, Exception> stateUnsafeSupplier) {
-
+	public void setState(UnsafeSupplier<State, Exception> stateUnsafeSupplier) {
 		_stateSupplier = () -> {
 			try {
 				return stateUnsafeSupplier.get();
@@ -662,19 +691,19 @@ public class IndividualSegment implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "State of the segment: 'READY', 'IN_PROGRESS', or 'DISABLED'."
-	)
+	@GraphQLField(description = "Lifecycle state of the segment.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String state;
+	protected State state;
 
 	@JsonIgnore
-	private Supplier<String> _stateSupplier;
+	private Supplier<State> _stateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Status of the segment: 'ACTIVE' or 'INACTIVE'."
+		description = "Operational status of the segment."
 	)
-	public String getStatus() {
+	@JsonGetter("status")
+	@Valid
+	public Status getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
 
@@ -684,7 +713,18 @@ public class IndividualSegment implements Serializable {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	@JsonIgnore
+	public String getStatusAsString() {
+		Status status = getStatus();
+
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 
 		_statusSupplier = null;
@@ -692,7 +732,7 @@ public class IndividualSegment implements Serializable {
 
 	@JsonIgnore
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		_statusSupplier = () -> {
 			try {
@@ -707,14 +747,12 @@ public class IndividualSegment implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "Status of the segment: 'ACTIVE' or 'INACTIVE'."
-	)
+	@GraphQLField(description = "Operational status of the segment.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String status;
+	protected Status status;
 
 	@JsonIgnore
-	private Supplier<String> _statusSupplier;
+	private Supplier<Status> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -918,7 +956,7 @@ public class IndividualSegment implements Serializable {
 			sb.append("\"");
 		}
 
-		String segmentType = getSegmentType();
+		SegmentType segmentType = getSegmentType();
 
 		if (segmentType != null) {
 			if (sb.length() > 1) {
@@ -928,13 +966,11 @@ public class IndividualSegment implements Serializable {
 			sb.append("\"segmentType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(segmentType));
-
+			sb.append(segmentType);
 			sb.append("\"");
 		}
 
-		String state = getState();
+		State state = getState();
 
 		if (state != null) {
 			if (sb.length() > 1) {
@@ -944,13 +980,11 @@ public class IndividualSegment implements Serializable {
 			sb.append("\"state\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(state));
-
+			sb.append(state);
 			sb.append("\"");
 		}
 
-		String status = getStatus();
+		Status status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {
@@ -960,9 +994,7 @@ public class IndividualSegment implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(status));
-
+			sb.append(status);
 			sb.append("\"");
 		}
 
@@ -977,6 +1009,120 @@ public class IndividualSegment implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("SegmentType")
+	public static enum SegmentType {
+
+		BATCH("BATCH"), REAL_TIME("REAL_TIME");
+
+		@JsonCreator
+		public static SegmentType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (SegmentType segmentType : values()) {
+				if (Objects.equals(segmentType.getValue(), value)) {
+					return segmentType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SegmentType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("State")
+	public static enum State {
+
+		DISABLED("DISABLED"), IN_PROGRESS("IN_PROGRESS"), READY("READY");
+
+		@JsonCreator
+		public static State create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (State state : values()) {
+				if (Objects.equals(state.getValue(), value)) {
+					return state;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private State(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	@GraphQLName("Status")
+	public static enum Status {
+
+		ACTIVE("ACTIVE"), INACTIVE("INACTIVE");
+
+		@JsonCreator
+		public static Status create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -1067,4 +1213,4 @@ public class IndividualSegment implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1766391143
+// LIFERAY-REST-BUILDER-HASH:716535836

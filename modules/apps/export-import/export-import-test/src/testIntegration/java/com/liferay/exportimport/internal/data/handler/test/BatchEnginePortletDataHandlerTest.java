@@ -61,6 +61,7 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -138,6 +139,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1700,11 +1702,13 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(objectEntries.toString(), 0, objectEntries.size());
 	}
 
-	@FeatureFlag("LPD-34594")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-69877")
+		}
+	)
 	@Test
-	public void testGetDescriptionAndTagWithRootObjectHierarchy()
-		throws Exception {
-
+	public void testExportImportWithRootObjectHierarchy() throws Exception {
 		Tree tree = TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			true,
@@ -1716,16 +1720,16 @@ public class BatchEnginePortletDataHandlerTest {
 				"AAA", new String[0]
 			).build());
 
-		ObjectDefinition objectDefinition =
+		ObjectDefinition rootObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_A");
 
-		PortletDataHandler portletDataHandler =
+		PortletDataHandler rootPortletDataHandler =
 			_portletDataHandlerProvider.provide(
 				TestPropsValues.getCompanyId(),
-				objectDefinition.getPortletId());
+				rootObjectDefinition.getPortletId());
 
-		String description = portletDataHandler.getDescription(
+		String description = rootPortletDataHandler.getDescription(
 			LocaleUtil.getDefault());
 
 		TreeTestUtil.forEachNodeObjectDefinition(
@@ -1748,7 +1752,56 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Assert.assertEquals(
 			LanguageUtil.get(LocaleUtil.getDefault(), "root-object"),
-			portletDataHandler.getTag(LocaleUtil.getDefault()));
+			rootPortletDataHandler.getTag(LocaleUtil.getDefault()));
+
+		// Descendant object visibility
+
+		ObjectDefinition childObjectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		Assert.assertFalse(
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				childObjectDefinition.getPortletId()
+			).isHidden());
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				TestPropsValues.getUserId(),
+				childObjectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+				StringPool.FALSE);
+
+		_objectDefinitionLocalService.deployObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
+				childObjectDefinition.getObjectDefinitionId()));
+
+		Assert.assertTrue(
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				childObjectDefinition.getPortletId()
+			).isHidden());
+
+		objectDefinitionSetting.setValue(StringPool.TRUE);
+
+		_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
+			objectDefinitionSetting);
+
+		_objectDefinitionLocalService.deployObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
+				childObjectDefinition.getObjectDefinitionId()));
+
+		Assert.assertFalse(
+			_portletDataHandlerProvider.provide(
+				TestPropsValues.getCompanyId(),
+				childObjectDefinition.getPortletId()
+			).isHidden());
+
+		// Root object visibility
+
+		Assert.assertFalse(rootPortletDataHandler.isHidden());
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,

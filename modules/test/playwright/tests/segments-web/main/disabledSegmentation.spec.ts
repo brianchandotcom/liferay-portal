@@ -14,7 +14,13 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import {
+	performLoginViaApi,
+	performUserSwitch,
+	userData,
+} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
 import {SimulationMenuPage} from '../../layout-admin-web/main/pages/SimulationMenuPage';
@@ -341,5 +347,139 @@ test(
 		});
 
 		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
+	}
+);
+
+test(
+	'Asserts that a user without Instance Settings permissions sees the contact-administrator alert across the Dynamic Collection editor, Manual Collection editor, and Segments admin',
+	{tag: '@LPS-152539'},
+	async ({apiHelpers, page, site}) => {
+
+		// Create the data the lower-permission user needs to reach each surface
+
+		await apiHelpers.jsonWebServicesAssetListEntry.addDynamicAssetListEntry(
+			{
+				groupId: site.id,
+				title: 'Dynamic Collection Test',
+			}
+		);
+
+		await apiHelpers.jsonWebServicesAssetListEntry.addManualAssetListEntry({
+			groupId: site.id,
+			title: 'Manual Collection Test',
+		});
+
+		// Create a role bundling the union of permissions needed to reach the three surfaces, and assign it to a new user
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'Segmentation Alert Permissions ' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: String(companyId),
+					resourceName:
+						'com_liferay_asset_list_web_portlet_AssetListPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: String(companyId),
+					resourceName:
+						'com_liferay_segments_web_internal_portlet_SegmentsPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['UPDATE'],
+					primaryKey: String(companyId),
+					resourceName: 'com.liferay.asset.list.model.AssetListEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_SITE_ADMINISTRATION'],
+					primaryKey: String(companyId),
+					resourceName: 'com.liferay.depot.model.DepotEntry',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW_SITE_ADMINISTRATION'],
+					primaryKey: String(companyId),
+					resourceName: 'com.liferay.portal.kernel.model.Group',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: String(companyId),
+					resourceName: 'com.liferay.segments',
+					scope: 1,
+				},
+			],
+		});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		// Switch to the lower-permission user
+
+		await performUserSwitch(page, user.alternateName);
+
+		const warning = page.locator('.alert-warning');
+
+		const contactAdministratorMessage = warning.getByText(
+			'Contact your system administrator to enable it.'
+		);
+
+		const reEnableLink = warning.getByRole('link', {
+			name: 'To enable, go to Instance Settings.',
+		});
+
+		// Visit the Dynamic Collection editor
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.collections}`
+		);
+
+		await page.getByRole('link', {name: 'Dynamic Collection Test'}).click();
+
+		await expect(contactAdministratorMessage).toBeVisible();
+
+		await expect(reEnableLink).toBeHidden();
+
+		// Visit the Manual Collection editor
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.collections}`
+		);
+
+		await page.getByRole('link', {name: 'Manual Collection Test'}).click();
+
+		await expect(contactAdministratorMessage).toBeVisible();
+
+		await expect(reEnableLink).toBeHidden();
+
+		// Visit the Segments admin
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await expect(contactAdministratorMessage).toBeVisible();
+
+		await expect(reEnableLink).toBeHidden();
+
+		// Switch back to the test user so the afterEach hook can reset Instance Settings
+
+		await performLoginViaApi({page, screenName: 'test'});
 	}
 );

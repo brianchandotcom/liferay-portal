@@ -14,6 +14,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -90,15 +91,19 @@ public class AssetCategoryLayoutDisplayPageObjectProvider
 	@Override
 	public String getURLTitle(Locale locale) {
 		try {
-			return _getUrlTitle(locale);
+			if (FeatureFlagManagerUtil.isEnabled(
+					_assetCategory.getCompanyId(), "LPD-70396")) {
+
+				return _getUrlTitle(locale);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-
-			return String.valueOf(_assetCategory.getCategoryId());
 		}
+
+		return String.valueOf(_assetCategory.getCategoryId());
 	}
 
 	private String _getUrlTitle(Locale locale) throws PortalException {

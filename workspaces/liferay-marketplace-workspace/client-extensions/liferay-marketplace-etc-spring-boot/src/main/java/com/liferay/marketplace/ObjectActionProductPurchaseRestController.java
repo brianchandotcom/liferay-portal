@@ -8,6 +8,7 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -494,11 +495,15 @@ public class ObjectActionProductPurchaseRestController
 
 		BillingAddress billingAddress = order.getBillingAddress();
 
+		OrderItem orderItem = order.getOrderItems()[0];
+
+		Sku sku = _marketplaceService.getSku(orderItem.getSkuId());
+
 		JSONObject jsonObject = _salesforceService.postSalesforceOpportunity(
 			new SalesforceOpportunity(
 				_marketplaceService.getCountryByA2(
 					billingAddress.getCountryISOCode()),
-				licenseType, order,
+				licenseType, order, sku,
 				_marketplaceService.getUserAccount(
 					order.getCreatorEmailAddress())));
 

@@ -1007,6 +1007,41 @@ test(
 );
 
 test(
+	'Can validate a segment name and value with script tags are escaped',
+	{
+		tag: '@LPS-92366',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Add a segment with a script tag as both name and First Name value
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		const scriptTag = '</script>';
+
+		await segmentsPage.addSegmentField('First Name', 'User', scriptTag);
+
+		await segmentsPage.changeCriterionInput('Contains');
+
+		await segmentsPage.fillField(scriptTag);
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Reopen the segment in view mode and assert the script tag survives as plain text
+
+		await segmentsPage.clickLinkByText(scriptTag);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			scriptTag
+		);
+	}
+);
+
+test(
 	`Can validate the default segments is not displayed.`,
 	{
 		tag: '@LPS-136086',

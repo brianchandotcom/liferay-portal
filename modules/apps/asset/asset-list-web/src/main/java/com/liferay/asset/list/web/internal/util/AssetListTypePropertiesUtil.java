@@ -50,6 +50,8 @@ public class AssetListTypePropertiesUtil {
 				continue;
 			}
 
+			JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
+
 			for (ObjectField objectField :
 					ObjectFieldLocalServiceUtil.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
@@ -60,11 +62,18 @@ public class AssetListTypePropertiesUtil {
 					continue;
 				}
 
-				jsonArray.put(
+				itemsJSONArray.put(
 					_toPropertyJSONObject(
 						classNameIds[i], classTypeId, locale, objectField,
 						type));
 			}
+
+			jsonArray.put(
+				JSONUtil.put(
+					"items", itemsJSONArray
+				).put(
+					"label", objectDefinition.getLabel(locale, true)
+				));
 		}
 
 		return jsonArray;

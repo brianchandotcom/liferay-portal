@@ -34,6 +34,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -60,6 +61,12 @@ public class DDMFormFieldOptionsFactoryImplTest {
 
 	@Test
 	public void testCreate() {
+		Mockito.when(
+			_ddmFormFieldRenderingContext.getLocale()
+		).thenReturn(
+			LocaleUtil.BRAZIL
+		);
+
 		_mockDDMDataProviderResponse(
 			ListUtil.fromArray(
 				new KeyValuePair("key1", "value1"),
@@ -75,6 +82,50 @@ public class DDMFormFieldOptionsFactoryImplTest {
 			"value2", _getString(ddmFormFieldOptions.getOptionLabels("key2")));
 		Assert.assertNull(ddmFormFieldOptions.getOptionReference("key1"));
 		Assert.assertNull(ddmFormFieldOptions.getOptionReference("key2"));
+
+		ArgumentCaptor<DDMDataProviderRequest> argumentCaptor =
+			ArgumentCaptor.forClass(DDMDataProviderRequest.class);
+
+		Mockito.verify(
+			_ddmDataProviderInvoker
+		).invoke(
+			argumentCaptor.capture()
+		);
+
+		DDMDataProviderRequest ddmDataProviderRequest =
+			argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL, ddmDataProviderRequest.getLocale());
+
+		Mockito.clearInvocations(_ddmDataProviderInvoker);
+
+		Mockito.when(
+			_ddmFormFieldRenderingContext.getLocale()
+		).thenReturn(
+			LocaleUtil.SPAIN
+		);
+
+		_mockDDMDataProviderResponse(
+			ListUtil.fromArray(
+				new KeyValuePair("key1", "value1"),
+				new KeyValuePair("key2", "value2")));
+
+		_ddmFormFieldOptionsFactoryImpl.create(
+			_ddmFormField, _ddmFormFieldRenderingContext);
+
+		argumentCaptor = ArgumentCaptor.forClass(DDMDataProviderRequest.class);
+
+		Mockito.verify(
+			_ddmDataProviderInvoker
+		).invoke(
+			argumentCaptor.capture()
+		);
+
+		ddmDataProviderRequest = argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.SPAIN, ddmDataProviderRequest.getLocale());
 
 		_mockDDMDataProviderResponse(null);
 

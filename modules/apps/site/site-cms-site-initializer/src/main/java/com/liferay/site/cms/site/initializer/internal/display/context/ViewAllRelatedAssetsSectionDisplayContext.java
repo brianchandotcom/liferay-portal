@@ -11,11 +11,9 @@ import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -24,7 +22,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterRegistry;
@@ -49,10 +46,7 @@ public class ViewAllRelatedAssetsSectionDisplayContext
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ObjectEntry objectEntry,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectRelationship objectRelationship, Portal portal,
 		TranslationInfoItemFieldValuesExporterRegistry
@@ -61,8 +55,7 @@ public class ViewAllRelatedAssetsSectionDisplayContext
 		super(
 			assetTagLocalService, depotEntryLocalService, dlConfiguration,
 			groupLocalService, httpServletRequest, language, objectDefinition,
-			objectDefinitionService, objectDefinitionSettingLocalService,
-			objectEntry, objectEntryFolderModelResourcePermission, portal,
+			objectDefinitionService, objectEntry, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;

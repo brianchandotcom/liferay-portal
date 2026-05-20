@@ -8,13 +8,10 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -37,19 +34,13 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 		DepotEntryLocalService depotEntryLocalService,
 		DLConfiguration dlConfiguration, GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionService objectDefinitionService,
-		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
-		ModelResourcePermission<ObjectEntryFolder>
-			objectEntryFolderModelResourcePermission,
-		Portal portal,
+		ObjectDefinitionService objectDefinitionService, Portal portal,
 		TranslationInfoItemFieldValuesExporterRegistry
 			translationInfoItemFieldValuesExporterRegistry) {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
-			httpServletRequest, language, objectDefinitionService,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal,
+			httpServletRequest, language, objectDefinitionService, portal,
 			translationInfoItemFieldValuesExporterRegistry);
 	}
 

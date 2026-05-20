@@ -92,6 +92,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
@@ -114,6 +115,7 @@ public class DDMFormDisplayContextTest {
 		_setUpJSONFactoryUtil();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
+		_renderRequest = _mockRenderRequest();
 		_setUpPrefsParamUtilMockedStatic();
 		_setUpResourceBundleUtil();
 	}
@@ -296,6 +298,12 @@ public class DDMFormDisplayContextTest {
 
 	@Test
 	public void testGetDDMFormContext() throws Exception {
+		Mockito.when(
+			_language.getLanguageId(Mockito.eq(_mockHttpServletRequest2))
+		).thenReturn(
+			"pt_BR"
+		);
+
 		ThemeDisplay themeDisplay = _mockThemeDisplay(false);
 
 		_mockHttpServletRequest2.setAttribute(
@@ -393,9 +401,23 @@ public class DDMFormDisplayContextTest {
 
 		Assert.assertFalse(
 			SetUtil.isEmpty(actualDDMFormFieldOptions.getOptionsValues()));
-
 		Assert.assertEquals(
 			expectedDDMFormFieldOptions, actualDDMFormFieldOptions);
+
+		ArgumentCaptor<DDMFormFieldRenderingContext> argumentCaptor =
+			ArgumentCaptor.forClass(DDMFormFieldRenderingContext.class);
+
+		Mockito.verify(
+			_ddmFormFieldOptionsFactory
+		).create(
+			Mockito.eq(ddmFormField), argumentCaptor.capture()
+		);
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			argumentCaptor.getValue();
+
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL, ddmFormFieldRenderingContext.getLocale());
 	}
 
 	@Test
@@ -1161,8 +1183,7 @@ public class DDMFormDisplayContextTest {
 		Mockito.when(
 			themeDisplay.getURLCurrent()
 		).thenReturn(
-			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-				"/web/forms/shared?form=123"
+			"http://localhost/web/forms/shared?form=123"
 		);
 
 		User user = Mockito.mock(User.class);
@@ -1360,7 +1381,7 @@ public class DDMFormDisplayContextTest {
 		_portletPermissionUtilMockedStatic;
 	private final MockedStatic<PrefsParamUtil> _prefsParamUtilMockedStatic =
 		Mockito.mockStatic(PrefsParamUtil.class);
-	private final RenderRequest _renderRequest = _mockRenderRequest();
+	private RenderRequest _renderRequest;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService = Mockito.mock(
 			WorkflowDefinitionLinkLocalService.class);

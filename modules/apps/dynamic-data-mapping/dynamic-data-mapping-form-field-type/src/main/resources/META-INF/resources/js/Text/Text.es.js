@@ -13,6 +13,7 @@ import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
+import {useHideTooltipOnFocus} from '../hooks/useHideTooltipOnFocus.es';
 import {useSyncValue} from '../hooks/useSyncValue.es';
 import fieldPopoverMap from '../util/fieldPopoverMap';
 import {getTooltipTitle} from '../util/tooltip';
@@ -98,6 +99,8 @@ const Text = ({
 		editingLanguageId
 	);
 
+	const focusedTooltip = useHideTooltipOnFocus();
+
 	const inputRef = useRef(null);
 
 	const prevEditingLanguageId = usePrevious(editingLanguageId);
@@ -160,7 +163,10 @@ const Text = ({
 			<ClayTooltipProvider autoAlign>
 				<div
 					data-tooltip-align="top"
-					{...getTooltipTitle({placeholder, value})}
+					ref={focusedTooltip.tooltipWrapperRef}
+					{...(focusedTooltip.isFocused
+						? {}
+						: getTooltipTitle({placeholder, value}))}
 				>
 					<ClayInput
 						{...accessibleProps}
@@ -175,6 +181,7 @@ const Text = ({
 						maxLength={showCounter ? '' : maxLength}
 						name={name}
 						onBlur={(event) => {
+							focusedTooltip.onBlur();
 							onBlur(event);
 
 							if (!preventChangeHandlerOnBlur) {
@@ -182,7 +189,10 @@ const Text = ({
 							}
 						}}
 						onChange={handleChangeInput}
-						onFocus={onFocus}
+						onFocus={(event) => {
+							focusedTooltip.onFocus();
+							onFocus(event);
+						}}
 						onKeyDown={onKeyDown}
 						placeholder={placeholder}
 						ref={inputRef}
@@ -227,12 +237,17 @@ const Textarea = ({
 }) => {
 	const [value, setValue] = useSyncValue(initialValue, syncDelay);
 
+	const focusedTooltip = useHideTooltipOnFocus();
+
 	return (
 		<>
 			<ClayTooltipProvider autoAlign>
 				<div
 					data-tooltip-align="top"
-					{...getTooltipTitle({placeholder, value})}
+					ref={focusedTooltip.tooltipWrapperRef}
+					{...(focusedTooltip.isFocused
+						? {}
+						: getTooltipTitle({placeholder, value}))}
 				>
 					<textarea
 						{...accessibleProps}
@@ -245,12 +260,18 @@ const Textarea = ({
 						id={id}
 						lang={editingLanguageId?.replaceAll('_', '-')}
 						name={name}
-						onBlur={onBlur}
+						onBlur={(event) => {
+							focusedTooltip.onBlur();
+							onBlur(event);
+						}}
 						onChange={(event) => {
 							setValue(event.target.value);
 							onChange(event);
 						}}
-						onFocus={onFocus}
+						onFocus={(event) => {
+							focusedTooltip.onFocus();
+							onFocus(event);
+						}}
 						placeholder={placeholder}
 						style={disabled ? {resize: 'none'} : null}
 						value={value}

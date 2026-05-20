@@ -29,7 +29,6 @@ import java.util.List;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -46,13 +45,6 @@ public class AssetListTypePropertiesUtilTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@BeforeClass
-	public static void setUpClass() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
 
 	@AfterClass
 	public static void tearDownClass() {
@@ -152,7 +144,7 @@ public class AssetListTypePropertiesUtilTest {
 		Assert.assertEquals(
 			_CLASS_TYPE_ID_1, jsonObject.getLong("classTypeId"));
 		Assert.assertEquals("title", jsonObject.getString("name"));
-		Assert.assertEquals("string", jsonObject.getString("type"));
+		Assert.assertEquals("text", jsonObject.getString("type"));
 	}
 
 	@Test
@@ -288,6 +280,16 @@ public class AssetListTypePropertiesUtilTest {
 		Assert.assertEquals("integer", jsonObject3.getString("type"));
 	}
 
+	private static MockedStatic<FeatureFlagManagerUtil>
+		_createFeatureFlagManagerUtilMockedStatic() {
+
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		return Mockito.mockStatic(FeatureFlagManagerUtil.class);
+	}
+
 	private ObjectField _mockObjectField(
 		String name, String businessType, boolean metadata) {
 
@@ -365,8 +367,8 @@ public class AssetListTypePropertiesUtilTest {
 	private static final long _COMPANY_ID = 12345L;
 
 	private static final MockedStatic<FeatureFlagManagerUtil>
-		_featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-			FeatureFlagManagerUtil.class);
+		_featureFlagManagerUtilMockedStatic =
+			_createFeatureFlagManagerUtilMockedStatic();
 	private static final MockedStatic<ListTypeEntryLocalServiceUtil>
 		_listTypeEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			ListTypeEntryLocalServiceUtil.class);

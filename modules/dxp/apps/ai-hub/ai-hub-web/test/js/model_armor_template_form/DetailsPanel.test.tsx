@@ -42,6 +42,28 @@ jest.mock('frontend-js-components-web', () => {
 	const React = require('react');
 
 	return {
+		FieldBase: ({
+			children,
+			errorMessage,
+			helpMessage,
+			id,
+			label,
+			required,
+		}: any) =>
+			React.createElement(
+				'div',
+				null,
+				label &&
+					React.createElement(
+						'label',
+						{htmlFor: id},
+						label,
+						required && '*'
+					),
+				children,
+				errorMessage && React.createElement('div', null, errorMessage),
+				helpMessage && React.createElement('small', null, helpMessage)
+			),
 		InputLocalized: ({id, label, onChange, placeholder, translations}: any) =>
 			React.createElement(
 				React.Fragment,
@@ -70,6 +92,7 @@ const baseValues: ModelArmorTemplate = {
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: 'input',
+	location: '',
 	maliciousUriFilterEnabled: false,
 	multiLanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
@@ -150,6 +173,32 @@ describe('DetailsPanel', () => {
 			renderPanel({errors: {externalReferenceCode: 'ERC required'}});
 
 			expect(screen.getByText('ERC required')).toBeInTheDocument();
+		});
+	});
+
+	describe('location input', () => {
+		it('calls setField on each keystroke', () => {
+			const {setField} = renderPanel();
+
+			fireEvent.change(screen.getByLabelText(/^location/i), {
+				target: {value: 'us-central1'},
+			});
+
+			expect(setField).toHaveBeenCalledWith('location', 'us-central1');
+		});
+
+		it('renders the help message below the field', () => {
+			renderPanel();
+
+			expect(
+				screen.getByText('model-armor-location-help')
+			).toBeInTheDocument();
+		});
+
+		it('surfaces the validation error when present', () => {
+			renderPanel({errors: {location: 'Location required'}});
+
+			expect(screen.getByText('Location required')).toBeInTheDocument();
 		});
 	});
 

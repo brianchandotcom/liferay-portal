@@ -13,6 +13,7 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: Omit<
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: 'input',
+	location: '',
 	maliciousUriFilterEnabled: false,
 	multiLanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',

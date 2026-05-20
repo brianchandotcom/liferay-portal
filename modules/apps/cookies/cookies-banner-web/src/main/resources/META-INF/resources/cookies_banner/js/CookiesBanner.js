@@ -102,20 +102,9 @@ export default function ({
 		if (previewMode) {
 			cookieBanner.style.display = 'block';
 
-			document.documentElement.classList.add('cookies-preview-mode');
-
-			const previewStyle = document.createElement('style');
-
-			previewStyle.textContent =
-				'.cookies-preview-mode body { pointer-events: none; }' +
-				'.cookies-preview-mode .cookies-banner,' +
-				'.cookies-preview-mode .cookies-banner *,' +
-				'.cookies-preview-mode .floating-icon-button,' +
-				'.cookies-preview-mode .custom-floating-icon-image,' +
-				'.cookies-preview-mode .modal,' +
-				'.cookies-preview-mode .modal * { pointer-events: auto; }';
-
-			document.head.appendChild(previewStyle);
+			document.documentElement.classList.add(
+				'cookies-banner-preview-mode'
+			);
 
 			cookieBanner.querySelectorAll('a').forEach((link) => {
 				link.addEventListener('click', (event) => {

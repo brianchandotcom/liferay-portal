@@ -11,7 +11,11 @@ export async function checkHasStandaloneEntries(
 	isDescendant: boolean,
 	objectDefinition: Partial<ObjectDefinition>
 ): Promise<boolean> {
-	if (!isDescendant || !objectDefinition.restContextPath) {
+	if (
+		!Liferay.FeatureFlags['LPD-69877'] ||
+		!isDescendant ||
+		!objectDefinition.restContextPath
+	) {
 		return false;
 	}
 

@@ -10,8 +10,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -50,9 +48,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -71,65 +67,63 @@ public class ObjectEntrySynonymSearchTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-		_originalName = PrincipalThreadLocal.getName();
+	@Test
+	public void testSearch() throws Exception {
+		long companyId = TestPropsValues.getCompanyId();
+		String originalName = PrincipalThreadLocal.getName();
 
-		_user = UserTestUtil.getAdminUser(_companyId);
+		User user = UserTestUtil.getAdminUser(companyId);
 
-		PrincipalThreadLocal.setName(_user.getUserId());
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(
-				_user.getUserId(), true);
+				user.getUserId(), true);
 
-		_originalPortalPreferencesXML = PortletPreferencesFactoryUtil.toXML(
-			portalPreferences);
+		String originalPortalPreferencesXML =
+			PortletPreferencesFactoryUtil.toXML(portalPreferences);
 
 		portalPreferences.setValue("", "locales", "en_US,pt_BR");
 
 		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
 			PortletPreferencesFactoryUtil.toXML(portalPreferences));
 
-		_addObjectDefinition();
-		_addObjectEntry("PD initiative");
-		_addObjectEntry("product delivery Initiative");
-		_addObjectEntry("Query Builder Initiative");
-		_addObjectEntry("UQB Initiative");
-		_addSynonymSets();
-	}
+		ObjectDefinition objectDefinition = _addObjectDefinition(user);
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		if (_objectDefinition != null) {
-			_objectDefinitionLocalService.deleteObjectDefinition(
-				_objectDefinition);
+		try {
+			_addObjectEntry("PD initiative", objectDefinition, user);
+			_addObjectEntry(
+				"product delivery Initiative", objectDefinition, user);
+			_addObjectEntry("Query Builder Initiative", objectDefinition, user);
+			_addObjectEntry("UQB Initiative", objectDefinition, user);
+
+			_addSynonymSets(companyId);
+
+			_testSearch(companyId, "PD", objectDefinition);
+			_testSearch(companyId, "product delivery", objectDefinition);
+			_testSearch(companyId, "query", objectDefinition);
+			_testSearch(companyId, "uqb", objectDefinition);
 		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
 
-		_deleteSynonymSets();
+			_deleteSynonymSets(companyId);
 
-		PrincipalThreadLocal.setName(_originalName);
+			PrincipalThreadLocal.setName(originalName);
 
-		PortalPreferencesLocalServiceUtil.updatePreferences(
-			_companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-			_originalPortalPreferencesXML);
+			PortalPreferencesLocalServiceUtil.updatePreferences(
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				originalPortalPreferencesXML);
+		}
 	}
 
-	@Test
-	public void testSearch() {
-		_testSearch("PD");
-		_testSearch("product delivery");
-		_testSearch("query");
-		_testSearch("uqb");
-	}
-
-	private static void _addObjectDefinition() throws Exception {
+	private ObjectDefinition _addObjectDefinition(User user) throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, _user.getUserId(), 0, null, true, false, true, false,
-				true, false, false, false, false, null,
+				null, user.getUserId(), 0, null, true, false, true, false, true,
+				false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(
 					ObjectDefinitionTestUtil.getRandomName()),
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -160,22 +154,23 @@ public class ObjectEntrySynonymSearchTest {
 				Collections.emptyList(),
 				ServiceContextTestUtil.getServiceContext());
 
-		ObjectFieldBag objectFieldBag = objectDefinition.getObjectFieldBag();
-
-		ObjectField titleField = objectFieldBag.getObjectField("title");
-
 		_objectDefinitionLocalService.updateTitleObjectFieldId(
 			objectDefinition.getObjectDefinitionId(),
-			titleField.getObjectFieldId());
+			objectDefinition.getObjectFieldBag(
+			).getObjectField(
+				"title"
+			).getObjectFieldId());
 
-		_objectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				_user.getUserId(), objectDefinition.getObjectDefinitionId());
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			user.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private static void _addObjectEntry(String content) throws Exception {
+	private void _addObjectEntry(
+			String content, ObjectDefinition objectDefinition, User user)
+		throws Exception {
+
 		_objectEntryLocalService.addObjectEntry(
-			0, _user.getUserId(), _objectDefinition.getObjectDefinitionId(),
+			0, user.getUserId(), objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
@@ -189,12 +184,12 @@ public class ObjectEntrySynonymSearchTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static void _addSynonymSets() {
+	private void _addSynonymSets(long companyId) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, _companyId);
+			WebKeys.COMPANY_ID, companyId);
 
 		ReflectionTestUtil.invoke(
 			_editSynonymSetsMVCActionCommand, "updateSynonymSets",
@@ -203,14 +198,14 @@ public class ObjectEntrySynonymSearchTest {
 			new String[] {"product delivery,PD", "query,uqb"});
 	}
 
-	private static void _deleteSynonymSets() {
+	private void _deleteSynonymSets(long companyId) {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.addParameter(
 			"deleteAllSynonymSets", "true");
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, _companyId);
+			WebKeys.COMPANY_ID, companyId);
 
 		ReflectionTestUtil.invoke(
 			_deleteSynonymSetsMVCActionCommand, "deleteSynonymSets",
@@ -218,13 +213,15 @@ public class ObjectEntrySynonymSearchTest {
 			mockLiferayPortletActionRequest);
 	}
 
-	private void _testSearch(String keyword) {
+	private void _testSearch(
+		long companyId, String keyword, ObjectDefinition objectDefinition) {
+
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder(
 			).companyId(
-				_companyId
+				companyId
 			).entryClassNames(
-				_objectDefinition.getClassName()
+				objectDefinition.getClassName()
 			).queryString(
 				keyword
 			);
@@ -238,31 +235,23 @@ public class ObjectEntrySynonymSearchTest {
 			searchResponse.getRequestString(), 2, documents.size());
 	}
 
-	private static Long _companyId;
-
 	@Inject(
 		filter = "mvc.command.name=/synonyms/delete_synonym_sets",
 		type = MVCActionCommand.class
 	)
-	private static MVCActionCommand _deleteSynonymSetsMVCActionCommand;
+	private MVCActionCommand _deleteSynonymSetsMVCActionCommand;
 
 	@Inject(
 		filter = "mvc.command.name=/synonyms/edit_synonym_sets",
 		type = MVCActionCommand.class
 	)
-	private static MVCActionCommand _editSynonymSetsMVCActionCommand;
-
-	private static ObjectDefinition _objectDefinition;
+	private MVCActionCommand _editSynonymSetsMVCActionCommand;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
-	private static ObjectEntryLocalService _objectEntryLocalService;
-
-	private static String _originalName;
-	private static String _originalPortalPreferencesXML;
-	private static User _user;
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private Searcher _searcher;

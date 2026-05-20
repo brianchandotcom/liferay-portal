@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="content" index-type="text" instance-id="lo0a0001" name="content" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[<p>Liferay DXP 2026.Q2 is generally available, bringing new AI-assisted authoring tools, improved performance for high-traffic deployments, and a redesigned Site Builder experience. This release focuses on the day-to-day productivity of authors and developers, with shorter feedback loops in the page editor and faster cold starts in clustered environments. Existing customers can upgrade through their usual channels; the full release notes and upgrade guide are available on learn.liferay.com.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

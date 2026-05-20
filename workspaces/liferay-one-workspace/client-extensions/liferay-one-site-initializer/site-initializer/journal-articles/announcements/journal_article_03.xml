@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="content" index-type="text" instance-id="lo0a0003" name="content" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[<p>The Liferay Community Meetup is back with in-person events across three regions and a fully online track for everyone else. Talks will cover real-world architecture patterns, contributions to the open-source codebase, and a deep dive into the upcoming roadmap. Lightning talk submissions from community members are open until the end of the month — see the community site for details and to reserve a seat.</p>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

@@ -193,26 +193,30 @@ export default function CriteriaSidebar({
 				{Liferay.Language.get('segment-criteria')}
 			</div>
 
-			<div className='sidebar-header'>
-				<Picker
-					items={pickerItems}
-					onSelectionChange={key => {
-						setSelectedPropertyKey(key as string);
-					}}
-					selectedKey={selectedPropertyKey ?? undefined}
-				>
-					{(group: IPickerGroup) => (
-						<ClayDropDown.Group
-							header={group.label}
-							items={group.items}
-						>
-							{(item: {label: string; value: string}) => (
-								<Option key={item.value}>{item.label}</Option>
-							)}
-						</ClayDropDown.Group>
-					)}
-				</Picker>
-			</div>
+			{type !== SegmentTypes.RealTime && (
+				<div className='sidebar-header'>
+					<Picker
+						items={pickerItems}
+						onSelectionChange={key => {
+							setSelectedPropertyKey(key as string);
+						}}
+						selectedKey={selectedPropertyKey ?? undefined}
+					>
+						{(group: IPickerGroup) => (
+							<ClayDropDown.Group
+								header={group.label}
+								items={group.items}
+							>
+								{(item: {label: string; value: string}) => (
+									<Option key={item.value}>
+										{item.label}
+									</Option>
+								)}
+							</ClayDropDown.Group>
+						)}
+					</Picker>
+				</div>
+			)}
 
 			<div className='sidebar-search'>
 				<CriteriaSidebarSearchBar

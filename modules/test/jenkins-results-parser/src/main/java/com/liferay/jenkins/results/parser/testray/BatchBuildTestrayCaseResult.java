@@ -224,7 +224,7 @@ public class BatchBuildTestrayCaseResult
 
 			for (String teamComponentName : teamComponentNames.split(",")) {
 				if (teamComponentName.equals(componentName)) {
-					return _uppercaseFirstLetterOfEachWord(
+					return _upperCaseFirstLetterOfEachWord(
 						teamName.replace("-", " "));
 				}
 			}
@@ -767,7 +767,7 @@ public class BatchBuildTestrayCaseResult
 			getBuildReport(), "Warnings", getAxisName() + "/warnings.html.gz");
 	}
 
-	private String _uppercaseFirstLetterOfEachWord(String string) {
+	private String _upperCaseFirstLetterOfEachWord(String string) {
 		StringBuilder sb = new StringBuilder(string);
 
 		for (int i = 0; i < sb.length(); i++) {

@@ -494,6 +494,31 @@ public class PortletFileRepositoryUtil {
 			repositoryId, searchContext);
 	}
 
+	public static FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, File file, String fileName,
+			String mimeType, ServiceContext serviceContext)
+		throws PortalException {
+
+		PortletFileRepository portletFileRepository =
+			_portletFileRepositorySnapshot.get();
+
+		return portletFileRepository.updatePortletFileEntry(
+			userId, fileEntryId, file, fileName, mimeType, serviceContext);
+	}
+
+	public static FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, InputStream inputStream,
+			String fileName, String mimeType, ServiceContext serviceContext)
+		throws PortalException {
+
+		PortletFileRepository portletFileRepository =
+			_portletFileRepositorySnapshot.get();
+
+		return portletFileRepository.updatePortletFileEntry(
+			userId, fileEntryId, inputStream, fileName, mimeType,
+			serviceContext);
+	}
+
 	private static final Snapshot<PortletFileRepository>
 		_portletFileRepositorySnapshot = new Snapshot<>(
 			PortletFileRepositoryUtil.class, PortletFileRepository.class);

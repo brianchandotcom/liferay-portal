@@ -254,6 +254,7 @@ const AssetCategories = ({
 														),
 												}}
 												displayType="secondary"
+												inverse
 												key={`${category.taxonomyVocabularyId}_${category.id}`}
 											>
 												{category.name}

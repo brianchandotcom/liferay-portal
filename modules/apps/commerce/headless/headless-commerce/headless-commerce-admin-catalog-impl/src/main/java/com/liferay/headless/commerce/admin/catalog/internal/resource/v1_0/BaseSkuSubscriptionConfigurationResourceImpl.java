@@ -47,6 +47,9 @@ public abstract class BaseSkuSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/by-externalReferenceCode/{externalReferenceCode}/skuSubscriptionConfiguration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the subscription configuration of the SKU identified by external reference code. Calls CPInstanceService.fetchCPInstanceByExternalReferenceCode + SkuSubscriptionConfigurationDTOConverter. Validation -- NoSuchCPInstanceException -> 404 when SKU ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -84,6 +87,9 @@ public abstract class BaseSkuSubscriptionConfigurationResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/skus/{id}/skuSubscriptionConfiguration'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Returns the subscription configuration of the SKU identified by id. Calls CPInstanceService.getCPInstance + SkuSubscriptionConfigurationDTOConverter. Validation -- NoSuchCPInstanceException -> 404 when SKU id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -559,4 +565,4 @@ public abstract class BaseSkuSubscriptionConfigurationResourceImpl
 			BaseSkuSubscriptionConfigurationResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-357287573
+// LIFERAY-REST-BUILDER-HASH:2019996210

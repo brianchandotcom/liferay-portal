@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("OrderType")
+@GraphQLName(
+	description = "Read-only reference to a commerce order type, embedded by catalog resources to identify the order classification for a product configuration list scope; order type create, read, update, and delete operations live in a separate admin module.",
+	value = "OrderType"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OrderType")
 public class OrderType implements Serializable {
@@ -50,7 +53,10 @@ public class OrderType implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the order type (FK identifier); read-only in this module.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,7 +88,9 @@ public class OrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the order type (FK identifier); read-only in this module."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -90,6 +98,7 @@ public class OrderType implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text; map keys are locale codes and values are the translated strings.",
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -126,7 +135,9 @@ public class OrderType implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text; map keys are locale codes and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> name;
 
@@ -285,4 +296,4 @@ public class OrderType implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:933593423
+// LIFERAY-REST-BUILDER-HASH:18296313

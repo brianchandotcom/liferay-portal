@@ -41,7 +41,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductConfiguration")
+@GraphQLName(
+	description = "Inventory, ordering, and fulfillment configuration for a single product or for a reusable configuration template; bundles inventory engine selection, order quantity rules, low-stock behavior, shipping dimensions, and tax classification under one configuration list entry.",
+	value = "ProductConfiguration"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductConfiguration")
 public class ProductConfiguration implements Serializable {
@@ -55,7 +58,9 @@ public class ProductConfiguration implements Serializable {
 			ProductConfiguration.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name such as `get`, `update`, and `delete`; each entry carries the URL template and HTTP method; the `delete` action is omitted on the master entry; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -91,14 +96,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name such as `get`, `update`, and `delete`; each entry carries the URL template and HTTP method; the `delete` action is omitted on the master entry; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether customers can place orders when the item is out of stock.",
+		example = "true"
+	)
 	public Boolean getAllowBackOrder() {
 		if (_allowBackOrderSupplier != null) {
 			allowBackOrder = _allowBackOrderSupplier.get();
@@ -132,14 +142,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether customers can place orders when the item is out of stock."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean allowBackOrder;
 
 	@JsonIgnore
 	private Supplier<Boolean> _allowBackOrderSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "[10, 20, 30, 40]")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Discrete order quantities the customer may pick from (for example 10, 20, 30); supplied as a space-separated list of numbers and exposed as a numeric array; when set, this list overrides the minimum, maximum, and step combination.",
+		example = "[10, 20, 30, 40]"
+	)
 	@Valid
 	public BigDecimal[] getAllowedOrderQuantities() {
 		if (_allowedOrderQuantitiesSupplier != null) {
@@ -175,7 +190,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Discrete order quantities the customer may pick from (for example 10, 20, 30); supplied as a space-separated list of numbers and exposed as a numeric array; when set, this list overrides the minimum, maximum, and step combination."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal[] allowedOrderQuantities;
 
@@ -183,7 +200,10 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<BigDecimal[]> _allowedOrderQuantitiesSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "31130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the availability estimate label assigned on create or update and used to render `availabilityEstimateName`.",
+		example = "31130"
+	)
 	public Long getAvailabilityEstimateId() {
 		if (_availabilityEstimateIdSupplier != null) {
 			availabilityEstimateId = _availabilityEstimateIdSupplier.get();
@@ -217,7 +237,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the availability estimate label assigned on create or update and used to render `availabilityEstimateName`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long availabilityEstimateId;
 
@@ -225,6 +247,7 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<Long> _availabilityEstimateIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized label for the availability estimate; map keys are locale codes such as `en_US` or `it_IT` and values are the translated strings.",
 		example = "{en_US=3-5 Days, it_IT=3-5 Giorni}"
 	)
 	@Valid
@@ -264,14 +287,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized label for the availability estimate; map keys are locale codes such as `en_US` or `it_IT` and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> availabilityEstimateName;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _availabilityEstimateNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Names of the fields whose stored values differ from the parent template snapshot; populated only when the `showDifferences` query parameter is true and the entry has a parent template; read-only.",
+		example = "[minOrderQuantity, maxOrderQuantity]"
+	)
 	public String[] getDifferences() {
 		if (_differencesSupplier != null) {
 			differences = _differencesSupplier.get();
@@ -305,14 +333,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Names of the fields whose stored values differ from the parent template snapshot; populated only when the `showDifferences` query parameter is true and the entry has a parent template; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] differences;
 
 	@JsonIgnore
 	private Supplier<String[]> _differencesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the storefront displays availability information such as in stock, out of stock, or estimate to customers.",
+		example = "true"
+	)
 	public Boolean getDisplayAvailability() {
 		if (_displayAvailabilitySupplier != null) {
 			displayAvailability = _displayAvailabilitySupplier.get();
@@ -346,14 +379,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the storefront displays availability information such as in stock, out of stock, or estimate to customers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayAvailability;
 
 	@JsonIgnore
 	private Supplier<Boolean> _displayAvailabilitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the storefront displays the exact remaining stock count to customers.",
+		example = "true"
+	)
 	public Boolean getDisplayStockQuantity() {
 		if (_displayStockQuantitySupplier != null) {
 			displayStockQuantity = _displayStockQuantitySupplier.get();
@@ -387,14 +425,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the storefront displays the exact remaining stock count to customers."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean displayStockQuantity;
 
 	@JsonIgnore
 	private Supplier<Boolean> _displayStockQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the target entity; the product's external reference code when the entry points at a product, or null when it points at a template; read-only.",
+		example = "AB-34098-789-N"
+	)
 	public String getEntityExternalReferenceCode() {
 		if (_entityExternalReferenceCodeSupplier != null) {
 			entityExternalReferenceCode =
@@ -432,7 +475,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the target entity; the product's external reference code when the entry points at a product, or null when it points at a template; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entityExternalReferenceCode;
 
@@ -440,7 +485,10 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<String> _entityExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the target entity; the product identifier when the entry points at a product or the configuration list identifier when it points at a template.",
+		example = "30130"
+	)
 	public Long getEntityId() {
 		if (_entityIdSupplier != null) {
 			entityId = _entityIdSupplier.get();
@@ -474,14 +522,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the target entity; the product identifier when the entry points at a product or the configuration list identifier when it points at a template."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long entityId;
 
 	@JsonIgnore
 	private Supplier<Long> _entityIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "ABS Sensor")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized name of the target product for the request locale; null when the entry points at a template; read-only.",
+		example = "ABS Sensor"
+	)
 	public String getEntityName() {
 		if (_entityNameSupplier != null) {
 			entityName = _entityNameSupplier.get();
@@ -515,14 +568,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized name of the target product for the request locale; null when the entry points at a template; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entityName;
 
 	@JsonIgnore
 	private Supplier<String> _entityNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "product")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Discriminator on create indicating which entity the new entry targets; `product` resolves a product by external reference code or identifier, while `template` targets the parent configuration list; defaults to `product` when omitted.",
+		example = "product"
+	)
 	@JsonGetter("entityType")
 	@Valid
 	public EntityType getEntityType() {
@@ -569,14 +627,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Discriminator on create indicating which entity the new entry targets; `product` resolves a product by external reference code or identifier, while `template` targets the parent configuration list; defaults to `product` when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected EntityType entityType;
 
 	@JsonIgnore
 	private Supplier<EntityType> _entityTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per product configuration within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -610,7 +673,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per product configuration within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -618,7 +683,10 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the product configuration; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -650,7 +718,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the product configuration; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -658,7 +728,8 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The inventory engine that will be used to manage the product inventory"
+		description = "Key of the inventory engine that resolves stock for this product; defaults to `default`, which uses the embedded inventory record; custom engines may delegate to external inventory systems.",
+		example = "default"
 	)
 	public String getInventoryEngine() {
 		if (_inventoryEngineSupplier != null) {
@@ -694,7 +765,7 @@ public class ProductConfiguration implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The inventory engine that will be used to manage the product inventory"
+		description = "Key of the inventory engine that resolves stock for this product; defaults to `default`, which uses the embedded inventory record; custom engines may delegate to external inventory systems."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String inventoryEngine;
@@ -703,7 +774,8 @@ public class ProductConfiguration implements Serializable {
 	private Supplier<String> _inventoryEngineSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The low stock action that will be performed when a product is out of stock"
+		description = "Key of the activity that runs when stock falls to or below the minimum stock quantity; the built-in `default` activity unpublishes the SKU.",
+		example = "default"
 	)
 	public String getLowStockAction() {
 		if (_lowStockActionSupplier != null) {
@@ -739,7 +811,7 @@ public class ProductConfiguration implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The low stock action that will be performed when a product is out of stock"
+		description = "Key of the activity that runs when stock falls to or below the minimum stock quantity; the built-in `default` activity unpublishes the SKU."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String lowStockAction;
@@ -747,7 +819,10 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _lowStockActionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Maximum quantity a customer may include for this product in a single order; must be greater than zero; defaults to 10000 on create when omitted.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getMaxOrderQuantity() {
 		if (_maxOrderQuantitySupplier != null) {
@@ -782,14 +857,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Maximum quantity a customer may include for this product in a single order; must be greater than zero; defaults to 10000 on create when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal maxOrderQuantity;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _maxOrderQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Minimum quantity a customer must include for this product in a single order; must be greater than zero; defaults to 1.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getMinOrderQuantity() {
 		if (_minOrderQuantitySupplier != null) {
@@ -824,14 +904,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Minimum quantity a customer must include for this product in a single order; must be greater than zero; defaults to 1."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal minOrderQuantity;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _minOrderQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Threshold at which the configured low-stock action is triggered; defaults to 1 on create; trailing zeros are stripped on read.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getMinStockQuantity() {
 		if (_minStockQuantitySupplier != null) {
@@ -866,14 +951,19 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Threshold at which the configured low-stock action is triggered; defaults to 1 on create; trailing zeros are stripped on read."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal minStockQuantity;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _minStockQuantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "10.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Step increment for order quantity; ordered quantities must be multiples of this value; must be greater than zero; defaults to 1.",
+		example = "10.1"
+	)
 	@Valid
 	public BigDecimal getMultipleOrderQuantity() {
 		if (_multipleOrderQuantitySupplier != null) {
@@ -909,7 +999,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Step increment for order quantity; ordered quantities must be multiples of this value; must be greater than zero; defaults to 1."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal multipleOrderQuantity;
 
@@ -1008,7 +1100,10 @@ public class ProductConfiguration implements Serializable {
 	@JsonIgnore
 	private Supplier<ProductTaxConfiguration> _productTaxConfigurationSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the product or SKU can be added to a cart and checked out; defaults to true on create.",
+		example = "true"
+	)
 	public Boolean getPurchasable() {
 		if (_purchasableSupplier != null) {
 			purchasable = _purchasableSupplier.get();
@@ -1042,7 +1137,9 @@ public class ProductConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the product or SKU can be added to a cart and checked out; defaults to true on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean purchasable;
 
@@ -1541,4 +1638,4 @@ public class ProductConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-743980005
+// LIFERAY-REST-BUILDER-HASH:307733337

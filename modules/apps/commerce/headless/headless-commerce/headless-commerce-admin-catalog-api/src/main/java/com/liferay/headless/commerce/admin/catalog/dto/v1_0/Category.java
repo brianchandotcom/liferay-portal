@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Category")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"id"})
+@GraphQLName(
+	description = "Asset-based taxonomy entry used to classify products; within the admin catalog API a category appears only as a reference body for assigning or listing categories against a product, and the resource itself does not create or delete category records.",
+	value = "Category"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Asset-based taxonomy entry used to classify products; within the admin catalog API a category appears only as a reference body for assigning or listing categories against a product, and the resource itself does not create or delete category records.",
+	requiredProperties = {"id"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Category")
 public class Category implements Serializable {
@@ -51,7 +57,10 @@ public class Category implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Category.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per category within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -85,7 +94,9 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per category within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -93,7 +104,10 @@ public class Category implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the category (FK identifier); required when patching product-category assignments because each entry is resolved by identifier and unknown identifiers are rejected.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -125,7 +139,9 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the category (FK identifier); required when patching product-category assignments because each entry is resolved by identifier and unknown identifiers are rejected."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long id;
@@ -133,7 +149,10 @@ public class Category implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal name of the category; the human-facing label is exposed through the localized `title` map.",
+		example = "Hand Tools"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -165,14 +184,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Category Name")
+	@GraphQLField(
+		description = "Internal name of the category; the human-facing label is exposed through the localized `title` map."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the Liferay site (FK identifier) where the category was defined.",
+		example = "20121"
+	)
 	public Long getSiteId() {
 		if (_siteIdSupplier != null) {
 			siteId = _siteIdSupplier.get();
@@ -206,7 +230,9 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the Liferay site (FK identifier) where the category was defined."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long siteId;
 
@@ -214,6 +240,7 @@ public class Category implements Serializable {
 	private Supplier<Long> _siteIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text; map keys are locale codes and values are the translated strings.",
 		example = "{en_US=Category Title EN, hr_HR=Category Title HR, hu_HU=Category Title HU}"
 	)
 	@Valid
@@ -250,14 +277,19 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text; map keys are locale codes and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _titleSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "Default Vocabulary")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Name of the vocabulary that owns this category, resolved at read time; read-only.",
+		example = "Default Vocabulary"
+	)
 	public String getVocabulary() {
 		if (_vocabularySupplier != null) {
 			vocabulary = _vocabularySupplier.get();
@@ -291,7 +323,9 @@ public class Category implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Name of the vocabulary that owns this category, resolved at read time; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String vocabulary;
 
@@ -510,4 +544,4 @@ public class Category implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2107461724
+// LIFERAY-REST-BUILDER-HASH:-1424011293

@@ -38,7 +38,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductSubscriptionConfiguration")
+@GraphQLName(
+	description = "Recurring billing and recurring delivery settings for a product; subscription fields control how the product is rebilled and delivery-subscription fields control an independent delivery schedule; cadence values use the keys `daily`, `weekly`, `monthly`, and `yearly`.",
+	value = "ProductSubscriptionConfiguration"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductSubscriptionConfiguration")
 public class ProductSubscriptionConfiguration implements Serializable {
@@ -53,7 +56,10 @@ public class ProductSubscriptionConfiguration implements Serializable {
 			ProductSubscriptionConfiguration.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether recurring delivery is enabled independently of billing.",
+		example = "true"
+	)
 	public Boolean getDeliverySubscriptionEnable() {
 		if (_deliverySubscriptionEnableSupplier != null) {
 			deliverySubscriptionEnable =
@@ -91,14 +97,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether recurring delivery is enabled independently of billing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean deliverySubscriptionEnable;
 
 	@JsonIgnore
 	private Supplier<Boolean> _deliverySubscriptionEnableSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of `deliverySubscriptionType` units between deliveries; for example, 2 with a `monthly` delivery type means delivering every two months.",
+		example = "2"
+	)
 	public Integer getDeliverySubscriptionLength() {
 		if (_deliverySubscriptionLengthSupplier != null) {
 			deliverySubscriptionLength =
@@ -136,14 +147,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Number of `deliverySubscriptionType` units between deliveries; for example, 2 with a `monthly` delivery type means delivering every two months."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer deliverySubscriptionLength;
 
 	@JsonIgnore
 	private Supplier<Integer> _deliverySubscriptionLengthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Maximum number of recurring deliveries before the delivery cycle ends; 0 means unlimited.",
+		example = "12"
+	)
 	public Long getDeliverySubscriptionNumberOfLength() {
 		if (_deliverySubscriptionNumberOfLengthSupplier != null) {
 			deliverySubscriptionNumberOfLength =
@@ -182,14 +198,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Maximum number of recurring deliveries before the delivery cycle ends; 0 means unlimited."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long deliverySubscriptionNumberOfLength;
 
 	@JsonIgnore
 	private Supplier<Long> _deliverySubscriptionNumberOfLengthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "monthly")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Delivery interval unit; allowed values are `daily`, `weekly`, `monthly`, and `yearly`.",
+		example = "monthly"
+	)
 	@JsonGetter("deliverySubscriptionType")
 	@Valid
 	public DeliverySubscriptionType getDeliverySubscriptionType() {
@@ -240,7 +261,9 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Delivery interval unit; allowed values are `daily`, `weekly`, `monthly`, and `yearly`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected DeliverySubscriptionType deliverySubscriptionType;
 
@@ -249,6 +272,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		_deliverySubscriptionTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Cadence-specific configuration map; when the delivery type is `monthly`, recognized keys are `deliveryMonthDay` (1 to 31) and `deliveryMonthlyMode` (`exact-day-of-month` or `nth-weekday`).",
 		example = "{deliveryMonthDay=1, deliveryMonthlyMode=0}"
 	)
 	@Valid
@@ -290,7 +314,9 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Cadence-specific configuration map; when the delivery type is `monthly`, recognized keys are `deliveryMonthDay` (1 to 31) and `deliveryMonthlyMode` (`exact-day-of-month` or `nth-weekday`)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> deliverySubscriptionTypeSettings;
 
@@ -298,7 +324,10 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	private Supplier<Map<String, String>>
 		_deliverySubscriptionTypeSettingsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether subscription purchases (recurring billing) are enabled for the product.",
+		example = "true"
+	)
 	public Boolean getEnable() {
 		if (_enableSupplier != null) {
 			enable = _enableSupplier.get();
@@ -332,14 +361,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether subscription purchases (recurring billing) are enabled for the product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean enable;
 
 	@JsonIgnore
 	private Supplier<Boolean> _enableSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of `subscriptionType` units between billing cycles; for example, 2 with a `monthly` subscription type rebills every two months.",
+		example = "2"
+	)
 	public Integer getLength() {
 		if (_lengthSupplier != null) {
 			length = _lengthSupplier.get();
@@ -373,14 +407,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Number of `subscriptionType` units between billing cycles; for example, 2 with a `monthly` subscription type rebills every two months."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer length;
 
 	@JsonIgnore
 	private Supplier<Integer> _lengthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Maximum number of billing cycles before the subscription ends; 0 means unlimited.",
+		example = "12"
+	)
 	public Long getNumberOfLength() {
 		if (_numberOfLengthSupplier != null) {
 			numberOfLength = _numberOfLengthSupplier.get();
@@ -414,14 +453,19 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Maximum number of billing cycles before the subscription ends; 0 means unlimited."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long numberOfLength;
 
 	@JsonIgnore
 	private Supplier<Long> _numberOfLengthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "monthly")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Billing interval unit; allowed values are `daily`, `weekly`, `monthly`, and `yearly`.",
+		example = "monthly"
+	)
 	@JsonGetter("subscriptionType")
 	@Valid
 	public SubscriptionType getSubscriptionType() {
@@ -469,7 +513,9 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Billing interval unit; allowed values are `daily`, `weekly`, `monthly`, and `yearly`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SubscriptionType subscriptionType;
 
@@ -477,6 +523,7 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	private Supplier<SubscriptionType> _subscriptionTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Cadence-specific configuration map; when the subscription type is `monthly`, recognized keys are `monthDay` (1 to 31) and `monthlyMode` (`exact-day-of-month` or `nth-weekday`).",
 		example = "{monthDay=1, monthlyMode=0}"
 	)
 	@Valid
@@ -516,7 +563,9 @@ public class ProductSubscriptionConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Cadence-specific configuration map; when the subscription type is `monthly`, recognized keys are `monthDay` (1 to 31) and `monthlyMode` (`exact-day-of-month` or `nth-weekday`)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> subscriptionTypeSettings;
 
@@ -859,4 +908,4 @@ public class ProductSubscriptionConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1890565956
+// LIFERAY-REST-BUILDER-HASH:-1041803791

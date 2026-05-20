@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("SkuVirtualSettingsFileEntry")
+@GraphQLName(
+	description = "Individual file or external URL attached to a SKU's virtual settings as a downloadable asset.",
+	value = "SkuVirtualSettingsFileEntry"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "SkuVirtualSettingsFileEntry")
 public class SkuVirtualSettingsFileEntry implements Serializable {
@@ -51,7 +54,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 			SkuVirtualSettingsFileEntry.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -87,7 +92,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -95,7 +102,8 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded file"
+		description = "Base64-encoded file uploaded as the asset for this entry on create or update; write-only and not returned on read. The resolved download URL is exposed through `src`.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
@@ -130,7 +138,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded file")
+	@GraphQLField(
+		description = "Base64-encoded file uploaded as the asset for this entry on create or update; write-only and not returned on read. The resolved download URL is exposed through `src`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
@@ -138,7 +148,10 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the file entry; read-only and assigned by the service on create.",
+		example = "30324"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -170,7 +183,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the file entry; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -178,7 +193,8 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the file"
+		description = "Resolved internal download URL for the attached file entry; null when no file is attached. Read-only.",
+		example = "https://example.com/download.zip"
 	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
@@ -211,14 +227,19 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the file")
+	@GraphQLField(
+		description = "Resolved internal download URL for the attached file entry; null when no file is attached. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String src;
 
 	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External URL pointing at the asset when it is hosted outside the portal; null when no URL is set.",
+		example = "https://example.com/download.zip"
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -250,7 +271,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the file")
+	@GraphQLField(
+		description = "External URL pointing at the asset when it is hosted outside the portal; null when no URL is set."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
@@ -258,7 +281,8 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Supplier<String> _urlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The version of the file"
+		description = "Optional version label for the asset; null when not set.",
+		example = "1.0"
 	)
 	public String getVersion() {
 		if (_versionSupplier != null) {
@@ -293,7 +317,9 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The version of the file")
+	@GraphQLField(
+		description = "Optional version label for the asset; null when not set."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
@@ -518,4 +544,4 @@ public class SkuVirtualSettingsFileEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-693630015
+// LIFERAY-REST-BUILDER-HASH:-765353821

@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductVirtualSettingsFileEntry")
+@GraphQLName(
+	description = "Single downloadable artifact attached to a product's virtual settings; links one Document Library file (or an external URL) and a version label to the virtual settings record.",
+	value = "ProductVirtualSettingsFileEntry"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductVirtualSettingsFileEntry")
 public class ProductVirtualSettingsFileEntry implements Serializable {
@@ -51,7 +54,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 			ProductVirtualSettingsFileEntry.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of available operations for the current user keyed by action name; each entry carries the URL template and HTTP method; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -87,7 +92,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of available operations for the current user keyed by action name; each entry carries the URL template and HTTP method; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
@@ -95,7 +102,8 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded file"
+		description = "Base64-encoded payload of the file accepted on write; the service decodes it and stores it as a Document Library file; write-only.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
@@ -130,7 +138,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded file")
+	@GraphQLField(
+		description = "Base64-encoded payload of the file accepted on write; the service decodes it and stores it as a Document Library file; write-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
@@ -138,7 +148,10 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the downloadable file entry; read-only.",
+		example = "30324"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -170,7 +183,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the downloadable file entry; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -178,7 +193,8 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the file"
+		description = "Resolved download URL for the backing file; null when no file is attached; read-only.",
+		example = "https://example.com/download.zip"
 	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
@@ -211,14 +227,19 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the file")
+	@GraphQLField(
+		description = "Resolved download URL for the backing file; null when no file is attached; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String src;
 
 	@JsonIgnore
 	private Supplier<String> _srcSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External URL where the file is hosted as an alternative to `attachment`; returned as-is.",
+		example = "https://example.com/download.zip"
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -250,7 +271,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the file")
+	@GraphQLField(
+		description = "External URL where the file is hosted as an alternative to `attachment`; returned as-is."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
@@ -258,7 +281,8 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Supplier<String> _urlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The version of the file"
+		description = "Free-form version label for this file, for example `1.0` or `v2024-03`.",
+		example = "1.0"
 	)
 	public String getVersion() {
 		if (_versionSupplier != null) {
@@ -293,7 +317,9 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The version of the file")
+	@GraphQLField(
+		description = "Free-form version label for this file, for example `1.0` or `v2024-03`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String version;
 
@@ -518,4 +544,4 @@ public class ProductVirtualSettingsFileEntry implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1723411475
+// LIFERAY-REST-BUILDER-HASH:-1813056324

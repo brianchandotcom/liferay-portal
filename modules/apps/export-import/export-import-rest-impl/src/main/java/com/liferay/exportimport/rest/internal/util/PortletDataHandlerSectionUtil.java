@@ -133,8 +133,11 @@ public class PortletDataHandlerSectionUtil {
 					long additionCount = 0;
 					long deletionCount = 0;
 
+					List<PreviewPortletDataHandler> previewPortletDataHandlers =
+						entry.getValue();
+
 					for (PreviewPortletDataHandler previewPortletDataHandler :
-							entry.getValue()) {
+							previewPortletDataHandlers) {
 
 						additionCount +=
 							previewPortletDataHandler.getAdditionCount();
@@ -143,16 +146,15 @@ public class PortletDataHandlerSectionUtil {
 					}
 
 					long finalAdditionCount = additionCount;
-					long finalDeletionCount = deletionCount;
 
 					setAdditionCount(() -> finalAdditionCount);
+
+					long finalDeletionCount = deletionCount;
+
 					setDeletionCount(() -> finalDeletionCount);
+
 					setLabel(() -> LanguageUtil.get(locale, entry.getKey()));
 					setName(entry::getKey);
-
-					List<PreviewPortletDataHandler> previewPortletDataHandlers =
-						entry.getValue();
-
 					setPreviewPortletDataHandlers(
 						() -> previewPortletDataHandlers.toArray(
 							new PreviewPortletDataHandler[0]));

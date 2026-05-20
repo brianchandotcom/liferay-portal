@@ -817,6 +817,8 @@ public class DataDefinitionResourceTest
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 						companyId)) {
 
+				Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
 				User user = UserTestUtil.getAdminUser(companyId);
 
 				Group group = GroupTestUtil.addGroup(
@@ -829,8 +831,6 @@ public class DataDefinitionResourceTest
 					dataDefinitionField.getCustomProperties();
 
 				customProperties.put("ddmStructureId", dataDefinition1.getId());
-
-				Company company = CompanyLocalServiceUtil.getCompany(companyId);
 
 				DataDefinitionResource dataDefinitionResource =
 					DataDefinitionResource.builder(

@@ -17,6 +17,7 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
+import {SimulationMenuPage} from '../../layout-admin-web/main/pages/SimulationMenuPage';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -104,6 +105,76 @@ test(
 		});
 
 		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
+	}
+);
+
+test(
+	'Asserts the segmentation-disabled alert can be dismissed and recovered in the Experience simulation sidepanel, and that it explains how to re-enable segmentation',
+	{tag: ['@LPS-154019', '@LPS-151362']},
+	async ({apiHelpers, page, site}) => {
+
+		// Create a content page and a segment so the simulation sidebar renders the segments section
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(firstName eq 'userfn3')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(firstName eq 'userfn3')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Segment With User3',
+		});
+
+		// Visit the page in view mode and open the simulation panel
+
+		const simulationMenuPage = new SimulationMenuPage(page);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await simulationMenuPage.openSimulationPanel();
+
+		const warning = page.locator('.alert-warning');
+
+		const alert = warning.getByText(
+			'Experiences cannot be displayed because segmentation is disabled.'
+		);
+
+		// Assert the alert explains how to re-enable segmentation
+
+		await expect(alert).toBeVisible();
+
+		await expect(
+			warning.getByRole('link', {
+				name: 'To enable, go to Instance Settings.',
+			})
+		).toBeVisible();
+
+		// Close the alert and assert it is hidden
+
+		await clickAndExpectToBeHidden({
+			target: alert,
+			trigger: warning.getByRole('button', {name: 'Close'}),
+		});
+
+		// Refresh, reopen the simulation panel, and assert the alert is back
+
+		await page.reload();
+
+		await simulationMenuPage.openSimulationPanel();
+
+		await expect(alert).toBeVisible();
 	}
 );
 

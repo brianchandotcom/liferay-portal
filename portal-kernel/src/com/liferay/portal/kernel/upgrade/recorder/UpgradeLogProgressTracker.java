@@ -432,11 +432,11 @@ public class UpgradeLogProgressTracker {
 		UpgradeLogProgressTracker.class);
 
 	private static volatile boolean _enabled;
-	private static final AtomicLong _handlerCounter = new AtomicLong();
 	private static final Map<String, Long> _lastKnownProgresses =
 		new ConcurrentHashMap<>();
 	private static final Map<String, Long> _lastKnownTotalCounts =
 		new ConcurrentHashMap<>();
+	private static final AtomicLong _queryCounter = new AtomicLong();
 	private static final Set<String> _unsafeSetters = new HashSet<>(
 		Arrays.asList(
 			"setAsciiStream", "setBinaryStream", "setBlob",
@@ -501,17 +501,17 @@ public class UpgradeLogProgressTracker {
 			_statementProxy = statementProxy;
 			_totalRowCountSupplier = totalRowCountSupplier;
 
-			long handlerId = _handlerCounter.incrementAndGet();
+			long queryId = _queryCounter.incrementAndGet();
 
 			if (PropsValues.DATABASE_PARTITION_ENABLED) {
 				_progressId = StringBundler.concat(
 					upgradeProcessClassName, " {companyId=",
-					CompanyThreadLocal.getCompanyId(), ", handlerId=",
-					handlerId, "}");
+					CompanyThreadLocal.getCompanyId(), ", queryId=", queryId,
+					"}");
 			}
 			else {
 				_progressId = StringBundler.concat(
-					upgradeProcessClassName, " {handlerId=", handlerId, "}");
+					upgradeProcessClassName, " {queryId=", queryId, "}");
 			}
 
 			_lastLogTime = System.currentTimeMillis();

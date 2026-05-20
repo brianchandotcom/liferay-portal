@@ -7,26 +7,9 @@ import InstructionDefinitionItemTitle from './InstructionDefinitionItemTitle';
 
 import type {
 	IInternalRenderer,
-	IItemsActions,
 	IListSchema,
 	IView,
 } from '@liferay/frontend-data-set-web';
-
-function applyStyles(itemsActions: Array<IItemsActions>): Array<IItemsActions> {
-	return itemsActions.map((action: IItemsActions) => {
-		const newItems = action.items ? applyStyles(action.items) : undefined;
-		const itemsChanged = newItems !== action.items;
-
-		if (!itemsChanged) {
-			return action;
-		}
-
-		return {
-			...action,
-			...(itemsChanged && {items: newItems}),
-		};
-	});
-}
 
 export default function propsTransformer({itemsActions, ...otherProps}: any) {
 	const customListTitleRenderer: IInternalRenderer = {
@@ -58,7 +41,7 @@ export default function propsTransformer({itemsActions, ...otherProps}: any) {
 		customRenderers: {
 			listSection: [customListTitleRenderer],
 		},
-		itemsActions: applyStyles(itemsActions),
+		itemsActions,
 		views,
 	};
 }

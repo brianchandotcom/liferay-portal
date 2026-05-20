@@ -16,11 +16,12 @@ public class CookiesBannerWebKeys {
 	public static final String COOKIES_BANNER_DISPLAY_CONTEXT =
 		"COOKIES_BANNER_DISPLAY_CONTEXT";
 
+	public static final String COOKIES_BANNER_PREVIEW =
+		"COOKIES_BANNER_PREVIEW";
+
 	public static final String
 		COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT =
 			"COOKIES_PREFERENCE_HANDLING_CONFIGURATION_DISPLAY_CONTEXT";
-
-	public static final String COOKIES_PREVIEW = "cookiesPreview";
 
 	public static final String CUSTOM_FLOATING_ICON_IMAGE_ID =
 		"CUSTOM_FLOATING_ICON_IMAGE_ID";

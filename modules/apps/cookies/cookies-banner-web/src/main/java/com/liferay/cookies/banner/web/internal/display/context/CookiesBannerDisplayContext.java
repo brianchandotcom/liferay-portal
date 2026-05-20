@@ -99,7 +99,7 @@ public class CookiesBannerDisplayContext
 			"previewMode",
 			GetterUtil.getBoolean(
 				httpServletRequest.getAttribute(
-					CookiesBannerWebKeys.COOKIES_PREVIEW))
+					CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW))
 		).put(
 			"requiredConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getRequiredConsentCookieTypes())

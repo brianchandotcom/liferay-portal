@@ -15,28 +15,28 @@ String homeURL = themeDisplay.getURLHome();
 
 <div class="alert alert-info align-items-center d-flex justify-content-between mb-3">
 	<span>
-		<liferay-ui:message key="see-how-this-will-look-to-users-preview-your-banner-and-panel-in-real-time-with-all-current-settings-translations-and-formatting-without-affecting-the-live-experience" />
+		<liferay-ui:message key="cookies-banner-preview-description" />
 	</span>
 
-	<button class="btn btn-info" id="<portlet:namespace />cookiesPreviewButton" type="button">
+	<button class="btn btn-info" id="<portlet:namespace />cookiesBannerPreviewButton" type="button">
 		<liferay-ui:message key="preview" />
 	</button>
 </div>
 
 <aui:script>
-	var previewButton = document.getElementById(
-		'<portlet:namespace />cookiesPreviewButton'
+	var cookiesBannerPreviewButton = document.getElementById(
+		'<portlet:namespace />cookiesBannerPreviewButton'
 	);
 
-	if (previewButton) {
-		previewButton.addEventListener('click', function (event) {
+	if (cookiesBannerPreviewButton) {
+		cookiesBannerPreviewButton.addEventListener('click', function (event) {
 			event.preventDefault();
 
 			Liferay.Util.openModal({
 				id: 'cookiesBannerPreviewModal',
 				size: 'full-screen',
 				title: Liferay.Language.get('preview'),
-				url: '<%= HtmlUtil.escapeJS(homeURL + (homeURL.contains("?") ? "&" : "?") + CookiesBannerWebKeys.COOKIES_PREVIEW + "=1") %>',
+				url: '<%= HtmlUtil.escapeJS(homeURL + (homeURL.contains("?") ? "&" : "?") + CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW + "=1") %>',
 			});
 		});
 	}

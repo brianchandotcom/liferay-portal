@@ -1108,6 +1108,25 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-88081")
+	public void testUpdateStyleBookEntryERCWithScopePersistsBothColumns()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		String entryERC = RandomTestUtil.randomString();
+		String scopeERC = RandomTestUtil.randomString();
+
+		Layout updatedLayout = _layoutLocalService.updateStyleBookEntryERC(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			entryERC, scopeERC);
+
+		Assert.assertEquals(entryERC, updatedLayout.getStyleBookEntryERC());
+		Assert.assertEquals(
+			scopeERC, updatedLayout.getStyleBookEntryScopeERC());
+	}
+
+	@Test
 	public void testUpdateTypeSettings() throws Exception {
 		LayoutPrototype layoutPrototype = LayoutTestUtil.addLayoutPrototype(
 			RandomTestUtil.randomString());

@@ -21,6 +21,7 @@ import com.liferay.osb.faro.contacts.demo.internal.data.creator.SalesforceIndivi
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.model.Author;
 import com.liferay.osb.faro.engine.client.model.Channel;
+import com.liferay.osb.faro.engine.client.model.ChannelsConfiguration;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DataSource;
 import com.liferay.osb.faro.engine.client.model.FieldMapping;
@@ -538,8 +539,8 @@ public class NaniteDemoCreatorService extends DemoCreatorService {
 
 		salesforceProvider.setAccountsConfiguration(accountsConfiguration);
 
-		SalesforceProvider.ChannelsConfiguration channelsConfiguration =
-			new SalesforceProvider.ChannelsConfiguration();
+		ChannelsConfiguration channelsConfiguration =
+			new ChannelsConfiguration();
 
 		channelsConfiguration.setEnableAllChannels(false);
 

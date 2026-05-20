@@ -5,11 +5,8 @@
 
 package com.liferay.osb.faro.engine.client.model.provider;
 
+import com.liferay.osb.faro.engine.client.model.ChannelsConfiguration;
 import com.liferay.osb.faro.engine.client.model.Provider;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 /**
  * @author Nilton Vieira
@@ -31,70 +28,6 @@ public class HubSpotProvider implements Provider {
 		ChannelsConfiguration channelsConfiguration) {
 
 		_channelsConfiguration = channelsConfiguration;
-	}
-
-	public static class Channel {
-
-		public String getChannelId() {
-			return _channelId;
-		}
-
-		public Set<Long> getCommerceChannelIds() {
-			return _commerceChannelIds;
-		}
-
-		public Set<Long> getGroupIds() {
-			return _groupIds;
-		}
-
-		public Boolean isEnabled() {
-			return _enabled;
-		}
-
-		public void setChannelId(String channelId) {
-			_channelId = channelId;
-		}
-
-		public void setCommerceChannelIds(Set<Long> commerceChannelIds) {
-			_commerceChannelIds = commerceChannelIds;
-		}
-
-		public void setEnabled(Boolean enabled) {
-			_enabled = enabled;
-		}
-
-		public void setGroupIds(Set<Long> groupIds) {
-			_groupIds = groupIds;
-		}
-
-		private String _channelId;
-		private Set<Long> _commerceChannelIds;
-		private Boolean _enabled;
-		private Set<Long> _groupIds;
-
-	}
-
-	public static class ChannelsConfiguration {
-
-		public List<Channel> getChannels() {
-			return _channels;
-		}
-
-		public boolean isEnableAllChannels() {
-			return _enableAllChannels;
-		}
-
-		public void setChannels(List<Channel> channels) {
-			_channels = channels;
-		}
-
-		public void setEnableAllChannels(boolean enableAllChannels) {
-			_enableAllChannels = enableAllChannels;
-		}
-
-		private List<Channel> _channels = new ArrayList<>();
-		private boolean _enableAllChannels;
-
 	}
 
 	private ChannelsConfiguration _channelsConfiguration;

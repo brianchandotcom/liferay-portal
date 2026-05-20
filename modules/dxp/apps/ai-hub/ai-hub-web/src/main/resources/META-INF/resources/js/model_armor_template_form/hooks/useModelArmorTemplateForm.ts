@@ -75,8 +75,7 @@ export function useModelArmorTemplateForm({
 				!formValues.title_i18n ||
 				!Object.values(formValues.title_i18n).some(Boolean)
 			) {
-				validationErrors.title_i18n =
-					Liferay.Language.get('required');
+				validationErrors.title_i18n = Liferay.Language.get('required');
 			}
 
 			if (!formValues.externalReferenceCode) {
@@ -85,8 +84,7 @@ export function useModelArmorTemplateForm({
 			}
 
 			if (!formValues.location) {
-				validationErrors.location =
-					Liferay.Language.get('required');
+				validationErrors.location = Liferay.Language.get('required');
 			}
 
 			return validationErrors;

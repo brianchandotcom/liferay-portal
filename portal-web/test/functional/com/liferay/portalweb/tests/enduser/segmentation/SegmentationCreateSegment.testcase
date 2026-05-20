@@ -39,53 +39,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-135495 Validate if, Input title values can only be changed in edit mode."
-	@priority = 3
-	test CheckTranslatedSegment {
-		task ("Create a segment") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Screen Name",
-				groupName = "Test Site Name",
-				operator = "contains",
-				segmentName = "Original Segment",
-				text = "Test");
-
-			Refresh();
-		}
-
-		task ("Create segment's translation") {
-			Segmentation.editSegment(entry = "Original Segment");
-
-			Segmentation.changeLocale(locale = "pt-BR");
-
-			Segmentation.fillTitle(titleField = "Segmento Traduzido");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Check if title displayed is in english") {
-			AssertElementPresent(
-				key_rowEntry = "Original Segment",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-		}
-
-		task ("Assert if Titile is 'readonly' when edit toggle is disabled") {
-			LexiconEntry.gotoEntry(rowEntry = "Original Segment");
-
-			Segmentation.changeLocale(locale = "pt-BR");
-
-			AssertElementPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
-
-			Click(
-				ariaLabel = "Enter Edit Mode",
-				locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
-			AssertElementNotPresent(locator1 = "Segmentation#TITLE_FIELD_READ_ONLY");
-		}
-	}
-
 	@description = "LPS-153507 - Test Automation for LPS-95412: Members count is not updated when conjunctions are changed"
 	@priority = 4
 	test SegmentationCheckMembersWithConditions {

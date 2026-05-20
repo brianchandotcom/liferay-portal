@@ -97,10 +97,9 @@ public class ViewRelatedAssetsSectionDisplayContext
 						SectionDisplayContextUtil.getAdditionalAPIURLParameters(
 							appendStatus(
 								StringBundler.concat(
-									"(cmsSection eq 'contents' or ",
-									"cmsSection eq 'files') and not ",
-									"(keywords/any(k:k in (",
-									getKeywordsFilterString(),
+									"(cmsSection eq 'contents' or cmsSection ",
+									"eq 'files') and not (keywords/any(k:k in ",
+									"(", getKeywordsFilterString(),
 									"))) and objectDefinitionId gt 0")),
 							httpServletRequest, null);
 

@@ -636,7 +636,9 @@ test(
 
 				await expect(page.getByRole('dialog')).toBeVisible();
 
-				await expect(page.getByText(fileTitle)).toBeVisible();
+				await expect(
+					page.getByRole('link', {name: fileTitle})
+				).toBeVisible();
 
 				const imgageSrc = await page
 					.getByRole('img', {name: fileTitle})

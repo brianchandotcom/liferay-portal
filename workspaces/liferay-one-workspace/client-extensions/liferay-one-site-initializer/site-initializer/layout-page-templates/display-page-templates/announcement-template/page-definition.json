@@ -47,7 +47,10 @@
 												},
 												"text": {
 													"value_i18n": {
-														"en_US": "Announcements"
+														"en_US": "Announcements",
+														"es_ES": "Anuncios",
+														"ja_JP": "アナウンスメント",
+														"pt_BR": "Avisos"
 													}
 												}
 											}
@@ -123,7 +126,10 @@
 										},
 										"text": {
 											"value_i18n": {
-												"en_US": "← Back to Announcements"
+												"en_US": "← Back to Announcements",
+												"es_ES": "← Volver a Anuncios",
+												"ja_JP": "← アナウンスメントに戻る",
+												"pt_BR": "← Voltar para Avisos"
 											}
 										}
 									}

@@ -40,12 +40,10 @@ public class ViewHomeQuickActionsDisplayContext {
 	public ViewHomeQuickActionsDisplayContext(
 		GroupLocalService groupLocalService,
 		ObjectDefinitionService objectDefinitionService,
-		SectionDisplayContextHelper sectionDisplayContextHelper,
 		ThemeDisplay themeDisplay) {
 
 		_groupLocalService = groupLocalService;
 		_objectDefinitionService = objectDefinitionService;
-		_sectionDisplayContextHelper = sectionDisplayContextHelper;
 		_themeDisplay = themeDisplay;
 	}
 
@@ -142,9 +140,9 @@ public class ViewHomeQuickActionsDisplayContext {
 		_quickActions = new ArrayList<>();
 
 		List<Long> depotEntryGroupIds =
-			_sectionDisplayContextHelper.getDepotEntryGroupIds(
+			SectionDisplayContextUtil.getDepotEntryGroupIds(
 				ActionKeys.ADD_ENTRY,
-				_sectionDisplayContextHelper.getObjectEntryFolderIdsMap(
+				SectionDisplayContextUtil.getObjectEntryFolderIdsMap(
 					_themeDisplay.getCompanyId(), null,
 					_themeDisplay.getUserId()),
 				_themeDisplay);
@@ -233,7 +231,6 @@ public class ViewHomeQuickActionsDisplayContext {
 	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private List<Map<String, Object>> _quickActions;
-	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 	private final ThemeDisplay _themeDisplay;
 
 }

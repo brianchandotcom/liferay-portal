@@ -102,16 +102,15 @@ public class ViewRelatedAssetsSectionDisplayContext
 				"searchAPIURL",
 				() -> {
 					String additionalAPIURLParameters =
-						sectionDisplayContextHelper.
-							getAdditionalAPIURLParameters(
-								appendStatus(
-									StringBundler.concat(
-										"(cmsSection eq 'contents' or ",
-										"cmsSection eq 'files') and not ",
-										"(keywords/any(k:k in (",
-										getKeywordsFilterString(),
-										"))) and objectDefinitionId gt 0")),
-								httpServletRequest, null);
+						SectionDisplayContextUtil.getAdditionalAPIURLParameters(
+							appendStatus(
+								StringBundler.concat(
+									"(cmsSection eq 'contents' or ",
+									"cmsSection eq 'files') and not ",
+									"(keywords/any(k:k in (",
+									getKeywordsFilterString(),
+									"))) and objectDefinitionId gt 0")),
+							httpServletRequest, null);
 
 					return "/o/search/v1.0/search?" +
 						additionalAPIURLParameters;

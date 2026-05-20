@@ -170,11 +170,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		if (_isContentsFolder()) {
-			return sectionDisplayContextHelper.
-				getContentsBulkActionDropdownItems(httpServletRequest);
+			return SectionDisplayContextUtil.getContentsBulkActionDropdownItems(
+				httpServletRequest);
 		}
 
-		return sectionDisplayContextHelper.getFilesBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesBulkActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -241,11 +241,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		if (_isContentsFolder()) {
-			return sectionDisplayContextHelper.
-				getContentsFDSActionDropdownItems(httpServletRequest);
+			return SectionDisplayContextUtil.getContentsFDSActionDropdownItems(
+				httpServletRequest);
 		}
 
-		return sectionDisplayContextHelper.getFilesFDSActionDropdownItems(
+		return SectionDisplayContextUtil.getFilesFDSActionDropdownItems(
 			httpServletRequest);
 	}
 

@@ -4,22 +4,12 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useState} from 'react';
+import React from 'react';
 
 import ClayLabel from '../src';
 
 export default {
 	argTypes: {
-		displayType: {
-			control: {type: 'select'},
-			options: [
-				'danger',
-				'info',
-				'secondary',
-				'success',
-				'warning',
-			] as const,
-		},
 		inverse: {
 			control: {type: 'boolean'},
 		},
@@ -31,75 +21,95 @@ export default {
 	title: 'Design System/Components/Label',
 };
 
-export function Default(args: typeof Default.args) {
-	const [visible, setVisible] = useState<boolean>(true);
+const displayTypes = [
+	'danger',
+	'info',
+	'secondary',
+	'success',
+	'warning',
+] as const;
 
-	return visible ? (
-		<ClayLabel
-			closeButtonProps={
-				args.closeable
-					? {
-							onClick: () => setVisible((val) => !val),
-						}
-					: undefined
+export function Default(args: typeof Default.args) {
+	const closeButtonProps = args.closeable
+		? {
+				onClick: () => alert('close callback'),
 			}
-			displayType={args.displayType as 'secondary'}
-			href={args.href}
-			inverse={args.inverse}
-			large={args.large}
-		>
-			{args.label}
-		</ClayLabel>
-	) : null;
+		: undefined;
+
+	return (
+		<>
+			{displayTypes.map((displayType) => (
+				<ClayLabel
+					closeButtonProps={closeButtonProps}
+					displayType={displayType}
+					href={args.href}
+					inverse={args.inverse}
+					key={displayType}
+					large={args.large}
+				>
+					{args.label}
+				</ClayLabel>
+			))}
+		</>
+	);
 }
 
 Default.args = {
 	closeable: false,
-	displayType: 'secondary',
 	href: '',
 	inverse: false,
 	label: 'Label',
-
 	large: false,
 };
 
 export function Truncate(args: typeof Default.args) {
 	return (
 		<div style={{width: 150}}>
-			<ClayLabel
-				displayType={args.displayType as 'secondary'}
-				inverse={args.inverse}
-				large={args.large}
-			>
-				<span className="text-truncate">
-					this is a very long bit of text, can you see the end of it?
-				</span>
-			</ClayLabel>
+			{displayTypes.map((displayType) => (
+				<ClayLabel
+					displayType={displayType}
+					inverse={args.inverse}
+					key={displayType}
+					large={args.large}
+				>
+					<span className="text-truncate">
+						this is a very long bit of text, can you see the end of
+						it?
+					</span>
+				</ClayLabel>
+			))}
 		</div>
 	);
 }
 
 Truncate.args = {
+	inverse: false,
 	large: false,
 };
 
 export function ContentBefore(args: typeof Default.args) {
 	return (
-		<ClayLabel
-			displayType={args.displayType as 'secondary'}
-			inverse={args.inverse}
-			large={args.large}
-			withClose={false}
-		>
-			<ClayLabel.ItemBefore>
-				<ClayIcon symbol="check" />
-			</ClayLabel.ItemBefore>
+		<>
+			{displayTypes.map((displayType) => (
+				<ClayLabel
+					displayType={displayType}
+					inverse={args.inverse}
+					key={displayType}
+					large={args.large}
+					withClose={false}
+				>
+					<ClayLabel.ItemBefore>
+						<ClayIcon symbol="check" />
+					</ClayLabel.ItemBefore>
 
-			<ClayLabel.ItemExpand>Label</ClayLabel.ItemExpand>
-		</ClayLabel>
+					<ClayLabel.ItemExpand>Label</ClayLabel.ItemExpand>
+				</ClayLabel>
+			))}
+		</>
 	);
 }
 
 ContentBefore.args = {
+	inverse: false,
 	large: false,
 };

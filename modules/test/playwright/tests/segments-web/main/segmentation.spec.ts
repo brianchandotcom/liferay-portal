@@ -1563,6 +1563,77 @@ test(
 );
 
 test(
+	'Can edit a non-first segment without loading the first one',
+	{
+		tag: ['@LPS-153512', '@LPS-94855'],
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Seed two segments
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(firstName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(firstName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'First Segment',
+		});
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(lastName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(lastName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Second Segment',
+		});
+
+		// Edit the second segment and change its value
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.editSegmentsEntry('Second Segment');
+
+		await segmentsPage.fillField('User');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the second segment persists the edit and the first is untouched
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText('Second Segment');
+
+		await segmentsPage.viewCriterionValue('User');
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText('First Segment');
+
+		await segmentsPage.viewCriterionValue('Test');
+	}
+);
+
+test(
 	`Can edit segment with Country criterion.`,
 	{
 		tag: '@LPS-102740',

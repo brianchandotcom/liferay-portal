@@ -432,6 +432,8 @@ public interface PropsKeys {
 
 	public static final String CLUSTER_LINK_ENABLED = "cluster.link.enabled";
 
+	public static final String CLUSTER_LINK_JMX_ENABLED = "cluster.link.jmx.enabled";
+
 	public static final String CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT =
 		"clusterable.advice.call.master.timeout";
 

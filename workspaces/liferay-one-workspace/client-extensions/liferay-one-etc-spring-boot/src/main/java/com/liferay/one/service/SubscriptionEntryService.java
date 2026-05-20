@@ -1,117 +1,151 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.osb.provisioning.subscription.service.impl;
+package com.liferay.one.service;
 
-import com.liferay.osb.provisioning.subscription.exception.NoSuchSubscriptionEntryException;
-import com.liferay.osb.provisioning.subscription.exception.SubscriptionEntryClassNameIdException;
-import com.liferay.osb.provisioning.subscription.exception.SubscriptionEntryClassPKException;
-import com.liferay.osb.provisioning.subscription.exception.SubscriptionEntryContactUuidException;
-import com.liferay.osb.provisioning.subscription.model.SubscriptionEntry;
-import com.liferay.osb.provisioning.subscription.service.base.SubscriptionEntryLocalServiceBaseImpl;
-import com.liferay.portal.aop.AopService;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.one.model.SubscriptionEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.service.component.annotations.Component;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * @author Jenny Chen
+ * @author Amos Fong
  */
-@Component(
-	property = "model.class.name=com.liferay.osb.provisioning.subscription.model.SubscriptionEntry",
-	service = AopService.class
-)
-public class SubscriptionEntryLocalServiceImpl
-	extends SubscriptionEntryLocalServiceBaseImpl {
+@Component
+public class SubscriptionEntryService extends BaseService {
 
 	public SubscriptionEntry addSubscriptionEntry(
-			long classNameId, long classPK, String contactUuid)
+			String className, long classPK, long userId)
 		throws Exception {
 
-		Date now = new Date();
+		SubscriptionEntry existingSubscriptionEntry = fetchSubscriptionEntry(
+			className, classPK, userId);
 
-		validate(classNameId, classPK, contactUuid);
-
-		SubscriptionEntry subscriptionEntry =
-			subscriptionEntryPersistence.fetchByC_C_CU(
-				classNameId, classPK, contactUuid);
-
-		if (subscriptionEntry != null) {
-			return subscriptionEntry;
+		if (existingSubscriptionEntry != null) {
+			return existingSubscriptionEntry;
 		}
 
-		long subscriptionEntryId = counterLocalService.increment();
+		JSONObject subscriptionEntryJSONObject = new JSONObject(
+		).put(
+			"className", className
+		).put(
+			"classPK", classPK
+		).put(
+			"userId", userId
+		);
 
-		subscriptionEntry = subscriptionEntryPersistence.create(
-			subscriptionEntryId);
+		String response = post(
+			getAuthorization(), subscriptionEntryJSONObject.toString(),
+			UriComponentsBuilder.fromPath(
+				"/o/c/subscriptionentries"
+			).build(
+			).toUri());
 
-		subscriptionEntry.setCreateDate(now);
-		subscriptionEntry.setClassNameId(classNameId);
-		subscriptionEntry.setClassPK(classPK);
-		subscriptionEntry.setContactUuid(contactUuid);
-
-		return subscriptionEntryPersistence.update(subscriptionEntry);
+		return new SubscriptionEntry(new JSONObject(response));
 	}
 
 	public void deleteSubscriptionEntry(
-			long classNameId, long classPK, String contactUuid)
-		throws NoSuchSubscriptionEntryException {
+			String className, long classPK, long userId)
+		throws Exception {
 
-		subscriptionEntryPersistence.removeByC_C_CU(
-			classNameId, classPK, contactUuid);
+		SubscriptionEntry subscriptionEntry = fetchSubscriptionEntry(
+			className, classPK, userId);
+
+		if (subscriptionEntry == null) {
+			return;
+		}
+
+		delete(
+			getAuthorization(), "",
+			UriComponentsBuilder.fromPath(
+				"/o/c/subscriptionentries/" +
+					subscriptionEntry.getSubscriptionEntryId()
+			).build(
+			).toUri());
 	}
 
 	public SubscriptionEntry fetchSubscriptionEntry(
-		long classNameId, long classPK, String contactUuid) {
-
-		return subscriptionEntryPersistence.fetchByC_C_CU(
-			classNameId, classPK, contactUuid);
-	}
-
-	public List<SubscriptionEntry> getSubscriptionEntries(
-		long classNameId, long classPK) {
-
-		return subscriptionEntryPersistence.findByC_C(classNameId, classPK);
-	}
-
-	public List<SubscriptionEntry> getSubscriptionEntries(
-		long classNameId, String contactUuid) {
-
-		return subscriptionEntryPersistence.findByC_CU(
-			classNameId, contactUuid);
-	}
-
-	public List<SubscriptionEntry> getSubscriptionEntries(String contactUuid) {
-		return subscriptionEntryPersistence.findByContactUuid(contactUuid);
-	}
-
-	public SubscriptionEntry getSubscriptionEntry(
-			long classNameId, long classPK, String contactUuid)
-		throws NoSuchSubscriptionEntryException {
-
-		return subscriptionEntryPersistence.findByC_C_CU(
-			classNameId, classPK, contactUuid);
-	}
-
-	protected void validate(long classNameId, long classPK, String contactUuid)
+			String className, long classPK, long userId)
 		throws Exception {
 
-		if (classNameId <= 0) {
-			throw new SubscriptionEntryClassNameIdException();
+		List<SubscriptionEntry> subscriptionEntries = getSubscriptionEntries(
+			StringBundler.concat(
+				"(className eq '", className, "') and (classPK eq ", classPK,
+				") and (userId eq ", userId, ")"));
+
+		if (subscriptionEntries.isEmpty()) {
+			return null;
 		}
 
-		if (classPK <= 0) {
-			throw new SubscriptionEntryClassPKException();
+		return subscriptionEntries.get(0);
+	}
+
+	public List<SubscriptionEntry> getSubscriptionEntries(String filterString)
+		throws Exception {
+
+		UriComponentsBuilder uriComponentsBuilder =
+			UriComponentsBuilder.fromPath("/o/c/subscriptionentries");
+
+		if (filterString != null) {
+			uriComponentsBuilder.queryParam("filter", filterString);
 		}
 
-		if (Validator.isNull(contactUuid)) {
-			throw new SubscriptionEntryContactUuidException();
+		String response = get(
+			getAuthorization(),
+			uriComponentsBuilder.build(
+			).toUri());
+
+		List<SubscriptionEntry> subscriptionEntries = new ArrayList<>();
+
+		if (Validator.isNull(response)) {
+			return subscriptionEntries;
+		}
+
+		try {
+			JSONObject jsonObject = new JSONObject(response);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				subscriptionEntries.add(
+					new SubscriptionEntry(jsonArray.getJSONObject(i)));
+			}
+
+			return subscriptionEntries;
+		}
+		catch (Exception exception) {
+			_log.error("Unable to parse JSON: " + response, exception);
+
+			return subscriptionEntries;
 		}
 	}
+
+	protected String getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-one-etc-spring-boot-oaua");
+	}
+
+	private static final Log _log = LogFactory.getLog(
+		SubscriptionEntryService.class);
+
+	@Autowired
+	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 }

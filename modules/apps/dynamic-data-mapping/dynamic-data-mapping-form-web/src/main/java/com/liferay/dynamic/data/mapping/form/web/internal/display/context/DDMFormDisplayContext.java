@@ -293,7 +293,8 @@ public class DDMFormDisplayContext {
 				ddmFormFieldRenderingContext.setHttpServletRequest(
 					_getHttpServletRequest());
 				ddmFormFieldRenderingContext.setLocale(
-					getLocale(_getHttpServletRequest(), ddmForm));
+					LocaleUtil.fromLanguageId(
+						LanguageUtil.getLanguageId(_getHttpServletRequest())));
 
 				ddmFormField.setDDMFormFieldOptions(
 					_ddmFormFieldOptionsFactory.create(

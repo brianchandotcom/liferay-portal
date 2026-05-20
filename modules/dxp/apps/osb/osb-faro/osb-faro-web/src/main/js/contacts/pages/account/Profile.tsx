@@ -19,13 +19,8 @@ const Profile: React.FC<IProfileProps> = ({account, loading}) => (
 		/>
 
 		<div className='account-profile-cards mb-3'>
-			<LifecycleStatus className='h-100' />
-
-			<AccountInfo
-				account={account}
-				className='h-100'
-				loading={loading}
-			/>
+			<LifecycleStatus />
+			<AccountInfo account={account} loading={loading} />
 			<TopAssets />
 			<TopCategoriesAndTags />
 		</div>

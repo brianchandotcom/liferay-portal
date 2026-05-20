@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
@@ -782,11 +781,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	private MessageBus _messageBus;
 
 	private Scheduler _persistedScheduler;
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.portal.scheduler.quartz)(release.schema.version>=1.0.2))"
-	)
-	private Release _release;
 
 	@Reference
 	private SchedulerEngineAuditor _schedulerEngineAuditor;

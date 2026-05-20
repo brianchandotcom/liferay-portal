@@ -6811,6 +6811,14 @@ public class PortalImpl implements Portal {
 			StringUtil.equalsIgnoreCase(portalDomain, defaultVirtualHostname) ||
 			!virtualHostnames.containsKey(defaultVirtualHostname)) {
 
+			for (Map.Entry<String, String> entry :
+					virtualHostnames.entrySet()) {
+
+				if (Validator.isNull(entry.getValue())) {
+					return entry.getKey();
+				}
+			}
+
 			String virtualHostname = getDefaultVirtualHostname(
 				false, layoutSet);
 

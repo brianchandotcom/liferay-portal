@@ -15,6 +15,7 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
+import com.liferay.layout.set.prototype.exception.LayoutSetPrototypeSyncException;
 import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSessionManagerUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -79,6 +80,14 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			long layoutSetPrototypeId, long userId)
 		throws PortalException {
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new LayoutSetPrototypeSyncException.
+				MustNotHaveExportImportInProgress();
+		}
+
 		LayoutSetPrototype layoutSetPrototype =
 			_layoutSetPrototypeLocalService.fetchLayoutSetPrototype(
 				layoutSetPrototypeId);
@@ -104,7 +113,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 
 			for (LayoutSet layoutSet : mergeableLayoutSets) {
 				try {
-					executeLayoutSetSync(false, layoutSet);
+					_executeLayoutSetSync(false, layoutSet);
 				}
 				catch (Exception exception) {
 					_log.error(
@@ -120,6 +129,14 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	public void executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
 		throws PortalException {
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			throw new LayoutSetPrototypeSyncException.
+				MustNotHaveExportImportInProgress();
+		}
+
 		Group group = layoutSet.getGroup();
 
 		layoutSet = _layoutSetLocalService.fetchLayoutSet(
@@ -129,14 +146,7 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		_syncLayoutSetPrototypeLayoutsInBackground(
-			initialSync, layoutSet, layoutSetPrototype);
+		_executeLayoutSetSync(initialSync, layoutSet);
 	}
 
 	@Override
@@ -744,17 +754,15 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	private void _syncLayoutSetPrototypeLayoutsInBackground(
-			boolean initialSync, LayoutSet layoutSet,
-			LayoutSetPrototype layoutSetPrototype)
+	private void _executeLayoutSetSync(
+			boolean initialSync, LayoutSet layoutSet)
 		throws PortalException {
 
-		if (ExportImportThreadLocal.isExportInProcess() ||
-			ExportImportThreadLocal.isImportInProcess() ||
-			ExportImportThreadLocal.isStagingInProcess()) {
-
-			return;
-		}
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
 
 		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
 				layoutSetPrototype, layoutSet)) {

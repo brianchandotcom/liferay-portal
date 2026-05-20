@@ -1,0 +1,154 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {
+	getModelArmorTemplate,
+	putModelArmorTemplate,
+} from '../../../../src/main/resources/META-INF/resources/js/model_armor_template_form/services/ModelArmorTemplateService';
+
+const mockFetch = jest.fn();
+
+jest.mock('frontend-js-web', () => ({
+	fetch: (...args: any[]) => mockFetch(...args),
+}));
+
+const BASE_URI = '/o/ai-hub/model-armor-templates';
+
+describe('ModelArmorTemplateService', () => {
+	beforeEach(() => {
+		mockFetch.mockReset();
+	});
+
+	describe('getModelArmorTemplate', () => {
+		it('falls back to defaults when picker fields are missing', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({externalReferenceCode: 'TEMPLATE_X'}),
+				ok: true,
+			});
+
+			const result = await getModelArmorTemplate('TEMPLATE_X');
+
+			expect(result.guardrailType).toBe('input');
+			expect(result.piAndJailbreakConfidenceLevel).toBe('mediumAndAbove');
+			expect(result.raiDangerousLevel).toBe('none');
+			expect(result.raiHarassmentLevel).toBe('none');
+			expect(result.raiHateSpeechLevel).toBe('none');
+			expect(result.raiSexuallyExplicitLevel).toBe('none');
+		});
+
+		it('keeps picker fields that already arrive as bare strings', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						externalReferenceCode: 'TEMPLATE_X',
+						guardrailType: 'input',
+						raiDangerousLevel: 'mediumAndAbove',
+					}),
+				ok: true,
+			});
+
+			const result = await getModelArmorTemplate('TEMPLATE_X');
+
+			expect(result.guardrailType).toBe('input');
+			expect(result.raiDangerousLevel).toBe('mediumAndAbove');
+		});
+
+		it('targets the by-external-reference-code endpoint', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () => Promise.resolve({}),
+				ok: true,
+			});
+
+			await getModelArmorTemplate('TEMPLATE_X');
+
+			expect(mockFetch).toHaveBeenCalledWith(
+				`${BASE_URI}/by-external-reference-code/TEMPLATE_X`,
+				expect.objectContaining({method: 'GET'})
+			);
+		});
+
+		it('throws when the response is not ok', async () => {
+			mockFetch.mockResolvedValueOnce({ok: false});
+
+			await expect(getModelArmorTemplate('TEMPLATE_X')).rejects.toThrow();
+		});
+
+		it('unwraps picker fields shaped as {key, name} into bare keys', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						active: true,
+						externalReferenceCode: 'TEMPLATE_X',
+						guardrailType: {key: 'output', name: 'Output'},
+						piAndJailbreakConfidenceLevel: {
+							key: 'high',
+							name: 'High',
+						},
+						raiDangerousLevel: {key: 'lowAndAbove', name: 'Low'},
+						raiHarassmentLevel: {
+							key: 'mediumAndAbove',
+							name: 'Med',
+						},
+						raiHateSpeechLevel: {key: 'high', name: 'High'},
+						raiSexuallyExplicitLevel: {key: 'none', name: 'None'},
+						title: 'My Template',
+					}),
+				ok: true,
+			});
+
+			const result = await getModelArmorTemplate('TEMPLATE_X');
+
+			expect(result.guardrailType).toBe('output');
+			expect(result.piAndJailbreakConfidenceLevel).toBe('high');
+			expect(result.raiDangerousLevel).toBe('lowAndAbove');
+			expect(result.raiHarassmentLevel).toBe('mediumAndAbove');
+			expect(result.raiHateSpeechLevel).toBe('high');
+			expect(result.raiSexuallyExplicitLevel).toBe('none');
+		});
+	});
+
+	describe('putModelArmorTemplate', () => {
+		it('returns the parsed response body', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						externalReferenceCode: 'TEMPLATE_X',
+						title: 'Saved',
+					}),
+			});
+
+			const result = await putModelArmorTemplate({
+				externalReferenceCode: 'TEMPLATE_X',
+			} as any);
+
+			expect(result.title).toBe('Saved');
+		});
+
+		it('sends a PUT with the template serialized as JSON', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({externalReferenceCode: 'TEMPLATE_X'}),
+			});
+
+			const template = {
+				active: true,
+				externalReferenceCode: 'TEMPLATE_X',
+				title: 'My Template',
+			} as any;
+
+			await putModelArmorTemplate(template);
+
+			expect(mockFetch).toHaveBeenCalledWith(
+				`${BASE_URI}/by-external-reference-code/TEMPLATE_X`,
+				expect.objectContaining({
+					body: JSON.stringify(template),
+					headers: {'Content-Type': 'application/json'},
+					method: 'PUT',
+				})
+			);
+		});
+	});
+});

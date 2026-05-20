@@ -5,19 +5,103 @@
 
 import {EventSource} from 'eventsource';
 
-import type {ChatbotConfiguration} from './types';
+import type {AuthorizationToken, ChatbotConfiguration} from './types';
 
-let aiHubURL = '';
+const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
-export function setAIHubURL(url: string) {
-	aiHubURL = url;
+const AUTHORIZATION_TOKEN_TTL = 9 * 60 * 1000;
+
+let cachedAuthorizationToken: AuthorizationToken | null = null;
+let cachedAuthorizationTokenMintedAt = 0;
+let pendingAuthorizationTokenPromise: Promise<AuthorizationToken | null> | null =
+	null;
+
+async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
+	try {
+		const authToken = (
+			window as unknown as {Liferay?: {authToken?: string}}
+		).Liferay?.authToken;
+
+		const response = await fetch(
+			'/o/ai-hub-cell/v1.0/authorization-tokens',
+			{
+				headers: authToken
+					? new Headers({'x-csrf-token': authToken})
+					: undefined,
+				method: 'POST',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error(
+				`Unable to generate authorization token: ${response.statusText}`
+			);
+		}
+
+		const data = (await response.json()) as Partial<AuthorizationToken>;
+
+		if (!data?.accessToken) {
+			throw new Error('Unable to generate authorization token.');
+		}
+
+		if (!data?.userToken) {
+			throw new Error('Unable to generate user token.');
+		}
+
+		if (!data?.serviceURL) {
+			throw new Error('Unable to find service URL.');
+		}
+
+		return data as AuthorizationToken;
+	}
+	catch (error) {
+		console.warn((error as Error).message);
+
+		return null;
+	}
+}
+
+async function getAuthorizationToken(): Promise<AuthorizationToken | null> {
+	const now = Date.now();
+
+	if (
+		cachedAuthorizationToken &&
+		now - cachedAuthorizationTokenMintedAt < AUTHORIZATION_TOKEN_TTL
+	) {
+		return cachedAuthorizationToken;
+	}
+
+	if (!pendingAuthorizationTokenPromise) {
+		pendingAuthorizationTokenPromise = postAuthorizationToken().then(
+			(token) => {
+				if (token) {
+					cachedAuthorizationToken = token;
+					cachedAuthorizationTokenMintedAt = Date.now();
+				}
+
+				pendingAuthorizationTokenPromise = null;
+
+				return token;
+			}
+		);
+	}
+
+	return pendingAuthorizationTokenPromise;
 }
 
 export async function getChatbotConfiguration(
 	chatbotExternalReferenceCode: string
 ): Promise<ChatbotConfiguration> {
+	const authorizationToken = await getAuthorizationToken();
+
+	if (!authorizationToken) {
+		throw new Error(
+			'Unable to obtain authorization token for chatbot configuration.'
+		);
+	}
+
 	const response = await fetch(
-		`${aiHubURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
+		`${authorizationToken.serviceURL}/o/ai-hub/chatbots/by-external-reference-code/${chatbotExternalReferenceCode}`,
 		{
 			headers: new Headers({
 				Accept: 'application/json',
@@ -34,26 +118,44 @@ export async function getChatbotConfiguration(
 	return (await response.json()) as ChatbotConfiguration;
 }
 
-export function createEventSource(): EventSource {
-	return new EventSource(`${aiHubURL}/o/ai-hub/v1.0/chats/subscribe`, {
-		fetch: (input, init) =>
-			fetch(input as RequestInfo, {
-				...init,
-				headers: new Headers({
-					Accept: 'text/event-stream',
+export async function createEventSource(): Promise<EventSource | null> {
+	const authorizationToken = await getAuthorizationToken();
+
+	if (!authorizationToken) {
+		return null;
+	}
+
+	return new EventSource(
+		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/chats/subscribe`,
+		{
+			fetch: (input, init) =>
+				fetch(input as RequestInfo, {
+					...init,
+					headers: new Headers({
+						Accept: 'text/event-stream',
+						Authorization: `Bearer ${authorizationToken.accessToken}`,
+					}),
 				}),
-			}),
-		withCredentials: true,
-	});
+			withCredentials: true,
+		}
+	);
 }
 
-export function postChatMessage(
+export async function postChatMessage(
 	chatbotExternalReferenceCode: string,
 	eventSourceReference: string,
 	text: string
 ): Promise<Response> {
+	const authorizationToken = await getAuthorizationToken();
+
+	if (!authorizationToken) {
+		throw new Error(
+			'Unable to obtain authorization token for chat message.'
+		);
+	}
+
 	return fetch(
-		`${aiHubURL}/o/ai-hub/v1.0/chats/by-external-reference-code/${eventSourceReference}/messages`,
+		`${authorizationToken.serviceURL}${AI_HUB_ENDPOINT}/chats/by-external-reference-code/${eventSourceReference}/messages`,
 		{
 			body: JSON.stringify({
 				chatbotExternalReferenceCode,
@@ -63,7 +165,10 @@ export function postChatMessage(
 			}),
 			headers: new Headers({
 				'Accept': 'application/json',
+				'Authorization': `Bearer ${authorizationToken.accessToken}`,
 				'Content-Type': 'application/json',
+				'Liferay-AI-Hub-Cell-On-Behalf-Of':
+					authorizationToken.userToken,
 			}),
 			method: 'POST',
 		}

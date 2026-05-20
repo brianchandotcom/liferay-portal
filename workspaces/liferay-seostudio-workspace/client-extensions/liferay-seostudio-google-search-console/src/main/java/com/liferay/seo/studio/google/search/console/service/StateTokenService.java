@@ -7,11 +7,15 @@ package com.liferay.seo.studio.google.search.console.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,9 +24,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class StateTokenService {
 
-	public StateTokenService() {
-		_secretKey = Jwts.SIG.HS256.key(
-		).build();
+	public StateTokenService(
+		@Value("${liferay.seostudio.gsc.state.secret}") String stateSecret) {
+
+		if (stateSecret.startsWith("${") || (stateSecret.length() < 32)) {
+			throw new IllegalArgumentException(
+				"\"liferay.seostudio.gsc.state.secret\" must be set to a " +
+					"value of at least 32 characters");
+		}
+
+		_secretKey = Keys.hmacShaKeyFor(
+			stateSecret.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public String generateState(long seoStudioInstanceId, String redirectURL) {

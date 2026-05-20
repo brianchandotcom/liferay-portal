@@ -386,21 +386,46 @@ describe('LifecycleStatus', () => {
 			).toBeInTheDocument();
 		});
 
-		it('should render an empty body when no lifecycles are returned', () => {
+		it('should render the empty state when no lifecycles are returned', () => {
 			mockedUseRequest.mockImplementation(
 				useRequestImpl({lifecyclesData: []})
 			);
 
 			const {container} = render(<LifecycleStatus />);
 
-			const multistep = container.querySelector(
-				'.lifecycle-status-multistep'
-			) as HTMLElement;
-
-			expect(within(multistep).queryByText('Aware')).toBeNull();
+			expect(
+				screen.getByText('No Lifecycle Data Available')
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(
+					'Lifecycle data will appear here once it is synced.'
+				)
+			).toBeInTheDocument();
+			expect(
+				container.querySelector('.lifecycle-status-multistep')
+			).toBeNull();
 			expect(
 				container.querySelector('.lifecycle-status-summary')
 			).toBeNull();
+		});
+
+		it('should render the empty state when the matching status has no stages', () => {
+			mockedUseRequest.mockImplementation(
+				useRequestImpl({
+					lifecyclesData: [{accountId: 'acc-1', id: 'al-1'}],
+					statusData: {
+						accountLifecycleStageStatuses: [],
+						id: 'al-1',
+						name: 'Default Lifecycle'
+					}
+				})
+			);
+
+			render(<LifecycleStatus />);
+
+			expect(
+				screen.getByText('No Lifecycle Data Available')
+			).toBeInTheDocument();
 		});
 	});
 

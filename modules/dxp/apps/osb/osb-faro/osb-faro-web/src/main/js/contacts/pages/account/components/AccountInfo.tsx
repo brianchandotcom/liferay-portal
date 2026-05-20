@@ -2,9 +2,10 @@ import AccountDetailsModal from './AccountDetailsModal';
 import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayLink from '@clayui/link';
-import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
+import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
@@ -66,16 +67,6 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 	const {id: accountId} = useParams<{id: string}>();
 
-	if (loading) {
-		return (
-			<Card className={classNames(className, 'p-3')} minHeight={284}>
-				<Card.Body>
-					<Loading />
-				</Card.Body>
-			</Card>
-		);
-	}
-
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
 		if (!account) {
 			return undefined;
@@ -93,6 +84,11 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 		return account[key];
 	};
 
+	const infoKeys = Object.keys(infoDataLabels) as Array<
+		keyof typeof infoDataLabels
+	>;
+	const isEmpty = !loading && infoKeys.every(key => !getValue(key));
+
 	return (
 		<>
 			<Card className={classNames(className, 'p-3')} minHeight={284}>
@@ -105,28 +101,46 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 						</span>
 					</Text>
 				</Card.Title>
-				<Card.Body className='justify-content-end mt-4 p-0'>
-					{(
-						Object.keys(infoDataLabels) as Array<
-							keyof typeof infoDataLabels
-						>
-					).map(key => (
-						<React.Fragment key={key}>
-							{infoItem(
-								infoDataLabels[key],
-								getValue(key),
-								key === 'website'
-							)}
-						</React.Fragment>
-					))}
-					<Button
-						borderless
-						className='ml-auto rounded-lg'
-						onClick={() => setIsDetailsModalOpen(true)}
-						size='sm'
-					>
-						{Liferay.Language.get('view-all')}
-					</Button>
+				<Card.Body
+					alignCenter={loading || isEmpty}
+					className={classNames('mt-4', {
+						'justify-content-end p-0': !loading && !isEmpty
+					})}
+				>
+					<StatesRenderer empty={isEmpty} loading={loading}>
+						<StatesRenderer.Loading />
+						<StatesRenderer.Empty>
+							<ClayEmptyState
+								className='mt-n5'
+								description={Liferay.Language.get(
+									'account-attributes-will-appear-here-once-they-are-available'
+								)}
+								small
+								title={Liferay.Language.get(
+									'no-account-attributes-available'
+								)}
+							/>
+						</StatesRenderer.Empty>
+						<StatesRenderer.Success>
+							{infoKeys.map(key => (
+								<React.Fragment key={key}>
+									{infoItem(
+										infoDataLabels[key],
+										getValue(key),
+										key === 'website'
+									)}
+								</React.Fragment>
+							))}
+							<Button
+								borderless
+								className='ml-auto rounded-lg'
+								onClick={() => setIsDetailsModalOpen(true)}
+								size='sm'
+							>
+								{Liferay.Language.get('view-all')}
+							</Button>
+						</StatesRenderer.Success>
+					</StatesRenderer>
 				</Card.Body>
 			</Card>
 

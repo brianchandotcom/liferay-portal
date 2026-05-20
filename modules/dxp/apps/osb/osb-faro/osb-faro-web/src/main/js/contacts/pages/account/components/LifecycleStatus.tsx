@@ -1,11 +1,12 @@
 import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
-import Loading from 'shared/components/Loading';
 import MultiStepNav from '@clayui/multi-step-nav';
 import React from 'react';
+import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {CUSTOM_DATE_FORMAT, formatUTCDate} from 'shared/util/date';
 import {
 	IAccountLifecycleStageStatus,
@@ -56,16 +57,6 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 	const isLoading =
 		lifecyclesLoading || (Boolean(accountLifecycle?.id) && statusLoading);
 
-	if (isLoading) {
-		return (
-			<Card className={classNames(className, 'p-3')} minHeight={284}>
-				<Card.Body>
-					<Loading />
-				</Card.Body>
-			</Card>
-		);
-	}
-
 	const lifecycle: IAccountLifecycleStatus | undefined = statusData;
 	const stages = (lifecycle?.accountLifecycleStageStatuses ?? [])
 		.slice()
@@ -86,6 +77,8 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 		activeIndex >= 0 ? progressionStages[activeIndex] : undefined;
 	const isAtRisk = Boolean(atRiskStage?.startDate && !atRiskStage.endDate);
 
+	const isEmpty = !isLoading && stages.length === 0;
+
 	return (
 		<Card className={classNames(className, 'p-3')} minHeight={284}>
 			<Card.Title>
@@ -100,115 +93,147 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 					</Text>
 				</p>
 			</Card.Title>
-			<Card.Body className='justify-content-around p-0'>
-				<div className='align-items-end d-none d-sm-flex flex-row lifecycle-status-multistep'>
-					<MultiStepNav center className='flex-fill pb-0'>
-						{progressionStages.map((stage, i) => (
-							<MultiStepNav.Item
-								active={i === activeIndex}
-								expand={i + 1 !== progressionStages.length}
-								key={stage.id}
-								state={i < activeIndex ? 'complete' : undefined}
-							>
-								<MultiStepNav.Title>
-									{getStageLabel(stage)}
-								</MultiStepNav.Title>
-								<MultiStepNav.Divider />
-								<MultiStepNav.Indicator
-									label={1 + i}
-									subTitle={
-										stage.startDate
-											? formatUTCDate(
-													stage.startDate,
-													CUSTOM_DATE_FORMAT
-											  )
-											: undefined
-									}
-								/>
-							</MultiStepNav.Item>
-						))}
-					</MultiStepNav>
-					{atRiskStage && (
-						<MultiStepNav center className='ml-3 pb-0'>
-							<MultiStepNav.Item>
-								<MultiStepNav.Title>
-									{getStageLabel(atRiskStage)}
-								</MultiStepNav.Title>
-								<MultiStepNav.Divider />
-								<ClaySticker
-									className={classNames('rounded-circle', {
-										'bg-red': isAtRisk
-									})}
-									displayType='secondary'
-								>
-									<ClayIcon
-										className={
-											isAtRisk
-												? 'text-white'
-												: 'text-secondary'
+			<Card.Body
+				alignCenter={isLoading || isEmpty}
+				className={classNames({
+					'justify-content-around p-0': !isLoading && !isEmpty
+				})}
+			>
+				<StatesRenderer empty={isEmpty} loading={isLoading}>
+					<StatesRenderer.Loading />
+					<StatesRenderer.Empty>
+						<ClayEmptyState
+							className='mt-n5'
+							description={Liferay.Language.get(
+								'lifecycle-data-will-appear-here-once-it-is-synced'
+							)}
+							small
+							title={Liferay.Language.get(
+								'no-lifecycle-data-available'
+							)}
+						/>
+					</StatesRenderer.Empty>
+					<StatesRenderer.Success>
+						<div className='align-items-end d-none d-sm-flex flex-row lifecycle-status-multistep'>
+							<MultiStepNav center className='flex-fill pb-0'>
+								{progressionStages.map((stage, i) => (
+									<MultiStepNav.Item
+										active={i === activeIndex}
+										expand={
+											i + 1 !== progressionStages.length
 										}
-										symbol='exclamation-circle'
-									/>
-								</ClaySticker>
-							</MultiStepNav.Item>
-						</MultiStepNav>
-					)}
-				</div>
-				{(activeStage || atRiskStage) && (
-					<div className='d-sm-none lifecycle-status-summary'>
-						{activeStage && (
-							<>
-								<div className='align-items-baseline d-flex justify-content-between'>
-									<Text
-										color='primary'
-										size={3}
-										weight='semi-bold'
+										key={stage.id}
+										state={
+											i < activeIndex
+												? 'complete'
+												: undefined
+										}
 									>
-										{getStageLabel(activeStage)}
-									</Text>
-									<Text color='secondary' size={3}>
-										{sub(
-											Liferay.Language.get('step-x-of-x'),
-											[
-												String(activeIndex + 1),
-												String(progressionStages.length)
-											]
+										<MultiStepNav.Title>
+											{getStageLabel(stage)}
+										</MultiStepNav.Title>
+										<MultiStepNav.Divider />
+										<MultiStepNav.Indicator
+											label={1 + i}
+											subTitle={
+												stage.startDate
+													? formatUTCDate(
+															stage.startDate,
+															CUSTOM_DATE_FORMAT
+													  )
+													: undefined
+											}
+										/>
+									</MultiStepNav.Item>
+								))}
+							</MultiStepNav>
+							{atRiskStage && (
+								<MultiStepNav center className='ml-3 pb-0'>
+									<MultiStepNav.Item>
+										<MultiStepNav.Title>
+											{getStageLabel(atRiskStage)}
+										</MultiStepNav.Title>
+										<MultiStepNav.Divider />
+										<ClaySticker
+											className={classNames('rounded-circle', {
+												'bg-red': isAtRisk
+											})}
+											displayType='secondary'
+										>
+											<ClayIcon
+												className={
+													isAtRisk
+														? 'text-white'
+														: 'text-secondary'
+												}
+												symbol='exclamation-circle'
+											/>
+										</ClaySticker>
+									</MultiStepNav.Item>
+								</MultiStepNav>
+							)}
+						</div>
+						{(activeStage || atRiskStage) && (
+							<div className='d-sm-none lifecycle-status-summary'>
+								{activeStage && (
+									<>
+										<div className='align-items-baseline d-flex justify-content-between'>
+											<Text
+												color='primary'
+												size={3}
+												weight='semi-bold'
+											>
+												{getStageLabel(activeStage)}
+											</Text>
+											<Text color='secondary' size={3}>
+												{sub(
+													Liferay.Language.get(
+														'step-x-of-x'
+													),
+													[
+														String(activeIndex + 1),
+														String(
+															progressionStages.length
+														)
+													]
+												)}
+											</Text>
+										</div>
+										{activeStage.startDate && (
+											<Text color='secondary' size={3}>
+												{formatUTCDate(
+													activeStage.startDate,
+													CUSTOM_DATE_FORMAT
+												)}
+											</Text>
 										)}
-									</Text>
-								</div>
-								{activeStage.startDate && (
-									<Text color='secondary' size={3}>
-										{formatUTCDate(
-											activeStage.startDate,
-											CUSTOM_DATE_FORMAT
+									</>
+								)}
+								{atRiskStage && (
+									<div
+										className={classNames(
+											'align-items-baseline d-flex justify-content-between',
+											{'mt-3': activeStage}
 										)}
-									</Text>
+									>
+										<Text
+											color='secondary'
+											size={3}
+											weight='semi-bold'
+										>
+											{Liferay.Language.get('at-risk')}
+										</Text>
+										<Text color='secondary' size={3}>
+											{isAtRisk
+												? Liferay.Language.get('yes')
+												: Liferay.Language.get('no')}
+										</Text>
+									</div>
 								)}
-							</>
-						)}
-						{atRiskStage && (
-							<div
-								className={classNames(
-									'align-items-baseline d-flex justify-content-between',
-									{'mt-3': activeStage}
-								)}
-							>
-								<Text
-									color='secondary'
-									size={3}
-									weight='semi-bold'
-								>
-									{Liferay.Language.get('at-risk')}
-								</Text>
-								<Text color='secondary' size={3}>
-									{isAtRisk
-										? Liferay.Language.get('yes')
-										: Liferay.Language.get('no')}
-								</Text>
 							</div>
 						)}
-					</div>
-				)}
+					</StatesRenderer.Success>
+				</StatesRenderer>
 			</Card.Body>
 		</Card>
 	);

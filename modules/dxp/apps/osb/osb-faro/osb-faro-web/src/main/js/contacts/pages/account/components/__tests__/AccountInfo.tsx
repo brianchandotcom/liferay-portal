@@ -92,11 +92,39 @@ describe('AccountInfo', () => {
 				container.querySelector('.loading-root')
 			).toBeInTheDocument();
 			expect(
-				screen.queryByText('General Account Information')
+				screen.queryByRole('button', {name: 'View All'})
 			).not.toBeInTheDocument();
+		});
+	});
+
+	describe('empty state', () => {
+		it('should render the empty title and description when no account is provided', () => {
+			render(<AccountInfo />);
+
+			expect(
+				screen.getByText('No Account Attributes Available')
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(
+					'Account attributes will appear here once they are available.'
+				)
+			).toBeInTheDocument();
+		});
+
+		it('should not render the View All button when there are no attributes', () => {
+			render(<AccountInfo />);
+
 			expect(
 				screen.queryByRole('button', {name: 'View All'})
 			).not.toBeInTheDocument();
+		});
+
+		it('should render the empty state when the account has no resolvable attributes', () => {
+			render(<AccountInfo account={{}} />);
+
+			expect(
+				screen.getByText('No Account Attributes Available')
+			).toBeInTheDocument();
 		});
 	});
 

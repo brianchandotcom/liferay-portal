@@ -6,6 +6,14 @@
 	@media (min-width: 1440px) {
 		grid-template-columns: 1fr 1fr;
 	}
+
+	.c-empty-state:not(.c-empty-state-animation) {
+		text-align: center;
+
+		.c-empty-state-title {
+			margin-top: 0;
+		}
+	}
 }
 
 .top-assets {

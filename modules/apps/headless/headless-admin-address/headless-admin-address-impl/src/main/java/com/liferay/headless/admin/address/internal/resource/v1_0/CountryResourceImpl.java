@@ -181,7 +181,8 @@ public class CountryResourceImpl
 
 			@Override
 			public String getPortletId() {
-				return _COUNTRIES_MANAGEMENT_ADMIN_PORTLET_ID;
+				return "com_liferay_address_web_internal_portlet_" +
+					"CountriesManagementAdminPortlet";
 			}
 
 			@Override
@@ -438,10 +439,6 @@ public class CountryResourceImpl
 
 		return serviceBuilderCountry;
 	}
-
-	private static final String _COUNTRIES_MANAGEMENT_ADMIN_PORTLET_ID =
-		"com_liferay_address_web_internal_portlet_" +
-			"CountriesManagementAdminPortlet";
 
 	private static final EntityModel _entityModel =
 		() -> EntityModel.toEntityFieldsMap(

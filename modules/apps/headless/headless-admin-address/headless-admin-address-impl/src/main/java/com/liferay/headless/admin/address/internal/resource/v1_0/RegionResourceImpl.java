@@ -141,7 +141,8 @@ public class RegionResourceImpl
 
 			@Override
 			public String getPortletId() {
-				return _COUNTRIES_MANAGEMENT_ADMIN_PORTLET_ID;
+				return "com_liferay_address_web_internal_portlet_" +
+					"CountriesManagementAdminPortlet"
 			}
 
 			@Override
@@ -333,10 +334,6 @@ public class RegionResourceImpl
 
 		return _regionResourceDTOConverter.toDTO(serviceBuilderRegion);
 	}
-
-	private static final String _COUNTRIES_MANAGEMENT_ADMIN_PORTLET_ID =
-		"com_liferay_address_web_internal_portlet_" +
-			"CountriesManagementAdminPortlet";
 
 	private static final EntityModel _entityModel =
 		() -> EntityModel.toEntityFieldsMap(

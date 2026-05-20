@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.persistence.RoleFinder;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -79,12 +80,42 @@ public class RoleFinderTest {
 
 			List<Role> roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
 				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
-				null, _TYPES, 0, _user.getGroupId(), QueryUtil.ALL_POS,
+				null, _TYPES, null, 0, _user.getGroupId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 			Assert.assertEquals(roles.toString(), 1, roles.size());
 
 			Assert.assertEquals(_roleWithViewPermission, roles.get(0));
+
+			_roleWithViewPermission.setSubtype("space");
+
+			_roleWithViewPermission = _roleLocalService.updateRole(
+				_roleWithViewPermission);
+
+			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
+				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
+				null, _TYPES, null, 0, _user.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			Assert.assertEquals(roles.toString(), 1, roles.size());
+
+			Assert.assertEquals(_roleWithViewPermission, roles.get(0));
+
+			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
+				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
+				null, _TYPES, "space", 0, _user.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			Assert.assertEquals(roles.toString(), 1, roles.size());
+
+			Assert.assertEquals(_roleWithViewPermission, roles.get(0));
+
+			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
+				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
+				null, _TYPES, RandomTestUtil.randomString(), 0,
+				_user.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Assert.assertTrue(roles.toString(), roles.isEmpty());
 		}
 	}
 

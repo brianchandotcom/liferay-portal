@@ -233,6 +233,8 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#list>
 
 		public static final String ORDER_BY_SQL_INLINE_DISTINCT = " ORDER BY ${orderBySQLInlineDistinct}";
+
+		public static final String FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKEntityColumn.DBName}";
 	</#if>
 
 	public static final String DATA_SOURCE = "${entity.dataSource}";

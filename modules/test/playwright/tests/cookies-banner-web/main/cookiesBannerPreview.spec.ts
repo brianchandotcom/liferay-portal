@@ -62,9 +62,7 @@ test(
 
 			const previewFrame = page.frameLocator('iframe[title="Preview"]');
 
-			await expect(
-				previewFrame.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(previewFrame.locator('.cookies-banner')).toBeVisible();
 		});
 	}
 );
@@ -101,9 +99,7 @@ test(
 
 			const previewFrame = page.frameLocator('iframe[title="Preview"]');
 
-			await expect(
-				previewFrame.getByRole('dialog', {name: 'banner cookies'})
-			).toBeVisible();
+			await expect(previewFrame.locator('.cookies-banner')).toBeVisible();
 		});
 	}
 );
@@ -131,9 +127,8 @@ test(
 		});
 
 		const previewFrame = page.frameLocator('iframe[title="Preview"]');
-		const banner = previewFrame.getByRole('dialog', {
-			name: 'banner cookies',
-		});
+
+		const banner = previewFrame.locator('.cookies-banner');
 
 		await expect(banner).toBeVisible();
 

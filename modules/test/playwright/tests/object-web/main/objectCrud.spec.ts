@@ -5,7 +5,6 @@
 
 import {
 	ObjectDefinition,
-	ObjectRelationship,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
@@ -268,67 +267,6 @@ test('Verify it is possible to update Custom Object when changing the localizati
 		});
 	}
 });
-
-test(
-	'Verify it is possible to update the label of relationship field of custom object from a native object',
-	{tag: '@LPS-135406'},
-	async ({apiHelpers, objectFieldsPage, page}) => {
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
-			ObjectRelationshipAPI
-		);
-
-		const relationshipLabel = 'Relationship' + getRandomInt();
-
-		const {body: objectRelationship} =
-			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
-				'L_USER',
-				{
-					label: {en_US: relationshipLabel},
-					name: 'relationship' + getRandomInt(),
-					objectDefinitionExternalReferenceCode2:
-						objectDefinition.externalReferenceCode,
-					objectDefinitionId2: objectDefinition.id,
-					objectDefinitionName2: objectDefinition.name,
-					type: 'oneToMany',
-				}
-			);
-
-		apiHelpers.data.push({
-			id: objectRelationship.id,
-			type: 'objectRelationship',
-		});
-
-		// Navigate to the custom object's Fields tab to update the relationship field label
-
-		await objectFieldsPage.goto(objectDefinition.label['en_US']);
-
-		await objectFieldsPage.openObjectField(relationshipLabel);
-
-		const iframeLocator = page.frameLocator('iframe');
-		const newLabel = 'New Relationship' + getRandomInt();
-
-		await iframeLocator.getByLabel('LabelMandatory').clear();
-		await iframeLocator.getByLabel('LabelMandatory').fill(newLabel);
-
-		await objectFieldsPage.editFieldSaveButton.click();
-
-		await waitForAlert(page, 'The object field was updated successfully');
-
-		await page.reload();
-
-		await expect(page.getByText(newLabel)).toBeVisible();
-	}
-);
 
 test(
 	'Verify an error message is shown when the user enters the wrong value in the confirmation field',

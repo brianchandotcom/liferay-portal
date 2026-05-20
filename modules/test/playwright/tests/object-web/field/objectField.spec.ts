@@ -1683,6 +1683,65 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		).toBeHidden();
 	});
 
+	test(
+		'can update relationship field label on system object',
+		{tag: '@LPS-135406'},
+		async ({apiHelpers, objectFieldsPage, page}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+				ObjectRelationshipAPI
+			);
+
+			const relationshipLabel = 'Relationship' + getRandomInt();
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_USER',
+					{
+						label: {en_US: relationshipLabel},
+						name: 'relationship' + getRandomInt(),
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await objectFieldsPage.goto(objectDefinition.label['en_US']);
+
+			await objectFieldsPage.openObjectField(relationshipLabel);
+
+			const iframeLocator = page.frameLocator('iframe');
+			const newLabel = 'New Relationship' + getRandomInt();
+
+			await iframeLocator.getByLabel('LabelMandatory').clear();
+			await iframeLocator.getByLabel('LabelMandatory').fill(newLabel);
+
+			await objectFieldsPage.editFieldSaveButton.click();
+
+			await waitForAlert(page, 'The object field was updated successfully');
+
+			await page.reload();
+
+			await expect(page.getByText(newLabel)).toBeVisible();
+		}
+	);
+
 	test('can view more than 20 picklists in the picklist drop-down', async ({
 		apiHelpers,
 		objectFieldsPage,

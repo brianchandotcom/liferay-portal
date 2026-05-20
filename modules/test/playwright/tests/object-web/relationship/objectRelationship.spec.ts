@@ -2567,6 +2567,202 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			).toBeVisible();
 		}
 	);
+
+	test(
+		'can delete an object after deleting the relationship',
+		{tag: '@LPS-150886'},
+		async ({
+			apiHelpers,
+			objectRelationshipsPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			let objectDefinition1: ObjectDefinition;
+			let objectDefinition2: ObjectDefinition;
+			let relationshipName: string;
+
+			await test.step('Create object definitions', async () => {
+				const objectFields = generateObjectFields({
+					objectFieldBusinessTypes: ['Text'],
+				});
+
+				objectDefinition1 =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields,
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition1.id,
+					type: 'objectDefinition',
+				});
+
+				objectDefinition2 =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						objectFields: generateObjectFields({
+							objectFieldBusinessTypes: ['Text'],
+						}),
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition2.id,
+					type: 'objectDefinition',
+				});
+			});
+
+			await test.step('Create object relationship', async () => {
+				const objectRelationshipAPIClient =
+					await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+				relationshipName = 'relationship' + getRandomInt();
+
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					objectDefinition1.externalReferenceCode!,
+					{
+						label: {en_US: 'Relationship'},
+						name: relationshipName,
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition2.externalReferenceCode,
+						objectDefinitionId2: objectDefinition2.id,
+						objectDefinitionName2: objectDefinition2.name,
+						type: 'oneToMany',
+					}
+				);
+			});
+
+			await test.step('Verify that an object that has a relationship cannot be deleted', async () => {
+				await viewObjectDefinitionsPage.goto();
+
+				await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+					objectDefinition1.label['en_US']
+				);
+
+				await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+				await expect(
+					page.getByText('Deletion Not Allowed')
+				).toBeVisible();
+
+				await page.getByRole('button', {name: 'Done'}).click();
+			});
+
+			await test.step('Delete the relationship first', async () => {
+				await objectRelationshipsPage.goto(
+					objectDefinition1.label['en_US']
+				);
+
+				await objectRelationshipsPage.actionsButton.click();
+
+				await objectRelationshipsPage.deleteObjectRelationshipOption.click();
+
+				await page
+					.getByPlaceholder('Confirm relationship name', {
+						exact: false,
+					})
+					.fill(relationshipName);
+
+				await page.getByRole('button', {name: 'Delete'}).click();
+
+				await expect(page.getByText('No Results Found')).toBeVisible({
+					timeout: 15000,
+				});
+			});
+
+			await test.step('Now delete the object definition', async () => {
+				await viewObjectDefinitionsPage.goto();
+
+				await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+					objectDefinition1.label['en_US']
+				);
+
+				await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+				await page
+					.getByPlaceholder('Confirm Object Definition Name')
+					.fill(objectDefinition1.name);
+
+				await page
+					.getByRole('button', {exact: true, name: 'Delete'})
+					.click();
+
+				apiHelpers.data.splice(
+					apiHelpers.data.findIndex(
+						(object) =>
+							object.id === objectDefinition1.id &&
+							object.type === 'objectDefinition'
+					),
+					1
+				);
+
+				await expect(
+					viewObjectDefinitionsPage.frontendDataSetEntries.filter({
+						hasText: objectDefinition1.label['en_US'],
+					})
+				).toBeHidden();
+			});
+		}
+	);
+
+	test(
+		'cannot delete an object that has a relationship',
+		{tag: '@LPS-150886'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectDefinition2 =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields: generateObjectFields({
+						objectFieldBusinessTypes: ['Text'],
+					}),
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition2.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				objectDefinition.externalReferenceCode!,
+				{
+					label: {en_US: 'Relationship'},
+					name: 'relationship' + getRandomInt(),
+					objectDefinitionExternalReferenceCode2:
+						objectDefinition2.externalReferenceCode,
+					objectDefinitionId2: objectDefinition2.id,
+					objectDefinitionName2: objectDefinition2.name,
+					type: 'oneToMany',
+				}
+			);
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label['en_US']
+			);
+
+			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+			await expect(page.getByText('Deletion Not Allowed')).toBeVisible();
+		}
+	);
 });
 
 test.describe('Manage object relationships with system objects', () => {
@@ -2766,6 +2962,102 @@ test.describe('Manage object relationships with system objects', () => {
 	);
 
 	test(
+		'can delete relationship on system object',
+		{tag: '@LPS-135406'},
+		async ({
+			apiHelpers,
+			objectRelationshipsPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			let userObjectRelationship: ObjectRelationship;
+			let relationshipLabel: string;
+			let relationshipName: string;
+
+			await test.step('Create object definition and relationship', async () => {
+				const objectDefinition =
+					await apiHelpers.objectAdmin.postRandomObjectDefinition({
+						status: {code: 0},
+					});
+
+				apiHelpers.data.push({
+					id: objectDefinition.id,
+					type: 'objectDefinition',
+				});
+
+				const objectRelationshipAPIClient =
+					await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+				relationshipLabel = 'Relationship' + getRandomInt();
+				relationshipName = 'relationship' + getRandomInt();
+
+				const {body: objectRelationship} =
+					await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+						'L_USER',
+						{
+							label: {en_US: relationshipLabel},
+							name: relationshipName,
+							objectDefinitionExternalReferenceCode2:
+								objectDefinition.externalReferenceCode,
+							objectDefinitionId2: objectDefinition.id,
+							objectDefinitionName2: objectDefinition.name,
+							type: 'oneToMany',
+						}
+					);
+
+				userObjectRelationship = objectRelationship;
+
+				apiHelpers.data.push({
+					id: objectRelationship.id,
+					type: 'objectRelationship',
+				});
+			});
+
+			await test.step("Navigate to the User system object's Relationships tab", async () => {
+				await viewObjectDefinitionsPage.goto();
+
+				await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+					'User'
+				);
+
+				await objectRelationshipsPage.relationshipTabItem.click();
+			});
+
+			await test.step('Delete the relationship', async () => {
+				await page
+					.getByRole('row', {name: relationshipLabel})
+					.getByRole('button')
+					.click();
+
+				await objectRelationshipsPage.deleteObjectRelationshipOption.click();
+
+				await page
+					.getByPlaceholder('Confirm relationship name', {
+						exact: false,
+					})
+					.fill(relationshipName);
+
+				await page.getByRole('button', {name: 'Delete'}).click();
+
+				apiHelpers.data.splice(
+					apiHelpers.data.findIndex(
+						(object) =>
+							object.id === userObjectRelationship.id &&
+							object.type === 'objectRelationship'
+					),
+					1
+				);
+			});
+
+			await test.step('Check that the relationship is deleted', async () => {
+				await expect(
+					page.getByRole('link', {name: relationshipName})
+				).not.toBeVisible();
+			});
+		}
+	);
+
+	test(
 		'can relate Many-to-Many Custom Object entry with System Object entries',
 		{tag: '@LPS-146754'},
 		async ({
@@ -2927,6 +3219,71 @@ test.describe('Manage object relationships with system objects', () => {
 				await expect(getRelatedUserRow(userAccount1)).toBeVisible();
 				await expect(getRelatedUserRow(userAccount2)).toBeVisible();
 			}
+		}
+	);
+
+	test(
+		'can update relationship label on system object',
+		{tag: '@LPS-135406'},
+		async ({
+			apiHelpers,
+			objectRelationshipsPage,
+			page,
+			viewObjectDefinitionsPage,
+		}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const objectRelationshipAPIClient =
+				await apiHelpers.buildRestClient(ObjectRelationshipAPI);
+
+			const relationshipLabel = 'Relationship' + getRandomInt();
+
+			const {body: objectRelationship} =
+				await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+					'L_USER',
+					{
+						label: {en_US: relationshipLabel},
+						name: 'relationship' + getRandomInt(),
+						objectDefinitionExternalReferenceCode2:
+							objectDefinition.externalReferenceCode,
+						objectDefinitionId2: objectDefinition.id,
+						objectDefinitionName2: objectDefinition.name,
+						type: 'oneToMany',
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectRelationship.id,
+				type: 'objectRelationship',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+				'User'
+			);
+
+			await objectRelationshipsPage.relationshipTabItem.click();
+
+			await page.getByRole('link', {name: relationshipLabel}).click();
+
+			const newLabel = 'New Relationship' + getRandomInt();
+
+			await objectRelationshipsPage.labelInput.fill(newLabel);
+
+			await objectRelationshipsPage.saveObjectRelationship();
+
+			await expect(
+				page.getByRole('link', {name: newLabel})
+			).toBeVisible();
 		}
 	);
 });

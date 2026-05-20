@@ -9,11 +9,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+import jakarta.annotation.PostConstruct;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
@@ -21,11 +27,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class StateTokenService {
-
-	public StateTokenService() {
-		_secretKey = Jwts.SIG.HS256.key(
-		).build();
-	}
 
 	public String generateState(String redirectURL, long seoStudioDomainId) {
 		Date date = new Date();
@@ -45,16 +46,32 @@ public class StateTokenService {
 	}
 
 	public Claims verifyState(String state) {
-		JwtParser jwtParser = Jwts.parser(
-		).verifyWith(
-			_secretKey
-		).build();
-
-		Jws<Claims> jws = jwtParser.parseSignedClaims(state);
+		Jws<Claims> jws = _jwtParser.parseSignedClaims(state);
 
 		return jws.getPayload();
 	}
 
-	private final SecretKey _secretKey;
+	@PostConstruct
+	private void _initialize() {
+		if (_stateSecret.startsWith("${") || (_stateSecret.length() < 32)) {
+			throw new IllegalArgumentException(
+				"\"liferay.seostudio.gsc.state.secret\" must be set to a " +
+					"value of at least 32 characters");
+		}
+
+		_secretKey = Keys.hmacShaKeyFor(
+			_stateSecret.getBytes(StandardCharsets.UTF_8));
+
+		_jwtParser = Jwts.parser(
+		).verifyWith(
+			_secretKey
+		).build();
+	}
+
+	private JwtParser _jwtParser;
+	private SecretKey _secretKey;
+
+	@Value("${liferay.seostudio.gsc.state.secret}")
+	private String _stateSecret;
 
 }

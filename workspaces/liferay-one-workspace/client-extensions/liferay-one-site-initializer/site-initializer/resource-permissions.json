@@ -233,6 +233,15 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "[$DATA_DEFINITION_ID:ANNOUNCEMENT$]",
+		"resourceName": "com.liferay.dynamic.data.mapping.model.DDMStructure-com.liferay.journal.model.JournalArticle",
+		"roleName": "Guest",
+		"scope": "4"
+	},
+	{
+		"actionIds": [
 			"ADD_ARTICLE",
 			"ADD_FOLDER",
 			"VIEW"

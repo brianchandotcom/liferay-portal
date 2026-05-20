@@ -2271,26 +2271,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getDefaultVirtualHostname(
-		boolean companyFallback, LayoutSet layoutSet) {
-
-		NavigableMap<String, String> virtualHostnames =
-			layoutSet.getVirtualHostnames();
-
-		for (Map.Entry<String, String> entry : virtualHostnames.entrySet()) {
-			if (Validator.isNull(entry.getValue())) {
-				return entry.getKey();
-			}
-		}
-
-		if (companyFallback) {
-			return layoutSet.getCompanyFallbackVirtualHostname();
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String getEmailFromAddress(
 		PortletPreferences portletPreferences, long companyId,
 		String defaultValue) {

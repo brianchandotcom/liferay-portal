@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class QuotaUtil {
 
-	public static void checkUsage(
+	public static boolean checkUsage(
 			long companyId, String nodeName, String text,
 			Map<String, Serializable> workflowContext, long workflowInstanceId,
 			long userId)
@@ -34,6 +34,8 @@ public class QuotaUtil {
 		try {
 			com.liferay.ai.hub.internal.quota.QuotaUtil.checkUsage(
 				companyId, text, userId);
+
+			return true;
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Message message = new Message();
@@ -50,6 +52,8 @@ public class QuotaUtil {
 				nodeName,
 				GetterUtil.getString(workflowContext.get("sseEventSinkKey")));
 		}
+
+		return false;
 	}
 
 	public static void updateUsage(

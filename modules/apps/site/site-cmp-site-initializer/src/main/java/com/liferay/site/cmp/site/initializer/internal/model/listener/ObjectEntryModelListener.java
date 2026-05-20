@@ -178,8 +178,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				RoleConstants.ADMINISTRATOR,
 				DepotRolesConstants.ASSET_LIBRARY_OWNER),
 			null, null,
-			new int[] {RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT}, 0,
-			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			new int[] {RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT},
+			null, 0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (Role role : roles) {
 			String[] actionIds = (String[])defaultPermissionsJSONObject.get(

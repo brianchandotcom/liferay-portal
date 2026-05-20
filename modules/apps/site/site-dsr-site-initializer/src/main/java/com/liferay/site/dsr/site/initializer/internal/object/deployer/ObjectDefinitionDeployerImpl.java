@@ -229,7 +229,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					new int[] {
 						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
 					},
-					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+					null, 0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 			String[] actionIds = permissionsMap.get(currentRole.getName());
 

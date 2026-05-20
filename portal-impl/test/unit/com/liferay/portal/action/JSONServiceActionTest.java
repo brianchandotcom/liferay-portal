@@ -35,7 +35,8 @@ public class JSONServiceActionTest {
 
 		String[] parameters = {
 			"companyId", "name", "excludedNames", "title", "description",
-			"types", "excludedTeamRoleId", "teamGroupId", "start", "end"
+			"types", "subtype", "excludedTeamRoleId", "teamGroupId", "start",
+			"end"
 		};
 
 		Object[] methodAndParameterTypes =

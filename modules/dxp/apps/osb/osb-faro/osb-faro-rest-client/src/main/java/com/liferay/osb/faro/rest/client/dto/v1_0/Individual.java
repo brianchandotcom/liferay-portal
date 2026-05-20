@@ -213,16 +213,24 @@ public class Individual implements Cloneable, Serializable {
 
 	protected String lastSessionCountry;
 
-	public String getProfileType() {
+	public ProfileType getProfileType() {
 		return profileType;
 	}
 
-	public void setProfileType(String profileType) {
+	public String getProfileTypeAsString() {
+		if (profileType == null) {
+			return null;
+		}
+
+		return profileType.toString();
+	}
+
+	public void setProfileType(ProfileType profileType) {
 		this.profileType = profileType;
 	}
 
 	public void setProfileType(
-		UnsafeSupplier<String, Exception> profileTypeUnsafeSupplier) {
+		UnsafeSupplier<ProfileType, Exception> profileTypeUnsafeSupplier) {
 
 		try {
 			profileType = profileTypeUnsafeSupplier.get();
@@ -232,7 +240,7 @@ public class Individual implements Cloneable, Serializable {
 		}
 	}
 
-	protected String profileType;
+	protected ProfileType profileType;
 
 	@Override
 	public Individual clone() throws CloneNotSupportedException {
@@ -265,5 +273,38 @@ public class Individual implements Cloneable, Serializable {
 		return IndividualSerDes.toJSON(this);
 	}
 
+	public static enum ProfileType {
+
+		ANONYMOUS("ANONYMOUS"), KNOWN("KNOWN");
+
+		public static ProfileType create(String value) {
+			for (ProfileType profileType : values()) {
+				if (Objects.equals(profileType.getValue(), value) ||
+					Objects.equals(profileType.name(), value)) {
+
+					return profileType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private ProfileType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:-830770606
+// LIFERAY-REST-BUILDER-HASH:-2059935576

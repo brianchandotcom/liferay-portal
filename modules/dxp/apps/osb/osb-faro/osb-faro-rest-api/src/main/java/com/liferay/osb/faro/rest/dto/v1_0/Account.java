@@ -230,7 +230,7 @@ public class Account implements Serializable {
 	private Supplier<Date> _dateModifiedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Account ID. Use this with `getAccount` to fetch the account directly."
+		description = "Account ID. Use this with `getWorkspaceGroupAccount` to fetch the account directly."
 	)
 	public String getId() {
 		if (_idSupplier != null) {
@@ -264,7 +264,7 @@ public class Account implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Account ID. Use this with `getAccount` to fetch the account directly."
+		description = "Account ID. Use this with `getWorkspaceGroupAccount` to fetch the account directly."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String id;
@@ -662,4 +662,4 @@ public class Account implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1870009784
+// LIFERAY-REST-BUILDER-HASH:-1232253832

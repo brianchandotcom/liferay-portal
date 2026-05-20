@@ -194,8 +194,9 @@ public abstract class BasePageMetricResourceTestCase {
 
 		Page<PageMetric> page = pageMetricResource.getWorkspaceGroupPagesPage(
 			groupId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
-			RandomTestUtil.randomString(), null, Pagination.of(1, 10), null);
+			Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1555,4 +1556,4 @@ public abstract class BasePageMetricResourceTestCase {
 		_pageMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1729434821
+// LIFERAY-REST-BUILDER-HASH:565068008

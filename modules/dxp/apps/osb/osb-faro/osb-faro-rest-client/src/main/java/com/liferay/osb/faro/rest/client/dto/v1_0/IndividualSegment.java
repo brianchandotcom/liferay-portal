@@ -277,16 +277,24 @@ public class IndividualSegment implements Cloneable, Serializable {
 
 	protected String name;
 
-	public String getSegmentType() {
+	public SegmentType getSegmentType() {
 		return segmentType;
 	}
 
-	public void setSegmentType(String segmentType) {
+	public String getSegmentTypeAsString() {
+		if (segmentType == null) {
+			return null;
+		}
+
+		return segmentType.toString();
+	}
+
+	public void setSegmentType(SegmentType segmentType) {
 		this.segmentType = segmentType;
 	}
 
 	public void setSegmentType(
-		UnsafeSupplier<String, Exception> segmentTypeUnsafeSupplier) {
+		UnsafeSupplier<SegmentType, Exception> segmentTypeUnsafeSupplier) {
 
 		try {
 			segmentType = segmentTypeUnsafeSupplier.get();
@@ -296,19 +304,25 @@ public class IndividualSegment implements Cloneable, Serializable {
 		}
 	}
 
-	protected String segmentType;
+	protected SegmentType segmentType;
 
-	public String getState() {
+	public State getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public String getStateAsString() {
+		if (state == null) {
+			return null;
+		}
+
+		return state.toString();
+	}
+
+	public void setState(State state) {
 		this.state = state;
 	}
 
-	public void setState(
-		UnsafeSupplier<String, Exception> stateUnsafeSupplier) {
-
+	public void setState(UnsafeSupplier<State, Exception> stateUnsafeSupplier) {
 		try {
 			state = stateUnsafeSupplier.get();
 		}
@@ -317,18 +331,26 @@ public class IndividualSegment implements Cloneable, Serializable {
 		}
 	}
 
-	protected String state;
+	protected State state;
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -338,7 +360,7 @@ public class IndividualSegment implements Cloneable, Serializable {
 		}
 	}
 
-	protected String status;
+	protected Status status;
 
 	@Override
 	public IndividualSegment clone() throws CloneNotSupportedException {
@@ -371,5 +393,104 @@ public class IndividualSegment implements Cloneable, Serializable {
 		return IndividualSegmentSerDes.toJSON(this);
 	}
 
+	public static enum SegmentType {
+
+		BATCH("BATCH"), REAL_TIME("REAL_TIME");
+
+		public static SegmentType create(String value) {
+			for (SegmentType segmentType : values()) {
+				if (Objects.equals(segmentType.getValue(), value) ||
+					Objects.equals(segmentType.name(), value)) {
+
+					return segmentType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SegmentType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum State {
+
+		DISABLED("DISABLED"), IN_PROGRESS("IN_PROGRESS"), READY("READY");
+
+		public static State create(String value) {
+			for (State state : values()) {
+				if (Objects.equals(state.getValue(), value) ||
+					Objects.equals(state.name(), value)) {
+
+					return state;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private State(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum Status {
+
+		ACTIVE("ACTIVE"), INACTIVE("INACTIVE");
+
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value) ||
+					Objects.equals(status.name(), value)) {
+
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:-864425324
+// LIFERAY-REST-BUILDER-HASH:-2102082135

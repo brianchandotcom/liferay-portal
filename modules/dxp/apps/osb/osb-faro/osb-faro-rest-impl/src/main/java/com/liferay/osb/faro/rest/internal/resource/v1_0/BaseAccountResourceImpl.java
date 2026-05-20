@@ -54,7 +54,7 @@ public abstract class BaseAccountResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspace/{groupId}/accounts/{accountId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an account id. To search accounts by name or filter, use `getAccountsPage`."
+		description = "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an account id. To search accounts by name or filter, use `getWorkspaceGroupAccountsPage`."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -604,4 +604,4 @@ public abstract class BaseAccountResourceImpl
 		LogFactoryUtil.getLog(BaseAccountResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-414245749
+// LIFERAY-REST-BUILDER-HASH:-1979827371

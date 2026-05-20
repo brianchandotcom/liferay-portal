@@ -50,7 +50,7 @@ public abstract class BaseEventResourceImpl implements EventResource {
 	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspace/{groupId}/channels/{channelId}/events'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a date range. For aggregated metrics across events, prefer `getSiteAssetSummariesPage` or `getSitePagesPage`."
+		description = "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer `getWorkspaceGroupAssetSummariesPage` or `getWorkspaceGroupPagesPage`."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -79,6 +79,7 @@ public abstract class BaseEventResourceImpl implements EventResource {
 				name = "rangeEnd"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "LAST_30_DAYS",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "rangeKey"
 			),
@@ -116,7 +117,7 @@ public abstract class BaseEventResourceImpl implements EventResource {
 			String rangeEnd,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeKey")
-			Integer rangeKey,
+			String rangeKey,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeStart")
 			String rangeStart,
@@ -574,4 +575,4 @@ public abstract class BaseEventResourceImpl implements EventResource {
 		LogFactoryUtil.getLog(BaseEventResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-309115906
+// LIFERAY-REST-BUILDER-HASH:-808528962

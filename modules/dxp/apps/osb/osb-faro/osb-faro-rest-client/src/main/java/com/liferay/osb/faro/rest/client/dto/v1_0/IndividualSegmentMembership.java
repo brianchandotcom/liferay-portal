@@ -110,16 +110,24 @@ public class IndividualSegmentMembership implements Cloneable, Serializable {
 
 	protected String individualSegmentId;
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public String getStatusAsString() {
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -129,7 +137,7 @@ public class IndividualSegmentMembership implements Cloneable, Serializable {
 		}
 	}
 
-	protected String status;
+	protected Status status;
 
 	@Override
 	public IndividualSegmentMembership clone()
@@ -166,5 +174,38 @@ public class IndividualSegmentMembership implements Cloneable, Serializable {
 		return IndividualSegmentMembershipSerDes.toJSON(this);
 	}
 
+	public static enum Status {
+
+		ACTIVE("ACTIVE"), INACTIVE("INACTIVE");
+
+		public static Status create(String value) {
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value) ||
+					Objects.equals(status.name(), value)) {
+
+					return status;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:-1127307592
+// LIFERAY-REST-BUILDER-HASH:-1720533073

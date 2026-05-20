@@ -214,9 +214,7 @@ public class IndividualSegmentSerDes {
 			sb.append("\"segmentType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individualSegment.getSegmentType()));
-
+			sb.append(individualSegment.getSegmentType());
 			sb.append("\"");
 		}
 
@@ -228,9 +226,7 @@ public class IndividualSegmentSerDes {
 			sb.append("\"state\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individualSegment.getState()));
-
+			sb.append(individualSegment.getState());
 			sb.append("\"");
 		}
 
@@ -242,9 +238,7 @@ public class IndividualSegmentSerDes {
 			sb.append("\"status\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(individualSegment.getStatus()));
-
+			sb.append(individualSegment.getStatus());
 			sb.append("\"");
 		}
 
@@ -556,17 +550,22 @@ public class IndividualSegmentSerDes {
 			else if (Objects.equals(jsonParserFieldName, "segmentType")) {
 				if (jsonParserFieldValue != null) {
 					individualSegment.setSegmentType(
-						(String)jsonParserFieldValue);
+						IndividualSegment.SegmentType.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "state")) {
 				if (jsonParserFieldValue != null) {
-					individualSegment.setState((String)jsonParserFieldValue);
+					individualSegment.setState(
+						IndividualSegment.State.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					individualSegment.setStatus((String)jsonParserFieldValue);
+					individualSegment.setStatus(
+						IndividualSegment.Status.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -650,4 +649,4 @@ public class IndividualSegmentSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1373075263
+// LIFERAY-REST-BUILDER-HASH:739462972

@@ -5,9 +5,12 @@
 
 package com.liferay.osb.faro.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +20,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -144,7 +149,7 @@ public class IndividualSegmentMembership implements Serializable {
 	private Supplier<Date> _dateRemovedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Identifier of the individual whose membership this record describes. Use with `getIndividual` to fetch the individual."
+		description = "Identifier of the individual whose membership this record describes. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	public String getIndividualId() {
 		if (_individualIdSupplier != null) {
@@ -180,7 +185,7 @@ public class IndividualSegmentMembership implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Identifier of the individual whose membership this record describes. Use with `getIndividual` to fetch the individual."
+		description = "Identifier of the individual whose membership this record describes. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String individualId;
@@ -234,9 +239,11 @@ public class IndividualSegmentMembership implements Serializable {
 	private Supplier<String> _individualSegmentIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Either 'ACTIVE' (currently a member) or 'INACTIVE' (formerly a member)."
+		description = "Membership status. ACTIVE means currently a member; INACTIVE means formerly a member."
 	)
-	public String getStatus() {
+	@JsonGetter("status")
+	@Valid
+	public Status getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
 
@@ -246,7 +253,18 @@ public class IndividualSegmentMembership implements Serializable {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	@JsonIgnore
+	public String getStatusAsString() {
+		Status status = getStatus();
+
+		if (status == null) {
+			return null;
+		}
+
+		return status.toString();
+	}
+
+	public void setStatus(Status status) {
 		this.status = status;
 
 		_statusSupplier = null;
@@ -254,7 +272,7 @@ public class IndividualSegmentMembership implements Serializable {
 
 	@JsonIgnore
 	public void setStatus(
-		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<Status, Exception> statusUnsafeSupplier) {
 
 		_statusSupplier = () -> {
 			try {
@@ -270,13 +288,13 @@ public class IndividualSegmentMembership implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Either 'ACTIVE' (currently a member) or 'INACTIVE' (formerly a member)."
+		description = "Membership status. ACTIVE means currently a member; INACTIVE means formerly a member."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String status;
+	protected Status status;
 
 	@JsonIgnore
-	private Supplier<String> _statusSupplier;
+	private Supplier<Status> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -374,7 +392,7 @@ public class IndividualSegmentMembership implements Serializable {
 			sb.append("\"");
 		}
 
-		String status = getStatus();
+		Status status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {
@@ -384,9 +402,7 @@ public class IndividualSegmentMembership implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(status));
-
+			sb.append(status);
 			sb.append("\"");
 		}
 
@@ -401,6 +417,44 @@ public class IndividualSegmentMembership implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Status")
+	public static enum Status {
+
+		ACTIVE("ACTIVE"), INACTIVE("INACTIVE");
+
+		@JsonCreator
+		public static Status create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Status status : values()) {
+				if (Objects.equals(status.getValue(), value)) {
+					return status;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Status(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -491,4 +545,4 @@ public class IndividualSegmentMembership implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1418151720
+// LIFERAY-REST-BUILDER-HASH:1250347377

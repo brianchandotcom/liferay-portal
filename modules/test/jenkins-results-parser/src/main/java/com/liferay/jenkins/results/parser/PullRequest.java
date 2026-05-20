@@ -602,7 +602,7 @@ public class PullRequest {
 					"mergeable_state");
 
 				if (mergeableState.equals("unknown")) {
-					throw new RuntimeException("mergeable_state is unknown");
+					throw new RuntimeException("Mergeable state is unknown");
 				}
 
 				return mergeableState;

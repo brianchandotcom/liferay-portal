@@ -13,7 +13,7 @@
 					"fragmentStyle": {
 						"backgroundFragmentImage": {
 							"url": {
-								"value": "/documents/d/one/hero-banner-background-svg"
+								"value": "/documents/d/one/hero_banner_background.svg"
 							}
 						},
 						"paddingBottom": "6",
@@ -302,7 +302,7 @@
 																"fragmentImage": {
 																	"url": {
 																		"value_i18n": {
-																			"en_US": "/documents/d/one/hero-banner-illustration-image-svg"
+																			"en_US": "/documents/d/one/hero_banner_illustration_image.svg"
 																		}
 																	}
 																},

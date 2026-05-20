@@ -15,7 +15,6 @@ import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 
 interface IProps {
 	errors: FormikErrors<ModelArmorTemplate>;
-	handleChange: (event: React.ChangeEvent<any>) => void;
 	setField: <K extends keyof ModelArmorTemplate>(
 		field: K,
 		value: ModelArmorTemplate[K]
@@ -23,12 +22,7 @@ interface IProps {
 	values: ModelArmorTemplate;
 }
 
-const DetailsPanel: React.FC<IProps> = ({
-	errors,
-	handleChange,
-	setField,
-	values,
-}) => {
+const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 	return (
 		<ClayPanel
 			className="model-armor-template-form-details"
@@ -57,11 +51,12 @@ const DetailsPanel: React.FC<IProps> = ({
 					<ClayInput
 						className={errors.title ? 'is-invalid' : ''}
 						id="title"
-						name="title"
-						onChange={handleChange}
+						onChange={(event) =>
+							setField('title', event.target.value)
+						}
 						required
 						type="text"
-						value={values.title || ''}
+						value={values.title}
 					/>
 
 					{errors.title && (
@@ -85,11 +80,15 @@ const DetailsPanel: React.FC<IProps> = ({
 							errors.externalReferenceCode ? 'is-invalid' : ''
 						}
 						id="externalReferenceCode"
-						name="externalReferenceCode"
-						onChange={handleChange}
+						onChange={(event) =>
+							setField(
+								'externalReferenceCode',
+								event.target.value
+							)
+						}
 						required
 						type="text"
-						value={values.externalReferenceCode || ''}
+						value={values.externalReferenceCode}
 					/>
 
 					{errors.externalReferenceCode && (
@@ -107,10 +106,11 @@ const DetailsPanel: React.FC<IProps> = ({
 					<textarea
 						className="form-control"
 						id="description"
-						name="description"
-						onChange={handleChange}
+						onChange={(event) =>
+							setField('description', event.target.value)
+						}
 						rows={3}
-						value={values.description || ''}
+						value={values.description}
 					/>
 				</ClayForm.Group>
 

@@ -5,11 +5,29 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
+import {DEFAULT_MODEL_ARMOR_TEMPLATE} from '../constants';
+import {
+	FilterLevel,
+	ModelArmorTemplate,
+	RAILevel,
+} from '../types/ModelArmorTemplate';
 
 const MODEL_ARMOR_TEMPLATE_BASE_URI = '/o/ai-hub/model-armor-templates';
 
-async function getModelArmorTemplate(externalReferenceCode: string) {
+const normalizeKey = <T extends string>(
+	value: {key: T} | T | null | undefined,
+	fallback: T
+): T => {
+	if (typeof value === 'object' && value !== null) {
+		return value.key;
+	}
+
+	return value ?? fallback;
+};
+
+async function getModelArmorTemplate(
+	externalReferenceCode: string
+): Promise<ModelArmorTemplate> {
 	const response = await fetch(
 		`${MODEL_ARMOR_TEMPLATE_BASE_URI}/by-external-reference-code/${externalReferenceCode}`,
 		{
@@ -21,7 +39,33 @@ async function getModelArmorTemplate(externalReferenceCode: string) {
 		throw new Error();
 	}
 
-	return response.json();
+	const raw = await response.json();
+
+	return {
+		...DEFAULT_MODEL_ARMOR_TEMPLATE,
+		...raw,
+		guardrailType: normalizeKey(raw.guardrailType, 'input'),
+		piAndJailbreakConfidenceLevel: normalizeKey<FilterLevel>(
+			raw.piAndJailbreakConfidenceLevel,
+			'mediumAndAbove'
+		),
+		raiDangerousLevel: normalizeKey<RAILevel>(
+			raw.raiDangerousLevel,
+			'none'
+		),
+		raiHarassmentLevel: normalizeKey<RAILevel>(
+			raw.raiHarassmentLevel,
+			'none'
+		),
+		raiHateSpeechLevel: normalizeKey<RAILevel>(
+			raw.raiHateSpeechLevel,
+			'none'
+		),
+		raiSexuallyExplicitLevel: normalizeKey<RAILevel>(
+			raw.raiSexuallyExplicitLevel,
+			'none'
+		),
+	};
 }
 
 async function putModelArmorTemplate(modelArmorTemplate: ModelArmorTemplate) {

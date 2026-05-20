@@ -68,8 +68,8 @@ public class CookiesBannerBottomJSPDynamicInclude
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
 
-			if (!permissionChecker.isOmniadmin() &&
-				!permissionChecker.isCompanyAdmin()) {
+			if (!permissionChecker.isCompanyAdmin() &&
+				!permissionChecker.isOmniadmin()) {
 
 				previewMode = false;
 			}

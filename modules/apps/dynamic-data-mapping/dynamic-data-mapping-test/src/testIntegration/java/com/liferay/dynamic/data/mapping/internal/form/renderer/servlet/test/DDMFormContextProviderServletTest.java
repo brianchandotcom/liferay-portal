@@ -67,20 +67,20 @@ public class DDMFormContextProviderServletTest {
 	@Test
 	public void testUploadExceptionReturnsJSONErrorResponse() throws Exception {
 
-		// Exceeded file size limit
-
-		_assertJSONErrorResponse(_createUploadException(true, false, false));
-
 		// Exceeded Liferay file item size limit
 
-		_assertJSONErrorResponse(_createUploadException(false, true, false));
+		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(false, true, false));
+
+		// Exceeded file size limit
+
+		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(true, false, false));
 
 		// Exceeded upload request size limit
 
-		_assertJSONErrorResponse(_createUploadException(false, false, true));
+		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(false, false, true));
 	}
 
-	private void _assertJSONErrorResponse(UploadException uploadException)
+	private void _testUploadExceptionReturnsJSONErrorResponse(UploadException uploadException)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =

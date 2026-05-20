@@ -12,6 +12,7 @@ import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
 import com.liferay.osb.faro.engine.client.model.ChannelDataSource;
+import com.liferay.osb.faro.engine.client.model.ChannelsConfiguration;
 import com.liferay.osb.faro.engine.client.model.Credentials;
 import com.liferay.osb.faro.engine.client.model.DXPGroup;
 import com.liferay.osb.faro.engine.client.model.DXPOrganization;
@@ -218,8 +219,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay createTypeDemandbase(
 			@PathParam("groupId") long groupId,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<DemandbaseProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue("ACTIVE") @FormParam("status") String status)
@@ -240,8 +240,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay createTypeHubSpot(
 			@PathParam("groupId") long groupId,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubSpotProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue("ACTIVE") @FormParam("status") String status)
@@ -289,8 +288,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay createTypeMarketo(
 			@PathParam("groupId") long groupId,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<MarketoProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name,
 			@DefaultValue("ACTIVE") @FormParam("status") String status)
@@ -314,8 +312,7 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<SalesforceProvider.AccountsConfiguration>
 					accountsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<SalesforceProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("contactsConfiguration")
 				FaroParam<SalesforceProvider.ContactsConfiguration>
 					contactsConfigurationFaroParam,
@@ -722,18 +719,18 @@ public class DataSourceController extends BaseFaroController {
 		if (StringUtil.equals(provider.getType(), LiferayProvider.TYPE)) {
 			LiferayProvider liferayProvider = (LiferayProvider)provider;
 
-			LiferayProvider.ChannelsConfiguration channelsConfiguration =
+			ChannelsConfiguration channelsConfiguration =
 				liferayProvider.getChannelsConfiguration();
 
 			if (channelsConfiguration != null) {
-				List<LiferayProvider.Channel> channels =
+				List<ChannelsConfiguration.Channel> channels =
 					channelsConfiguration.getChannels();
 
 				if (ListUtil.isNotEmpty(channels)) {
 					channelsCount = channels.size();
 				}
 
-				for (LiferayProvider.Channel channel : channels) {
+				for (ChannelsConfiguration.Channel channel : channels) {
 					Set<Long> groupIds = channel.getGroupIds();
 
 					if (SetUtil.isNotEmpty(groupIds)) {
@@ -750,18 +747,18 @@ public class DataSourceController extends BaseFaroController {
 			SalesforceProvider salesforceProvider =
 				(SalesforceProvider)provider;
 
-			SalesforceProvider.ChannelsConfiguration channelsConfiguration =
+			ChannelsConfiguration channelsConfiguration =
 				salesforceProvider.getChannelsConfiguration();
 
 			if (channelsConfiguration != null) {
-				List<SalesforceProvider.Channel> channels =
+				List<ChannelsConfiguration.Channel> channels =
 					channelsConfiguration.getChannels();
 
 				if (ListUtil.isNotEmpty(channels)) {
 					channelsCount = channels.size();
 				}
 
-				for (SalesforceProvider.Channel channel : channels) {
+				for (ChannelsConfiguration.Channel channel : channels) {
 					Set<Long> groupIds = channel.getGroupIds();
 
 					if (SetUtil.isNotEmpty(groupIds)) {
@@ -1119,15 +1116,14 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay patchTypeDemandbase(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<DemandbaseProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
 
 		DemandbaseProvider demandbaseProvider = new DemandbaseProvider();
 
-		DemandbaseProvider.ChannelsConfiguration channelsConfiguration =
+		ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 
 		if (channelsConfiguration != null) {
@@ -1145,15 +1141,14 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay patchTypeHubSpot(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubSpotProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
 
 		HubSpotProvider hubSpotProvider = new HubSpotProvider();
 
-		HubSpotProvider.ChannelsConfiguration channelsConfiguration =
+		ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 
 		if (channelsConfiguration != null) {
@@ -1174,8 +1169,7 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<LiferayProvider.AnalyticsConfiguration>
 					analyticsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<LiferayProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("contactsConfiguration")
 				FaroParam<LiferayProvider.ContactsConfiguration>
 					contactsConfigurationFaroParam,
@@ -1190,7 +1184,7 @@ public class DataSourceController extends BaseFaroController {
 
 		LiferayProvider.AnalyticsConfiguration analyticsConfiguration =
 			analyticsConfigurationFaroParam.getValue();
-		LiferayProvider.ChannelsConfiguration channelsConfiguration =
+		ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 		LiferayProvider.ContactsConfiguration contactsConfiguration =
 			contactsConfigurationFaroParam.getValue();
@@ -1240,15 +1234,14 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay patchTypeMarketo(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<MarketoProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
 
 		MarketoProvider marketoProvider = new MarketoProvider();
 
-		MarketoProvider.ChannelsConfiguration channelsConfiguration =
+		ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 
 		if (channelsConfiguration != null) {
@@ -1269,8 +1262,7 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<SalesforceProvider.AccountsConfiguration>
 					accountsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<SalesforceProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("contactsConfiguration")
 				FaroParam<SalesforceProvider.ContactsConfiguration>
 					contactsConfigurationFaroParam,
@@ -1283,7 +1275,7 @@ public class DataSourceController extends BaseFaroController {
 
 		SalesforceProvider.AccountsConfiguration accountsConfiguration =
 			accountsConfigurationFaroParam.getValue();
-		SalesforceProvider.ChannelsConfiguration channelsConfiguration =
+		ChannelsConfiguration channelsConfiguration =
 			channelsConfigurationFaroParam.getValue();
 		SalesforceProvider.ContactsConfiguration contactsConfiguration =
 			contactsConfigurationFaroParam.getValue();
@@ -1457,8 +1449,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay updateTypeDemandbase(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<DemandbaseProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
@@ -1479,8 +1470,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay updateTypeHubSpot(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<HubSpotProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
@@ -1532,8 +1522,7 @@ public class DataSourceController extends BaseFaroController {
 	public DataSourceDisplay updateTypeMarketo(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<MarketoProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@FormParam("credentials") Credentials credentials,
 			@FormParam("name") String name, @FormParam("status") String status)
 		throws Exception {
@@ -1557,8 +1546,7 @@ public class DataSourceController extends BaseFaroController {
 				FaroParam<SalesforceProvider.AccountsConfiguration>
 					accountsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("channelsConfiguration")
-				FaroParam<SalesforceProvider.ChannelsConfiguration>
-					channelsConfigurationFaroParam,
+				FaroParam<ChannelsConfiguration> channelsConfigurationFaroParam,
 			@DefaultValue(StringPool.BLANK) @FormParam("contactsConfiguration")
 				FaroParam<SalesforceProvider.ContactsConfiguration>
 					contactsConfigurationFaroParam,

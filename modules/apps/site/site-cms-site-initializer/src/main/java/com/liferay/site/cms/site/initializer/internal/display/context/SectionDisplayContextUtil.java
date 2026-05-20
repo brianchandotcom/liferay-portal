@@ -400,9 +400,7 @@ public class SectionDisplayContextUtil {
 				objectEntryFolderIdsMap.entrySet()) {
 
 			for (long objectEntryFolderId : entry.getValue()) {
-				if (_contains(
-						actionId, objectEntryFolderId, themeDisplay)) {
-
+				if (_contains(actionId, objectEntryFolderId, themeDisplay)) {
 					depotEntryGroupIds.add(entry.getKey());
 
 					break;
@@ -833,6 +831,31 @@ public class SectionDisplayContextUtil {
 			));
 	}
 
+	private static boolean _contains(
+		String actionId, long objectEntryFolderId, ThemeDisplay themeDisplay) {
+
+		try {
+			ModelResourcePermission<ObjectEntryFolder> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					ObjectEntryFolder.class.getName());
+
+			if (modelResourcePermission == null) {
+				return false;
+			}
+
+			return modelResourcePermission.contains(
+				themeDisplay.getPermissionChecker(), objectEntryFolderId,
+				actionId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return false;
+	}
+
 	private static List<DropdownItem> _getBulkActionDropdownItems(
 		HttpServletRequest httpServletRequest) {
 
@@ -1109,31 +1132,6 @@ public class SectionDisplayContextUtil {
 		}
 
 		return new String[] {rootObjectEntryFolderExternalReferenceCode};
-	}
-
-	private static boolean _contains(
-		String actionId, long objectEntryFolderId, ThemeDisplay themeDisplay) {
-
-		try {
-			ModelResourcePermission<ObjectEntryFolder> modelResourcePermission =
-				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-					ObjectEntryFolder.class.getName());
-
-			if (modelResourcePermission == null) {
-				return false;
-			}
-
-			return modelResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), objectEntryFolderId,
-				actionId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return false;
 	}
 
 	private static final String _CMS_WORKFLOW_STATUSES_STRING =

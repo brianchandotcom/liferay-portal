@@ -68,11 +68,11 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	@Override
 	public int countByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return doCountByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, false);
 	}
 
@@ -156,11 +156,11 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	@Override
 	public int filterCountByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return doCountByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, true);
 	}
 
@@ -236,11 +236,11 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	@Override
 	public List<Role> filterFindByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return doFindByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end, true);
 	}
 
@@ -325,11 +325,11 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	@Override
 	public List<Role> findByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return doFindByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end, false);
 	}
 
@@ -423,8 +423,8 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 	protected int doCountByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, boolean inlineSQLHelper) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, boolean inlineSQLHelper) {
 
 		if (ArrayUtil.isEmpty(types)) {
 			return 0;
@@ -444,7 +444,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 							COUNT_COLUMN_NAME
 						)),
 					companyId, name, excludedNames, title, description, types,
-					excludedTeamRoleId, teamGroupId, inlineSQLHelper));
+					subtype, excludedTeamRoleId, teamGroupId, inlineSQLHelper));
 
 			sqlQuery.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -634,8 +634,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 	protected List<Role> doFindByGroupRoleAndTeamRole(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end, boolean inlineSQLHelper) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end,
+		boolean inlineSQLHelper) {
 
 		if (ArrayUtil.isEmpty(types)) {
 			return Collections.emptyList();
@@ -648,8 +649,8 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 			OrderByStep orderByStep = _getOrderByStep(
 				DSLQueryFactoryUtil.select(RoleTable.INSTANCE), companyId, name,
-				excludedNames, title, description, types, excludedTeamRoleId,
-				teamGroupId, inlineSQLHelper);
+				excludedNames, title, description, types, subtype,
+				excludedTeamRoleId, teamGroupId, inlineSQLHelper);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				orderByStep.orderBy(RoleTable.INSTANCE.name.ascending()));
@@ -985,7 +986,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	private OrderByStep _getOrderByStep(
 		FromStep fromStep, long companyId, String name,
 		List<String> excludedNames, String title, String description,
-		int[] types, long excludedTeamRoleId, long teamGroupId,
+		int[] types, String subtype, long excludedTeamRoleId, long teamGroupId,
 		boolean inlineSQLHelper) {
 
 		Predicate wherePredicate = RoleTable.INSTANCE.companyId.eq(companyId);
@@ -1076,6 +1077,16 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		else {
 			rolesWherePredicate = rolesWherePredicate.and(
 				Predicate.withParentheses(typesWherePredicate));
+		}
+
+		if (Validator.isNotNull(subtype)) {
+			Predicate subtypeWherePredicate = RoleTable.INSTANCE.subtype.isNull(
+			).or(
+				RoleTable.INSTANCE.subtype.eq(subtype)
+			);
+
+			rolesWherePredicate = rolesWherePredicate.and(
+				Predicate.withParentheses(subtypeWherePredicate));
 		}
 
 		if (rolesWherePredicate != null) {

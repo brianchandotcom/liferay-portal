@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductTaxConfiguration")
+@GraphQLName(
+	description = "Tax classification for a product; pairs the tax category used by tax engines with a taxable flag; sourced from the product itself at the product level and from the configuration entry when embedded inside a product configuration.",
+	value = "ProductTaxConfiguration"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductTaxConfiguration")
 public class ProductTaxConfiguration implements Serializable {
@@ -50,7 +53,10 @@ public class ProductTaxConfiguration implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the tax category assigned to the product; 0 means no tax category is assigned.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,14 +88,19 @@ public class ProductTaxConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the tax category assigned to the product; 0 means no tax category is assigned."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "taxCategoryName")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized name of the tax category for the request locale; read-only.",
+		example = "taxCategoryName"
+	)
 	public String getTaxCategory() {
 		if (_taxCategorySupplier != null) {
 			taxCategory = _taxCategorySupplier.get();
@@ -123,14 +134,19 @@ public class ProductTaxConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized name of the tax category for the request locale; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String taxCategory;
 
 	@JsonIgnore
 	private Supplier<String> _taxCategorySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the product is subject to tax; defaults to true on create when omitted.",
+		example = "true"
+	)
 	public Boolean getTaxable() {
 		if (_taxableSupplier != null) {
 			taxable = _taxableSupplier.get();
@@ -164,7 +180,9 @@ public class ProductTaxConfiguration implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the product is subject to tax; defaults to true on create when omitted."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean taxable;
 
@@ -340,4 +358,4 @@ public class ProductTaxConfiguration implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:458283801
+// LIFERAY-REST-BUILDER-HASH:-830704343

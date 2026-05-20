@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductVirtualSettings")
+@GraphQLName(
+	description = "Digital download configuration for a virtual product; controls the download URL, sample file, terms of use, activation gating, and usage and duration limits; returned as null when the product is not virtual or has no virtual settings.",
+	value = "ProductVirtualSettings"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductVirtualSettings")
 public class ProductVirtualSettings implements Serializable {
@@ -51,7 +54,10 @@ public class ProductVirtualSettings implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "0")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Order status at which the download becomes available to the buyer; numeric code where 0 means Completed (default), 1 means Pending, and 10 means Processing.",
+		example = "0"
+	)
 	public Integer getActivationStatus() {
 		if (_activationStatusSupplier != null) {
 			activationStatus = _activationStatusSupplier.get();
@@ -85,14 +91,18 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Order status at which the download becomes available to the buyer; numeric code where 0 means Completed (default), 1 means Pending, and 10 means Processing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer activationStatus;
 
 	@JsonIgnore
 	private Supplier<Integer> _activationStatusSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Resolved human-readable label and localized label for the activation status value; read-only."
+	)
 	@Valid
 	public Status getActivationStatusInfo() {
 		if (_activationStatusInfoSupplier != null) {
@@ -127,7 +137,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Resolved human-readable label and localized label for the activation status value; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Status activationStatusInfo;
 
@@ -135,7 +147,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Status> _activationStatusInfoSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded file"
+		description = "Base64-encoded payload of the primary downloadable file accepted on write; the service decodes it and stores it as a Document Library file referenced by the virtual setting; write-only.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getAttachment() {
 		if (_attachmentSupplier != null) {
@@ -170,7 +183,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded file")
+	@GraphQLField(
+		description = "Base64-encoded payload of the primary downloadable file accepted on write; the service decodes it and stores it as a Document Library file referenced by the virtual setting; write-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String attachment;
 
@@ -178,7 +193,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _attachmentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Number of days to download the attachment"
+		description = "Number of days after activation during which the buyer may download.",
+		example = "30"
 	)
 	public Long getDuration() {
 		if (_durationSupplier != null) {
@@ -213,7 +229,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Number of days to download the attachment")
+	@GraphQLField(
+		description = "Number of days after activation during which the buyer may download."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long duration;
 
@@ -221,7 +239,10 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Long> _durationSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the virtual settings record.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -253,7 +274,7 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Identifier of the virtual settings record.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
@@ -261,7 +282,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Number of downloads available for attachment"
+		description = "Maximum number of times the buyer may download the file; 0 typically means unlimited.",
+		example = "0"
 	)
 	public Integer getMaxUsages() {
 		if (_maxUsagesSupplier != null) {
@@ -296,14 +318,18 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Number of downloads available for attachment")
+	@GraphQLField(
+		description = "Maximum number of times the buyer may download the file; 0 typically means unlimited."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer maxUsages;
 
 	@JsonIgnore
 	private Supplier<Integer> _maxUsagesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Collection of downloadable file entries attached to these virtual settings; each entry models one downloadable file or external URL."
+	)
 	@Valid
 	public ProductVirtualSettingsFileEntry[]
 		getProductVirtualSettingsFileEntries() {
@@ -345,7 +371,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Collection of downloadable file entries attached to these virtual settings; each entry models one downloadable file or external URL."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductVirtualSettingsFileEntry[]
 		productVirtualSettingsFileEntries;
@@ -355,7 +383,8 @@ public class ProductVirtualSettings implements Serializable {
 		_productVirtualSettingsFileEntriesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Base64 encoded sample file"
+		description = "Base64-encoded payload of a public sample file accepted on write; the service decodes it and stores it as the sample file referenced by the virtual settings; write-only.",
+		example = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
 	)
 	public String getSampleAttachment() {
 		if (_sampleAttachmentSupplier != null) {
@@ -390,7 +419,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Base64 encoded sample file")
+	@GraphQLField(
+		description = "Base64-encoded payload of a public sample file accepted on write; the service decodes it and stores it as the sample file referenced by the virtual settings; write-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleAttachment;
 
@@ -398,7 +429,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _sampleAttachmentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the sample file"
+		description = "Resolved download URL for the sample file; null when no sample file is set; read-only.",
+		example = "https://example.com/sample.pdf"
 	)
 	public String getSampleSrc() {
 		if (_sampleSrcSupplier != null) {
@@ -433,7 +465,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the sample file")
+	@GraphQLField(
+		description = "Resolved download URL for the sample file; null when no sample file is set; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String sampleSrc;
 
@@ -441,7 +475,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _sampleSrcSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL of the sample file"
+		description = "External URL pointing at a sample of the product; alternative to `sampleAttachment`; validated for syntax when `useSample` is true.",
+		example = "https://example.com/sample.pdf"
 	)
 	public String getSampleURL() {
 		if (_sampleURLSupplier != null) {
@@ -476,7 +511,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the sample file")
+	@GraphQLField(
+		description = "External URL pointing at a sample of the product; alternative to `sampleAttachment`; validated for syntax when `useSample` is true."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sampleURL;
 
@@ -484,7 +521,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _sampleURLSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "URL to download the file"
+		description = "Resolved download URL for the first attached file entry; null when no file is attached; read-only.",
+		example = "https://example.com/download.zip"
 	)
 	public String getSrc() {
 		if (_srcSupplier != null) {
@@ -517,7 +555,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL to download the file")
+	@GraphQLField(
+		description = "Resolved download URL for the first attached file entry; null when no file is attached; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String src;
 
@@ -525,8 +565,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _srcSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use content",
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized terms of use shown to the buyer before download; map keys are locale codes and values are the translated strings; mutually exclusive with `termsOfUseJournalArticleId` (supplying an article identifier clears this map).",
+		example = "{en_US=By downloading you accept the license terms., hr_HR=Preuzimanjem prihvacate uvjete licence., hu_HU=A letoltessel elfogadja a licencfelteteleket.}"
 	)
 	@Valid
 	public Map<String, String> getTermsOfUseContent() {
@@ -563,7 +603,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use content")
+	@GraphQLField(
+		description = "Localized terms of use shown to the buyer before download; map keys are locale codes and values are the translated strings; mutually exclusive with `termsOfUseJournalArticleId` (supplying an article identifier clears this map)."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> termsOfUseContent;
 
@@ -571,7 +613,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Map<String, String>> _termsOfUseContentSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use related Article Id"
+		description = "Identifier of the web content article whose body serves as the terms of use; mutually exclusive with `termsOfUseContent`.",
+		example = "30130"
 	)
 	public Long getTermsOfUseJournalArticleId() {
 		if (_termsOfUseJournalArticleIdSupplier != null) {
@@ -608,7 +651,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use related Article Id")
+	@GraphQLField(
+		description = "Identifier of the web content article whose body serves as the terms of use; mutually exclusive with `termsOfUseContent`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long termsOfUseJournalArticleId;
 
@@ -616,7 +661,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<Long> _termsOfUseJournalArticleIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Terms of Use required"
+		description = "Whether the buyer must accept terms of use before downloading; when true, either a terms-of-use article or a non-empty terms-of-use content map must be supplied.",
+		example = "true"
 	)
 	public Boolean getTermsOfUseRequired() {
 		if (_termsOfUseRequiredSupplier != null) {
@@ -651,14 +697,19 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Terms of Use required")
+	@GraphQLField(
+		description = "Whether the buyer must accept terms of use before downloading; when true, either a terms-of-use article or a non-empty terms-of-use content map must be supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean termsOfUseRequired;
 
 	@JsonIgnore
 	private Supplier<Boolean> _termsOfUseRequiredSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "URL of the file")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External URL where the file is hosted as an alternative to `attachment`; persisted on the first downloadable file entry.",
+		example = "https://example.com/download.zip"
+	)
 	public String getUrl() {
 		if (_urlSupplier != null) {
 			url = _urlSupplier.get();
@@ -690,7 +741,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "URL of the file")
+	@GraphQLField(
+		description = "External URL where the file is hosted as an alternative to `attachment`; persisted on the first downloadable file entry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String url;
 
@@ -698,7 +751,8 @@ public class ProductVirtualSettings implements Serializable {
 	private Supplier<String> _urlSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Enable sample file"
+		description = "Whether the storefront exposes a sample to anonymous visitors; when true, either a sample file or a syntactically valid sample URL is required.",
+		example = "true"
 	)
 	public Boolean getUseSample() {
 		if (_useSampleSupplier != null) {
@@ -733,7 +787,9 @@ public class ProductVirtualSettings implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Enable sample file")
+	@GraphQLField(
+		description = "Whether the storefront exposes a sample to anonymous visitors; when true, either a sample file or a syntactically valid sample URL is required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean useSample;
 
@@ -1096,4 +1152,4 @@ public class ProductVirtualSettings implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1129984589
+// LIFERAY-REST-BUILDER-HASH:-241539127

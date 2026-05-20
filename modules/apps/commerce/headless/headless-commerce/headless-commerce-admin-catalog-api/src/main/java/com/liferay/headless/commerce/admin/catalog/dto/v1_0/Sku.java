@@ -43,8 +43,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Sku")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"sku"})
+@GraphQLName(
+	description = "A purchasable stock keeping unit (variant) of a product, with its own SKU code, pricing, dimensions, subscription configuration, and optional virtual download settings.",
+	value = "Sku"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A purchasable stock keeping unit (variant) of a product, with its own SKU code, pricing, dimensions, subscription configuration, and optional virtual download settings.",
+	requiredProperties = {"sku"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Sku")
 public class Sku implements Serializable {
@@ -58,7 +64,10 @@ public class Sku implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "101")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Cost paid to acquire the SKU, before margin; expressed in the parent product catalog's default currency and rejected when negative.",
+		example = "101"
+	)
 	@Valid
 	public BigDecimal getCost() {
 		if (_costSupplier != null) {
@@ -93,14 +102,18 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Cost paid to acquire the SKU, before margin; expressed in the parent product catalog's default currency and rejected when negative."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal cost;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _costSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom expando fields defined for SKUs; read using the request locale and written back as expando attributes alongside the SKU."
+	)
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -141,7 +154,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom expando fields defined for SKUs; read using the request locale and written back as expando attributes alongside the SKU."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected com.liferay.portal.vulcan.custom.field.CustomField[] customFields;
 
@@ -150,7 +165,10 @@ public class Sku implements Serializable {
 		_customFieldsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Depth dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings.",
+		example = "1.1"
+	)
 	public Double getDepth() {
 		if (_depthSupplier != null) {
 			depth = _depthSupplier.get();
@@ -184,14 +202,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Depth dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double depth;
 
 	@JsonIgnore
 	private Supplier<Double> _depthSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "false")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the SKU is marked as discontinued; when true the service resolves the replacement SKU from `replacementSkuId` or `replacementSkuExternalReferenceCode` and records the link to it.",
+		example = "false"
+	)
 	public Boolean getDiscontinued() {
 		if (_discontinuedSupplier != null) {
 			discontinued = _discontinuedSupplier.get();
@@ -225,14 +248,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the SKU is marked as discontinued; when true the service resolves the replacement SKU from `replacementSkuId` or `replacementSkuExternalReferenceCode` and records the link to it."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean discontinued;
 
 	@JsonIgnore
 	private Supplier<Boolean> _discontinuedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone.",
+		example = "2017-07-21"
+	)
 	public Date getDiscontinuedDate() {
 		if (_discontinuedDateSupplier != null) {
 			discontinuedDate = _discontinuedDateSupplier.get();
@@ -266,14 +294,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date on which the SKU was marked discontinued; accepted in the request locale and time zone and normalized to the portal's time zone."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date discontinuedDate;
 
 	@JsonIgnore
 	private Supplier<Date> _discontinuedDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-07-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date and time from which the SKU becomes visible; accepted in the request locale and time zone, normalized to the portal's time zone, and indexed for sorting.",
+		example = "2017-07-21"
+	)
 	public Date getDisplayDate() {
 		if (_displayDateSupplier != null) {
 			displayDate = _displayDateSupplier.get();
@@ -307,14 +340,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date and time from which the SKU becomes visible; accepted in the request locale and time zone, normalized to the portal's time zone, and indexed for sorting."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date displayDate;
 
 	@JsonIgnore
 	private Supplier<Date> _displayDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "2017-08-21")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Date and time after which the SKU is considered expired; accepted in the request locale and time zone and ignored when `neverExpire` is true.",
+		example = "2017-08-21"
+	)
 	public Date getExpirationDate() {
 		if (_expirationDateSupplier != null) {
 			expirationDate = _expirationDateSupplier.get();
@@ -348,14 +386,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Date and time after which the SKU is considered expired; accepted in the request locale and time zone and ignored when `neverExpire` is true."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Date expirationDate;
 
 	@JsonIgnore
 	private Supplier<Date> _expirationDateSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per SKU within the company and limited to 75 characters; indexed for exact-match search.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -389,14 +432,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per SKU within the company and limited to 75 characters; indexed for exact-match search."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Global Trade Item Number (UPC, EAN, JAN, or ISBN) assigned to the SKU; limited to 75 characters and indexed for exact-match search.",
+		example = "12341234"
+	)
 	public String getGtin() {
 		if (_gtinSupplier != null) {
 			gtin = _gtinSupplier.get();
@@ -428,7 +476,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Global Trade Item Number (UPC, EAN, JAN, or ISBN) assigned to the SKU; limited to 75 characters and indexed for exact-match search."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String gtin;
 
@@ -436,7 +486,10 @@ public class Sku implements Serializable {
 	private Supplier<String> _gtinSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Height dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings.",
+		example = "20.2"
+	)
 	public Double getHeight() {
 		if (_heightSupplier != null) {
 			height = _heightSupplier.get();
@@ -470,7 +523,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Height dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double height;
 
@@ -478,7 +533,10 @@ public class Sku implements Serializable {
 	private Supplier<Double> _heightSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the SKU; read-only and assigned by the service on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -510,14 +568,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the SKU; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "29")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reserved field for the current stock quantity of the SKU; not populated by this API. Use the headless commerce admin inventory API to read actual inventory.",
+		example = "29"
+	)
 	public Integer getInventoryLevel() {
 		if (_inventoryLevelSupplier != null) {
 			inventoryLevel = _inventoryLevelSupplier.get();
@@ -551,14 +614,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reserved field for the current stock quantity of the SKU; not populated by this API. Use the headless commerce admin inventory API to read actual inventory."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Integer inventoryLevel;
 
 	@JsonIgnore
 	private Supplier<Integer> _inventoryLevelSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Manufacturer part number (MPN) assigned by the manufacturer; limited to 75 characters.",
+		example = "12341234"
+	)
 	public String getManufacturerPartNumber() {
 		if (_manufacturerPartNumberSupplier != null) {
 			manufacturerPartNumber = _manufacturerPartNumberSupplier.get();
@@ -593,14 +661,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Manufacturer part number (MPN) assigned by the manufacturer; limited to 75 characters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String manufacturerPartNumber;
 
 	@JsonIgnore
 	private Supplier<String> _manufacturerPartNumberSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "When true the SKU has no expiration date and `expirationDate` is ignored on update; defaults to true when `expirationDate` is not supplied on create.",
+		example = "true"
+	)
 	public Boolean getNeverExpire() {
 		if (_neverExpireSupplier != null) {
 			neverExpire = _neverExpireSupplier.get();
@@ -634,7 +707,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "When true the SKU has no expiration date and `expirationDate` is ignored on update; defaults to true when `expirationDate` is not supplied on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean neverExpire;
 
@@ -642,7 +717,10 @@ public class Sku implements Serializable {
 	private Supplier<Boolean> _neverExpireSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "101")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Regular selling price of the SKU before any promotion; expressed in the parent catalog's default currency, rejected when negative, and synchronized to a base price-list entry for the SKU.",
+		example = "101"
+	)
 	@Valid
 	public BigDecimal getPrice() {
 		if (_priceSupplier != null) {
@@ -677,7 +755,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Regular selling price of the SKU before any promotion; expressed in the parent catalog's default currency, rejected when negative, and synchronized to a base price-list entry for the SKU."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal price;
 
@@ -685,7 +765,10 @@ public class Sku implements Serializable {
 	private Supplier<BigDecimal> _priceSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30129")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the parent product; read-only.",
+		example = "30129"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -719,7 +802,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the parent product; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
@@ -727,7 +812,8 @@ public class Sku implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		example = "{en_US=Croatia, hr_HR=Hrvatska, hu_HU=Horvatorszag}"
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Mirrors the parent product's name and is read-only.",
+		example = "{en_US=Hand Saw, hr_HR=Pila, hu_HU=Kezi fureszrol}"
 	)
 	@Valid
 	public Map<String, String> getProductName() {
@@ -764,7 +850,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Mirrors the parent product's name and is read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productName;
 
@@ -772,7 +860,10 @@ public class Sku implements Serializable {
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "202")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Promotional selling price applied in place of `price` when a promotion is active; expressed in the parent catalog's default currency, rejected when negative, and synchronized to a promotion price-list entry for the SKU.",
+		example = "202"
+	)
 	@Valid
 	public BigDecimal getPromoPrice() {
 		if (_promoPriceSupplier != null) {
@@ -807,14 +898,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Promotional selling price applied in place of `price` when a promotion is active; expressed in the parent catalog's default currency, rejected when negative, and synchronized to a promotion price-list entry for the SKU."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected BigDecimal promoPrice;
 
 	@JsonIgnore
 	private Supplier<BigDecimal> _promoPriceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the SKU is publicly published; indexed for filtering and defaults to true on create.",
+		example = "true"
+	)
 	public Boolean getPublished() {
 		if (_publishedSupplier != null) {
 			published = _publishedSupplier.get();
@@ -848,14 +944,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the SKU is publicly published; indexed for filtering and defaults to true on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean published;
 
 	@JsonIgnore
 	private Supplier<Boolean> _publishedSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the SKU can be added to an order; indexed for filtering and defaults to true on create.",
+		example = "true"
+	)
 	public Boolean getPurchasable() {
 		if (_purchasableSupplier != null) {
 			purchasable = _purchasableSupplier.get();
@@ -889,14 +990,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the SKU can be added to an order; indexed for filtering and defaults to true on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean purchasable;
 
 	@JsonIgnore
 	private Supplier<Boolean> _purchasableSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU0111")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the replacement SKU that customers are redirected to when this SKU is discontinued; on read the value mirrors the replacement's external reference code, and on write it is honored only when `discontinued` is true.",
+		example = "SKU0111"
+	)
 	public String getReplacementSkuExternalReferenceCode() {
 		if (_replacementSkuExternalReferenceCodeSupplier != null) {
 			replacementSkuExternalReferenceCode =
@@ -935,7 +1041,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the replacement SKU that customers are redirected to when this SKU is discontinued; on read the value mirrors the replacement's external reference code, and on write it is honored only when `discontinued` is true."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String replacementSkuExternalReferenceCode;
 
@@ -943,7 +1051,10 @@ public class Sku implements Serializable {
 	private Supplier<String> _replacementSkuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33135")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Internal numeric identifier of the replacement SKU used when `discontinued` is true; honored only when `replacementSkuExternalReferenceCode` does not resolve. Pointing a SKU to itself is rejected.",
+		example = "33135"
+	)
 	public Long getReplacementSkuId() {
 		if (_replacementSkuIdSupplier != null) {
 			replacementSkuId = _replacementSkuIdSupplier.get();
@@ -977,14 +1088,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Internal numeric identifier of the replacement SKU used when `discontinued` is true; honored only when `replacementSkuExternalReferenceCode` does not resolve. Pointing a SKU to itself is rejected."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long replacementSkuId;
 
 	@JsonIgnore
 	private Supplier<Long> _replacementSkuIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "12341234")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable SKU code that uniquely identifies the variant within its parent product; required on create, limited to 75 characters, indexed as text and sortable, and rejected when another SKU within the same product already uses it.",
+		example = "12341234"
+	)
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -1016,7 +1132,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable SKU code that uniquely identifies the variant within its parent product; required on create, limited to 75 characters, indexed as text and sortable, and rejected when another SKU within the same product already uses it."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String sku;
@@ -1024,7 +1142,9 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Option selections that define which product option values this variant represents; each entry references a product option and one of its option values, either by numeric identifier or by stable string key."
+	)
 	@Valid
 	public SkuOption[] getSkuOptions() {
 		if (_skuOptionsSupplier != null) {
@@ -1059,7 +1179,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Option selections that define which product option values this variant represents; each entry references a product option and one of its option values, either by numeric identifier or by stable string key."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuOption[] skuOptions;
 
@@ -1113,7 +1235,9 @@ public class Sku implements Serializable {
 	private Supplier<SkuSubscriptionConfiguration>
 		_skuSubscriptionConfigurationSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Alternative units in which the SKU is sold (per kg, per box, per pallet, and similar) with their conversion rates and per-unit pricing."
+	)
 	@Valid
 	public SkuUnitOfMeasure[] getSkuUnitOfMeasures() {
 		if (_skuUnitOfMeasuresSupplier != null) {
@@ -1149,7 +1273,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Alternative units in which the SKU is sold (per kg, per box, per pallet, and similar) with their conversion rates and per-unit pricing."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected SkuUnitOfMeasure[] skuUnitOfMeasures;
 
@@ -1199,7 +1325,10 @@ public class Sku implements Serializable {
 	@JsonIgnore
 	private Supplier<SkuVirtualSettings> _skuVirtualSettingsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "pl")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Stable key of the unit of measure carried in the current row; only populated when the SKU was expanded through the unit-of-measure SKUs endpoint for a specific unit of measure.",
+		example = "pl"
+	)
 	public String getUnitOfMeasureKey() {
 		if (_unitOfMeasureKeySupplier != null) {
 			unitOfMeasureKey = _unitOfMeasureKeySupplier.get();
@@ -1233,7 +1362,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Stable key of the unit of measure carried in the current row; only populated when the SKU was expanded through the unit-of-measure SKUs endpoint for a specific unit of measure."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureKey;
 
@@ -1241,6 +1372,7 @@ public class Sku implements Serializable {
 	private Supplier<String> _unitOfMeasureKeySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Mirrors the unit-of-measure name and is only populated when the SKU was expanded for a specific unit of measure.",
 		example = "{en_US=Pallet, hr_HR=Pallet HR, hu_HU=Pallet HU}"
 	)
 	@Valid
@@ -1278,14 +1410,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Mirrors the unit-of-measure name and is only populated when the SKU was expanded for a specific unit of measure."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> unitOfMeasureName;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _unitOfMeasureNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Composite identifier in the form <skuId>-<unitOfMeasureId> returned by the unit-of-measure SKUs endpoint; falls back to the SKU's numeric identifier as a string when no unit of measure is in context.",
+		example = "30130-piece"
+	)
 	public String getUnitOfMeasureSkuId() {
 		if (_unitOfMeasureSkuIdSupplier != null) {
 			unitOfMeasureSkuId = _unitOfMeasureSkuIdSupplier.get();
@@ -1319,14 +1456,19 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Composite identifier in the form <skuId>-<unitOfMeasureId> returned by the unit-of-measure SKUs endpoint; falls back to the SKU's numeric identifier as a string when no unit of measure is in context."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String unitOfMeasureSkuId;
 
 	@JsonIgnore
 	private Supplier<String> _unitOfMeasureSkuIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1234567890")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "United Nations Standard Products and Services Code categorizing the SKU for procurement; limited to 75 characters and indexed for exact-match search.",
+		example = "1234567890"
+	)
 	public String getUnspsc() {
 		if (_unspscSupplier != null) {
 			unspsc = _unspscSupplier.get();
@@ -1360,7 +1502,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "United Nations Standard Products and Services Code categorizing the SKU for procurement; limited to 75 characters and indexed for exact-match search."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String unspsc;
 
@@ -1368,7 +1512,10 @@ public class Sku implements Serializable {
 	private Supplier<String> _unspscSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Weight of the SKU; rejected when negative; expressed in the weight unit configured on the parent catalog or commerce shop settings.",
+		example = "1.1"
+	)
 	public Double getWeight() {
 		if (_weightSupplier != null) {
 			weight = _weightSupplier.get();
@@ -1402,7 +1549,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Weight of the SKU; rejected when negative; expressed in the weight unit configured on the parent catalog or commerce shop settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double weight;
 
@@ -1410,7 +1559,10 @@ public class Sku implements Serializable {
 	private Supplier<Double> _weightSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Width dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings.",
+		example = "20.2"
+	)
 	public Double getWidth() {
 		if (_widthSupplier != null) {
 			width = _widthSupplier.get();
@@ -1444,7 +1596,9 @@ public class Sku implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Width dimension of the SKU; rejected when negative; expressed in the dimensions unit configured on the parent catalog or commerce shop settings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double width;
 
@@ -2055,4 +2209,4 @@ public class Sku implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:21159589
+// LIFERAY-REST-BUILDER-HASH:788373949

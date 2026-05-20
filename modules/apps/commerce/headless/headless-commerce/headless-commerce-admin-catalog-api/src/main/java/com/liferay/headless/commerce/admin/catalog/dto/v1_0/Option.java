@@ -41,8 +41,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Option")
+@GraphQLName(
+	description = "A reusable, company-scoped option template; an option defines a field type, a key, localized labels, optional values, and a few flags that drive how the option appears on every product that links to it.",
+	value = "Option"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "A reusable, company-scoped option template; an option defines a field type, a key, localized labels, optional values, and a few flags that drive how the option appears on every product that links to it.",
 	requiredProperties = {"fieldType", "key", "name"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -57,7 +61,9 @@ public class Option implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Option.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from the caller's permissions (delete, get, update); read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -93,14 +99,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from the caller's permissions (delete, get, update); read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Not populated on reads and ignored on writes; the option is scoped by company only; reserved for future per-catalog scoping.",
+		example = "30130"
+	)
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -134,14 +145,18 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Not populated on reads and ignored on writes; the option is scoped by company only; reserved for future per-catalog scoping."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom field values stored against the option through the expando bridge; localized when the request accepts all languages."
+	)
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -182,7 +197,9 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom field values stored against the option through the expando bridge; localized when the request accepts all languages."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected com.liferay.portal.vulcan.custom.field.CustomField[] customFields;
 
@@ -191,6 +208,7 @@ public class Option implements Serializable {
 		_customFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized administrative description shown in the admin UI; map keys are locale codes and values are the translated strings.",
 		example = "{en_US=Description, hr_HR=Description HR, hu_HU=Description HU}"
 	)
 	@Valid
@@ -228,14 +246,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized administrative description shown in the admin UI; map keys are locale codes and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per option within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -269,14 +292,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per option within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the option is exposed as a search facet in product catalog searches; when true the option key and value names are indexed so the storefront can filter on them.",
+		example = "true"
+	)
 	public Boolean getFacetable() {
 		if (_facetableSupplier != null) {
 			facetable = _facetableSupplier.get();
@@ -310,14 +338,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the option is exposed as a search facet in product catalog searches; when true the option key and value names are indexed so the storefront can filter on them."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
 	@JsonIgnore
 	private Supplier<Boolean> _facetableSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "select")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Selects the input widget rendered on the storefront; validated against the configured allow list and, when `skuContributor` is true, restricted to select, select_date, and radio; required.",
+		example = "select"
+	)
 	@JsonGetter("fieldType")
 	@Valid
 	public FieldType getFieldType() {
@@ -364,7 +397,9 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Selects the input widget rendered on the storefront; validated against the configured allow list and, when `skuContributor` is true, restricted to select, select_date, and radio; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected FieldType fieldType;
@@ -373,7 +408,10 @@ public class Option implements Serializable {
 	private Supplier<FieldType> _fieldTypeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key; read-only and assigned by the service on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -405,14 +443,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "color")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Machine identifier used for integrations and lookups; normalized to a friendly URL form and must be unique per company; required.",
+		example = "color"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -444,7 +487,9 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Machine identifier used for integrations and lookups; normalized to a friendly URL form and must be unique per company; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String key;
@@ -453,6 +498,7 @@ public class Option implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized display label shown to administrators and (when surfaced) to shoppers; map keys are locale codes and values are the translated strings; required.",
 		example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}"
 	)
 	@Valid
@@ -489,7 +535,9 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized display label shown to administrators and (when surfaced) to shoppers; map keys are locale codes and values are the translated strings; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
@@ -497,7 +545,9 @@ public class Option implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Available values for this option; populated on create or update by cascading each value through the option-value resource."
+	)
 	@Valid
 	public OptionValue[] getOptionValues() {
 		if (_optionValuesSupplier != null) {
@@ -532,14 +582,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Available values for this option; populated on create or update by cascading each value through the option-value resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected OptionValue[] optionValues;
 
 	@JsonIgnore
 	private Supplier<OptionValue[]> _optionValuesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display order used when listing options in the admin UI; lower values appear first.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -573,14 +628,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display order used when listing options in the admin UI; lower values appear first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the shopper must select a value for this option before the product can be added to the cart.",
+		example = "true"
+	)
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -614,14 +674,19 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the shopper must select a value for this option before the product can be added to the cart."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether selecting a value on this option produces a distinct SKU for the parent product; enabling it restricts `fieldType` to select, select_date, or radio.",
+		example = "true"
+	)
 	public Boolean getSkuContributor() {
 		if (_skuContributorSupplier != null) {
 			skuContributor = _skuContributorSupplier.get();
@@ -655,7 +720,9 @@ public class Option implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether selecting a value on this option produces a distinct SKU for the parent product; enabling it restricts `fieldType` to select, select_date, or radio."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
 
@@ -1030,4 +1097,4 @@ public class Option implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1884843365
+// LIFERAY-REST-BUILDER-HASH:1912891991

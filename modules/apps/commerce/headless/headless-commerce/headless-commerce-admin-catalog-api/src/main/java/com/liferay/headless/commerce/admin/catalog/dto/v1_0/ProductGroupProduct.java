@@ -35,7 +35,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductGroupProduct")
+@GraphQLName(
+	description = "Membership entry that links a product to a product group; admin catalog write view used to add or remove products from a product group.",
+	value = "ProductGroupProduct"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroupProduct")
 public class ProductGroupProduct implements Serializable {
@@ -50,7 +53,9 @@ public class ProductGroupProduct implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key of the membership row.", example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -82,14 +87,17 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Primary key of the membership row.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "PAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent envelope of the linked product; used on create to resolve the product when `productId` is not supplied.",
+		example = "PAB-34098-789-N"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -127,14 +135,19 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent envelope of the linked product; used on create to resolve the product when `productId` is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "DAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the product group this membership belongs to; used on create to resolve the group when `productGroupId` is not supplied.",
+		example = "DAB-34098-789-N"
+	)
 	public String getProductGroupExternalReferenceCode() {
 		if (_productGroupExternalReferenceCodeSupplier != null) {
 			productGroupExternalReferenceCode =
@@ -173,7 +186,9 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the product group this membership belongs to; used on create to resolve the group when `productGroupId` is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productGroupExternalReferenceCode;
 
@@ -181,7 +196,10 @@ public class ProductGroupProduct implements Serializable {
 	private Supplier<String> _productGroupExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30324")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the product group; required on create when `productGroupExternalReferenceCode` does not resolve.",
+		example = "30324"
+	)
 	public Long getProductGroupId() {
 		if (_productGroupIdSupplier != null) {
 			productGroupId = _productGroupIdSupplier.get();
@@ -215,7 +233,9 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the product group; required on create when `productGroupExternalReferenceCode` does not resolve."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productGroupId;
 
@@ -223,7 +243,10 @@ public class ProductGroupProduct implements Serializable {
 	private Supplier<Long> _productGroupIdSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent product envelope whose published revision is added to the group; required on create when `productExternalReferenceCode` does not resolve.",
+		example = "30130"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -257,14 +280,19 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent product envelope whose published revision is added to the group; required on create when `productExternalReferenceCode` does not resolve."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
 	@JsonIgnore
 	private Supplier<Long> _productIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the linked product in the requested locale; read-only.",
+		example = "Hand Saw"
+	)
 	public String getProductName() {
 		if (_productNameSupplier != null) {
 			productName = _productNameSupplier.get();
@@ -298,14 +326,19 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display name of the linked product in the requested locale; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productName;
 
 	@JsonIgnore
 	private Supplier<String> _productNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "BL500IC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "SKU summary of the linked product -- the single variant SKU when there is exactly one variant, an empty string when there are no variants, or the localized 'multiple-skus' label when several variants exist; read-only.",
+		example = "BL500IC"
+	)
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -337,7 +370,9 @@ public class ProductGroupProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "SKU summary of the linked product -- the single variant SKU when there is exactly one variant, an empty string when there are no variants, or the localized 'multiple-skus' label when several variants exist; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
@@ -573,4 +608,4 @@ public class ProductGroupProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1495180680
+// LIFERAY-REST-BUILDER-HASH:-180711673

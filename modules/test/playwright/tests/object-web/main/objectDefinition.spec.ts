@@ -1597,6 +1597,8 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 				})
 				.fill('WrongValue');
 
+			await expect(page.getByText('Input does not match')).toBeVisible();
+
 			await expect(
 				page.getByRole('button', {exact: true, name: 'Delete'})
 			).toBeDisabled();

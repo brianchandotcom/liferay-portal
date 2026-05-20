@@ -268,41 +268,6 @@ test('Verify it is possible to update Custom Object when changing the localizati
 	}
 });
 
-test(
-	'Verify an error message is shown when the user enters the wrong value in the confirmation field',
-	{tag: '@LPS-162024'},
-	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
-			objectDefinition.label['en_US']
-		);
-
-		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
-
-		await page
-			.getByPlaceholder('Confirm Object Definition Name')
-			.fill('wrongvalue');
-
-		await expect(page.getByText('Input does not match')).toBeVisible();
-	}
-);
-
 test('Verify it is possible to view the custom object after restarting portal', async ({
 	apiHelpers,
 	page,

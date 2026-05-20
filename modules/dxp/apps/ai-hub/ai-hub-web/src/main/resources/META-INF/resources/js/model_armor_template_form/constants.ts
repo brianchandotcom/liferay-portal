@@ -22,7 +22,7 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: Omit<
 	raiHateSpeechLevel: 'none',
 	raiSexuallyExplicitLevel: 'none',
 	sdpFilterEnabled: false,
-	title: '',
+	title_i18n: {},
 };
 
 export type DetectionField = Extract<

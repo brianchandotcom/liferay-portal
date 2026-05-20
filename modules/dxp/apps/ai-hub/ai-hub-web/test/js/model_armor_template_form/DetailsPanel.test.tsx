@@ -38,6 +38,26 @@ jest.mock('@clayui/core', () => {
 	};
 });
 
+jest.mock('frontend-js-components-web', () => {
+	const React = require('react');
+
+	return {
+		InputLocalized: ({id, label, onChange, placeholder, translations}: any) =>
+			React.createElement(
+				React.Fragment,
+				null,
+				React.createElement('label', {htmlFor: id}, label),
+				React.createElement('input', {
+					id,
+					onChange: (event: any) =>
+						onChange({en_US: event.target.value}),
+					placeholder,
+					value: translations?.en_US || '',
+				})
+			),
+	};
+});
+
 (global as any).Liferay = {
 	Icons: {spritemap: 'icons.svg'},
 	Language: {
@@ -60,7 +80,7 @@ const baseValues: ModelArmorTemplate = {
 	raiHateSpeechLevel: 'none',
 	raiSexuallyExplicitLevel: 'none',
 	sdpFilterEnabled: false,
-	title: '',
+	title_i18n: {},
 };
 
 function renderPanel(
@@ -176,11 +196,18 @@ describe('DetailsPanel', () => {
 				target: {value: 'New Title'},
 			});
 
-			expect(setField).toHaveBeenCalledWith('title', 'New Title');
+			expect(setField).toHaveBeenCalledWith('title_i18n', {
+				en_US: 'New Title',
+			});
 		});
 
 		it('renders the current title value', () => {
-			renderPanel({values: {...baseValues, title: 'Existing Title'}});
+			renderPanel({
+				values: {
+					...baseValues,
+					title_i18n: {en_US: 'Existing Title'},
+				},
+			});
 
 			expect(
 				screen.getByDisplayValue('Existing Title')
@@ -188,7 +215,7 @@ describe('DetailsPanel', () => {
 		});
 
 		it('surfaces the validation error when present', () => {
-			renderPanel({errors: {title: 'Required field'}});
+			renderPanel({errors: {title_i18n: 'Required field'}});
 
 			expect(screen.getByText('Required field')).toBeInTheDocument();
 		});

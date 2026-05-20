@@ -7,6 +7,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import Icon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
+import {InputLocalized} from 'frontend-js-components-web';
 import {FormikErrors} from 'formik';
 import React from 'react';
 
@@ -40,28 +41,20 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 				</div>
 
 				<ClayForm.Group>
-					<label htmlFor="title">
-						{Liferay.Language.get('title')}
-
-						<span className="ml-1 reference-mark text-warning">
-							<Icon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClayInput
-						className={errors.title ? 'is-invalid' : ''}
+					<InputLocalized
 						id="title"
-						onChange={(event) =>
-							setField('title', event.target.value)
-						}
+						label={Liferay.Language.get('title')}
+						name="title_i18n"
+						onChange={(value) => setField('title_i18n', value)}
+						onSelectedLocaleChange={() => {}}
+						placeholder={Liferay.Language.get('title')}
 						required
-						type="text"
-						value={values.title}
+						translations={values.title_i18n || {}}
 					/>
 
-					{errors.title && (
+					{errors.title_i18n && (
 						<div className="d-block invalid-feedback">
-							{errors.title}
+							{errors.title_i18n as string}
 						</div>
 					)}
 				</ClayForm.Group>

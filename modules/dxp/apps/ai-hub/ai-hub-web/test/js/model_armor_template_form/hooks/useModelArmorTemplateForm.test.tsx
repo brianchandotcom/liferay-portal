@@ -68,7 +68,7 @@ describe('fetch lifecycle', () => {
 			raiHateSpeechLevel: 'high',
 			raiSexuallyExplicitLevel: 'none',
 			sdpFilterEnabled: false,
-			title: 'Loaded Title',
+			title_i18n: {en_US: 'Loaded Title'},
 		});
 
 		const {result} = renderModelArmorHook({
@@ -76,7 +76,9 @@ describe('fetch lifecycle', () => {
 		});
 
 		await waitFor(() => {
-			expect(result.current.values.title).toBe('Loaded Title');
+			expect(result.current.values.title_i18n).toEqual({
+				en_US: 'Loaded Title',
+			});
 		});
 
 		expect(result.current.values.active).toBe(false);
@@ -157,10 +159,12 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
-				result.current.setField('title', 'New Title');
+				result.current.setField('title_i18n', {en_US: 'New Title'});
 			});
 
-			expect(result.current.values.title).toBe('New Title');
+			expect(result.current.values.title_i18n).toEqual({
+				en_US: 'New Title',
+			});
 			expect(result.current.values.active).toBe(true);
 			expect(result.current.values.guardrailType).toBe('input');
 		});
@@ -173,7 +177,9 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
-				result.current.setField('title', 'My Template');
+				result.current.setField('title_i18n', {
+					en_US: 'My Template',
+				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
 			});
 
@@ -197,7 +203,9 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
-				result.current.setField('title', 'My Template');
+				result.current.setField('title_i18n', {
+					en_US: 'My Template',
+				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
 			});
 
@@ -223,7 +231,9 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
-				result.current.setField('title', 'My Template');
+				result.current.setField('title_i18n', {
+					en_US: 'My Template',
+				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
 			});
 
@@ -251,7 +261,7 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(result.current.errors.title).toBe('required');
+				expect(result.current.errors.title_i18n).toBe('required');
 			});
 
 			mockPutModelArmorTemplate.mockResolvedValueOnce({
@@ -259,7 +269,9 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await act(async () => {
-				result.current.setField('title', 'My Template');
+				result.current.setField('title_i18n', {
+					en_US: 'My Template',
+				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
 			});
 
@@ -268,14 +280,14 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(result.current.errors.title).toBeUndefined();
+				expect(result.current.errors.title_i18n).toBeUndefined();
 				expect(
 					result.current.errors.externalReferenceCode
 				).toBeUndefined();
 			});
 		});
 
-		it('flags missing title and externalReferenceCode on submit', async () => {
+		it('flags missing title_i18n and externalReferenceCode on submit', async () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
@@ -283,7 +295,7 @@ describe('useModelArmorTemplateForm', () => {
 			});
 
 			await waitFor(() => {
-				expect(result.current.errors.title).toBe('required');
+				expect(result.current.errors.title_i18n).toBe('required');
 				expect(result.current.errors.externalReferenceCode).toBe(
 					'required'
 				);

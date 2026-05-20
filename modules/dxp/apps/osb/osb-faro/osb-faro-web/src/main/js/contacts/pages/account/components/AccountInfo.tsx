@@ -105,7 +105,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 						</span>
 					</Text>
 				</Card.Title>
-				<Card.Body className='justify-content-end p-0'>
+				<Card.Body className='justify-content-end mt-4 p-0'>
 					{(
 						Object.keys(infoDataLabels) as Array<
 							keyof typeof infoDataLabels

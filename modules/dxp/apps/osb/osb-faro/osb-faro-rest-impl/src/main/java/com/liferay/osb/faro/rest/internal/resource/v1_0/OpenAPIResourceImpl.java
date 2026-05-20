@@ -103,9 +103,11 @@ public class OpenAPIResourceImpl {
 
 			add(SearchTermResourceImpl.class);
 
+			add(WorkspaceResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};
 
 }
-// LIFERAY-REST-BUILDER-HASH:-167217310
+// LIFERAY-REST-BUILDER-HASH:-1664468973

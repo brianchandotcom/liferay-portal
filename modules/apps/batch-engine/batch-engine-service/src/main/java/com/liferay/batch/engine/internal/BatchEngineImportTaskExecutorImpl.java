@@ -153,17 +153,21 @@ public class BatchEngineImportTaskExecutorImpl
 					batchEngineTaskProgress.getTotalItemsCount(inputStream));
 			}
 
-			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
-				batchEngineImportTask);
+			batchEngineImportTask =
+				_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+					batchEngineImportTask);
 
 			User user = _userLocalService.getUser(
 				batchEngineImportTask.getUserId());
 
-			BatchEngineTaskExecutorUtil.execute(
+			BatchEngineImportTask finalBatchEngineImportTask =
+				batchEngineImportTask;
+
+			batchEngineImportTask = BatchEngineTaskExecutorUtil.execute(
 				checkPermissions,
 				() -> _importFile(
-					batchEngineImportTask, batchEngineTaskItemDelegate, file,
-					user),
+					finalBatchEngineImportTask, batchEngineTaskItemDelegate,
+					file, user),
 				user);
 
 			_updateBatchEngineImportTask(
@@ -260,7 +264,7 @@ public class BatchEngineImportTaskExecutorImpl
 		_itemReaderPostActions.close();
 	}
 
-	private <T> void _commitItems(
+	private <T> BatchEngineImportTask _commitItems(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
 			List<T> items, Map<String, Serializable> parameters,
@@ -283,7 +287,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 		batchEngineImportTask.setProcessedItemsCount(processedItemsCount);
 
-		_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+		return _batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 			batchEngineImportTask);
 	}
 
@@ -424,7 +428,7 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
-	private <T> Void _importFile(
+	private <T> BatchEngineImportTask _importFile(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
 			File file, User user)
@@ -443,10 +447,13 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineImportTask.getCompanyId(),
 				batchEngineTaskItemDelegate, parameters, user);
 
+			BatchEngineImportTask finalBatchEngineImportTask =
+				batchEngineImportTask;
+
 			batchEngineTaskItemDelegate.setImportItemUnsafeBiConsumer(
 				(item, unsafeFunction) -> _importItem(
-					batchEngineImportTask, batchEngineTaskItemDelegate, item,
-					unsafeFunction));
+					finalBatchEngineImportTask, batchEngineTaskItemDelegate,
+					item, unsafeFunction));
 
 			List<T> items = new ArrayList<>();
 
@@ -484,7 +491,7 @@ public class BatchEngineImportTaskExecutorImpl
 				}
 
 				if (items.size() == batchEngineImportTask.getBatchSize()) {
-					_commitItems(
+					batchEngineImportTask = _commitItems(
 						batchEngineImportTask, batchEngineTaskItemDelegate,
 						items, parameters, processedItemsCount);
 
@@ -499,7 +506,7 @@ public class BatchEngineImportTaskExecutorImpl
 			}
 
 			if (!items.isEmpty()) {
-				_commitItems(
+				batchEngineImportTask = _commitItems(
 					batchEngineImportTask, batchEngineTaskItemDelegate, items,
 					parameters, processedItemsCount);
 			}
@@ -510,7 +517,7 @@ public class BatchEngineImportTaskExecutorImpl
 			}
 		}
 
-		return null;
+		return batchEngineImportTask;
 	}
 
 	private <T> void _importItem(

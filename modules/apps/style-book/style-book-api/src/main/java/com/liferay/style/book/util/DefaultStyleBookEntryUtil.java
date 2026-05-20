@@ -9,17 +9,11 @@ import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -60,61 +54,13 @@ public class DefaultStyleBookEntryUtil {
 	}
 
 	public static StyleBookEntry getDefaultStyleBookEntry(Layout layout) {
-		StyleBookEntry styleBookEntry = getStyleBookEntry(layout);
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryProviderUtil.getStyleBookEntry(layout);
 
 		if ((styleBookEntry == null) ||
 			!_isStyleBookEntryApplicable(layout, styleBookEntry)) {
 
 			return getDefaultMasterStyleBookEntry(layout);
-		}
-
-		return styleBookEntry;
-	}
-
-	public static StyleBookEntry getStyleBookEntry(Layout layout) {
-		if (Validator.isNull(layout.getStyleBookEntryERC())) {
-			return null;
-		}
-
-		String styleBookEntryScopeERC = layout.getStyleBookEntryScopeERC();
-
-		if (Validator.isNull(styleBookEntryScopeERC)) {
-			return StyleBookEntryLocalServiceUtil.
-				fetchStyleBookEntryByExternalReferenceCode(
-					layout.getStyleBookEntryERC(),
-					StagingUtil.getLiveGroupId(layout.getGroupId()));
-		}
-
-		Group scopeGroup =
-			GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				styleBookEntryScopeERC, layout.getCompanyId());
-
-		if (scopeGroup == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to resolve Style Book scope group with ERC ",
-						styleBookEntryScopeERC, " for Layout ",
-						layout.getPlid(),
-						"; falling back to site default Style Book"));
-			}
-
-			return null;
-		}
-
-		StyleBookEntry styleBookEntry =
-			StyleBookEntryLocalServiceUtil.
-				fetchStyleBookEntryByExternalReferenceCode(
-					layout.getStyleBookEntryERC(),
-					StagingUtil.getLiveGroupId(scopeGroup.getGroupId()));
-
-		if ((styleBookEntry == null) && _log.isWarnEnabled()) {
-			_log.warn(
-				StringBundler.concat(
-					"Unable to resolve Style Book entry with ERC ",
-					layout.getStyleBookEntryERC(), " in scope group ",
-					scopeGroup.getGroupId(), " for Layout ", layout.getPlid(),
-					"; falling back to site default Style Book"));
 		}
 
 		return styleBookEntry;
@@ -158,7 +104,8 @@ public class DefaultStyleBookEntryUtil {
 				layout.getMasterLayoutPlid());
 
 			if (masterLayout != null) {
-				styleBookEntry = getStyleBookEntry(masterLayout);
+				styleBookEntry = StyleBookEntryProviderUtil.getStyleBookEntry(
+					masterLayout);
 			}
 		}
 
@@ -184,9 +131,6 @@ public class DefaultStyleBookEntryUtil {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultStyleBookEntryUtil.class);
 
 	private static final Snapshot<FrontendTokenDefinitionRegistry>
 		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(

@@ -14,7 +14,7 @@ function main {
 
 	if [ -z "${liferay_infrastructure_name}" ]
 	then
-		echo "No LiferayInfrastructure found in the workflow namespace. Skipping restorePhase reset."
+		echo "No LiferayInfrastructure found in the workflow namespace. Skipping restore phase reset."
 
 		exit 0
 	fi

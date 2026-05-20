@@ -10,3 +10,5 @@ export const PREVIEW_DISPLAY_PAGE_SESSION_KEY =
 	'CMSContentEditorPreviewSelectedDisplayPageKey';
 
 export const PREVIEW_VISIBLE_SESSION_KEY = 'CMSContentEditorPreviewVisible';
+
+export const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';

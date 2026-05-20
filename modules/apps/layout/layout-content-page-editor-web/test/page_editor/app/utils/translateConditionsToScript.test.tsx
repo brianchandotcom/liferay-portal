@@ -238,6 +238,72 @@ describe('translateConditionsToScript', () => {
 		});
 	});
 
+	describe('multiselect field conditions', () => {
+		const fieldTypes = {tags: 'multiselect'};
+
+		it('emits a single-key contains wrapped in parentheses', () => {
+			expect(
+				translateConditionsToScript(
+					[getMultiselectCondition('tags', 'contains', ['news'])],
+					'all',
+					fieldTypes
+				)
+			).toBe('(contains(tags, "news"))');
+		});
+
+		it('joins multiple keys with OR for contains', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getMultiselectCondition('tags', 'contains', [
+							'news',
+							'press',
+						]),
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe('(contains(tags, "news") OR contains(tags, "press"))');
+		});
+
+		it('wraps the OR expression in NOT for does-not-contain', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getMultiselectCondition('tags', 'does-not-contain', [
+							'news',
+							'press',
+						]),
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe(
+				'NOT((contains(tags, "news") OR contains(tags, "press")))'
+			);
+		});
+
+		it('emits isEmpty for is-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getMultiselectCondition('tags', 'is-empty', [])],
+					'all',
+					fieldTypes
+				)
+			).toBe('isEmpty(tags)');
+		});
+
+		it('wraps isEmpty in NOT for is-not-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getMultiselectCondition('tags', 'is-not-empty', [])],
+					'all',
+					fieldTypes
+				)
+			).toBe('NOT(isEmpty(tags))');
+		});
+	});
+
 	describe('form conditions', () => {
 		it('rewrites the field name with the input__ prefix and underscores', () => {
 			expect(
@@ -335,6 +401,20 @@ function getFieldCondition(
 ): Condition {
 	return {
 		field,
+		id: `condition-${field}-${type}`,
+		options: {type, value},
+		type: 'field',
+	};
+}
+
+function getMultiselectCondition(
+	field: string,
+	type: 'contains' | 'does-not-contain' | 'is-empty' | 'is-not-empty',
+	value: string[]
+): Condition {
+	return {
+		field,
+		fieldType: 'multiselect',
 		id: `condition-${field}-${type}`,
 		options: {type, value},
 		type: 'field',

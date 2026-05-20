@@ -3,16 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayDatePicker from '@clayui/date-picker';
-import {ClayInput} from '@clayui/form';
 import {
 	ScreenReaderAnnouncerContext,
 	isNullOrUndefined,
 } from '@liferay/layout-js-components-web';
-import {useId} from 'frontend-js-components-web';
-import {dateUtils, sub} from 'frontend-js-web';
-import moment from 'moment';
-import React, {FC, useCallback, useContext, useRef, useState} from 'react';
+import {sub} from 'frontend-js-web';
+import React, {FC, useContext} from 'react';
 
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
@@ -21,13 +17,13 @@ import {
 	ObjectFieldAttributes,
 	ObjectFields,
 } from '../../../app/contexts/ObjectDataContext';
-import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
-import RuleField from './RuleField';
+import RuleDatePickerField from './RuleDatePickerField';
 import RuleSelect from './RuleSelect';
+import RuleTextField from './RuleTextField';
 import OPERATORS from './operators';
 
 interface ConditionProps {
@@ -117,14 +113,6 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.GREATER_THAN_OR_EQUALS,
 				OPERATORS.LESS_THAN,
 				OPERATORS.LESS_THAN_OR_EQUALS,
-			];
-
-		case 'select':
-			return [
-				OPERATORS.EQUAL,
-				OPERATORS.NOT_EQUAL,
-				OPERATORS.IS_EMPTY,
-				OPERATORS.IS_NOT_EMPTY,
 			];
 
 		case 'text':
@@ -444,9 +432,6 @@ function FieldFragmentTypeSelectors({
 	);
 }
 
-const DATE_FORMAT = 'YYYY-MM-DD';
-const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
-
 function ConditionValueInput({
 	attributes,
 	fieldType,
@@ -462,39 +447,6 @@ function ConditionValueInput({
 	onErrorChange: (error: RuleError | null) => void;
 	value: string | undefined;
 }) {
-	const isDateField = fieldType === 'date' || fieldType === 'date-time';
-	const isDateTime = fieldType === 'date-time';
-	const dateFormat = isDateTime ? DATE_TIME_FORMAT : DATE_FORMAT;
-
-	const [hasError, setHasError] = useState(false);
-	const id = useId();
-	const inputRef = useRef<HTMLInputElement | null>(null);
-
-	const errorMessage = Liferay.Language.get('please-enter-a-valid-date');
-
-	const handleError = useCallback(
-		(value: string) => {
-			if (!isDateField) {
-				return;
-			}
-
-			const isValid = !value || moment(value, dateFormat, true).isValid();
-
-			setHasError(!isValid);
-
-			if (inputRef.current) {
-				onErrorChange(
-					isValid
-						? null
-						: {element: inputRef.current, message: errorMessage}
-				);
-			}
-		},
-		[dateFormat, errorMessage, isDateField, onErrorChange]
-	);
-
-	useRuleValidation(() => handleError(value ?? ''));
-
 	if (fieldType === 'select' && attributes?.options) {
 		return (
 			<RuleSelect
@@ -511,60 +463,24 @@ function ConditionValueInput({
 		);
 	}
 
-	if (isDateField) {
+	if (fieldType === 'date' || fieldType === 'date-time') {
 		return (
-			<RuleField
-				className="mb-0 page-editor__rule-builder-date-picker w-100"
-				errorMessage={errorMessage}
-				fieldId={id}
-				hasError={hasError}
-			>
-				<ClayDatePicker
-					firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
-					id={id}
-					months={dateUtils.getMonthsLong()}
-					onBlur={() => {
-						handleError(value ?? '');
-
-						onBlur();
-					}}
-					onChange={(nextValue) => {
-						handleError(nextValue as string);
-
-						onChange(nextValue as string);
-					}}
-					placeholder={dateFormat}
-					ref={inputRef}
-					time={isDateTime}
-					value={value ?? ''}
-					weekdaysShort={dateUtils.getWeekdaysShort() as string[]}
-					{...({sizing: 'sm'} as {sizing: 'sm'})}
-					years={{
-						end: new Date().getFullYear() + 25,
-						start: new Date().getFullYear() - 50,
-					}}
-				/>
-			</RuleField>
+			<RuleDatePickerField
+				isDateTime={fieldType === 'date-time'}
+				onBlur={onBlur}
+				onChange={onChange}
+				onErrorChange={onErrorChange}
+				value={value ?? ''}
+			/>
 		);
 	}
 
-	const isNumber = fieldType === 'number';
-
 	return (
-		<ClayInput
-			aria-label={Liferay.Language.get('value')}
-			className="w-auto"
+		<RuleTextField
+			isNumber={fieldType === 'number'}
 			onBlur={onBlur}
-			onChange={(event) => onChange(event.target.value)}
-			onKeyDown={(event) => {
-				if (event.key === 'Enter') {
-					onBlur();
-				}
-			}}
-			sizing="sm"
-			step={isNumber ? 'any' : undefined}
-			type={isNumber ? 'number' : 'text'}
-			value={value}
+			onChange={onChange}
+			value={value ?? ''}
 		/>
 	);
 }

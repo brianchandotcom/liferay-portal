@@ -19,25 +19,19 @@
 	}
 }
 
-.floating-icon-button {
-	background-color: var(--gray-400);
-	bottom: 24px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	height: 60px;
-	left: 24px;
-	position: fixed !important;
-	transition: background-color 0.2s ease;
-	width: 60px;
-	z-index: 1030;
-}
+.cookies-banner-preview-mode {
+	body {
+		pointer-events: none;
+	}
 
-.floating-icon-button:hover {
-	background-color: var(--gray-700);
-}
-
-.floating-icon-button .lexicon-icon {
-	height: 30px;
-	width: 30px;
+	.cookies-banner,
+	.cookies-banner *,
+	.custom-floating-icon-image,
+	.floating-icon-button,
+	.modal,
+	.modal * {
+		pointer-events: auto;
+	}
 }
 
 .custom-floating-icon-image {
@@ -52,18 +46,23 @@
 	z-index: 1030;
 }
 
-.cookies-banner-preview-mode {
+.floating-icon-button {
+	background-color: var(--gray-400);
+	bottom: 24px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	height: 60px;
+	left: 24px;
+	position: fixed !important;
+	transition: background-color 0.2s ease;
+	width: 60px;
+	z-index: 1030;
+}
 
-	body {
-		pointer-events: none;
-	}
+.floating-icon-button .lexicon-icon {
+	height: 30px;
+	width: 30px;
+}
 
-	.cookies-banner,
-	.cookies-banner *,
-	.custom-floating-icon-image,
-	.floating-icon-button,
-	.modal,
-	.modal * {
-		pointer-events: auto;
-	}
+.floating-icon-button:hover {
+	background-color: var(--gray-700);
 }

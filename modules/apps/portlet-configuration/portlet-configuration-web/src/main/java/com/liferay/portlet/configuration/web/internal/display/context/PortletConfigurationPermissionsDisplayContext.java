@@ -5,12 +5,14 @@
 
 package com.liferay.portlet.configuration.web.internal.display.context;
 
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.ResourcePrimKeyException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -477,25 +479,27 @@ public class PortletConfigurationPermissionsDisplayContext {
 				roleSearchContainer.setResultsAndTotal(
 					() -> RoleServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), null, excludedRoleNames,
-						null, null, getRoleTypes(), roleModelResourceRoleId,
-						roleTeamGroupId, roleSearchContainer.getStart(),
+						null, null, getRoleTypes(), _getSubtype(),
+						roleModelResourceRoleId, roleTeamGroupId,
+						roleSearchContainer.getStart(),
 						roleSearchContainer.getEnd()),
 					RoleServiceUtil.getGroupRolesAndTeamRolesCount(
 						_themeDisplay.getCompanyId(), null, excludedRoleNames,
-						null, null, getRoleTypes(), roleModelResourceRoleId,
-						roleTeamGroupId));
+						null, null, getRoleTypes(), _getSubtype(),
+						roleModelResourceRoleId, roleTeamGroupId));
 			}
 			else {
 				roleSearchContainer.setResultsAndTotal(
 					() -> RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), null, excludedRoleNames,
-						null, null, getRoleTypes(), roleModelResourceRoleId,
-						roleTeamGroupId, roleSearchContainer.getStart(),
+						null, null, getRoleTypes(), _getSubtype(),
+						roleModelResourceRoleId, roleTeamGroupId,
+						roleSearchContainer.getStart(),
 						roleSearchContainer.getEnd()),
 					RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
 						_themeDisplay.getCompanyId(), null, excludedRoleNames,
-						null, null, getRoleTypes(), roleModelResourceRoleId,
-						roleTeamGroupId));
+						null, null, getRoleTypes(), _getSubtype(),
+						roleModelResourceRoleId, roleTeamGroupId));
 			}
 		}
 		else {
@@ -506,16 +510,16 @@ public class PortletConfigurationPermissionsDisplayContext {
 					RoleServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), _getKeywords(),
 						excludedRoleNames, _getKeywords(), null, getRoleTypes(),
-						modelResourceRoleId, teamGroupId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS));
+						_getSubtype(), modelResourceRoleId, teamGroupId,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 			}
 			else {
 				roleSearchContainer.setResultsAndTotal(
 					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 						_themeDisplay.getCompanyId(), _getKeywords(),
 						excludedRoleNames, _getKeywords(), null, getRoleTypes(),
-						modelResourceRoleId, teamGroupId, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS));
+						_getSubtype(), modelResourceRoleId, teamGroupId,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 			}
 		}
 
@@ -733,6 +737,22 @@ public class PortletConfigurationPermissionsDisplayContext {
 		_roleTypesParam = ParamUtil.getString(_httpServletRequest, "roleTypes");
 
 		return _roleTypesParam;
+	}
+
+	private String _getSubtype() {
+		if ((_group == null) || !_group.isDepot()) {
+			return null;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-17564") &&
+			!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-58677")) {
+
+			return null;
+		}
+
+		return DepotRoleUtil.getSubtype(_group.getGroupId());
 	}
 
 	private boolean _isFirstLayout(

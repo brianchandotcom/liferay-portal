@@ -7,7 +7,7 @@ import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import Icon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import {InputLocalized} from 'frontend-js-components-web';
+import {FieldBase, InputLocalized} from 'frontend-js-components-web';
 import {FormikErrors} from 'formik';
 import React from 'react';
 
@@ -106,6 +106,25 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 						value={values.description}
 					/>
 				</ClayForm.Group>
+
+				<FieldBase
+					errorMessage={errors.location}
+					helpMessage={Liferay.Language.get('model-armor-location-help')}
+					id="location"
+					label={Liferay.Language.get('location')}
+					required
+				>
+					<ClayInput
+						className={errors.location ? 'is-invalid' : ''}
+						id="location"
+						onChange={(event) =>
+							setField('location', event.target.value)
+						}
+						required
+						type="text"
+						value={values.location || ''}
+					/>
+				</FieldBase>
 
 				<ClayForm.Group>
 					<label htmlFor="guardrailType">

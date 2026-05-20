@@ -64,6 +64,28 @@ jest.mock('frontend-js-components-web', () => {
 	const React = require('react');
 
 	return {
+		FieldBase: ({
+			children,
+			errorMessage,
+			helpMessage,
+			id,
+			label,
+			required,
+		}: any) =>
+			React.createElement(
+				'div',
+				null,
+				label &&
+					React.createElement(
+						'label',
+						{htmlFor: id},
+						label,
+						required && '*'
+					),
+				children,
+				errorMessage && React.createElement('div', null, errorMessage),
+				helpMessage && React.createElement('small', null, helpMessage)
+			),
 		InputLocalized: ({id, label, onChange, placeholder, translations}: any) =>
 			React.createElement(
 				React.Fragment,
@@ -110,6 +132,7 @@ describe('ModelArmorTemplateForm', () => {
 				active: true,
 				externalReferenceCode: 'TEMPLATE_X',
 				guardrailType: 'input',
+				location: '',
 				maliciousUriFilterEnabled: false,
 				multiLanguageDetectionEnabled: false,
 				piAndJailbreakConfidenceLevel: 'mediumAndAbove',
@@ -175,6 +198,9 @@ describe('ModelArmorTemplateForm', () => {
 				screen.getByLabelText(/^external-reference-code/i),
 				{target: {value: 'TEMPLATE_X'}}
 			);
+			fireEvent.change(screen.getByLabelText(/^location/i), {
+				target: {value: 'us-central1'},
+			});
 
 			fireEvent.click(screen.getByRole('button', {name: 'save'}));
 
@@ -182,6 +208,7 @@ describe('ModelArmorTemplateForm', () => {
 				expect(mockPutModelArmorTemplate).toHaveBeenCalledWith(
 					expect.objectContaining({
 						externalReferenceCode: 'TEMPLATE_X',
+						location: 'us-central1',
 						title_i18n: {en_US: 'My Template'},
 					})
 				);

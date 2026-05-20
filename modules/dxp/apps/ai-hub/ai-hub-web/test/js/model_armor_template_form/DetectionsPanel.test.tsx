@@ -22,6 +22,7 @@ const baseValues: ModelArmorTemplate = {
 	description: '',
 	externalReferenceCode: '',
 	guardrailType: 'input',
+	location: '',
 	maliciousUriFilterEnabled: false,
 	multiLanguageDetectionEnabled: false,
 	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
@@ -32,7 +33,7 @@ const baseValues: ModelArmorTemplate = {
 	raiHateSpeechLevel: 'none',
 	raiSexuallyExplicitLevel: 'none',
 	sdpFilterEnabled: false,
-	title: '',
+	title_i18n: {},
 };
 
 function renderPanel(overrides: Partial<ModelArmorTemplate> = {}) {

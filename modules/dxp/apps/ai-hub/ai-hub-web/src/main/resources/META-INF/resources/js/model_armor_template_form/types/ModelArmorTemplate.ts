@@ -12,6 +12,7 @@ export type ModelArmorTemplate = {
 	description: string;
 	externalReferenceCode: string;
 	guardrailType: string;
+	location: string;
 	maliciousUriFilterEnabled: boolean;
 	multiLanguageDetectionEnabled: boolean;
 	piAndJailbreakConfidenceLevel: FilterLevel;

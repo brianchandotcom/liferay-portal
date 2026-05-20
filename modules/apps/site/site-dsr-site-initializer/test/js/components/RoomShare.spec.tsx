@@ -85,6 +85,7 @@ describe('RoomShare', () => {
 
 	afterEach(() => {
 		cleanup();
+		jest.restoreAllMocks();
 	});
 
 	it('renders the correct UI elements', async () => {
@@ -383,11 +384,14 @@ describe('RoomShare', () => {
 		});
 	});
 
-	it('hides role dropdown for invited members', async () => {
+	it('hides role dropdown for invited members when current user is not owner or inviter', async () => {
+		jest.spyOn(Liferay.ThemeDisplay, 'getUserId').mockReturnValue('999');
+
 		const mockInvitedMembers = [
 			{
 				emailAddress: 'invited@example.com',
 				id: 10,
+				ownerId: 998,
 			},
 		];
 
@@ -409,5 +413,69 @@ describe('RoomShare', () => {
 
 		expect(invitedUserRow?.querySelector('.dropdown-toggle')).toBeNull();
 		expect(invitedUserRow?.textContent).toContain('viewer');
+	});
+
+	it('shows role dropdown for invited members when current user is owner', async () => {
+		jest.spyOn(Liferay.ThemeDisplay, 'getUserId').mockReturnValue('1');
+
+		const mockInvitedMembers = [
+			{
+				emailAddress: 'invited@example.com',
+				id: 10,
+				ownerId: 999,
+			},
+		];
+
+		(RoomService.getRoomInvitedMembers as jest.Mock).mockResolvedValue(
+			mockInvitedMembers
+		);
+
+		renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('invited@example.com')).toBeInTheDocument();
+		});
+
+		const invitedUserRow = screen
+			.getByText('invited@example.com')
+			.closest('.user-row');
+
+		expect(
+			invitedUserRow?.querySelector('.dropdown-toggle')
+		).not.toBeNull();
+	});
+
+	it('shows role dropdown for invited members when current user is the inviter', async () => {
+		jest.spyOn(Liferay.ThemeDisplay, 'getUserId').mockReturnValue('998');
+
+		const mockInvitedMembers = [
+			{
+				emailAddress: 'invited@example.com',
+				id: 10,
+				ownerId: 998,
+			},
+		];
+
+		(RoomService.getRoomInvitedMembers as jest.Mock).mockResolvedValue(
+			mockInvitedMembers
+		);
+
+		renderComponent({
+			roomId: 10,
+		});
+
+		await waitFor(() => {
+			expect(screen.getByText('invited@example.com')).toBeInTheDocument();
+		});
+
+		const invitedUserRow = screen
+			.getByText('invited@example.com')
+			.closest('.user-row');
+
+		expect(
+			invitedUserRow?.querySelector('.dropdown-toggle')
+		).not.toBeNull();
 	});
 });

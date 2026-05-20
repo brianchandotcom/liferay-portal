@@ -64,7 +64,13 @@ jest.mock('frontend-js-components-web', () => {
 				errorMessage && React.createElement('div', null, errorMessage),
 				helpMessage && React.createElement('small', null, helpMessage)
 			),
-		InputLocalized: ({id, label, onChange, placeholder, translations}: any) =>
+		InputLocalized: ({
+			id,
+			label,
+			onChange,
+			placeholder,
+			translations,
+		}: any) =>
 			React.createElement(
 				React.Fragment,
 				null,

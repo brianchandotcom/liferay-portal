@@ -7,8 +7,8 @@ import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import Icon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import {FieldBase, InputLocalized} from 'frontend-js-components-web';
 import {FormikErrors} from 'formik';
+import {FieldBase, InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
 import {GUARDRAIL_TYPE_OPTIONS} from './constants';
@@ -109,7 +109,9 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 
 				<FieldBase
 					errorMessage={errors.location}
-					helpMessage={Liferay.Language.get('model-armor-location-help')}
+					helpMessage={Liferay.Language.get(
+						'model-armor-location-help'
+					)}
 					id="location"
 					label={Liferay.Language.get('location')}
 					required

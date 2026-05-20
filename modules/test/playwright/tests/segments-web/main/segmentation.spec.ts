@@ -2264,6 +2264,35 @@ test(
 );
 
 test(
+	'Can expand each segment editor sidebar section to view its own properties',
+	{
+		tag: '@LPS-135969',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor; the User section is expanded by default
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addCriterion('Date of Birth', 'User');
+
+		// Expand Organization and assert Country is visible
+
+		await segmentsPage.addCriterion('Country', 'Organization');
+
+		// Expand Session and assert Browser is visible
+
+		await segmentsPage.addCriterion('Browser', 'Session');
+
+		// Expand Segments and assert Segment is visible
+
+		await segmentsPage.addCriterion('Segment', 'Segments');
+	}
+);
+
+test(
 	'Can drop properties from different sections of the segment editor sidebar',
 	{
 		tag: ['@LPS-135969', '@LPS-94651'],

@@ -86,6 +86,8 @@ export const PORTLET_URLS = {
 		'/manage?p_p_id=com_liferay_notifications_web_portlet_NotificationsPortlet',
 	objects:
 		'/~/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet',
+	organizations:
+		'/~/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_users_admin_web_portlet_UsersAdminPortlet_screenNavigationCategoryKey=organizations',
 	pageTemplates:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=page-templates',
 	pages: '/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet',

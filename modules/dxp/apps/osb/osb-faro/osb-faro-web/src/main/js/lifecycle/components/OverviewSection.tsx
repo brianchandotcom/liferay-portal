@@ -34,7 +34,7 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 		},
 		{
 			description: Liferay.Language.get(
-				'the-total-number-of-accounts-specifically-stuck-in-the-engaged-stage-that-have-exceeded-their-designated-time-in-stage-threshold-(>-90-days)'
+				'the-total-number-of-accounts-specifically-stuck-in-the-engaged-stage-that-have-exceeded-their-designated-time-in-stage-threshold-90-days'
 			),
 			metric: stalledAccounts,
 			title: Liferay.Language.get('stalled-accounts')

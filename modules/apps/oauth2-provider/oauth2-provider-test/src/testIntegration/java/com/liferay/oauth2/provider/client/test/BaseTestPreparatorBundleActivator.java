@@ -210,8 +210,7 @@ public abstract class BaseTestPreparatorBundleActivator
 			companyId, user, clientId, "oauthTestApplicationSecret",
 			allowedGrantTypesList,
 			Collections.singletonList(
-				"http://redirecturi:" + PortalUtil.getPortalServerPort(false) +
-					""),
+				"http://redirecturi:" + PortalUtil.getPortalServerPort(false)),
 			rememberDevice, scopeAliasesList, trustedApplication);
 	}
 
@@ -225,8 +224,7 @@ public abstract class BaseTestPreparatorBundleActivator
 			companyId, user, clientId, "oauthTestApplicationSecret",
 			allowedGrantTypesList,
 			Collections.singletonList(
-				"http://redirecturi:" + PortalUtil.getPortalServerPort(false) +
-					""),
+				"http://redirecturi:" + PortalUtil.getPortalServerPort(false)),
 			scopeAliasesList);
 	}
 
@@ -291,11 +289,9 @@ public abstract class BaseTestPreparatorBundleActivator
 				user.getUserId(), clientId, 0, clientSecret,
 				"test oauth application",
 				Collections.singletonList("token.introspection"),
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"",
-				0, jwks, "test application",
-				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
-					"",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false), 0,
+				jwks, "test application",
+				"http://localhost:" + PortalUtil.getPortalServerPort(false),
 				redirectURIsList, rememberDevice, scopeAliasesList,
 				trustedApplication, new ServiceContext());
 

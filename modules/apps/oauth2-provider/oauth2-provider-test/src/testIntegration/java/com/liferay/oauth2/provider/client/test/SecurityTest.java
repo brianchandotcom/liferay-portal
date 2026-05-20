@@ -157,8 +157,7 @@ public class SecurityTest extends BaseClientTestCase {
 					"client_id", "oauthTestApplicationCode"
 				).queryParam(
 					"redirect_uri",
-					"http://invalid:" + PortalUtil.getPortalServerPort(false) +
-						""
+					"http://invalid:" + PortalUtil.getPortalServerPort(false)
 				).queryParam(
 					"response_type", "code"
 				)));
@@ -195,8 +194,7 @@ public class SecurityTest extends BaseClientTestCase {
 				"oauthTestApplicationCode", null,
 				getExchangeAuthorizationCodeBiFunction(
 					authorizationCode,
-					"http://invalid:" + PortalUtil.getPortalServerPort(false) +
-						""),
+					"http://invalid:" + PortalUtil.getPortalServerPort(false)),
 				this::parseError));
 	}
 

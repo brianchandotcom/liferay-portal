@@ -40,78 +40,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And user leaves and returns to page Then the alert reappears"
-	@priority = 3
-	test CloseAndRecoverAlertAtSegmentsPage {
-		task ("Navigate to Segments Admin") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Close warning and check it disappears") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Leave then return to page and check if warning reappears") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Go to segments editor") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Close warning and check it disappears") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Leave then return to page and check if warning reappears") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-			Segmentation.openSegmentsAdmin(siteURLKey = "test-site-name");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Simulation panel And user leaves and returns to page Then the alert reappears"
 	@priority = 3
 	test CloseAndRecoverAlertAtSimulationPanel {
@@ -179,29 +107,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
-		}
-	}
-
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Segments Admin Then should be forwarded to Segments Service at Instance Settings"
-	@priority = 4
-	test ViewAndReEnableAlertAtSegmentsList {
-		task ("Open the Segments List") {
-			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
-		}
-
-		task ("Check alert shows re-enable instructions") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 	}
 

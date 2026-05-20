@@ -16,6 +16,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
+import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -95,15 +96,70 @@ test(
 
 		// Click the re-enable link and assert Segments Service is reached
 
-		await expect(alert).toContainText(
-			'To enable, go to Instance Settings.'
-		);
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('heading', {name: 'Segments Service'}),
+			trigger: page.getByRole('link', {
+				name: 'To enable, go to Instance Settings.',
+			}),
+		});
 
-		await alert.getByRole('link', {name: 'Instance Settings'}).click();
+		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
+	}
+);
 
-		await expect(
-			page.getByRole('heading', {name: 'Segments Service'})
-		).toBeVisible();
+test(
+	'Asserts the segmentation-disabled alert can be dismissed and recovered at the Segments admin list and editor, and that the re-enable link reaches Segments Service',
+	{tag: ['@LPS-154019', '@LPS-152539']},
+	async ({page, site}) => {
+
+		// Open the Segments admin list
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		const warning = page.locator('.alert-warning');
+
+		const alert = warning.getByText('Segmentation is disabled.');
+
+		// Close the alert and assert it is hidden on the list
+
+		await expect(alert).toBeVisible();
+
+		await clickAndExpectToBeHidden({
+			target: alert,
+			trigger: warning.getByRole('button', {name: 'Close'}),
+		});
+
+		// Refresh and assert the alert is back on the list
+
+		await page.reload();
+
+		await expect(alert).toBeVisible();
+
+		// Open the segment editor and close the alert again
+
+		await page.getByRole('link', {name: 'Add New User Segment'}).click();
+
+		await expect(alert).toBeVisible();
+
+		await clickAndExpectToBeHidden({
+			target: alert,
+			trigger: warning.getByRole('button', {name: 'Close'}),
+		});
+
+		// Refresh and assert the alert is back on the editor
+
+		await page.reload();
+
+		await expect(alert).toBeVisible();
+
+		// Click the re-enable link and assert Segments Service is reached
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('heading', {name: 'Segments Service'}),
+			trigger: page.getByRole('link', {
+				name: 'To enable, go to Instance Settings.',
+			}),
+		});
 
 		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
 	}

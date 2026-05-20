@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {useEventListener} from '@liferay/frontend-js-react-web';
 import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
@@ -61,13 +60,15 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 		updatePreview();
 	}, [activeSize, updatePreview]);
 
-	const handleWindowResize = debounce(() => {
-		updatePreview();
-	}, 250);
+	useEffect(() => {
+		const handleWindowResize = debounce(() => updatePreview(), 250);
 
-	// @ts-ignore
+		window.addEventListener('resize', handleWindowResize);
 
-	useEventListener('resize', handleWindowResize, false, window);
+		return () => {
+			window.removeEventListener('resize', handleWindowResize);
+		};
+	}, [updatePreview]);
 
 	if (!open) {
 		return null;

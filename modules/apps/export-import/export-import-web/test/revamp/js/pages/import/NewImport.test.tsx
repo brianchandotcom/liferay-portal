@@ -242,9 +242,11 @@ describe('NewImport', () => {
 		expect(screen.getByRole('checkbox', {name: 'Logo'})).toBeChecked();
 		expect(screen.getByRole('checkbox', {name: 'Fragments'})).toBeChecked();
 
-		expect(screen.getByLabelText('import-permissions')).toBeInTheDocument();
 		expect(
-			screen.queryByLabelText('replicate-selected-deletions')
+			screen.getByLabelText(/^import-permissions/)
+		).toBeInTheDocument();
+		expect(
+			screen.queryByLabelText(/^replicate-selected-deletions/)
 		).not.toBeInTheDocument();
 
 		await checkAccessibility({context: container});
@@ -326,7 +328,9 @@ describe('NewImport', () => {
 		expect(screen.getByText('Both')).toBeInTheDocument();
 		expect(screen.getByText('No Counts')).toBeInTheDocument();
 
-		await user.click(screen.getByLabelText('replicate-selected-deletions'));
+		await user.click(
+			screen.getByLabelText(/^replicate-selected-deletions/)
+		);
 
 		expect(screen.getByText('Deletions Only')).toBeInTheDocument();
 	});

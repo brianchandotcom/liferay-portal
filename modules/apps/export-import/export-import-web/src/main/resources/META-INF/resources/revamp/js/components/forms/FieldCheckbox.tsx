@@ -35,6 +35,7 @@ export function FieldCheckbox({
 			bordered={bordered}
 			description={description}
 			descriptionId={description ? descriptionId : undefined}
+			inline
 			input={
 				<ClayCheckbox
 					{...restProps}

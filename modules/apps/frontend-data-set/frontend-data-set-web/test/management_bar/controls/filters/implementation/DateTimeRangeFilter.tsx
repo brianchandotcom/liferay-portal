@@ -6,6 +6,7 @@
 import {
 	dateTimeRangeFilterImplementation,
 	isWithinBounds,
+	parseClayValue,
 } from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
 
 const {getOdataString, getSelectedItemsLabel} =
@@ -149,6 +150,132 @@ describe('DateTimeRangeFilter.isWithinBounds', () => {
 
 		it('rejects a date after the upper bound', () => {
 			expect(isWithinBounds(afterMax, minBound, maxBound)).toBe(false);
+		});
+	});
+});
+
+describe('DateTimeRangeFilter.parseClayValue', () => {
+	describe('in date-only mode', () => {
+		it('parses a valid date', () => {
+			expect(parseClayValue('2026-05-11', false, false)).toEqual({
+				day: 11,
+				hour: 0,
+				minute: 0,
+				month: 5,
+				year: 2026,
+			});
+		});
+
+		it('accepts February 29 on a leap year', () => {
+			expect(parseClayValue('2024-02-29', false, false)).toEqual({
+				day: 29,
+				hour: 0,
+				minute: 0,
+				month: 2,
+				year: 2024,
+			});
+		});
+
+		it('rejects February 29 on a non-leap year', () => {
+			expect(parseClayValue('2023-02-29', false, false)).toBeNull();
+		});
+
+		it('rejects February 30', () => {
+			expect(parseClayValue('2026-02-30', false, false)).toBeNull();
+		});
+
+		it('rejects month 13', () => {
+			expect(parseClayValue('2026-13-01', false, false)).toBeNull();
+		});
+
+		it('rejects day 32', () => {
+			expect(parseClayValue('2026-01-32', false, false)).toBeNull();
+		});
+
+		it('rejects an empty string', () => {
+			expect(parseClayValue('', false, false)).toBeNull();
+		});
+
+		it('rejects a malformed string', () => {
+			expect(parseClayValue('2026/05/11', false, false)).toBeNull();
+		});
+	});
+
+	describe('in 24-hour dateTime mode', () => {
+		it('parses a valid datetime', () => {
+			expect(parseClayValue('2026-05-11 15:30', false, true)).toEqual({
+				day: 11,
+				hour: 15,
+				minute: 30,
+				month: 5,
+				year: 2026,
+			});
+		});
+
+		it('rejects hour 24', () => {
+			expect(parseClayValue('2026-05-11 24:00', false, true)).toBeNull();
+		});
+
+		it('rejects minute 60', () => {
+			expect(parseClayValue('2026-05-11 23:60', false, true)).toBeNull();
+		});
+
+		it('rejects month 13', () => {
+			expect(parseClayValue('2026-13-01 12:00', false, true)).toBeNull();
+		});
+
+		it('rejects day 99', () => {
+			expect(parseClayValue('2026-01-99 12:00', false, true)).toBeNull();
+		});
+	});
+
+	describe('in 12-hour dateTime mode', () => {
+		it('parses a valid AM datetime', () => {
+			expect(
+				parseClayValue('2026-05-11 09:30 AM', true, true)
+			).toEqual({
+				day: 11,
+				hour: 9,
+				minute: 30,
+				month: 5,
+				year: 2026,
+			});
+		});
+
+		it('parses 12:00 PM as noon', () => {
+			expect(
+				parseClayValue('2026-05-11 12:00 PM', true, true)
+			).toEqual({
+				day: 11,
+				hour: 12,
+				minute: 0,
+				month: 5,
+				year: 2026,
+			});
+		});
+
+		it('parses 12:00 AM as midnight', () => {
+			expect(
+				parseClayValue('2026-05-11 12:00 AM', true, true)
+			).toEqual({
+				day: 11,
+				hour: 0,
+				minute: 0,
+				month: 5,
+				year: 2026,
+			});
+		});
+
+		it('rejects minute 60', () => {
+			expect(
+				parseClayValue('2026-05-11 11:60 AM', true, true)
+			).toBeNull();
+		});
+
+		it('rejects February 30', () => {
+			expect(
+				parseClayValue('2026-02-30 11:00 AM', true, true)
+			).toBeNull();
 		});
 	});
 });

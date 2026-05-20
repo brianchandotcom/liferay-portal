@@ -93,7 +93,29 @@ function formatDatePartsForClay(
 	return `${date} ${pad2(dateParts.hour)}:${pad2(dateParts.minute)}`;
 }
 
-function parseClayValue(
+function buildDateParts(
+	year: number,
+	month: number,
+	day: number,
+	hour: number,
+	minute: number
+): DateParts | null {
+	const back = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+	if (
+		back.getUTCFullYear() !== year ||
+		back.getUTCMonth() !== month - 1 ||
+		back.getUTCDate() !== day ||
+		back.getUTCHours() !== hour ||
+		back.getUTCMinutes() !== minute
+	) {
+		return null;
+	}
+
+	return {day, hour, minute, month, year};
+}
+
+export function parseClayValue(
 	value: string | undefined,
 	use12Hours: boolean,
 	dateTime: boolean
@@ -109,13 +131,13 @@ function parseClayValue(
 			return null;
 		}
 
-		return {
-			day: Number(match[3]),
-			hour: 0,
-			minute: 0,
-			month: Number(match[2]),
-			year: Number(match[1]),
-		};
+		return buildDateParts(
+			Number(match[1]),
+			Number(match[2]),
+			Number(match[3]),
+			0,
+			0
+		);
 	}
 
 	if (use12Hours) {
@@ -137,13 +159,13 @@ function parseClayValue(
 			hour = 0;
 		}
 
-		return {
-			day: Number(match[3]),
+		return buildDateParts(
+			Number(match[1]),
+			Number(match[2]),
+			Number(match[3]),
 			hour,
-			minute: Number(match[5]),
-			month: Number(match[2]),
-			year: Number(match[1]),
-		};
+			Number(match[5])
+		);
 	}
 
 	const match = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(value);
@@ -152,13 +174,13 @@ function parseClayValue(
 		return null;
 	}
 
-	return {
-		day: Number(match[3]),
-		hour: Number(match[4]),
-		minute: Number(match[5]),
-		month: Number(match[2]),
-		year: Number(match[1]),
-	};
+	return buildDateParts(
+		Number(match[1]),
+		Number(match[2]),
+		Number(match[3]),
+		Number(match[4]),
+		Number(match[5])
+	);
 }
 
 function nowInTimeZone(timeZone: string): DateParts {
@@ -445,6 +467,10 @@ const DateTimeRangeFilter = ({
 	const fromDateParts = parseClayValue(fromValue, use12Hours, dateTime);
 	const toDateParts = parseClayValue(toValue, use12Hours, dateTime);
 
+	const hasInvalidInput =
+		(!!fromValue.length && !fromDateParts) ||
+		(!!toValue.length && !toDateParts);
+
 	const isValidRange =
 		!fromDateParts ||
 		!toDateParts ||
@@ -477,7 +503,8 @@ const DateTimeRangeFilter = ({
 		fromValue !== initialFromString ||
 		toValue !== initialToString;
 
-	const submitDisabled = !isChanged || !isValidRange || !withinBounds;
+	const submitDisabled =
+		!isChanged || hasInvalidInput || !isValidRange || !withinBounds;
 
 	const yearRange = {
 		end: new Date().getFullYear() + 25,
@@ -554,18 +581,20 @@ const DateTimeRangeFilter = ({
 						/>
 					</ClayForm.Group>
 
-					{(!isValidRange || !withinBounds) && (
+					{(hasInvalidInput || !isValidRange || !withinBounds) && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 
-								{!isValidRange
-									? Liferay.Language.get(
-											'date-range-is-invalid.-from-must-be-before-to'
-										)
-									: Liferay.Language.get(
-											'date-is-out-of-range'
-										)}
+								{hasInvalidInput
+									? Liferay.Language.get('date-is-invalid')
+									: !isValidRange
+										? Liferay.Language.get(
+												'date-range-is-invalid.-from-must-be-before-to'
+											)
+										: Liferay.Language.get(
+												'date-is-out-of-range'
+											)}
 							</ClayForm.FeedbackItem>
 						</ClayForm.FeedbackGroup>
 					)}

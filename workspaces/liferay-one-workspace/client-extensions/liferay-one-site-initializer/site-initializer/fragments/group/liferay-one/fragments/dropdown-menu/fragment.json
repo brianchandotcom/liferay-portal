@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Liferay One Account Selection",
+	"name": "Dropdown Menu",
 	"type": "component"
 }

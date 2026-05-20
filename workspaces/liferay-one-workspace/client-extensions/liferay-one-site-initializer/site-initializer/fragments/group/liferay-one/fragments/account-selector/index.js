@@ -16,40 +16,26 @@ let accountSelectionDropdown;
 let accountList = [];
 let lastRenderedAccounts = [];
 
-function initializeElements() {
-	accountList = [];
-	accountSelectionDropdown = fragmentElement.querySelector(
-		'.account-selection-dropdown'
-	);
-	dropdownList = fragmentElement.querySelector('#dropdownList');
-	menu = fragmentElement.querySelector('.dropdown-menu-container');
-	profileAccountImage = document.getElementById('profile-account-image');
-	profileAccountName = document.getElementById('profile-account-name');
-	searchInput = fragmentElement.querySelector('.search-input');
-	trigger = fragmentElement.querySelector('.dropdown-trigger');
-}
-
-async function setCommerceContextAccount(accountId) {
+async function fetchAccounts(search) {
 	try {
-		const body = new FormData();
-
-		body.append('accountId', accountId);
-
-		await fetch(
-			`/o/commerce-ui/set-current-account?groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&p_auth=${
-				Liferay.authToken
-			}`,
-			{
-				body,
-				headers: {'x-csrf-token': Liferay.authToken},
-				method: 'POST',
-			}
+		const response = await getAccounts(
+			new URLSearchParams({
+				fields: 'id,name,logoURL,type',
+				filter: `contains(name, '${search}')`,
+				page: 1,
+				pageSize: PAGE_SIZE.toString(),
+				sort: 'name:asc',
+			})
 		);
 
-		window.location.reload();
+		renderAccounts(
+			response.items,
+			Liferay.CommerceContext.account.accountId,
+			search
+		);
 	}
 	catch (error) {
-		console.error('Failed to set account:', error);
+		console.error('Search failed:', error);
 	}
 }
 
@@ -83,15 +69,68 @@ async function getAccounts(searchParams = new URLSearchParams()) {
 	}
 }
 
-function setAccountName(name) {
-	if (profileAccountName) {
-		profileAccountName.innerText = name;
+function initializeElements() {
+	accountList = [];
+	accountSelectionDropdown = fragmentElement.querySelector(
+		'.account-selection-dropdown'
+	);
+	dropdownList = fragmentElement.querySelector('#dropdownList');
+	menu = fragmentElement.querySelector('.dropdown-menu-container');
+	profileAccountImage = document.getElementById('profile-account-image');
+	profileAccountName = document.getElementById('profile-account-name');
+	searchInput = fragmentElement.querySelector('.search-input');
+	trigger = fragmentElement.querySelector('.dropdown-trigger');
+}
+
+async function loadDropdownAccounts() {
+	try {
+		const response = await getAccounts(
+			new URLSearchParams({
+				fields: 'id,logoURL,name,type',
+				page: 1,
+				pageSize: PAGE_SIZE.toString(),
+				sort: 'name:asc',
+			})
+		);
+
+		accountList = response?.items || [];
+		lastRenderedAccounts = [...accountList];
+
+		renderAccounts(accountList, Liferay.CommerceContext.account.accountId);
+	}
+	catch (error) {
+		console.error('Failed to load accounts:', error);
 	}
 }
 
-function setAccountImage(logoURL) {
-	if (profileAccountImage) {
-		profileAccountImage.setAttribute('src', logoURL);
+async function loadSelectedAccount() {
+	try {
+		const account = await getAccount(
+			Liferay.CommerceContext.account.accountId
+		);
+
+		if (account) {
+			setAccountImage(account.logoURL);
+			setAccountName(account.name);
+		}
+	}
+	catch (error) {
+		console.error('Failed to load selected account:', error);
+	}
+}
+
+async function main() {
+	try {
+		setAccountName(Liferay.CommerceContext.account.accountName);
+
+		accountSelectionDropdown?.classList.remove('d-none');
+
+		setupEventListeners();
+
+		await Promise.all([loadDropdownAccounts(), loadSelectedAccount()]);
+	}
+	catch (error) {
+		console.error('Failed to initialize:', error);
 	}
 }
 
@@ -175,63 +214,39 @@ function renderAccounts(accounts, currentAccountId) {
 	});
 }
 
-async function loadDropdownAccounts() {
-	try {
-		const response = await getAccounts(
-			new URLSearchParams({
-				fields: 'id,logoURL,name,type',
-				page: 2,
-				pageSize: PAGE_SIZE.toString(),
-				sort: 'name:asc',
-			})
-		);
-
-		accountList = response?.items || [];
-		lastRenderedAccounts = [...accountList];
-
-		renderAccounts(accountList, Liferay.CommerceContext.account.accountId);
-	}
-	catch (error) {
-		console.error('Failed to load accounts:', error);
+function setAccountImage(logoURL) {
+	if (profileAccountImage) {
+		profileAccountImage.setAttribute('src', logoURL);
 	}
 }
 
-async function loadSelectedAccount() {
-	try {
-		const account = await getAccount(
-			Liferay.CommerceContext.account.accountId
-		);
-
-		if (account) {
-			setAccountImage(account.logoURL);
-			setAccountName(account.name);
-		}
-	}
-	catch (error) {
-		console.error('Failed to load selected account:', error);
+function setAccountName(name) {
+	if (profileAccountName) {
+		profileAccountName.innerText = name;
 	}
 }
 
-async function fetchAccounts(search) {
+async function setCommerceContextAccount(accountId) {
 	try {
-		const response = await getAccounts(
-			new URLSearchParams({
-				fields: 'id,name,logoURL,type',
-				filter: `contains(name, '${search}')`,
-				page: 1,
-				pageSize: PAGE_SIZE.toString(),
-				sort: 'name:asc',
-			})
+		const body = new FormData();
+
+		body.append('accountId', accountId);
+
+		await fetch(
+			`/o/commerce-ui/set-current-account?groupId=${Liferay.ThemeDisplay.getScopeGroupId()}&p_auth=${
+				Liferay.authToken
+			}`,
+			{
+				body,
+				headers: {'x-csrf-token': Liferay.authToken},
+				method: 'POST',
+			}
 		);
 
-		renderAccounts(
-			response.items,
-			Liferay.CommerceContext.account.accountId,
-			search
-		);
+		window.location.reload();
 	}
 	catch (error) {
-		console.error('Search failed:', error);
+		console.error('Failed to set account:', error);
 	}
 }
 
@@ -268,22 +283,5 @@ function setupEventListeners() {
 	});
 }
 
-async function main() {
-	try {
-		setAccountName(Liferay.CommerceContext.account.accountName);
-
-		accountSelectionDropdown?.classList.remove('d-none');
-
-		setupEventListeners();
-
-		await Promise.all([loadDropdownAccounts(), loadSelectedAccount()]);
-	}
-	catch (error) {
-		console.error('Failed to initialize:', error);
-	}
-}
-
-if (Liferay.ThemeDisplay.isSignedIn()) {
-	initializeElements();
-	main();
-}
+initializeElements();
+main();

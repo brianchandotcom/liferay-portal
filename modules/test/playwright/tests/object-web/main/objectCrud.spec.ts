@@ -32,56 +32,6 @@ const test = mergeTests(
 );
 
 test(
-	'Verify it is possible to delete a published object',
-	{tag: '@LPS-150886'},
-	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
-			objectDefinition.label['en_US']
-		);
-
-		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
-
-		await page
-			.getByPlaceholder('Confirm Object Definition Name')
-			.fill(objectDefinition.name);
-
-		await page.getByRole('button', {exact: true, name: 'Delete'}).click();
-
-		apiHelpers.data.splice(
-			apiHelpers.data.findIndex(
-				(object) =>
-					object.id === objectDefinition.id &&
-					object.type === 'objectDefinition'
-			),
-			1
-		);
-
-		await expect(
-			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
-				hasText: objectDefinition.label['en_US'],
-			})
-		).toBeHidden();
-	}
-);
-
-test(
 	'Verify it is possible to filter object entries by API',
 	{tag: '@LPS-158615'},
 	async ({apiHelpers}) => {

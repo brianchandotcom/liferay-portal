@@ -988,6 +988,7 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 	test('can delete an object definition by FDS action', async ({
 		apiHelpers,
+		page,
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition1 =
@@ -1000,12 +1001,21 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 				status: {code: 2},
 			});
 
+		const objectDefinition3 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
 		apiHelpers.data.push({
 			id: objectDefinition1.id,
 			type: 'objectDefinition',
 		});
 		apiHelpers.data.push({
 			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+		apiHelpers.data.push({
+			id: objectDefinition3.id,
 			type: 'objectDefinition',
 		});
 
@@ -1026,6 +1036,27 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 			1
 		);
 
+		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+			objectDefinition3.label!['en_US']
+		);
+
+		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+		await page
+			.getByPlaceholder('Confirm Object Definition Name')
+			.fill(objectDefinition3.name!);
+
+		await page.getByRole('button', {exact: true, name: 'Delete'}).click();
+
+		apiHelpers.data.splice(
+			apiHelpers.data.findIndex(
+				(object) =>
+					object.id === objectDefinition3.id &&
+					object.type === 'objectDefinition'
+			),
+			1
+		);
+
 		await expect(
 			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
 				hasText: objectDefinition1.label['en_US'],
@@ -1035,6 +1066,12 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		await expect(
 			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
 				hasText: objectDefinition2.label['en_US'],
+			})
+		).toBeHidden();
+
+		await expect(
+			viewObjectDefinitionsPage.frontendDataSetEntries.filter({
+				hasText: objectDefinition3.label!['en_US'],
 			})
 		).toBeHidden();
 	});

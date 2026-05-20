@@ -13,11 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.osb.faro.rest.client.dto.v1_0.Channel;
+import com.liferay.osb.faro.rest.client.dto.v1_0.Workspace;
 import com.liferay.osb.faro.rest.client.http.HttpInvoker;
 import com.liferay.osb.faro.rest.client.pagination.Page;
-import com.liferay.osb.faro.rest.client.resource.v1_0.ChannelResource;
-import com.liferay.osb.faro.rest.client.serdes.v1_0.ChannelSerDes;
+import com.liferay.osb.faro.rest.client.resource.v1_0.WorkspaceResource;
+import com.liferay.osb.faro.rest.client.serdes.v1_0.WorkspaceSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -73,7 +73,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseChannelResourceTestCase {
+public abstract class BaseWorkspaceResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -94,12 +94,12 @@ public abstract class BaseChannelResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_channelResource.setContextCompany(testCompany);
+		_workspaceResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		channelResource = ChannelResource.builder(
+		workspaceResource = WorkspaceResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -121,23 +121,23 @@ public abstract class BaseChannelResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Channel channel1 = randomChannel();
+		Workspace workspace1 = randomWorkspace();
 
-		String json = objectMapper.writeValueAsString(channel1);
+		String json = objectMapper.writeValueAsString(workspace1);
 
-		Channel channel2 = ChannelSerDes.toDTO(json);
+		Workspace workspace2 = WorkspaceSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(channel1, channel2));
+		Assert.assertTrue(equals(workspace1, workspace2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		Channel channel = randomChannel();
+		Workspace workspace = randomWorkspace();
 
-		String json1 = objectMapper.writeValueAsString(channel);
-		String json2 = ChannelSerDes.toJSON(channel);
+		String json1 = objectMapper.writeValueAsString(workspace);
+		String json2 = WorkspaceSerDes.toJSON(workspace);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -165,203 +165,42 @@ public abstract class BaseChannelResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		Channel channel = randomChannel();
+		Workspace workspace = randomWorkspace();
 
-		channel.setId(regex);
-		channel.setName(regex);
+		workspace.setName(regex);
 
-		String json = ChannelSerDes.toJSON(channel);
+		String json = WorkspaceSerDes.toJSON(workspace);
 
 		Assert.assertFalse(json.contains(regex));
 
-		channel = ChannelSerDes.toDTO(json);
+		workspace = WorkspaceSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, channel.getId());
-		Assert.assertEquals(regex, channel.getName());
+		Assert.assertEquals(regex, workspace.getName());
 	}
 
 	@Test
-	public void testGetWorkspaceGroupChannel() throws Exception {
-		Channel postChannel = testGetWorkspaceGroupChannel_addChannel();
-
-		Channel getChannel = channelResource.getWorkspaceGroupChannel(
-			testGetWorkspaceGroupChannel_getGroupId(), postChannel.getId());
-
-		assertEquals(postChannel, getChannel);
-		assertValid(getChannel);
-	}
-
-	protected Channel testGetWorkspaceGroupChannel_addChannel()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWorkspaceGroupChannel_getGroupId() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkspaceGroupChannel() throws Exception {
-		Channel channel = testGraphQLGetWorkspaceGroupChannel_addChannel();
-
-		// No namespace
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"workspaceGroupChannel",
-								new HashMap<String, Object>() {
-									{
-										put(
-											"groupId",
-											testGraphQLGetWorkspaceGroupChannel_getGroupId());
-										put(
-											"channelId",
-											"\"" + channel.getId() + "\"");
-									}
-								},
-								getGraphQLFields())),
-						"JSONObject/data", "Object/workspaceGroupChannel"))));
-
-		// Using the namespace faro_v1_0
-
-		Assert.assertTrue(
-			equals(
-				channel,
-				ChannelSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"faro_v1_0",
-								new GraphQLField(
-									"workspaceGroupChannel",
-									new HashMap<String, Object>() {
-										{
-											put(
-												"groupId",
-												testGraphQLGetWorkspaceGroupChannel_getGroupId());
-											put(
-												"channelId",
-												"\"" + channel.getId() + "\"");
-										}
-									},
-									getGraphQLFields()))),
-						"JSONObject/data", "JSONObject/faro_v1_0",
-						"Object/workspaceGroupChannel"))));
-	}
-
-	protected Long testGraphQLGetWorkspaceGroupChannel_getGroupId()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGraphQLGetWorkspaceGroupChannelNotFound() throws Exception {
-		Long irrelevantGroupId = RandomTestUtil.randomLong();
-		String irrelevantChannelId =
-			"\"" + RandomTestUtil.randomString() + "\"";
-
-		// No namespace
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"workspaceGroupChannel",
-						new HashMap<String, Object>() {
-							{
-								put("groupId", irrelevantGroupId);
-								put("channelId", irrelevantChannelId);
-							}
-						},
-						getGraphQLFields())),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-
-		// Using the namespace faro_v1_0
-
-		Assert.assertEquals(
-			"Not Found",
-			JSONUtil.getValueAsString(
-				invokeGraphQLQuery(
-					new GraphQLField(
-						"faro_v1_0",
-						new GraphQLField(
-							"workspaceGroupChannel",
-							new HashMap<String, Object>() {
-								{
-									put("groupId", irrelevantGroupId);
-									put("channelId", irrelevantChannelId);
-								}
-							},
-							getGraphQLFields()))),
-				"JSONArray/errors", "Object/0", "JSONObject/extensions",
-				"Object/code"));
-	}
-
-	protected Channel testGraphQLGetWorkspaceGroupChannel_addChannel()
-		throws Exception {
-
-		return testGraphQLChannel_addChannel();
-	}
-
-	@Test
-	public void testGetWorkspaceGroupChannelsPage() throws Exception {
-		Long groupId = testGetWorkspaceGroupChannelsPage_getGroupId();
-		Long irrelevantGroupId =
-			testGetWorkspaceGroupChannelsPage_getIrrelevantGroupId();
-
-		Page<Channel> page = channelResource.getWorkspaceGroupChannelsPage(
-			groupId);
+	public void testGetWorkspacesPage() throws Exception {
+		Page<Workspace> page = workspaceResource.getWorkspacesPage();
 
 		long totalCount = page.getTotalCount();
 
-		if (irrelevantGroupId != null) {
-			Channel irrelevantChannel =
-				testGetWorkspaceGroupChannelsPage_addChannel(
-					irrelevantGroupId, randomIrrelevantChannel());
+		Workspace workspace1 = testGetWorkspacesPage_addWorkspace(
+			randomWorkspace());
 
-			page = channelResource.getWorkspaceGroupChannelsPage(
-				irrelevantGroupId);
+		Workspace workspace2 = testGetWorkspacesPage_addWorkspace(
+			randomWorkspace());
 
-			Assert.assertEquals(totalCount + 1, page.getTotalCount());
-
-			assertContains(irrelevantChannel, (List<Channel>)page.getItems());
-			assertValid(
-				page,
-				testGetWorkspaceGroupChannelsPage_getExpectedActions(
-					irrelevantGroupId));
-		}
-
-		Channel channel1 = testGetWorkspaceGroupChannelsPage_addChannel(
-			groupId, randomChannel());
-
-		Channel channel2 = testGetWorkspaceGroupChannelsPage_addChannel(
-			groupId, randomChannel());
-
-		page = channelResource.getWorkspaceGroupChannelsPage(groupId);
+		page = workspaceResource.getWorkspacesPage();
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertContains(channel1, (List<Channel>)page.getItems());
-		assertContains(channel2, (List<Channel>)page.getItems());
-		assertValid(
-			page,
-			testGetWorkspaceGroupChannelsPage_getExpectedActions(groupId));
+		assertContains(workspace1, (List<Workspace>)page.getItems());
+		assertContains(workspace2, (List<Workspace>)page.getItems());
+		assertValid(page, testGetWorkspacesPage_getExpectedActions());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetWorkspaceGroupChannelsPage_getExpectedActions(Long groupId)
+			testGetWorkspacesPage_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -369,44 +208,28 @@ public abstract class BaseChannelResourceTestCase {
 		return expectedActions;
 	}
 
-	protected Channel testGetWorkspaceGroupChannelsPage_addChannel(
-			Long groupId, Channel channel)
+	protected Workspace testGetWorkspacesPage_addWorkspace(Workspace workspace)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetWorkspaceGroupChannelsPage_getGroupId()
-		throws Exception {
+	protected void assertContains(
+		Workspace workspace, List<Workspace> workspaces) {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected Long testGetWorkspaceGroupChannelsPage_getIrrelevantGroupId()
-		throws Exception {
-
-		return null;
-	}
-
-	protected Channel testGraphQLChannel_addChannel() throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void assertContains(Channel channel, List<Channel> channels) {
 		boolean contains = false;
 
-		for (Channel item : channels) {
-			if (equals(channel, item)) {
+		for (Workspace item : workspaces) {
+			if (equals(workspace, item)) {
 				contains = true;
 
 				break;
 			}
 		}
 
-		Assert.assertTrue(channels + " does not contain " + channel, contains);
+		Assert.assertTrue(
+			workspaces + " does not contain " + workspace, contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -417,35 +240,35 @@ public abstract class BaseChannelResourceTestCase {
 			expectedHttpResponseStatusCode, actualHttpResponse.getStatusCode());
 	}
 
-	protected void assertEquals(Channel channel1, Channel channel2) {
+	protected void assertEquals(Workspace workspace1, Workspace workspace2) {
 		Assert.assertTrue(
-			channel1 + " does not equal " + channel2,
-			equals(channel1, channel2));
+			workspace1 + " does not equal " + workspace2,
+			equals(workspace1, workspace2));
 	}
 
 	protected void assertEquals(
-		List<Channel> channels1, List<Channel> channels2) {
+		List<Workspace> workspaces1, List<Workspace> workspaces2) {
 
-		Assert.assertEquals(channels1.size(), channels2.size());
+		Assert.assertEquals(workspaces1.size(), workspaces2.size());
 
-		for (int i = 0; i < channels1.size(); i++) {
-			Channel channel1 = channels1.get(i);
-			Channel channel2 = channels2.get(i);
+		for (int i = 0; i < workspaces1.size(); i++) {
+			Workspace workspace1 = workspaces1.get(i);
+			Workspace workspace2 = workspaces2.get(i);
 
-			assertEquals(channel1, channel2);
+			assertEquals(workspace1, workspace2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<Channel> channels1, List<Channel> channels2) {
+		List<Workspace> workspaces1, List<Workspace> workspaces2) {
 
-		Assert.assertEquals(channels1.size(), channels2.size());
+		Assert.assertEquals(workspaces1.size(), workspaces2.size());
 
-		for (Channel channel1 : channels1) {
+		for (Workspace workspace1 : workspaces1) {
 			boolean contains = false;
 
-			for (Channel channel2 : channels2) {
-				if (equals(channel1, channel2)) {
+			for (Workspace workspace2 : workspaces2) {
+				if (equals(workspace1, workspace2)) {
 					contains = true;
 
 					break;
@@ -453,22 +276,26 @@ public abstract class BaseChannelResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				channels2 + " does not contain " + channel1, contains);
+				workspaces2 + " does not contain " + workspace1, contains);
 		}
 	}
 
-	protected void assertValid(Channel channel) throws Exception {
+	protected void assertValid(Workspace workspace) throws Exception {
 		boolean valid = true;
-
-		if (channel.getId() == null) {
-			valid = false;
-		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("groupId", additionalAssertFieldName)) {
+				if (workspace.getGroupId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (channel.getName() == null) {
+				if (workspace.getName() == null) {
 					valid = false;
 				}
 
@@ -483,18 +310,19 @@ public abstract class BaseChannelResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<Channel> page) {
+	protected void assertValid(Page<Workspace> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<Channel> page, Map<String, Map<String, String>> expectedActions) {
+		Page<Workspace> page,
+		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<Channel> channels = page.getItems();
+		java.util.Collection<Workspace> workspaces = page.getItems();
 
-		int size = channels.size();
+		int size = workspaces.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -532,11 +360,9 @@ public abstract class BaseChannelResourceTestCase {
 	protected List<GraphQLField> getGraphQLFields() throws Exception {
 		List<GraphQLField> graphQLFields = new ArrayList<>();
 
-		graphQLFields.add(new GraphQLField("id"));
-
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.osb.faro.rest.dto.v1_0.Channel.class)) {
+					com.liferay.osb.faro.rest.dto.v1_0.Workspace.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -584,16 +410,18 @@ public abstract class BaseChannelResourceTestCase {
 		return new String[0];
 	}
 
-	protected boolean equals(Channel channel1, Channel channel2) {
-		if (channel1 == channel2) {
+	protected boolean equals(Workspace workspace1, Workspace workspace2) {
+		if (workspace1 == workspace2) {
 			return true;
 		}
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
-			if (Objects.equals("id", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(channel1.getId(), channel2.getId())) {
+			if (Objects.equals("groupId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						workspace1.getGroupId(), workspace2.getGroupId())) {
+
 					return false;
 				}
 
@@ -602,7 +430,7 @@ public abstract class BaseChannelResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						channel1.getName(), channel2.getName())) {
+						workspace1.getName(), workspace2.getName())) {
 
 					return false;
 				}
@@ -666,13 +494,13 @@ public abstract class BaseChannelResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_channelResource instanceof EntityModelResource)) {
+		if (!(_workspaceResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_channelResource;
+			(EntityModelResource)_workspaceResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -705,7 +533,7 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	protected String getFilterString(
-		EntityField entityField, String operator, Channel channel) {
+		EntityField entityField, String operator, Workspace workspace) {
 
 		StringBundler sb = new StringBundler();
 
@@ -717,54 +545,13 @@ public abstract class BaseChannelResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
-		if (entityFieldName.equals("id")) {
-			Object object = channel.getId();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+		if (entityFieldName.equals("groupId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
-			Object object = channel.getName();
+			Object object = workspace.getName();
 
 			String value = String.valueOf(object);
 
@@ -853,26 +640,26 @@ public abstract class BaseChannelResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected Channel randomChannel() throws Exception {
-		return new Channel() {
+	protected Workspace randomWorkspace() throws Exception {
+		return new Workspace() {
 			{
-				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				groupId = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected Channel randomIrrelevantChannel() throws Exception {
-		Channel randomIrrelevantChannel = randomChannel();
+	protected Workspace randomIrrelevantWorkspace() throws Exception {
+		Workspace randomIrrelevantWorkspace = randomWorkspace();
 
-		return randomIrrelevantChannel;
+		return randomIrrelevantWorkspace;
 	}
 
-	protected Channel randomPatchChannel() throws Exception {
-		return randomChannel();
+	protected Workspace randomPatchWorkspace() throws Exception {
+		return randomWorkspace();
 	}
 
-	protected ChannelResource channelResource;
+	protected WorkspaceResource workspaceResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;
@@ -1071,15 +858,15 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseChannelResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseWorkspaceResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.osb.faro.rest.resource.v1_0.ChannelResource
-		_channelResource;
+	private com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource
+		_workspaceResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2037503774
+// LIFERAY-REST-BUILDER-HASH:1400158858

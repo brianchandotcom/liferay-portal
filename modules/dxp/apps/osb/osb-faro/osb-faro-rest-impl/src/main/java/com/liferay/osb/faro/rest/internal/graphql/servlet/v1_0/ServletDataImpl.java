@@ -16,6 +16,7 @@ import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentMembers
 import com.liferay.osb.faro.rest.internal.resource.v1_0.IndividualSegmentResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.PageMetricResourceImpl;
 import com.liferay.osb.faro.rest.internal.resource.v1_0.SearchTermResourceImpl;
+import com.liferay.osb.faro.rest.internal.resource.v1_0.WorkspaceResourceImpl;
 import com.liferay.osb.faro.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.ChannelResource;
@@ -25,6 +26,7 @@ import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResour
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentResource;
 import com.liferay.osb.faro.rest.resource.v1_0.PageMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.SearchTermResource;
+import com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -68,6 +70,8 @@ public class ServletDataImpl implements ServletData {
 			_pageMetricResourceComponentServiceObjects);
 		Query.setSearchTermResourceComponentServiceObjects(
 			_searchTermResourceComponentServiceObjects);
+		Query.setWorkspaceResourceComponentServiceObjects(
+			_workspaceResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -169,6 +173,10 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							SearchTermResourceImpl.class,
 							"getWorkspaceGroupChannelSearchTermsPage"));
+					put(
+						"query#workspaces",
+						new ObjectValuePair<>(
+							WorkspaceResourceImpl.class, "getWorkspacesPage"));
 				}
 			};
 
@@ -208,5 +216,9 @@ public class ServletDataImpl implements ServletData {
 	private ComponentServiceObjects<SearchTermResource>
 		_searchTermResourceComponentServiceObjects;
 
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<WorkspaceResource>
+		_workspaceResourceComponentServiceObjects;
+
 }
-// LIFERAY-REST-BUILDER-HASH:-517157000
+// LIFERAY-REST-BUILDER-HASH:1562524079

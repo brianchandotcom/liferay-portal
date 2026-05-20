@@ -5,8 +5,8 @@
 
 package com.liferay.osb.faro.rest.internal.resource.v1_0;
 
-import com.liferay.osb.faro.rest.dto.v1_0.Channel;
-import com.liferay.osb.faro.rest.resource.v1_0.ChannelResource;
+import com.liferay.osb.faro.rest.dto.v1_0.Workspace;
+import com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -41,79 +41,24 @@ import java.util.Map;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseChannelResourceImpl implements ChannelResource {
+public abstract class BaseWorkspaceResourceImpl implements WorkspaceResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspace/{groupId}/channels/{channelId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspaces'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Fetch a single channel (also known as property) from an Analytics Cloud workspace. To list available channels in the workspace use `getWorkspaceGroupChannelsPage`."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "channelId"
-			)
-		}
+		description = "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with other endpoints (e.g. `getWorkspaceGroupAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope requests to a specific workspace."
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Channel")}
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Workspace")}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/workspace/{groupId}/channels/{channelId}")
+	@jakarta.ws.rs.Path("/workspaces")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Channel getWorkspaceGroupChannel(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("groupId")
-			Long groupId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("channelId")
-			String channelId)
-		throws Exception {
-
-		return new Channel();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspace/{groupId}/channels'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use `getWorkspaceGroupChannel`."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "groupId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Channel")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/workspace/{groupId}/channels")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Channel> getWorkspaceGroupChannelsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("groupId")
-			Long groupId)
-		throws Exception {
-
+	public Page<Workspace> getWorkspacesPage() throws Exception {
 		return Page.of(Collections.emptyList());
 	}
 
@@ -559,7 +504,7 @@ public abstract class BaseChannelResourceImpl implements ChannelResource {
 	protected SortParserProvider sortParserProvider;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseChannelResourceImpl.class);
+		LogFactoryUtil.getLog(BaseWorkspaceResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:2079461276
+// LIFERAY-REST-BUILDER-HASH:659565317

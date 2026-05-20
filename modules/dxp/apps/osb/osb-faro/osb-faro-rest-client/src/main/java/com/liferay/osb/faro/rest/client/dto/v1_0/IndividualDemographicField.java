@@ -25,16 +25,24 @@ public class IndividualDemographicField implements Cloneable, Serializable {
 		return IndividualDemographicFieldSerDes.toDTO(json);
 	}
 
-	public String getFieldType() {
+	public FieldType getFieldType() {
 		return fieldType;
 	}
 
-	public void setFieldType(String fieldType) {
+	public String getFieldTypeAsString() {
+		if (fieldType == null) {
+			return null;
+		}
+
+		return fieldType.toString();
+	}
+
+	public void setFieldType(FieldType fieldType) {
 		this.fieldType = fieldType;
 	}
 
 	public void setFieldType(
-		UnsafeSupplier<String, Exception> fieldTypeUnsafeSupplier) {
+		UnsafeSupplier<FieldType, Exception> fieldTypeUnsafeSupplier) {
 
 		try {
 			fieldType = fieldTypeUnsafeSupplier.get();
@@ -44,7 +52,7 @@ public class IndividualDemographicField implements Cloneable, Serializable {
 		}
 	}
 
-	protected String fieldType;
+	protected FieldType fieldType;
 
 	public String getLabel() {
 		return label;
@@ -142,5 +150,38 @@ public class IndividualDemographicField implements Cloneable, Serializable {
 		return IndividualDemographicFieldSerDes.toJSON(this);
 	}
 
+	public static enum FieldType {
+
+		BOOLEAN("boolean"), DATE("date"), NUMBER("number"), STRING("string");
+
+		public static FieldType create(String value) {
+			for (FieldType fieldType : values()) {
+				if (Objects.equals(fieldType.getValue(), value) ||
+					Objects.equals(fieldType.name(), value)) {
+
+					return fieldType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FieldType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
 }
-// LIFERAY-REST-BUILDER-HASH:1452647190
+// LIFERAY-REST-BUILDER-HASH:-1366930917

@@ -40,7 +40,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page metadata. Use `getSiteChannelEventsPage` to retrieve a list of analytics events.",
+	description = "A single tracked analytics event captured — page views, custom events, form submissions, etc. Each event carries free-form `attributes` (a name-value map of contextual properties) plus any matching page metadata. Use `getWorkspaceGroupChannelEventsPage` to retrieve a list of analytics events.",
 	value = "Event"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -144,7 +144,7 @@ public class Event implements Serializable {
 	private Supplier<String> _assetTitleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Free-form event properties as a key-value map."
+		description = "Free-form event properties as a key-value map. Available keys depend on the event `name` (e.g. a `pageViewed` event carries different attributes than `formSubmitted`)."
 	)
 	@Valid
 	public Map<String, String> getAttributes() {
@@ -182,7 +182,7 @@ public class Event implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Free-form event properties as a key-value map."
+		description = "Free-form event properties as a key-value map. Available keys depend on the event `name` (e.g. a `pageViewed` event carries different attributes than `formSubmitted`)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> attributes;
@@ -279,7 +279,7 @@ public class Event implements Serializable {
 	private Supplier<Date> _createDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Identifier of known individuals. Null for anonymous individuals."
+		description = "Identifier of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	public String getIndividualId() {
 		if (_individualIdSupplier != null) {
@@ -315,7 +315,7 @@ public class Event implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Identifier of known individuals. Null for anonymous individuals."
+		description = "Identifier of the individual that emitted the event. Null for anonymous individuals. Use with `getWorkspaceGroupIndividual` to fetch the individual."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String individualId;
@@ -324,7 +324,7 @@ public class Event implements Serializable {
 	private Supplier<String> _individualIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.)."
+		description = "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names varies per channel and per integration."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -358,7 +358,7 @@ public class Event implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.)."
+		description = "Name of the event type (e.g. 'pageViewed', 'formSubmitted', etc.). The set of available names varies per channel and per integration."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String name;
@@ -904,4 +904,4 @@ public class Event implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1861677210
+// LIFERAY-REST-BUILDER-HASH:-672434847

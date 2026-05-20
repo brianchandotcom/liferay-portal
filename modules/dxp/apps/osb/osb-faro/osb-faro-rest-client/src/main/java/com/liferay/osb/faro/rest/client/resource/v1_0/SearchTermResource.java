@@ -35,14 +35,14 @@ public interface SearchTermResource {
 	}
 
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, Integer rangeKey,
+			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWorkspaceGroupChannelSearchTermsPageHttpResponse(
 				Long groupId, String channelId, String rangeEnd,
-				Integer rangeKey, String rangeStart, Pagination pagination)
+				String rangeKey, String rangeStart, Pagination pagination)
 		throws Exception;
 
 	public static class Builder {
@@ -155,7 +155,7 @@ public interface SearchTermResource {
 
 		public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
 				Long groupId, String channelId, String rangeEnd,
-				Integer rangeKey, String rangeStart, Pagination pagination)
+				String rangeKey, String rangeStart, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
@@ -225,7 +225,7 @@ public interface SearchTermResource {
 		public HttpInvoker.HttpResponse
 				getWorkspaceGroupChannelSearchTermsPageHttpResponse(
 					Long groupId, String channelId, String rangeEnd,
-					Integer rangeKey, String rangeStart, Pagination pagination)
+					String rangeKey, String rangeStart, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -296,4 +296,4 @@ public interface SearchTermResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:363100654
+// LIFERAY-REST-BUILDER-HASH:-1063518150

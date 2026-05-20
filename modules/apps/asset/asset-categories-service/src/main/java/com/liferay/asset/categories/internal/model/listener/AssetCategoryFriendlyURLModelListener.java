@@ -37,15 +37,16 @@ public class AssetCategoryFriendlyURLModelListener
 				return;
 			}
 
+			long classNameId = _classNameLocalService.getClassNameId(
+				AssetCategory.class);
+			long parentClassPK = _getAssetCategoryParentClassPK(assetCategory);
+
 			_friendlyURLEntryLocalService.addFriendlyURLEntry(
-				assetCategory.getGroupId(),
-				_classNameLocalService.getClassNameId(AssetCategory.class),
-				_getAssetCategoryParentClassPK(assetCategory),
+				assetCategory.getGroupId(), classNameId, parentClassPK,
 				assetCategory.getCategoryId(),
 				assetCategory.getDefaultLanguageId(),
 				_friendlyURLEntryLocalService.getUniqueUrlTitleMap(
-					assetCategory.getGroupId(),
-					_classNameLocalService.getClassNameId(AssetCategory.class),
+					assetCategory.getGroupId(), classNameId, parentClassPK,
 					assetCategory.getCategoryId(), assetCategory.getTitleMap()),
 				new ServiceContext());
 		}

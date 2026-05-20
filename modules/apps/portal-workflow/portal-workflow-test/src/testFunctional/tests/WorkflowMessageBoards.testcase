@@ -374,27 +374,4 @@ definition {
 		Workflow.viewWorkflowStatus(status = "Pending");
 	}
 
-	@description = "This is a test for LRQA-69694. Verify that the process status is Pending when the user creates a new thread with workflow associated."
-	@priority = 4
-	test WorkflowPendingForMessageBoard {
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
-
-		MessageboardsThread.addWithWorkflowCP(
-			threadBody = "Thread Message Body",
-			threadSubject = "Thread Message Subject");
-
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
-
-		Navigator.gotoNavTab(navTab = "Assigned to My Roles");
-
-		Workflow.viewPendingTasks(
-			workflowAssetTitle = "Thread Message Subject",
-			workflowAssetType = "Message Boards Message",
-			workflowTask = "Review");
-
-		Workflow.gotoCompletedTaskAssignedToMePreview(workflowAssetTitle = "Thread Message Subject");
-
-		Workflow.viewWorkflowStatus(status = "Pending");
-	}
-
 }

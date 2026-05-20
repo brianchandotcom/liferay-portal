@@ -418,12 +418,12 @@ function _set_tomcat_ports {
 	local target_https=$((8443 + OFFSET))
 
 	_sed_inplace \
+		--regexp-extended \
 		--expression "/<Server/s/port=\"[0-9]+\"/port=\"${target_shutdown}\"/" \
 		--expression "/protocol=\"HTTP\\/1\\.1\"/s/port=\"[0-9]+\"/port=\"${target_http}\"/" \
 		--expression "/protocol=\"org\\.apache\\.coyote\\.http11\\.Http11NioProtocol\"/s/port=\"[0-9]+\"/port=\"${target_https}\"/" \
 		--expression "/<Connector protocol=\"AJP\\/1\\.3\"/,/\\/>/s/^([[:space:]]+)port=\"[0-9]+\"/\\1port=\"${target_ajp}\"/" \
 		--expression "s/redirectPort=\"[0-9]+\"/redirectPort=\"${target_https}\"/g" \
-		--regexp-extended \
 		"${file}"
 }
 

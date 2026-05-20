@@ -2264,6 +2264,90 @@ test(
 );
 
 test(
+	'Can translate a segment title and edit it only after enabling edit mode',
+	{
+		tag: '@LPS-135495',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Seed a segment on the site
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(screenName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(screenName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Original Segment',
+		});
+
+		// Translate the title to pt-BR
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.editSegmentsEntry('Original Segment');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'pt-BR language: Untranslated',
+			}),
+			trigger: page.getByTitle('en-US'),
+		});
+
+		await fillAndClickOutside(
+			page,
+			page.getByTestId('localized-input-button'),
+			'Segmento Traduzido'
+		);
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the entries list still shows the default-language title
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('link', {name: 'Original Segment'})
+		).toBeVisible();
+
+		// In view mode, the pt-BR title field is read-only
+
+		await segmentsPage.clickLinkByText('Original Segment');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'pt-BR language: Translated',
+			}),
+			trigger: page.getByTitle('en-US'),
+		});
+
+		await expect(
+			page.getByTestId('localized-input-button')
+		).toHaveAttribute('readonly');
+
+		// After enabling Edit Mode the field becomes editable
+
+		await page.getByLabel('Enter Edit Mode').click();
+
+		await expect(
+			page.getByTestId('localized-input-button')
+		).not.toHaveAttribute('readonly');
+	}
+);
+
+test(
 	'Can see the portal default language tagged as Default in the segment locale dropdown',
 	{
 		tag: '@LPS-135495',

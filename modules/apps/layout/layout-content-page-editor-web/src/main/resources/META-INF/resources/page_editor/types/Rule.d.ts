@@ -33,26 +33,70 @@ export type BasicRule = {
 	script?: never;
 };
 
-export interface Condition {
+type EqualityOperator = 'equal' | 'not-equal';
+
+type ComparisonOperator =
+	| 'greater-than'
+	| 'greater-than-or-equals'
+	| 'less-than'
+	| 'less-than-or-equals';
+
+type ContainmentOperator = 'contains' | 'does-not-contain';
+
+type EmptinessOperator = 'is-empty' | 'is-not-empty';
+
+type ConditionBase = {
 	error?: RuleError | null;
-	field?: 'user' | 'role' | 'segment' | string;
+	field?: string;
 	id: string;
-	options?: {
-		type:
-			| 'contains'
-			| 'does-not-contain'
-			| 'equal'
-			| 'greater-than'
-			| 'greater-than-or-equals'
-			| 'is-empty'
-			| 'is-not-empty'
-			| 'less-than'
-			| 'less-than-or-equals'
-			| 'not-equal';
-		value?: string;
-	};
 	type: 'field' | 'form' | 'user' | undefined;
-}
+};
+
+export type Condition = ConditionBase &
+	(
+		| {
+				fieldType?: undefined;
+				options?: {
+					type:
+						| EqualityOperator
+						| ComparisonOperator
+						| ContainmentOperator
+						| EmptinessOperator;
+					value?: string;
+				};
+		  }
+		| {
+				fieldType: 'date' | 'date-time' | 'number';
+				options?: {
+					type: EqualityOperator | ComparisonOperator;
+					value?: string;
+				};
+		  }
+		| {
+				fieldType: 'text';
+				options?: {
+					type:
+						| EqualityOperator
+						| ContainmentOperator
+						| EmptinessOperator;
+					value?: string;
+				};
+		  }
+		| {
+				fieldType: 'select';
+				options?: {
+					type: EqualityOperator | EmptinessOperator;
+					value?: string;
+				};
+		  }
+		| {
+				fieldType: 'multiselect';
+				options?: {
+					type: ContainmentOperator | EmptinessOperator;
+					value?: string[];
+				};
+		  }
+	);
 
 export type Rule = AdvancedRule | BasicRule;
 

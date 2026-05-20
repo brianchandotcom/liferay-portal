@@ -196,7 +196,11 @@ function getValue(
 		condition?.type === TYPE_VALUES.formFragment ||
 		condition?.type === TYPE_VALUES.field
 	) {
-		return value;
+		return Array.isArray(value) ? value.join(', ') : value;
+	}
+
+	if (Array.isArray(value)) {
+		return '';
 	}
 
 	switch (condition?.field) {

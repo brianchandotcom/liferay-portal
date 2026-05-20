@@ -87,6 +87,39 @@ public class LogoutPreActionTest {
 				"test-cookie", _mockHttpServletRequest));
 	}
 
+	@Test
+	public void testLogoutWithoutThemeDisplay() throws Exception {
+		_mockHttpServletRequest.removeAttribute(WebKeys.THEME_DISPLAY);
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
+
+		_assertCookiesExist();
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.click.to.chat.web.internal.configuration." +
+						"ClickToChatConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"chatProviderId", "intercom"
+					).put(
+						"enabled", true
+					).build())) {
+
+			AuthenticatedSessionManagerUtil.logout(
+				_mockHttpServletRequest, new MockHttpServletResponse());
+		}
+
+		Assert.assertNull(
+			CookiesManagerUtil.getCookieValue(
+				"intercom-id-test", _mockHttpServletRequest));
+		Assert.assertNull(
+			CookiesManagerUtil.getCookieValue(
+				"intercom-session-test", _mockHttpServletRequest));
+		Assert.assertNotNull(
+			CookiesManagerUtil.getCookieValue(
+				"test-cookie", _mockHttpServletRequest));
+	}
+
 	private void _assertCookiesExist() {
 		Assert.assertNotNull(
 			CookiesManagerUtil.getCookieValue(

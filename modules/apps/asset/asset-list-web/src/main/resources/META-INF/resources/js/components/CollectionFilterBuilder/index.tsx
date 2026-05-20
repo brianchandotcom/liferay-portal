@@ -57,7 +57,7 @@ function serializeValue(
 interface CollectionFilterBuilderProps extends Config {
 	initialConditions?: Array<Omit<FilterCondition, 'id'>>;
 	onChange?: (state: FilterCondition[]) => void;
-	properties: FilterProperty[];
+	properties: FilterPropertyGroup[];
 }
 
 /**
@@ -93,7 +93,7 @@ export default function CollectionFilterBuilder({
 			: [{id: uuidv4()}]
 	);
 
-	const [properties, setProperties] = useState<FilterProperty[]>(
+	const [properties, setProperties] = useState<FilterPropertyGroup[]>(
 		initialProperties || []
 	);
 
@@ -119,14 +119,7 @@ export default function CollectionFilterBuilder({
 				],
 				label: '',
 			},
-			...(properties.length
-				? [
-						{
-							items: properties,
-							label: Liferay.Language.get('common-fields'),
-						},
-					]
-				: []),
+			...properties,
 		],
 		[properties]
 	);

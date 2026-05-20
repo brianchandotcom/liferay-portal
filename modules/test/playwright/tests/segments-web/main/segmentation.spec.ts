@@ -597,6 +597,206 @@ test(
 );
 
 test(
+	'Can validate a segment can be created using the "Session > Hostname" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionHostname Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Hostname', 'Session', segmentName);
+
+		await segmentsPage.fillField('localhost');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('localhost');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Cookies" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionCookies Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Cookies', 'Session', segmentName);
+
+		await page
+			.getByLabel('Cookies: Input a key.')
+			.fill('GUEST_LANGUAGE_ID');
+
+		await page.getByLabel('Cookies: Input a value.').fill('en_US');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			'GUEST_LANGUAGE_ID=en_US'
+		);
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > IP Geocoder Country" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionIPGeocoderCountry Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'IP Geocoder Country',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.selectOption('Spain');
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('ES');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Referrer URL" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionReferrerURL Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'Referrer URL',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.fillField('http://localhost:8080');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('http://localhost:8080');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Request Parameters" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionRequestParameters Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'Request Parameters',
+			'Session',
+			segmentName
+		);
+
+		await page
+			.getByLabel('Request Parameters: Input a key.')
+			.fill('languageId');
+
+		await page
+			.getByLabel('Request Parameters: Input a value.')
+			.fill('en_US');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			'languageId=en_US'
+		);
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > User Agent" criterion with the Contains operator',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionUserAgent Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'User Agent',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.changeCriterionInput('Contains');
+
+		await segmentsPage.fillField('Chrome');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('Chrome');
+
+		await expect(page.locator('.operator')).toContainText('Contains');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Signed In" criterion with the False option',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionSignedIn Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Signed In', 'Session', segmentName);
+
+		await page.getByLabel('Signed In: Select Option').selectOption('False');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('false');
+	}
+);
+
+test(
 	`Can validate a segment can be created using an 'Apostrophe' in segment property`,
 	{
 		tag: '@LPS-146550',

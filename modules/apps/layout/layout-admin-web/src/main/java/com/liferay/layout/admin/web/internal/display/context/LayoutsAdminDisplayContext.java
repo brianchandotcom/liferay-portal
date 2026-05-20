@@ -143,7 +143,7 @@ public class LayoutsAdminDisplayContext {
 		ItemSelector itemSelector, LayoutActionsHelper layoutActionsHelper,
 		LayoutService layoutService,
 		LayoutSetPrototypeHelper layoutSetPrototypeHelper,
-		LayoutSetSEORobotsProvider layoutSetRobotsProvider,
+		LayoutSetSEORobotsProvider layoutSetSEORobotsProvider,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -151,7 +151,7 @@ public class LayoutsAdminDisplayContext {
 		_layoutActionsHelper = layoutActionsHelper;
 		_layoutService = layoutService;
 		_layoutSetPrototypeHelper = layoutSetPrototypeHelper;
-		_layoutSetRobotsProvider = layoutSetRobotsProvider;
+		_layoutSetSEORobotsProvider = layoutSetSEORobotsProvider;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
 
@@ -1213,7 +1213,7 @@ public class LayoutsAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		return _layoutSetRobotsProvider.getRobotsContributions(selLayoutSet);
+		return _layoutSetSEORobotsProvider.getRobotsContributions(selLayoutSet);
 	}
 
 	public String getSelectFaviconEventName() {
@@ -2581,7 +2581,7 @@ public class LayoutsAdminDisplayContext {
 	private final LayoutActionsHelper _layoutActionsHelper;
 	private final LayoutService _layoutService;
 	private final LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
-	private final LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
+	private final LayoutSetSEORobotsProvider _layoutSetSEORobotsProvider;
 	private SearchContainer<Layout> _layoutsSearchContainer;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

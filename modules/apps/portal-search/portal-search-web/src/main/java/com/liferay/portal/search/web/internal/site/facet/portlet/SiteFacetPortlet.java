@@ -74,7 +74,7 @@ public class SiteFacetPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String metaRobotsContent = _layoutMetaRobotsProvider.getContent(
+		String metaRobotsContent = _layoutSEOMetaRobotsProvider.getContent(
 			renderRequest);
 
 		if (Validator.isNotNull(metaRobotsContent)) {
@@ -227,6 +227,6 @@ public class SiteFacetPortlet extends MVCPortlet {
 		target = "(jakarta.portlet.name=" + SiteFacetPortletKeys.SITE_FACET + ")",
 		unbind = "-"
 	)
-	private LayoutSEOMetaRobotsProvider _layoutMetaRobotsProvider;
+	private LayoutSEOMetaRobotsProvider _layoutSEOMetaRobotsProvider;
 
 }

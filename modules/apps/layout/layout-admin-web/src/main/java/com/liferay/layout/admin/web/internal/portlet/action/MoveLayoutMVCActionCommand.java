@@ -96,7 +96,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 			LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 				new LayoutsAdminDisplayContext(
 					_itemSelector, layoutActionsHelper, _layoutService,
-					_layoutSetPrototypeHelper, _layoutSetRobotsProvider,
+					_layoutSetPrototypeHelper, _layoutSetSEORobotsProvider,
 					liferayPortletRequest, liferayPortletResponse);
 
 			JSONPortletResponseUtil.writeJSON(
@@ -142,7 +142,7 @@ public class MoveLayoutMVCActionCommand extends BaseAddLayoutMVCActionCommand {
 	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Reference
-	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
+	private LayoutSetSEORobotsProvider _layoutSetSEORobotsProvider;
 
 	@Reference
 	private Portal _portal;

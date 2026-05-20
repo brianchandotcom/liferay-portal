@@ -66,7 +66,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String metaRobotsContent = _layoutMetaRobotsProvider.getContent(
+		String metaRobotsContent = _layoutSEOMetaRobotsProvider.getContent(
 			renderRequest);
 
 		if (Validator.isNotNull(metaRobotsContent)) {
@@ -190,7 +190,7 @@ public class CustomFacetPortlet extends MVCPortlet {
 		target = "(jakarta.portlet.name=" + CustomFacetPortletKeys.CUSTOM_FACET + ")",
 		unbind = "-"
 	)
-	private LayoutSEOMetaRobotsProvider _layoutMetaRobotsProvider;
+	private LayoutSEOMetaRobotsProvider _layoutSEOMetaRobotsProvider;
 
 	@Reference
 	private Portal _portal;

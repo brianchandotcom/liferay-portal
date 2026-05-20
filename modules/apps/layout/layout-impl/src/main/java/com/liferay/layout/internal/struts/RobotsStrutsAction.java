@@ -69,7 +69,7 @@ public class RobotsStrutsAction implements StrutsAction {
 				}
 			}
 
-			String robots = _layoutSetRobotsProvider.getRobots(
+			String robots = _layoutSetSEORobotsProvider.getRobots(
 				layoutSet, httpServletRequest.isSecure());
 
 			ServletResponseUtil.sendFile(
@@ -99,7 +99,7 @@ public class RobotsStrutsAction implements StrutsAction {
 	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Reference
-	private LayoutSetSEORobotsProvider _layoutSetRobotsProvider;
+	private LayoutSetSEORobotsProvider _layoutSetSEORobotsProvider;
 
 	@Reference
 	private Portal _portal;

@@ -477,11 +477,12 @@ public class KaleoInstanceTokenLocalServiceWrapper
 
 	@Override
 	public KaleoInstanceToken updateKaleoInstanceToken(
-			long kaleoInstanceTokenId, long currentKaleoNodeId)
+			long kaleoInstanceTokenId, long currentKaleoNodeId,
+			String currentKaleoNodeName)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _kaleoInstanceTokenLocalService.updateKaleoInstanceToken(
-			kaleoInstanceTokenId, currentKaleoNodeId);
+			kaleoInstanceTokenId, currentKaleoNodeId, currentKaleoNodeName);
 	}
 
 	@Override
@@ -524,4 +525,4 @@ public class KaleoInstanceTokenLocalServiceWrapper
 	private KaleoInstanceTokenLocalService _kaleoInstanceTokenLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-123253968
+// LIFERAY-SERVICE-BUILDER-HASH:135910369

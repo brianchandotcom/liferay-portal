@@ -72,6 +72,7 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {transformAdditionalAPIURLParameters} from './utils/transformAdditionalAPIURLParameters';
+import transformDataSetItems from './utils/transformDataSetItems';
 import {
 	EConfigInURLBehavior,
 	EConfigInURLKeys,
@@ -801,27 +802,16 @@ const FrontendDataSetContent = ({
 
 	const updateDataSetItems = useCallback(
 		(dataSetData: IDataSetData) => {
-			const remappedItems = dataSetData.items.map((item) => {
-				if (item.embedded && item.embedded.actions) {
-					return {
-						...item,
-						actions: item.embedded.actions,
-					};
-				}
+			const transformedItems = transformDataSetItems(dataSetData.items);
 
-				return {
-					...item,
-				};
-			});
-
-			setItems(remappedItems);
+			setItems(transformedItems);
 			setTotal(dataSetData.totalCount);
 
 			if (!dataSetData.items.length && dataSetData.totalCount > 0) {
 				viewsDispatch(updatePageNumber(dataSetData.lastPage));
 			}
 
-			return remappedItems;
+			return transformedItems;
 		},
 		[updatePageNumber, viewsDispatch]
 	);

@@ -294,6 +294,27 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 	@Override
+	public java.util.List<KaleoAction> getKaleoNodeKaleoActions(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoActions(kaleoNodeId);
+	}
+
+	@Override
+	public java.util.List<KaleoNotification> getKaleoNodeKaleoNotifications(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoNotifications(kaleoNodeId);
+	}
+
+	@Override
+	public java.util.List<KaleoTransition> getKaleoNodeKaleoTransitions(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoTransitions(kaleoNodeId);
+	}
+
+	@Override
 	public KaleoNode getKaleoStartNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -944,4 +965,4 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1893707107
+// LIFERAY-SERVICE-BUILDER-HASH:687919407

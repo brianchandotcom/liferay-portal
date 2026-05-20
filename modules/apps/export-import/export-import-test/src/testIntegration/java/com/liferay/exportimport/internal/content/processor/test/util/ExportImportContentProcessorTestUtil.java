@@ -35,6 +35,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -144,7 +145,14 @@ public class ExportImportContentProcessorTestUtil {
 		}
 
 		LayoutSet sourcePrivateLayoutSet = sourceGroup.getPrivateLayoutSet();
+
+		NavigableMap<String, String> sourcePrivateVirtualHostnames =
+			sourcePrivateLayoutSet.getVirtualHostnames();
+
 		LayoutSet sourcePublicLayoutSet = sourceGroup.getPublicLayoutSet();
+
+		NavigableMap<String, String> sourcePublicVirtualHostnames =
+			sourcePublicLayoutSet.getVirtualHostnames();
 
 		String targetPublicLayoutFriendlyURL = "";
 		String targetPublicLayoutLocaleFriendlyURL = "";
@@ -206,10 +214,8 @@ public class ExportImportContentProcessorTestUtil {
 				String.valueOf(fileEntry.getGroupId()),
 				StringUtil.removeFirst(
 					sourceGroup.getFriendlyURL(), StringPool.SLASH),
-				PortalUtil.getDefaultVirtualHostname(
-					false, sourcePrivateLayoutSet),
-				PortalUtil.getDefaultVirtualHostname(
-					false, sourcePublicLayoutSet),
+				sourcePrivateVirtualHostnames.firstKey(),
+				sourcePublicVirtualHostnames.firstKey(),
 				String.valueOf(fileEntry.getFileEntryId()),
 				targetGroup.getFriendlyURL(),
 				String.valueOf(targetGroup.getGroupId()),

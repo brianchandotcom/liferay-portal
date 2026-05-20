@@ -9,7 +9,6 @@ import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.io.unsync.UnsyncStringReader;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.Index;
@@ -407,7 +406,7 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
-	protected List<DB.QueryInfo> getQueryInfos(
+	protected List<QueryInfo> getQueryInfos(
 			Connection connection, String sql, long threshold)
 		throws SQLException {
 

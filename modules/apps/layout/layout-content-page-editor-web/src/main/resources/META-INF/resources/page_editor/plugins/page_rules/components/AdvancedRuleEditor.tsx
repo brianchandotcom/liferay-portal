@@ -10,6 +10,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import {config} from '../../../app/config';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {
 	ObjectField,
 	ObjectFields,
@@ -23,7 +24,6 @@ import {useSelector} from '../../../app/contexts/StoreContext';
 import selectFormConfiguration from '../../../app/selectors/selectFormConfiguration';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import FormService from '../../../app/services/FormService';
-import InfoItemService from '../../../app/services/InfoItemService';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS, getCacheItem, getCacheKey} from '../../../app/utils/cache';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
@@ -34,13 +34,18 @@ import {FragmentLayoutDataItem} from '../../../types/layout_data/FragmentLayoutD
 import {filterAndConvertMappingFields} from './Condition';
 
 type Props = {
+	mappingFields: ObjectFields | null;
 	onChange: (value: string | undefined) => void;
 	value?: string;
 };
 
 type CodeEditorSidebarPanel = (typeof config.codeEditorSidebarPanels)[number];
 
-export default function AdvancedRuleEditor({onChange, value}: Props) {
+export default function AdvancedRuleEditor({
+	mappingFields,
+	onChange,
+	value,
+}: Props) {
 	const id = useId();
 
 	const state = useSelector((state: State) => state);
@@ -84,7 +89,7 @@ export default function AdvancedRuleEditor({onChange, value}: Props) {
 	);
 
 	useEffect(() => {
-		getFormFieldsSections(state).then((sections) => {
+		getFormFieldsSections(state, mappingFields).then((sections) => {
 			setCodeEditorSidebarPanels([
 				...config.codeEditorSidebarPanels,
 				...sections,
@@ -93,7 +98,13 @@ export default function AdvancedRuleEditor({onChange, value}: Props) {
 				segmentEntriesSection,
 			]);
 		});
-	}, [state, segmentEntriesSection, rolesSection, usersSection]);
+	}, [
+		mappingFields,
+		rolesSection,
+		segmentEntriesSection,
+		state,
+		usersSection,
+	]);
 
 	useRuleValidation(() => {
 		setError(scriptError || '');
@@ -150,18 +161,13 @@ function getUsersSection(
 	};
 }
 
-async function getFormFieldsSections(state: State) {
+async function getFormFieldsSections(
+	state: State,
+	mappingFields: ObjectFields | null
+) {
 	const sections: CodeEditorSidebarPanel[] = [];
 
-	if (config.selectedMappingTypes) {
-		const {subtype, type} = config.selectedMappingTypes;
-
-		const mappingFields =
-			(await InfoItemService.getAvailableStructureMappingFields({
-				classNameId: type.id,
-				classTypeId: subtype ? subtype.id : '',
-			})) as ObjectFields;
-
+	if (config.layoutType === LAYOUT_TYPES.display && mappingFields) {
 		sections.push({
 			items: filterAndConvertMappingFields(mappingFields).map((field) => {
 				return {
@@ -172,9 +178,9 @@ async function getFormFieldsSections(state: State) {
 			key: 'mappingFields',
 			label: sub(
 				Liferay.Language.get('x-default'),
-				config.selectedMappingTypes.subtype
+				config.selectedMappingTypes?.subtype
 					? config.selectedMappingTypes.subtype.label
-					: config.selectedMappingTypes.type.label
+					: config.selectedMappingTypes?.type.label ?? ''
 			),
 		});
 	}

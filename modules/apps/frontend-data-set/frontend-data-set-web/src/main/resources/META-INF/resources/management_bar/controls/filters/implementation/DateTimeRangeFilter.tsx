@@ -198,7 +198,13 @@ function resolveBound(bound?: Bound): DateParts | undefined {
 		return nowInTimeZone(Liferay.ThemeDisplay.getTimeZone());
 	}
 
-	return normalizeDateParts(bound) ?? undefined;
+	const dateParts = normalizeDateParts(bound);
+
+	if (!dateParts || dateParts.year === 0) {
+		return undefined;
+	}
+
+	return dateParts;
 }
 
 function datePartsToInstantMs(dateParts: DateParts): number {
@@ -209,6 +215,32 @@ function datePartsToInstantMs(dateParts: DateParts): number {
 		dateParts.hour,
 		dateParts.minute
 	);
+}
+
+export function isWithinBounds(
+	dateParts: DateParts | null,
+	min: Bound | undefined,
+	max: Bound | undefined
+): boolean {
+	if (!dateParts) {
+		return true;
+	}
+
+	const datePartsMs = datePartsToInstantMs(dateParts);
+
+	const resolvedMin = resolveBound(min);
+
+	if (resolvedMin && datePartsMs < datePartsToInstantMs(resolvedMin)) {
+		return false;
+	}
+
+	const resolvedMax = resolveBound(max);
+
+	if (resolvedMax && datePartsMs > datePartsToInstantMs(resolvedMax)) {
+		return false;
+	}
+
+	return true;
 }
 
 function getTimeZoneOffset(timeZone: string, atDate: Date): string {
@@ -413,34 +445,15 @@ const DateTimeRangeFilter = ({
 	const fromDateParts = parseClayValue(fromValue, use12Hours, dateTime);
 	const toDateParts = parseClayValue(toValue, use12Hours, dateTime);
 
-	const resolvedMin = resolveBound(min);
-	const resolvedMax = resolveBound(max);
-
 	const isValidRange =
 		!fromDateParts ||
 		!toDateParts ||
 		datePartsToInstantMs(fromDateParts) <=
 			datePartsToInstantMs(toDateParts);
 
-	const isInBounds = (dateParts: DateParts | null) => {
-		if (!dateParts) {
-			return true;
-		}
-
-		const datePartsMs = datePartsToInstantMs(dateParts);
-
-		if (resolvedMin && datePartsMs < datePartsToInstantMs(resolvedMin)) {
-			return false;
-		}
-
-		if (resolvedMax && datePartsMs > datePartsToInstantMs(resolvedMax)) {
-			return false;
-		}
-
-		return true;
-	};
-
-	const isWithinBounds = isInBounds(fromDateParts) && isInBounds(toDateParts);
+	const withinBounds =
+		isWithinBounds(fromDateParts, min, max) &&
+		isWithinBounds(toDateParts, min, max);
 
 	let actionType = 'edit';
 
@@ -464,7 +477,7 @@ const DateTimeRangeFilter = ({
 		fromValue !== initialFromString ||
 		toValue !== initialToString;
 
-	const submitDisabled = !isChanged || !isValidRange || !isWithinBounds;
+	const submitDisabled = !isChanged || !isValidRange || !withinBounds;
 
 	const yearRange = {
 		end: new Date().getFullYear() + 25,
@@ -541,7 +554,7 @@ const DateTimeRangeFilter = ({
 						/>
 					</ClayForm.Group>
 
-					{(!isValidRange || !isWithinBounds) && (
+					{(!isValidRange || !withinBounds) && (
 						<ClayForm.FeedbackGroup>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />

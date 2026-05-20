@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {dateTimeRangeFilterImplementation} from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
+import {
+	dateTimeRangeFilterImplementation,
+	isWithinBounds,
+} from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
 
 const {getOdataString, getSelectedItemsLabel} =
 	dateTimeRangeFilterImplementation;
@@ -101,6 +104,51 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 			} as any);
 
 			expect(result).toBe('testField ge 2026-05-11T15:30:00Z');
+		});
+	});
+});
+
+describe('DateTimeRangeFilter.isWithinBounds', () => {
+	const noBound = {day: 0, hour: 0, minute: 0, month: 0, year: 0};
+
+	const minBound = {day: 1, hour: 0, minute: 0, month: 1, year: 2026};
+	const maxBound = {day: 31, hour: 23, minute: 59, month: 12, year: 2026};
+
+	const beforeMin = {day: 31, hour: 23, minute: 59, month: 12, year: 2025};
+	const insideBounds = {day: 15, hour: 12, minute: 0, month: 6, year: 2026};
+	const afterMax = {day: 1, hour: 0, minute: 0, month: 1, year: 2027};
+
+	describe('without an upper limit', () => {
+		it('accepts a date after the lower bound', () => {
+			expect(isWithinBounds(afterMax, minBound, noBound)).toBe(true);
+		});
+
+		it('rejects a date before the lower bound', () => {
+			expect(isWithinBounds(beforeMin, minBound, noBound)).toBe(false);
+		});
+	});
+
+	describe('without a lower limit', () => {
+		it('accepts a date before the upper bound', () => {
+			expect(isWithinBounds(beforeMin, noBound, maxBound)).toBe(true);
+		});
+
+		it('rejects a date after the upper bound', () => {
+			expect(isWithinBounds(afterMax, noBound, maxBound)).toBe(false);
+		});
+	});
+
+	describe('with both limits', () => {
+		it('accepts a date inside the range', () => {
+			expect(isWithinBounds(insideBounds, minBound, maxBound)).toBe(true);
+		});
+
+		it('rejects a date before the lower bound', () => {
+			expect(isWithinBounds(beforeMin, minBound, maxBound)).toBe(false);
+		});
+
+		it('rejects a date after the upper bound', () => {
+			expect(isWithinBounds(afterMax, minBound, maxBound)).toBe(false);
 		});
 	});
 });

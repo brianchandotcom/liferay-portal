@@ -2264,6 +2264,54 @@ test(
 );
 
 test(
+	'Can list a segment created on one locale from the admin URL of any other locale',
+	{
+		tag: '@LPS-153509',
+	},
+	async ({apiHelpers, page, site}) => {
+
+		// Seed a segment on the site
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(lastName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(lastName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Segmento Espanol',
+		});
+
+		// Assert the segment is visible from the Spanish admin URL
+
+		await page.goto(
+			`/es/group${site.friendlyUrlPath}/~/control_panel/manage/-/segments/entries`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Segmento Espanol'})
+		).toBeVisible();
+
+		// Assert the segment is also visible from the Portuguese admin URL
+
+		await page.goto(
+			`/pt/group${site.friendlyUrlPath}/~/control_panel/manage/-/segments/entries`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Segmento Espanol'})
+		).toBeVisible();
+	}
+);
+
+test(
 	'Can refresh the members count when conjunctions between conditions change',
 	{
 		tag: ['@LPS-153507', '@LPS-95412'],

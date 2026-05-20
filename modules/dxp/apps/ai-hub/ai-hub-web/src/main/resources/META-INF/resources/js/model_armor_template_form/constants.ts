@@ -5,6 +5,26 @@
 
 import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 
+export const DEFAULT_MODEL_ARMOR_TEMPLATE: Omit<
+	ModelArmorTemplate,
+	'r_accountToAIHubModelArmorTemplates_accountEntryERC'
+> = {
+	active: true,
+	description: '',
+	externalReferenceCode: '',
+	guardrailType: 'input',
+	maliciousUriFilterEnabled: false,
+	multiLanguageDetectionEnabled: false,
+	piAndJailbreakConfidenceLevel: 'mediumAndAbove',
+	piAndJailbreakFilterEnabled: false,
+	raiDangerousLevel: 'none',
+	raiHarassmentLevel: 'none',
+	raiHateSpeechLevel: 'none',
+	raiSexuallyExplicitLevel: 'none',
+	sdpFilterEnabled: false,
+	title: '',
+};
+
 export type DetectionField = Extract<
 	keyof ModelArmorTemplate,
 	| 'maliciousUriFilterEnabled'

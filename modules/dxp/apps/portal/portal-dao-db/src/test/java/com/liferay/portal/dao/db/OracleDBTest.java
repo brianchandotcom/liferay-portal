@@ -6,6 +6,7 @@
 package com.liferay.portal.dao.db;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -350,11 +351,8 @@ public class OracleDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testGetQueryInfosORA942() throws Exception {
+	public void testGetQueryInfos() throws Exception {
 		OracleDB oracleDB = new OracleDB(0, 0);
-
-		SQLException sqlException1 = new SQLException(
-			"ORA-00942: table or view does not exist", "42000", 942);
 
 		Connection connection = Mockito.mock(Connection.class);
 
@@ -366,6 +364,9 @@ public class OracleDBTest extends BaseDBTestCase {
 		).thenReturn(
 			preparedStatement
 		);
+
+		SQLException sqlException1 = new SQLException(
+			StringPool.BLANK, _SQL_STATE_SYNTAX_ERROR, _ORA_100_NO_DATA_FOUND);
 
 		Mockito.when(
 			preparedStatement.executeQuery()
@@ -379,17 +380,36 @@ public class OracleDBTest extends BaseDBTestCase {
 			Assert.fail();
 		}
 		catch (SQLException sqlException2) {
+			Assert.assertSame(sqlException1, sqlException2);
+		}
+
+		SQLException sqlException2 = new SQLException(
+			_ORA_942_MESSAGE, _SQL_STATE_OBJECT_NOT_FOUND,
+			_ORA_942_TABLE_NOT_FOUND);
+
+		Mockito.doThrow(
+			sqlException2
+		).when(
+			preparedStatement
+		).executeQuery();
+
+		try {
+			oracleDB.getQueryInfos(connection, "select 1 from dual", 0);
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException3) {
 			Assert.assertEquals(
-				sqlException1.getErrorCode(), sqlException2.getErrorCode());
+				sqlException2.getErrorCode(), sqlException3.getErrorCode());
 			Assert.assertEquals(
 				StringBundler.concat(
 					"Grant select privileges on \"sys.v_$session\" and ",
 					"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
 					"\"DBA\", because the database user lacks the required ",
 					"select privileges"),
-				sqlException2.getMessage());
+				sqlException3.getMessage());
 			Assert.assertEquals(
-				sqlException1.getSQLState(), sqlException2.getSQLState());
+				sqlException2.getSQLState(), sqlException3.getSQLState());
 		}
 	}
 
@@ -559,6 +579,17 @@ public class OracleDBTest extends BaseDBTestCase {
 
 		};
 	}
+
+	private static final int _ORA_100_NO_DATA_FOUND = 100;
+
+	private static final String _ORA_942_MESSAGE =
+		"ORA-00942: table or view does not exist";
+
+	private static final int _ORA_942_TABLE_NOT_FOUND = 942;
+
+	private static final String _SQL_STATE_OBJECT_NOT_FOUND = "42000";
+
+	private static final String _SQL_STATE_SYNTAX_ERROR = "42001";
 
 	private boolean _nullable;
 

@@ -51,33 +51,33 @@ test(
 			let cells = await page.locator('td').allInnerTexts();
 
 			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
-			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
-			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
-			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
+			await expect(page.locator('td').nth(12)).toHaveText(cells[12]);
+			await expect(page.locator('td').nth(23)).toHaveText(cells[23]);
+			await expect(page.locator('td').nth(34)).toHaveText(cells[34]);
 
 			const ascendingIDCells = [
 				cells[1],
-				cells[11],
-				cells[21],
-				cells[31],
-				cells[41],
-				cells[51],
-				cells[61],
-				cells[71],
-				cells[81],
-				cells[91],
+				cells[12],
+				cells[23],
+				cells[34],
+				cells[45],
+				cells[56],
+				cells[67],
+				cells[78],
+				cells[89],
+				cells[100],
 			].sort();
 
 			await expect(page.locator('td').nth(1)).toHaveText(
 				ascendingIDCells[0]
 			);
-			await expect(page.locator('td').nth(11)).toHaveText(
+			await expect(page.locator('td').nth(12)).toHaveText(
 				ascendingIDCells[1]
 			);
-			await expect(page.locator('td').nth(21)).toHaveText(
+			await expect(page.locator('td').nth(23)).toHaveText(
 				ascendingIDCells[2]
 			);
-			await expect(page.locator('td').nth(31)).toHaveText(
+			await expect(page.locator('td').nth(34)).toHaveText(
 				ascendingIDCells[3]
 			);
 
@@ -96,27 +96,27 @@ test(
 
 			const ascendingTitleCells = [
 				cells[2],
-				cells[12],
-				cells[22],
-				cells[32],
-				cells[42],
-				cells[52],
-				cells[62],
-				cells[72],
-				cells[82],
-				cells[92],
+				cells[13],
+				cells[24],
+				cells[35],
+				cells[46],
+				cells[57],
+				cells[68],
+				cells[79],
+				cells[90],
+				cells[101],
 			].sort((a, b) => new Intl.Collator('en').compare(a, b));
 
 			await expect(page.locator('td').nth(2)).toHaveText(
 				ascendingTitleCells[0]
 			);
-			await expect(page.locator('td').nth(12)).toHaveText(
+			await expect(page.locator('td').nth(13)).toHaveText(
 				ascendingTitleCells[1]
 			);
-			await expect(page.locator('td').nth(22)).toHaveText(
+			await expect(page.locator('td').nth(24)).toHaveText(
 				ascendingTitleCells[2]
 			);
-			await expect(page.locator('td').nth(32)).toHaveText(
+			await expect(page.locator('td').nth(35)).toHaveText(
 				ascendingTitleCells[3]
 			);
 		});

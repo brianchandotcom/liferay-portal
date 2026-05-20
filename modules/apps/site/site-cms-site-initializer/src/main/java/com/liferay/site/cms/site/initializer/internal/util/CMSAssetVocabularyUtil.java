@@ -31,7 +31,7 @@ public class CMSAssetVocabularyUtil {
 
 		Set<AssetVocabulary> assetVocabularies = new LinkedHashSet<>();
 
-		boolean hasConnectedSpace = false;
+		boolean hasConnectedSpaceDepotEntry = false;
 
 		for (long groupId : groupIds) {
 			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
@@ -47,12 +47,12 @@ public class CMSAssetVocabularyUtil {
 				continue;
 			}
 
-			hasConnectedSpace = true;
+			hasConnectedSpaceDepotEntry = true;
 
 			assetVocabularies.addAll(_getAssetVocabulariesByGroupRels(groupId));
 		}
 
-		if (hasConnectedSpace) {
+		if (hasConnectedSpaceDepotEntry) {
 			assetVocabularies.addAll(
 				_getAssetVocabulariesByGroupRels(
 					GroupConstants.ANY_PARENT_GROUP_ID));

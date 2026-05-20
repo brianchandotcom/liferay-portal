@@ -1,0 +1,9 @@
+{
+	"articleId": "WEB-CONTENT-ANNOUNCEMENT-02",
+	"assetCategoryERCs": [
+		"T_AC_ONLINE"
+	],
+	"ddmStructureKey": "ANNOUNCEMENT",
+	"folder": "Announcements",
+	"name": "Webinar: Modernizing customer portals with Liferay"
+}

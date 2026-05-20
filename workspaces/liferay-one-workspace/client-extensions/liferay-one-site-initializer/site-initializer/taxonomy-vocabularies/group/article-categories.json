@@ -1,0 +1,17 @@
+{
+	"availableLanguages": [
+		"en-US",
+		"es-ES",
+		"ja-JP",
+		"pt-BR"
+	],
+	"externalReferenceCode": "T_AC",
+	"name": "Article Categories",
+	"name_i18n": {
+		"en_US": "Article Categories",
+		"es_ES": "Categorías de artículos",
+		"ja_JP": "記事カテゴリー",
+		"pt_BR": "Categorias de artigos"
+	},
+	"viewableBy": "Anyone"
+}

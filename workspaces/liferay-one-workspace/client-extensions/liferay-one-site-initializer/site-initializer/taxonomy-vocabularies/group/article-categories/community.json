@@ -1,0 +1,18 @@
+{
+	"description": "Community",
+	"description_i18n": {
+		"en_US": "Community",
+		"es_ES": "Comunidad",
+		"ja_JP": "コミュニティ",
+		"pt_BR": "Comunidade"
+	},
+	"externalReferenceCode": "T_AC_COMMUNITY",
+	"name": "Community",
+	"name_i18n": {
+		"en_US": "Community",
+		"es_ES": "Comunidad",
+		"ja_JP": "コミュニティ",
+		"pt_BR": "Comunidade"
+	},
+	"viewableBy": "Anyone"
+}

@@ -54,10 +54,6 @@ public class AssetListTypePropertiesUtil {
 					ObjectFieldLocalServiceUtil.getObjectFields(
 						objectDefinition.getObjectDefinitionId())) {
 
-				if (objectField.isMetadata()) {
-					continue;
-				}
-
 				String type = _toFilterType(objectField.getBusinessType());
 
 				if (type == null) {

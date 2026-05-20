@@ -283,20 +283,20 @@ public class EditPortalDefaultPermissionsConfigurationDisplayContext {
 			roleSearchContainer.setResultsAndTotal(
 				() -> RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 					_themeDisplay.getCompanyId(), null, excludedRoleNames, null,
-					null, _getRoleTypes(), 0, roleTeamGroupId,
+					null, _getRoleTypes(), null, 0, roleTeamGroupId,
 					roleSearchContainer.getStart(),
 					roleSearchContainer.getEnd()),
 				RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(
 					_themeDisplay.getCompanyId(), null, excludedRoleNames, null,
-					null, _getRoleTypes(), 0, roleTeamGroupId));
+					null, _getRoleTypes(), null, 0, roleTeamGroupId));
 		}
 		else {
 			roleSearchContainer.setResultsAndTotal(
 				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
 					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
 					excludedRoleNames, searchTerms.getKeywords(), null,
-					_getRoleTypes(), 0, roleTeamGroupId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS));
+					_getRoleTypes(), null, 0, roleTeamGroupId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 		}
 
 		_roleSearchContainer = roleSearchContainer;

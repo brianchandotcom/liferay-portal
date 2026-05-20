@@ -128,7 +128,7 @@ public class PermissionUtil {
 					new int[] {
 						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
 					},
-					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					null, 0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				role -> HashMapBuilder.put(
 					"key", role.getName()
 				).put(

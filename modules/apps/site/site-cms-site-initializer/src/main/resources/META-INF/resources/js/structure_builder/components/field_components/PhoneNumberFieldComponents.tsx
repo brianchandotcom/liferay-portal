@@ -6,15 +6,17 @@
 import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {
+	CountryCodePicker,
+	CountryInfo,
+} from '@liferay/object-js-components-web';
 import {useId} from 'frontend-js-components-web';
 import React from 'react';
 
 import {config} from '../../config';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
-import {Country} from '../../types/Country';
 import {Field, PhoneNumberField} from '../../utils/field';
-import PhonePrefixSelector from '../settings/PhonePrefixSelector';
 
 const PREFIX_TYPE_OPTIONS = [
 	{
@@ -97,44 +99,44 @@ function FirstSectionComponent({
 			</ClayForm.Group>
 
 			{phoneNumberField.settings.prefixType === 'fixed' && (
-				<ClayForm.Group className="mb-3">
-					<label htmlFor={prefixId}>
-						{Liferay.Language.get('prefix')}
+				<div className="form-group-autofit">
+					<ClayForm.Group className="form-group-item-shrink mb-3">
+						<label htmlFor={prefixId}>
+							{Liferay.Language.get('prefix')}
 
-						<ClayIcon
-							className="ml-1 reference-mark"
-							focusable="false"
-							role="presentation"
-							symbol="asterisk"
+							<ClayIcon
+								className="ml-1 reference-mark"
+								focusable="false"
+								role="presentation"
+								symbol="asterisk"
+							/>
+						</label>
+
+						<CountryCodePicker
+							aria-label={Liferay.Language.get('prefix')}
+							countries={config.countries}
+							disabled={disabled}
+							id={prefixId}
+							onSelectionChange={(country) => {
+								dispatch({
+									settings: {
+										...phoneNumberField.settings,
+										prefix: buildPrefix(country),
+									},
+									type: 'update-field',
+									uuid: field.uuid,
+								});
+							}}
+							selectedKey={
+								config.countries.find(
+									(country) =>
+										buildPrefix(country) ===
+										phoneNumberField.settings.prefix
+								)?.a2
+							}
 						/>
-					</label>
-
-					<PhonePrefixSelector
-						disabled={disabled}
-						id={prefixId}
-						onChange={(countryCode) => {
-							const country = config.countries.find(
-								({a2}) => a2 === countryCode
-							);
-
-							dispatch({
-								settings: {
-									...phoneNumberField.settings,
-									prefix: buildPrefix(country),
-								},
-								type: 'update-field',
-								uuid: field.uuid,
-							});
-						}}
-						value={
-							config.countries.find(
-								(country) =>
-									buildPrefix(country) ===
-									phoneNumberField.settings.prefix
-							)?.a2
-						}
-					/>
-				</ClayForm.Group>
+					</ClayForm.Group>
+				</div>
 			)}
 		</>
 	);
@@ -175,6 +177,6 @@ function SecondSectionComponent({
 	);
 }
 
-function buildPrefix(country?: Country) {
-	return `+${country?.prefix}`;
+function buildPrefix(country?: CountryInfo) {
+	return `+${country?.idd}`;
 }

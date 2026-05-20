@@ -577,7 +577,7 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "liferay-one-master"
+			"key": "liferay-one"
 		},
 		"styleBook": {
 			"key": "liferay-one",

@@ -29,6 +29,9 @@ const searchDropdownTrigger = document.querySelector(
 );
 const searchIcon = document.querySelector('.search-icon');
 const searchInput = document.querySelector('.search-input');
+const articlesResultsContainer = document.querySelector(
+	'.articles-results-container'
+);
 const searchResultsContainer = document.querySelector(
 	'.search-results-container'
 );
@@ -39,15 +42,62 @@ let listSectionContainers = document.querySelectorAll(
 	'.list-section-container'
 );
 
-function getClayIconSVG(icon, options = {height: 16, width: 16}) {
-	return `<svg class="lexicon-icon lexicon-icon-${icon} mr-2" height="${options.height}" width="${options.width}">
-				<use href="${spritemap}#${icon}"></use>
-			</svg>`;
-}
+const getFirstParam = (...keys) => {
+	const params = new URLSearchParams(window.location.search);
 
-function getDecodedJSONParse(value, defaultValue = []) {
-	return value ? JSON.parse(decodeURIComponent(value)) : defaultValue;
-}
+	for (const key of keys) {
+		const value = params.get(key);
+
+		if (value) {
+			return {key, value: decodeURIComponent(value)};
+		}
+	}
+
+	return null;
+};
+
+const removeAllQueryParams = (url) => {
+	const _url = new URL(url, window.location.origin);
+
+	_url.search = '';
+
+	return _url.toString();
+};
+
+const scrollControl = {
+	lock() {
+		const scrollBarWidth =
+			window.innerWidth - document.documentElement.clientWidth;
+		document.body.style.paddingRight = `${scrollBarWidth}px`;
+		document.body.style.overflow = 'hidden';
+	},
+
+	unlock() {
+		document.body.style.paddingRight = '';
+		document.body.style.overflow = '';
+	},
+};
+
+const searchStorage = {
+	clear(storageKey) {
+		document.cookie = `${storageKey}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+	},
+
+	get(storageKey) {
+		return document.cookie
+			.split('; ')
+			.find((row) => row.startsWith(storageKey + '='))
+			?.split('=')[1];
+	},
+
+	save(name, value, days = 7) {
+		const expires = new Date(Date.now() + days * 864e5).toUTCString();
+
+		document.cookie = `${name}=${encodeURIComponent(
+			value
+		)}; expires=${expires}; path=/`;
+	},
+};
 
 const searchToggle = {
 	hide() {
@@ -58,6 +108,9 @@ const searchToggle = {
 		search.classList.remove('expanded');
 		searchContainer.classList.remove('expanded');
 		searchIcon.classList.remove('expanded');
+
+		articlesResultsContainer.innerHTML = '';
+		articlesResultsContainer.style.display = 'none';
 
 		scrollControl.unlock();
 
@@ -96,56 +149,6 @@ const searchToggle = {
 	},
 };
 
-const searchStorage = {
-	clear(storageKey) {
-		document.cookie = `${storageKey}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-	},
-
-	get(storageKey) {
-		return document.cookie
-			.split('; ')
-			.find((row) => row.startsWith(storageKey + '='))
-			?.split('=')[1];
-	},
-
-	save(name, value, days = 7) {
-		const expires = new Date(Date.now() + days * 864e5).toUTCString();
-
-		document.cookie = `${name}=${encodeURIComponent(
-			value
-		)}; expires=${expires}; path=/`;
-	},
-};
-
-function setSearchInput(value) {
-	const items = getDecodedJSONParse(searchStorage.get(SEARCH_STORAGE_KEY));
-
-	const searchItemsLimited = [
-		value,
-		...items.filter((item) => item.toLowerCase() !== value.toLowerCase()),
-	].slice(0, 5);
-
-	searchStorage.save(
-		SEARCH_STORAGE_KEY,
-		JSON.stringify(searchItemsLimited),
-		30
-	);
-}
-
-const scrollControl = {
-	lock() {
-		const scrollBarWidth =
-			window.innerWidth - document.documentElement.clientWidth;
-		document.body.style.paddingRight = `${scrollBarWidth}px`;
-		document.body.style.overflow = 'hidden';
-	},
-
-	unlock() {
-		document.body.style.paddingRight = '';
-		document.body.style.overflow = '';
-	},
-};
-
 const state = {
 	categorySelected: '',
 	enterSelection: null,
@@ -157,20 +160,44 @@ const state = {
 	selectedIndex: -1,
 };
 
+function escapeHTML(str) {
+	return str
+		.replace(/&/g, '&amp;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;')
+		.replace(/"/g, '&quot;');
+}
+
 async function fetchSearchResults(category, searchValue) {
 	searchValue = searchValue.trim();
 
 	if (!searchValue) {
+		articlesResultsContainer.innerHTML = '';
+		articlesResultsContainer.style.display = 'none';
 		searchResultsContainer.innerHTML = '';
 		searchResultsContainer.style.display = 'none';
 
 		return;
 	}
 
-	const {items = []} = await getProducts(category, searchValue);
+	const [{items = []}, {items: articleItems = []}] = await Promise.all([
+		getProducts(category, searchValue),
+		getArticles(searchValue),
+	]);
+
+	renderArticleResults(articleItems, searchValue);
+
+	if (!items.length && !articleItems.length) {
+		return renderNoResults(searchValue);
+	}
 
 	if (!items.length) {
-		return renderNoResults(searchValue);
+		searchResultsContainer.innerHTML = '';
+		searchResultsContainer.style.display = 'none';
+
+		setSearchInput(searchValue);
+
+		return;
 	}
 
 	setSearchInput(searchValue);
@@ -192,7 +219,7 @@ async function fetchSearchResults(category, searchValue) {
 							<img alt="${product.name}" class="app-search-bar-image" draggable="false" height="56" src="${product.urlImage?.replace('https://', 'http://') || ''}" width="56" />
 						</div>
 
-						<div class="app-name font-weight-bold w-100">${product.name.replace(searchRegex, '<mark>$1</mark>')}</div>
+						<div class="app-name font-weight-bold w-100">${escapeHTML(product.name).replace(searchRegex, '<mark>$1</mark>')}</div>
 					</a>
 				</li>
 			`;
@@ -211,19 +238,49 @@ async function fetchSearchResults(category, searchValue) {
 	searchResultsContainer.style.display = 'block';
 }
 
-const getFirstParam = (...keys) => {
-	const params = new URLSearchParams(window.location.search);
+async function getArticles(query) {
+	const params = new URLSearchParams({
+		pageSize: 5,
+		search: query,
+	});
 
-	for (const key of keys) {
-		const value = params.get(key);
+	const response = await Liferay.Util.fetch(
+		`/o/headless-delivery/v1.0/sites/${Liferay.ThemeDisplay.getScopeGroupId()}/structured-contents?${params}`
+	);
 
-		if (value) {
-			return {key, value: decodeURIComponent(value)};
-		}
+	return response.json();
+}
+
+async function getCatalogProducts(options = {}) {
+	const searchParams = new URLSearchParams({
+		accountId: options.accountId || '-1',
+		pageSize: options.pageSize || 12,
+	});
+
+	if (options.filter) {
+		searchParams.set('filter', options.filter);
 	}
 
-	return null;
-};
+	if (options.search) {
+		searchParams.set('search', encodeURIComponent(options.search));
+	}
+
+	const response = await Liferay.Util.fetch(
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?${searchParams}`
+	);
+
+	return response.json();
+}
+
+function getClayIconSVG(icon, options = {height: 16, width: 16}) {
+	return `<svg class="lexicon-icon lexicon-icon-${icon} mr-2" height="${options.height}" width="${options.width}">
+				<use href="${spritemap}#${icon}"></use>
+			</svg>`;
+}
+
+function getDecodedJSONParse(value, defaultValue = []) {
+	return value ? JSON.parse(decodeURIComponent(value)) : defaultValue;
+}
 
 async function getProducts(category, query) {
 	const params = new URLSearchParams({
@@ -326,6 +383,8 @@ async function main() {
 				sectionContainer.classList.remove('hidden')
 			);
 
+			articlesResultsContainer.innerHTML = '';
+			articlesResultsContainer.style.display = 'none';
 			searchResultsContainer.innerHTML = '';
 			searchResultsContainer.style.display = 'none';
 			searchInput.value = '';
@@ -523,248 +582,56 @@ async function onclickNavigateTo(term) {
 	window.location.href = `/web/one/marketplace/applications?${queryParam}=${term}`;
 }
 
-const removeAllQueryParams = (url) => {
-	const _url = new URL(url, window.location.origin);
+function renderArticleResults(articles, searchValue) {
+	articlesResultsContainer.innerHTML = '';
 
-	_url.search = '';
-
-	return _url.toString();
-};
-
-function renderNoResults(query) {
-	listSectionContainers = document.querySelectorAll(
-		'.list-section-container'
-	);
-
-	listSectionContainers.forEach((sectionElement) =>
-		sectionElement.classList.add('hidden')
-	);
-
-	searchResultsContainer.innerHTML = `
-		<ul class="recent-searches-list w-100">
-			<li class="py-3 results-items-list w-100">
-				<div class="align-items-center d-flex search-no-results-container">
-					${getClayIconSVG('warning')}
-
-					<span>Oops! No results for <strong>"${query}"</strong></span>
-				</div>
-			</li>
-		</ul>
-	`;
-
-	searchResultsContainer.style.display = 'block';
-}
-
-function renderRecentSearches() {
-	const searchItems = getDecodedJSONParse(
-		searchStorage.get(SEARCH_STORAGE_KEY)
-	);
-
-	recentSearchesContainer.innerHTML = '';
-
-	if (!searchItems.length) {
-		recentSearchesContainer.style.display = 'none';
+	if (!articles.length) {
+		articlesResultsContainer.style.display = 'none';
 
 		return;
 	}
 
-	recentSearchesContainer.style.display = 'block';
+	const searchRegex = new RegExp(
+		`(${searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`,
+		'gi'
+	);
 
-	const titleHTML = `
-		<div class="align-items-center d-flex justify-content-between results-title-container w-100">
-			<h4 class="m-0 text-black-50 text-nowrap">Recent Searches</h4>
-			<div class="divider-horizontal flex-grow-1 mx-3"></div>
-			<button class="btn font-weight-bold p-0 section-action-button text-nowrap">Clear All</button>
-		</div>
+	const titleContainer = document.createElement('div');
+
+	titleContainer.className =
+		'align-items-center d-flex justify-content-between results-title-container w-100';
+	titleContainer.innerHTML = `
+		<h4 class="m-0 text-black-50 text-nowrap">Articles</h4>
+		<div class="divider-horizontal flex-grow-1 mx-3"></div>
 	`;
-
-	recentSearchesContainer.insertAdjacentHTML('beforeend', titleHTML);
-
-	recentSearchesContainer
-		.querySelector('button')
-		.addEventListener('click', () => {
-			searchStorage.clear(SEARCH_STORAGE_KEY);
-
-			renderRecentSearches();
-		});
 
 	const list = document.createElement('ul');
 
-	list.className = 'results-list-container w-100';
+	list.className = 'recent-searches-list w-100';
 
-	searchItems.slice(0, 3).forEach((searchItem) => {
+	for (const article of articles) {
 		const li = document.createElement('li');
 
 		li.className = 'results-items-list w-100';
 
+		const href = `/web/one${article.friendlyUrlPath}`;
+
 		li.innerHTML = `
-			<a class="align-items-center d-flex text-dark text-decoration-none w-100">
-				${getClayIconSVG('restore')}
+			<a class="align-items-center border-radius-medium d-flex flex-row mb-0 text-dark text-decoration-none w-100" href="${escapeHTML(href)}">
+				<div class="align-items-center article-search-icon d-flex justify-content-center mr-2">
+					${getClayIconSVG('web-content', {height: 24, width: 24})}
+				</div>
 
-				<span class="font-weight-bold w-100">${searchItem}</span>
+				<div class="app-name font-weight-bold w-100">${escapeHTML(article.title).replace(searchRegex, '<mark>$1</mark>')}</div>
 			</a>
-
-			<button class="bg-transparent border-0 btn btn-sm text-muted">
-				${getClayIconSVG('times', {height: 14, width: 14})}
-			</button>
 		`;
 
-		li.querySelector('a').addEventListener('click', () =>
-			onclickNavigateTo(searchItem)
-		);
-
-		li.querySelector('button').addEventListener('click', (event) => {
-			event.stopPropagation();
-
-			const items = getDecodedJSONParse(
-				searchStorage.get(SEARCH_STORAGE_KEY)
-			).filter((item) => item !== searchItem);
-
-			searchStorage.save(SEARCH_STORAGE_KEY, JSON.stringify(items));
-
-			renderRecentSearches();
-		});
-
 		list.appendChild(li);
-	});
-
-	recentSearchesContainer.appendChild(list);
-}
-
-async function syncContextParams() {
-	const categoryParam = getFirstParam('category', 'type');
-	const keywordParam = getFirstParam('q', 'n', 'keyword');
-	const keywordValue = keywordParam?.value || '';
-
-	selectCategory(
-		categoryParam?.value ? categoryParam.value : 'All Categories',
-		false
-	);
-
-	searchInput.value = keywordValue;
-
-	if (keywordValue && keywordParam.key !== 'keyword') {
-		try {
-			const data = await getProducts(
-				state.categorySelected,
-				keywordValue
-			);
-
-			showFeedbackAlert(
-				data.items.length
-					? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${keywordValue}</strong>`
-					: `No results for <strong class="mx-1">${keywordValue}</strong>. Feel free to browse the catalog.`
-			);
-		}
-		catch (error) {
-			console.error('Error fetching products', error);
-		}
-	}
-}
-
-function selectCategory(category, updateHistory = true) {
-	const currentUrl = window.location.href;
-	const url = new URL(currentUrl);
-
-	categoriesListItems.forEach((item) => {
-		item.classList.remove('selected');
-	});
-
-	categoriesListItems.forEach((item) => {
-		if (item.dataset.category === category) {
-			item.classList.add('selected');
-		}
-	});
-
-	if (category === 'All Categories') {
-		categoriesTrigger.textContent = 'All Categories';
-		url.searchParams.delete('category');
-		url.searchParams.delete('type');
-
-		if (updateHistory) {
-			window.history.pushState({}, '', url);
-		}
-
-		state.categorySelected = category;
-
-		return;
 	}
 
-	if (category && category !== 'All Categories') {
-		categoriesTrigger.textContent = category;
-		url.searchParams.set('category', category);
-		url.searchParams.set('type', category);
-	}
-	else {
-		url.searchParams.delete('category');
-		url.searchParams.delete('type');
-	}
-
-	if (search.classList.contains('expanded')) {
-		searchInput.focus();
-
-		results.classList.add('expanded');
-		searchDropdown.classList.remove('expanded');
-		state.isDropdownExpanded = false;
-		state.isResultsExpanded = true;
-	}
-
-	if (updateHistory) {
-		window.history.pushState({}, '', url);
-	}
-
-	state.categorySelected = category;
-}
-
-function showFeedbackAlert(text) {
-	const panel = document.createElement('div');
-	panel.className =
-		'search-info-panel expanded d-flex align-items-center justify-content-between';
-
-	panel.innerHTML = `
-		<div class="container-fluid container-fluid-max-xl d-flex justify-content-between">
-			<div class="align-items-center d-flex">${text}</div>
-			<button class="btn btn-sm border-0 bg-transparent text-muted" style="cursor:pointer">
-				${getClayIconSVG('times', {height: 14, width: 14})}
-			</button>
-		</div>
-	`;
-
-	panel.querySelector('button').addEventListener('click', (event) => {
-		event.stopPropagation();
-		panel.classList.remove('expanded');
-		navContainer.classList.remove('expanded');
-		searchInput.value = '';
-		window.history.replaceState(
-			{},
-			'',
-			removeAllQueryParams(window.location.href)
-		);
-	});
-
-	navContainer.appendChild(panel);
-	navContainer.classList.add('expanded');
-}
-
-async function getCatalogProducts(options = {}) {
-	const searchParams = new URLSearchParams({
-		accountId: options.accountId || '-1',
-		pageSize: options.pageSize || 12,
-	});
-
-	if (options.filter) {
-		searchParams.set('filter', options.filter);
-	}
-
-	if (options.search) {
-		searchParams.set('search', encodeURIComponent(options.search));
-	}
-
-	const response = await Liferay.Util.fetch(
-		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?${searchParams}`
-	);
-
-	return response.json();
+	articlesResultsContainer.appendChild(titleContainer);
+	articlesResultsContainer.appendChild(list);
+	articlesResultsContainer.style.display = 'block';
 }
 
 async function renderFeaturedSection({
@@ -912,6 +779,236 @@ async function renderFeaturedSection({
 	featuredSectionHTML.appendChild(resultsListContainer);
 
 	featuredSectionContainer.appendChild(featuredSectionHTML);
+}
+
+function renderNoResults(query) {
+	listSectionContainers = document.querySelectorAll(
+		'.list-section-container'
+	);
+
+	listSectionContainers.forEach((sectionElement) =>
+		sectionElement.classList.add('hidden')
+	);
+
+	searchResultsContainer.innerHTML = `
+		<ul class="recent-searches-list w-100">
+			<li class="py-3 results-items-list w-100">
+				<div class="align-items-center d-flex search-no-results-container">
+					${getClayIconSVG('warning')}
+
+					<span>Oops! No results for <strong>"${escapeHTML(query)}"</strong></span>
+				</div>
+			</li>
+		</ul>
+	`;
+
+	searchResultsContainer.style.display = 'block';
+}
+
+function renderRecentSearches() {
+	const searchItems = getDecodedJSONParse(
+		searchStorage.get(SEARCH_STORAGE_KEY)
+	);
+
+	recentSearchesContainer.innerHTML = '';
+
+	if (!searchItems.length) {
+		recentSearchesContainer.style.display = 'none';
+
+		return;
+	}
+
+	recentSearchesContainer.style.display = 'block';
+
+	const titleHTML = `
+		<div class="align-items-center d-flex justify-content-between results-title-container w-100">
+			<h4 class="m-0 text-black-50 text-nowrap">Recent Searches</h4>
+			<div class="divider-horizontal flex-grow-1 mx-3"></div>
+			<button class="btn font-weight-bold p-0 section-action-button text-nowrap">Clear All</button>
+		</div>
+	`;
+
+	recentSearchesContainer.insertAdjacentHTML('beforeend', titleHTML);
+
+	recentSearchesContainer
+		.querySelector('button')
+		.addEventListener('click', () => {
+			searchStorage.clear(SEARCH_STORAGE_KEY);
+
+			renderRecentSearches();
+		});
+
+	const list = document.createElement('ul');
+
+	list.className = 'results-list-container w-100';
+
+	searchItems.slice(0, 3).forEach((searchItem) => {
+		const li = document.createElement('li');
+
+		li.className = 'results-items-list w-100';
+
+		li.innerHTML = `
+			<a class="align-items-center d-flex text-dark text-decoration-none w-100">
+				${getClayIconSVG('restore')}
+
+				<span class="font-weight-bold w-100">${searchItem}</span>
+			</a>
+
+			<button class="bg-transparent border-0 btn btn-sm text-muted">
+				${getClayIconSVG('times', {height: 14, width: 14})}
+			</button>
+		`;
+
+		li.querySelector('a').addEventListener('click', () =>
+			onclickNavigateTo(searchItem)
+		);
+
+		li.querySelector('button').addEventListener('click', (event) => {
+			event.stopPropagation();
+
+			const items = getDecodedJSONParse(
+				searchStorage.get(SEARCH_STORAGE_KEY)
+			).filter((item) => item !== searchItem);
+
+			searchStorage.save(SEARCH_STORAGE_KEY, JSON.stringify(items));
+
+			renderRecentSearches();
+		});
+
+		list.appendChild(li);
+	});
+
+	recentSearchesContainer.appendChild(list);
+}
+
+function selectCategory(category, updateHistory = true) {
+	const currentUrl = window.location.href;
+	const url = new URL(currentUrl);
+
+	categoriesListItems.forEach((item) => {
+		item.classList.remove('selected');
+	});
+
+	categoriesListItems.forEach((item) => {
+		if (item.dataset.category === category) {
+			item.classList.add('selected');
+		}
+	});
+
+	if (category === 'All Categories') {
+		categoriesTrigger.textContent = 'All Categories';
+		url.searchParams.delete('category');
+		url.searchParams.delete('type');
+
+		if (updateHistory) {
+			window.history.pushState({}, '', url);
+		}
+
+		state.categorySelected = category;
+
+		return;
+	}
+
+	if (category && category !== 'All Categories') {
+		categoriesTrigger.textContent = category;
+		url.searchParams.set('category', category);
+		url.searchParams.set('type', category);
+	}
+	else {
+		url.searchParams.delete('category');
+		url.searchParams.delete('type');
+	}
+
+	if (search.classList.contains('expanded')) {
+		searchInput.focus();
+
+		results.classList.add('expanded');
+		searchDropdown.classList.remove('expanded');
+		state.isDropdownExpanded = false;
+		state.isResultsExpanded = true;
+	}
+
+	if (updateHistory) {
+		window.history.pushState({}, '', url);
+	}
+
+	state.categorySelected = category;
+}
+
+function setSearchInput(value) {
+	const items = getDecodedJSONParse(searchStorage.get(SEARCH_STORAGE_KEY));
+
+	const searchItemsLimited = [
+		value,
+		...items.filter((item) => item.toLowerCase() !== value.toLowerCase()),
+	].slice(0, 5);
+
+	searchStorage.save(
+		SEARCH_STORAGE_KEY,
+		JSON.stringify(searchItemsLimited),
+		30
+	);
+}
+
+function showFeedbackAlert(text) {
+	const panel = document.createElement('div');
+	panel.className =
+		'search-info-panel expanded d-flex align-items-center justify-content-between';
+
+	panel.innerHTML = `
+		<div class="container-fluid container-fluid-max-xl d-flex justify-content-between">
+			<div class="align-items-center d-flex">${text}</div>
+			<button class="btn btn-sm border-0 bg-transparent text-muted" style="cursor:pointer">
+				${getClayIconSVG('times', {height: 14, width: 14})}
+			</button>
+		</div>
+	`;
+
+	panel.querySelector('button').addEventListener('click', (event) => {
+		event.stopPropagation();
+		panel.classList.remove('expanded');
+		navContainer.classList.remove('expanded');
+		searchInput.value = '';
+		window.history.replaceState(
+			{},
+			'',
+			removeAllQueryParams(window.location.href)
+		);
+	});
+
+	navContainer.appendChild(panel);
+	navContainer.classList.add('expanded');
+}
+
+async function syncContextParams() {
+	const categoryParam = getFirstParam('category', 'type');
+	const keywordParam = getFirstParam('q', 'n', 'keyword');
+	const keywordValue = keywordParam?.value || '';
+
+	selectCategory(
+		categoryParam?.value ? categoryParam.value : 'All Categories',
+		false
+	);
+
+	searchInput.value = keywordValue;
+
+	if (keywordValue && keywordParam.key !== 'keyword') {
+		try {
+			const data = await getProducts(
+				state.categorySelected,
+				keywordValue
+			);
+
+			showFeedbackAlert(
+				data.items.length
+					? `<strong class="mx-1">${data.totalCount}</strong> results for <strong class="mx-1">${escapeHTML(keywordValue)}</strong>`
+					: `No results for <strong class="mx-1">${escapeHTML(keywordValue)}</strong>. Feel free to browse the catalog.`
+			);
+		}
+		catch (error) {
+			console.error('Error fetching products', error);
+		}
+	}
 }
 
 main();

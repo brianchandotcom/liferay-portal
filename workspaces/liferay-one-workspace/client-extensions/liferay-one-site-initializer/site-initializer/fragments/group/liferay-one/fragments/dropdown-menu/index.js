@@ -4,16 +4,20 @@
  */
 
 function main() {
-	const menu = fragmentElement.querySelector('.dropdown-menu-container');
-	const trigger = fragmentElement.querySelector('.dropdown-trigger');
+	if (fragmentElement.querySelector('.one-dropdown.one-dropdown-edit')) {
+		return;
+	}
+
+	const content = fragmentElement.querySelector('.one-dropdown-content');
+	const trigger = fragmentElement.querySelector('.one-dropdown-trigger');
 
 	trigger?.addEventListener('click', () => {
-		menu.classList.toggle('active');
+		content.classList.toggle('active');
 	});
 
 	document.addEventListener('click', (event) => {
 		if (!fragmentElement.contains(event.target)) {
-			menu.classList.remove('active');
+			content.classList.remove('active');
 		}
 	});
 }

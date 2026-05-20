@@ -186,6 +186,8 @@ describe('validateSegmentEditor', () => {
 	const criteriaWithInvalidItemsObject = {
 		items: [{valid: {bar: false, foo: false}}]
 	};
+	const criteriaWith5Items = data.mockNewCriteria(5, {valid: true});
+	const criteriaWith6Items = data.mockNewCriteria(6, {valid: true});
 
 	it.each`
 		criteria                          | error
@@ -198,5 +200,21 @@ describe('validateSegmentEditor', () => {
 		${criteriaWithItems}              | ${undefined}
 	`('should return $error for $criteria', ({criteria, error}) => {
 		expect(validateSegmentEditor(criteria)).toBe(error);
+	});
+
+	it('should block save when sequential is enabled and criteria exceed the limit', () => {
+		expect(validateSegmentEditor(criteriaWith6Items, true)).toBe(
+			'Maximum of 5 sequential criteria has been exceeded. Remove some criteria to save.'
+		);
+	});
+
+	it('should allow save when sequential is enabled and criteria are at the limit', () => {
+		expect(validateSegmentEditor(criteriaWith5Items, true)).toBe(undefined);
+	});
+
+	it('should allow save when criteria exceed the limit but sequential is disabled', () => {
+		expect(validateSegmentEditor(criteriaWith6Items, false)).toBe(
+			undefined
+		);
 	});
 });

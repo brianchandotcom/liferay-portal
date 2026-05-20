@@ -11,8 +11,10 @@ import {
 	CustomFunctionOperators,
 	isKnown,
 	isUnknown,
+	MAX_SEQUENTIAL_CRITERIA,
 	NotOperators,
 	PropertyTypes,
+	SequentialLimitState,
 	SUPPORTED_OPERATORS_MAP
 } from './constants';
 import {Criteria, Criterion, CriterionGroup, Operator} from './types';
@@ -126,6 +128,33 @@ export const getPropertyContextFromRaw = (
 	const properties = propertyLabel.split('/');
 
 	return properties.length > 1 ? properties[0] : null;
+};
+
+/**
+ * Returns the current state of the sequential criteria limit, or null when
+ * the limit is not relevant (non-sequential mode, missing criteria, or below
+ * the limit). Used to drive both the inline alert in the builder and the
+ * save-time validation in the segment editor.
+ */
+export const getSequentialLimitState = (
+	criteria: CriterionGroup | null | undefined,
+	sequential: boolean | undefined
+): SequentialLimitState | null => {
+	if (!sequential || !criteria) {
+		return null;
+	}
+
+	const length = criteria.items?.length ?? 0;
+
+	if (length > MAX_SEQUENTIAL_CRITERIA) {
+		return 'exceedsLimit';
+	}
+
+	if (length === MAX_SEQUENTIAL_CRITERIA) {
+		return 'reachedLimit';
+	}
+
+	return null;
 };
 
 /**

@@ -18,11 +18,12 @@ import {
 	wrapInCriteriaGroup
 } from './utils/odata';
 import {Criteria, CriterionGroup} from './utils/types';
-import {HTML5Backend} from 'react-dnd-html5-backend';
 import {
+	getSequentialLimitState,
 	invalidateCriterionWithMissingProperty,
 	validateSegmentInputs
 } from './utils/utils';
+import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
 import {PropertyGroup, Segment} from 'shared/util/records';
 import {
@@ -31,12 +32,17 @@ import {
 } from './context/referencedObjects';
 import {SegmentEnabledSequentialCard} from 'segment/components/SegmentEnabledSequentialCard';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
+import {SEQUENTIAL_LIMIT_ALERT} from './utils/constants';
 import {v4 as uuidv4} from 'uuid';
 
 /**
- * Returns an error message if the criteria contains an invalid row.
+ * Returns an error message if the criteria contains an invalid row,
+ * or if sequential mode is enabled and the criteria exceed the limit.
  */
-export function validateSegmentEditor(criteria: CriterionGroup | null) {
+export function validateSegmentEditor(
+	criteria: CriterionGroup | null,
+	sequential?: boolean
+) {
 	let error;
 
 	if (
@@ -45,6 +51,10 @@ export function validateSegmentEditor(criteria: CriterionGroup | null) {
 		!validateSegmentInputs(criteria)
 	) {
 		error = Liferay.Language.get('empty-fields');
+	} else if (
+		getSequentialLimitState(criteria, sequential) === 'exceedsLimit'
+	) {
+		error = SEQUENTIAL_LIMIT_ALERT.exceedsLimit.text;
 	}
 
 	return error;
@@ -395,8 +405,13 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 															sequential={
 																sequential
 															}
-															validate={
-																validateSegmentEditor
+															validate={(
+																criteria: CriterionGroup | null
+															) =>
+																validateSegmentEditor(
+																	criteria,
+																	sequential
+																)
 															}
 														/>
 													</div>

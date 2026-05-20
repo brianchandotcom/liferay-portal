@@ -8,6 +8,24 @@ export const HOURS = 'hours';
 
 export const HOURS_IN_A_DAY = 24;
 export const MAX_DAYS = 30;
+export const MAX_SEQUENTIAL_CRITERIA = 5;
+
+export const SEQUENTIAL_LIMIT_ALERT = {
+	exceedsLimit: {
+		color: 'danger',
+		text: Liferay.Language.get(
+			'maximum-of-5-sequential-criteria-has-been-exceeded-remove-some-criteria-to-save'
+		)
+	},
+	reachedLimit: {
+		color: 'warning',
+		text: Liferay.Language.get(
+			'maximum-of-5-sequential-criteria-has-been-reached'
+		)
+	}
+} as const;
+
+export type SequentialLimitState = keyof typeof SEQUENTIAL_LIMIT_ALERT;
 
 export const isKnown = 'is-known';
 export const isUnknown = 'is-unknown';

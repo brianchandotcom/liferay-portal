@@ -6,23 +6,18 @@
 import {getFDSInternalRenderer} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
-import {ModelArmorTemplate} from '../model_armor_template_form/types/ModelArmorTemplate';
-
 import type {IItemsActions} from '@liferay/frontend-data-set-web';
 
 const ActionLinkRenderer = getFDSInternalRenderer('actionLink')?.component;
 
-const ModelArmorTemplateItemTitle = ({
-	actions,
-	itemData,
-	itemId,
-	value,
-}: {
+interface IProps {
 	actions: IItemsActions[];
-	itemData: ModelArmorTemplate;
-	itemId: any;
+	itemData: unknown;
+	itemId: unknown;
 	value: unknown;
-}) => {
+}
+
+const FDSItemTitle = ({actions, itemData, itemId, value}: IProps) => {
 	return ActionLinkRenderer ? (
 		<ActionLinkRenderer
 			actions={actions}
@@ -36,4 +31,4 @@ const ModelArmorTemplateItemTitle = ({
 	);
 };
 
-export default ModelArmorTemplateItemTitle;
+export default FDSItemTitle;

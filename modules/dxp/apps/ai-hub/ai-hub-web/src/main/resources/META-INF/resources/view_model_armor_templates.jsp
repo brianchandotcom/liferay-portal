@@ -17,6 +17,6 @@ ViewModelArmorTemplatesDisplayContext viewModelArmorTemplatesDisplayContext = (V
 	fdsActionDropdownItems="<%= viewModelArmorTemplatesDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= AIHubFDSNames.MODEL_ARMOR_TEMPLATES %>"
 	itemsPerPage="<%= 20 %>"
-	propsTransformer="{ModelArmorTemplateItemTitlePropsTransformer} from ai-hub-web"
+	propsTransformer="{ListTitlePropsTransformer} from ai-hub-web"
 	style="fluid"
 />

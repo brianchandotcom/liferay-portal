@@ -36,7 +36,7 @@ public class AssetSummaryMetricResourceImpl
 
 	@Override
 	public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
-			Long groupId, String channelId, String rangeEnd, Integer rangeKey,
+			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, String search, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -57,7 +57,7 @@ public class AssetSummaryMetricResourceImpl
 					).put(
 						"rangeEnd", rangeEnd
 					).put(
-						"rangeKey", rangeKey
+						"rangeKey", TimeRange.getRangeKey(rangeKey)
 					).put(
 						"rangeStart", rangeStart
 					).put(

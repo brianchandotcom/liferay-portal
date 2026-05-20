@@ -37,7 +37,7 @@ public class IndividualDemographicFieldDTOConverter
 
 		return new IndividualDemographicField() {
 			{
-				setFieldType(field::getFieldType);
+				setFieldType(() -> FieldType.create(field.getFieldType()));
 				setLabel(field::getLabel);
 				setName(field::getName);
 				setValue(field::getValue);

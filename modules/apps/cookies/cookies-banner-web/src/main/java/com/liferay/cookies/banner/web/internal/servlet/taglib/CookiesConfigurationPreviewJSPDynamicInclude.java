@@ -41,7 +41,7 @@ public class CookiesConfigurationPreviewJSPDynamicInclude
 
 	@Override
 	protected String getJspPath() {
-		return "/dynamic_include/preview_button.jsp";
+		return "/dynamic_include/cookies_banner_preview_button.jsp";
 	}
 
 	@Override

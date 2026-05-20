@@ -5,9 +5,16 @@
 
 package com.liferay.osb.faro.rest.internal.resource.v1_0;
 
+import com.liferay.osb.faro.constants.FaroUserConstants;
+import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.rest.dto.v1_0.Workspace;
 import com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource;
+import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.osb.faro.service.FaroUserLocalService;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -18,4 +25,35 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = WorkspaceResource.class
 )
 public class WorkspaceResourceImpl extends BaseWorkspaceResourceImpl {
+
+	@Override
+	public Page<Workspace> getWorkspacesPage() throws Exception {
+		return Page.of(
+			transform(
+				_faroUserLocalService.getFaroUsersByLiveUserId(
+					contextUser.getUserId(), FaroUserConstants.STATUS_APPROVED),
+				faroUser -> {
+					FaroProject faroProject =
+						_faroProjectLocalService.fetchFaroProjectByGroupId(
+							faroUser.getGroupId());
+
+					if (faroProject == null) {
+						return null;
+					}
+
+					return new Workspace() {
+						{
+							setGroupId(faroProject::getGroupId);
+							setName(faroProject::getName);
+						}
+					};
+				}));
+	}
+
+	@Reference
+	private FaroProjectLocalService _faroProjectLocalService;
+
+	@Reference
+	private FaroUserLocalService _faroUserLocalService;
+
 }

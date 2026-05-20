@@ -3,67 +3,135 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openSelectionModal, openToast} from 'frontend-js-components-web';
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {openToast} from 'frontend-js-components-web';
 import {fetch, navigate, objectToFormData} from 'frontend-js-web';
 
 import openDeleteVocabularyModal from './openDeleteVocabularyModal';
 
+const HEADLESS_TAXONOMY_VOCABULARIES_BASE =
+	'/o/headless-admin-taxonomy/v1.0/sites';
+
+function buildVocabulariesURL(currentSiteId) {
+	const url = new URL(
+		`${HEADLESS_TAXONOMY_VOCABULARIES_BASE}/${String(
+			currentSiteId
+		)}/taxonomy-vocabularies`,
+		window.location.origin
+	);
+
+	url.searchParams.set(
+		'filter',
+		`visibilityType eq 0 and siteId eq ${String(currentSiteId)}`
+	);
+
+	return url.toString();
+}
+
 const ACTIONS = {
 	deleteVocabularies(itemData, portletNamespace) {
-		openSelectionModal({
-			buttonAddLabel: Liferay.Language.get('delete'),
-			multiple: true,
-			onSelect: (selectedItems) => {
-				if (selectedItems.length) {
-					openDeleteVocabularyModal({
-						multiple: true,
-						onDelete: () => {
-							fetch(itemData.deleteVocabulariesURL, {
-								body: objectToFormData({
-									[`${portletNamespace}rowIds`]: selectedItems
-										.map((item) => {
-											const selectedValue = JSON.parse(
-												item.value
-											);
+		const TitleCell = ({itemData: vocabulary}) =>
+			`${vocabulary.name} (${itemData.siteName})`;
 
-											return selectedValue.vocabularyId;
-										})
-										.join(','),
-								}),
-								method: 'POST',
-							})
-								.then((response) => {
-									if (response.ok) {
-										return response.json();
-									}
-									else {
-										showErorMessage();
-									}
-								})
-								.then((data) => {
-									if (data.success) {
-										navigate(itemData.redirectURL);
-
-										openToast({
-											message: Liferay.Language.get(
-												'your-request-completed-successfully'
-											),
-											type: 'success',
-										});
-									}
-									else {
-										showErorMessage(data.errorMessage);
-									}
-								})
-								.catch(() => {
-									showErorMessage();
-								});
+		openItemSelectorModal({
+			apiURL: buildVocabulariesURL(itemData.currentSiteId),
+			confirmButtonLabel: Liferay.Language.get('delete'),
+			fdsProps: {
+				configInURLBehavior: 'OFF',
+				customRenderers: {
+					tableCell: [
+						{
+							component: TitleCell,
+							name: 'titleWithScope',
+							type: 'internal',
 						},
-					});
-				}
+					],
+				},
+				id: 'assetCategoriesAdminVocabularyDeleteFDS',
+				pagination: {
+					deltas: [{label: 20}, {label: 50}],
+					initialDelta: 20,
+				},
+				views: [
+					{
+						contentRenderer: 'table',
+						label: '',
+						name: 'list',
+						schema: {
+							fields: [
+								{
+									contentRenderer: 'titleWithScope',
+									fieldName: 'name',
+									label: Liferay.Language.get('title'),
+								},
+								{
+									fieldName: 'creator.name',
+									label: Liferay.Language.get('user'),
+								},
+								{
+									contentRenderer: 'dateTime',
+									fieldName: 'dateModified',
+									label: Liferay.Language.get(
+										'modified-date'
+									),
+									sortable: true,
+								},
+							],
+						},
+					},
+				],
 			},
+			itemTypeLabel: Liferay.Language.get('vocabulary'),
+			items: [],
+			locator: {id: 'id', label: 'name', value: 'id'},
+			multiSelect: true,
+			onItemsChange: (selected) => {
+				if (!selected.length) {
+					return;
+				}
+
+				openDeleteVocabularyModal({
+					multiple: true,
+					onDelete: () => {
+						fetch(itemData.deleteVocabulariesURL, {
+							body: objectToFormData({
+								[`${portletNamespace}rowIds`]: selected
+									.map((vocabulary) => vocabulary.id)
+									.join(','),
+							}),
+							method: 'POST',
+						})
+							.then((response) => {
+								if (response.ok) {
+									return response.json();
+								}
+								else {
+									showErorMessage();
+								}
+							})
+							.then((data) => {
+								if (data.success) {
+									navigate(itemData.redirectURL);
+
+									openToast({
+										message: Liferay.Language.get(
+											'your-request-completed-successfully'
+										),
+										type: 'success',
+									});
+								}
+								else {
+									showErorMessage(data.errorMessage);
+								}
+							})
+							.catch(() => {
+								showErorMessage();
+							});
+					},
+				});
+			},
+			size: 'lg',
 			title: Liferay.Language.get('delete-vocabulary'),
-			url: itemData.viewVocabulariesURL,
 		});
 	},
 };

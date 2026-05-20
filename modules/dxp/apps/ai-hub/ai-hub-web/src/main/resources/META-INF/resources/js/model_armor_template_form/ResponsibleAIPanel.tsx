@@ -49,6 +49,7 @@ const ResponsibleAIPanel: React.FC<IProps> = ({setField, values}) => {
 
 						<Picker
 							className="model-armor-template-form-picker"
+							id={field}
 							items={RAI_LEVEL_OPTIONS}
 							onSelectionChange={(value) =>
 								setField(field, value as RAILevel)

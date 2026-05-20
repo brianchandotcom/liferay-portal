@@ -528,22 +528,22 @@ public class RoleLocalServiceWrapper
 	@Override
 	public java.util.List<Role> getGroupRolesAndTeamRoles(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end) {
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	@Override
 	public int getGroupRolesAndTeamRolesCount(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return _roleLocalService.getGroupRolesAndTeamRolesCount(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId);
 	}
 
@@ -1448,4 +1448,4 @@ public class RoleLocalServiceWrapper
 	private RoleLocalService _roleLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1421322486
+// LIFERAY-SERVICE-BUILDER-HASH:-1432670102

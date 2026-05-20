@@ -463,21 +463,21 @@ public class RoleLocalServiceUtil {
 
 	public static List<Role> getGroupRolesAndTeamRoles(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return getService().getGroupRolesAndTeamRoles(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static int getGroupRolesAndTeamRolesCount(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return getService().getGroupRolesAndTeamRolesCount(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId);
 	}
 
@@ -1268,4 +1268,4 @@ public class RoleLocalServiceUtil {
 	private static volatile RoleLocalService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-480530326
+// LIFERAY-SERVICE-BUILDER-HASH:285072798

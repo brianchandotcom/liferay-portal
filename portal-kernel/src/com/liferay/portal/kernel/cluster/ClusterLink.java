@@ -15,7 +15,7 @@ public interface ClusterLink {
 	public static final int MAX_CHANNEL_COUNT = Priority.values().length;
 
 	public boolean isEnabled();
-
+	
 	public void sendMulticastMessage(Message message, Priority priority);
 
 	public void sendUnicastMessage(

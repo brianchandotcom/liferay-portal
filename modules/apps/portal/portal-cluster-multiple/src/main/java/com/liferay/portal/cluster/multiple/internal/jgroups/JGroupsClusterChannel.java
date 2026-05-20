@@ -190,6 +190,10 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 				"Unable to send unicast message", exception);
 		}
 	}
+	
+	public JChannel getJChannel() {
+		return _jChannel;
+	}
 
 	private String _getJChannelProperties(String[] excludedPropertyKeys)
 		throws ReflectiveOperationException {

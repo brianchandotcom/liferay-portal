@@ -326,6 +326,9 @@ public class PropsValues {
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
 
+	public static final boolean CLUSTER_LINK_JMX_ENABLED = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.CLUSTER_LINK_JMX_ENABLED));
+	
 	public static final boolean CMS_BROKEN_LINKS_CHECKER_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED));

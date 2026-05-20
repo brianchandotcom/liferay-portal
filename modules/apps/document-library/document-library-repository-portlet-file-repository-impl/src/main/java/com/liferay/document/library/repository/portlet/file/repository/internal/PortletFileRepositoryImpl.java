@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLTrashLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -796,6 +797,63 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			_repositoryProvider.getRepository(repositoryId);
 
 		return repository.search(searchContext);
+	}
+
+	@Override
+	public FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, File file, String fileName,
+			String mimeType, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = getPortletFileEntry(fileEntryId);
+
+		if (Validator.isNull(mimeType) ||
+			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
+
+			mimeType = MimeTypesUtil.getContentType(file, fileName);
+		}
+
+		String finalMimeType = mimeType;
+
+		return _run(
+			() -> {
+				LocalRepository localRepository =
+					_repositoryProvider.getLocalRepository(
+						fileEntry.getRepositoryId());
+
+				return localRepository.updateFileEntry(
+					userId, fileEntryId, fileName, finalMimeType,
+					fileEntry.getTitle(), null, fileEntry.getDescription(),
+					null, DLVersionNumberIncrease.NONE, file, null, null, null,
+					serviceContext);
+			});
+	}
+
+	@Override
+	public FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, InputStream inputStream,
+			String fileName, String mimeType, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (inputStream == null) {
+			return null;
+		}
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile(inputStream);
+
+			return updatePortletFileEntry(
+				userId, fileEntryId, file, fileName, mimeType, serviceContext);
+		}
+		catch (IOException ioException) {
+			throw new SystemException(
+				"Unable to write temporary file", ioException);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
 	}
 
 	private boolean _isAttachment(FileEntry fileEntry) {

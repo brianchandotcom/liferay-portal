@@ -199,4 +199,14 @@ public interface PortletFileRepository {
 			long repositoryId, SearchContext searchContext)
 		throws PortalException;
 
+	public FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, File file, String fileName,
+			String mimeType, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileEntry updatePortletFileEntry(
+			long userId, long fileEntryId, InputStream inputStream,
+			String fileName, String mimeType, ServiceContext serviceContext)
+		throws PortalException;
+
 }

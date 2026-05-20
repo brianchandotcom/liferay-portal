@@ -155,11 +155,15 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		QuotaUtil.checkUsage(
+		boolean checkUsage = QuotaUtil.checkUsage(
 			serviceContext.getCompanyId(), currentKaleoNode.getName(),
 			prompt + "\n" + userMessage, workflowContext,
 			kaleoInstanceToken.getKaleoInstanceId(),
 			serviceContext.getUserId());
+
+		if (!checkUsage) {
+			return;
+		}
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(

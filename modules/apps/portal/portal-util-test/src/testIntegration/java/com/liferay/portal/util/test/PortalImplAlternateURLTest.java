@@ -65,6 +65,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -510,17 +511,17 @@ public class PortalImplAlternateURLTest {
 
 		LayoutSet layoutSet = group.getPublicLayoutSet();
 
-		String defaultVirtualHostname = _portal.getDefaultVirtualHostname(
-			false, layoutSet);
+		NavigableMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
 
-		if (Validator.isNull(defaultVirtualHostname)) {
+		if (virtualHostnames.isEmpty()) {
 			return _generateLayoutURL(
 				defaultLocale, friendlyURL, _group.getFriendlyURL(), locale,
 				portalURL, portletPreferences);
 		}
 
 		return StringBundler.concat(
-			"http://", defaultVirtualHostname, ":8080",
+			"http://", virtualHostnames.firstKey(), ":8080",
 			_getI18nPath(defaultLocale, locale, portletPreferences),
 			friendlyURL);
 	}

@@ -147,7 +147,9 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 
 		try {
 			Locale locale = LocaleUtil.fromLanguageId(
-				_language.getLanguageId(httpServletRequest));
+				ParamUtil.getString(
+					httpServletRequest, "languageId",
+					_language.getLanguageId(httpServletRequest)));
 
 			DDMFormRenderingContext ddmFormRenderingContext =
 				_createDDMFormRenderingContext(

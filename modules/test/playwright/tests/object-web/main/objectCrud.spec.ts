@@ -86,50 +86,6 @@ test(
 	}
 );
 
-test(
-	'Verify the custom object label cannot be used to confirm the deletion',
-	{tag: '@LPS-150886'},
-	async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
-		const objectFields = generateObjectFields({
-			objectFieldBusinessTypes: ['Text'],
-		});
-
-		const objectDefinition =
-			await apiHelpers.objectAdmin.postRandomObjectDefinition({
-				objectFields,
-				status: {code: 0},
-			});
-
-		apiHelpers.data.push({
-			id: objectDefinition.id,
-			type: 'objectDefinition',
-		});
-
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
-			objectDefinition.label['en_US']
-		);
-
-		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
-
-		// Type a wrong value (not the name)
-
-		await page
-			.getByPlaceholder('Confirm Object Definition Name', {
-				exact: false,
-			})
-			.fill('WrongValue');
-
-		const deleteButton = page.getByRole('button', {
-			exact: true,
-			name: 'Delete',
-		});
-
-		await expect(deleteButton).toBeDisabled();
-	}
-);
-
 test('Verify it is possible to search object entries by API', async ({
 	apiHelpers,
 }) => {

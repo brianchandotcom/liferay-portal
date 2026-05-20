@@ -1569,6 +1569,40 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		}
 	});
 
+	test(
+		'cannot delete a published object definition with a mismatched confirmation name',
+		{tag: '@LPS-150886'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label!['en_US']
+			);
+
+			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+			await page
+				.getByPlaceholder('Confirm Object Definition Name', {
+					exact: false,
+				})
+				.fill('WrongValue');
+
+			await expect(
+				page.getByRole('button', {exact: true, name: 'Delete'})
+			).toBeDisabled();
+		}
+	);
+
 	test('cannot publish an object without the publish permission', async ({
 		apiHelpers,
 		editObjectDetailsPage,

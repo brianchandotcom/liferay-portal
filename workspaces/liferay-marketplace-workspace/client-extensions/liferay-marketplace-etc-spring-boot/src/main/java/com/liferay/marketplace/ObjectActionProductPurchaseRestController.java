@@ -21,6 +21,7 @@ import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.SalesforceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Map;
@@ -493,9 +494,15 @@ public class ObjectActionProductPurchaseRestController
 	private void _setUpCustomAddOn(String licenseType, Order order)
 		throws Exception {
 
+		OrderItem[] orderItems = order.getOrderItems();
+
+		if (ArrayUtil.isEmpty(orderItems)) {
+			return;
+		}
+
 		BillingAddress billingAddress = order.getBillingAddress();
 
-		OrderItem orderItem = order.getOrderItems()[0];
+		OrderItem orderItem = orderItems[0];
 
 		Sku sku = _marketplaceService.getSku(orderItem.getSkuId());
 

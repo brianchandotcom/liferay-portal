@@ -19,17 +19,17 @@ import type {
 	ISelectedItemsLabelArgs,
 } from '../Filter';
 
-type DateTimeBound = DateTime | 'now';
+type Bound = Partial<DateParts> | 'now';
 
 export interface DateTimeRangeFilterImplementationArgs
 	extends FilterImplementationArgs<SelectedData> {
 	entityFieldType: EEntityFieldType;
-	max?: DateTimeBound;
-	min?: DateTimeBound;
+	max?: Bound;
+	min?: Bound;
 	placeholder?: string;
 }
 
-interface DateTime {
+interface DateParts {
 	day: number;
 	hour: number;
 	minute: number;
@@ -38,11 +38,27 @@ interface DateTime {
 }
 
 interface SelectedData {
-	from: DateTime | null;
-	to: DateTime | null;
+	from: Partial<DateParts> | null;
+	to: Partial<DateParts> | null;
 }
 
 const pad2 = (value: number) => String(value).padStart(2, '0');
+
+function normalizeDateParts(
+	dateParts: Partial<DateParts> | null | undefined
+): DateParts | null {
+	if (!dateParts) {
+		return null;
+	}
+
+	return {
+		day: dateParts.day ?? 0,
+		hour: dateParts.hour ?? 0,
+		minute: dateParts.minute ?? 0,
+		month: dateParts.month ?? 0,
+		year: dateParts.year ?? 0,
+	};
+}
 
 function isUserLocale12Hour(): boolean {
 	try {
@@ -56,27 +72,50 @@ function isUserLocale12Hour(): boolean {
 	}
 }
 
-function formatPartsForClay(dateTime: DateTime, use12Hours: boolean): string {
-	if (use12Hours) {
-		const period = dateTime.hour >= 12 ? 'PM' : 'AM';
-		const hour12 = dateTime.hour % 12 === 0 ? 12 : dateTime.hour % 12;
+function formatDatePartsForClay(
+	dateParts: DateParts,
+	use12Hours: boolean,
+	dateTime: boolean
+): string {
+	const date = `${dateParts.year}-${pad2(dateParts.month)}-${pad2(dateParts.day)}`;
 
-		return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(
-			dateTime.day
-		)} ${pad2(hour12)}:${pad2(dateTime.minute)} ${period}`;
+	if (!dateTime) {
+		return date;
 	}
 
-	return `${dateTime.year}-${pad2(dateTime.month)}-${pad2(
-		dateTime.day
-	)} ${pad2(dateTime.hour)}:${pad2(dateTime.minute)}`;
+	if (use12Hours) {
+		const period = dateParts.hour >= 12 ? 'PM' : 'AM';
+		const hour12 = dateParts.hour % 12 === 0 ? 12 : dateParts.hour % 12;
+
+		return `${date} ${pad2(hour12)}:${pad2(dateParts.minute)} ${period}`;
+	}
+
+	return `${date} ${pad2(dateParts.hour)}:${pad2(dateParts.minute)}`;
 }
 
-function parseClayDateTime(
+function parseClayValue(
 	value: string | undefined,
-	use12Hours: boolean
-): DateTime | null {
+	use12Hours: boolean,
+	dateTime: boolean
+): DateParts | null {
 	if (!value) {
 		return null;
+	}
+
+	if (!dateTime) {
+		const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+
+		if (!match) {
+			return null;
+		}
+
+		return {
+			day: Number(match[3]),
+			hour: 0,
+			minute: 0,
+			month: Number(match[2]),
+			year: Number(match[1]),
+		};
 	}
 
 	if (use12Hours) {
@@ -122,7 +161,7 @@ function parseClayDateTime(
 	};
 }
 
-function nowInTimeZone(timeZone: string): DateTime {
+function nowInTimeZone(timeZone: string): DateParts {
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		hour: '2-digit',
@@ -133,24 +172,24 @@ function nowInTimeZone(timeZone: string): DateTime {
 		year: 'numeric',
 	});
 
-	const parts: Record<string, string> = {};
+	const dateParts: Record<string, string> = {};
 
 	for (const part of formatter.formatToParts(new Date())) {
 		if (part.type !== 'literal') {
-			parts[part.type] = part.value;
+			dateParts[part.type] = part.value;
 		}
 	}
 
 	return {
-		day: Number(parts.day),
-		hour: parts.hour === '24' ? 0 : Number(parts.hour),
-		minute: Number(parts.minute),
-		month: Number(parts.month),
-		year: Number(parts.year),
+		day: Number(dateParts.day),
+		hour: dateParts.hour === '24' ? 0 : Number(dateParts.hour),
+		minute: Number(dateParts.minute),
+		month: Number(dateParts.month),
+		year: Number(dateParts.year),
 	};
 }
 
-function resolveBound(bound?: DateTimeBound): DateTime | undefined {
+function resolveBound(bound?: Bound): DateParts | undefined {
 	if (!bound) {
 		return undefined;
 	}
@@ -159,16 +198,16 @@ function resolveBound(bound?: DateTimeBound): DateTime | undefined {
 		return nowInTimeZone(Liferay.ThemeDisplay.getTimeZone());
 	}
 
-	return bound;
+	return normalizeDateParts(bound) ?? undefined;
 }
 
-function partsToInstantMs(parts: DateTime): number {
+function datePartsToInstantMs(dateParts: DateParts): number {
 	return Date.UTC(
-		parts.year,
-		parts.month - 1,
-		parts.day,
-		parts.hour,
-		parts.minute
+		dateParts.year,
+		dateParts.month - 1,
+		dateParts.day,
+		dateParts.hour,
+		dateParts.minute
 	);
 }
 
@@ -206,8 +245,11 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 	return '+00:00';
 }
 
-function zonedPartsToOdataDateTime(parts: DateTime, timeZone: string): string {
-	const naiveUTCMs = partsToInstantMs(parts);
+function zonedDatePartsToOdataDateTime(
+	dateParts: DateParts,
+	timeZone: string
+): string {
+	const naiveUTCMs = datePartsToInstantMs(dateParts);
 
 	const offset = getTimeZoneOffset(timeZone, new Date(naiveUTCMs));
 
@@ -231,38 +273,52 @@ function zonedPartsToOdataDateTime(parts: DateTime, timeZone: string): string {
 	)}:00Z`;
 }
 
-function getSelectedItemsLabel({
-	selectedData,
-}: ISelectedItemsLabelArgs): string {
-	const {from, to} = selectedData as unknown as SelectedData;
+function dateOnlyEdgeIso(dateParts: DateParts, edge: 'from' | 'to'): string {
+	const isFrom = edge === 'from';
 
-	const format = (parts: DateTime) =>
-		`${parts.year}-${pad2(parts.month)}-${pad2(parts.day)} ${pad2(
-			parts.hour
-		)}:${pad2(parts.minute)}`;
+	const utc = new Date(
+		Date.UTC(
+			dateParts.year,
+			dateParts.month - 1,
+			dateParts.day,
+			isFrom ? 0 : 23,
+			isFrom ? 0 : 59,
+			isFrom ? 0 : 59,
+			isFrom ? 0 : 999
+		)
+	);
 
-	if (from && to) {
-		return `${format(from)} - ${format(to)}`;
-	}
-
-	if (from) {
-		return `${Liferay.Language.get('from')} ${format(from)}`;
-	}
-
-	if (to) {
-		return `${Liferay.Language.get('to[date-time]')} ${format(to)}`;
-	}
-
-	return '';
+	return utc.toISOString();
 }
 
-function getOdataString({id, selectedData}: IOdataStringArgs): string {
-	const {from, to} = selectedData as unknown as SelectedData;
+function buildOdataString(
+	{entityFieldType, id, selectedData}: IOdataStringArgs,
+	dateTime: boolean
+): string {
+	const {from: rawFrom, to: rawTo} = (selectedData ||
+		{}) as unknown as SelectedData;
+	const from = normalizeDateParts(rawFrom);
+	const to = normalizeDateParts(rawTo);
 
-	const timeZone = Liferay.ThemeDisplay.getTimeZone();
+	const edgeToOdata = (dateParts: DateParts, edge: 'from' | 'to'): string => {
+		if (dateTime) {
+			return zonedDatePartsToOdataDateTime(
+				dateParts,
+				Liferay.ThemeDisplay.getTimeZone()
+			);
+		}
 
-	const fromOdataString = from && zonedPartsToOdataDateTime(from, timeZone);
-	const toOdataString = to && zonedPartsToOdataDateTime(to, timeZone);
+		const iso = dateOnlyEdgeIso(dateParts, edge);
+
+		if (entityFieldType === EEntityFieldType.DATE) {
+			return iso.split('T')[0];
+		}
+
+		return iso;
+	};
+
+	const fromOdataString = from && edgeToOdata(from, 'from');
+	const toOdataString = to && edgeToOdata(to, 'to');
 
 	if (from && to) {
 		return `${id} ge ${fromOdataString}) and (${id} le ${toOdataString}`;
@@ -279,57 +335,112 @@ function getOdataString({id, selectedData}: IOdataStringArgs): string {
 	return '';
 }
 
+function prettifyDate(dateParts: DateParts): string {
+	const date = new Date(dateParts.year, dateParts.month - 1, dateParts.day);
+
+	return date.toLocaleDateString();
+}
+
+function buildSelectedItemsLabel(
+	{selectedData}: ISelectedItemsLabelArgs,
+	dateTime: boolean
+): string {
+	const {from: rawFrom, to: rawTo} = (selectedData ||
+		{}) as unknown as SelectedData;
+	const from = normalizeDateParts(rawFrom);
+	const to = normalizeDateParts(rawTo);
+
+	const format = (dateParts: DateParts) => {
+		if (!dateTime) {
+			return prettifyDate(dateParts);
+		}
+
+		return `${dateParts.year}-${pad2(dateParts.month)}-${pad2(dateParts.day)} ${pad2(
+			dateParts.hour
+		)}:${pad2(dateParts.minute)}`;
+	};
+
+	if (from && to) {
+		return `${format(from)} - ${format(to)}`;
+	}
+
+	if (from) {
+		return `${Liferay.Language.get('from')} ${format(from)}`;
+	}
+
+	if (to) {
+		return `${Liferay.Language.get('to[date-time]')} ${format(to)}`;
+	}
+
+	return '';
+}
+
+interface DateTimeRangeFilterProps
+	extends DateTimeRangeFilterImplementationArgs {
+	dateTime: boolean;
+}
+
 const DateTimeRangeFilter = ({
+	dateTime,
 	id,
 	max,
 	min,
 	placeholder,
 	selectedData,
 	setFilter,
-}: DateTimeRangeFilterImplementationArgs) => {
-	const use12Hours = useMemo(() => isUserLocale12Hour(), []);
+}: DateTimeRangeFilterProps) => {
+	const use12Hours = useMemo(
+		() => (dateTime ? isUserLocale12Hour() : false),
+		[dateTime]
+	);
 
 	const months = useMemo(() => dateUtils.getMonthsLong(), []);
 
+	const initialFromDateParts = normalizeDateParts(selectedData?.from);
+	const initialToDateParts = normalizeDateParts(selectedData?.to);
+
 	const [fromValue, setFromValue] = useState(
-		selectedData?.from
-			? formatPartsForClay(selectedData.from, use12Hours)
+		initialFromDateParts
+			? formatDatePartsForClay(initialFromDateParts, use12Hours, dateTime)
 			: ''
 	);
 	const [toValue, setToValue] = useState(
-		selectedData?.to ? formatPartsForClay(selectedData.to, use12Hours) : ''
+		initialToDateParts
+			? formatDatePartsForClay(initialToDateParts, use12Hours, dateTime)
+			: ''
 	);
 
-	const fromParts = parseClayDateTime(fromValue, use12Hours);
-	const toParts = parseClayDateTime(toValue, use12Hours);
+	const fromDateParts = parseClayValue(fromValue, use12Hours, dateTime);
+	const toDateParts = parseClayValue(toValue, use12Hours, dateTime);
 
 	const resolvedMin = resolveBound(min);
 	const resolvedMax = resolveBound(max);
 
 	const isValidRange =
-		!fromParts ||
-		!toParts ||
-		partsToInstantMs(fromParts) <= partsToInstantMs(toParts);
+		!fromDateParts ||
+		!toDateParts ||
+		datePartsToInstantMs(fromDateParts) <=
+			datePartsToInstantMs(toDateParts);
 
-	const isInBounds = (parts: DateTime | null) => {
-		if (!parts) {
+	const isInBounds = (dateParts: DateParts | null) => {
+		if (!dateParts) {
 			return true;
 		}
 
-		const partsMs = partsToInstantMs(parts);
+		const datePartsMs = datePartsToInstantMs(dateParts);
 
-		if (resolvedMin && partsMs < partsToInstantMs(resolvedMin)) {
+		if (resolvedMin && datePartsMs < datePartsToInstantMs(resolvedMin)) {
 			return false;
 		}
 
-		if (resolvedMax && partsMs > partsToInstantMs(resolvedMax)) {
+		if (resolvedMax && datePartsMs > datePartsToInstantMs(resolvedMax)) {
 			return false;
 		}
 
 		return true;
 	};
 
-	const isWithinBounds = isInBounds(fromParts) && isInBounds(toParts);
+	const isWithinBounds = isInBounds(fromDateParts) && isInBounds(toDateParts);
 
 	let actionType = 'edit';
 
@@ -341,11 +452,11 @@ const DateTimeRangeFilter = ({
 		actionType = 'add';
 	}
 
-	const initialFromString = selectedData?.from
-		? formatPartsForClay(selectedData.from, use12Hours)
+	const initialFromString = initialFromDateParts
+		? formatDatePartsForClay(initialFromDateParts, use12Hours, dateTime)
 		: '';
-	const initialToString = selectedData?.to
-		? formatPartsForClay(selectedData.to, use12Hours)
+	const initialToString = initialToDateParts
+		? formatDatePartsForClay(initialToDateParts, use12Hours, dateTime)
 		: '';
 
 	const isChanged =
@@ -360,14 +471,36 @@ const DateTimeRangeFilter = ({
 		start: new Date().getFullYear() - 50,
 	};
 
-	const fallbackPlaceholder = use12Hours
-		? 'yyyy-mm-dd hh:mm aa'
-		: 'yyyy-mm-dd hh:mm';
+	const fallbackPlaceholder = !dateTime
+		? 'yyyy-mm-dd'
+		: use12Hours
+			? 'yyyy-mm-dd hh:mm aa'
+			: 'yyyy-mm-dd hh:mm';
+
+	const wrapperClassName = dateTime
+		? 'fds-date-time-range form-group'
+		: 'fds-date-range form-group';
+
+	const toSelectedData = (dateParts: DateParts | null) => {
+		if (!dateParts) {
+			return null;
+		}
+
+		if (!dateTime) {
+			return {
+				day: dateParts.day,
+				month: dateParts.month,
+				year: dateParts.year,
+			};
+		}
+
+		return dateParts;
+	};
 
 	return (
 		<>
 			<ClayDropDown.Caption>
-				<div className="fds-date-time-range form-group">
+				<div className={wrapperClassName}>
 					<ClayForm.Group className="form-group-sm">
 						<label htmlFor={`from-${id}`}>
 							{Liferay.Language.get('from')}
@@ -380,7 +513,7 @@ const DateTimeRangeFilter = ({
 							months={months}
 							onChange={(value: string) => setFromValue(value)}
 							placeholder={placeholder || fallbackPlaceholder}
-							time={true}
+							time={dateTime}
 							use12Hours={use12Hours}
 							value={fromValue}
 							weekdaysShort={dateUtils.getWeekdaysShort()}
@@ -400,7 +533,7 @@ const DateTimeRangeFilter = ({
 							months={months}
 							onChange={(value: string) => setToValue(value)}
 							placeholder={placeholder || fallbackPlaceholder}
-							time={true}
+							time={dateTime}
 							use12Hours={use12Hours}
 							value={toValue}
 							weekdaysShort={dateUtils.getWeekdaysShort()}
@@ -437,8 +570,8 @@ const DateTimeRangeFilter = ({
 							setFilter({
 								active: true,
 								selectedData: {
-									from: fromParts,
-									to: toParts,
+									from: toSelectedData(fromDateParts),
+									to: toSelectedData(toDateParts),
 								},
 							});
 						}
@@ -458,11 +591,25 @@ const DateTimeRangeFilter = ({
 	);
 };
 
-const filterImplementation: FilterImplementation<DateTimeRangeFilterImplementationArgs> =
-	{
-		Component: DateTimeRangeFilter,
-		getOdataString,
-		getSelectedItemsLabel,
+function filterImplementation({
+	dateTime,
+}: {
+	dateTime: boolean;
+}): FilterImplementation<DateTimeRangeFilterImplementationArgs> {
+	return {
+		Component: (args: DateTimeRangeFilterImplementationArgs) => (
+			<DateTimeRangeFilter {...args} dateTime={dateTime} />
+		),
+		getOdataString: (args: IOdataStringArgs) =>
+			buildOdataString(args, dateTime),
+		getSelectedItemsLabel: (args: ISelectedItemsLabelArgs) =>
+			buildSelectedItemsLabel(args, dateTime),
 	};
+}
 
-export default filterImplementation;
+export const dateRangeFilterImplementation = filterImplementation({
+	dateTime: false,
+});
+export const dateTimeRangeFilterImplementation = filterImplementation({
+	dateTime: true,
+});

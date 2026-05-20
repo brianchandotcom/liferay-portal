@@ -129,6 +129,7 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 
 					<Picker
 						className="model-armor-template-form-picker"
+						id="guardrailType"
 						items={GUARDRAIL_TYPE_OPTIONS}
 						onSelectionChange={(value) =>
 							setField('guardrailType', value as string)

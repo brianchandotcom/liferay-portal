@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -136,18 +135,15 @@ public class FriendlyURLEntryLocalServiceImplTest {
 			new FriendlyURLEntryLocalServiceImpl();
 
 		Mockito.reset(
-			_assetEntryLocalService, _classNameLocalService,
-			_counterLocalService, _exportImportHelper, _friendlyURLEntry,
-			_friendlyURLEntryLocalizationPersistence, _friendlyURLEntryMapping,
-			_friendlyURLEntryMappingPersistence, _friendlyURLEntryPersistence,
-			_friendlyURLNormalizer, _groupLocalService, _language, _portal);
+			_assetEntryLocalService, _counterLocalService, _exportImportHelper,
+			_friendlyURLEntry, _friendlyURLEntryLocalizationPersistence,
+			_friendlyURLEntryMapping, _friendlyURLEntryMappingPersistence,
+			_friendlyURLEntryPersistence, _friendlyURLNormalizer,
+			_groupLocalService, _language, _portal);
 
 		ReflectionTestUtil.setFieldValue(
 			friendlyURLEntryLocalServiceImpl, "_assetEntryLocalService",
 			_assetEntryLocalService);
-		ReflectionTestUtil.setFieldValue(
-			friendlyURLEntryLocalServiceImpl, "_classNameLocalService",
-			_classNameLocalService);
 		ReflectionTestUtil.setFieldValue(
 			friendlyURLEntryLocalServiceImpl, "counterLocalService",
 			_counterLocalService);
@@ -346,8 +342,6 @@ public class FriendlyURLEntryLocalServiceImplTest {
 	private final MockedStatic<BatchEngineThreadLocal>
 		_batchEngineThreadLocalMockedStatic = Mockito.mockStatic(
 			BatchEngineThreadLocal.class);
-	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
-		ClassNameLocalService.class);
 	private final CounterLocalService _counterLocalService = Mockito.mock(
 		CounterLocalService.class);
 	private final ExportImportHelper _exportImportHelper = Mockito.mock(

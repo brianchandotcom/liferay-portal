@@ -54,7 +54,7 @@ public abstract class BaseContentsSectionDisplayContext
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return sectionDisplayContextHelper.getContentsBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getContentsBulkActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -78,7 +78,7 @@ public abstract class BaseContentsSectionDisplayContext
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return sectionDisplayContextHelper.getContentsFDSActionDropdownItems(
+		return SectionDisplayContextUtil.getContentsFDSActionDropdownItems(
 			httpServletRequest);
 	}
 

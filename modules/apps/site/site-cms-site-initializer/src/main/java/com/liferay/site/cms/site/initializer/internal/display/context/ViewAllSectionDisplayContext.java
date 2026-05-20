@@ -89,7 +89,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return sectionDisplayContextHelper.getAllSectionBulkActionDropdownItems(
+		return SectionDisplayContextUtil.getAllSectionBulkActionDropdownItems(
 			httpServletRequest);
 	}
 

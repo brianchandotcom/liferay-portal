@@ -223,6 +223,75 @@ public interface KaleoNotificationPersistence
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
+	 * Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	public java.util.List<KaleoNotification> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo notification
+	 * @throws NoSuchNotificationException if a matching kaleo notification could not be found
+	 */
+	public KaleoNotification findByKCN_KDVI_First(
+			String kaleoClassName, long kaleoDefinitionVersionId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification>
+				orderByComparator)
+		throws NoSuchNotificationException;
+
+	/**
+	 * Returns the first kaleo notification in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
+	 */
+	public KaleoNotification fetchByKCN_KDVI_First(
+		String kaleoClassName, long kaleoDefinitionVersionId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification>
+			orderByComparator);
+
+	/**
+	 * Removes all the kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63; from the database.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 */
+	public void removeByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
+	/**
+	 * Returns the number of kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @return the number of matching kaleo notifications
+	 */
+	public int countByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
+	/**
 	 * Creates a new kaleo notification with the primary key. Does not add the kaleo notification to the database.
 	 *
 	 * @param kaleoNotificationId the primary key for the new kaleo notification
@@ -430,5 +499,67 @@ public interface KaleoNotificationPersistence
 			kaleoClassName, kaleoClassPK, start, end, orderByComparator, true);
 	}
 
+	/**
+	 * Returns all the kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @return the matching kaleo notifications
+	 */
+	public default java.util.List<KaleoNotification> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @return the range of matching kaleo notifications
+	 */
+	public default java.util.List<KaleoNotification> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo notifications where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo notifications
+	 * @param end the upper bound of the range of kaleo notifications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo notifications
+	 */
+	public default java.util.List<KaleoNotification> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification>
+			orderByComparator) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:961456946
+// LIFERAY-SERVICE-BUILDER-HASH:-1696696839

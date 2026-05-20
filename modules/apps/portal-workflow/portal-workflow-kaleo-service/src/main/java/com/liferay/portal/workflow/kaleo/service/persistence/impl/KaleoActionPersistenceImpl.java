@@ -372,6 +372,114 @@ public class KaleoActionPersistenceImpl
 	}
 
 	private CollectionPersistenceFinder<KaleoAction>
+		_collectionPersistenceFinderByKCN_KDVI;
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo actions
+	 */
+	@Override
+	public List<KaleoAction> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end, OrderByComparator<KaleoAction> orderByComparator,
+		boolean useFinderCache) {
+
+		return _collectionPersistenceFinderByKCN_KDVI.find(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoDefinitionVersionId}, start, end,
+			orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction findByKCN_KDVI_First(
+			String kaleoClassName, long kaleoDefinitionVersionId,
+			OrderByComparator<KaleoAction> orderByComparator)
+		throws NoSuchActionException {
+
+		KaleoAction kaleoAction = fetchByKCN_KDVI_First(
+			kaleoClassName, kaleoDefinitionVersionId, orderByComparator);
+
+		if (kaleoAction != null) {
+			return kaleoAction;
+		}
+
+		throw new NoSuchActionException(
+			_collectionPersistenceFinderByKCN_KDVI.buildNoSuchKeyMessage(
+				_NO_SUCH_ENTITY_WITH_KEY,
+				new Object[] {kaleoClassName, kaleoDefinitionVersionId}));
+	}
+
+	/**
+	 * Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	@Override
+	public KaleoAction fetchByKCN_KDVI_First(
+		String kaleoClassName, long kaleoDefinitionVersionId,
+		OrderByComparator<KaleoAction> orderByComparator) {
+
+		return _collectionPersistenceFinderByKCN_KDVI.fetchFirst(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoDefinitionVersionId},
+			orderByComparator);
+	}
+
+	/**
+	 * Removes all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63; from the database.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 */
+	@Override
+	public void removeByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		_collectionPersistenceFinderByKCN_KDVI.remove(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoDefinitionVersionId});
+	}
+
+	/**
+	 * Returns the number of kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @return the number of matching kaleo actions
+	 */
+	@Override
+	public int countByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return _collectionPersistenceFinderByKCN_KDVI.count(
+			finderCache,
+			new Object[] {kaleoClassName, kaleoDefinitionVersionId});
+	}
+
+	private CollectionPersistenceFinder<KaleoAction>
 		_collectionPersistenceFinderByC_KCN_KCPK;
 
 	/**
@@ -857,6 +965,39 @@ public class KaleoActionPersistenceImpl
 					"kaleoAction.", "kaleoClassPK", FinderColumn.Type.LONG, "=",
 					true, true, KaleoAction::getKaleoClassPK));
 
+		_collectionPersistenceFinderByKCN_KDVI =
+			new CollectionPersistenceFinder<>(
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKCN_KDVI",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoClassName", "kaleoDefinitionVersionId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKCN_KDVI",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"kaleoClassName", "kaleoDefinitionVersionId"},
+					0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKCN_KDVI",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"kaleoClassName", "kaleoDefinitionVersionId"},
+					0, 1, false, null),
+				_SQL_SELECT_KALEOACTION_WHERE, _SQL_COUNT_KALEOACTION_WHERE,
+				KaleoActionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
+				new FinderColumn<>(
+					"kaleoAction.", "kaleoClassName", FinderColumn.Type.STRING,
+					"=", true, true, KaleoAction::getKaleoClassName),
+				new FinderColumn<>(
+					"kaleoAction.", "kaleoDefinitionVersionId",
+					FinderColumn.Type.LONG, "=", true, true,
+					KaleoAction::getKaleoDefinitionVersionId));
+
 		_collectionPersistenceFinderByC_KCN_KCPK =
 			new CollectionPersistenceFinder<>(
 				this,
@@ -975,4 +1116,4 @@ public class KaleoActionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-517712749
+// LIFERAY-SERVICE-BUILDER-HASH:2077581268

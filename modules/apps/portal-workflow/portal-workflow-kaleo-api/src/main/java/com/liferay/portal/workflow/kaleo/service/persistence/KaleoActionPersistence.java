@@ -222,6 +222,75 @@ public interface KaleoActionPersistence
 	public int countByKCN_KCPK(String kaleoClassName, long kaleoClassPK);
 
 	/**
+	 * Returns an ordered range of all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching kaleo actions
+	 */
+	public java.util.List<KaleoAction> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action
+	 * @throws NoSuchActionException if a matching kaleo action could not be found
+	 */
+	public KaleoAction findByKCN_KDVI_First(
+			String kaleoClassName, long kaleoDefinitionVersionId,
+			com.liferay.portal.kernel.util.OrderByComparator<KaleoAction>
+				orderByComparator)
+		throws NoSuchActionException;
+
+	/**
+	 * Returns the first kaleo action in the ordered set where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	 */
+	public KaleoAction fetchByKCN_KDVI_First(
+		String kaleoClassName, long kaleoDefinitionVersionId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction>
+			orderByComparator);
+
+	/**
+	 * Removes all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63; from the database.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 */
+	public void removeByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
+	/**
+	 * Returns the number of kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @return the number of matching kaleo actions
+	 */
+	public int countByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
+	/**
 	 * Returns an ordered range of all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	 *
 	 * <p>
@@ -499,6 +568,68 @@ public interface KaleoActionPersistence
 	}
 
 	/**
+	 * Returns all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @return the matching kaleo actions
+	 */
+	public default java.util.List<KaleoAction> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @return the range of matching kaleo actions
+	 */
+	public default java.util.List<KaleoAction> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo actions where kaleoClassName = &#63; and kaleoDefinitionVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.model.impl.KaleoActionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoClassName the kaleo class name
+	 * @param kaleoDefinitionVersionId the kaleo definition version ID
+	 * @param start the lower bound of the range of kaleo actions
+	 * @param end the upper bound of the range of kaleo actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo actions
+	 */
+	public default java.util.List<KaleoAction> findByKCN_KDVI(
+		String kaleoClassName, long kaleoDefinitionVersionId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoAction>
+			orderByComparator) {
+
+		return findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
 	 * Returns all the kaleo actions where companyId = &#63; and kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	 *
 	 * @param companyId the company ID
@@ -564,4 +695,4 @@ public interface KaleoActionPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2055537870
+// LIFERAY-SERVICE-BUILDER-HASH:171592479

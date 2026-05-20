@@ -23,8 +23,8 @@
 		},
 		{
 			"active": true,
-			"description": "Detects phone numbers in international and common national formats.",
-			"detectionRegex": "\\+?[\\d\\s\\-().]{7,20}",
+			"description": "Detects phone numbers in international format (leading + required).",
+			"detectionRegex": "(?<!\\d)\\+\\d[\\d\\s\\-().]{6,19}(?!\\d)",
 			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_PHONE",
 			"maskType": "system",
 			"name": "Phone numbers",
@@ -50,8 +50,8 @@
 		},
 		{
 			"active": true,
-			"description": "Detects Dutch BSN identification numbers.",
-			"detectionRegex": "\\b\\d{9}\\b",
+			"description": "Detects Dutch BSN identification numbers (9 digits, must not start with 0).",
+			"detectionRegex": "\\b[1-9]\\d{8}\\b",
 			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_NATIONAL_ID_BSN",
 			"maskType": "system",
 			"name": "National IDs (BSN)",
@@ -88,8 +88,8 @@
 		},
 		{
 			"active": true,
-			"description": "Detects IBAN-formatted bank account numbers across all country formats.",
-			"detectionRegex": "\\b[A-Z]{2}\\d{2}[A-Z0-9]{4,30}\\b",
+			"description": "Detects IBAN-formatted bank account numbers across all country formats. Allows optional whitespace between groups.",
+			"detectionRegex": "\\b[A-Z]{2}\\d{2}(?:\\s?[A-Z0-9]){11,30}\\b",
 			"externalReferenceCode": "L_MCP_SERVER_DATA_MASK_IBAN",
 			"maskType": "system",
 			"name": "IBAN / Bank accounts",

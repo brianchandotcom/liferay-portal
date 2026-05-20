@@ -5,11 +5,11 @@
 
 package com.liferay.osb.faro.rest.client.resource.v1_0;
 
-import com.liferay.osb.faro.rest.client.dto.v1_0.Channel;
+import com.liferay.osb.faro.rest.client.dto.v1_0.Workspace;
 import com.liferay.osb.faro.rest.client.http.HttpInvoker;
 import com.liferay.osb.faro.rest.client.pagination.Page;
 import com.liferay.osb.faro.rest.client.problem.Problem;
-import com.liferay.osb.faro.rest.client.serdes.v1_0.ChannelSerDes;
+import com.liferay.osb.faro.rest.client.serdes.v1_0.WorkspaceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -27,24 +27,15 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface ChannelResource {
+public interface WorkspaceResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public Channel getWorkspaceGroupChannel(Long groupId, String channelId)
-		throws Exception;
+	public Page<Workspace> getWorkspacesPage() throws Exception;
 
-	public HttpInvoker.HttpResponse getWorkspaceGroupChannelHttpResponse(
-			Long groupId, String channelId)
-		throws Exception;
-
-	public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getWorkspaceGroupChannelsPageHttpResponse(
-			Long groupId)
+	public HttpInvoker.HttpResponse getWorkspacesPageHttpResponse()
 		throws Exception;
 
 	public static class Builder {
@@ -60,8 +51,8 @@ public interface ChannelResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public ChannelResource build() {
-			return new ChannelResourceImpl(this);
+		public WorkspaceResource build() {
+			return new WorkspaceResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -153,13 +144,11 @@ public interface ChannelResource {
 
 	}
 
-	public static class ChannelResourceImpl implements ChannelResource {
+	public static class WorkspaceResourceImpl implements WorkspaceResource {
 
-		public Channel getWorkspaceGroupChannel(Long groupId, String channelId)
-			throws Exception {
-
+		public Page<Workspace> getWorkspacesPage() throws Exception {
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkspaceGroupChannelHttpResponse(groupId, channelId);
+				getWorkspacesPageHttpResponse();
 
 			String content = httpResponse.getContent();
 
@@ -209,7 +198,7 @@ public interface ChannelResource {
 			}
 
 			try {
-				return ChannelSerDes.toDTO(content);
+				return Page.of(content, WorkspaceSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -220,8 +209,7 @@ public interface ChannelResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getWorkspaceGroupChannelHttpResponse(
-				Long groupId, String channelId)
+		public HttpInvoker.HttpResponse getWorkspacesPageHttpResponse()
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -248,10 +236,7 @@ public interface ChannelResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/faro-rest/v1.0/workspace/{groupId}/channels/{channelId}");
-
-			httpInvoker.path("groupId", groupId);
-			httpInvoker.path("channelId", channelId);
+						"/o/faro-rest/v1.0/workspaces");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -261,121 +246,16 @@ public interface ChannelResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getWorkspaceGroupChannelsPageHttpResponse(groupId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, ChannelSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getWorkspaceGroupChannelsPageHttpResponse(Long groupId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/faro-rest/v1.0/workspace/{groupId}/channels");
-
-			httpInvoker.path("groupId", groupId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		private ChannelResourceImpl(Builder builder) {
+		private WorkspaceResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			ChannelResource.class.getName());
+			WorkspaceResource.class.getName());
 
 		private Builder _builder;
 
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-929472869
+// LIFERAY-REST-BUILDER-HASH:1220826844

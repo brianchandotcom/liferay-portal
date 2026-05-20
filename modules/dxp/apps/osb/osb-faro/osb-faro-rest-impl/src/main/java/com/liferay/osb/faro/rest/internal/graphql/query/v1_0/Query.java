@@ -14,6 +14,7 @@ import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegment;
 import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegmentMembership;
 import com.liferay.osb.faro.rest.dto.v1_0.PageMetric;
 import com.liferay.osb.faro.rest.dto.v1_0.SearchTerm;
+import com.liferay.osb.faro.rest.dto.v1_0.Workspace;
 import com.liferay.osb.faro.rest.resource.v1_0.AccountResource;
 import com.liferay.osb.faro.rest.resource.v1_0.AssetSummaryMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.ChannelResource;
@@ -23,6 +24,7 @@ import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentMembershipResour
 import com.liferay.osb.faro.rest.resource.v1_0.IndividualSegmentResource;
 import com.liferay.osb.faro.rest.resource.v1_0.PageMetricResource;
 import com.liferay.osb.faro.rest.resource.v1_0.SearchTermResource;
+import com.liferay.osb.faro.rest.resource.v1_0.WorkspaceResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -127,6 +129,14 @@ public class Query {
 			searchTermResourceComponentServiceObjects;
 	}
 
+	public static void setWorkspaceResourceComponentServiceObjects(
+		ComponentServiceObjects<WorkspaceResource>
+			workspaceResourceComponentServiceObjects) {
+
+		_workspaceResourceComponentServiceObjects =
+			workspaceResourceComponentServiceObjects;
+	}
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -227,23 +237,20 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupChannels(groupId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupChannels(groupId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "List channels configured within an Analytics Cloud workspaces. To fetch a single channel by id, use `getWorkspaceGroupChannel`."
 	)
 	public ChannelPage workspaceGroupChannels(
-			@GraphQLName("groupId") Long groupId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
+			@GraphQLName("groupId") Long groupId)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_channelResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			channelResource -> new ChannelPage(
-				channelResource.getWorkspaceGroupChannelsPage(
-					groupId, Pagination.of(page, pageSize))));
+				channelResource.getWorkspaceGroupChannelsPage(groupId)));
 	}
 
 	/**
@@ -465,6 +472,22 @@ public class Query {
 				searchTermResource.getWorkspaceGroupChannelSearchTermsPage(
 					groupId, channelId, rangeEnd, rangeKey, rangeStart,
 					Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaces{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "List Analytics Cloud workspaces accessible to the current user. Use the resulting `groupId` values with other endpoints (e.g. `getWorkspaceGroupAccountsPage`, `getWorkspaceGroupChannelsPage`) to scope requests to a specific workspace."
+	)
+	public WorkspacePage workspaces() throws Exception {
+		return _applyComponentServiceObjects(
+			_workspaceResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			workspaceResource -> new WorkspacePage(
+				workspaceResource.getWorkspacesPage()));
 	}
 
 	@GraphQLName("AccountPage")
@@ -766,6 +789,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("WorkspacePage")
+	public class WorkspacePage {
+
+		public WorkspacePage(Page workspacePage) {
+			actions = workspacePage.getActions();
+
+			items = workspacePage.getItems();
+			lastPage = workspacePage.getLastPage();
+			page = workspacePage.getPage();
+			pageSize = workspacePage.getPageSize();
+			totalCount = workspacePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Workspace> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -951,6 +1007,23 @@ public class Query {
 		searchTermResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(WorkspaceResource workspaceResource)
+		throws Exception {
+
+		workspaceResource.setContextAcceptLanguage(_acceptLanguage);
+		workspaceResource.setContextCompany(_company);
+		workspaceResource.setContextHttpServletRequest(_httpServletRequest);
+		workspaceResource.setContextHttpServletResponse(_httpServletResponse);
+		workspaceResource.setContextUriInfo(_uriInfo);
+		workspaceResource.setContextUser(_user);
+		workspaceResource.setGroupLocalService(_groupLocalService);
+		workspaceResource.setResourceActionLocalService(
+			_resourceActionLocalService);
+		workspaceResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		workspaceResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private static ComponentServiceObjects<AccountResource>
 		_accountResourceComponentServiceObjects;
 	private static ComponentServiceObjects<AssetSummaryMetricResource>
@@ -969,6 +1042,8 @@ public class Query {
 		_pageMetricResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SearchTermResource>
 		_searchTermResourceComponentServiceObjects;
+	private static ComponentServiceObjects<WorkspaceResource>
+		_workspaceResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
@@ -987,4 +1062,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-242389805
+// LIFERAY-REST-BUILDER-HASH:1639684878

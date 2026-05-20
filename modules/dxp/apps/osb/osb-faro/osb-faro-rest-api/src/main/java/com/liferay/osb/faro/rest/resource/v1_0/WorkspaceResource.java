@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.rest.resource.v1_0;
 
-import com.liferay.osb.faro.rest.dto.v1_0.Channel;
+import com.liferay.osb.faro.rest.dto.v1_0.Workspace;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -40,13 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface ChannelResource {
+public interface WorkspaceResource {
 
-	public Channel getWorkspaceGroupChannel(Long groupId, String channelId)
-		throws Exception;
-
-	public Page<Channel> getWorkspaceGroupChannelsPage(Long groupId)
-		throws Exception;
+	public Page<Workspace> getWorkspacesPage() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -110,7 +106,7 @@ public interface ChannelResource {
 	@ProviderType
 	public interface Builder {
 
-		public ChannelResource build();
+		public WorkspaceResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -136,4 +132,4 @@ public interface ChannelResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:780840551
+// LIFERAY-REST-BUILDER-HASH:-1952711373

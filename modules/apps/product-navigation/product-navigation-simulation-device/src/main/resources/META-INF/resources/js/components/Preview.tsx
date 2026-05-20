@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {useEventListener} from '@liferay/frontend-js-react-web';
+import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -68,30 +69,6 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 
 	useEventListener('resize', handleWindowResize, false, window);
 
-	const handleIframeLoad = (
-		event: React.SyntheticEvent<HTMLIFrameElement>
-	) => {
-		const iframe = event.target as HTMLIFrameElement;
-
-		const iframeWin = iframe.contentWindow;
-		const iframeDoc = iframeWin?.document;
-
-		iframeDoc?.addEventListener('click', (event) => {
-			const target = event.target as HTMLElement;
-
-			const link = target.closest('a');
-
-			if (link && link.href) {
-				event.preventDefault();
-			}
-		});
-
-		(iframeWin as any)?.Liferay.on('beforeNavigate', (event: any) => {
-			event.preventDefault();
-			event.originalEvent.preventDefault();
-		});
-	};
-
 	if (!open) {
 		return null;
 	}
@@ -125,7 +102,7 @@ export default function Preview({activeSize, open, previewRef}: IPreviewProps) {
 			>
 				<iframe
 					className="border-0 h-100 w-100"
-					onLoad={handleIframeLoad}
+					onLoad={preventIframeNavigation}
 					src={createIframeURL()}
 					title={Liferay.Language.get('simulation-preview')}
 				/>

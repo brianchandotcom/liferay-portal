@@ -39,7 +39,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupAssetSummariesPage` to list these sets of metrics.",
+	description = "An aggregated set of analytics metrics for a single tracked asset (page, blog, document, form, journal, object entry, etc.) over the selected date range. Trend percentages compare metrics on the selected date range to the previous date range. Use `getWorkspaceGroupChannelAssetSummariesPage` to list these sets of metrics.",
 	value = "AssetSummaryMetric"
 )
 @JsonFilter("Liferay.Vulcan")
@@ -870,4 +870,4 @@ public class AssetSummaryMetric implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:2020623730
+// LIFERAY-REST-BUILDER-HASH:-449896351

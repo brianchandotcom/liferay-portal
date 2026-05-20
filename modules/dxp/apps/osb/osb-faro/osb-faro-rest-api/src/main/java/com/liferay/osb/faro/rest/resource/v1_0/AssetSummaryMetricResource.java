@@ -43,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetSummaryMetricResource {
 
-	public Page<AssetSummaryMetric> getWorkspaceGroupAssetSummariesPage(
+	public Page<AssetSummaryMetric> getWorkspaceGroupChannelAssetSummariesPage(
 			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -137,4 +137,4 @@ public interface AssetSummaryMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-182119100
+// LIFERAY-REST-BUILDER-HASH:-1765649719

@@ -43,7 +43,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PageMetricResource {
 
-	public Page<PageMetric> getWorkspaceGroupPagesPage(
+	public Page<PageMetric> getWorkspaceGroupChannelPagesPage(
 			Long groupId, String channelId, String dataSourceId,
 			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination,
@@ -138,4 +138,4 @@ public interface PageMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1048719995
+// LIFERAY-REST-BUILDER-HASH:-800169304

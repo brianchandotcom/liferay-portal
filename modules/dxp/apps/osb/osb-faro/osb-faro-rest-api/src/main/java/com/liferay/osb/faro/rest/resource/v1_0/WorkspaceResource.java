@@ -5,7 +5,7 @@
 
 package com.liferay.osb.faro.rest.resource.v1_0;
 
-import com.liferay.osb.faro.rest.dto.v1_0.IndividualSegment;
+import com.liferay.osb.faro.rest.dto.v1_0.Workspace;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -15,7 +15,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
@@ -41,17 +40,9 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface IndividualSegmentResource {
+public interface WorkspaceResource {
 
-	public Page<IndividualSegment>
-			getWorkspaceGroupChannelIndividualSegmentsPage(
-				Long groupId, String channelId, String name, String search,
-				String status, Pagination pagination)
-		throws Exception;
-
-	public IndividualSegment getWorkspaceGroupIndividualSegment(
-			Long groupId, String individualSegmentId)
-		throws Exception;
+	public Page<Workspace> getWorkspacesPage() throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
@@ -115,7 +106,7 @@ public interface IndividualSegmentResource {
 	@ProviderType
 	public interface Builder {
 
-		public IndividualSegmentResource build();
+		public WorkspaceResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 
@@ -141,4 +132,4 @@ public interface IndividualSegmentResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1650608003
+// LIFERAY-REST-BUILDER-HASH:-1952711373

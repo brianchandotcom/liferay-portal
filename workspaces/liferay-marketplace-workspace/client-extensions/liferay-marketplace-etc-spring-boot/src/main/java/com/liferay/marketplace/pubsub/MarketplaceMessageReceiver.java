@@ -32,7 +32,6 @@ import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.service.ProvisioningHubService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
@@ -40,7 +39,6 @@ import com.liferay.petra.string.StringBundler;
 import java.math.BigDecimal;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -245,12 +243,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			PostalAddress.class);
 	}
 
-	private String _getSkuExternalReferenceCode(Product product) {
-		Map<String, String> properties = product.getProperties();
-
-		return "SF-" + properties.get("salesforce-product-id");
-	}
-
 	private UserAccount _getUserAccount(String emailAddress) throws Exception {
 		Page<UserAccount> userAccountsPage =
 			_marketplaceService.getUserAccountsPage(
@@ -356,8 +348,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			com.liferay.headless.commerce.admin.catalog.client.http.HttpInvoker.
 				HttpResponse httpResponse =
 					skuResource.getSkuByExternalReferenceCodeHttpResponse(
-						_getSkuExternalReferenceCode(
-							productPurchase.getProduct()));
+						productPurchase.getProductKey());
 
 			if (!_isOKStatusCode(httpResponse.getStatusCode())) {
 				if (_log.isInfoEnabled()) {
@@ -397,8 +388,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 											() -> new BigDecimal(
 												productPurchase.getQuantity()));
 										setSkuExternalReferenceCode(
-											() -> _getSkuExternalReferenceCode(
-												productPurchase.getProduct()));
+											productPurchase::getProductKey);
 									}
 								}
 							});

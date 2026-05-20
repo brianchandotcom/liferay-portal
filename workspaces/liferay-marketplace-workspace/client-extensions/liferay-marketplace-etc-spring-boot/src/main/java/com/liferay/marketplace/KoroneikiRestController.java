@@ -248,8 +248,7 @@ public class KoroneikiRestController extends BaseRestController {
 			String skuExternalReferenceCode = sku.getExternalReferenceCode();
 
 			if ((licenseUsageType == null) ||
-				skuExternalReferenceCode.startsWith("KOR-") ||
-				skuExternalReferenceCode.startsWith("SF-")) {
+				skuExternalReferenceCode.startsWith("KOR-")) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Skipping POST product for sku " + sku);

@@ -25,11 +25,11 @@ public class DefaultLanguageLabelsUtil {
 			ThemeDisplay themeDisplay, String... keys)
 		throws PortalException {
 
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
 		Company company = themeDisplay.getCompany();
 
 		Locale locale = company.getLocale();
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (String key : keys) {
 			jsonObject.put(key, LanguageUtil.get(locale, key));

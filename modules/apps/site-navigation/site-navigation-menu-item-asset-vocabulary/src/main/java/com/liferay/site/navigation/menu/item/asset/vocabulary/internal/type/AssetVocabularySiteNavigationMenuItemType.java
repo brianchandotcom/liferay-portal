@@ -552,7 +552,7 @@ public class AssetVocabularySiteNavigationMenuItemType
 			AssetVocabularySiteNavigationMenuTypeConstants.
 				ASSET_VOCABULARY_SITE_NAVIGATION_MENU_TYPE_DISPLAY_CONTEXT,
 			new AssetVocabularySiteNavigationMenuTypeDisplayContext(
-				httpServletRequest, _itemSelector, siteNavigationMenuItem));
+				httpServletRequest, siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,

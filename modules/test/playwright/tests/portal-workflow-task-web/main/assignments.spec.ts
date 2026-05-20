@@ -567,3 +567,57 @@ test('verify that the user can order the results inside Assigned to My Roles by 
 		expect(webContent2Index).toBeLessThan(webContent1Index);
 	});
 });
+
+test(
+	'workflow status is pending when a message board thread is submitted for workflow',
+	{tag: '@LRQA-69694'},
+	async ({
+		messageBoardsEditThreadPage,
+		messageBoardsPage,
+		page,
+		site,
+		workflowPage,
+		workflowTaskDetailsPage,
+		workflowTasksPage,
+	}) => {
+		await workflowPage.goto(site.friendlyUrlPath);
+
+		await workflowPage.changeWorkflow(
+			'Message Boards Message',
+			'Single Approver'
+		);
+
+		const threadBody = getRandomString();
+
+		const threadSubject = getRandomString();
+
+		await messageBoardsPage.goto(site.friendlyUrlPath);
+
+		await messageBoardsEditThreadPage.publishNewThreadForWorkflow(
+			threadSubject,
+			threadBody
+		);
+
+		await page.waitForLoadState('networkidle');
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		const row = page.getByRole('row', {name: threadSubject});
+
+		await expect(row).toBeVisible();
+
+		await expect(row.getByText('Message Boards Message')).toBeVisible();
+
+		await expect(row.getByText('Review')).toBeVisible();
+
+		await workflowTaskDetailsPage.selectAsset(threadSubject);
+
+		const newTabPagePromise = page.waitForEvent('popup');
+
+		await page.getByRole('link', {exact: true, name: 'View'}).click();
+
+		const newTabPage = await newTabPagePromise;
+
+		await expect(newTabPage.getByText('Pending')).toBeVisible();
+	}
+);

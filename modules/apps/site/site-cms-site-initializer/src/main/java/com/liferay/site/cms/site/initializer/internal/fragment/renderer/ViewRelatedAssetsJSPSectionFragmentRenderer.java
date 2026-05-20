@@ -11,11 +11,8 @@ import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewRelatedAssetsSectionDisplayContext;
 
@@ -60,8 +57,7 @@ public class ViewRelatedAssetsJSPSectionFragmentRenderer
 			groupLocalService, httpServletRequest, language,
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId()),
-			_objectDefinitionService, _objectDefinitionSettingLocalService,
-			objectEntry, _objectEntryFolderModelResourcePermission, _portal,
+			_objectDefinitionService, objectEntry, _portal,
 			translationInfoItemFieldValuesExporterRegistry);
 	}
 
@@ -83,16 +79,6 @@ public class ViewRelatedAssetsJSPSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
-
-	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

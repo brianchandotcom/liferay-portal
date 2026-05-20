@@ -104,3 +104,57 @@ test(
 		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
 	}
 );
+
+test(
+	'Asserts the segmentation-disabled alert can be dismissed and recovered at the Manual Collection editor, and that the re-enable link reaches Segments Service',
+	{tag: ['@LPS-154019', '@LPS-152539']},
+	async ({apiHelpers, page, site}) => {
+
+		// Create a manual asset list
+
+		await apiHelpers.jsonWebServicesAssetListEntry.addManualAssetListEntry({
+			groupId: site.id,
+			title: 'Manual Collection Test',
+		});
+
+		// Open the Asset Lists Admin and edit the collection
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.collections}`
+		);
+
+		await page.getByRole('link', {name: 'Manual Collection Test'}).click();
+
+		const warning = page.locator('.alert-warning');
+
+		const alert = warning.getByText(
+			'Personalized variations cannot be displayed because segmentation is disabled.'
+		);
+
+		// Close the alert and assert it is hidden
+
+		await expect(alert).toBeVisible();
+
+		await clickAndExpectToBeHidden({
+			target: alert,
+			trigger: warning.getByRole('button', {name: 'Close'}),
+		});
+
+		// Refresh and assert the alert is back
+
+		await page.reload();
+
+		await expect(alert).toBeVisible();
+
+		// Click the re-enable link and assert Segments Service is reached
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('heading', {name: 'Segments Service'}),
+			trigger: page.getByRole('link', {
+				name: 'To enable, go to Instance Settings.',
+			}),
+		});
+
+		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
+	}
+);

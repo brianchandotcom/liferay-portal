@@ -95,56 +95,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the ""Enable Segmentation"" is disabled When user clicks at Close button at Manual Collection Editor page And user leaves and returns to page Then the alert reappears"
-	@priority = 3
-	test CloseAndRecoverAlertAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Collection Admin") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Close warning and check it disappears") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertElementNotPresent(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Leave then return to page and check if warning reappears") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And user leaves and returns to page Then the alert reappears"
 	@priority = 3
 	test CloseAndRecoverAlertAtSegmentsPage {
@@ -302,39 +252,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
-		}
-	}
-
-	@description = "LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user clicks at breadcrumb's link at Manual Collection editor Then should be forwarded to Segments Service at Instance Settings"
-	@priority = 3
-	test ViewAndReEnableAlertAtManualCollectionEditor {
-		task ("Create a Collection via JSONWS") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article",
-				title = "Manual Collection Test");
-		}
-
-		task ("Navigate to Manual Collection Editor") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
-			AssetListsAdmin.editAssetList(assetListTitle = "Manual Collection Test");
-		}
-
-		task ("Check alert shows re-enable instructions") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "To enable, go to Instance Settings.");
 		}
 
 		task ("Click at warning with link and confirm Instance Settings is open") {

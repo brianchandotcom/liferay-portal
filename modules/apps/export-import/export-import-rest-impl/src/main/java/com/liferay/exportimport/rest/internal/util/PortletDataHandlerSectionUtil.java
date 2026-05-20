@@ -191,12 +191,11 @@ public class PortletDataHandlerSectionUtil {
 						String portletTitle = portletDataHandler.getTitle(
 							locale);
 
-						if (portletTitle == null) {
-							portletTitle = PortalUtil.getPortletTitle(
-								portlet, locale);
+						if (portletTitle != null) {
+							return portletTitle;
 						}
 
-						return portletTitle;
+						return PortalUtil.getPortletTitle(portlet, locale);
 					});
 				setName(
 					() ->

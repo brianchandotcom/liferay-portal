@@ -7,8 +7,6 @@ import ClayLayout from '@clayui/layout';
 import classnames from 'classnames';
 import React from 'react';
 
-import '../../../css/utilities.scss';
-
 export function OptionRow({
 	bordered = false,
 	description,

@@ -276,6 +276,11 @@ public class FragmentServiceUpgradeStepRegistrator
 
 		registry.register(
 			"3.0.1", "3.0.2", new FragmentEntryHTMLUpgradeProcess());
+
+		registry.register(
+			"3.0.2", "3.0.3",
+			new com.liferay.fragment.internal.upgrade.v3_0_3.
+				FragmentEntryVersionUpgradeProcess());
 	}
 
 	@Reference

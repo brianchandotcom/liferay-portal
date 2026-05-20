@@ -60,6 +60,26 @@ jest.mock('@clayui/core', () => {
 	};
 });
 
+jest.mock('frontend-js-components-web', () => {
+	const React = require('react');
+
+	return {
+		InputLocalized: ({id, label, onChange, placeholder, translations}: any) =>
+			React.createElement(
+				React.Fragment,
+				null,
+				React.createElement('label', {htmlFor: id}, label),
+				React.createElement('input', {
+					id,
+					onChange: (event: any) =>
+						onChange({en_US: event.target.value}),
+					placeholder,
+					value: translations?.en_US || '',
+				})
+			),
+	};
+});
+
 (global as any).Liferay = {
 	Icons: {spritemap: 'icons.svg'},
 	Language: {
@@ -100,7 +120,7 @@ describe('ModelArmorTemplateForm', () => {
 				raiHateSpeechLevel: 'none',
 				raiSexuallyExplicitLevel: 'none',
 				sdpFilterEnabled: false,
-				title: 'Loaded From API',
+				title_i18n: {en_US: 'Loaded From API'},
 			});
 
 			render(
@@ -162,7 +182,7 @@ describe('ModelArmorTemplateForm', () => {
 				expect(mockPutModelArmorTemplate).toHaveBeenCalledWith(
 					expect.objectContaining({
 						externalReferenceCode: 'TEMPLATE_X',
-						title: 'My Template',
+						title_i18n: {en_US: 'My Template'},
 					})
 				);
 			});
@@ -192,7 +212,7 @@ describe('ModelArmorTemplateForm', () => {
 		it('shows the edit-guardrail title when externalReferenceCode is set', async () => {
 			mockGetModelArmorTemplate.mockResolvedValueOnce({
 				externalReferenceCode: 'TEMPLATE_X',
-				title: 'Loaded Title',
+				title_i18n: {en_US: 'Loaded Title'},
 			});
 
 			render(

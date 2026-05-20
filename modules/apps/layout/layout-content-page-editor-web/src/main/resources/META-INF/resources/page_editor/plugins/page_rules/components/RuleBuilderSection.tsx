@@ -465,6 +465,7 @@ export function RuleBuilderConditionSection({
 				) : (
 					<div>
 						<AdvancedRuleEditor
+							mappingFields={mappingFields}
 							onChange={(value: string | undefined) => {
 								setRuleConditions({script: value || ''});
 							}}

@@ -76,6 +76,11 @@ export interface IItemSelectorModalProps<T> {
 	breadcrumbsLabel?: boolean;
 
 	/**
+	 * Label for the footer confirmation button. Defaults to "Select".
+	 */
+	confirmButtonLabel?: string;
+
+	/**
 	 * Label shown in the footer as "{label} Selected" when
 	 * 'allowEmptySelection' is true and no items are selected.
 	 */
@@ -151,6 +156,12 @@ export interface IItemSelectorModalProps<T> {
 	open: boolean;
 
 	/**
+	 * Modal size. Defaults to "full-screen" to preserve the file-picker
+	 * layout; pass a smaller value (e.g. "lg") for compact list pickers.
+	 */
+	size?: React.ComponentProps<typeof ClayModal>['size'];
+
+	/**
 	 * Represents the title of a modal. takes precedence over itemTypeLabel.
 	 */
 	title?: string;
@@ -162,6 +173,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	apiURL,
 	breadcrumbs,
 	breadcrumbsLabel = true,
+	confirmButtonLabel,
 	emptySelectionLabel,
 	fdsProps,
 	filesUploaderComponent: FilesUploaderComponent,
@@ -180,6 +192,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	onItemsChange,
 	onOpenChange,
 	open,
+	size = 'full-screen',
 	title,
 }: IItemSelectorModalProps<T>) {
 	const [selectedItems, setSelectedItems] = useState(externalItems);
@@ -230,7 +243,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	}
 
 	return (
-		<ClayModal observer={observer} size="full-screen">
+		<ClayModal observer={observer} size={size}>
 			<ClayModal.Header
 				closeButtonAriaLabel={Liferay.Language.get('close')}
 			>
@@ -379,7 +392,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 									onOpenChange(false);
 								}}
 							>
-								{Liferay.Language.get('select')}
+								{confirmButtonLabel ??
+									Liferay.Language.get('select')}
 							</ClayButton>
 						</ClayButton.Group>
 					}

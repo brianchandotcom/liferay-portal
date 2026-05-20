@@ -5,7 +5,6 @@
 
 package com.liferay.layout.set.prototype.internal.helper;
 
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
@@ -21,11 +20,6 @@ import com.liferay.layout.set.prototype.internal.sync.LayoutSetPrototypeSyncSess
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.background.task.util.comparator.BackgroundTaskCreateDateComparator;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstants;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,7 +48,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sites.kernel.util.Sites;
@@ -419,6 +412,65 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		}
 	}
 
+	private void _executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
+		throws PortalException {
+
+		LayoutSetPrototype layoutSetPrototype =
+			_layoutSetPrototypeLocalService.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		Map<String, String[]> parameterMap = _getLayoutSetPrototypesParameters(
+			initialSync);
+
+		parameterMap.put(
+			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
+			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
+		parameterMap.put(
+			"layoutSetId",
+			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
+		parameterMap.put(
+			"layoutSetPrototypeId",
+			new String[] {
+				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
+			});
+
+		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
+
+		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
+			layoutSetPrototype.getGroupId(), true);
+
+		Map<String, Serializable> exportLayoutSettingsMap =
+			ExportImportConfigurationSettingsMapFactoryUtil.
+				buildExportLayoutSettingsMap(
+					user, layoutSetPrototype.getGroupId(), true,
+					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
+					parameterMap);
+
+		ExportImportConfiguration exportImportConfiguration = null;
+
+		try {
+			exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						user.getUserId(),
+						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+						exportLayoutSettingsMap);
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to add draft export-import configuration",
+				portalException);
+
+			return;
+		}
+
+		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
+			user.getUserId(), layoutSet.getGroupId(),
+			exportImportConfiguration);
+	}
+
 	private Layout _getDuplicatedFriendlyURLPrototypeLayout(Layout layout)
 		throws PortalException {
 
@@ -689,59 +741,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		return true;
 	}
 
-	private boolean _isLayoutSetPrototypeSyncBackgroundTaskExists(
-		LayoutSetPrototype layoutSetPrototype, LayoutSet layoutSet) {
-
-		List<BackgroundTask> incompleteBackgroundTasks =
-			_backgroundTaskManager.getBackgroundTasks(
-				layoutSet.getGroupId(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_SET_PROTOTYPE_SYNC_BACKGROUND_TASK_EXECUTOR,
-				false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				BackgroundTaskCreateDateComparator.getInstance(false));
-
-		for (BackgroundTask incompleteBackgroundTask :
-				incompleteBackgroundTasks) {
-
-			long exportImportConfigurationId = MapUtil.getLong(
-				incompleteBackgroundTask.getTaskContextMap(),
-				"exportImportConfigurationId");
-
-			ExportImportConfiguration exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					fetchExportImportConfiguration(exportImportConfigurationId);
-
-			if (exportImportConfiguration != null) {
-				Map<String, Serializable> settingsMap =
-					exportImportConfiguration.getSettingsMap();
-
-				Map<String, String[]> parameterMap =
-					(Map<String, String[]>)settingsMap.get("parameterMap");
-
-				long layoutSetId = MapUtil.getLong(parameterMap, "layoutSetId");
-
-				if (layoutSetId == layoutSet.getLayoutSetId()) {
-					if (incompleteBackgroundTask.getStatus() !=
-							BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-
-						return true;
-					}
-
-					long lastMergeVersion = MapUtil.getLong(
-						parameterMap, "lastMergeVersion");
-
-					if (lastMergeVersion ==
-							layoutSetPrototype.getMvccVersion()) {
-
-						return true;
-					}
-				}
-			}
-		}
-
-		return false;
-	}
-
 	/**
 	 * Resets the modified timestamp on the layout so the linked page template is
 	 * merged into the layout when it is first accessed.
@@ -754,83 +753,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		_layoutLocalService.updateLayout(layout);
 	}
 
-	private void _executeLayoutSetSync(
-			boolean initialSync, LayoutSet layoutSet)
-		throws PortalException {
-
-		LayoutSetPrototype layoutSetPrototype =
-			_layoutSetPrototypeLocalService.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		if (_isLayoutSetPrototypeSyncBackgroundTaskExists(
-				layoutSetPrototype, layoutSet)) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Layout set prototype merge is in progress for layout " +
-						"set " + layoutSet.getLayoutSetId());
-			}
-
-			return;
-		}
-
-		Map<String, String[]> parameterMap = _getLayoutSetPrototypesParameters(
-			initialSync);
-
-		parameterMap.put(
-			PortletDataHandlerKeys.LAYOUT_SET_PRIVATE_LAYOUT,
-			new String[] {String.valueOf(layoutSet.isPrivateLayout())});
-		parameterMap.put(
-			"layoutSetId",
-			new String[] {String.valueOf(layoutSet.getLayoutSetId())});
-		parameterMap.put(
-			"layoutSetPrototypeId",
-			new String[] {
-				String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId())
-			});
-
-		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
-
-		List<Layout> layoutSetPrototypeLayouts = _layoutLocalService.getLayouts(
-			layoutSetPrototype.getGroupId(), true);
-
-		Map<String, Serializable> exportLayoutSettingsMap =
-			ExportImportConfigurationSettingsMapFactoryUtil.
-				buildExportLayoutSettingsMap(
-					user, layoutSetPrototype.getGroupId(), true,
-					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
-					parameterMap);
-
-		ExportImportConfiguration exportImportConfiguration = null;
-
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
-		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add draft export-import configuration",
-				portalException);
-
-			return;
-		}
-
-		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutSetPrototypeHelperImpl.class);
-
-	@Reference
-	private BackgroundTaskManager _backgroundTaskManager;
 
 	@Reference
 	private ExportImportConfigurationLocalService

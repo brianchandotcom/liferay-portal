@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Georgel Pop
@@ -24,58 +26,81 @@ public class FragmentEntryVersionUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (long fragmentEntryId : _getFragmentEntryIds()) {
-			List<Long> fragmentEntryVersionIds = _getFragmentEntryVersionIds(
-				fragmentEntryId);
+		Map<Long, List<Long>> fragmentEntryIdsByCtCollectionId =
+			_getFragmentEntryIdsByCtCollectionId();
 
-			List<Long> fragmentEntryVersionIdsToDelete =
-				fragmentEntryVersionIds.subList(
-					MAX_VERSIONS, fragmentEntryVersionIds.size());
+		for (Map.Entry<Long, List<Long>> entry :
+				fragmentEntryIdsByCtCollectionId.entrySet()) {
 
-			for (int i = 0; i < fragmentEntryVersionIdsToDelete.size();
-				 i += _BATCH_SIZE) {
+			for (Long fragmentEntryId : entry.getValue()) {
+				List<Long> fragmentEntryVersionIds =
+					_getFragmentEntryVersionIds(
+						entry.getKey(), fragmentEntryId);
 
-				int end = Math.min(
-					i + _BATCH_SIZE, fragmentEntryVersionIdsToDelete.size());
+				List<Long> fragmentEntryVersionIdsToDelete =
+					fragmentEntryVersionIds.subList(
+						MAX_VERSIONS, fragmentEntryVersionIds.size());
 
-				runSQL(
-					StringBundler.concat(
-						"delete from FragmentEntryVersion where ",
-						"fragmentEntryVersionId in (",
-						StringUtil.merge(
-							fragmentEntryVersionIdsToDelete.subList(i, end)),
-						")"));
+				for (int i = 0; i < fragmentEntryVersionIdsToDelete.size();
+					 i += _BATCH_SIZE) {
+
+					int end = Math.min(
+						i + _BATCH_SIZE,
+						fragmentEntryVersionIdsToDelete.size());
+
+					runSQL(
+						StringBundler.concat(
+							"delete from FragmentEntryVersion where ",
+							"fragmentEntryVersionId in (",
+							StringUtil.merge(
+								fragmentEntryVersionIdsToDelete.subList(
+									i, end)),
+							")"));
+				}
 			}
 		}
 	}
 
-	private List<Long> _getFragmentEntryIds() throws Exception {
-		List<Long> fragmentEntryIds = new ArrayList<>();
+	private Map<Long, List<Long>> _getFragmentEntryIdsByCtCollectionId()
+		throws Exception {
+
+		Map<Long, List<Long>> fragmentEntryIdsByCtCollectionId =
+			new HashMap<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select fragmentEntryId from FragmentEntryVersion group by " +
-					"fragmentEntryId having count(*) > " + MAX_VERSIONS);
+				StringBundler.concat(
+					"select ctCollectionId, fragmentEntryId from ",
+					"FragmentEntryVersion group by ctCollectionId, ",
+					"fragmentEntryId having count(*) > ", MAX_VERSIONS));
 
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
+				List<Long> fragmentEntryIds =
+					fragmentEntryIdsByCtCollectionId.computeIfAbsent(
+						resultSet.getLong("ctCollectionId"),
+						ctCollectionId -> new ArrayList<>());
+
 				fragmentEntryIds.add(resultSet.getLong("fragmentEntryId"));
 			}
 		}
 
-		return fragmentEntryIds;
+		return fragmentEntryIdsByCtCollectionId;
 	}
 
-	private List<Long> _getFragmentEntryVersionIds(long fragmentEntryId)
+	private List<Long> _getFragmentEntryVersionIds(
+			long ctCollectionId, long fragmentEntryId)
 		throws Exception {
 
 		List<Long> fragmentEntryVersionIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select fragmentEntryVersionId from FragmentEntryVersion " +
-					"where fragmentEntryId = ? order by version desc")) {
+					"where ctCollectionId = ? and fragmentEntryId = ? order " +
+						"by version desc")) {
 
-			preparedStatement.setLong(1, fragmentEntryId);
+			preparedStatement.setLong(1, ctCollectionId);
+			preparedStatement.setLong(2, fragmentEntryId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {

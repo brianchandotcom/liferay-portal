@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -25,6 +27,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -69,6 +72,8 @@ public class AssetListTypePropertiesUtilTest {
 		).thenReturn(
 			true
 		);
+
+		_setUpLanguageUtil();
 	}
 
 	@Test
@@ -93,9 +98,9 @@ public class AssetListTypePropertiesUtilTest {
 				new long[] {_CLASS_TYPE_ID_1, _CLASS_TYPE_ID_2}, _COMPANY_ID,
 				LocaleUtil.US);
 
-		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 3, jsonArray.length());
 
-		JSONObject groupJSONObject1 = jsonArray.getJSONObject(0);
+		JSONObject groupJSONObject1 = jsonArray.getJSONObject(1);
 
 		Assert.assertEquals(_LABEL_1, groupJSONObject1.getString("label"));
 
@@ -112,7 +117,7 @@ public class AssetListTypePropertiesUtilTest {
 			_CLASS_TYPE_ID_1, itemJSONObject1.getLong("classTypeId"));
 		Assert.assertEquals("title", itemJSONObject1.getString("name"));
 
-		JSONObject groupJSONObject2 = jsonArray.getJSONObject(1);
+		JSONObject groupJSONObject2 = jsonArray.getJSONObject(2);
 
 		Assert.assertEquals(_LABEL_2, groupJSONObject2.getString("label"));
 
@@ -153,9 +158,9 @@ public class AssetListTypePropertiesUtilTest {
 				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
 				_COMPANY_ID, LocaleUtil.US);
 
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
 
-		JSONObject groupJSONObject = jsonArray.getJSONObject(0);
+		JSONObject groupJSONObject = jsonArray.getJSONObject(1);
 
 		Assert.assertEquals(_LABEL_1, groupJSONObject.getString("label"));
 
@@ -206,10 +211,10 @@ public class AssetListTypePropertiesUtilTest {
 				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
 				_COMPANY_ID, LocaleUtil.US);
 
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
 
 		JSONArray itemsJSONArray = jsonArray.getJSONObject(
-			0
+			1
 		).getJSONArray(
 			"items"
 		);
@@ -245,9 +250,9 @@ public class AssetListTypePropertiesUtilTest {
 				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
 				_COMPANY_ID, LocaleUtil.US);
 
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
 
-		JSONObject groupJSONObject = jsonArray.getJSONObject(0);
+		JSONObject groupJSONObject = jsonArray.getJSONObject(1);
 
 		Assert.assertEquals(_LABEL_1, groupJSONObject.getString("label"));
 
@@ -323,10 +328,10 @@ public class AssetListTypePropertiesUtilTest {
 				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
 				_COMPANY_ID, LocaleUtil.US);
 
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
 
 		JSONObject itemJSONObject = jsonArray.getJSONObject(
-			0
+			1
 		).getJSONArray(
 			"items"
 		).getJSONObject(
@@ -353,6 +358,41 @@ public class AssetListTypePropertiesUtilTest {
 			).getString(
 				"value"
 			));
+	}
+
+	@Test
+	public void testReturnsOnlyCommonFieldsGroupWhenNoClassNameIds() {
+		JSONArray jsonArray =
+			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
+				new long[0], new long[0], _COMPANY_ID, LocaleUtil.US);
+
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
+
+		JSONObject groupJSONObject = jsonArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			"common-fields", groupJSONObject.getString("label"));
+
+		JSONArray itemsJSONArray = groupJSONObject.getJSONArray("items");
+
+		Assert.assertEquals(
+			itemsJSONArray.toString(), 10, itemsJSONArray.length());
+
+		String[] expectedNames = {
+			"title", "description", "userName", "createDate", "modified",
+			"displayDate", "publishDate", "expirationDate", "priority",
+			"viewCount"
+		};
+
+		for (int i = 0; i < expectedNames.length; i++) {
+			Assert.assertEquals(
+				expectedNames[i],
+				itemsJSONArray.getJSONObject(
+					i
+				).getString(
+					"name"
+				));
+		}
 	}
 
 	private static MockedStatic<FeatureFlagManagerUtil>
@@ -395,6 +435,20 @@ public class AssetListTypePropertiesUtilTest {
 		);
 
 		return objectField;
+	}
+
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.get(Mockito.any(Locale.class), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1)
+		);
+
+		languageUtil.setLanguage(language);
 	}
 
 	private void _stubObjectDefinition(

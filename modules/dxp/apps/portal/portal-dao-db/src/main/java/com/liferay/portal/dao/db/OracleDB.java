@@ -420,8 +420,8 @@ public class OracleDB extends BaseDB {
 					StringBundler.concat(
 						"Grant select privileges on \"sys.v_$session\" and ",
 						"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
-						"\"DBA\", because the database user lacks the required ",
-						"select privileges"),
+						"\"DBA\", because the database user lacks the ",
+						"required select privileges"),
 					sqlException.getSQLState(), sqlException.getErrorCode(),
 					sqlException);
 			}

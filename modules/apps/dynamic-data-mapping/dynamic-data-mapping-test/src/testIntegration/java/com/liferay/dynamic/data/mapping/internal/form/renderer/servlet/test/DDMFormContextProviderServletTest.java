@@ -69,24 +69,35 @@ public class DDMFormContextProviderServletTest {
 
 		// Exceeded Liferay file item size limit
 
-		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(false, true, false));
+		_testUploadExceptionReturnsJSONErrorResponse(false, true, false);
 
 		// Exceeded file size limit
 
-		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(true, false, false));
+		_testUploadExceptionReturnsJSONErrorResponse(true, false, false);
 
 		// Exceeded upload request size limit
 
-		_testUploadExceptionReturnsJSONErrorResponse(_createUploadException(false, false, true));
+		_testUploadExceptionReturnsJSONErrorResponse(false, false, true);
 	}
 
-	private void _testUploadExceptionReturnsJSONErrorResponse(UploadException uploadException)
+	private void _testUploadExceptionReturnsJSONErrorResponse(boolean exceededFileSizeLimit, boolean exceededLiferayFileItemSizeLimit,
+		boolean exceededUploadRequestSizeLimit)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.addPreferredLocale(LocaleUtil.US);
+
+		UploadException uploadException = new UploadException(
+			RandomTestUtil.randomString());
+
+		uploadException.setExceededFileSizeLimit(exceededFileSizeLimit);
+		uploadException.setExceededLiferayFileItemSizeLimit(
+			exceededLiferayFileItemSizeLimit);
+		uploadException.setExceededUploadRequestSizeLimit(
+			exceededUploadRequestSizeLimit);
+
 		mockHttpServletRequest.setAttribute(
 			WebKeys.UPLOAD_EXCEPTION, uploadException);
 
@@ -109,22 +120,6 @@ public class DDMFormContextProviderServletTest {
 		Assert.assertEquals(
 			HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
 			mockHttpServletResponse.getStatus());
-	}
-
-	private UploadException _createUploadException(
-		boolean exceededFileSizeLimit, boolean exceededLiferayFileItemSizeLimit,
-		boolean exceededUploadRequestSizeLimit) {
-
-		UploadException uploadException = new UploadException(
-			RandomTestUtil.randomString());
-
-		uploadException.setExceededFileSizeLimit(exceededFileSizeLimit);
-		uploadException.setExceededLiferayFileItemSizeLimit(
-			exceededLiferayFileItemSizeLimit);
-		uploadException.setExceededUploadRequestSizeLimit(
-			exceededUploadRequestSizeLimit);
-
-		return uploadException;
 	}
 
 	@Inject(

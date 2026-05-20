@@ -538,6 +538,38 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetUniqueUrlTitleMapGeneratesUniqueTitlesWhenDuplicated()
+		throws Exception {
+
+		long classNameId = _classNameLocalService.getClassNameId(
+			AssetCategory.class);
+
+		String urlTitle1 = _getRandomURLTitle();
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getSiteDefault());
+
+		_friendlyURLEntryLocalService.addFriendlyURLEntry(
+			_group.getGroupId(), classNameId,
+			_assetVocabulary.getVocabularyId(), _assetCategory.getCategoryId(),
+			defaultLanguageId,
+			Collections.singletonMap(defaultLanguageId, urlTitle1),
+			_getServiceContext());
+
+		Map<String, String> uniqueUrlTitleMap =
+			_friendlyURLEntryLocalService.getUniqueUrlTitleMap(
+				_group.getGroupId(), classNameId,
+				_assetVocabulary.getVocabularyId(),
+				_assetCategory.getCategoryId() + 1,
+				Collections.singletonMap(LocaleUtil.US, urlTitle1));
+
+		String urlTitle2 = uniqueUrlTitleMap.get(
+			LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		Assert.assertTrue(urlTitle2, urlTitle2.endsWith("-1"));
+	}
+
+	@Test
 	public void testGetUniqueUrlTitleMapSkipsBlankTitles() throws Exception {
 		String urlTitle = _getRandomURLTitle();
 

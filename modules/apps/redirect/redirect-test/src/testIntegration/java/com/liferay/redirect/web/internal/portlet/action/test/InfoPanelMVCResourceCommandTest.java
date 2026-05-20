@@ -62,7 +62,7 @@ public class InfoPanelMVCResourceCommandTest {
 
 	@Test
 	@TestInfo("LPD-90724")
-	public void testDoServeResourceWithRowIdsFromOtherGroup() throws Exception {
+	public void testDoServeResource() throws Exception {
 		RedirectEntry redirectEntry =
 			_redirectEntryLocalService.addRedirectEntry(
 				_group2.getGroupId(), "destinationURL", null, false,

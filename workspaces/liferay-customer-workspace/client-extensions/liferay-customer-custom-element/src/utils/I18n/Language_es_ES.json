@@ -420,7 +420,7 @@
 	"paas": "PaaS",
 	"paas-user": "Usuario de PaaS",
 	"paas-users": "Usuarios de PaaS",
-	"paas-users-will-have-access-to-paas-experience-applications": "Los usuarios de PaaS tendrán acceso a aplicaciones PaaS Experience (argoCD, argoWorkflows y Grafana).",
+	"paas-users-will-have-access-to-paas-experience-applications": "Los usuarios de PaaS tendrán acceso a aplicaciones PaaS Experience (Argo CD, Argo Workflows y Grafana).",
 	"partner": "Partner",
 	"partner-manager": "Administrador del partner",
 	"partner-member": "Miembro del partner",

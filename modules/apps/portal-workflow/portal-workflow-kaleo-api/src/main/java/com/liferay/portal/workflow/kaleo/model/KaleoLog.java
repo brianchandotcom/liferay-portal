@@ -49,5 +49,7 @@ public interface KaleoLog extends KaleoLogModel, PersistedModel {
 
 		};
 
+	public boolean shouldIndex();
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1840980917
+// LIFERAY-SERVICE-BUILDER-HASH:656127981

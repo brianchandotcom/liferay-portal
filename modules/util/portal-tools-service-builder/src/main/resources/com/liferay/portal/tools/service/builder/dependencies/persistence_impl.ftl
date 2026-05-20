@@ -3207,21 +3207,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						${entity.name}ModelImpl.ORDER_BY_JPQL,
 						_ENTITY_ALIAS_PREFIX,
 						"${entityFinder.where!}",
-						<#if filterEnabled>
-							new FilterCollectionPersistenceFinder.FilterMetadata<>(
-								${entity.name}Impl.class,
-								${entity.name}.class,
-								"${entity.alias}",
-								"${entity.table}",
-								"${entity.alias}.${entity.filterPKEntityColumn.DBName}",
-								"SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ",
-								"SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKDBName} FROM ${entity.table} ${entity.alias} WHERE ",
-								") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKDBName} = ${entity.table}.${entity.PKDBName}",
-								"SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKDBName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ",
-								${entity.name}ModelImpl.ORDER_BY_SQL,
-								${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT
-							),
-						</#if>
 						<#list entityColumns as entityColumn>
 							<#if entityColumn.hasArrayableOperator()>
 								new ArrayableFinderColumn<>(

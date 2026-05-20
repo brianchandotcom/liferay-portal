@@ -31,14 +31,34 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
 		String defaultOrderByJpql, String orderByEntityAlias, String where,
-		FilterMetadata<T> filterMetadata, FinderColumn<T>... finderColumns) {
+		FinderColumn<T>... finderColumns) {
 
 		super(
 			basePersistenceImpl, paginatedFindPath, unpaginatedFindPath,
 			countFinderPath, sqlSelectWhere, sqlCountWhere, defaultOrderByJpql,
 			orderByEntityAlias, where, finderColumns);
 
-		_filterMetadata = filterMetadata;
+		String entityAlias = basePersistenceImpl.getEntityAlias();
+		String tableName = basePersistenceImpl.getTableName();
+		String pkColumnName = basePersistenceImpl.getPKColumnName();
+
+		_filterPKColumn = StringBundler.concat(
+			entityAlias, ".", basePersistenceImpl.getFilterPKColumnName());
+
+		_filterSqlSelectWhere = StringBundler.concat(
+			"SELECT DISTINCT {", entityAlias, ".*} FROM ", tableName, " ",
+			entityAlias, " WHERE ");
+		_filterSqlSelectNoInlineDistinctWhere1 = StringBundler.concat(
+			"SELECT {", tableName, ".*} FROM (SELECT DISTINCT ", entityAlias,
+			".", pkColumnName, " FROM ", tableName, " ", entityAlias,
+			" WHERE ");
+		_filterSqlSelectNoInlineDistinctWhere2 = StringBundler.concat(
+			") TEMP_TABLE INNER JOIN ", tableName, " ON TEMP_TABLE.",
+			pkColumnName, " = ", tableName, ".", pkColumnName);
+		_filterSqlCountWhere = StringBundler.concat(
+			"SELECT COUNT(DISTINCT ", entityAlias, ".", pkColumnName,
+			") AS COUNT_VALUE FROM ", tableName, " ", entityAlias, " WHERE ");
+		_orderByEntityTable = tableName.concat(".");
 	}
 
 	public int filterCount(FinderCache finderCache, Object[] values) {
@@ -135,51 +155,6 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 			finderCache, values, start, end, orderByComparator, groupIds);
 	}
 
-	public static class FilterMetadata<T extends BaseModel<T>> {
-
-		public FilterMetadata(
-			Class<? extends T> implClass, Class<? extends T> apiClass,
-			String entityAlias, String entityTable, String filterPKColumn,
-			String filterSqlSelectWhere,
-			String filterSqlSelectNoInlineDistinctWhere1,
-			String filterSqlSelectNoInlineDistinctWhere2,
-			String filterSqlCountWhere, String defaultOrderBySql,
-			String defaultOrderBySqlInlineDistinct) {
-
-			_implClass = implClass;
-			_apiClass = apiClass;
-			_entityAlias = entityAlias;
-			_entityTable = entityTable;
-			_filterPKColumn = filterPKColumn;
-			_filterSqlSelectWhere = filterSqlSelectWhere;
-			_filterSqlSelectNoInlineDistinctWhere1 =
-				filterSqlSelectNoInlineDistinctWhere1;
-			_filterSqlSelectNoInlineDistinctWhere2 =
-				filterSqlSelectNoInlineDistinctWhere2;
-			_filterSqlCountWhere = filterSqlCountWhere;
-			_defaultOrderBySql = defaultOrderBySql;
-			_defaultOrderBySqlInlineDistinct = defaultOrderBySqlInlineDistinct;
-
-			_entityAliasPrefix = entityAlias + ".";
-			_orderByEntityTable = entityTable + ".";
-		}
-
-		private final Class<? extends T> _apiClass;
-		private final String _defaultOrderBySql;
-		private final String _defaultOrderBySqlInlineDistinct;
-		private final String _entityAlias;
-		private final String _entityAliasPrefix;
-		private final String _entityTable;
-		private final String _filterPKColumn;
-		private final String _filterSqlCountWhere;
-		private final String _filterSqlSelectNoInlineDistinctWhere1;
-		private final String _filterSqlSelectNoInlineDistinctWhere2;
-		private final String _filterSqlSelectWhere;
-		private final Class<? extends T> _implClass;
-		private final String _orderByEntityTable;
-
-	}
-
 	private String _buildFilterFindSql(
 		boolean inlineDistinct, Object[] values,
 		OrderByComparator<T> orderByComparator) {
@@ -198,10 +173,10 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 		}
 
 		if (inlineDistinct) {
-			sb.append(_filterMetadata._filterSqlSelectWhere);
+			sb.append(_filterSqlSelectWhere);
 		}
 		else {
-			sb.append(_filterMetadata._filterSqlSelectNoInlineDistinctWhere1);
+			sb.append(_filterSqlSelectNoInlineDistinctWhere1);
 		}
 
 		for (int i = 0; i < finderColumns.length; i++) {
@@ -223,21 +198,21 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 		}
 
 		if (!inlineDistinct) {
-			sb.append(_filterMetadata._filterSqlSelectNoInlineDistinctWhere2);
+			sb.append(_filterSqlSelectNoInlineDistinctWhere2);
 		}
 
 		if (orderByComparator != null) {
 			basePersistenceImpl.appendOrderByComparator(
 				sb,
-				inlineDistinct ? _filterMetadata._entityAliasPrefix :
-					_filterMetadata._orderByEntityTable,
+				inlineDistinct ? basePersistenceImpl.getEntityAliasPrefix() :
+					_orderByEntityTable,
 				orderByComparator, true);
 		}
 		else if (inlineDistinct) {
-			sb.append(_filterMetadata._defaultOrderBySqlInlineDistinct);
+			sb.append(basePersistenceImpl.getDefaultOrderBySQLInlineDistinct());
 		}
 		else {
-			sb.append(_filterMetadata._defaultOrderBySql);
+			sb.append(basePersistenceImpl.getDefaultOrderBySQL());
 		}
 
 		return sb.toString();
@@ -259,8 +234,7 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 		normalizeValues(values);
 
 		String sql = _replacePermissionCheck(
-			buildSQLWhere(_filterMetadata._filterSqlCountWhere, values),
-			groupIds);
+			buildSQLWhere(_filterSqlCountWhere, values), groupIds);
 
 		Session session = null;
 
@@ -321,11 +295,13 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 
 			if (inlineDistinct) {
 				sqlQuery.addEntity(
-					_filterMetadata._entityAlias, _filterMetadata._implClass);
+					basePersistenceImpl.getEntityAlias(),
+					basePersistenceImpl.getModelImplClass());
 			}
 			else {
 				sqlQuery.addEntity(
-					_filterMetadata._entityTable, _filterMetadata._implClass);
+					basePersistenceImpl.getTableName(),
+					basePersistenceImpl.getModelImplClass());
 			}
 
 			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
@@ -344,19 +320,24 @@ public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
 	}
 
 	private String _replacePermissionCheck(String sql, long[] groupIds) {
+		Class<T> modelClass = basePersistenceImpl.getModelClass();
+
 		if (groupIds.length == 0) {
 			return InlineSQLHelperUtil.replacePermissionCheck(
-				sql, _filterMetadata._apiClass.getName(),
-				_filterMetadata._filterPKColumn);
+				sql, modelClass.getName(), _filterPKColumn);
 		}
 
 		return InlineSQLHelperUtil.replacePermissionCheck(
-			sql, _filterMetadata._apiClass.getName(),
-			_filterMetadata._filterPKColumn, groupIds);
+			sql, modelClass.getName(), _filterPKColumn, groupIds);
 	}
 
 	private static final long[] _EMPTY_GROUP_IDS = new long[0];
 
-	private final FilterMetadata<T> _filterMetadata;
+	private final String _filterPKColumn;
+	private final String _filterSqlCountWhere;
+	private final String _filterSqlSelectNoInlineDistinctWhere1;
+	private final String _filterSqlSelectNoInlineDistinctWhere2;
+	private final String _filterSqlSelectWhere;
+	private final String _orderByEntityTable;
 
 }

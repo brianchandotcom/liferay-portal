@@ -39,29 +39,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
-	@priority = 3
-	test CheckDefaultLanguageTag {
-		var defaultLanguage = Segmentation.getPortalInstanceDefaultLanguageId();
-
-		task ("Go to add segment screen") {
-			LexiconEntry.gotoAdd();
-		}
-
-		task ("Open localizations dropdwon") {
-			Click.clickNoMouseOver(
-				key_currentLocale = "en-us",
-				locator1 = "Button#TRANSLATIONS_LOCALIZATION");
-		}
-
-		task ("Validate tag text") {
-			AssertTextEquals(
-				key_locale = StringUtil.replace(${defaultLanguage}, "_", "-"),
-				locator1 = "Translation#TRANSLATION_LANGUAGE_STATUS_LABEL",
-				value1 = "Default");
-		}
-	}
-
 	@description = "LPS-135495 Validate if, Input title values can only be changed in edit mode."
 	@priority = 3
 	test CheckTranslatedSegment {

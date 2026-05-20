@@ -71,8 +71,12 @@ export function useModelArmorTemplateForm({
 				Record<keyof ModelArmorTemplate, string>
 			> = {};
 
-			if (!formValues.title) {
-				validationErrors.title = Liferay.Language.get('required');
+			if (
+				!formValues.title_i18n ||
+				!Object.values(formValues.title_i18n).some(Boolean)
+			) {
+				validationErrors.title_i18n =
+					Liferay.Language.get('required');
 			}
 
 			if (!formValues.externalReferenceCode) {

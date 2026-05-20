@@ -72,34 +72,6 @@ public class AssetListTypePropertiesUtilTest {
 	}
 
 	@Test
-	public void testExcludesMetadataAndUnfilterableFields() {
-		_stubObjectDefinition(
-			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1,
-			Arrays.asList(
-				_mockObjectField(
-					"creator", ObjectFieldConstants.BUSINESS_TYPE_TEXT, true),
-				_mockObjectField(
-					"attachment", ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
-					false),
-				_mockObjectField(
-					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
-
-		JSONArray jsonArray =
-			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
-				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
-				_COMPANY_ID, LocaleUtil.US);
-
-		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.length());
-		Assert.assertEquals(
-			"title",
-			jsonArray.getJSONObject(
-				0
-			).getString(
-				"name"
-			));
-	}
-
-	@Test
 	public void testFeatureFlagDisabledReturnsEmptyArray() {
 		_featureFlagManagerUtilMockedStatic.when(
 			() -> FeatureFlagManagerUtil.isEnabled(
@@ -145,6 +117,41 @@ public class AssetListTypePropertiesUtilTest {
 			_CLASS_TYPE_ID_1, jsonObject.getLong("classTypeId"));
 		Assert.assertEquals("title", jsonObject.getString("name"));
 		Assert.assertEquals("text", jsonObject.getString("type"));
+	}
+
+	@Test
+	public void testIncludesMetadataFieldsAndExcludesUnfilterableFields() {
+		_stubObjectDefinition(
+			_CLASS_NAME_ID_1, _CLASS_TYPE_ID_1,
+			Arrays.asList(
+				_mockObjectField(
+					"attachment", ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					false),
+				_mockObjectField(
+					"creator", ObjectFieldConstants.BUSINESS_TYPE_TEXT, true),
+				_mockObjectField(
+					"title", ObjectFieldConstants.BUSINESS_TYPE_TEXT, false)));
+
+		JSONArray jsonArray =
+			AssetListTypePropertiesUtil.getTypePropertiesJSONArray(
+				new long[] {_CLASS_NAME_ID_1}, new long[] {_CLASS_TYPE_ID_1},
+				_COMPANY_ID, LocaleUtil.US);
+
+		Assert.assertEquals(jsonArray.toString(), 2, jsonArray.length());
+		Assert.assertEquals(
+			"creator",
+			jsonArray.getJSONObject(
+				0
+			).getString(
+				"name"
+			));
+		Assert.assertEquals(
+			"title",
+			jsonArray.getJSONObject(
+				1
+			).getString(
+				"name"
+			));
 	}
 
 	@Test

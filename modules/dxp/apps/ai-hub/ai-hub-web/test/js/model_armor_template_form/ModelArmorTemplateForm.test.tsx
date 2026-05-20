@@ -160,12 +160,58 @@ describe('ModelArmorTemplateForm', () => {
 			});
 		});
 
-		it('renders the three panel headers', () => {
+		it('shows only the Details panel when no guardrail type is selected', () => {
 			render(<ModelArmorTemplateForm {...defaultProps} />);
 
 			expect(screen.getByText('details')).toBeInTheDocument();
-			expect(screen.getByText('detections')).toBeInTheDocument();
-			expect(screen.getByText('responsible-ai')).toBeInTheDocument();
+			expect(screen.queryByText('detections')).not.toBeInTheDocument();
+			expect(
+				screen.queryByText('responsible-ai')
+			).not.toBeInTheDocument();
+		});
+
+		it('shows Details and Detections when the guardrail type is input', async () => {
+			mockGetModelArmorTemplate.mockResolvedValueOnce({
+				externalReferenceCode: 'TEMPLATE_X',
+				guardrailType: 'input',
+			});
+
+			render(
+				<ModelArmorTemplateForm
+					{...defaultProps}
+					externalReferenceCode="TEMPLATE_X"
+				/>
+			);
+
+			await waitFor(() => {
+				expect(screen.getByText('detections')).toBeInTheDocument();
+			});
+
+			expect(screen.getByText('details')).toBeInTheDocument();
+			expect(
+				screen.queryByText('responsible-ai')
+			).not.toBeInTheDocument();
+		});
+
+		it('shows Details and Responsible AI when the guardrail type is output', async () => {
+			mockGetModelArmorTemplate.mockResolvedValueOnce({
+				externalReferenceCode: 'TEMPLATE_X',
+				guardrailType: 'output',
+			});
+
+			render(
+				<ModelArmorTemplateForm
+					{...defaultProps}
+					externalReferenceCode="TEMPLATE_X"
+				/>
+			);
+
+			await waitFor(() => {
+				expect(screen.getByText('responsible-ai')).toBeInTheDocument();
+			});
+
+			expect(screen.getByText('details')).toBeInTheDocument();
+			expect(screen.queryByText('detections')).not.toBeInTheDocument();
 		});
 	});
 

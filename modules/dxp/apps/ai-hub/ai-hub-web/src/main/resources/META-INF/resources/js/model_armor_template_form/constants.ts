@@ -12,7 +12,7 @@ export const DEFAULT_MODEL_ARMOR_TEMPLATE: Omit<
 	active: true,
 	description: '',
 	externalReferenceCode: '',
-	guardrailType: 'input',
+	guardrailType: '',
 	location: '',
 	maliciousUriFilterEnabled: false,
 	multiLanguageDetectionEnabled: false,

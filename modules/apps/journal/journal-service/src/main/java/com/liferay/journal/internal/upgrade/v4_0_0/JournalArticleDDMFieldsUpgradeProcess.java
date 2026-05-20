@@ -77,9 +77,7 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 					resultSet.getString("DDMStructureKey")
 				},
 				values -> {
-					long id = (Long)values[0];
 					long groupId = (Long)values[1];
-					String content = (String)values[2];
 					String ddmStructureKey = (String)values[3];
 
 					DDMStructure ddmStructure =
@@ -87,17 +85,21 @@ public class JournalArticleDDMFieldsUpgradeProcess extends UpgradeProcess {
 							_portal.getSiteGroupId(groupId), classNameId,
 							ddmStructureKey, true);
 
+					String content = (String)values[2];
+
 					DDMFormValues ddmFormValues =
 						_fieldsToDDMFormValuesConverter.convert(
 							ddmStructure,
 							_journalConverter.getDDMFields(
 								ddmStructure, _convertFieldNames(content)));
 
+					long id = (Long)values[0];
+
 					_ddmFieldLocalService.updateDDMFormValues(
 						ddmStructure.getStructureId(), id, ddmFormValues);
 				},
-				"Unable to upgrade JournalArticle DDM fields for company " +
-					companyId));
+				"Unable to upgrade journal article dynamic data mapping " +
+					"fields for company " + companyId));
 	}
 
 	@Override

@@ -80,7 +80,7 @@ export class MessageBoardsEditThreadPage {
 	}
 
 	async publishNewThreadForWorkflow(subject: string, body: string) {
-		await this.messageBoardsPage.newThreadButton.click();
+		await this.messageBoardsPage.goToCreateNewThread();
 		await this.subjectSelector.fill(subject);
 		await this.bodyTextBox.fill(body);
 		await this.submitForWorkflowButton.click();

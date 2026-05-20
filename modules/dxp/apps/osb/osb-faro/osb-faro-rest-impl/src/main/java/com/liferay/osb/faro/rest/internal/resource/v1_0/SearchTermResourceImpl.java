@@ -34,7 +34,7 @@ public class SearchTermResourceImpl extends BaseSearchTermResourceImpl {
 
 	@Override
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, Integer rangeKey,
+			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, Pagination pagination)
 		throws Exception {
 
@@ -52,7 +52,7 @@ public class SearchTermResourceImpl extends BaseSearchTermResourceImpl {
 					).put(
 						"rangeEnd", rangeEnd
 					).put(
-						"rangeKey", rangeKey
+						"rangeKey", TimeRange.getRangeKey(rangeKey)
 					).put(
 						"rangeStart", rangeStart
 					).put(

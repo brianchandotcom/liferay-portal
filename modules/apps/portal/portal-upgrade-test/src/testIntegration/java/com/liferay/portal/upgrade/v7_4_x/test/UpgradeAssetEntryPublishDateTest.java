@@ -62,6 +62,8 @@ public class UpgradeAssetEntryPublishDateTest {
 
 		Date displayDate = calendar.getTime();
 
+		Date publishDate = RandomTestUtil.nextDate();
+
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -70,10 +72,26 @@ public class UpgradeAssetEntryPublishDateTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 
+		FileEntry fileEntryWithoutDisplayDate = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(), null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user.getUserId()));
+
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		assetEntry.setPublishDate(fileEntry.getCreateDate());
+
+		_assetEntryLocalService.updateAssetEntry(assetEntry);
+
+		assetEntry = _assetEntryLocalService.getEntry(
+			DLFileEntry.class.getName(),
+			fileEntryWithoutDisplayDate.getFileEntryId());
+
+		assetEntry.setPublishDate(publishDate);
 
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
 
@@ -88,6 +106,12 @@ public class UpgradeAssetEntryPublishDateTest {
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		Assert.assertEquals(displayDate, assetEntry.getPublishDate());
+
+		assetEntry = _assetEntryLocalService.getEntry(
+			DLFileEntry.class.getName(),
+			fileEntryWithoutDisplayDate.getFileEntryId());
+
+		Assert.assertEquals(publishDate, assetEntry.getPublishDate());
 	}
 
 	@Inject

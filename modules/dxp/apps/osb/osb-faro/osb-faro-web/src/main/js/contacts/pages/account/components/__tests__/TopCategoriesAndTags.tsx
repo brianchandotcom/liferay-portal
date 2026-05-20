@@ -137,7 +137,7 @@ describe('TopCategoriesAndTags', () => {
 		it('should render the Group By dropdown with the default metric (Impressions)', () => {
 			render(<TopCategoriesAndTags />);
 
-			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Group by').length).toBeGreaterThan(0);
 			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(
 				0
 			);
@@ -191,7 +191,7 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('button', {name: /Group by/})[0]
 			);
 
 			fireEvent.click(
@@ -210,7 +210,7 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group By/})[0]
+				screen.getAllByRole('button', {name: /Group by/})[0]
 			);
 
 			fireEvent.click(
@@ -314,7 +314,12 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			expect(
-				screen.getAllByText('No data available').length
+				screen.getAllByText('No Categorization Available').length
+			).toBeGreaterThan(0);
+			expect(
+				screen.getAllByText(
+					'Vocabularies, Categories and Tags will appear here once they are available.'
+				).length
 			).toBeGreaterThan(0);
 		});
 

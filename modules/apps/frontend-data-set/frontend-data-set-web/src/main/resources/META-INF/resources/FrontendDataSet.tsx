@@ -803,13 +803,9 @@ const FrontendDataSetContent = ({
 		(dataSetData: IDataSetData) => {
 			const remappedItems = dataSetData.items.map((item) => {
 				if (item.embedded && item.embedded.actions) {
-					const actions = item.embedded.actions;
-
-					delete item.embedded.actions;
-
 					return {
 						...item,
-						actions,
+						actions: item.embedded.actions,
 					};
 				}
 
@@ -824,6 +820,8 @@ const FrontendDataSetContent = ({
 			if (!dataSetData.items.length && dataSetData.totalCount > 0) {
 				viewsDispatch(updatePageNumber(dataSetData.lastPage));
 			}
+
+			return remappedItems;
 		},
 		[updatePageNumber, viewsDispatch]
 	);
@@ -1303,10 +1301,10 @@ const FrontendDataSetContent = ({
 					}
 
 					if (isMounted()) {
-						updateDataSetItems(data);
+						const updatedItems = updateDataSetItems(data);
 
 						setSelectedItems(
-							data.items.filter(
+							updatedItems.filter(
 								(item: ISelectionFilterStateItem) => {
 									const itemValue = getObjectValueFromPath({
 										object: item,

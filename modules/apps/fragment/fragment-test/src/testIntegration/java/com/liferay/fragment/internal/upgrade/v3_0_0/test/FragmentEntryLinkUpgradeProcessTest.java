@@ -335,6 +335,19 @@ public class FragmentEntryLinkUpgradeProcessTest
 			true);
 	}
 
+	private void _addFragmentEntryLinkColumn(
+			String columnName, String columnType)
+		throws Exception {
+
+		if (_dbInspector.hasColumn("FragmentEntryLink", columnName)) {
+			_db.alterTableDropColumn(
+				_connection, "FragmentEntryLink", columnName);
+		}
+
+		_db.alterTableAddColumn(
+			_connection, "FragmentEntryLink", columnName, columnType);
+	}
+
 	private void _assertFragmentEntryLinks(
 			Map<Long, Map<String, Object>> expectedValuesMap,
 			List<Long> fragmentEntryLinkIds)
@@ -443,12 +456,9 @@ public class FragmentEntryLinkUpgradeProcessTest
 	}
 
 	private void _updateFragmentEntryLinks() throws Exception {
-		_db.alterTableAddColumn(
-			_connection, "FragmentEntryLink", "originalFragmentEntryLinkId",
-			"LONG");
+		_addFragmentEntryLinkColumn("originalFragmentEntryLinkId", "LONG");
 
-		_db.alterTableAddColumn(
-			_connection, "FragmentEntryLink", "fragmentEntryId", "LONG");
+		_addFragmentEntryLinkColumn("fragmentEntryId", "LONG");
 
 		Group guestGroup = GroupLocalServiceUtil.getFriendlyURLGroup(
 			PortalUtil.getDefaultCompanyId(),

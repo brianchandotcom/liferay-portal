@@ -15925,6 +15925,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									#!/bin/bash
 
 									impdp ${oracle.admin.user}/${oracle.admin.password} dumpfile=oracle.dmp table_exists_action=replace
+
+									sqlplus ${oracle.admin.user}/${oracle.admin.password} << -'EOF'
+									grant select on sys.v_$session to ${database.username};
+									grant select on sys.v_$sql to ${database.username};
+									exit
+									EOF
 								]]>
 							</echo>
 
@@ -16140,6 +16146,13 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<arg value="dumpfile=${database.type}.dmp" />
 								<arg value="table_exists_action=replace" />
 							</exec>
+
+							<sql classpath="${test.app.server.lib.portal.dir}/${jdbc.oracle.driver}" driver="oracle.jdbc.OracleDriver" onerror="continue" password="${oracle.admin.password}" print="true" url="${database.oracle.url}" userid="${oracle.admin.user}">
+								<![CDATA[
+									grant select on sys.v_$session to lportal;
+									grant select on sys.v_$sql to lportal;
+								]]>
+							</sql>
 
 							<delete file="${data.pump.dir}/${database.type}.dmp" />
 						</then>

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.CompanyInfo;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.cache.CacheField;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.security.Key;
 
 import java.util.Locale;
+import java.util.NavigableMap;
 import java.util.TimeZone;
 
 /**
@@ -188,25 +190,27 @@ public class CompanyImpl extends CompanyBaseImpl {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		if (group.hasPublicLayouts()) {
-			String defaultVirtualHostname =
-				PortalUtil.getDefaultVirtualHostname(
-					false,
-					LayoutSetLocalServiceUtil.getLayoutSet(groupId, false));
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, false);
 
-			if (Validator.isNotNull(defaultVirtualHostname)) {
+			NavigableMap<String, String> virtualHostnames =
+				layoutSet.getVirtualHostnames();
+
+			if (!virtualHostnames.isEmpty()) {
 				portalURL = PortalUtil.getPortalURL(
-					defaultVirtualHostname, portalServerPort, false);
+					virtualHostnames.firstKey(), portalServerPort, false);
 			}
 		}
 		else if (group.hasPrivateLayouts()) {
-			String defaultVirtualHostname =
-				PortalUtil.getDefaultVirtualHostname(
-					false,
-					LayoutSetLocalServiceUtil.getLayoutSet(groupId, true));
+			LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+				groupId, true);
 
-			if (Validator.isNotNull(defaultVirtualHostname)) {
+			NavigableMap<String, String> virtualHostnames =
+				layoutSet.getVirtualHostnames();
+
+			if (!virtualHostnames.isEmpty()) {
 				portalURL = PortalUtil.getPortalURL(
-					defaultVirtualHostname, portalServerPort, false);
+					virtualHostnames.firstKey(), portalServerPort, false);
 			}
 		}
 
@@ -226,13 +230,15 @@ public class CompanyImpl extends CompanyBaseImpl {
 			return portalURL;
 		}
 
-		String defaultVirtualHostname = PortalUtil.getDefaultVirtualHostname(
-			false,
-			LayoutSetLocalServiceUtil.getLayoutSet(groupId, privateLayout));
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
 
-		if (Validator.isNotNull(defaultVirtualHostname)) {
+		NavigableMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (!virtualHostnames.isEmpty()) {
 			portalURL = PortalUtil.getPortalURL(
-				defaultVirtualHostname, portalServerPort, false);
+				virtualHostnames.firstKey(), portalServerPort, false);
 		}
 
 		return portalURL;

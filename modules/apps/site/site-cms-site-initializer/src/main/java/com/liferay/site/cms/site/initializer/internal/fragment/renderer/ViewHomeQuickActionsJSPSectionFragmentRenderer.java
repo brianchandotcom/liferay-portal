@@ -5,17 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
-import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQuickActionsDisplayContext;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -41,10 +34,6 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 
 		return new ViewHomeQuickActionsDisplayContext(
 			groupLocalService, _objectDefinitionService,
-			new SectionDisplayContextHelper(
-				_depotEntryLocalService, groupLocalService, _language,
-				_objectDefinitionSettingLocalService,
-				_objectEntryFolderModelResourcePermission, _portal),
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -55,25 +44,6 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 	}
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private Language _language;
-
-	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
-
-	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
-	)
-	private ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
-
-	@Reference
-	private Portal _portal;
 
 }

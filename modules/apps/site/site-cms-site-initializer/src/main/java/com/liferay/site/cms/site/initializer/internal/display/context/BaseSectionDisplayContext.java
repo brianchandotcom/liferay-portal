@@ -101,15 +101,10 @@ public abstract class BaseSectionDisplayContext {
 		objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
-
-		sectionDisplayContextHelper = new SectionDisplayContextHelper(
-			depotEntryLocalService, groupLocalService, language,
-			objectDefinitionSettingLocalService,
-			objectEntryFolderModelResourcePermission, portal);
 	}
 
 	public String getAdditionalAPIURLParameters() {
-		return sectionDisplayContextHelper.getAdditionalAPIURLParameters(
+		return SectionDisplayContextUtil.getAdditionalAPIURLParameters(
 			getCMSSectionFilterString(), httpServletRequest,
 			getRootObjectEntryFolderExternalReferenceCode());
 	}
@@ -126,7 +121,7 @@ public abstract class BaseSectionDisplayContext {
 			}
 		).put(
 			"assetLibraries",
-			sectionDisplayContextHelper.getDepotEntriesJSONArray(
+			SectionDisplayContextUtil.getDepotEntriesJSONArray(
 				httpServletRequest)
 		).put(
 			"autocompleteURL",
@@ -156,7 +151,7 @@ public abstract class BaseSectionDisplayContext {
 				PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED))
 		).put(
 			"candidateAssetLibraries",
-			sectionDisplayContextHelper.getDepotEntriesJSONArray(
+			SectionDisplayContextUtil.getDepotEntriesJSONArray(
 				httpServletRequest,
 				getRootObjectEntryFolderExternalReferenceCode())
 		).put(
@@ -305,7 +300,7 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return sectionDisplayContextHelper.getCreationMenu(
+		return SectionDisplayContextUtil.getCreationMenu(
 			getCreationMenuDropdownItems(), httpServletRequest,
 			getRootObjectEntryFolderExternalReferenceCode());
 	}
@@ -317,7 +312,7 @@ public abstract class BaseSectionDisplayContext {
 	public abstract Map<String, Object> getEmptyState();
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return sectionDisplayContextHelper.getFDSActionDropdownItems(
+		return SectionDisplayContextUtil.getFDSActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -335,12 +330,12 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	protected String appendGroupIds(String filterString) {
-		return sectionDisplayContextHelper.appendGroupIds(
+		return SectionDisplayContextUtil.appendGroupIds(
 			filterString, httpServletRequest);
 	}
 
 	protected String appendStatus(String filterString) {
-		return sectionDisplayContextHelper.appendStatus(filterString);
+		return SectionDisplayContextUtil.appendStatus(filterString);
 	}
 
 	protected abstract String getCMSSectionFilterString();
@@ -366,7 +361,6 @@ public abstract class BaseSectionDisplayContext {
 	protected final Language language;
 	protected final ObjectEntryFolder objectEntryFolder;
 	protected final Portal portal;
-	protected final SectionDisplayContextHelper sectionDisplayContextHelper;
 	protected final ThemeDisplay themeDisplay;
 
 	private JSONObject _getExportFileFormatJSONObject(

@@ -5,6 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayEmptyState from '@clayui/empty-state';
+import {preventIframeNavigation} from '@liferay/layout-js-components-web';
 import React from 'react';
 
 import PreviewSelectors from './PreviewSelectors';
@@ -60,15 +61,12 @@ export default function PreviewBody({
 					)}
 				</ClayAlert>
 			) : (
-				<div
-					className="align-items-center content-editor__preview__content d-flex position-relative"
-					{...(previewURL && {inert: ''})}
-				>
+				<div className="align-items-center content-editor__preview__content d-flex position-relative">
 					{previewURL ? (
 						<iframe
 							className="border-0 d-block h-100 w-100"
+							onLoad={preventIframeNavigation}
 							src={previewURL}
-							tabIndex={-1}
 							title={Liferay.Language.get('preview')}
 						/>
 					) : (

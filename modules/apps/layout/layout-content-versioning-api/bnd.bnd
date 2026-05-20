@@ -5,4 +5,5 @@ Export-Package:\
 	com.liferay.layout.content.versioning.exception,\
 	com.liferay.layout.content.versioning.model,\
 	com.liferay.layout.content.versioning.service,\
-	com.liferay.layout.content.versioning.service.persistence
+	com.liferay.layout.content.versioning.service.persistence,\
+	com.liferay.layout.content.versioning.util.comparator

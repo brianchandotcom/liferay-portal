@@ -142,7 +142,7 @@ public class RegionResourceImpl
 			@Override
 			public String getPortletId() {
 				return "com_liferay_address_web_internal_portlet_" +
-					"CountriesManagementAdminPortlet"
+					"CountriesManagementAdminPortlet";
 			}
 
 			@Override

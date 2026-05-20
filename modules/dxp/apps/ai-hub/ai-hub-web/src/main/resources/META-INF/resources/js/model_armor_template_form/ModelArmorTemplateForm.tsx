@@ -81,15 +81,19 @@ export default function ModelArmorTemplateForm({
 								values={values}
 							/>
 
-							<DetectionsPanel
-								setField={setField}
-								values={values}
-							/>
+							{values.guardrailType === 'input' && (
+								<DetectionsPanel
+									setField={setField}
+									values={values}
+								/>
+							)}
 
-							<ResponsibleAIPanel
-								setField={setField}
-								values={values}
-							/>
+							{values.guardrailType === 'output' && (
+								<ResponsibleAIPanel
+									setField={setField}
+									values={values}
+								/>
+							)}
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayForm>

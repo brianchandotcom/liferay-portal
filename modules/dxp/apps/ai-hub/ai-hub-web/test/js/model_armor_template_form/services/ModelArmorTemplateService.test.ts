@@ -31,7 +31,7 @@ describe('ModelArmorTemplateService', () => {
 
 			const result = await getModelArmorTemplate('TEMPLATE_X');
 
-			expect(result.guardrailType).toBe('input');
+			expect(result.guardrailType).toBe('');
 			expect(result.piAndJailbreakConfidenceLevel).toBe('mediumAndAbove');
 			expect(result.raiDangerousLevel).toBe('none');
 			expect(result.raiHarassmentLevel).toBe('none');

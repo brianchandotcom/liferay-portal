@@ -124,7 +124,7 @@ describe('useModelArmorTemplateForm', () => {
 			const {result} = renderModelArmorHook();
 
 			expect(result.current.values.active).toBe(true);
-			expect(result.current.values.guardrailType).toBe('input');
+			expect(result.current.values.guardrailType).toBe('');
 			expect(result.current.values.piAndJailbreakConfidenceLevel).toBe(
 				'mediumAndAbove'
 			);
@@ -168,7 +168,7 @@ describe('useModelArmorTemplateForm', () => {
 				en_US: 'New Title',
 			});
 			expect(result.current.values.active).toBe(true);
-			expect(result.current.values.guardrailType).toBe('input');
+			expect(result.current.values.guardrailType).toBe('');
 		});
 	});
 

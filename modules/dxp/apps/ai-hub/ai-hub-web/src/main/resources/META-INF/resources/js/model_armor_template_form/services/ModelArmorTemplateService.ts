@@ -44,7 +44,7 @@ async function getModelArmorTemplate(
 	return {
 		...DEFAULT_MODEL_ARMOR_TEMPLATE,
 		...raw,
-		guardrailType: normalizeKey(raw.guardrailType, 'input'),
+		guardrailType: normalizeKey(raw.guardrailType, ''),
 		piAndJailbreakConfidenceLevel: normalizeKey<FilterLevel>(
 			raw.piAndJailbreakConfidenceLevel,
 			'mediumAndAbove'

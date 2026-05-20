@@ -72,16 +72,16 @@ public class UserModelListener extends BaseModelListener<User> {
 				continue;
 			}
 
-			List<SharingEntry> pendingSharingEntries =
+			List<SharingEntry> sharingEntries =
 				_sharingEntryLocalService.getToTicketSharingEntries(
 					ticket.getTicketId());
 
-			for (SharingEntry pendingSharingEntry : pendingSharingEntries) {
+			for (SharingEntry sharingEntry : sharingEntries) {
 				SharingEntry existingSharingEntry =
 					_sharingEntryLocalService.fetchSharingEntry(
-						0, pendingSharingEntry.getToUserGroupId(),
-						user.getUserId(), pendingSharingEntry.getClassNameId(),
-						pendingSharingEntry.getClassPK());
+						0, sharingEntry.getToUserGroupId(), user.getUserId(),
+						sharingEntry.getClassNameId(),
+						sharingEntry.getClassPK());
 
 				if (existingSharingEntry != null) {
 					if (_log.isInfoEnabled()) {
@@ -89,20 +89,18 @@ public class UserModelListener extends BaseModelListener<User> {
 							StringBundler.concat(
 								"A sharing entry already exists for user ",
 								user.getUserId(), " with class name ID ",
-								pendingSharingEntry.getClassNameId(),
+								sharingEntry.getClassNameId(),
 								" and class primary key ",
-								pendingSharingEntry.getClassPK()));
+								sharingEntry.getClassPK()));
 					}
 
-					_sharingEntryLocalService.deleteSharingEntry(
-						pendingSharingEntry);
+					_sharingEntryLocalService.deleteSharingEntry(sharingEntry);
 				}
 				else {
-					pendingSharingEntry.setToTicketId(0);
-					pendingSharingEntry.setToUserId(user.getUserId());
+					sharingEntry.setToTicketId(0);
+					sharingEntry.setToUserId(user.getUserId());
 
-					_sharingEntryLocalService.updateSharingEntry(
-						pendingSharingEntry);
+					_sharingEntryLocalService.updateSharingEntry(sharingEntry);
 				}
 			}
 

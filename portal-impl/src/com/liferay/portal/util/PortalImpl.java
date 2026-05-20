@@ -1222,7 +1222,8 @@ public class PortalImpl implements Portal {
 		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
 			themeDisplay.getLayoutSet());
 
-		String virtualHostname = _getVirtualHostname(themeDisplay);
+		String virtualHostname = _getVirtualHostname(
+			virtualHostnames, themeDisplay);
 
 		if ((!Validator.isBlank(portalDomain) &&
 			 !StringUtil.equalsIgnoreCase(
@@ -2831,10 +2832,17 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		String virtualHostname = getDefaultVirtualHostname(
-			false, layout.getLayoutSet());
+		String virtualHostname = null;
 
-		if (Validator.isNull(virtualHostname)) {
+		LayoutSet layoutSet = layout.getLayoutSet();
+
+		NavigableMap<String, String> virtualHostnames =
+			layoutSet.getVirtualHostnames();
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
+		}
+		else {
 			Company company = CompanyLocalServiceUtil.getCompany(
 				layout.getCompanyId());
 
@@ -2920,8 +2928,7 @@ public class PortalImpl implements Portal {
 			String portalDomain = portalURL.substring(index + 3);
 
 			String virtualHostname = getCanonicalDomain(
-				virtualHostnames, portalDomain, defaultVirtualHostname,
-				layoutSet);
+				virtualHostnames, portalDomain, defaultVirtualHostname);
 
 			virtualHostname = getPortalURL(
 				virtualHostname, portalPort, secureConnection);
@@ -2965,7 +2972,14 @@ public class PortalImpl implements Portal {
 		String defaultVirtualHostname = _getDefaultVirtualHostname(
 			themeDisplay.getCompany());
 
-		String virtualHostname = getDefaultVirtualHostname(true, layoutSet);
+		String virtualHostname = null;
+
+		NavigableMap<String, String> virtualHostnames = getVirtualHostnames(
+			layoutSet);
+
+		if (!virtualHostnames.isEmpty()) {
+			virtualHostname = virtualHostnames.firstKey();
+		}
 
 		if (Validator.isNotNull(virtualHostname) &&
 			!StringUtil.equalsIgnoreCase(
@@ -6805,20 +6819,13 @@ public class PortalImpl implements Portal {
 
 	protected String getCanonicalDomain(
 		NavigableMap<String, String> virtualHostnames, String portalDomain,
-		String defaultVirtualHostname, LayoutSet layoutSet) {
+		String defaultVirtualHostname) {
 
 		if (Validator.isBlank(portalDomain) ||
 			StringUtil.equalsIgnoreCase(portalDomain, defaultVirtualHostname) ||
 			!virtualHostnames.containsKey(defaultVirtualHostname)) {
 
-			String virtualHostname = getDefaultVirtualHostname(
-				false, layoutSet);
-
-			if (Validator.isNotNull(virtualHostname)) {
-				return virtualHostname;
-			}
-
-			return defaultVirtualHostname;
+			return virtualHostnames.firstKey();
 		}
 
 		int pos = portalDomain.indexOf(CharPool.COLON);
@@ -7608,7 +7615,7 @@ public class PortalImpl implements Portal {
 								virtualHostnames, portalDomain)) {
 
 							portalURL = getPortalURL(
-								getDefaultVirtualHostname(true, layoutSet),
+								virtualHostnames.firstKey(),
 								themeDisplay.getServerPort(),
 								themeDisplay.isSecure());
 						}
@@ -7673,7 +7680,7 @@ public class PortalImpl implements Portal {
 
 						String virtualHostname = getCanonicalDomain(
 							virtualHostnames, portalDomain,
-							defaultVirtualHostname, layoutSet);
+							defaultVirtualHostname);
 
 						portalURL = getPortalURL(
 							virtualHostname, themeDisplay.getServerPort(),
@@ -8065,17 +8072,17 @@ public class PortalImpl implements Portal {
 		).build();
 	}
 
-	private String _getVirtualHostname(ThemeDisplay themeDisplay) {
-		String virtualHostname = getDefaultVirtualHostname(
-			true, themeDisplay.getLayoutSet());
+	private String _getVirtualHostname(
+		NavigableMap<String, String> virtualHostnames,
+		ThemeDisplay themeDisplay) {
 
-		if (Validator.isNotNull(virtualHostname)) {
-			return virtualHostname;
+		if (virtualHostnames.isEmpty()) {
+			Company company = themeDisplay.getCompany();
+
+			return company.getVirtualHostname();
 		}
 
-		Company company = themeDisplay.getCompany();
-
-		return company.getVirtualHostname();
+		return virtualHostnames.firstKey();
 	}
 
 	private boolean _isSignedIn(HttpServletRequest httpServletRequest) {

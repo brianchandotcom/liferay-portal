@@ -25,6 +25,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
 
 /**
@@ -158,8 +159,14 @@ public class AlternateURLMapperProvider {
 		}
 
 		private String _getPortalURL(ThemeDisplay themeDisplay) {
-			String virtualHostname = _portal.getDefaultVirtualHostname(
-				true, themeDisplay.getLayoutSet());
+			NavigableMap<String, String> virtualHostnames =
+				_portal.getVirtualHostnames(themeDisplay.getLayoutSet());
+
+			String virtualHostname = null;
+
+			if (!virtualHostnames.isEmpty()) {
+				virtualHostname = virtualHostnames.firstKey();
+			}
 
 			if (Validator.isNull(virtualHostname)) {
 				virtualHostname = "localhost";

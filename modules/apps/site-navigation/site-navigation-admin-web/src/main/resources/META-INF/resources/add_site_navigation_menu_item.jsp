@@ -44,7 +44,7 @@ if (addURL == null) {
 	<aui:button-row cssClass="modal-footer position-fixed">
 		<clay:button
 			id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
-			label='<%= type.equals("layout") ? "select" : "add" %>'
+			label="add"
 			type="submit"
 		/>
 

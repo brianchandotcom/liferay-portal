@@ -76,6 +76,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1116,7 +1117,10 @@ public class AssetPublisherDisplayContext {
 				"categoryId", String.valueOf(getAssetCategoryId()));
 		}
 
-		if (!isPaginationTypeNone()) {
+		if (!isPaginationTypeNone() &&
+			FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-89171")) {
+
 			String redirect = ParamUtil.getString(_portletRequest, "redirect");
 
 			if (Validator.isNull(redirect)) {

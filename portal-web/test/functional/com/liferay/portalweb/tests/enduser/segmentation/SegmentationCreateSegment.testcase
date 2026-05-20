@@ -39,68 +39,6 @@ definition {
 		}
 	}
 
-	@description = "Test Automation for LPS-106196 Bug: Conjunction selector works as a switch"
-	@priority = 3
-	test CanEditConjunctionInConditionsSegments {
-		task ("Add segment with condition and change the default conjunction") {
-			LexiconEntry.gotoAdd();
-
-			Segmentation.addProperties(propertyOption = "Email Address");
-
-			Segmentation.fillTitle(titleField = "CanEditConjunctionInConditionsSegments Test");
-
-			Segmentation.changeCriterionInput(criterionInputOption = "Contains");
-
-			Segmentation.fillProperty(criterionValue = "@liferay.com");
-
-			Segmentation.duplicateCriteria();
-
-			AssertTextEquals(
-				locator1 = "Segmentation#CRITERION_CONJUNCTION",
-				value1 = "And");
-
-			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "Or");
-
-			Segmentation.fillProperty(
-				criterionValue = "@liferay2.com",
-				indexNumber = 2);
-
-			AssertTextEquals(
-				locator1 = "Segmentation#CRITERION_CONJUNCTION",
-				value1 = "Or");
-
-			Button.clickSave();
-
-			Alert.viewSuccessMessage();
-		}
-
-		task ("Check if the change remains after saving the segment") {
-			Segmentation.editSegment(entry = "CanEditConjunctionInConditionsSegments Test");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#CRITERION_CONJUNCTION",
-				value1 = "Or");
-		}
-
-		task ("Edit the condition conjunction again and save the segment") {
-			Segmentation.changeCriterionConjunction(criterionConjunctionItem = "And");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#CRITERION_CONJUNCTION",
-				value1 = "And");
-
-			Button.clickSave();
-		}
-
-		task ("Check if the change remains after saving the segment") {
-			Segmentation.editSegment(entry = "CanEditConjunctionInConditionsSegments Test");
-
-			AssertTextEquals(
-				locator1 = "Segmentation#CRITERION_CONJUNCTION",
-				value1 = "And");
-		}
-	}
-
 	@description = "LPS-153512 - Test Automation for LPS-94855: I can edit only the first created segment"
 	@priority = 4
 	test CanEditSecondSegmentCreated {

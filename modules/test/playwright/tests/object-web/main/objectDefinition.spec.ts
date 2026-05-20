@@ -1570,6 +1570,55 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 	});
 
 	test(
+		'delete modal shows the number of object entries that will be deleted',
+		{tag: '@LPS-150886'},
+		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			const applicationName =
+				'c/' + objectDefinition.name!.toLowerCase() + 's';
+			const fieldName = objectFields[0].name!;
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry A'},
+				applicationName
+			);
+
+			await apiHelpers.objectEntry.postObjectEntry(
+				{[fieldName]: 'Entry B'},
+				applicationName
+			);
+
+			await viewObjectDefinitionsPage.goto();
+
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition.label!['en_US']
+			);
+
+			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+
+			await expect(
+				page.getByText('Delete Object Definition')
+			).toBeVisible();
+
+			await expect(page.getByText('2 object entries')).toBeVisible();
+		}
+	);
+
+	test(
 		'cannot delete a published object definition with a mismatched confirmation name',
 		{tag: '@LPS-150886'},
 		async ({apiHelpers, page, viewObjectDefinitionsPage}) => {

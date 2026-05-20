@@ -73,60 +73,27 @@ public class UserModelListenerTest {
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testAddUser() throws Exception {
-		_testAddUserWithDuplicateInviteCollaboratorTickets();
-		_testAddUserWithExpiredInviteCollaboratorTicket();
-		_testAddUserWithInvalidEmailAddress();
-		_testAddUserWithInviteCollaboratorTickets();
-		_testAddUserWithUpperCaseEmailAddress();
+	public void testOnAfterCreate() throws Exception {
+		_testOnAfterCreateWithDuplicateInviteCollaboratorTickets();
+		_testOnAfterCreateWithExpiredInviteCollaboratorTicket();
+		_testOnAfterCreateWithInvalidEmailAddress();
+		_testOnAfterCreateWithInviteCollaboratorTickets();
+		_testOnAfterCreateWithUpperCaseEmailAddress();
+		_testOnAfterCreateWithWorkflow();
 	}
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testAddUserWithWorkflow() throws Exception {
-		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
-		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
-
-		_group2 = GroupTestUtil.addGroup();
-
-		Ticket ticket1 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress1);
-		Ticket ticket2 = _addInviteCollaboratorTicket(
-			_group2.getGroupId(), emailAddress1);
-		Ticket ticket3 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress2);
-
-		SharingEntry sharingEntry1 = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket1.getTicketId());
-		SharingEntry sharingEntry2 = _addTicketSharingEntry(
-			_group2.getGroupId(), ticket2.getTicketId());
-		SharingEntry sharingEntry3 = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket3.getTicketId());
-
-		User user = _addUserWithWorkflow(emailAddress1);
-
-		Assert.assertNull(
-			_ticketLocalService.fetchTicket(ticket1.getTicketId()));
-		Assert.assertNull(
-			_ticketLocalService.fetchTicket(ticket2.getTicketId()));
-
-		_assertSharingEntryToUserId(sharingEntry1, user);
-		_assertSharingEntryToUserId(sharingEntry2, user);
-		_assertSharingEntryToTicketId(sharingEntry3, ticket3);
+	public void testOnAfterUpdate() throws Exception {
+		_testOnAfterUpdateWithExistingToUserSharingEntry();
+		_testOnAfterUpdateWithInviteCollaboratorTicket();
 	}
 
 	@Test
 	@TestInfo("LPD-48130")
-	public void testDeleteUser() throws Exception {
-		_testDeleteUserWithToUserSharingEntries();
-		_testDeleteUserWithoutToUserSharingEntries();
-	}
-
-	@Test
-	@TestInfo("LPD-48130")
-	public void testUpdateUserStatus() throws Exception {
-		_testUpdateUserStatusWithExistingToUserSharingEntry();
-		_testUpdateUserStatusWithInviteCollaboratorTicket();
+	public void testOnBeforeRemove() throws Exception {
+		_testOnBeforeRemoveWithToUserSharingEntries();
+		_testOnBeforeRemoveWithoutToUserSharingEntries();
 	}
 
 	private Ticket _addInviteCollaboratorTicket(
@@ -228,7 +195,7 @@ public class UserModelListenerTest {
 		return StringUtil.toLowerCase(StringUtil.trim(emailAddress));
 	}
 
-	private void _testAddUserWithDuplicateInviteCollaboratorTickets()
+	private void _testOnAfterCreateWithDuplicateInviteCollaboratorTickets()
 		throws Exception {
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
@@ -265,7 +232,7 @@ public class UserModelListenerTest {
 		_assertToTicketSharingEntriesCount(0, ticket2);
 	}
 
-	private void _testAddUserWithExpiredInviteCollaboratorTicket()
+	private void _testOnAfterCreateWithExpiredInviteCollaboratorTicket()
 		throws Exception {
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
@@ -285,7 +252,7 @@ public class UserModelListenerTest {
 		_assertSharingEntryToTicketId(sharingEntry, ticket);
 	}
 
-	private void _testAddUserWithInvalidEmailAddress() throws Exception {
+	private void _testOnAfterCreateWithInvalidEmailAddress() throws Exception {
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket1 = _addInviteCollaboratorTicket(
@@ -316,7 +283,9 @@ public class UserModelListenerTest {
 		_assertSharingEntryToUserId(sharingEntry3, user);
 	}
 
-	private void _testAddUserWithInviteCollaboratorTickets() throws Exception {
+	private void _testOnAfterCreateWithInviteCollaboratorTickets()
+		throws Exception {
+
 		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
 		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
 
@@ -348,7 +317,9 @@ public class UserModelListenerTest {
 		_assertSharingEntryToTicketId(sharingEntry3, ticket3);
 	}
 
-	private void _testAddUserWithUpperCaseEmailAddress() throws Exception {
+	private void _testOnAfterCreateWithUpperCaseEmailAddress()
+		throws Exception {
+
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
 
 		Ticket ticket = _addInviteCollaboratorTicket(
@@ -366,70 +337,39 @@ public class UserModelListenerTest {
 		_assertSharingEntryToUserId(sharingEntry, user);
 	}
 
-	private void _testDeleteUserWithoutToUserSharingEntries() throws Exception {
-		User toUser = UserTestUtil.addGroupUser(
-			_group1, RoleConstants.POWER_USER);
+	private void _testOnAfterCreateWithWorkflow() throws Exception {
+		String emailAddress1 = RandomTestUtil.randomString() + "@liferay.com";
+		String emailAddress2 = RandomTestUtil.randomString() + "@liferay.com";
 
-		_users.add(toUser);
+		_group2 = GroupTestUtil.addGroup();
 
-		User unrelatedUser = UserTestUtil.addGroupUser(
-			_group1, RoleConstants.POWER_USER);
+		Ticket ticket1 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress1);
+		Ticket ticket2 = _addInviteCollaboratorTicket(
+			_group2.getGroupId(), emailAddress1);
+		Ticket ticket3 = _addInviteCollaboratorTicket(
+			_group1.getGroupId(), emailAddress2);
 
-		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, 0, toUser.getUserId(),
-			_classNameLocalService.getClassNameId(Group.class.getName()),
-			_group1.getGroupId(), _group1.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group1.getGroupId(), TestPropsValues.getUserId()));
+		SharingEntry sharingEntry1 = _addTicketSharingEntry(
+			_group1.getGroupId(), ticket1.getTicketId());
+		SharingEntry sharingEntry2 = _addTicketSharingEntry(
+			_group2.getGroupId(), ticket2.getTicketId());
+		SharingEntry sharingEntry3 = _addTicketSharingEntry(
+			_group1.getGroupId(), ticket3.getTicketId());
 
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				toUser.getUserId());
+		User user = _addUserWithWorkflow(emailAddress1);
 
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+		Assert.assertNull(
+			_ticketLocalService.fetchTicket(ticket1.getTicketId()));
+		Assert.assertNull(
+			_ticketLocalService.fetchTicket(ticket2.getTicketId()));
 
-		_userLocalService.deleteUser(unrelatedUser.getUserId());
-
-		toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				toUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+		_assertSharingEntryToUserId(sharingEntry1, user);
+		_assertSharingEntryToUserId(sharingEntry2, user);
+		_assertSharingEntryToTicketId(sharingEntry3, ticket3);
 	}
 
-	private void _testDeleteUserWithToUserSharingEntries() throws Exception {
-		User toUser = UserTestUtil.addGroupUser(
-			_group1, RoleConstants.POWER_USER);
-
-		_sharingEntryLocalService.addSharingEntry(
-			null, TestPropsValues.getUserId(), 0, 0, toUser.getUserId(),
-			_classNameLocalService.getClassNameId(Group.class.getName()),
-			_group1.getGroupId(), _group1.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group1.getGroupId(), TestPropsValues.getUserId()));
-
-		List<SharingEntry> toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				toUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
-
-		_userLocalService.deleteUser(toUser.getUserId());
-
-		toUserSharingEntries =
-			_sharingEntryLocalService.getToUserSharingEntries(
-				toUser.getUserId());
-
-		Assert.assertEquals(
-			toUserSharingEntries.toString(), 0, toUserSharingEntries.size());
-	}
-
-	private void _testUpdateUserStatusWithExistingToUserSharingEntry()
+	private void _testOnAfterUpdateWithExistingToUserSharingEntry()
 		throws Exception {
 
 		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
@@ -478,7 +418,7 @@ public class UserModelListenerTest {
 			toUserSharingEntry.getSharingEntryId());
 	}
 
-	private void _testUpdateUserStatusWithInviteCollaboratorTicket()
+	private void _testOnAfterUpdateWithInviteCollaboratorTicket()
 		throws Exception {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
@@ -517,6 +457,73 @@ public class UserModelListenerTest {
 
 		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
 			workflowDefinitionLink);
+	}
+
+	private void _testOnBeforeRemoveWithoutToUserSharingEntries()
+		throws Exception {
+
+		User toUser = UserTestUtil.addGroupUser(
+			_group1, RoleConstants.POWER_USER);
+
+		_users.add(toUser);
+
+		User unrelatedUser = UserTestUtil.addGroupUser(
+			_group1, RoleConstants.POWER_USER);
+
+		_sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), 0, 0, toUser.getUserId(),
+			_classNameLocalService.getClassNameId(Group.class.getName()),
+			_group1.getGroupId(), _group1.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group1.getGroupId(), TestPropsValues.getUserId()));
+
+		List<SharingEntry> toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(
+				toUser.getUserId());
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+
+		_userLocalService.deleteUser(unrelatedUser.getUserId());
+
+		toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(
+				toUser.getUserId());
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+	}
+
+	private void _testOnBeforeRemoveWithToUserSharingEntries()
+		throws Exception {
+
+		User toUser = UserTestUtil.addGroupUser(
+			_group1, RoleConstants.POWER_USER);
+
+		_sharingEntryLocalService.addSharingEntry(
+			null, TestPropsValues.getUserId(), 0, 0, toUser.getUserId(),
+			_classNameLocalService.getClassNameId(Group.class.getName()),
+			_group1.getGroupId(), _group1.getGroupId(), true,
+			Arrays.asList(SharingEntryAction.VIEW), null,
+			ServiceContextTestUtil.getServiceContext(
+				_group1.getGroupId(), TestPropsValues.getUserId()));
+
+		List<SharingEntry> toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(
+				toUser.getUserId());
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 1, toUserSharingEntries.size());
+
+		_userLocalService.deleteUser(toUser.getUserId());
+
+		toUserSharingEntries =
+			_sharingEntryLocalService.getToUserSharingEntries(
+				toUser.getUserId());
+
+		Assert.assertEquals(
+			toUserSharingEntries.toString(), 0, toUserSharingEntries.size());
 	}
 
 	@Inject

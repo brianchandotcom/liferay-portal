@@ -67,60 +67,54 @@ public class StartPaymentAuthorizeNetServletTest {
 	public void testStartPaymentAuthorizeNetServletWithGuestUser()
 		throws Exception {
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				_user, PermissionCheckerFactoryUtil.create(_user));
+			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				PortalImpl.class.getName(), LoggerTestUtil.OFF)) {
 
-			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
-					_user, PermissionCheckerFactoryUtil.create(_user))) {
+			CommerceCurrency commerceCurrency =
+				CommerceCurrencyTestUtil.addCommerceCurrency(
+					_group.getCompanyId());
 
-				CommerceCurrency commerceCurrency =
-					CommerceCurrencyTestUtil.addCommerceCurrency(
-						_group.getCompanyId());
+			CommerceChannel commerceChannel =
+				CommerceTestUtil.addCommerceChannel(
+					_group.getGroupId(), commerceCurrency.getCode());
 
-				CommerceChannel commerceChannel =
-					CommerceTestUtil.addCommerceChannel(
-						_group.getGroupId(), commerceCurrency.getCode());
+			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+				_user.getUserId(), commerceChannel.getGroupId(),
+				commerceCurrency);
 
-				CommerceOrder commerceOrder =
-					CommerceTestUtil.addB2CCommerceOrder(
-						_user.getUserId(), commerceChannel.getGroupId(),
-						commerceCurrency);
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest(
+					"GET", "/start-authorizenet-payment");
 
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest(
-						"GET", "/start-authorizenet-payment");
+			mockHttpServletRequest.setParameter(
+				"groupId", String.valueOf(commerceOrder.getGroupId()));
+			mockHttpServletRequest.setParameter(
+				"uuid", String.valueOf(commerceOrder.getUuid()));
 
-				mockHttpServletRequest.setParameter(
-					"groupId", String.valueOf(commerceOrder.getGroupId()));
-				mockHttpServletRequest.setParameter(
-					"uuid", String.valueOf(commerceOrder.getUuid()));
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
 
-				MockHttpServletResponse mockHttpServletResponse =
-					new MockHttpServletResponse();
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-				_servlet.service(
-					mockHttpServletRequest, mockHttpServletResponse);
+			Assert.assertEquals(
+				HttpServletResponse.SC_BAD_REQUEST,
+				mockHttpServletResponse.getStatus());
 
-				Assert.assertEquals(
-					HttpServletResponse.SC_BAD_REQUEST,
-					mockHttpServletResponse.getStatus());
+			mockHttpServletRequest.addParameter(
+				"guestToken",
+				_encryptor.encrypt(
+					_company.getKeyObj(),
+					String.valueOf(commerceOrder.getCommerceOrderId())));
 
-				mockHttpServletRequest.addParameter(
-					"guestToken",
-					_encryptor.encrypt(
-						_company.getKeyObj(),
-						String.valueOf(commerceOrder.getCommerceOrderId())));
+			mockHttpServletResponse = new MockHttpServletResponse();
 
-				mockHttpServletResponse = new MockHttpServletResponse();
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
 
-				_servlet.service(
-					mockHttpServletRequest, mockHttpServletResponse);
+			String contentString = mockHttpServletResponse.getContentAsString();
 
-				String contentString =
-					mockHttpServletResponse.getContentAsString();
-
-				Assert.assertTrue(contentString.contains("formAuthorizeNet"));
-			}
+			Assert.assertTrue(contentString.contains("formAuthorizeNet"));
 		}
 	}
 

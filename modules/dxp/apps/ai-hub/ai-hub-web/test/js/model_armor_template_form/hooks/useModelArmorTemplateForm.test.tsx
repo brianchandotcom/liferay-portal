@@ -58,6 +58,7 @@ describe('fetch lifecycle', () => {
 			description: 'Loaded from API',
 			externalReferenceCode: 'TEMPLATE_X',
 			guardrailType: 'output',
+			location: 'us-central1',
 			maliciousUriFilterEnabled: true,
 			multiLanguageDetectionEnabled: false,
 			piAndJailbreakConfidenceLevel: 'high',
@@ -83,6 +84,7 @@ describe('fetch lifecycle', () => {
 
 		expect(result.current.values.active).toBe(false);
 		expect(result.current.values.guardrailType).toBe('output');
+		expect(result.current.values.location).toBe('us-central1');
 		expect(result.current.values.raiDangerousLevel).toBe('lowAndAbove');
 	});
 
@@ -181,6 +183,7 @@ describe('useModelArmorTemplateForm', () => {
 					en_US: 'My Template',
 				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
+				result.current.setField('location', 'us-central1');
 			});
 
 			await act(async () => {
@@ -207,6 +210,7 @@ describe('useModelArmorTemplateForm', () => {
 					en_US: 'My Template',
 				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
+				result.current.setField('location', 'us-central1');
 			});
 
 			await act(async () => {
@@ -235,6 +239,7 @@ describe('useModelArmorTemplateForm', () => {
 					en_US: 'My Template',
 				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
+				result.current.setField('location', 'us-central1');
 			});
 
 			await act(async () => {
@@ -273,6 +278,7 @@ describe('useModelArmorTemplateForm', () => {
 					en_US: 'My Template',
 				});
 				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
+				result.current.setField('location', 'us-central1');
 			});
 
 			await act(async () => {
@@ -284,10 +290,11 @@ describe('useModelArmorTemplateForm', () => {
 				expect(
 					result.current.errors.externalReferenceCode
 				).toBeUndefined();
+				expect(result.current.errors.location).toBeUndefined();
 			});
 		});
 
-		it('flags missing title_i18n and externalReferenceCode on submit', async () => {
+		it('flags missing required fields on submit', async () => {
 			const {result} = renderModelArmorHook();
 
 			await act(async () => {
@@ -299,6 +306,7 @@ describe('useModelArmorTemplateForm', () => {
 				expect(result.current.errors.externalReferenceCode).toBe(
 					'required'
 				);
+				expect(result.current.errors.location).toBe('required');
 			});
 
 			expect(mockPutModelArmorTemplate).not.toHaveBeenCalled();

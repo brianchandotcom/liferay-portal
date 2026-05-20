@@ -192,7 +192,7 @@ public class SharingUserNotificationHandlerTest {
 		if (hasUpdatePermission) {
 			expectedURL = StringBundler.concat(
 				"http://localhost:", PortalUtil.getPortalServerPort(false),
-				"/c/portal/cms", "/edit_content_item?objectEntryId=", classPK,
+				"/c/portal/cms/edit_content_item?objectEntryId=", classPK,
 				"&p_l_mode=edit&redirect=http://localhost:",
 				PortalUtil.getPortalServerPort(false));
 		}

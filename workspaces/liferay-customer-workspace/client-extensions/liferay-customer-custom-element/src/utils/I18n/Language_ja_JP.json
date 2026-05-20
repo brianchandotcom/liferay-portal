@@ -420,7 +420,7 @@
 	"paas": "PaaS",
 	"paas-user": "PaaSユーザー",
 	"paas-users": "PaaSユーザー",
-	"paas-users-will-have-access-to-paas-experience-applications": "PaaSユーザーは、PaaS Experienceアプリケーション（argoCD、argoWorkflows、Grafana）にアクセスできます。",
+	"paas-users-will-have-access-to-paas-experience-applications": "PaaSユーザーは、PaaS Experienceアプリケーション（Argo CD、Argo Workflows、Grafana）にアクセスできます。",
 	"partner": "パートナー",
 	"partner-manager": "パートナーマネージャー",
 	"partner-member": "パートナーメンバー",

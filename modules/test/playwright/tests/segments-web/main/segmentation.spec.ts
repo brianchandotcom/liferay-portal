@@ -16,6 +16,7 @@ import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -2259,5 +2260,29 @@ test(
 				'Define the time (in seconds) before clearing the Interest Terms cache.'
 			)
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can see the portal default language tagged as Default in the segment locale dropdown',
+	{
+		tag: '@LPS-135495',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		// Assert the portal default language is tagged as Default
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {
+				name: 'en-US language: Default.',
+			}),
+			trigger: page.getByRole('combobox', {name: 'Open Localizations'}),
+		});
 	}
 );

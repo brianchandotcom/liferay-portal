@@ -40,61 +40,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Experience menu And user leaves and returns to page Then the alert reappears"
-	@priority = 3
-	test CloseAndRecoverAlertAtExperiencesMenu {
-		task ("Create and navigate to the page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Experience Content Page",
-				type = "content");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-		}
-
-		task ("Open Experiences menu") {
-			PageEditor.openExperienceMenu();
-		}
-
-		task ("Close warning and check it disappears") {
-			Segmentation.closeSegmentationDisabledWarning();
-
-			AssertTextNotEquals.assertNotPartialMatch(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Refresh and check if warning reappears") {
-			Refresh();
-
-			PageEditor.openExperienceMenu();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Close warning message") {
-			Segmentation.closeSegmentationDisabledWarning();
-		}
-
-		task ("Leave then return to page and check if warning reappears") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name");
-
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
-			PageEditor.openExperienceMenu();
-
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-	}
-
 	@description = "LPS-154019 Given the 'Enable Segmentation' is disabled When user clicks at Close button at Segments Page And user leaves and returns to page Then the alert reappears"
 	@priority = 3
 	test CloseAndRecoverAlertAtSegmentsPage {
@@ -234,33 +179,6 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
 				value1 = "Segmentation is disabled");
-		}
-	}
-
-	@description = "LPS-151362 LPS-152539 Given segmentation is disabled at Instance Settings And user has permissions to Instance Settings When user navigates to Experiences menu Then alert is shown including breadcrumb link to segments service"
-	@priority = 5
-	test ViewAndReEnableAlertAtExperiencesMenu {
-		task ("Open the Experience menu") {
-			Navigator.openURL();
-
-			ContentPages.gotoPageEditor();
-
-			PageEditor.openExperienceMenu();
-		}
-
-		task ("Check alert shows Segmentation is disabled") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#ERROR_3",
-				value1 = "Segmentation is disabled");
-		}
-
-		task ("Click at warning with link and confirm Instance Settings is open") {
-			Segmentation.clickToReEnableSegmentsWarningLink();
-
-			AssertVisible(
-				key_configurationName = "Segments Service",
-				key_configurationScope = "Virtual Instance Scope",
-				locator1 = "SystemSettings#SCOPED_CONFIGURATION_NAME");
 		}
 	}
 

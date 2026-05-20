@@ -14,6 +14,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
 const test = mergeTests(
@@ -89,6 +90,63 @@ test(
 		// Refresh and assert the alert is back
 
 		await page.reload();
+
+		await expect(alert).toBeVisible();
+
+		// Click the re-enable link and assert Segments Service is reached
+
+		await expect(alert).toContainText(
+			'To enable, go to Instance Settings.'
+		);
+
+		await alert.getByRole('link', {name: 'Instance Settings'}).click();
+
+		await expect(
+			page.getByRole('heading', {name: 'Segments Service'})
+		).toBeVisible();
+
+		await expect(page.getByText('Virtual Instance Scope')).toBeVisible();
+	}
+);
+
+test(
+	'Asserts the segmentation-disabled alert can be dismissed and recovered at the Experiences menu of the page editor, and that the re-enable link reaches Segments Service',
+	{tag: ['@LPS-154019', '@LPS-151362', '@LPS-152539']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a content page and open it in the editor
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Open the Experiences menu
+
+		await pageEditorPage.openExperienceSelector();
+
+		const warning = page.locator('.alert-warning');
+
+		const alert = warning.getByText(
+			'Experiences cannot be displayed because segmentation is disabled.'
+		);
+
+		// Close the alert and assert it is hidden
+
+		await expect(alert).toBeVisible();
+
+		await clickAndExpectToBeHidden({
+			target: alert,
+			trigger: warning.getByRole('button', {name: 'Close'}),
+		});
+
+		// Refresh, reopen the Experiences menu, and assert the alert is back
+
+		await page.reload();
+
+		await pageEditorPage.openExperienceSelector();
 
 		await expect(alert).toBeVisible();
 

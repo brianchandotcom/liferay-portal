@@ -243,8 +243,8 @@ public class ObjectEntryResourceImpl
 				_objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
-				objectEntryUnsafeFunction = objectEntry -> {
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
+				objectEntry -> {
 					if (objectEntry.getId() != null) {
 						try {
 							deleteObjectEntry(objectEntry.getId());
@@ -279,19 +279,7 @@ public class ObjectEntryResourceImpl
 						"Unable to delete by external reference code or ID");
 				};
 
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(
-					objectEntries, objectEntryUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					objectEntries, objectEntryUnsafeFunction::apply);
-			}
-			else {
-				for (ObjectEntry objectEntry : objectEntries) {
-					objectEntryUnsafeFunction.apply(objectEntry);
-				}
-			}
+			_applyUnsafeFunction(objectEntries, unsafeFunction);
 		}
 		else {
 			super.delete(objectEntries, parameters);
@@ -1469,11 +1457,10 @@ public class ObjectEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
 			null;
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -1527,10 +1514,10 @@ public class ObjectEntryResourceImpl
 		if (unsafeFunction == null) {
 			throw new NotSupportedException(
 				"Update strategy \"" + updateStrategy +
-					"\" is not supported for ObjectEntry");
+					"\" is not supported for object entry");
 		}
 
-		_executeBatch(objectEntries, unsafeFunction);
+		_applyUnsafeFunction(objectEntries, unsafeFunction);
 	}
 
 	@Override
@@ -1571,6 +1558,25 @@ public class ObjectEntryResourceImpl
 
 		if (objectEntry.getStatus() != null) {
 			existingObjectEntry.setStatus(objectEntry::getStatus);
+		}
+	}
+
+	private void _applyUnsafeFunction(
+			Collection<ObjectEntry> objectEntries,
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction)
+		throws Exception {
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, unsafeFunction::apply);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				unsafeFunction.apply(objectEntry);
+			}
 		}
 	}
 
@@ -1667,10 +1673,10 @@ public class ObjectEntryResourceImpl
 		if (unsafeFunction == null) {
 			throw new NotSupportedException(
 				"Create strategy \"" + createStrategy +
-					"\" is not supported for ObjectEntry");
+					"\" is not supported for object entry");
 		}
 
-		_executeBatch(objectEntries, unsafeFunction);
+		_applyUnsafeFunction(objectEntries, unsafeFunction);
 	}
 
 	private void _deleteTempFile(File file) {
@@ -1688,25 +1694,6 @@ public class ObjectEntryResourceImpl
 			ArrayUtil.isEmpty(parentFile.list())) {
 
 			parentFile.delete();
-		}
-	}
-
-	private void _executeBatch(
-			Collection<ObjectEntry> objectEntries,
-			UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction)
-		throws Exception {
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				objectEntries, unsafeFunction::apply);
-		}
-		else {
-			for (ObjectEntry objectEntry : objectEntries) {
-				unsafeFunction.apply(objectEntry);
-			}
 		}
 	}
 

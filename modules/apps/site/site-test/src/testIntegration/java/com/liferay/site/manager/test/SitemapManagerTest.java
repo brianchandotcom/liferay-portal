@@ -336,7 +336,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			ObjectEntry includedObjectEntry = _addObjectEntry(
@@ -387,7 +387,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			JournalArticle journalArticle = _addJournalArticle();
@@ -412,7 +412,7 @@ public class SitemapManagerTest {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			JournalArticle journalArticle = _addJournalArticle();
@@ -1164,7 +1164,7 @@ public class SitemapManagerTest {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			List<String> urls = new ArrayList<>();
@@ -1202,7 +1202,7 @@ public class SitemapManagerTest {
 						HashMapDictionaryBuilder.<String, Object>put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			JournalArticle journalArticle = _addJournalArticle();
@@ -1251,7 +1251,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			_assertSitemap(
@@ -1272,7 +1272,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			_assertSitemap(
@@ -1290,7 +1290,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			_assertSitemap(
@@ -1312,7 +1312,7 @@ public class SitemapManagerTest {
 						).put(
 							"xmlSitemapIndexEnabled", true
 						).put(
-							"xmlSitemapIndexMode", _ASSET_TYPE_INDEX_MODE
+							"xmlSitemapIndexMode", _INDEX_MODE_ASSET_TYPE
 						).build())) {
 
 			_assertSitemap(false, _group.getGroupId(), StringPool.BLANK);
@@ -1838,7 +1838,7 @@ public class SitemapManagerTest {
 			_group.getGroupId(), uuid, urls);
 	}
 
-	private static final String _ASSET_TYPE_INDEX_MODE = "asset-type";
+	private static final String _INDEX_MODE_ASSET_TYPE = "asset-type";
 
 	private static final String _CLASS_NAME_ASSET_CATEGORY =
 		AssetCategory.class.getName();

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -31,6 +32,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-78863': {enabled: true, system: true},
 	}),
+	instanceSettingsPagesTest,
 	pageEditorPagesTest,
 	productMenuPageTest,
 	segmentsPageTest,
@@ -2227,5 +2229,35 @@ test(
 				page.getByText('Spanish Segment Heading')
 			).toBeVisible();
 		});
+	}
+);
+
+test(
+	'Can see Analytics Cloud Segments help texts at Instance Settings > Segments',
+	{
+		tag: '@LPS-130917',
+	},
+	async ({instanceSettingsPage, page}) => {
+
+		// Open the Analytics Cloud Segments configuration
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'Segments',
+			'Analytics Cloud Segments'
+		);
+
+		// Assert the Anonymous Segment and Interest Terms cache help texts are displayed
+
+		await expect(
+			page.getByText(
+				'Define the time (in seconds) before clearing the Anonymous Segment cache.'
+			)
+		).toBeVisible();
+
+		await expect(
+			page.getByText(
+				'Define the time (in seconds) before clearing the Interest Terms cache.'
+			)
+		).toBeVisible();
 	}
 );

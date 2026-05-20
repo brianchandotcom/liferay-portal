@@ -39,31 +39,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-130917 Given Instance Settings > Segments When the user clicks on Analytics Cloud Segments tab Then help text of Anonymous User Segments Cache Expiration Time will be: Define the time (in seconds) before clearing the Anonymous Segment cache."
-	@priority = 3
-	test CheckAnalyticsCloudSegmentsHelpTexts {
-		task ("Go to Instance Settings > Segments") {
-			PortalSettings.openInstanceSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "Segments",
-				configurationName = "Analytics Cloud Segments",
-				configurationScope = "Virtual Instance Scope");
-		}
-
-		task ("Assert the text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Anonymous Segment cache.");
-		}
-
-		task ("Assert the Interest Terms cache help text is present") {
-			AssertTextEquals(
-				locator1 = "FormFields#HELP_TEXT",
-				value1 = "Define the time (in seconds) before clearing the Interest Terms cache.");
-		}
-	}
-
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = 3
 	test CheckDefaultLanguageTag {

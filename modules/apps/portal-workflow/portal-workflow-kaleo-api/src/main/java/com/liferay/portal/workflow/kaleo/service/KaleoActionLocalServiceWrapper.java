@@ -317,6 +317,14 @@ public class KaleoActionLocalServiceWrapper
 		return _kaleoActionLocalService.getKaleoActionsCount();
 	}
 
+	@Override
+	public java.util.List<KaleoAction> getKaleoDefinitionVersionKaleoActions(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return _kaleoActionLocalService.getKaleoDefinitionVersionKaleoActions(
+			kaleoClassName, kaleoDefinitionVersionId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -393,4 +401,4 @@ public class KaleoActionLocalServiceWrapper
 	private KaleoActionLocalService _kaleoActionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1425320307
+// LIFERAY-SERVICE-BUILDER-HASH:617561991

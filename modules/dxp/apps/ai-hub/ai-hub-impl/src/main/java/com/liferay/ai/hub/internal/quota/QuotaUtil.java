@@ -49,7 +49,7 @@ public class QuotaUtil {
 			return;
 		}
 
-		long tokensCount = _countTokens(companyId, text);
+		long tokensCount = _getTokensCount(companyId, text);
 
 		try (Closeable closeable = _lock(objectEntry.getObjectEntryId())) {
 			objectEntry = ObjectEntryLocalServiceUtil.getObjectEntry(
@@ -94,37 +94,6 @@ public class QuotaUtil {
 		}
 	}
 
-	private static long _countTokens(long companyId, String text)
-		throws PortalException {
-
-		VertexAIConfiguration vertexAIConfiguration =
-			ConfigurationProviderUtil.getCompanyConfiguration(
-				VertexAIConfiguration.class, companyId);
-
-		String location = vertexAIConfiguration.location();
-		String modelName = vertexAIConfiguration.modelName();
-
-		if (Objects.equals(location, "global")) {
-			location = "europe-central2";
-			modelName = "gemini-2.5-flash";
-		}
-
-		try (VertexAI vertexAI = new VertexAI(
-				vertexAIConfiguration.projectId(), location)) {
-
-			GenerativeModel generativeModel = new GenerativeModel(
-				modelName, vertexAI);
-
-			CountTokensResponse countTokensResponse =
-				generativeModel.countTokens(text);
-
-			return countTokensResponse.getTotalTokens();
-		}
-		catch (IOException ioException) {
-			throw new PortalException(ioException);
-		}
-	}
-
 	private static ObjectEntry _fetchQuotaObjectEntry(
 			long companyId, long userId)
 		throws PortalException {
@@ -157,6 +126,37 @@ public class QuotaUtil {
 
 		return ObjectEntryLocalServiceUtil.fetchObjectEntry(
 			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId());
+	}
+
+	private static long _getTokensCount(long companyId, String text)
+		throws PortalException {
+
+		VertexAIConfiguration vertexAIConfiguration =
+			ConfigurationProviderUtil.getCompanyConfiguration(
+				VertexAIConfiguration.class, companyId);
+
+		String location = vertexAIConfiguration.location();
+		String modelName = vertexAIConfiguration.modelName();
+
+		if (Objects.equals(location, "global")) {
+			location = "europe-central2";
+			modelName = "gemini-2.5-flash";
+		}
+
+		try (VertexAI vertexAI = new VertexAI(
+				vertexAIConfiguration.projectId(), location)) {
+
+			GenerativeModel generativeModel = new GenerativeModel(
+				modelName, vertexAI);
+
+			CountTokensResponse countTokensResponse =
+				generativeModel.countTokens(text);
+
+			return countTokensResponse.getTotalTokens();
+		}
+		catch (IOException ioException) {
+			throw new PortalException(ioException);
+		}
 	}
 
 	private static Closeable _lock(long objectEntryId) throws PortalException {

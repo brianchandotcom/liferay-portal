@@ -110,13 +110,13 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		boolean checkUsage = QuotaUtil.checkUsage(
+		boolean hasExceededQuota = QuotaUtil.hasExceededQuota(
 			serviceContext.getCompanyId(), currentKaleoNode.getName(),
 			prompt + "\n" + userMessage, workflowContext,
 			kaleoInstanceToken.getKaleoInstanceId(),
 			serviceContext.getUserId());
 
-		if (!checkUsage) {
+		if (hasExceededQuota) {
 			return;
 		}
 

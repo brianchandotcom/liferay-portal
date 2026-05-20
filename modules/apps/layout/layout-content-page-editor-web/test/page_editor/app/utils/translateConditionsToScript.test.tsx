@@ -238,6 +238,50 @@ describe('translateConditionsToScript', () => {
 		});
 	});
 
+	describe('select field conditions', () => {
+		const fieldTypes = {status: 'select'};
+
+		it('emits an equality check for equal', () => {
+			expect(
+				translateConditionsToScript(
+					[getSelectCondition('status', 'equal', 'active')],
+					'all',
+					fieldTypes
+				)
+			).toBe('status == "active"');
+		});
+
+		it('emits an inequality check for not-equal', () => {
+			expect(
+				translateConditionsToScript(
+					[getSelectCondition('status', 'not-equal', 'archived')],
+					'all',
+					fieldTypes
+				)
+			).toBe('status != "archived"');
+		});
+
+		it('emits isEmpty for is-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getSelectCondition('status', 'is-empty', '')],
+					'all',
+					fieldTypes
+				)
+			).toBe('isEmpty(status)');
+		});
+
+		it('wraps isEmpty in NOT for is-not-empty', () => {
+			expect(
+				translateConditionsToScript(
+					[getSelectCondition('status', 'is-not-empty', '')],
+					'all',
+					fieldTypes
+				)
+			).toBe('NOT(isEmpty(status))');
+		});
+	});
+
 	describe('multiselect field conditions', () => {
 		const fieldTypes = {tags: 'multiselect'};
 
@@ -401,6 +445,20 @@ function getFieldCondition(
 ): Condition {
 	return {
 		field,
+		id: `condition-${field}-${type}`,
+		options: {type, value},
+		type: 'field',
+	};
+}
+
+function getSelectCondition(
+	field: string,
+	type: 'equal' | 'is-empty' | 'is-not-empty' | 'not-equal',
+	value: string
+): Condition {
+	return {
+		field,
+		fieldType: 'select',
 		id: `condition-${field}-${type}`,
 		options: {type, value},
 		type: 'field',

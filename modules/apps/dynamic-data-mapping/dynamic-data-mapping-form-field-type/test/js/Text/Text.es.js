@@ -109,6 +109,65 @@ describe('Field Text', () => {
 		});
 	});
 
+	it('clears the wrapper title while the input is focused', () => {
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				onBlur={jest.fn()}
+				onChange={jest.fn()}
+				onFocus={jest.fn()}
+				value="some long value"
+			/>
+		);
+
+		act(() => {
+			jest.advanceTimersByTime(100);
+		});
+
+		const input = container.querySelector('input');
+		const wrapper = container.querySelector('[data-tooltip-align="top"]');
+
+		expect(wrapper.getAttribute('title')).toBe('some long value');
+
+		fireEvent.focus(input);
+
+		expect(wrapper.hasAttribute('title')).toBe(false);
+
+		fireEvent.blur(input);
+
+		expect(wrapper.getAttribute('title')).toBe('some long value');
+	});
+
+	it('clears the wrapper title while the textarea is focused', () => {
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				displayStyle="multiline"
+				onBlur={jest.fn()}
+				onChange={jest.fn()}
+				onFocus={jest.fn()}
+				value="some long value"
+			/>
+		);
+
+		act(() => {
+			jest.advanceTimersByTime(100);
+		});
+
+		const textarea = container.querySelector('textarea');
+		const wrapper = container.querySelector('[data-tooltip-align="top"]');
+
+		expect(wrapper.getAttribute('title')).toBe('some long value');
+
+		fireEvent.focus(textarea);
+
+		expect(wrapper.hasAttribute('title')).toBe(false);
+
+		fireEvent.blur(textarea);
+
+		expect(wrapper.getAttribute('title')).toBe('some long value');
+	});
+
 	it('does not have aria-invalid attribute on first render when it is required', () => {
 		const {container} = render(
 			<TextWithProvider {...defaultTextConfig} required={true} />

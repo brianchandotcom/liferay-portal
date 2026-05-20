@@ -85,8 +85,8 @@ const DEFAULT_PICKLISTS = [
 
 const DEFAULT_CONFIG = {
 	countries: [
-		{a2: 'US', name: 'United States', prefix: '1'},
-		{a2: 'ES', name: 'Spain', prefix: '34'},
+		{a2: 'US', idd: '1', name: 'United States'},
+		{a2: 'ES', idd: '34', name: 'Spain'},
 	],
 } as Config;
 

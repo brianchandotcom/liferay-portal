@@ -71,6 +71,7 @@ const createDisplayPageTemplate = async ({
 	displayPageTemplateName,
 	displayPageTemplatesPage,
 	field = 'Friendly URL',
+	linkURL,
 	page,
 	pageEditorPage,
 	site,
@@ -79,6 +80,7 @@ const createDisplayPageTemplate = async ({
 	displayPageTemplateName: string;
 	displayPageTemplatesPage: DisplayPageTemplatesPage;
 	field?: string;
+	linkURL?: string;
 	page: Page;
 	pageEditorPage: PageEditorPage;
 	site: Site;
@@ -103,6 +105,19 @@ const createDisplayPageTemplate = async ({
 		.selectOption(field);
 
 	await pageEditorPage.waitForChangesSaved();
+
+	if (linkURL) {
+		await pageEditorPage.addFragment('Basic Components', 'Button');
+
+		await pageEditorPage.mapEditableLink({
+			editableId: 'link',
+			fragmentName: 'Button',
+			linkConfiguration: {
+				type: 'URL',
+				url: linkURL,
+			},
+		});
+	}
 
 	await pageEditorPage.publishPage();
 };
@@ -279,6 +294,7 @@ test(
 		spaceSummaryPage,
 	}) => {
 		const displayPageTemplateName = getRandomString();
+		const linkURL = `/web${site.friendlyUrlPath}`;
 		const title = getRandomString();
 		const previewTitle = `${title} Preview`;
 		const spaceName = `Space ${getRandomString()}`;
@@ -288,6 +304,7 @@ test(
 				await createDisplayPageTemplate({
 					displayPageTemplateName,
 					displayPageTemplatesPage,
+					linkURL,
 					page,
 					pageEditorPage,
 					site,
@@ -356,12 +373,20 @@ test(
 				});
 			});
 
-			await test.step('Check that the display page appears in the preview', async () => {
+			await test.step('Check that the display page appears in the preview and is interactive but does not navigate', async () => {
 				const friendlyURL = await page
 					.getByLabel('Friendly URL')
 					.inputValue();
 
 				const iframe = page.frameLocator('iframe');
+
+				await expect(iframe.getByText(friendlyURL)).toBeVisible();
+
+				await iframe.getByRole('link', {name: 'Go Somewhere'}).click();
+
+				// Give Senna time to navigate if the iframe is not prevented.
+
+				await page.waitForTimeout(2000);
 
 				await expect(iframe.getByText(friendlyURL)).toBeVisible();
 			});

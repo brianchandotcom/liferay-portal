@@ -70,6 +70,10 @@ public class StartPaymentAuthorizeNetServletTest {
 			LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				PortalImpl.class.getName(), LoggerTestUtil.OFF)) {
 
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest(
+					"GET", "/start-authorizenet-payment");
+
 			CommerceCurrency commerceCurrency =
 				CommerceCurrencyTestUtil.addCommerceCurrency(
 					_group.getCompanyId());
@@ -81,10 +85,6 @@ public class StartPaymentAuthorizeNetServletTest {
 			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 				_user.getUserId(), commerceChannel.getGroupId(),
 				commerceCurrency);
-
-			MockHttpServletRequest mockHttpServletRequest =
-				new MockHttpServletRequest(
-					"GET", "/start-authorizenet-payment");
 
 			mockHttpServletRequest.setParameter(
 				"groupId", String.valueOf(commerceOrder.getGroupId()));

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {openModal, openSelectionModal} from 'frontend-js-components-web';
 import {
 	COOKIE_TYPES,
@@ -11,6 +12,38 @@ import {
 	objectToFormData,
 	sessionStorage,
 } from 'frontend-js-web';
+
+const ASSET_VOCABULARY_TYPE = 'asset_vocabulary';
+
+const HEADLESS_TAXONOMY_VOCABULARIES_BASE =
+	'/o/headless-admin-taxonomy/v1.0/sites';
+
+function buildVocabulariesURL(currentSiteId) {
+	const url = new URL(
+		`${HEADLESS_TAXONOMY_VOCABULARIES_BASE}/${String(
+			currentSiteId
+		)}/taxonomy-vocabularies`,
+		window.location.origin
+	);
+
+	url.searchParams.set('filter', 'visibilityType eq 0');
+
+	return url.toString();
+}
+
+function getVocabularyScopeName(vocabulary, companyGroupId) {
+	const assetLibrary = vocabulary.assetLibraries?.[0];
+
+	if (!assetLibrary) {
+		return '';
+	}
+
+	if (String(assetLibrary.id) === String(companyGroupId)) {
+		return Liferay.Language.get('global');
+	}
+
+	return assetLibrary.name;
+}
 
 export default function decorateAddSiteNavigationMenuItemOptions({
 	addSiteNavigationMenuItemOptions,
@@ -30,6 +63,18 @@ export default function decorateAddSiteNavigationMenuItemOptions({
 		parentSiteNavigationMenuItemId,
 	}) => {
 		const useSmallerModal = shouldUseSmallerModal(data.type);
+
+		if (data.type === ASSET_VOCABULARY_TYPE && data.itemSelector) {
+			openAssetVocabularyPicker({
+				data,
+				onItemAdd,
+				order,
+				parentSiteNavigationMenuItemId,
+				portletNamespace,
+			});
+
+			return;
+		}
 
 		if (data.itemSelector) {
 			openSelectionModal({
@@ -172,6 +217,113 @@ function getNamespacedInfoItems(
 	};
 
 	return Liferay.Util.ns(portletNamespace, infoItems);
+}
+
+function openAssetVocabularyPicker({
+	data,
+	onItemAdd,
+	order,
+	parentSiteNavigationMenuItemId,
+	portletNamespace,
+}) {
+	const companyGroupId = Liferay.ThemeDisplay.getCompanyGroupId();
+	const currentSiteId = Liferay.ThemeDisplay.getScopeGroupId();
+
+	const TitleCell = ({itemData: vocabulary}) => {
+		const scopeName = getVocabularyScopeName(vocabulary, companyGroupId);
+
+		if (!scopeName) {
+			return vocabulary.name;
+		}
+
+		return `${vocabulary.name} (${scopeName})`;
+	};
+
+	openItemSelectorModal({
+		apiURL: buildVocabulariesURL(currentSiteId),
+		fdsProps: {
+			configInURLBehavior: 'OFF',
+			customRenderers: {
+				tableCell: [
+					{
+						component: TitleCell,
+						name: 'titleWithScope',
+						type: 'internal',
+					},
+				],
+			},
+			id: 'addSiteNavigationMenuVocabularyFDS',
+			pagination: {
+				deltas: [{label: 20}, {label: 50}],
+				initialDelta: 20,
+			},
+			views: [
+				{
+					contentRenderer: 'table',
+					label: '',
+					name: 'list',
+					schema: {
+						fields: [
+							{
+								contentRenderer: 'titleWithScope',
+								fieldName: 'name',
+								label: Liferay.Language.get('title'),
+							},
+							{
+								fieldName: 'creator.name',
+								label: Liferay.Language.get('user'),
+							},
+							{
+								contentRenderer: 'dateTime',
+								fieldName: 'dateModified',
+								label: Liferay.Language.get('modified-date'),
+								sortable: true,
+							},
+						],
+					},
+				},
+			],
+		},
+		itemTypeLabel: Liferay.Language.get('vocabulary'),
+		items: [],
+		locator: {id: 'id', label: 'name', value: 'id'},
+		multiSelect: true,
+		onItemsChange: (selected) => {
+			if (!selected.length) {
+				return;
+			}
+
+			const addItemURL = createPortletURL(data.addItemURL, {
+				order,
+				parentSiteNavigationMenuItemId,
+			});
+
+			const items = selected.map((vocabulary) => ({
+				externalReferenceCode: vocabulary.externalReferenceCode,
+				groupId:
+					vocabulary.siteId ??
+					vocabulary.assetLibraries?.[0]?.id ??
+					currentSiteId,
+				title: vocabulary.name,
+			}));
+
+			fetch(addItemURL, {
+				body: objectToFormData(
+					Liferay.Util.ns(portletNamespace, {
+						items: JSON.stringify(items),
+						siteNavigationMenuId: data.siteNavigationMenuId,
+					})
+				),
+				method: 'POST',
+			}).then(() => {
+				onItemAdd();
+
+				window.location.reload();
+			});
+		},
+		size: 'lg',
+		title: data.addTitle,
+	});
 }
 
 const SMALLER_MODAL_TYPES = [

@@ -10,6 +10,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -19,6 +20,7 @@ import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -284,6 +286,45 @@ public class LayoutStructureRulesHelperTest {
 		_testWithFieldCondition(
 			infoItemFieldValues, fieldName, "less-than-or-equals",
 			"2026-05-11 12:30");
+	}
+
+	@Test
+	public void testWithMultiselectInfoFieldType() throws Exception {
+		InfoField<MultiselectInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			MultiselectInfoFieldType.INSTANCE
+		).name(
+			"tags"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "tags")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(infoField, JSONUtil.putAll("news", "press"))
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "contains",
+			JSONUtil.putAll("news"));
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "contains",
+			JSONUtil.putAll("news", "press"));
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "does-not-contain",
+			JSONUtil.putAll("archived"));
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "equal",
+			JSONUtil.putAll("press", "news"));
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "is-not-empty",
+			_jsonFactory.createJSONArray());
+		_testWithMultiselectFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal",
+			JSONUtil.putAll("news"));
 	}
 
 	@Test
@@ -638,8 +679,54 @@ public class LayoutStructureRulesHelperTest {
 			hiddenItemIds.toString(), hiddenItemIds.contains("fragment1"));
 	}
 
+	private void _testWithMultiselectFieldCondition(
+			InfoItemFieldValues infoItemFieldValues, String fieldName,
+			String operator, JSONArray fieldValueJSONArray)
+		throws Exception {
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			StringUtil.replace(
+				_read("layout_data_rules_multiselect_field.json"), "${", "}",
+				HashMapBuilder.put(
+					"FIELD_NAME", fieldName
+				).put(
+					"FIELD_VALUE", fieldValueJSONArray.toString()
+				).put(
+					"OPERATOR", operator
+				).build()));
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(_user);
+
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				_layoutStructureRulesHelper.processLayoutStructureRules(
+					_group.getGroupId(), infoItemFieldValues, layoutStructure,
+					LocaleUtil.getDefault(), permissionChecker,
+					new long[] {SegmentsEntryConstants.ID_DEFAULT});
+
+		Set<String> displayedItemIds =
+			layoutStructureRulesResult.getDisplayedItemIds();
+
+		Assert.assertEquals(
+			displayedItemIds.toString(), 1, displayedItemIds.size());
+		Assert.assertTrue(
+			displayedItemIds.toString(),
+			displayedItemIds.contains("container2"));
+
+		Set<String> hiddenItemIds =
+			layoutStructureRulesResult.getHiddenItemIds();
+
+		Assert.assertEquals(hiddenItemIds.toString(), 1, hiddenItemIds.size());
+		Assert.assertTrue(
+			hiddenItemIds.toString(), hiddenItemIds.contains("fragment1"));
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private LayoutStructureRulesHelper _layoutStructureRulesHelper;

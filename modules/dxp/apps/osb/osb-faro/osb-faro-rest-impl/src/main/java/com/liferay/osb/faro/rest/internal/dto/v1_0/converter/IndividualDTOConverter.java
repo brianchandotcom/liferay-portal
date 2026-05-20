@@ -57,7 +57,8 @@ public class IndividualDTOConverter
 				setId(individual::getId);
 				setLastActivityDate(individual::getLastActivityDate);
 				setLastSessionCountry(individual::getLastSessionCountry);
-				setProfileType(individual::getProfileType);
+				setProfileType(
+					() -> ProfileType.create(individual.getProfileType()));
 			}
 		};
 	}

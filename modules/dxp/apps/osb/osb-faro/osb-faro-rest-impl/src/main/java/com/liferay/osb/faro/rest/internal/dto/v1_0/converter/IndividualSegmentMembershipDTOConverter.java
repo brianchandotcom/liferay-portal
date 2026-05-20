@@ -45,7 +45,9 @@ public class IndividualSegmentMembershipDTOConverter
 				setIndividualId(individualSegmentMembership::getIndividualId);
 				setIndividualSegmentId(
 					individualSegmentMembership::getIndividualSegmentId);
-				setStatus(individualSegmentMembership::getStatus);
+				setStatus(
+					() -> Status.create(
+						individualSegmentMembership.getStatus()));
 			}
 		};
 	}

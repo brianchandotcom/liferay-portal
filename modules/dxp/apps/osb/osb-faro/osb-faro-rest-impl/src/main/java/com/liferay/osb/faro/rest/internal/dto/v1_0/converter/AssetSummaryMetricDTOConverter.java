@@ -43,7 +43,8 @@ public class AssetSummaryMetricDTOConverter
 			{
 				setAssetId(assetSummaryMetric::getAssetId);
 				setAssetTitle(assetSummaryMetric::getAssetTitle);
-				setAssetType(assetSummaryMetric::getAssetType);
+				setAssetType(
+					() -> AssetType.create(assetSummaryMetric.getAssetType()));
 				setDownloads(
 					() -> _value(assetSummaryMetric.getDownloadsMetric()));
 				setDownloadsTrendPercentage(

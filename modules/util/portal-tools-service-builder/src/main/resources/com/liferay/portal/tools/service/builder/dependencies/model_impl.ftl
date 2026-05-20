@@ -195,6 +195,10 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 	public static final String ENTITY_ALIAS = "${entity.alias}";
 
+	<#if entity.isPermissionCheckEnabled() && serviceBuilder.isVersionGTE_7_4_0()>
+		public static final String FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKEntityColumn.DBName}";
+	</#if>
+
 	public static final String ORDER_BY_JPQL = " ORDER BY ${orderByJPQL}";
 
 	<#assign orderBySQL = "" />

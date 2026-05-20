@@ -101,7 +101,8 @@ public class LayoutSetPrototypeSyncBackgroundTaskExecutor
 			_mergeLayoutPrototypeLayouts(layoutSetPrototype);
 
 			String syncSessionId = MapUtil.getString(
-				parameterMap, LayoutSetPrototypeConstants.KEY_SYNC_SESSION_ID);
+				backgroundTask.getTaskContextMap(),
+				LayoutSetPrototypeConstants.KEY_SYNC_SESSION_ID);
 
 			if (!Validator.isBlank(syncSessionId)) {
 				File cacheFile = new File(

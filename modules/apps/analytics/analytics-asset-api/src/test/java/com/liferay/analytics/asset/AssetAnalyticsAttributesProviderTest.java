@@ -64,8 +64,10 @@ public class AssetAnalyticsAttributesProviderTest {
 		_testBuildAttributesForDLFileEntry();
 		_testBuildAttributesForJournalArticle();
 		_testBuildAttributesTypeForObjectEntry();
-		_testBuildAttributesWithNullInputs();
 		_testBuildAttributesWithoutAssetEntry();
+		_testBuildAttributesWithoutAssetRenderer();
+		_testBuildAttributesWithoutField();
+		_testBuildAttributesWithoutLocale();
 	}
 
 	private void _assertCMSVersion(
@@ -312,43 +314,6 @@ public class AssetAnalyticsAttributesProviderTest {
 		_assertType(provider, "object-entry");
 	}
 
-	private void _testBuildAttributesWithNullInputs() {
-		AssetEntry assetEntry = _mockAssetEntry(
-			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong());
-
-		AssetAnalyticsAttributesProvider provider1 =
-			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
-
-		String attributes1 = provider1.buildAttributes(
-			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
-			AssetAnalyticsAttributesProvider.FIELD_TITLE);
-
-		Assert.assertFalse(attributes1.contains("analytics-asset-title="));
-
-		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
-			RandomTestUtil.randomString());
-
-		AssetAnalyticsAttributesProvider provider2 =
-			new AssetAnalyticsAttributesProvider(
-				assetEntry, assetRenderer, null);
-
-		String attributes2 = provider2.buildAttributes(
-			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
-			AssetAnalyticsAttributesProvider.FIELD_TITLE);
-
-		Assert.assertFalse(attributes2.contains("analytics-asset-title="));
-
-		AssetAnalyticsAttributesProvider provider3 =
-			new AssetAnalyticsAttributesProvider(
-				assetEntry, assetRenderer, LocaleUtil.US);
-
-		String attributes3 = provider3.buildAttributes(
-			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, null);
-
-		Assert.assertFalse(attributes3.contains("analytics-asset-field="));
-	}
-
 	private void _testBuildAttributesWithoutAssetEntry() {
 		AssetAnalyticsAttributesProvider provider =
 			new AssetAnalyticsAttributesProvider(null, null, null);
@@ -358,6 +323,58 @@ public class AssetAnalyticsAttributesProviderTest {
 			provider.buildAttributes(
 				AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 				AssetAnalyticsAttributesProvider.FIELD_TITLE));
+	}
+
+	private void _testBuildAttributesWithoutAssetRenderer() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertFalse(attributes.contains("analytics-asset-title="));
+	}
+
+	private void _testBuildAttributesWithoutField() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong());
+
+		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
+			RandomTestUtil.randomString());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(
+				assetEntry, assetRenderer, LocaleUtil.US);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, null);
+
+		Assert.assertFalse(attributes.contains("analytics-asset-field="));
+	}
+
+	private void _testBuildAttributesWithoutLocale() {
+		AssetEntry assetEntry = _mockAssetEntry(
+			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong());
+
+		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
+			RandomTestUtil.randomString());
+
+		AssetAnalyticsAttributesProvider provider =
+			new AssetAnalyticsAttributesProvider(
+				assetEntry, assetRenderer, null);
+
+		String attributes = provider.buildAttributes(
+			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
+			AssetAnalyticsAttributesProvider.FIELD_TITLE);
+
+		Assert.assertFalse(attributes.contains("analytics-asset-title="));
 	}
 
 	private static final String _CLASS_NAME_JOURNAL_ARTICLE =

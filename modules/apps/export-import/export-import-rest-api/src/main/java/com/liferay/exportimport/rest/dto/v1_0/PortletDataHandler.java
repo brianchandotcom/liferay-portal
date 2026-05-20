@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.Valid;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -47,129 +45,6 @@ public class PortletDataHandler implements Serializable {
 	public static PortletDataHandler unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(PortletDataHandler.class, json);
 	}
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getAdditionCount() {
-		if (_additionCountSupplier != null) {
-			additionCount = _additionCountSupplier.get();
-
-			_additionCountSupplier = null;
-		}
-
-		return additionCount;
-	}
-
-	public void setAdditionCount(Long additionCount) {
-		this.additionCount = additionCount;
-
-		_additionCountSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAdditionCount(
-		UnsafeSupplier<Long, Exception> additionCountUnsafeSupplier) {
-
-		_additionCountSupplier = () -> {
-			try {
-				return additionCountUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long additionCount;
-
-	@JsonIgnore
-	private Supplier<Long> _additionCountSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getDeletionCount() {
-		if (_deletionCountSupplier != null) {
-			deletionCount = _deletionCountSupplier.get();
-
-			_deletionCountSupplier = null;
-		}
-
-		return deletionCount;
-	}
-
-	public void setDeletionCount(Long deletionCount) {
-		this.deletionCount = deletionCount;
-
-		_deletionCountSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setDeletionCount(
-		UnsafeSupplier<Long, Exception> deletionCountUnsafeSupplier) {
-
-		_deletionCountSupplier = () -> {
-			try {
-				return deletionCountUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long deletionCount;
-
-	@JsonIgnore
-	private Supplier<Long> _deletionCountSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getLabel() {
-		if (_labelSupplier != null) {
-			label = _labelSupplier.get();
-
-			_labelSupplier = null;
-		}
-
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-
-		_labelSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setLabel(
-		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
-
-		_labelSupplier = () -> {
-			try {
-				return labelUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String label;
-
-	@JsonIgnore
-	private Supplier<String> _labelSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The handler's portlet ID."
@@ -206,58 +81,11 @@ public class PortletDataHandler implements Serializable {
 	}
 
 	@GraphQLField(description = "The handler's portlet ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public PortletDataHandlerControl[] getPortletDataHandlerControls() {
-		if (_portletDataHandlerControlsSupplier != null) {
-			portletDataHandlerControls =
-				_portletDataHandlerControlsSupplier.get();
-
-			_portletDataHandlerControlsSupplier = null;
-		}
-
-		return portletDataHandlerControls;
-	}
-
-	public void setPortletDataHandlerControls(
-		PortletDataHandlerControl[] portletDataHandlerControls) {
-
-		this.portletDataHandlerControls = portletDataHandlerControls;
-
-		_portletDataHandlerControlsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setPortletDataHandlerControls(
-		UnsafeSupplier<PortletDataHandlerControl[], Exception>
-			portletDataHandlerControlsUnsafeSupplier) {
-
-		_portletDataHandlerControlsSupplier = () -> {
-			try {
-				return portletDataHandlerControlsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected PortletDataHandlerControl[] portletDataHandlerControls;
-
-	@JsonIgnore
-	private Supplier<PortletDataHandlerControl[]>
-		_portletDataHandlerControlsSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -286,46 +114,6 @@ public class PortletDataHandler implements Serializable {
 
 		sb.append("{");
 
-		Long additionCount = getAdditionCount();
-
-		if (additionCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"additionCount\": ");
-
-			sb.append(additionCount);
-		}
-
-		Long deletionCount = getDeletionCount();
-
-		if (deletionCount != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"deletionCount\": ");
-
-			sb.append(deletionCount);
-		}
-
-		String label = getLabel();
-
-		if (label != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"label\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(label));
-
-			sb.append("\"");
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -340,29 +128,6 @@ public class PortletDataHandler implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
-		}
-
-		PortletDataHandlerControl[] portletDataHandlerControls =
-			getPortletDataHandlerControls();
-
-		if (portletDataHandlerControls != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"portletDataHandlerControls\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < portletDataHandlerControls.length; i++) {
-				sb.append(String.valueOf(portletDataHandlerControls[i]));
-
-				if ((i + 1) < portletDataHandlerControls.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
 		}
 
 		sb.append("}");
@@ -466,4 +231,4 @@ public class PortletDataHandler implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-373171110
+// LIFERAY-REST-BUILDER-HASH:-485963558

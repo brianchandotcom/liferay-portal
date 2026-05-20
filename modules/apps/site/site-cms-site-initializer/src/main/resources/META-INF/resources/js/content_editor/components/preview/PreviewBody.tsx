@@ -13,16 +13,18 @@ import usePreviewState from './usePreviewState';
 export default function PreviewBody({
 	getPreviewDataURL,
 	isContentEdited,
+	languageId,
 }: {
 	getPreviewDataURL: string;
 	isContentEdited: boolean;
+	languageId: Liferay.Language.Locale;
 }) {
 	const {
 		displayPageTemplates,
 		previewURL,
 		showDisplayPageTemplateAlert,
 		...selectorProps
-	} = usePreviewState(getPreviewDataURL);
+	} = usePreviewState(getPreviewDataURL, languageId);
 
 	return (
 		<>

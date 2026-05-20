@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 import {CommerceAdminProductDetailsPage} from './commerceAdminProductDetailsPage';
@@ -54,9 +54,24 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 	readonly commerceAdminProductDetailsPage: CommerceAdminProductDetailsPage;
 	readonly creationMenuNewButton: Locator;
 	readonly deleteBulkMenuItem: Locator;
+	readonly editSidePanelFrame: FrameLocator;
+	readonly modalProductCheckbox: (productName: string) => Locator;
+	readonly modalSearchInput: Locator;
 	readonly page: Page;
+	readonly priorityInput: Locator;
+	readonly productRelationRow: (
+		productName: string,
+		relationType: string
+	) => Locator;
+	readonly productRelationRowActionsButton: (
+		productName: string,
+		relationType: string
+	) => Locator;
+	readonly productRelationRowMenuItem: (action: string) => Locator;
+	readonly productRelationTypeMenuItem: (relationType: string) => Locator;
 	readonly productRelationsLink: Locator;
 	readonly selectItemsInput: Locator;
+	readonly sidePanelSubmitButton: Locator;
 	readonly addIncompatibleInBundleProduct: Locator;
 	readonly addRequiresInBundleProduct: Locator;
 	readonly addSpareProductMenuButton: Locator;
@@ -104,13 +119,16 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 		};
 		this.bulkActionButton = page
 			.getByTestId('selectionToolbar')
-			.getByRole('button', {name: 'Actions'});
+			.getByRole('button', {exact: true, name: 'Actions'});
 		this.commerceAdminProductDetailsPage =
 			new CommerceAdminProductDetailsPage(page);
 		this.creationMenuNewButton = page
 			.getByTestId('managementToolbar')
-			.getByRole('button', {name: 'New'});
-		this.deleteBulkMenuItem = page.getByRole('menuitem', {name: 'Delete'});
+			.getByRole('button', {exact: true, name: 'New'});
+		this.deleteBulkMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.page = page;
 		this.productRelationsLink = page.getByRole('link', {
 			exact: true,
@@ -133,6 +151,48 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 			exact: true,
 			name: 'Add Up-Sell Product',
 		});
+		this.editSidePanelFrame = page
+			.locator('.fds-side-panel')
+			.getByRole('tabpanel')
+			.locator('iframe')
+			.contentFrame();
+		this.modalProductCheckbox = (productName: string) =>
+			this.addNewProductFrame
+				.getByRole('row', {name: productName})
+				.getByTitle('Select');
+		this.modalSearchInput = this.addNewProductFrame.getByRole('searchbox', {
+			name: 'Search for:',
+		});
+		this.priorityInput = this.editSidePanelFrame.getByRole('textbox', {
+			name: 'Priority',
+		});
+		this.productRelationRow = (productName: string, relationType: string) =>
+			this.table
+				.locator('tbody tr')
+				.filter({hasText: productName})
+				.filter({hasText: relationType});
+		this.productRelationRowActionsButton = (
+			productName: string,
+			relationType: string
+		) =>
+			this.productRelationRow(productName, relationType).getByRole(
+				'button',
+				{exact: true, name: 'Item Actions'}
+			);
+		this.productRelationRowMenuItem = (action: string) =>
+			page.getByRole('menuitem', {exact: true, name: action});
+		this.productRelationTypeMenuItem = (relationType: string) =>
+			page.getByRole('menuitem', {
+				exact: true,
+				name: `Add ${relationType} Product`,
+			});
+		this.sidePanelSubmitButton = this.editSidePanelFrame.getByRole(
+			'button',
+			{
+				exact: true,
+				name: 'Publish',
+			}
+		);
 		this.tableRowCreateDateField = async (rowValue) => {
 			const tableRow = await this.tableRow(2, rowValue, true);
 
@@ -156,10 +216,41 @@ export class CommerceAdminProductDetailsProductRelationsPage extends CommerceDND
 		await this.addRequiresInBundleProduct.click();
 	}
 
+	async addProductRelation(relationType: string, productName: string) {
+		await this.creationMenuNewButton.click();
+		await this.productRelationTypeMenuItem(relationType).click();
+		await this.modalSearchInput.fill(productName);
+		await this.modalSearchInput.press('Enter');
+		await this.modalProductCheckbox(productName).check();
+		await this.page.getByRole('button', {exact: true, name: 'Add'}).click();
+
+		await expect(this.addNewProductFrameTable).toBeHidden();
+
+		await expect(
+			this.productRelationRow(productName, relationType)
+		).toBeVisible();
+	}
+
 	async addSpareProductRelation() {
 		await this.goto();
 		await this.creationMenuNewButton.click();
 		await this.addSpareProductMenuButton.click();
+	}
+
+	async setProductRelationPriority(
+		productName: string,
+		relationType: string,
+		priority: number
+	) {
+		await this.productRelationRowActionsButton(
+			productName,
+			relationType
+		).click();
+		await this.productRelationRowMenuItem('Edit').click();
+		await this.priorityInput.fill(String(priority));
+		await this.sidePanelSubmitButton.click();
+
+		await this.page.reload();
 	}
 
 	async goto() {

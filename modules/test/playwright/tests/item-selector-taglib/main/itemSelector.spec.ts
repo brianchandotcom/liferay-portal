@@ -47,6 +47,65 @@ baseTest(
 );
 
 baseTest(
+	'Image Selector reopens at the last accessed folder',
+	{
+		tag: '@LPD-89541',
+	},
+	async ({documentLibraryPage, journalEditArticlePage, page, site}) => {
+		const folderName = getRandomString();
+
+		await baseTest.step(
+			'Create a folder in Documents and Media',
+			async () => {
+				await documentLibraryPage.goto(site.friendlyUrlPath);
+				await documentLibraryPage.goToCreateNewFolder();
+
+				await page.getByLabel('Name Required').fill(folderName);
+
+				await page.getByRole('button', {name: 'Save'}).click();
+			}
+		);
+
+		const iframe = page.frameLocator('iframe[title="Select Item"]');
+
+		await baseTest.step(
+			'Select an image from inside the folder',
+			async () => {
+				await journalEditArticlePage.goto({
+					siteUrl: site.friendlyUrlPath,
+				});
+
+				await page.getByLabel('Image', {exact: true}).click();
+
+				await iframe.getByRole('link', {name: folderName}).click();
+
+				await iframe
+					.locator('input[type="file"]')
+					.setInputFiles(
+						path.join(
+							__dirname,
+							'../../frontend-js-item-selector-web/main/dependencies/sample_image.png'
+						)
+					);
+
+				await iframe.getByRole('button', {name: 'Add'}).click();
+			}
+		);
+
+		await baseTest.step(
+			'Reopen the image selector and verify the folder is remembered',
+			async () => {
+				await page.getByLabel('Image', {exact: true}).click();
+
+				await expect(
+					iframe.getByText('sample_image.png', {exact: true})
+				).toBeVisible();
+			}
+		);
+	}
+);
+
+baseTest(
 	'Item Selector preview shows the no-preview state for non-previewable documents',
 	{
 		tag: '@LPD-87398',

@@ -7,6 +7,7 @@ package com.liferay.saml.opensaml.integration.internal.metadata;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.opensaml.integration.internal.BaseSamlTestCase;
@@ -52,7 +53,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 		Assert.assertNotNull(
 			MetadataManagerUtil.getEntityDescriptor(
 				getMockHttpServletRequest(
-					"http://localhost:8080/c/portal/saml/metadata"),
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/c/portal/saml/metadata"),
 				samlProviderConfigurationHelper, credentialResolver,
 				keyStoreLocalEntityManager));
 	}
@@ -71,7 +74,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 			_checkMatch(
 				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:8080/c/portal/saml/metadata"),
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) +
+								"/c/portal/saml/metadata"),
 					samlProviderConfigurationHelper, credentialResolver,
 					keyStoreLocalEntityManager)));
 	}
@@ -96,7 +101,9 @@ public class MetadataGeneratorTest extends BaseSamlTestCase {
 			_checkMatch(
 				MetadataManagerUtil.getEntityDescriptor(
 					getMockHttpServletRequest(
-						"http://localhost:8080/c/portal/saml/metadata"),
+						"http://localhost:" +
+							PortalUtil.getPortalServerPort(false) +
+								"/c/portal/saml/metadata"),
 					samlProviderConfigurationHelper, credentialResolver,
 					keyStoreLocalEntityManager)));
 	}

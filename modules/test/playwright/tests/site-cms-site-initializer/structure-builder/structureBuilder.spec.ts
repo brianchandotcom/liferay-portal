@@ -399,6 +399,30 @@ test(
 );
 
 test(
+	'Title and File fields are locked and cannot be removed on File Content Structures',
+	{tag: '@LPD-89342'},
+	async ({page, structureBuilderPage}) => {
+		await structureBuilderPage.goToCreateStructure('file');
+
+		for (const fieldName of ['Title', 'File']) {
+			const field = page.getByRole('treeitem', {
+				exact: true,
+				name: fieldName,
+			});
+
+			await expect(field).toBeVisible();
+			await expect(field.getByText('Locked Field')).toBeVisible();
+
+			await field.hover();
+
+			await expect(
+				field.getByRole('button', {name: 'Field Options'})
+			).toBeHidden();
+		}
+	}
+);
+
+test(
 	'Fields are sorted',
 	{
 		tag: '@LPD-61206',
@@ -673,5 +697,46 @@ test(
 			child: {label: 'Boolean'},
 			parent: {label: 'Group 1'},
 		});
+	}
+);
+
+test(
+	'Can republish a structure after changing its ERC',
+	{tag: '@LPD-89564'},
+	async ({apiHelpers, structureBuilderPage}) => {
+
+		// Create and publish a structure with an initial ERC
+
+		const label = `Structure${getRandomInt()}`;
+		const initialERC = getRandomString();
+
+		const structureId = await structureBuilderPage.createStructureFromData({
+			erc: initialERC,
+			label,
+			name: label,
+			page: structureBuilderPage,
+		});
+
+		// Change the ERC and republish
+
+		const updatedERC = getRandomString();
+
+		await structureBuilderPage.changeStructureSettings({erc: updatedERC});
+
+		const republishedId = await structureBuilderPage.publishStructure();
+
+		// Republishing must update the existing structure, not create a new one
+
+		expect(republishedId).toBe(structureId);
+
+		// The persisted ERC should match the updated value
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinition(structureId);
+
+		expect(objectDefinition.externalReferenceCode).toBe(updatedERC);
 	}
 );

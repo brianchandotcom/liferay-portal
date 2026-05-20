@@ -53,9 +53,12 @@ test('Resize columns', {tag: '@LPD-54497'}, async ({fdsSamplePage, page}) => {
 		const resizer = firstColumnHeader.locator('.dnd-th-resizer');
 		const resizerBoundingBox = await resizer.boundingBox();
 
-		await page.mouse.move(resizerBoundingBox.x, resizerBoundingBox.y);
+		const startX = resizerBoundingBox.x + resizerBoundingBox.width / 2;
+		const startY = resizerBoundingBox.y + resizerBoundingBox.height / 2;
+
+		await page.mouse.move(startX, startY);
 		await page.mouse.down();
-		await page.mouse.move(resizerBoundingBox.x + 50, resizerBoundingBox.y);
+		await page.mouse.move(startX + 50, startY, {steps: 5});
 		await page.mouse.up();
 	});
 
@@ -75,9 +78,11 @@ test(
 		const firstRowItemActionButton =
 			fdsSamplePage.table.itemActionButtons.first();
 
-		const initialBodyCellText = await page.locator('td').nth(1).innerText();
+		const tableCells = fdsSamplePage.table.container.locator('td');
 
-		const rowAction = page.locator('td .component-action').first();
+		const initialBodyCellText = await tableCells.nth(1).innerText();
+
+		const rowAction = tableCells.locator('.component-action').first();
 
 		await test.step('Check that row actions are present', async () => {
 			await firstRowItemActionButton.hover();
@@ -98,9 +103,7 @@ test(
 		});
 
 		await test.step('Check that the first column is hidden and the row actions are still present', async () => {
-			await expect(page.locator('td').nth(1)).not.toHaveText(
-				initialBodyCellText
-			);
+			await expect(tableCells.nth(1)).not.toHaveText(initialBodyCellText);
 
 			await expect(rowAction).toBeAttached();
 		});
@@ -111,75 +114,83 @@ test(
 	'Columns with nested field names are shown',
 	{tag: '@LPD-75783'},
 	async ({fdsSamplePage, page, systemDataSetsPage}) => {
-		await test.step('Check author column, defined by creator.name field name, is visible', async () => {
-			expect(
-				fdsSamplePage.table.container.locator(
-					'[data-id="string,creator,name"]'
-				)
-			).toBeVisible();
-		});
-
-		await test.step('Create System Data Set', async () => {
-			await systemDataSetsPage.goto();
-
-			const creationModal = systemDataSetsPage.creationModal;
-
-			const advancedSampleListItem = creationModal.listItems.filter({
-				hasText: 'Advanced Sample',
+		try {
+			await test.step('Check author column, defined by creator.name field name, is visible', async () => {
+				await expect(
+					fdsSamplePage.table.container.locator(
+						'[data-id="string,creator,name"]'
+					)
+				).toBeVisible();
 			});
 
-			await systemDataSetsPage.createButton.click();
+			await test.step('Create System Data Set', async () => {
+				await systemDataSetsPage.goto();
 
-			await expect(advancedSampleListItem).toBeVisible();
+				const creationModal = systemDataSetsPage.creationModal;
 
-			await advancedSampleListItem.getByRole('radio').click();
+				const advancedSampleListItem = creationModal.listItems.filter({
+					hasText: 'Advanced Sample',
+				});
 
-			await expect(advancedSampleListItem).toHaveClass(/selected/);
+				await systemDataSetsPage.createButton.click();
 
-			await creationModal.createButton.click();
+				await expect(advancedSampleListItem).toBeVisible();
 
-			await waitForAlert(systemDataSetsPage.page);
-		});
+				await advancedSampleListItem.click();
 
-		await test.step('Check author column is still visible', async () => {
-			await page.goto(fdsSamplePageURL);
+				await expect(advancedSampleListItem).toHaveClass(/selected/);
 
-			await fdsSamplePage.selectTab('Advanced');
+				await creationModal.createButton.click();
 
-			await waitForFDS({
-				page,
-				visualizationMode: EFDSVisualizationMode.TABLE,
+				await waitForAlert(systemDataSetsPage.page);
 			});
 
-			expect(
-				fdsSamplePage.table.container.locator(
-					'[data-id="string,creator.name"]'
-				)
-			).toBeVisible();
-		});
+			await test.step('Check author column is still visible', async () => {
+				await page.goto(fdsSamplePageURL);
 
-		await test.step('Delete used system data set', async () => {
-			await systemDataSetsPage.goto();
+				await fdsSamplePage.selectTab('Advanced');
 
-			const fdsRows = systemDataSetsPage.pageContainer.locator('.fds tr');
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
+				});
 
-			const advancedSampleRow = fdsRows.filter({
-				hasText: 'Advanced Sample',
+				await expect(
+					fdsSamplePage.table.container.locator(
+						'[data-id="string,creator.name"]'
+					)
+				).toBeVisible();
 			});
+		}
+		finally {
+			await test.step('Delete used system data set', async () => {
+				await systemDataSetsPage.goto();
 
-			await advancedSampleRow.locator('.dropdown-toggle').click();
+				const fdsRows =
+					systemDataSetsPage.pageContainer.locator('.fds tr');
 
-			await fdsSamplePage.dropdownMenu
-				.getByRole('menuitem', {name: 'Delete'})
-				.click();
+				const advancedSampleRow = fdsRows.filter({
+					hasText: 'Advanced Sample',
+				});
 
-			const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+				if ((await advancedSampleRow.count()) === 0) {
+					return;
+				}
 
-			await deleteModal.getByRole('button', {name: 'Delete'}).click();
+				await advancedSampleRow.locator('.dropdown-toggle').click();
 
-			await waitForAlert(systemDataSetsPage.page);
+				await fdsSamplePage.dropdownMenu
+					.getByRole('menuitem', {name: 'Delete'})
+					.click();
 
-			await expect(advancedSampleRow).not.toBeAttached();
-		});
+				const deleteModal = systemDataSetsPage.page.getByRole('dialog');
+
+				await deleteModal.getByRole('button', {name: 'Delete'}).click();
+
+				await waitForAlert(systemDataSetsPage.page);
+
+				await expect(advancedSampleRow).not.toBeAttached();
+			});
+		}
 	}
 );

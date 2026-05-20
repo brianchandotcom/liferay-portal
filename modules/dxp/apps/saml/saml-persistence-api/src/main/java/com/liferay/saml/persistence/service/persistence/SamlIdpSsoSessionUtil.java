@@ -142,16 +142,6 @@ public class SamlIdpSsoSessionUtil {
 	}
 
 	/**
-	 * Returns the saml idp sso session where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	public static SamlIdpSsoSession fetchByUserId(long userId) {
-		return getPersistence().fetchByUserId(userId);
-	}
-
-	/**
 	 * Returns the saml idp sso session where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -328,19 +318,6 @@ public class SamlIdpSsoSessionUtil {
 	}
 
 	/**
-	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpSsoSessionKey the saml idp sso session key
-	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
-	 */
-	public static SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
-		String samlIdpSsoSessionKey) {
-
-		return getPersistence().fetchBySamlIdpSsoSessionKey(
-			samlIdpSsoSessionKey);
-	}
-
-	/**
 	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSsoSessionKey the saml idp sso session key
@@ -436,6 +413,29 @@ public class SamlIdpSsoSessionUtil {
 		return getPersistence().fetchByPrimaryKey(samlIdpSsoSessionId);
 	}
 
+	/**
+	 * Returns the saml idp sso session where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
+	 */
+	public static SamlIdpSsoSession fetchByUserId(long userId) {
+		return getPersistence().fetchByUserId(userId);
+	}
+
+	/**
+	 * Returns the saml idp sso session where samlIdpSsoSessionKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param samlIdpSsoSessionKey the saml idp sso session key
+	 * @return the matching saml idp sso session, or <code>null</code> if a matching saml idp sso session could not be found
+	 */
+	public static SamlIdpSsoSession fetchBySamlIdpSsoSessionKey(
+		String samlIdpSsoSessionKey) {
+
+		return getPersistence().fetchBySamlIdpSsoSessionKey(
+			samlIdpSsoSessionKey);
+	}
+
 	public static SamlIdpSsoSessionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -449,4 +449,4 @@ public class SamlIdpSsoSessionUtil {
 	private static volatile SamlIdpSsoSessionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-890724588
+// LIFERAY-SERVICE-BUILDER-HASH:-865785786

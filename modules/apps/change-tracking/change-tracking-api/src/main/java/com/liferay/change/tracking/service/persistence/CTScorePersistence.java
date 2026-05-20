@@ -42,14 +42,6 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 		throws NoSuchScoreException;
 
 	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	public CTScore fetchByCtCollectionId(long ctCollectionId);
-
-	/**
 	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -112,5 +104,15 @@ public interface CTScorePersistence extends BasePersistence<CTScore> {
 	 */
 	public CTScore fetchByPrimaryKey(long ctScoreId);
 
+	/**
+	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ctCollectionId the ct collection ID
+	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
+	 */
+	public default CTScore fetchByCtCollectionId(long ctCollectionId) {
+		return fetchByCtCollectionId(ctCollectionId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1039365285
+// LIFERAY-SERVICE-BUILDER-HASH:-1947685953

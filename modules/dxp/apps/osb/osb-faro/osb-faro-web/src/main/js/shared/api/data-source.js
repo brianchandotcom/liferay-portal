@@ -29,7 +29,7 @@ export function search({
 	delta,
 	groupId,
 	orderIOMap = createOrderIOMap(NAME),
-	page,
+	page = 1,
 	query = '',
 	...otherParams
 }) {

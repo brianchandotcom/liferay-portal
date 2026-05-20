@@ -6,12 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from '../../osb-faro-web/main/utils/channel';
 import {gotoLatestLiferayDXPDataSource} from '../../osb-faro-web/main/utils/data-source';
 import {
 	PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
@@ -25,11 +24,11 @@ import {
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-20640': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -122,7 +121,7 @@ test(
 	{
 		tag: '@LPD-69652',
 	},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const site1 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
@@ -145,24 +144,15 @@ test(
 			name: getRandomString(),
 		});
 
-		const channelName2 = getRandomString();
-
-		const {project} = await createChannel({
-			apiHelpers,
-			channelName: channelName2,
-		});
-
 		await toggleSiteSync({
-			channelName: channelName2,
+			channelName: channel.name,
 			page,
 			siteName: site2.name,
 		});
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesConfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesConfigured')).toBeVisible();
 
 		await goToSettingsStep({
 			page,
@@ -170,7 +160,7 @@ test(
 		});
 
 		await toggleSiteSync({
-			channelName: channelName2,
+			channelName: channel.name,
 			page,
 			siteName: site2.name,
 			synced: false,
@@ -178,9 +168,7 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesConfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesConfigured')).toBeVisible();
 
 		await goToSettingsStep({
 			page,
@@ -196,8 +184,6 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(
-			page.getByText('Synced SitesUnconfigured').isVisible()
-		).toBeTruthy();
+		await expect(page.getByText('Synced SitesUnconfigured')).toBeVisible();
 	}
 );

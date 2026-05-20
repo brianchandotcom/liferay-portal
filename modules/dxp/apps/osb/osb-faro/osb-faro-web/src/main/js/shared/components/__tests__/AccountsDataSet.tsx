@@ -58,14 +58,16 @@ describe('AccountsDataSet', () => {
 		useFrontendDataSetMock.mockReturnValue(null);
 
 		const {container} = render(
-			<AccountsDataSet channelId='123' groupId='23' />
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
 		);
 
 		expect(container).toBeEmptyDOMElement();
 	});
 
 	it('should render the FrontendDataSet with id "accounts-list-dataset"', () => {
-		render(<AccountsDataSet channelId='123' groupId='23' />);
+		render(
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+		);
 
 		expect(screen.getByTestId('fds-component')).toHaveAttribute(
 			'id',
@@ -74,7 +76,9 @@ describe('AccountsDataSet', () => {
 	});
 
 	it('should leave country/industry/lifecycleStatus filters without preloadedData when no props are passed', () => {
-		render(<AccountsDataSet channelId='123' groupId='23' />);
+		render(
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+		);
 
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
 		const industryFilter = lastFilters?.find(f => f.id === 'industry');
@@ -89,7 +93,12 @@ describe('AccountsDataSet', () => {
 
 	it('should preload the country filter when countryFilter prop is provided', () => {
 		render(
-			<AccountsDataSet channelId='123' countryFilter='US' groupId='23' />
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				countryFilter='US'
+				groupId='23'
+			/>
 		);
 
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
@@ -103,6 +112,7 @@ describe('AccountsDataSet', () => {
 	it('should preload the industry filter when industryFilter prop is provided', () => {
 		render(
 			<AccountsDataSet
+				apiURL='fake-url'
 				channelId='123'
 				groupId='23'
 				industryFilter='Tech'
@@ -120,6 +130,7 @@ describe('AccountsDataSet', () => {
 	it('should preload the lifecycleStatus filter when lifecycleStageFilter prop is provided', () => {
 		render(
 			<AccountsDataSet
+				apiURL='fake-url'
 				channelId='123'
 				groupId='23'
 				lifecycleStageFilter={LifecycleStages.AT_RISK}
@@ -132,12 +143,14 @@ describe('AccountsDataSet', () => {
 
 		expect(lifecycleStatusFilter?.preloadedData).toEqual({
 			exclude: false,
-			selectedItems: [{label: 'At Risk', value: 'atRisk'}]
+			selectedItems: [{label: 'At Risk', value: 'AT_RISK'}]
 		});
 	});
 
 	it('should render the account name link with channelId in the href', () => {
-		render(<AccountsDataSet channelId='123' groupId='23' />);
+		render(
+			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+		);
 
 		const {container} = render(
 			lastCustomDataRenderers!.accountNameRenderer({

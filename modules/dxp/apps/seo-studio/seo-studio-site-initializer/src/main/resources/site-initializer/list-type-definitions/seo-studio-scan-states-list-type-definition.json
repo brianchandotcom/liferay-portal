@@ -1,0 +1,37 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_SCAN_STATES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_STATE_CANCELLED",
+			"key": "cancelled",
+			"name": "Cancelled",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_STATE_COMPLETED",
+			"key": "completed",
+			"name": "Completed",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_STATE_FAILED",
+			"key": "failed",
+			"name": "Failed",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_STATE_QUEUED",
+			"key": "queued",
+			"name": "Queued",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_STATE_RUNNING",
+			"key": "running",
+			"name": "Running",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Scan States",
+	"system": true
+}

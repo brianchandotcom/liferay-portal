@@ -13,6 +13,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import {AccountUserSelectorPage} from '../../../pages/account-admin-web/AccountUserSelectorPage';
 import {AccountUsersPage} from '../../../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../../../pages/account-admin-web/AccountsPage';
@@ -1636,7 +1637,7 @@ test(
 			);
 
 			newPage = await browser.newPage({
-				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`,
 			});
 
 			accountUserSelectorPage = new AccountUserSelectorPage(newPage);

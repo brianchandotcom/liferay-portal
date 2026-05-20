@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,8 +38,9 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = _formatHeaders(content);
 		content = replace(content);
+
+		content = _formatHeaders(content);
 
 		return replaceTaglibURIs(content);
 	}
@@ -53,6 +55,7 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 
 		properties.load(new StringReader(content));
 
+		_removeExcludedImportPackage(properties);
 		_replaceRequireCapability(properties);
 
 		return _toString(properties);
@@ -148,6 +151,36 @@ public class JakartaTransformBNDCheck extends BaseJakartaTransformCheck {
 		}
 
 		return _jakartaTransformOSGiContractsMap;
+	}
+
+	private void _removeExcludedImportPackage(Properties properties) {
+		String importPackage = properties.getProperty("Import-Package");
+
+		if (importPackage == null) {
+			return;
+		}
+
+		List<String> excludedImportPackages = new ArrayList<>();
+
+		Parameters parameters = new Parameters(importPackage);
+
+		Set<String> keys = parameters.keySet();
+
+		for (String key : keys) {
+			if (!keys.contains(key.substring(1)) ||
+				!key.startsWith("!jakarta.")) {
+
+				continue;
+			}
+
+			excludedImportPackages.add(key);
+		}
+
+		for (String excludedImportPackage : excludedImportPackages) {
+			parameters.remove(excludedImportPackage);
+		}
+
+		properties.setProperty("Import-Package", parameters.toString());
 	}
 
 	private void _replaceRequireCapability(Properties properties)

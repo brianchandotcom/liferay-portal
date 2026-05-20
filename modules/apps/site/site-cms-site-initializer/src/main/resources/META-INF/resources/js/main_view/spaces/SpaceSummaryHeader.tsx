@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {navigate} from 'frontend-js-web';
+import ClayLink from '@clayui/link';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import ApiHelper from '../../common/services/ApiHelper';
@@ -103,6 +103,7 @@ export default function SpaceSummaryHeader({
 				trigger={
 					<ClayButtonWithIcon
 						aria-label={`Add ${title}`}
+						data-canonical-name={`Add ${title}`}
 						displayType="secondary"
 						small
 						symbol="plus"
@@ -182,17 +183,18 @@ export default function SpaceSummaryHeader({
 			<div className="align-items-center d-flex">
 				{showViewAll &&
 					(url ? (
-						<ClayButton
+						<ClayLink
 							className="text-3 text-weight-semi-bold"
-							displayType="link"
-							onClick={() => navigate(url)}
-							size="sm"
+							data-canonical-name={label}
+							displayType="unstyled"
+							href={url}
 						>
 							{label}
-						</ClayButton>
+						</ClayLink>
 					) : (
 						<ClayButton
 							className="text-3 text-weight-semi-bold"
+							data-canonical-name={label}
 							displayType="link"
 							onClick={getActionCallback}
 							size="sm"

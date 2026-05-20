@@ -10,7 +10,9 @@ import {liferayConfig} from '../../../liferay.config';
 test('JavaScript URLs honor CDN', {tag: '@LPD-66044'}, async ({page}) => {
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	const pattern = /^http:\/\/cdn:8080\//;
+	const pattern = new RegExp(
+		`^http://cdn:${liferayConfig.environment.port}/`
+	);
 
 	await test.step('CDN is referenced in import maps', async () => {
 		const json = JSON.parse(

@@ -98,60 +98,8 @@ public class GroupPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the groups where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where uuid = &#63;.
@@ -240,7 +188,6 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -270,18 +217,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -330,67 +265,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where uuid = &#63; and companyId = &#63;.
@@ -486,61 +362,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the groups where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63;.
@@ -629,62 +452,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLiveGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByLiveGroupId;
-	private FinderPath _finderPathCountByLiveGroupId;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByLiveGroupId;
-
-	/**
-	 * Returns all the groups where liveGroupId = &#63;.
-	 *
-	 * @param liveGroupId the live group ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByLiveGroupId(long liveGroupId) {
-		return findByLiveGroupId(
-			liveGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where liveGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveGroupId the live group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByLiveGroupId(long liveGroupId, int start, int end) {
-		return findByLiveGroupId(liveGroupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where liveGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveGroupId the live group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByLiveGroupId(
-		long liveGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByLiveGroupId(
-			liveGroupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where liveGroupId = &#63;.
@@ -773,67 +542,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {liveGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_C;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_C(long companyId, long classNameId) {
-		return findByC_C(
-			companyId, classNameId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C(
-		long companyId, long classNameId, int start, int end) {
-
-		return findByC_C(companyId, classNameId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C(
-		long companyId, long classNameId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_C(
-			companyId, classNameId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63;.
@@ -934,68 +644,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_P;
-	private FinderPath _finderPathCountByC_P;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_P;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_P(long companyId, long parentGroupId) {
-		return findByC_P(
-			companyId, parentGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P(
-		long companyId, long parentGroupId, int start, int end) {
-
-		return findByC_P(companyId, parentGroupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P(
-		long companyId, long parentGroupId, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_P(
-			companyId, parentGroupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63;.
@@ -1096,73 +746,9 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_GK;
-	private FinderPath _finderPathWithoutPaginationFindByC_GK;
-	private FinderPath _finderPathFetchByC_GK;
-	private FinderPath _finderPathCountByC_GK;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_GK;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_GK;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and groupKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupKeys the group keys
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_GK(long companyId, String[] groupKeys) {
-		return findByC_GK(
-			companyId, groupKeys, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and groupKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupKeys the group keys
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_GK(
-		long companyId, String[] groupKeys, int start, int end) {
-
-		return findByC_GK(companyId, groupKeys, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and groupKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupKeys the group keys
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_GK(
-		long companyId, String[] groupKeys, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_GK(
-			companyId, groupKeys, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and groupKey = &#63;, optionally using the finder cache.
@@ -1238,18 +824,6 @@ public class GroupPersistenceImpl
 	}
 
 	/**
-	 * Returns the group where companyId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param groupKey the group key
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByC_GK(long companyId, String groupKey) {
-		return fetchByC_GK(companyId, groupKey, true);
-	}
-
-	/**
 	 * Returns the group where companyId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -1310,7 +884,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(groupKeys)});
 	}
 
-	private FinderPath _finderPathFetchByC_F;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_F;
 
 	/**
@@ -1341,18 +914,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where companyId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param friendlyURL the friendly url
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByC_F(long companyId, String friendlyURL) {
-		return fetchByC_F(companyId, friendlyURL, true);
 	}
 
 	/**
@@ -1402,66 +963,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, friendlyURL});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_S;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_S(long companyId, boolean site) {
-		return findByC_S(
-			companyId, site, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_S(
-		long companyId, boolean site, int start, int end) {
-
-		return findByC_S(companyId, site, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_S(
-		long companyId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_S(companyId, site, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and site = &#63;.
@@ -1557,67 +1060,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, site});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_A;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_A(long companyId, boolean active) {
-		return findByC_A(
-			companyId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_A(
-		long companyId, boolean active, int start, int end) {
-
-		return findByC_A(companyId, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_A(
-		long companyId, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_A(
-			companyId, active, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and active = &#63;.
@@ -1713,67 +1157,8 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_CPK;
-	private FinderPath _finderPathWithoutPaginationFindByC_CPK;
-	private FinderPath _finderPathCountByC_CPK;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_CPK;
-
-	/**
-	 * Returns all the groups where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_CPK(long classNameId, long classPK) {
-		return findByC_CPK(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_CPK(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_CPK(classNameId, classPK, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_CPK(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_CPK(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where classNameId = &#63; and classPK = &#63;.
@@ -1873,64 +1258,8 @@ public class GroupPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_A;
-	private FinderPath _finderPathWithoutPaginationFindByT_A;
-	private FinderPath _finderPathCountByT_A;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByT_A;
-
-	/**
-	 * Returns all the groups where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(int type, boolean active) {
-		return findByT_A(
-			type, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where type = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(int type, boolean active, int start, int end) {
-		return findByT_A(type, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where type = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(
-		int type, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByT_A(type, active, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where type = &#63; and active = &#63;.
@@ -2025,8 +1354,6 @@ public class GroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type, active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGtG_C_P;
-	private FinderPath _finderPathWithPaginationCountByGtG_C_P;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByGtG_C_P;
 
@@ -2203,7 +1530,6 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, parentGroupId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_C;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_C_C;
 
 	/**
@@ -2235,19 +1561,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where companyId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByC_C_C(long companyId, long classNameId, long classPK) {
-		return fetchByC_C_C(companyId, classNameId, classPK, true);
 	}
 
 	/**
@@ -2301,76 +1614,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_P;
-	private FinderPath _finderPathCountByC_C_P;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_C_P;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_P(
-		long companyId, long classNameId, long parentGroupId) {
-
-		return findByC_C_P(
-			companyId, classNameId, parentGroupId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_P(
-		long companyId, long classNameId, long parentGroupId, int start,
-		int end) {
-
-		return findByC_C_P(
-			companyId, classNameId, parentGroupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param parentGroupId the parent group ID
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_P(
-		long companyId, long classNameId, long parentGroupId, int start,
-		int end, OrderByComparator<Group> orderByComparator) {
-
-		return findByC_C_P(
-			companyId, classNameId, parentGroupId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63; and parentGroupId = &#63;.
@@ -2482,73 +1727,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, parentGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
-	private FinderPath _finderPathCountByC_C_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_C_S;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_S(
-		long companyId, long classNameId, boolean site) {
-
-		return findByC_C_S(
-			companyId, classNameId, site, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_S(
-		long companyId, long classNameId, boolean site, int start, int end) {
-
-		return findByC_C_S(companyId, classNameId, site, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_C_S(
-		long companyId, long classNameId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_C_S(
-			companyId, classNameId, site, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and classNameId = &#63; and site = &#63;.
@@ -2654,74 +1834,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, site});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_P_S;
-	private FinderPath _finderPathCountByC_P_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_P_S;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S(
-		long companyId, long parentGroupId, boolean site) {
-
-		return findByC_P_S(
-			companyId, parentGroupId, site, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S(
-		long companyId, long parentGroupId, boolean site, int start, int end) {
-
-		return findByC_P_S(companyId, parentGroupId, site, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S(
-		long companyId, long parentGroupId, boolean site, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_P_S(
-			companyId, parentGroupId, site, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63;.
@@ -2829,7 +1943,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, site});
 	}
 
-	private FinderPath _finderPathFetchByC_L_GK;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_L_GK;
 
 	/**
@@ -2861,21 +1974,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where companyId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param liveGroupId the live group ID
-	 * @param groupKey the group key
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByC_L_GK(
-		long companyId, long liveGroupId, String groupKey) {
-
-		return fetchByC_L_GK(companyId, liveGroupId, groupKey, true);
 	}
 
 	/**
@@ -2932,8 +2030,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, liveGroupId, groupKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeT_S;
-	private FinderPath _finderPathWithPaginationCountByC_LikeT_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_LikeT_S;
 
@@ -3105,8 +2201,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, treePath, site});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeN_S;
-	private FinderPath _finderPathWithPaginationCountByC_LikeN_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_LikeN_S;
 
@@ -3275,73 +2369,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, name, site});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_S_A;
-	private FinderPath _finderPathCountByC_S_A;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_S_A;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_S_A(
-		long companyId, boolean site, boolean active) {
-
-		return findByC_S_A(
-			companyId, site, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_S_A(
-		long companyId, boolean site, boolean active, int start, int end) {
-
-		return findByC_S_A(companyId, site, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and site = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param site the site
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_S_A(
-		long companyId, boolean site, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_S_A(
-			companyId, site, active, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and site = &#63; and active = &#63;.
@@ -3447,8 +2476,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, site, active});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGtG_C_C_P;
-	private FinderPath _finderPathWithPaginationCountByGtG_C_C_P;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByGtG_C_C_P;
 
@@ -3635,8 +2662,6 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, classNameId, parentGroupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGtG_C_P_S;
-	private FinderPath _finderPathWithPaginationCountByGtG_C_P_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByGtG_C_P_S;
 
@@ -3823,7 +2848,6 @@ public class GroupPersistenceImpl
 			new Object[] {groupId, companyId, parentGroupId, site});
 	}
 
-	private FinderPath _finderPathFetchByC_C_L_GK;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByC_C_L_GK;
 
 	/**
@@ -3860,23 +2884,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where companyId = &#63; and classNameId = &#63; and liveGroupId = &#63; and groupKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param liveGroupId the live group ID
-	 * @param groupKey the group key
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByC_C_L_GK(
-		long companyId, long classNameId, long liveGroupId, String groupKey) {
-
-		return fetchByC_C_L_GK(
-			companyId, classNameId, liveGroupId, groupKey, true);
 	}
 
 	/**
@@ -3938,8 +2945,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, classNameId, liveGroupId, groupKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P_LikeN_S;
-	private FinderPath _finderPathWithPaginationCountByC_P_LikeN_S;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_P_LikeN_S;
 
@@ -4126,81 +3131,8 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, name, site});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P_S_I;
-	private FinderPath _finderPathWithoutPaginationFindByC_P_S_I;
-	private FinderPath _finderPathCountByC_P_S_I;
 	private CollectionPersistenceFinder<Group>
 		_collectionPersistenceFinderByC_P_S_I;
-
-	/**
-	 * Returns all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S_I(
-		long companyId, long parentGroupId, boolean site,
-		boolean inheritContent) {
-
-		return findByC_P_S_I(
-			companyId, parentGroupId, site, inheritContent, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S_I(
-		long companyId, long parentGroupId, boolean site,
-		boolean inheritContent, int start, int end) {
-
-		return findByC_P_S_I(
-			companyId, parentGroupId, site, inheritContent, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentGroupId the parent group ID
-	 * @param site the site
-	 * @param inheritContent the inherit content
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByC_P_S_I(
-		long companyId, long parentGroupId, boolean site,
-		boolean inheritContent, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-
-		return findByC_P_S_I(
-			companyId, parentGroupId, site, inheritContent, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the groups where companyId = &#63; and parentGroupId = &#63; and site = &#63; and inheritContent = &#63;.
@@ -4319,7 +3251,6 @@ public class GroupPersistenceImpl
 			new Object[] {companyId, parentGroupId, site, inheritContent});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<Group> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -4350,18 +3281,6 @@ public class GroupPersistenceImpl
 		}
 
 		return group;
-	}
-
-	/**
-	 * Returns the group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByERC_C(String externalReferenceCode, long companyId) {
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -6115,41 +5034,37 @@ public class GroupPersistenceImpl
 			"Users_Groups", "companyId", "groupId", "userId", this,
 			userPersistence);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"group_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Group::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(Group::getUuid), Group::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(Group::getUuid), Group::getGroupId),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Group::getUuid),
@@ -6157,32 +5072,27 @@ public class GroupPersistenceImpl
 				"group_.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_GROUP__WHERE,
-				_SQL_COUNT_GROUP__WHERE, GroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"group_.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Group::getUuid),
@@ -6190,86 +5100,74 @@ public class GroupPersistenceImpl
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_GROUP__WHERE,
-				_SQL_COUNT_GROUP__WHERE, GroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId));
 
-		_finderPathWithPaginationFindByLiveGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLiveGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"liveGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByLiveGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLiveGroupId",
-			new String[] {Long.class.getName()}, new String[] {"liveGroupId"},
-			true);
-
-		_finderPathCountByLiveGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveGroupId",
-			new String[] {Long.class.getName()}, new String[] {"liveGroupId"},
-			false);
-
 		_collectionPersistenceFinderByLiveGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLiveGroupId,
-				_finderPathWithoutPaginationFindByLiveGroupId,
-				_finderPathCountByLiveGroupId, _SQL_SELECT_GROUP__WHERE,
-				_SQL_COUNT_GROUP__WHERE, GroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLiveGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"liveGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLiveGroupId", new String[] {Long.class.getName()},
+					new String[] {"liveGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLiveGroupId", new String[] {Long.class.getName()},
+					new String[] {"liveGroupId"}, false),
+				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"group_.", "liveGroupId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getLiveGroupId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "classNameId"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "classNameId"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6279,28 +5177,24 @@ public class GroupPersistenceImpl
 				"group_.", "classNameId", FinderColumn.Type.LONG, "=", true,
 				true, Group::getClassNameId));
 
-		_finderPathWithPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "parentGroupId"}, true);
-
-		_finderPathCountByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "parentGroupId"}, false);
-
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P,
-			_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "parentGroupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "parentGroupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "parentGroupId"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6310,34 +5204,24 @@ public class GroupPersistenceImpl
 				"group_.", "parentGroupId", FinderColumn.Type.LONG, "=", true,
 				true, Group::getParentGroupId));
 
-		_finderPathWithPaginationFindByC_GK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GK",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "groupKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_GK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_GK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "groupKey"}, 0, 2, true, null);
-
-		_finderPathFetchByC_GK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_GK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "groupKey"}, 0, 2, false,
-			Group::getCompanyId, convertNullFunction(Group::getGroupKey));
-
-		_finderPathCountByC_GK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "groupKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_GK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_GK,
-			_finderPathWithoutPaginationFindByC_GK, _finderPathCountByC_GK,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GK",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "groupKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_GK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "groupKey"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "groupKey"}, 0, 2, false, null),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6348,7 +5232,13 @@ public class GroupPersistenceImpl
 				true, true, Group::getGroupKey));
 
 		_uniquePersistenceFinderByC_GK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_GK, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_GK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "groupKey"}, 0, 2, false,
+				Group::getCompanyId, convertNullFunction(Group::getGroupKey)),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -6356,14 +5246,15 @@ public class GroupPersistenceImpl
 				"group_.", "groupKey", FinderColumn.Type.STRING, "=", true,
 				true, Group::getGroupKey));
 
-		_finderPathFetchByC_F = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "friendlyURL"}, 0, 2, false,
-			Group::getCompanyId, convertNullFunction(Group::getFriendlyURL));
-
 		_uniquePersistenceFinderByC_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_F, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "friendlyURL"}, 0, 2, false,
+				Group::getCompanyId,
+				convertNullFunction(Group::getFriendlyURL)),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -6371,28 +5262,24 @@ public class GroupPersistenceImpl
 				"group_.", "friendlyURL", FinderColumn.Type.STRING, "=", true,
 				true, Group::getFriendlyURL));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "site"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "site"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "site"}, false);
-
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S,
-			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6402,28 +5289,24 @@ public class GroupPersistenceImpl
 				"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isSite));
 
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "active_"}, true);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "active_"}, false);
-
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6433,28 +5316,24 @@ public class GroupPersistenceImpl
 				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isActive));
 
-		_finderPathWithPaginationFindByC_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_CPK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_CPK,
-			_finderPathWithoutPaginationFindByC_CPK, _finderPathCountByC_CPK,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_CPK",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6464,28 +5343,24 @@ public class GroupPersistenceImpl
 				"group_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Group::getClassPK));
 
-		_finderPathWithPaginationFindByT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_A",
-			new String[] {
-				Integer.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"type_", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_A",
-			new String[] {Integer.class.getName(), Boolean.class.getName()},
-			new String[] {"type_", "active_"}, true);
-
-		_finderPathCountByT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_A",
-			new String[] {Integer.class.getName(), Boolean.class.getName()},
-			new String[] {"type_", "active_"}, false);
-
 		_collectionPersistenceFinderByT_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_A,
-			_finderPathWithoutPaginationFindByT_A, _finderPathCountByT_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_A",
+				new String[] {
+					Integer.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"type_", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_A",
+				new String[] {Integer.class.getName(), Boolean.class.getName()},
+				new String[] {"type_", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_A",
+				new String[] {Integer.class.getName(), Boolean.class.getName()},
+				new String[] {"type_", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6495,26 +5370,28 @@ public class GroupPersistenceImpl
 				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isActive));
 
-		_finderPathWithPaginationFindByGtG_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "parentGroupId"}, true);
-
-		_finderPathWithPaginationCountByGtG_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "companyId", "parentGroupId"}, false);
-
 		_collectionPersistenceFinderByGtG_C_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtG_C_P, null,
-				_finderPathWithPaginationCountByGtG_C_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "companyId", "parentGroupId"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {"groupId", "companyId", "parentGroupId"},
+					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6527,16 +5404,18 @@ public class GroupPersistenceImpl
 					"group_.", "parentGroupId", FinderColumn.Type.LONG, "=",
 					true, true, Group::getParentGroupId));
 
-		_finderPathFetchByC_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "classPK"}, 0, 0, false,
-			Group::getCompanyId, Group::getClassNameId, Group::getClassPK);
-
 		_uniquePersistenceFinderByC_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_C, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "classPK"}, 0, 0,
+				false, Group::getCompanyId, Group::getClassNameId,
+				Group::getClassPK),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -6547,32 +5426,33 @@ public class GroupPersistenceImpl
 				"group_.", "classPK", FinderColumn.Type.LONG, "=", true, true,
 				Group::getClassPK));
 
-		_finderPathWithPaginationFindByC_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "parentGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "parentGroupId"}, true);
-
-		_finderPathCountByC_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "parentGroupId"}, false);
-
 		_collectionPersistenceFinderByC_C_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_P,
-			_finderPathWithoutPaginationFindByC_C_P, _finderPathCountByC_C_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "parentGroupId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "parentGroupId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "parentGroupId"},
+				false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6585,34 +5465,30 @@ public class GroupPersistenceImpl
 				"group_.", "parentGroupId", FinderColumn.Type.LONG, "=", true,
 				true, Group::getParentGroupId));
 
-		_finderPathWithPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "site"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "site"}, true);
-
-		_finderPathCountByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "classNameId", "site"}, false);
-
 		_collectionPersistenceFinderByC_C_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_S,
-			_finderPathWithoutPaginationFindByC_C_S, _finderPathCountByC_C_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "classNameId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6625,34 +5501,30 @@ public class GroupPersistenceImpl
 				"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isSite));
 
-		_finderPathWithPaginationFindByC_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId", "site"}, true);
-
-		_finderPathWithoutPaginationFindByC_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId", "site"}, true);
-
-		_finderPathCountByC_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId", "site"}, false);
-
 		_collectionPersistenceFinderByC_P_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P_S,
-			_finderPathWithoutPaginationFindByC_P_S, _finderPathCountByC_P_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "parentGroupId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "parentGroupId", "site"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "parentGroupId", "site"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6665,18 +5537,18 @@ public class GroupPersistenceImpl
 				"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isSite));
 
-		_finderPathFetchByC_L_GK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_L_GK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "liveGroupId", "groupKey"}, 0, 4, false,
-			Group::getCompanyId, Group::getLiveGroupId,
-			convertNullFunction(Group::getGroupKey));
-
 		_uniquePersistenceFinderByC_L_GK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_L_GK, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_L_GK",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "liveGroupId", "groupKey"}, 0, 4,
+				false, Group::getCompanyId, Group::getLiveGroupId,
+				convertNullFunction(Group::getGroupKey)),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -6687,27 +5559,26 @@ public class GroupPersistenceImpl
 				"group_.", "groupKey", FinderColumn.Type.STRING, "=", true,
 				true, Group::getGroupKey));
 
-		_finderPathWithPaginationFindByC_LikeT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeT_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "treePath", "site"}, true);
-
-		_finderPathWithPaginationCountByC_LikeT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeT_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "treePath", "site"}, false);
-
 		_collectionPersistenceFinderByC_LikeT_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeT_S, null,
-				_finderPathWithPaginationCountByC_LikeT_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeT_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "treePath", "site"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeT_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"companyId", "treePath", "site"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6720,27 +5591,26 @@ public class GroupPersistenceImpl
 					"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Group::isSite));
 
-		_finderPathWithPaginationFindByC_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name", "site"}, true);
-
-		_finderPathWithPaginationCountByC_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "name", "site"}, false);
-
 		_collectionPersistenceFinderByC_LikeN_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeN_S, null,
-				_finderPathWithPaginationCountByC_LikeN_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name", "site"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"companyId", "name", "site"}, false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6753,34 +5623,30 @@ public class GroupPersistenceImpl
 					"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Group::isSite));
 
-		_finderPathWithPaginationFindByC_S_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "site", "active_"}, true);
-
-		_finderPathWithoutPaginationFindByC_S_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "site", "active_"}, true);
-
-		_finderPathCountByC_S_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"companyId", "site", "active_"}, false);
-
 		_collectionPersistenceFinderByC_S_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S_A,
-			_finderPathWithoutPaginationFindByC_S_A, _finderPathCountByC_S_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "site", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "site", "active_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"companyId", "site", "active_"}, false),
 			_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 			GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -6793,34 +5659,32 @@ public class GroupPersistenceImpl
 				"group_.", "active", FinderColumn.Type.BOOLEAN, "=", true, true,
 				Group::isActive));
 
-		_finderPathWithPaginationFindByGtG_C_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "companyId", "classNameId", "parentGroupId"
-			},
-			true);
-
-		_finderPathWithPaginationCountByGtG_C_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "companyId", "classNameId", "parentGroupId"
-			},
-			false);
-
 		_collectionPersistenceFinderByGtG_C_C_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtG_C_C_P, null,
-				_finderPathWithPaginationCountByGtG_C_C_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "classNameId", "parentGroupId"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "classNameId", "parentGroupId"
+					},
+					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6836,30 +5700,32 @@ public class GroupPersistenceImpl
 					"group_.", "parentGroupId", FinderColumn.Type.LONG, "=",
 					true, true, Group::getParentGroupId));
 
-		_finderPathWithPaginationFindByGtG_C_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "companyId", "parentGroupId", "site"},
-			true);
-
-		_finderPathWithPaginationCountByGtG_C_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"groupId", "companyId", "parentGroupId", "site"},
-			false);
-
 		_collectionPersistenceFinderByGtG_C_P_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtG_C_P_S, null,
-				_finderPathWithPaginationCountByGtG_C_P_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtG_C_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "parentGroupId", "site"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtG_C_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "companyId", "parentGroupId", "site"
+					},
+					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6875,20 +5741,20 @@ public class GroupPersistenceImpl
 					"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Group::isSite));
 
-		_finderPathFetchByC_C_L_GK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_L_GK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "liveGroupId", "groupKey"
-			},
-			0, 8, false, Group::getCompanyId, Group::getClassNameId,
-			Group::getLiveGroupId, convertNullFunction(Group::getGroupKey));
-
 		_uniquePersistenceFinderByC_C_L_GK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_L_GK, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_L_GK",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), String.class.getName()
+				},
+				new String[] {
+					"companyId", "classNameId", "liveGroupId", "groupKey"
+				},
+				0, 8, false, Group::getCompanyId, Group::getClassNameId,
+				Group::getLiveGroupId, convertNullFunction(Group::getGroupKey)),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "companyId", FinderColumn.Type.LONG, "=", true, true,
 				Group::getCompanyId),
@@ -6902,28 +5768,29 @@ public class GroupPersistenceImpl
 				"group_.", "groupKey", FinderColumn.Type.STRING, "=", true,
 				true, Group::getGroupKey));
 
-		_finderPathWithPaginationFindByC_P_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId", "name", "site"}, true);
-
-		_finderPathWithPaginationCountByC_P_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_P_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"companyId", "parentGroupId", "name", "site"}, false);
-
 		_collectionPersistenceFinderByC_P_LikeN_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_P_LikeN_S, null,
-				_finderPathWithPaginationCountByC_P_LikeN_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_LikeN_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "parentGroupId", "name", "site"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_P_LikeN_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"companyId", "parentGroupId", "name", "site"},
+					false),
 				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
 				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -6939,48 +5806,43 @@ public class GroupPersistenceImpl
 					"group_.", "site", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Group::isSite));
 
-		_finderPathWithPaginationFindByC_P_S_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_S_I",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "parentGroupId", "site", "inheritContent"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_P_S_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_S_I",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"companyId", "parentGroupId", "site", "inheritContent"
-			},
-			true);
-
-		_finderPathCountByC_P_S_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_S_I",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"companyId", "parentGroupId", "site", "inheritContent"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_P_S_I =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_P_S_I,
-				_finderPathWithoutPaginationFindByC_P_S_I,
-				_finderPathCountByC_P_S_I, _SQL_SELECT_GROUP__WHERE,
-				_SQL_COUNT_GROUP__WHERE, GroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P_S_I",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "parentGroupId", "site", "inheritContent"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P_S_I",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "parentGroupId", "site", "inheritContent"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P_S_I",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"companyId", "parentGroupId", "site", "inheritContent"
+					},
+					false),
+				_SQL_SELECT_GROUP__WHERE, _SQL_COUNT_GROUP__WHERE,
+				GroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"group_.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Group::getCompanyId),
@@ -6994,15 +5856,15 @@ public class GroupPersistenceImpl
 					"group_.", "inheritContent", FinderColumn.Type.BOOLEAN, "=",
 					true, true, Group::isInheritContent));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(Group::getExternalReferenceCode),
-			Group::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_GROUP__WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false, convertNullFunction(Group::getExternalReferenceCode),
+				Group::getCompanyId),
+			_SQL_SELECT_GROUP__WHERE, "",
 			new FinderColumn<>(
 				"group_.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, Group::getExternalReferenceCode),
@@ -7075,4 +5937,4 @@ public class GroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2100058415
+// LIFERAY-SERVICE-BUILDER-HASH:-414554693

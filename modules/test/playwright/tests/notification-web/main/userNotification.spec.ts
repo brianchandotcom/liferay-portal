@@ -130,6 +130,17 @@ test('review comment is added to user notification', async ({
 
 	await page.waitForLoadState('networkidle');
 
+	const workflowTaskPortletURLPattern =
+		/com_liferay_portal_workflow_task_web_portlet_MyWorkflowTaskPortlet/;
+
+	async function clickBackArrowAndExpectWorkflowTaskURL() {
+		await expect(userPersonalBarPage.backArrow).toBeVisible();
+
+		await userPersonalBarPage.backArrow.click();
+
+		await expect(page).toHaveURL(workflowTaskPortletURLPattern);
+	}
+
 	await userPersonalBarPage.notificationBadge.click();
 
 	await expect(
@@ -137,4 +148,12 @@ test('review comment is added to user notification', async ({
 			name: `Your submission was reviewed and the reviewer applied the following ${approvalComment}.`,
 		})
 	).toBeVisible();
+
+	await clickBackArrowAndExpectWorkflowTaskURL();
+
+	await userPersonalBarPage.userMenuButton.click();
+
+	await userPersonalBarPage.notificationsMenuItem.click();
+
+	await clickBackArrowAndExpectWorkflowTaskURL();
 });

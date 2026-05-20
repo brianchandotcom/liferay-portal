@@ -370,18 +370,6 @@ public class RatingsStatsPersistenceImpl
 	}
 
 	/**
-	 * Returns the ratings stats where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching ratings stats, or <code>null</code> if a matching ratings stats could not be found
-	 */
-	@Override
-	public RatingsStats fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
-	}
-
-	/**
 	 * Returns the ratings stats where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -1003,4 +991,4 @@ public class RatingsStatsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611351241
+// LIFERAY-SERVICE-BUILDER-HASH:-386846885

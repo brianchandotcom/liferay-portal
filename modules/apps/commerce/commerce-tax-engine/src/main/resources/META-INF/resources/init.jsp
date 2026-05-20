@@ -16,7 +16,8 @@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set"
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
+<%@ page import="com.liferay.commerce.product.exception.NoSuchCPTaxCategoryException" %><%@
+page import="com.liferay.commerce.product.model.CPTaxCategory" %><%@
 page import="com.liferay.commerce.tax.engine.internal.constants.FunctionCommerceTaxEngineFDSNames" %><%@
 page import="com.liferay.commerce.tax.engine.internal.constants.FunctionCommerceTaxEngineWebKeys" %><%@
 page import="com.liferay.commerce.tax.engine.internal.display.context.CommerceTaxCategoryMappingsDisplayContext" %><%@

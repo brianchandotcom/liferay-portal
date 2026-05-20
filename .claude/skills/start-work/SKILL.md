@@ -10,22 +10,22 @@ name: start-work
 
 Prepare a Liferay ticket for development.
 
-## 1. Resolve the Ticket
+## Resolve the Ticket
 
 Accept a key (`LPD-86295`) or a browse URL from `${ARGUMENTS}`. When nothing is supplied and `${PWD}` matches `*/liferay-portal-<KEY>` where `<KEY>` matches the Jira pattern `[A-Z]+-[0-9]+`, derive the key from the directory name. Otherwise, ask the user.
 
-## 2. Prerequisites
+## Prerequisites
 
 Abort when the working tree has uncommitted changes.
 
-## 3. Determine the Target
+## Determine the Target
 
 Fetch the ticket (issue type, current assignee, subtasks) and resolve the **target** — the ticket where the branch and active work state live:
 
 - **Bug** (`10004`) — the bug itself. There is no child.
-- **Story** (`10001`) or **Task** (`10002`) — the **Technical Task** (`10153`) subtask. Jira autocreates it when the parent is moved to an in-progress status, so the target does not exist yet and must be resolved after step 4. It may exist from a previous attempt, in which case it becomes the target.
+- **Story** (`10001`) or **Task** (`10002`) — the **Technical Task** (`10153`) subtask. Jira autocreates it when the parent is moved to an in-progress status, so the target does not exist yet and must be resolved after **Start Work on the Parent**. It may exist from a previous attempt, in which case it becomes the target.
 
-## 4. Start Work on the Parent
+## Start Work on the Parent
 
 Assign the parent to the user and apply the transitions below. If the parent is already in an in-progress status by a different user, refuse to continue.
 
@@ -37,7 +37,7 @@ Assign the parent to the user and apply the transitions below. If the parent is 
 
 For a Story, apply the two transitions in sequence: `41` moves it to **Ready for Development**, which triggers Jira to autocreate the **Technical Task** subtask, then `61` moves it to **In Development**.
 
-## 5. Start Work on the Child
+## Start Work on the Child
 
 Skip for **Bug**. For **Story** / **Task**, refetch the parent's subtasks until the **Technical Task** appears, then assign it to the user and transition it:
 
@@ -45,10 +45,10 @@ Skip for **Bug**. For **Story** / **Task**, refetch the parent's subtasks until 
 | --- | --- | --- |
 | Technical Task | In Progress | `41` |
 
-## 6. Create a Git Branch
+## Create a Git Branch
 
-Branch off the current HEAD, named after the **target** key. When the branch already exists, check it out instead. When `${PWD}` matches `*/liferay-portal-<name>`, the session is running inside a Liferay worktree that already has branch `<name>` checked out — skip this step and invoke the `worktree-setup` skill (action `new`) instead to provision the bundle, ports, and database.
+Branch off the current HEAD, named after the **target** key. When the branch already exists, check it out instead.
 
-## 7. Make a Plan
+## Make a Plan
 
 Enter plan mode and read the tickets (both parent and child) to make the plan.

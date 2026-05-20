@@ -6,18 +6,16 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
 import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -29,14 +27,7 @@ test(
 		tag: '@LPD-44478',
 	},
 
-	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
+	async ({analyticsChannel: channel, page, project}) => {
 		await test.step('Go to Analytics Cloud and Switch the property', async () => {
 			await navigateToACPageViaURL({
 				acPage: ACPage.sitePage,
@@ -118,13 +109,6 @@ test(
 					.locator(CardSelectors.SearchTerms)
 					.getByRole('button', {exact: false, name: '2'})
 			).toBeVisible();
-		});
-
-		await test.step('delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
 		});
 	}
 );

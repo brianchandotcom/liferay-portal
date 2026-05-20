@@ -7,6 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.asset
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsRoute;
@@ -47,10 +48,10 @@ public class AssetPublisherSimilarResultsContributorTest
 		RouteBuilderImpl routeBuilderImpl = new RouteBuilderImpl();
 
 		RouteHelper routeHelper = () -> StringBundler.concat(
-			"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-			"/BNPTUvWUBXIr/content/id?p_r_p_assetEntryId=43152",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_redirect=");
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/web/guest/ap-page/-/asset_publisher/BNPTUvWUBXIr/content/id?",
+			"p_r_p_assetEntryId=43152&_com_liferay_asset_publisher_web_portlet",
+			"_AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_redirect=");
 
 		_assetPublisherSimilarResultsContributor.detectRoute(
 			routeBuilderImpl, routeHelper);
@@ -85,13 +86,16 @@ public class AssetPublisherSimilarResultsContributorTest
 
 	@Test
 	public void testWriteDestination() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/web/guest/ap-page/-/asset_publisher/BNPTUvWUBXIr/");
+
 		DestinationBuilderImpl destinationBuilderImpl =
 			new DestinationBuilderImpl(
 				StringBundler.concat(
-					"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-					"/BNPTUvWUBXIr/content/id?p_r_p_assetEntryId=12345",
-					"&_com_liferay_asset_publisher_web_portlet_",
-					"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_redirect="));
+					portalURL, "content/id?p_r_p_assetEntryId=12345&_com_",
+					"liferay_asset_publisher_web_portlet_AssetPublisherPortlet",
+					"_INSTANCE_BNPTUvWUBXIr_redirect="));
 
 		setUpDestinationHelper(WikiPage.class.getName());
 		setUpDestinationHelper(setUpAssetEntry(54321L));
@@ -104,10 +108,9 @@ public class AssetPublisherSimilarResultsContributorTest
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-				"/BNPTUvWUBXIr/wiki/id?p_r_p_assetEntryId=54321",
-				"&_com_liferay_asset_publisher_web_portlet_",
-				"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_redirect="),
+				portalURL, "wiki/id?p_r_p_assetEntryId=54321&_com_liferay_",
+				"asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_",
+				"BNPTUvWUBXIr_redirect="),
 			destinationBuilderImpl.build());
 	}
 

@@ -2310,13 +2310,16 @@ public class DefaultObjectEntryManagerImplTest
 		LocalDateTime localDateTime = nowLocalDateTime.truncatedTo(
 			ChronoUnit.MILLIS);
 
+		String localDateTimeString = localDateTime.format(
+			DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS"));
+
 		assertEquals(
 			_defaultObjectEntryManager.addObjectEntry(
 				dtoConverterContext, _objectDefinition2,
 				new ObjectEntry() {
 					{
 						properties = HashMapBuilder.<String, Object>put(
-							"dateTimeObjectFieldName", localDateTime
+							"dateTimeObjectFieldName", localDateTimeString
 						).build();
 					}
 				},
@@ -2324,10 +2327,7 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						"dateTimeObjectFieldName",
-						localDateTime.format(
-							DateTimeFormatter.ofPattern(
-								"yyyy-MM-dd'T'HH:mm:ss.SSS"))
+						"dateTimeObjectFieldName", localDateTimeString
 					).build();
 				}
 			});
@@ -7574,8 +7574,6 @@ public class DefaultObjectEntryManagerImplTest
 
 	@Test
 	public void testPartialUpdateObjectEntry() throws Exception {
-		LocalDateTime nowLocalDateTime = LocalDateTime.now();
-
 		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
 			dtoConverterContext, _objectDefinition2,
 			new ObjectEntry() {
@@ -7585,7 +7583,13 @@ public class DefaultObjectEntryManagerImplTest
 						_simpleDateFormat.format(RandomTestUtil.nextDate())
 					).put(
 						"dateTimeObjectFieldName",
-						nowLocalDateTime.truncatedTo(ChronoUnit.MILLIS)
+						LocalDateTime.now(
+						).truncatedTo(
+							ChronoUnit.MILLIS
+						).format(
+							DateTimeFormatter.ofPattern(
+								"yyyy-MM-dd'T'HH:mm:ss.SSS")
+						)
 					).put(
 						"decimalObjectFieldName", RandomTestUtil.randomDouble()
 					).put(

@@ -8,7 +8,6 @@ package com.liferay.portal.tools.service.builder.test.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -78,66 +77,14 @@ public class ERCVersionedEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the erc versioned entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -221,72 +168,14 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_Head;
-	private FinderPath _finderPathCountByUuid_Head;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByUuid_Head;
 
 	/**
-	 * Returns all the erc versioned entries where uuid = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_Head(String uuid, boolean head) {
-		return findByUuid_Head(
-			uuid, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where uuid = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_Head(
-		String uuid, boolean head, int start, int end) {
-
-		return findByUuid_Head(uuid, head, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and head = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param head the head
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_Head(
-		String uuid, boolean head, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByUuid_Head(uuid, head, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -377,72 +266,14 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUUID_G;
-	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByUUID_G;
 
 	/**
-	 * Returns all the erc versioned entries where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUUID_G(String uuid, long groupId) {
-		return findByUUID_G(
-			uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUUID_G(
-		String uuid, long groupId, int start, int end) {
-
-		return findByUUID_G(uuid, groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUUID_G(
-		String uuid, long groupId, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByUUID_G(uuid, groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -533,7 +364,6 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G_Head;
 	private UniquePersistenceFinder<ERCVersionedEntry>
 		_uniquePersistenceFinderByUUID_G_Head;
 
@@ -568,21 +398,6 @@ public class ERCVersionedEntryPersistenceImpl
 		}
 
 		return ercVersionedEntry;
-	}
-
-	/**
-	 * Returns the erc versioned entry where uuid = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @return the matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	@Override
-	public ERCVersionedEntry fetchByUUID_G_Head(
-		String uuid, long groupId, boolean head) {
-
-		return fetchByUUID_G_Head(uuid, groupId, head, true);
 	}
 
 	/**
@@ -635,73 +450,14 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the erc versioned entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -792,78 +548,14 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Head;
-	private FinderPath _finderPathCountByUuid_C_Head;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByUuid_C_Head;
 
 	/**
-	 * Returns all the erc versioned entries where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C_Head(
-		String uuid, long companyId, boolean head) {
-
-		return findByUuid_C_Head(
-			uuid, companyId, head, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C_Head(
-		String uuid, long companyId, boolean head, int start, int end) {
-
-		return findByUuid_C_Head(uuid, companyId, head, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and companyId = &#63; and head = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param head the head
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByUuid_C_Head(
-		String uuid, long companyId, boolean head, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByUuid_C_Head(
-			uuid, companyId, head, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where uuid = &#63; and companyId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -961,77 +653,14 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, head});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByERC_G;
-	private FinderPath _finderPathWithoutPaginationFindByERC_G;
-	private FinderPath _finderPathCountByERC_G;
 	private CollectionPersistenceFinder<ERCVersionedEntry>
 		_collectionPersistenceFinderByERC_G;
 
 	/**
-	 * Returns all the erc versioned entries where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return findByERC_G(
-			externalReferenceCode, groupId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the erc versioned entries where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @return the range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByERC_G(
-		String externalReferenceCode, long groupId, int start, int end) {
-
-		return findByERC_G(externalReferenceCode, groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the erc versioned entries where externalReferenceCode = &#63; and groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of erc versioned entries
-	 * @param end the upper bound of the range of erc versioned entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching erc versioned entries
-	 */
-	@Override
-	public List<ERCVersionedEntry> findByERC_G(
-		String externalReferenceCode, long groupId, int start, int end,
-		OrderByComparator<ERCVersionedEntry> orderByComparator) {
-
-		return findByERC_G(
-			externalReferenceCode, groupId, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the erc versioned entries where externalReferenceCode = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ERCVersionedEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -1124,7 +753,6 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
-	private FinderPath _finderPathFetchByERC_G_Head;
 	private UniquePersistenceFinder<ERCVersionedEntry>
 		_uniquePersistenceFinderByERC_G_Head;
 
@@ -1159,21 +787,6 @@ public class ERCVersionedEntryPersistenceImpl
 		}
 
 		return ercVersionedEntry;
-	}
-
-	/**
-	 * Returns the erc versioned entry where externalReferenceCode = &#63; and groupId = &#63; and head = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @param head the head
-	 * @return the matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	@Override
-	public ERCVersionedEntry fetchByERC_G_Head(
-		String externalReferenceCode, long groupId, boolean head) {
-
-		return fetchByERC_G_Head(externalReferenceCode, groupId, head, true);
 	}
 
 	/**
@@ -1230,7 +843,6 @@ public class ERCVersionedEntryPersistenceImpl
 			finderCache, new Object[] {externalReferenceCode, groupId, head});
 	}
 
-	private FinderPath _finderPathFetchByHeadId;
 	private UniquePersistenceFinder<ERCVersionedEntry>
 		_uniquePersistenceFinderByHeadId;
 
@@ -1260,17 +872,6 @@ public class ERCVersionedEntryPersistenceImpl
 		}
 
 		return ercVersionedEntry;
-	}
-
-	/**
-	 * Returns the erc versioned entry where headId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param headId the head ID
-	 * @return the matching erc versioned entry, or <code>null</code> if a matching erc versioned entry could not be found
-	 */
-	@Override
-	public ERCVersionedEntry fetchByHeadId(long headId) {
-		return fetchByHeadId(headId, true);
 	}
 
 	/**
@@ -1578,27 +1179,23 @@ public class ERCVersionedEntryPersistenceImpl
 	 * Initializes the erc versioned entry persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 			_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 			ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1606,30 +1203,31 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ERCVersionedEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
-			new String[] {
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Head",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"uuid_", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_Head,
-				_finderPathWithoutPaginationFindByUuid_Head,
-				_finderPathCountByUuid_Head,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_Head",
+					new String[] {
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"uuid_", "head"}, 0, 1, false, null),
 				_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 				_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1641,30 +1239,26 @@ public class ERCVersionedEntryPersistenceImpl
 					"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ERCVersionedEntry::isHead));
 
-		_finderPathWithPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, true, null);
-
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUUID_G =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUUID_G,
-				_finderPathWithoutPaginationFindByUUID_G,
-				_finderPathCountByUUID_G, _SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, false, null),
+				_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 				_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1675,18 +1269,17 @@ public class ERCVersionedEntryPersistenceImpl
 					"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getGroupId));
 
-		_finderPathFetchByUUID_G_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
-			convertNullFunction(ERCVersionedEntry::getUuid),
-			ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead);
-
 		_uniquePersistenceFinderByUUID_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G_Head,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Head",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"uuid_", "groupId", "head"}, 0, 1, false,
+				convertNullFunction(ERCVersionedEntry::getUuid),
+				ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead),
 			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ercVersionedEntry.", "uuid", FinderColumn.Type.STRING, "=",
@@ -1698,30 +1291,26 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 				true, true, ERCVersionedEntry::isHead));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 				_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1732,36 +1321,36 @@ public class ERCVersionedEntryPersistenceImpl
 					"ercVersionedEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ERCVersionedEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C_Head = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "head"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C_Head =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C_Head,
-				_finderPathWithoutPaginationFindByUuid_C_Head,
-				_finderPathCountByUuid_C_Head,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_C_Head",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "head"}, 0, 1, false,
+					null),
 				_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 				_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 				ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1776,30 +1365,26 @@ public class ERCVersionedEntryPersistenceImpl
 					"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ERCVersionedEntry::isHead));
 
-		_finderPathWithPaginationFindByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, true,
-			null);
-
-		_finderPathCountByERC_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			null);
-
 		_collectionPersistenceFinderByERC_G = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByERC_G,
-			_finderPathWithoutPaginationFindByERC_G, _finderPathCountByERC_G,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByERC_G",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"externalReferenceCode", "groupId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				null),
 			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
 			_SQL_COUNT_ERCVERSIONEDENTRY_WHERE,
 			ERCVersionedEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1811,19 +1396,19 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, ERCVersionedEntry::getGroupId));
 
-		_finderPathFetchByERC_G_Head = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"externalReferenceCode", "groupId", "head"}, 0, 1,
-			false,
-			convertNullFunction(ERCVersionedEntry::getExternalReferenceCode),
-			ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead);
-
 		_uniquePersistenceFinderByERC_G_Head = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G_Head,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G_Head",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"externalReferenceCode", "groupId", "head"}, 0, 1,
+				false,
+				convertNullFunction(
+					ERCVersionedEntry::getExternalReferenceCode),
+				ERCVersionedEntry::getGroupId, ERCVersionedEntry::isHead),
 			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ercVersionedEntry.", "externalReferenceCode",
@@ -1836,14 +1421,13 @@ public class ERCVersionedEntryPersistenceImpl
 				"ercVersionedEntry.", "head", FinderColumn.Type.BOOLEAN, "=",
 				true, true, ERCVersionedEntry::isHead));
 
-		_finderPathFetchByHeadId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
-			new String[] {Long.class.getName()}, new String[] {"headId"}, 0, 0,
-			false, ERCVersionedEntry::getHeadId);
-
 		_uniquePersistenceFinderByHeadId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHeadId, _SQL_SELECT_ERCVERSIONEDENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByHeadId",
+				new String[] {Long.class.getName()}, new String[] {"headId"}, 0,
+				0, false, ERCVersionedEntry::getHeadId),
+			_SQL_SELECT_ERCVERSIONEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"ercVersionedEntry.", "headId", FinderColumn.Type.LONG, "=",
 				true, true, ERCVersionedEntry::getHeadId));
@@ -1890,4 +1474,4 @@ public class ERCVersionedEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-60212607
+// LIFERAY-SERVICE-BUILDER-HASH:545969811

@@ -56,6 +56,10 @@ public class JakartaCompatabilityUtil {
 
 						if (fileName.endsWith(".xml")) {
 							_updateXMLWebappTag(path);
+
+							FileUtil.replaceString(
+								file, _SPRING5_THYMELEAF_PACKAGE,
+								_SPRING6_THYMELEAF_PACKAGE);
 						}
 
 						if (fileName.endsWith(".jsp")) {
@@ -170,6 +174,12 @@ public class JakartaCompatabilityUtil {
 	private static final String _POM_GAV_PATTERN_WITH_OPTIONAL_VERSION =
 		"<groupId>%s</groupId>\\n\\s*<artifactId>%s</artifactId>" +
 			"(\\n\\s*<version>.*</version>)?";
+
+	private static final String _SPRING5_THYMELEAF_PACKAGE =
+		"org.thymeleaf.spring5";
+
+	private static final String _SPRING6_THYMELEAF_PACKAGE =
+		"org.thymeleaf.spring6";
 
 	private static final String _TAGLIB_URL_NEW = "jakarta.tags.core";
 

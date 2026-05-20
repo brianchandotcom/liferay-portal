@@ -141,8 +141,8 @@ export default function ExportTranslationModalContent({
 	availableTargetLocales = [],
 	closeModal,
 	defaultSourceLanguageId,
-	itemId,
 	selectedData,
+	translationsAPIURL,
 }: {
 	apiURL?: string;
 	availableExportFileFormats: FileFormat[];
@@ -150,8 +150,8 @@ export default function ExportTranslationModalContent({
 	availableTargetLocales: Locale[];
 	closeModal: () => void;
 	defaultSourceLanguageId: string;
-	itemId?: number;
 	selectedData?: IBulkActionFDSData;
+	translationsAPIURL?: string;
 }) {
 	const [exportMimeType, setExportMimeType] = useState(
 		availableExportFileFormats[0].mimeType
@@ -198,17 +198,13 @@ export default function ExportTranslationModalContent({
 			version,
 		});
 
-		return fetch(
-			`/o/cms/basic-web-contents/${itemId}/translations?${params}`,
-			{
-				headers: {
-					'Accept': 'application/zip',
-					'Accept-Language':
-						Liferay.ThemeDisplay.getBCP47LanguageId(),
-					'Content-Type': 'application/json',
-				},
-			}
-		).then(async (response) => {
+		return fetch(`${translationsAPIURL}?${params}`, {
+			headers: {
+				'Accept': 'application/zip',
+				'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+				'Content-Type': 'application/json',
+			},
+		}).then(async (response) => {
 			if (!response.ok) {
 				displayErrorToast();
 			}

@@ -95,7 +95,7 @@ export default WrappedComponent => {
 					return API.individualSegment
 						.delete({
 							groupId,
-							id
+							ids: [id]
 						})
 						.then(() => {
 							addAlert({

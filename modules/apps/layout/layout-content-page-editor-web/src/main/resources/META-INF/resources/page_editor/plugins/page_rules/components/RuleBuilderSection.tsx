@@ -17,17 +17,21 @@ import React, {useId, useMemo} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
+import InfoItemService from '../../../app/services/InfoItemService';
+import {CACHE_KEYS} from '../../../app/utils/cache';
 import {isAllowedInRules} from '../../../app/utils/isAllowedInRules';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import {translateConditionsToScript} from '../../../app/utils/translateConditionsToScript';
 import useActionValues from '../../../app/utils/useActionValues';
+import useCache from '../../../app/utils/useCache';
 import useConditionValues from '../../../app/utils/useConditionValues';
 import {Action, Condition} from '../../../types/Rule';
 import ActionComponent from './Action';
 import AdvancedRuleEditor from './AdvancedRuleEditor';
-import ConditionComponent from './Condition';
+import ConditionComponent, {filterAndConvertMappingFields} from './Condition';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -232,6 +236,38 @@ export function RuleBuilderConditionSection({
 		items: inputFragmentItems,
 	});
 
+	const {subtype, type} = config.selectedMappingTypes ?? {};
+
+	const mappingFields = useCache({
+		fetcher: () =>
+			type
+				? InfoItemService.getAvailableStructureMappingFields({
+						classNameId: type.id,
+						classTypeId: subtype ? subtype.id : '',
+					})
+				: Promise.resolve([]),
+		key: type
+			? subtype
+				? [CACHE_KEYS.mappingFields, type.id, subtype.id]
+				: [CACHE_KEYS.mappingFields, type.id]
+			: [CACHE_KEYS.mappingFields],
+	});
+
+	const mappingFieldItems = useMemo(
+		() => filterAndConvertMappingFields(mappingFields),
+		[mappingFields]
+	);
+
+	const fieldTypes = useMemo(() => {
+		const types: Record<string, string> = {};
+
+		for (const field of mappingFieldItems) {
+			types[field.value] = field.type;
+		}
+
+		return types;
+	}, [mappingFieldItems]);
+
 	const tooltipId = useId();
 
 	return (
@@ -277,7 +313,8 @@ export function RuleBuilderConditionSection({
 												script: conditions?.length
 													? translateConditionsToScript(
 															conditions,
-															conditionType
+															conditionType,
+															fieldTypes
 														)
 													: '',
 											}
@@ -414,6 +451,7 @@ export function RuleBuilderConditionSection({
 								<ConditionComponent
 									condition={item}
 									inputFragmentItems={inputFragmentItems}
+									mappingFieldItems={mappingFieldItems}
 									onConditionChange={onChange}
 								/>
 							)}

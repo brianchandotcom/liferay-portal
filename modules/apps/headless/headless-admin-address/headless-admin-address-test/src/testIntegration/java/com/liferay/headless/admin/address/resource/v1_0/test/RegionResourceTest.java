@@ -52,7 +52,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		super.setUp();
 
 		_country = _countryLocalService.addCountry(
-			"a1", "a11", true, RandomTestUtil.randomBoolean(),
+			null, "a1", "a11", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -221,7 +221,7 @@ public class RegionResourceTest extends BaseRegionResourceTestCase {
 		throws Exception {
 
 		Country country = _countryLocalService.addCountry(
-			"a2", "a22", true, RandomTestUtil.randomBoolean(),
+			null, "a2", "a22", true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),

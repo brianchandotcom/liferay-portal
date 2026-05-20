@@ -42,6 +42,8 @@ public interface BuildReport {
 
 	public StopWatchRecordsGroup getStopWatchRecordsGroup();
 
+	public URL getTestrayAttachmentURLBySuffix(String suffix);
+
 	public List<URL> getTestrayAttachmentURLs();
 
 	public boolean isFailing();

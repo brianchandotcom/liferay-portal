@@ -3,12 +3,14 @@
 
 import demandbaseConfig from './configs/demandbase';
 import hubspotConfig from './configs/hubspot';
+import marketoConfig from './configs/marketo';
 import {ConnectorConfig} from './types';
 import {DataSourceTypes} from 'shared/util/constants';
 
 const connectorRegistry: Record<string, ConnectorConfig> = {
 	[DataSourceTypes.Demandbase]: demandbaseConfig,
-	[DataSourceTypes.Hubspot]: hubspotConfig
+	[DataSourceTypes.Hubspot]: hubspotConfig,
+	[DataSourceTypes.Marketo]: marketoConfig
 };
 
 export function getConnectorConfig(

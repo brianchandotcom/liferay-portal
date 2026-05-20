@@ -33,47 +33,6 @@ public interface ObjectDefinitionSettingPersistence
 	 */
 
 	/**
-	 * Returns all the object definition settings where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the object definition settings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @return the range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object definition settings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ObjectDefinitionSetting> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object definition settings where uuid = &#63;.
 	 *
 	 * <p>
@@ -133,51 +92,6 @@ public interface ObjectDefinitionSettingPersistence
 	 * @return the number of matching object definition settings
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns all the object definition settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the object definition settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @return the range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object definition settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object definition settings where uuid = &#63; and companyId = &#63;.
@@ -246,48 +160,6 @@ public interface ObjectDefinitionSettingPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the object definition settings where objectDefinitionId = &#63;.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @return the matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByObjectDefinitionId(
-		long objectDefinitionId);
-
-	/**
-	 * Returns a range of all the object definition settings where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @return the range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object definition settings where objectDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByObjectDefinitionId(
-		long objectDefinitionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ObjectDefinitionSetting> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object definition settings where objectDefinitionId = &#63;.
 	 *
 	 * <p>
@@ -347,51 +219,6 @@ public interface ObjectDefinitionSettingPersistence
 	 * @return the number of matching object definition settings
 	 */
 	public int countByObjectDefinitionId(long objectDefinitionId);
-
-	/**
-	 * Returns all the object definition settings where companyId = &#63; and name = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N(
-		long companyId, String name);
-
-	/**
-	 * Returns a range of all the object definition settings where companyId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @return the range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N(
-		long companyId, String name, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N(
-		long companyId, String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63;.
@@ -472,16 +299,6 @@ public interface ObjectDefinitionSettingPersistence
 		throws NoSuchObjectDefinitionSettingException;
 
 	/**
-	 * Returns the object definition setting where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectDefinitionId the object definition ID
-	 * @param name the name
-	 * @return the matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
-	 */
-	public ObjectDefinitionSetting fetchByODI_N(
-		long objectDefinitionId, String name);
-
-	/**
 	 * Returns the object definition setting where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param objectDefinitionId the object definition ID
@@ -511,54 +328,6 @@ public interface ObjectDefinitionSettingPersistence
 	 * @return the number of matching object definition settings
 	 */
 	public int countByODI_N(long objectDefinitionId, String name);
-
-	/**
-	 * Returns all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @return the matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N_V(
-		long companyId, String name, String value);
-
-	/**
-	 * Returns a range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @return the range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N_V(
-		long companyId, String name, String value, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param value the value
-	 * @param start the lower bound of the range of object definition settings
-	 * @param end the upper bound of the range of object definition settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object definition settings
-	 */
-	public java.util.List<ObjectDefinitionSetting> findByC_N_V(
-		long companyId, String name, String value, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<ObjectDefinitionSetting> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
@@ -672,5 +441,304 @@ public interface ObjectDefinitionSettingPersistence
 	public ObjectDefinitionSetting fetchByPrimaryKey(
 		long objectDefinitionSettingId);
 
+	/**
+	 * Returns the object definition setting where objectDefinitionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param name the name
+	 * @return the matching object definition setting, or <code>null</code> if a matching object definition setting could not be found
+	 */
+	public default ObjectDefinitionSetting fetchByODI_N(
+		long objectDefinitionId, String name) {
+
+		return fetchByODI_N(objectDefinitionId, name, true);
+	}
+
+	/**
+	 * Returns all the object definition settings where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid(
+		String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object definition settings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @return the range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definition settings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<ObjectDefinitionSetting> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object definition settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object definition settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @return the range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definition settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<ObjectDefinitionSetting> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object definition settings where objectDefinitionId = &#63;.
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @return the matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting>
+		findByObjectDefinitionId(long objectDefinitionId) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object definition settings where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @return the range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting>
+		findByObjectDefinitionId(long objectDefinitionId, int start, int end) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definition settings where objectDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectDefinitionId the object definition ID
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting>
+		findByObjectDefinitionId(
+			long objectDefinitionId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<ObjectDefinitionSetting> orderByComparator) {
+
+		return findByObjectDefinitionId(
+			objectDefinitionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object definition settings where companyId = &#63; and name = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @return the matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N(
+		long companyId, String name) {
+
+		return findByC_N(
+			companyId, name,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object definition settings where companyId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @return the range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N(
+		long companyId, String name, int start, int end) {
+
+		return findByC_N(companyId, name, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N(
+		long companyId, String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<ObjectDefinitionSetting> orderByComparator) {
+
+		return findByC_N(companyId, name, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param value the value
+	 * @return the matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N_V(
+		long companyId, String name, String value) {
+
+		return findByC_N_V(
+			companyId, name, value,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param value the value
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @return the range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N_V(
+		long companyId, String name, String value, int start, int end) {
+
+		return findByC_N_V(companyId, name, value, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectDefinitionSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param name the name
+	 * @param value the value
+	 * @param start the lower bound of the range of object definition settings
+	 * @param end the upper bound of the range of object definition settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definition settings
+	 */
+	public default java.util.List<ObjectDefinitionSetting> findByC_N_V(
+		long companyId, String name, String value, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<ObjectDefinitionSetting> orderByComparator) {
+
+		return findByC_N_V(
+			companyId, name, value, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2105233007
+// LIFERAY-SERVICE-BUILDER-HASH:-1388604414

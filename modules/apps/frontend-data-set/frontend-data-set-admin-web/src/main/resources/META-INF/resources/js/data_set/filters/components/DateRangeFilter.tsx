@@ -155,7 +155,7 @@ function Body({
 				from,
 				label_i18n: i18nFilterLabels,
 				to,
-				type: selectedField?.format,
+				type: selectedField?.format ?? selectedField?.type,
 			};
 
 			onSave(formData);

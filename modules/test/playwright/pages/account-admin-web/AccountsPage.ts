@@ -141,6 +141,12 @@ export class AccountsPage {
 		await this.page.goto(`${PORTLET_URLS.accountAdmin}`);
 	}
 
+	async gotoAccountChannelDefaults(accountName: string) {
+		await this.gotoAccountAdmin();
+		await this.accountNameLink(accountName).click();
+		await this.channelDefaultsTab.click();
+	}
+
 	async organizationName(name: string): Promise<Locator> {
 		return this.page.getByText(name, {exact: true});
 	}

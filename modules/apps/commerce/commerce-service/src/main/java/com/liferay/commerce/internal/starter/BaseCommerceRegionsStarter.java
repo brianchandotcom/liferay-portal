@@ -87,7 +87,7 @@ public abstract class BaseCommerceRegionsStarter
 			double priority = jsonObject.getDouble("priority");
 
 			regionLocalService.addRegion(
-				country.getCountryId(), true, name, priority, code,
+				null, country.getCountryId(), true, name, priority, code,
 				serviceContext);
 		}
 	}

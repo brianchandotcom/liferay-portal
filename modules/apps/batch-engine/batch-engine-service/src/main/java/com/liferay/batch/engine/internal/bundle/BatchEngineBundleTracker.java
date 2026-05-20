@@ -12,7 +12,7 @@ import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -72,7 +72,7 @@ public class BatchEngineBundleTracker {
 
 		@Override
 		public Bundle addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-			if (DBUpgrader.isUpgradeClient()) {
+			if (UpgradeProcessUtil.isUpgradeClient()) {
 				return null;
 			}
 

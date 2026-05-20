@@ -45,14 +45,6 @@ public interface DDMFormInstanceReportPersistence
 		throws NoSuchFormInstanceReportException;
 
 	/**
-	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
-	 */
-	public DDMFormInstanceReport fetchByFormInstanceId(long formInstanceId);
-
-	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param formInstanceId the form instance ID
@@ -118,5 +110,17 @@ public interface DDMFormInstanceReportPersistence
 	 */
 	public DDMFormInstanceReport fetchByPrimaryKey(long formInstanceReportId);
 
+	/**
+	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
+	 */
+	public default DDMFormInstanceReport fetchByFormInstanceId(
+		long formInstanceId) {
+
+		return fetchByFormInstanceId(formInstanceId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1785736196
+// LIFERAY-SERVICE-BUILDER-HASH:213558880

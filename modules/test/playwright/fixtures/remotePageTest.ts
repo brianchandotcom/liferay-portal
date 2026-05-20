@@ -21,10 +21,11 @@ function remotePageTest(port: string) {
 		remotePage: async ({browser, page}, use) => {
 			await page.goto('/');
 
-			const remoteUrl = liferayConfig.environment.baseUrl.replace(
-				'8080',
-				port
-			);
+			const remoteBaseUrl = new URL(liferayConfig.environment.baseUrl);
+
+			remoteBaseUrl.port = port;
+
+			const remoteUrl = remoteBaseUrl.origin;
 
 			const remoteContext = await browser.newContext({
 				baseURL: remoteUrl,

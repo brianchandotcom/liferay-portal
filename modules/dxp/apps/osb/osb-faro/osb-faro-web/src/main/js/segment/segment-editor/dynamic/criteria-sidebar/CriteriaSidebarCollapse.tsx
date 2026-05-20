@@ -24,7 +24,7 @@ import {useParams} from 'react-router-dom';
 /**
  * Returns a default value for a property provided.
  */
-const getDefaultValue = (property: Property): any => {
+export const getDefaultValue = (property: Property): any => {
 	const {name, options, type} = property;
 
 	switch (type) {
@@ -156,18 +156,11 @@ const getDefaultValue = (property: Property): any => {
 				{key: 'operator', value: RelationalOperators.GE},
 				{key: 'value', value: 1}
 			]);
+		case PropertyTypes.Tag:
 		case PropertyTypes.Vocabulary:
 			return createCustomValueMap([
-				{
-					key: 'criterionGroup',
-					value: [
-						{
-							operatorName: RelationalOperators.EQ,
-							propertyName: name,
-							value: ''
-						}
-					]
-				}
+				{key: 'operator', value: RelationalOperators.GE},
+				{key: 'value', value: 1}
 			]);
 		case PropertyTypes.OrganizationBoolean:
 			return createCustomValueMap([

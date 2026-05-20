@@ -5,6 +5,7 @@
 
 import React from 'react';
 
+import CheckboxSheet from '../../../components/forms/CheckboxSheet';
 import {FormikFieldContentSelector} from '../../../components/forms/formik';
 import {ImportPreview} from '../../../types/exportImportPreview';
 import FileSummary from './FileSummary';
@@ -22,9 +23,27 @@ export default function DataSelectionStep({
 		<>
 			<FileSummary importPreview={importPreview} />
 
+			{importPreview.deletionCount > 0 && (
+				<CheckboxSheet
+					description={Liferay.Language.get('deletions-help')}
+					label={Liferay.Language.get('replicate-selected-deletions')}
+					name="deletions"
+					title={Liferay.Language.get('deletions')}
+				/>
+			)}
+
+			<CheckboxSheet
+				description={Liferay.Language.get(
+					'export-import-permissions-help'
+				)}
+				label={Liferay.Language.get('import-permissions')}
+				name="importPermissions"
+				title={Liferay.Language.get('permissions')}
+			/>
+
 			<FormikFieldContentSelector
 				name="contentSelection"
-				sections={importPreview.portletDataHandlerSections}
+				sections={importPreview.previewPortletDataHandlerSections}
 			/>
 		</>
 	);

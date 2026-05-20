@@ -135,55 +135,6 @@ public class SharepointOAuth2TokenEntryUtil {
 	}
 
 	/**
-	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching sharepoint o auth2 token entries
-	 */
-	public static List<SharepointOAuth2TokenEntry> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	 * Returns a range of all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of sharepoint o auth2 token entries
-	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	 * @return the range of matching sharepoint o auth2 token entries
-	 */
-	public static List<SharepointOAuth2TokenEntry> findByUserId(
-		long userId, int start, int end) {
-
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of sharepoint o auth2 token entries
-	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching sharepoint o auth2 token entries
-	 */
-	public static List<SharepointOAuth2TokenEntry> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
 	 *
 	 * <p>
@@ -270,19 +221,6 @@ public class SharepointOAuth2TokenEntryUtil {
 			NoSuch2TokenEntryException {
 
 		return getPersistence().findByU_C(userId, configurationPid);
-	}
-
-	/**
-	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
-	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	 */
-	public static SharepointOAuth2TokenEntry fetchByU_C(
-		long userId, String configurationPid) {
-
-		return getPersistence().fetchByU_C(userId, configurationPid);
 	}
 
 	/**
@@ -386,6 +324,68 @@ public class SharepointOAuth2TokenEntryUtil {
 		return getPersistence().fetchByPrimaryKey(sharepointOAuth2TokenEntryId);
 	}
 
+	/**
+	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param configurationPid the configuration pid
+	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
+	 */
+	public static SharepointOAuth2TokenEntry fetchByU_C(
+		long userId, String configurationPid) {
+
+		return getPersistence().fetchByU_C(userId, configurationPid);
+	}
+
+	/**
+	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching sharepoint o auth2 token entries
+	 */
+	public static List<SharepointOAuth2TokenEntry> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @return the range of matching sharepoint o auth2 token entries
+	 */
+	public static List<SharepointOAuth2TokenEntry> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of sharepoint o auth2 token entries
+	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching sharepoint o auth2 token entries
+	 */
+	public static List<SharepointOAuth2TokenEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
 	public static SharepointOAuth2TokenEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -399,4 +399,4 @@ public class SharepointOAuth2TokenEntryUtil {
 	private static volatile SharepointOAuth2TokenEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550592388
+// LIFERAY-SERVICE-BUILDER-HASH:71130668

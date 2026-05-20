@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -95,72 +94,14 @@ public class StyleBookEntryVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStyleBookEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByStyleBookEntryId;
-	private FinderPath _finderPathCountByStyleBookEntryId;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByStyleBookEntryId;
 
 	/**
-	 * Returns all the style book entry versions where styleBookEntryId = &#63;.
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByStyleBookEntryId(
-		long styleBookEntryId) {
-
-		return findByStyleBookEntryId(
-			styleBookEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where styleBookEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByStyleBookEntryId(
-		long styleBookEntryId, int start, int end) {
-
-		return findByStyleBookEntryId(styleBookEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where styleBookEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByStyleBookEntryId(
-		long styleBookEntryId, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByStyleBookEntryId(
-			styleBookEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where styleBookEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param styleBookEntryId the style book entry ID
@@ -247,7 +188,6 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {styleBookEntryId});
 	}
 
-	private FinderPath _finderPathFetchByStyleBookEntryId_Version;
 	private UniquePersistenceFinder<StyleBookEntryVersion>
 		_uniquePersistenceFinderByStyleBookEntryId_Version;
 
@@ -282,20 +222,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		}
 
 		return styleBookEntryVersion;
-	}
-
-	/**
-	 * Returns the style book entry version where styleBookEntryId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param styleBookEntryId the style book entry ID
-	 * @param version the version
-	 * @return the matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	@Override
-	public StyleBookEntryVersion fetchByStyleBookEntryId_Version(
-		long styleBookEntryId, int version) {
-
-		return fetchByStyleBookEntryId_Version(styleBookEntryId, version, true);
 	}
 
 	/**
@@ -348,68 +274,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {styleBookEntryId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the style book entry versions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -495,75 +367,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_Version;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_Version;
-	private FinderPath _finderPathCountByUuid_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByUuid_Version;
 
 	/**
-	 * Returns all the style book entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_Version(
-		String uuid, int version) {
-
-		return findByUuid_Version(
-			uuid, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_Version(
-		String uuid, int version, int start, int end) {
-
-		return findByUuid_Version(uuid, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_Version(
-		String uuid, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByUuid_Version(
-			uuid, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -654,72 +465,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUUID_G;
-	private FinderPath _finderPathWithoutPaginationFindByUUID_G;
-	private FinderPath _finderPathCountByUUID_G;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByUUID_G;
 
 	/**
-	 * Returns all the style book entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUUID_G(String uuid, long groupId) {
-		return findByUUID_G(
-			uuid, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUUID_G(
-		String uuid, long groupId, int start, int end) {
-
-		return findByUUID_G(uuid, groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUUID_G(
-		String uuid, long groupId, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByUUID_G(uuid, groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -810,7 +563,6 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G_Version;
 	private UniquePersistenceFinder<StyleBookEntryVersion>
 		_uniquePersistenceFinderByUUID_G_Version;
 
@@ -845,21 +597,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		}
 
 		return styleBookEntryVersion;
-	}
-
-	/**
-	 * Returns the style book entry version where uuid = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @return the matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	@Override
-	public StyleBookEntryVersion fetchByUUID_G_Version(
-		String uuid, long groupId, int version) {
-
-		return fetchByUUID_G_Version(uuid, groupId, version, true);
 	}
 
 	/**
@@ -912,75 +649,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the style book entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1071,79 +747,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C_Version;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C_Version;
-	private FinderPath _finderPathCountByUuid_C_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByUuid_C_Version;
 
 	/**
-	 * Returns all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version) {
-
-		return findByUuid_C_Version(
-			uuid, companyId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version, int start, int end) {
-
-		return findByUuid_C_Version(uuid, companyId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByUuid_C_Version(
-		String uuid, long companyId, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByUuid_C_Version(
-			uuid, companyId, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -1244,69 +855,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1392,75 +948,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId_Version;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId_Version;
-	private FinderPath _finderPathCountByGroupId_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByGroupId_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId_Version(
-		long groupId, int version) {
-
-		return findByGroupId_Version(
-			groupId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId_Version(
-		long groupId, int version, int start, int end) {
-
-		return findByGroupId_Version(groupId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByGroupId_Version(
-		long groupId, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByGroupId_Version(
-			groupId, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1551,77 +1046,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_D;
-	private FinderPath _finderPathCountByG_D;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_D;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D(
-		long groupId, boolean defaultStyleBookEntry) {
-
-		return findByG_D(
-			groupId, defaultStyleBookEntry, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D(
-		long groupId, boolean defaultStyleBookEntry, int start, int end) {
-
-		return findByG_D(groupId, defaultStyleBookEntry, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D(
-		long groupId, boolean defaultStyleBookEntry, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_D(
-			groupId, defaultStyleBookEntry, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1714,82 +1146,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, defaultStyleBookEntry});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_Version;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_Version;
-	private FinderPath _finderPathCountByG_D_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_D_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_Version(
-		long groupId, boolean defaultStyleBookEntry, int version) {
-
-		return findByG_D_Version(
-			groupId, defaultStyleBookEntry, version, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_Version(
-		long groupId, boolean defaultStyleBookEntry, int version, int start,
-		int end) {
-
-		return findByG_D_Version(
-			groupId, defaultStyleBookEntry, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_Version(
-		long groupId, boolean defaultStyleBookEntry, int version, int start,
-		int end, OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_D_Version(
-			groupId, defaultStyleBookEntry, version, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1893,72 +1257,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N;
-	private FinderPath _finderPathWithoutPaginationFindByG_N;
-	private FinderPath _finderPathCountByG_N;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_N;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N(long groupId, String name) {
-		return findByG_N(
-			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N(
-		long groupId, String name, int start, int end) {
-
-		return findByG_N(groupId, name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N(
-		long groupId, String name, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_N(groupId, name, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2049,78 +1355,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N_Version;
-	private FinderPath _finderPathWithoutPaginationFindByG_N_Version;
-	private FinderPath _finderPathCountByG_N_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_N_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N_Version(
-		long groupId, String name, int version) {
-
-		return findByG_N_Version(
-			groupId, name, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N_Version(
-		long groupId, String name, int version, int start, int end) {
-
-		return findByG_N_Version(groupId, name, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_N_Version(
-		long groupId, String name, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_N_Version(
-			groupId, name, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2218,75 +1460,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, name, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN;
-	private FinderPath _finderPathWithoutPaginationFindByG_LikeN;
-	private FinderPath _finderPathCountByG_LikeN;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_LikeN;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN(
-		long groupId, String name) {
-
-		return findByG_LikeN(
-			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN(
-		long groupId, String name, int start, int end) {
-
-		return findByG_LikeN(groupId, name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN(
-		long groupId, String name, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_LikeN(
-			groupId, name, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2377,78 +1558,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN_Version;
-	private FinderPath _finderPathWithoutPaginationFindByG_LikeN_Version;
-	private FinderPath _finderPathCountByG_LikeN_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_LikeN_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN_Version(
-		long groupId, String name, int version) {
-
-		return findByG_LikeN_Version(
-			groupId, name, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN_Version(
-		long groupId, String name, int version, int start, int end) {
-
-		return findByG_LikeN_Version(groupId, name, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_LikeN_Version(
-		long groupId, String name, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_LikeN_Version(
-			groupId, name, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and name = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2549,76 +1666,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, name, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_SBEK;
-	private FinderPath _finderPathWithoutPaginationFindByG_SBEK;
-	private FinderPath _finderPathCountByG_SBEK;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_SBEK;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and styleBookEntryKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_SBEK(
-		long groupId, String styleBookEntryKey) {
-
-		return findByG_SBEK(
-			groupId, styleBookEntryKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and styleBookEntryKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_SBEK(
-		long groupId, String styleBookEntryKey, int start, int end) {
-
-		return findByG_SBEK(groupId, styleBookEntryKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and styleBookEntryKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_SBEK(
-		long groupId, String styleBookEntryKey, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_SBEK(
-			groupId, styleBookEntryKey, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and styleBookEntryKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2711,7 +1766,6 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey});
 	}
 
-	private FinderPath _finderPathFetchByG_SBEK_Version;
 	private UniquePersistenceFinder<StyleBookEntryVersion>
 		_uniquePersistenceFinderByG_SBEK_Version;
 
@@ -2746,21 +1800,6 @@ public class StyleBookEntryVersionPersistenceImpl
 		}
 
 		return styleBookEntryVersion;
-	}
-
-	/**
-	 * Returns the style book entry version where groupId = &#63; and styleBookEntryKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param styleBookEntryKey the style book entry key
-	 * @param version the version
-	 * @return the matching style book entry version, or <code>null</code> if a matching style book entry version could not be found
-	 */
-	@Override
-	public StyleBookEntryVersion fetchByG_SBEK_Version(
-		long groupId, String styleBookEntryKey, int version) {
-
-		return fetchByG_SBEK_Version(groupId, styleBookEntryKey, version, true);
 	}
 
 	/**
@@ -2817,72 +1856,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, styleBookEntryKey, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_T;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T(long groupId, String themeId) {
-		return findByG_T(
-			groupId, themeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and themeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T(
-		long groupId, String themeId, int start, int end) {
-
-		return findByG_T(groupId, themeId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and themeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T(
-		long groupId, String themeId, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_T(groupId, themeId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and themeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2973,79 +1954,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, themeId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_Version;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_Version;
-	private FinderPath _finderPathCountByG_T_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_T_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T_Version(
-		long groupId, String themeId, int version) {
-
-		return findByG_T_Version(
-			groupId, themeId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T_Version(
-		long groupId, String themeId, int version, int start, int end) {
-
-		return findByG_T_Version(groupId, themeId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and themeId = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_T_Version(
-		long groupId, String themeId, int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_T_Version(
-			groupId, themeId, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3143,82 +2059,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, themeId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T;
-	private FinderPath _finderPathCountByG_D_T;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_D_T;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T(
-		long groupId, boolean defaultStyleBookEntry, String themeId) {
-
-		return findByG_D_T(
-			groupId, defaultStyleBookEntry, themeId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T(
-		long groupId, boolean defaultStyleBookEntry, String themeId, int start,
-		int end) {
-
-		return findByG_D_T(
-			groupId, defaultStyleBookEntry, themeId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T(
-		long groupId, boolean defaultStyleBookEntry, String themeId, int start,
-		int end, OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_D_T(
-			groupId, defaultStyleBookEntry, themeId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3322,87 +2170,14 @@ public class StyleBookEntryVersionPersistenceImpl
 			new Object[] {groupId, defaultStyleBookEntry, themeId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T_Version;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T_Version;
-	private FinderPath _finderPathCountByG_D_T_Version;
 	private CollectionPersistenceFinder<StyleBookEntryVersion>
 		_collectionPersistenceFinderByG_D_T_Version;
 
 	/**
-	 * Returns all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @return the matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T_Version(
-		long groupId, boolean defaultStyleBookEntry, String themeId,
-		int version) {
-
-		return findByG_D_T_Version(
-			groupId, defaultStyleBookEntry, themeId, version, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @return the range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T_Version(
-		long groupId, boolean defaultStyleBookEntry, String themeId,
-		int version, int start, int end) {
-
-		return findByG_D_T_Version(
-			groupId, defaultStyleBookEntry, themeId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultStyleBookEntry the default style book entry
-	 * @param themeId the theme ID
-	 * @param version the version
-	 * @param start the lower bound of the range of style book entry versions
-	 * @param end the upper bound of the range of style book entry versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching style book entry versions
-	 */
-	@Override
-	public List<StyleBookEntryVersion> findByG_D_T_Version(
-		long groupId, boolean defaultStyleBookEntry, String themeId,
-		int version, int start, int end,
-		OrderByComparator<StyleBookEntryVersion> orderByComparator) {
-
-		return findByG_D_T_Version(
-			groupId, defaultStyleBookEntry, themeId, version, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the style book entry versions where groupId = &#63; and defaultStyleBookEntry = &#63; and themeId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>StyleBookEntryVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3877,29 +2652,28 @@ public class StyleBookEntryVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStyleBookEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStyleBookEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"styleBookEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByStyleBookEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStyleBookEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"styleBookEntryId"}, true);
-
-		_finderPathCountByStyleBookEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByStyleBookEntryId", new String[] {Long.class.getName()},
-			new String[] {"styleBookEntryId"}, false);
-
 		_collectionPersistenceFinderByStyleBookEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStyleBookEntryId,
-				_finderPathWithoutPaginationFindByStyleBookEntryId,
-				_finderPathCountByStyleBookEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByStyleBookEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"styleBookEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStyleBookEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"styleBookEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStyleBookEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"styleBookEntryId"}, false),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -3909,16 +2683,17 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					StyleBookEntryVersion::getStyleBookEntryId));
 
-		_finderPathFetchByStyleBookEntryId_Version = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByStyleBookEntryId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"styleBookEntryId", "version"}, 0, 0, false,
-			StyleBookEntryVersion::getStyleBookEntryId,
-			StyleBookEntryVersion::getVersion);
-
 		_uniquePersistenceFinderByStyleBookEntryId_Version =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByStyleBookEntryId_Version,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByStyleBookEntryId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"styleBookEntryId", "version"}, 0, 0, false,
+					StyleBookEntryVersion::getStyleBookEntryId,
+					StyleBookEntryVersion::getVersion),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "styleBookEntryId",
@@ -3929,27 +2704,23 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3958,30 +2729,32 @@ public class StyleBookEntryVersionPersistenceImpl
 				"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntryVersion::getUuid));
 
-		_finderPathWithPaginationFindByUuid_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_Version",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "version"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_Version",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"uuid_", "version"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_Version",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"uuid_", "version"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_Version,
-				_finderPathWithoutPaginationFindByUuid_Version,
-				_finderPathCountByUuid_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByUuid_Version",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_Version",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"uuid_", "version"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_Version",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"uuid_", "version"}, 0, 1, false, null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -3994,30 +2767,25 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, true, null);
-
-		_finderPathCountByUUID_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUUID_G =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUUID_G,
-				_finderPathWithoutPaginationFindByUUID_G,
-				_finderPathCountByUUID_G,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUUID_G",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "groupId"}, 0, 1, false, null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4029,20 +2797,19 @@ public class StyleBookEntryVersionPersistenceImpl
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, StyleBookEntryVersion::getGroupId));
 
-		_finderPathFetchByUUID_G_Version = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "version"}, 0, 1, false,
-			convertNullFunction(StyleBookEntryVersion::getUuid),
-			StyleBookEntryVersion::getGroupId,
-			StyleBookEntryVersion::getVersion);
-
 		_uniquePersistenceFinderByUUID_G_Version =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByUUID_G_Version,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_Version",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"uuid_", "groupId", "version"}, 0, 1, false,
+					convertNullFunction(StyleBookEntryVersion::getUuid),
+					StyleBookEntryVersion::getGroupId,
+					StyleBookEntryVersion::getVersion),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "uuid", FinderColumn.Type.STRING,
@@ -4055,30 +2822,25 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4091,36 +2853,37 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					StyleBookEntryVersion::getCompanyId));
 
-		_finderPathWithPaginationFindByUuid_C_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "version"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C_Version",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"uuid_", "companyId", "version"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C_Version,
-				_finderPathWithoutPaginationFindByUuid_C_Version,
-				_finderPathCountByUuid_C_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByUuid_C_Version",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByUuid_C_Version",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "version"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByUuid_C_Version",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"uuid_", "companyId", "version"}, 0, 1, false,
+					null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4137,29 +2900,25 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4168,30 +2927,32 @@ public class StyleBookEntryVersionPersistenceImpl
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, StyleBookEntryVersion::getGroupId));
 
-		_finderPathWithPaginationFindByGroupId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId_Version",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "version"}, true);
-
-		_finderPathCountByGroupId_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId_Version",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "version"}, false);
-
 		_collectionPersistenceFinderByGroupId_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId_Version,
-				_finderPathWithoutPaginationFindByGroupId_Version,
-				_finderPathCountByGroupId_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByGroupId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByGroupId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByGroupId_Version",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "version"}, false),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4204,28 +2965,24 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry"}, true);
-
-		_finderPathWithoutPaginationFindByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "defaultStyleBookEntry"}, true);
-
-		_finderPathCountByG_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "defaultStyleBookEntry"}, false);
-
 		_collectionPersistenceFinderByG_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_D,
-			_finderPathWithoutPaginationFindByG_D, _finderPathCountByG_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "defaultStyleBookEntry"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"groupId", "defaultStyleBookEntry"}, false),
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4238,37 +2995,43 @@ public class StyleBookEntryVersionPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				StyleBookEntryVersion::isDefaultStyleBookEntry));
 
-		_finderPathWithPaginationFindByG_D_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "version"}, true);
-
-		_finderPathWithoutPaginationFindByG_D_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "version"}, true);
-
-		_finderPathCountByG_D_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "version"},
-			false);
-
 		_collectionPersistenceFinderByG_D_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_Version,
-				_finderPathWithoutPaginationFindByG_D_Version,
-				_finderPathCountByG_D_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "version"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_D_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "version"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_D_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "version"
+					},
+					false),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4285,28 +3048,24 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_N,
-			_finderPathWithoutPaginationFindByG_N, _finderPathCountByG_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 0, 2, false, null),
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4318,36 +3077,36 @@ public class StyleBookEntryVersionPersistenceImpl
 				"styleBookEntryVersion.", "name", FinderColumn.Type.STRING, "=",
 				true, true, StyleBookEntryVersion::getName));
 
-		_finderPathWithPaginationFindByG_N_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, true);
-
-		_finderPathWithoutPaginationFindByG_N_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, 0, 2, true, null);
-
-		_finderPathCountByG_N_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_N_Version,
-				_finderPathWithoutPaginationFindByG_N_Version,
-				_finderPathCountByG_N_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_N_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_N_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, 0, 2, false,
+					null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4363,30 +3122,25 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_LikeN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN,
-				_finderPathWithoutPaginationFindByG_LikeN,
-				_finderPathCountByG_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, 0, 2, false, null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4398,36 +3152,37 @@ public class StyleBookEntryVersionPersistenceImpl
 					"styleBookEntryVersion.", "name", FinderColumn.Type.STRING,
 					"=", true, true, StyleBookEntryVersion::getName));
 
-		_finderPathWithPaginationFindByG_LikeN_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, true);
-
-		_finderPathWithoutPaginationFindByG_LikeN_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_LikeN_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, 0, 2, true, null);
-
-		_finderPathCountByG_LikeN_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_LikeN_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "version"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_LikeN_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN_Version,
-				_finderPathWithoutPaginationFindByG_LikeN_Version,
-				_finderPathCountByG_LikeN_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeN_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_LikeN_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_LikeN_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "version"}, 0, 2, false,
+					null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4443,30 +3198,27 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SBEK",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "styleBookEntryKey"}, true);
-
-		_finderPathWithoutPaginationFindByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SBEK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "styleBookEntryKey"}, 0, 2, true, null);
-
-		_finderPathCountByG_SBEK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "styleBookEntryKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_SBEK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_SBEK,
-				_finderPathWithoutPaginationFindByG_SBEK,
-				_finderPathCountByG_SBEK,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_SBEK",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "styleBookEntryKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_SBEK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "styleBookEntryKey"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_SBEK",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "styleBookEntryKey"}, 0, 2, false,
+					null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4479,20 +3231,20 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					StyleBookEntryVersion::getStyleBookEntryKey));
 
-		_finderPathFetchByG_SBEK_Version = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "styleBookEntryKey", "version"}, 0, 2,
-			false, StyleBookEntryVersion::getGroupId,
-			convertNullFunction(StyleBookEntryVersion::getStyleBookEntryKey),
-			StyleBookEntryVersion::getVersion);
-
 		_uniquePersistenceFinderByG_SBEK_Version =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByG_SBEK_Version,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByG_SBEK_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "styleBookEntryKey", "version"}, 0,
+					2, false, StyleBookEntryVersion::getGroupId,
+					convertNullFunction(
+						StyleBookEntryVersion::getStyleBookEntryKey),
+					StyleBookEntryVersion::getVersion),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE, "",
 				new FinderColumn<>(
 					"styleBookEntryVersion.", "groupId", FinderColumn.Type.LONG,
@@ -4506,28 +3258,24 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "themeId"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "themeId"}, 0, 2, true, null);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "themeId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_T,
-			_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "themeId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "themeId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "themeId"}, 0, 2, false, null),
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4539,36 +3287,36 @@ public class StyleBookEntryVersionPersistenceImpl
 				"styleBookEntryVersion.", "themeId", FinderColumn.Type.STRING,
 				"=", true, true, StyleBookEntryVersion::getThemeId));
 
-		_finderPathWithPaginationFindByG_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "themeId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByG_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "themeId", "version"}, 0, 2, true, null);
-
-		_finderPathCountByG_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_Version",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "themeId", "version"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_Version,
-				_finderPathWithoutPaginationFindByG_T_Version,
-				_finderPathCountByG_T_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "themeId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_T_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "themeId", "version"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_T_Version",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "themeId", "version"}, 0, 2, false,
+					null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4585,36 +3333,33 @@ public class StyleBookEntryVersionPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					StyleBookEntryVersion::getVersion));
 
-		_finderPathWithPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, true);
-
-		_finderPathWithoutPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_D_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_D_T,
-			_finderPathWithoutPaginationFindByG_D_T, _finderPathCountByG_D_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0,
+				4, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "defaultStyleBookEntry", "themeId"}, 0,
+				4, false, null),
 			_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 			_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 			StyleBookEntryVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4630,46 +3375,44 @@ public class StyleBookEntryVersionPersistenceImpl
 				"styleBookEntryVersion.", "themeId", FinderColumn.Type.STRING,
 				"=", true, true, StyleBookEntryVersion::getThemeId));
 
-		_finderPathWithPaginationFindByG_D_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "version"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_D_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "version"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_D_T_Version = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T_Version",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "defaultStyleBookEntry", "themeId", "version"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_D_T_Version =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_T_Version,
-				_finderPathWithoutPaginationFindByG_D_T_Version,
-				_finderPathCountByG_D_T_Version,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_D_T_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "version"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_D_T_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "version"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_D_T_Version",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultStyleBookEntry", "themeId", "version"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_STYLEBOOKENTRYVERSION_WHERE,
 				_SQL_COUNT_STYLEBOOKENTRYVERSION_WHERE,
 				StyleBookEntryVersionModelImpl.ORDER_BY_JPQL,
@@ -4762,4 +3505,4 @@ public class StyleBookEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1139316622
+// LIFERAY-SERVICE-BUILDER-HASH:1722424607

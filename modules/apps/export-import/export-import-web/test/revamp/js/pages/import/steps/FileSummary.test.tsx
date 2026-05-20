@@ -29,7 +29,7 @@ const baseImportPreview: ImportPreview = {
 	fileEntryId: 1,
 	fileName: 'site.lar',
 	fileSize: 1024,
-	portletDataHandlerSections: [],
+	previewPortletDataHandlerSections: [],
 };
 
 const valueOf = (label: string) =>

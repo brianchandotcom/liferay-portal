@@ -125,54 +125,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the account groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where uuid = &#63;.
 	 *
 	 * <p>
@@ -224,34 +176,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByUuid(String uuid) {
-		return getPersistence().filterFindByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().filterFindByUuid(uuid, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -299,58 +223,6 @@ public class AccountGroupUtil {
 	 */
 	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -412,38 +284,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -495,56 +335,6 @@ public class AccountGroupUtil {
 	 */
 	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the account groups where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(long accountGroupId) {
-		return getPersistence().findByAccountGroupId(accountGroupId);
-	}
-
-	/**
-	 * Returns a range of all the account groups where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(
-		long accountGroupId, int start, int end) {
-
-		return getPersistence().findByAccountGroupId(
-			accountGroupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(
-		long accountGroupId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByAccountGroupId(
-			accountGroupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -603,37 +393,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByAccountGroupId(
-		long accountGroupId) {
-
-		return getPersistence().filterFindByAccountGroupId(accountGroupId);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByAccountGroupId(
-		long accountGroupId, int start, int end) {
-
-		return getPersistence().filterFindByAccountGroupId(
-			accountGroupId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where accountGroupId = &#63;.
 	 *
 	 * <p>
@@ -655,37 +414,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where accountGroupId = any &#63;.
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByAccountGroupId(
-		long[] accountGroupIds) {
-
-		return getPersistence().filterFindByAccountGroupId(accountGroupIds);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByAccountGroupId(
-		long[] accountGroupIds, int start, int end) {
-
-		return getPersistence().filterFindByAccountGroupId(
-			accountGroupIds, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permission to view where accountGroupId = any &#63;.
 	 *
 	 * <p>
@@ -703,62 +431,6 @@ public class AccountGroupUtil {
 		OrderByComparator<AccountGroup> orderByComparator) {
 
 		return getPersistence().filterFindByAccountGroupId(
-			accountGroupIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(
-		long[] accountGroupIds) {
-
-		return getPersistence().findByAccountGroupId(accountGroupIds);
-	}
-
-	/**
-	 * Returns a range of all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(
-		long[] accountGroupIds, int start, int end) {
-
-		return getPersistence().findByAccountGroupId(
-			accountGroupIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where accountGroupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupIds the account group IDs
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByAccountGroupId(
-		long[] accountGroupIds, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByAccountGroupId(
 			accountGroupIds, start, end, orderByComparator);
 	}
 
@@ -835,55 +507,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where companyId = &#63;.
 	 *
 	 * <p>
@@ -937,34 +560,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByCompanyId(long companyId) {
-		return getPersistence().filterFindByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().filterFindByCompanyId(companyId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
@@ -1012,61 +607,6 @@ public class AccountGroupUtil {
 	 */
 	public static int filterCountByCompanyId(long companyId) {
 		return getPersistence().filterCountByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup) {
-
-		return getPersistence().findByC_D(companyId, defaultAccountGroup);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end) {
-
-		return getPersistence().findByC_D(
-			companyId, defaultAccountGroup, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByC_D(
-			companyId, defaultAccountGroup, start, end, orderByComparator);
 	}
 
 	/**
@@ -1126,39 +666,6 @@ public class AccountGroupUtil {
 
 		return getPersistence().fetchByC_D_First(
 			companyId, defaultAccountGroup, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByC_D(
-		long companyId, boolean defaultAccountGroup) {
-
-		return getPersistence().filterFindByC_D(companyId, defaultAccountGroup);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param defaultAccountGroup the default account group
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByC_D(
-		long companyId, boolean defaultAccountGroup, int start, int end) {
-
-		return getPersistence().filterFindByC_D(
-			companyId, defaultAccountGroup, start, end);
 	}
 
 	/**
@@ -1420,58 +927,6 @@ public class AccountGroupUtil {
 	}
 
 	/**
-	 * Returns all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the matching account groups
-	 */
-	public static List<AccountGroup> findByC_T(long companyId, String type) {
-		return getPersistence().findByC_T(companyId, type);
-	}
-
-	/**
-	 * Returns a range of all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups
-	 */
-	public static List<AccountGroup> findByC_T(
-		long companyId, String type, int start, int end) {
-
-		return getPersistence().findByC_T(companyId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account groups
-	 */
-	public static List<AccountGroup> findByC_T(
-		long companyId, String type, int start, int end,
-		OrderByComparator<AccountGroup> orderByComparator) {
-
-		return getPersistence().findByC_T(
-			companyId, type, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1527,38 +982,6 @@ public class AccountGroupUtil {
 
 		return getPersistence().fetchByC_T_First(
 			companyId, type, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @return the matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByC_T(
-		long companyId, String type) {
-
-		return getPersistence().filterFindByC_T(companyId, type);
-	}
-
-	/**
-	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param type the type
-	 * @param start the lower bound of the range of account groups
-	 * @param end the upper bound of the range of account groups (not inclusive)
-	 * @return the range of matching account groups that the user has permission to view
-	 */
-	public static List<AccountGroup> filterFindByC_T(
-		long companyId, String type, int start, int end) {
-
-		return getPersistence().filterFindByC_T(companyId, type, start, end);
 	}
 
 	/**
@@ -1628,19 +1051,6 @@ public class AccountGroupUtil {
 		throws com.liferay.account.exception.NoSuchGroupException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
-	 */
-	public static AccountGroup fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1735,6 +1145,592 @@ public class AccountGroupUtil {
 		return getPersistence().fetchByPrimaryKey(accountGroupId);
 	}
 
+	/**
+	 * Returns the account group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching account group, or <code>null</code> if a matching account group could not be found
+	 */
+	public static AccountGroup fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the account groups where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the account groups where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns all the account groups where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the account groups where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns all the account groups where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(long accountGroupId) {
+		return getPersistence().findByAccountGroupId(accountGroupId);
+	}
+
+	/**
+	 * Returns a range of all the account groups where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(
+		long accountGroupId, int start, int end) {
+
+		return getPersistence().findByAccountGroupId(
+			accountGroupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(
+		long accountGroupId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByAccountGroupId(
+			accountGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups where accountGroupId = any &#63;.
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(
+		long[] accountGroupIds) {
+
+		return getPersistence().findByAccountGroupId(accountGroupIds);
+	}
+
+	/**
+	 * Returns a range of all the account groups where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(
+		long[] accountGroupIds, int start, int end) {
+
+		return getPersistence().findByAccountGroupId(
+			accountGroupIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByAccountGroupId(
+		long[] accountGroupIds, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByAccountGroupId(
+			accountGroupIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByAccountGroupId(
+		long accountGroupId) {
+
+		return getPersistence().filterFindByAccountGroupId(accountGroupId);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByAccountGroupId(
+		long accountGroupId, int start, int end) {
+
+		return getPersistence().filterFindByAccountGroupId(
+			accountGroupId, start, end);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where accountGroupId = any &#63;.
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByAccountGroupId(
+		long[] accountGroupIds) {
+
+		return getPersistence().filterFindByAccountGroupId(accountGroupIds);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where accountGroupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupIds the account group IDs
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByAccountGroupId(
+		long[] accountGroupIds, int start, int end) {
+
+		return getPersistence().filterFindByAccountGroupId(
+			accountGroupIds, start, end);
+	}
+
+	/**
+	 * Returns all the account groups where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the account groups where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultAccountGroup the default account group
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByC_D(
+		long companyId, boolean defaultAccountGroup) {
+
+		return getPersistence().findByC_D(companyId, defaultAccountGroup);
+	}
+
+	/**
+	 * Returns a range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultAccountGroup the default account group
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_D(
+		long companyId, boolean defaultAccountGroup, int start, int end) {
+
+		return getPersistence().findByC_D(
+			companyId, defaultAccountGroup, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where companyId = &#63; and defaultAccountGroup = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultAccountGroup the default account group
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_D(
+		long companyId, boolean defaultAccountGroup, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByC_D(
+			companyId, defaultAccountGroup, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param defaultAccountGroup the default account group
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByC_D(
+		long companyId, boolean defaultAccountGroup) {
+
+		return getPersistence().filterFindByC_D(companyId, defaultAccountGroup);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and defaultAccountGroup = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param defaultAccountGroup the default account group
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByC_D(
+		long companyId, boolean defaultAccountGroup, int start, int end) {
+
+		return getPersistence().filterFindByC_D(
+			companyId, defaultAccountGroup, start, end);
+	}
+
+	/**
+	 * Returns all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(long companyId, String type) {
+		return getPersistence().findByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().findByC_T(companyId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account groups where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account groups
+	 */
+	public static List<AccountGroup> findByC_T(
+		long companyId, String type, int start, int end,
+		OrderByComparator<AccountGroup> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			companyId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @return the matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByC_T(
+		long companyId, String type) {
+
+		return getPersistence().filterFindByC_T(companyId, type);
+	}
+
+	/**
+	 * Returns a range of all the account groups that the user has permission to view where companyId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param type the type
+	 * @param start the lower bound of the range of account groups
+	 * @param end the upper bound of the range of account groups (not inclusive)
+	 * @return the range of matching account groups that the user has permission to view
+	 */
+	public static List<AccountGroup> filterFindByC_T(
+		long companyId, String type, int start, int end) {
+
+		return getPersistence().filterFindByC_T(companyId, type, start, end);
+	}
+
 	public static AccountGroupPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1746,4 +1742,4 @@ public class AccountGroupUtil {
 	private static volatile AccountGroupPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:592767630
+// LIFERAY-SERVICE-BUILDER-HASH:-246373669

@@ -31,6 +31,7 @@ export type Scope = {
 };
 
 interface EditObjectDetailsProps {
+	allowStandaloneObjectEntry: boolean;
 	backURL: string;
 	companies: Scope[];
 	dbTableName: string;
@@ -78,6 +79,7 @@ function setAccountRelationshipFieldMandatory(
 }
 
 export default function EditObjectDetails({
+	allowStandaloneObjectEntry,
 	backURL,
 	companies,
 	dbTableName,
@@ -226,6 +228,7 @@ export default function EditObjectDetails({
 		<>
 			<div className="lfr-objects__object-definition-details-management-toolbar">
 				<ObjectManagementToolbar
+					allowStandaloneObjectEntry={allowStandaloneObjectEntry}
 					backURL={backURL}
 					hasPublishObjectPermission={hasPublishObjectPermission}
 					hasUpdateObjectDefinitionPermission={

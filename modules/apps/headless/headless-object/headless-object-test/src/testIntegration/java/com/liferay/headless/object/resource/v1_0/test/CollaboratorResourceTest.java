@@ -8,6 +8,7 @@ package com.liferay.headless.object.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.object.client.dto.v1_0.Collaborator;
 import com.liferay.headless.object.client.pagination.Page;
+import com.liferay.headless.object.client.problem.Problem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -19,6 +20,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -72,6 +74,94 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		_objectEntryFolder = _addObjectEntryFolder();
 	}
 
+	@Test
+	@TestInfo("LPD-48130")
+	public void testDeleteObjectEntryFolderCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		super.testDeleteObjectEntryFolderCollaboratorByTypeCollaborator();
+
+		try {
+			collaboratorResource.
+				deleteObjectEntryFolderCollaboratorByTypeCollaborator(
+					_objectEntryFolder.getObjectEntryFolderId(), "Email", 0L);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-48130")
+	public void testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		super.
+			testDeleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator();
+
+		try {
+			collaboratorResource.
+				deleteScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+					testGroup.getGroupKey(),
+					_objectEntryFolder.getExternalReferenceCode(), "Email", 0L);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-48130")
+	public void testGetObjectEntryFolderCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		super.testGetObjectEntryFolderCollaboratorByTypeCollaborator();
+
+		try {
+			collaboratorResource.
+				getObjectEntryFolderCollaboratorByTypeCollaborator(
+					_objectEntryFolder.getObjectEntryFolderId(), "Email", 0L);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-48130")
+	public void testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		super.
+			testGetScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator();
+
+		try {
+			collaboratorResource.
+				getScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+					testGroup.getGroupKey(),
+					_objectEntryFolder.getExternalReferenceCode(), "Email", 0L);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
 	@Override
 	@Test
 	public void testPostObjectEntryFolderCollaboratorsPage() throws Exception {
@@ -90,6 +180,19 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		_assertCollaborators(
 			(List<Collaborator>)collaboratorsPage.getItems(), collaborators);
+
+		try {
+			collaboratorResource.postObjectEntryFolderCollaboratorsPage(
+				_objectEntryFolder.getObjectEntryFolderId(),
+				new Collaborator[] {_getEmailCollaborator()});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
 	}
 
 	@Override
@@ -115,6 +218,43 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		_assertCollaborators(
 			(List<Collaborator>)collaboratorsPage.getItems(), collaborators);
+
+		try {
+			collaboratorResource.
+				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorsPage(
+					testGroup.getGroupKey(),
+					_objectEntryFolder.getExternalReferenceCode(),
+					new Collaborator[] {_getEmailCollaborator()});
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-48130")
+	public void testPutObjectEntryFolderCollaboratorByTypeCollaborator()
+		throws Exception {
+
+		super.testPutObjectEntryFolderCollaboratorByTypeCollaborator();
+
+		try {
+			collaboratorResource.
+				putObjectEntryFolderCollaboratorByTypeCollaborator(
+					_objectEntryFolder.getObjectEntryFolderId(), "Email", 0L,
+					_getEmailCollaborator());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
 	}
 
 	@Override
@@ -148,6 +288,21 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 
 		assertEquals(randomCollaborator, getCollaborator);
 		assertValid(getCollaborator);
+
+		try {
+			collaboratorResource.
+				putScopeScopeKeyObjectEntryFolderByExternalReferenceCodeCollaboratorByTypeCollaborator(
+					testGroup.getGroupKey(),
+					_objectEntryFolder.getExternalReferenceCode(), "Email", 0L,
+					_getEmailCollaborator());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+		}
 	}
 
 	@Override
@@ -413,11 +568,19 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
+	private User _addUser() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		_users.add(user);
+
+		return user;
+	}
+
 	private Collaborator _addUserCollaborator(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		User user = _getUser();
+		User user = _addUser();
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
@@ -431,11 +594,19 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 					testGroup.getGroupId(), TestPropsValues.getUserId())));
 	}
 
+	private UserGroup _addUserGroup() throws Exception {
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroups.add(userGroup);
+
+		return userGroup;
+	}
+
 	private Collaborator _addUserGroupCollaborator(
 			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		return _toCollaborator(
 			_sharingEntryLocalService.addSharingEntry(
@@ -463,16 +634,23 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		}
 	}
 
-	private User _getUser() throws Exception {
-		User user = UserTestUtil.addUser();
-
-		_users.add(user);
-
-		return user;
+	private Collaborator _getEmailCollaborator() {
+		return new Collaborator() {
+			{
+				actionIds = new String[] {
+					SharingEntryAction.VIEW.getActionId()
+				};
+				emailAddress =
+					StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+						"@liferay.com";
+				share = true;
+				type = "Email";
+			}
+		};
 	}
 
 	private Collaborator _getUserCollaborator() throws Exception {
-		User user = _getUser();
+		User user = _addUser();
 
 		return new Collaborator() {
 			{
@@ -489,16 +667,8 @@ public class CollaboratorResourceTest extends BaseCollaboratorResourceTestCase {
 		};
 	}
 
-	private UserGroup _getUserGroup() throws Exception {
-		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
-
-		_userGroups.add(userGroup);
-
-		return userGroup;
-	}
-
 	private Collaborator _getUserGroupCollaborator() throws Exception {
-		UserGroup userGroup = _getUserGroup();
+		UserGroup userGroup = _addUserGroup();
 
 		return new Collaborator() {
 			{

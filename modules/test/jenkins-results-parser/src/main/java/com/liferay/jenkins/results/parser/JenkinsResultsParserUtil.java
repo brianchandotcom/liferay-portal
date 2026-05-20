@@ -106,9 +106,9 @@ import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -134,10 +134,6 @@ public class JenkinsResultsParserUtil {
 	public static boolean debug;
 
 	public static void addRedactToken(String token) {
-		if (_redactTokens.isEmpty()) {
-			_initializeRedactTokens();
-		}
-
 		if (_forbiddenRedactTokens.contains(token)) {
 			return;
 		}
@@ -4842,12 +4838,6 @@ public class JenkinsResultsParserUtil {
 			return string;
 		}
 
-		if (_redactTokens.isEmpty()) {
-			synchronized (_redactTokens) {
-				_initializeRedactTokens();
-			}
-		}
-
 		synchronized (_redactTokens) {
 			for (String redactToken : _redactTokens) {
 				if (_forbiddenRedactTokens.contains(redactToken)) {
@@ -7189,6 +7179,10 @@ public class JenkinsResultsParserUtil {
 		Matcher matcher = _nestedPropertyPattern.matcher(value);
 
 		String newValue = value;
+
+		if (SecretsUtil.isSecretProperty(newValue)) {
+			newValue = SecretsUtil.getSecret(newValue);
+		}
 
 		while (matcher.find()) {
 			String propertyGroup = matcher.group(0);

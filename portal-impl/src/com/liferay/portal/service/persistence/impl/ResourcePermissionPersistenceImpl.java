@@ -80,62 +80,8 @@ public class ResourcePermissionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByName;
-	private FinderPath _finderPathWithoutPaginationFindByName;
-	private FinderPath _finderPathCountByName;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByName;
-
-	/**
-	 * Returns all the resource permissions where name = &#63;.
-	 *
-	 * @param name the name
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByName(String name) {
-		return findByName(name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByName(
-		String name, int start, int end) {
-
-		return findByName(name, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByName(
-		String name, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByName(name, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where name = &#63;.
@@ -227,60 +173,8 @@ public class ResourcePermissionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByScope;
-	private FinderPath _finderPathWithoutPaginationFindByScope;
-	private FinderPath _finderPathCountByScope;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByScope;
-
-	/**
-	 * Returns all the resource permissions where scope = &#63;.
-	 *
-	 * @param scope the scope
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(int scope) {
-		return findByScope(scope, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param scope the scope
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(int scope, int start, int end) {
-		return findByScope(scope, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param scope the scope
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(
-		int scope, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByScope(scope, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where scope = &#63;.
@@ -356,61 +250,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the resource permissions where scope = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param scopes the scopes
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(int[] scopes) {
-		return findByScope(scopes, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where scope = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param scopes the scopes
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(
-		int[] scopes, int start, int end) {
-
-		return findByScope(scopes, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where scope = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param scopes the scopes
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByScope(
-		int[] scopes, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByScope(scopes, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the resource permissions where scope = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -472,62 +311,8 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(scopes)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRoleId;
-	private FinderPath _finderPathWithoutPaginationFindByRoleId;
-	private FinderPath _finderPathCountByRoleId;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByRoleId;
-
-	/**
-	 * Returns all the resource permissions where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByRoleId(long roleId) {
-		return findByRoleId(roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByRoleId(
-		long roleId, int start, int end) {
-
-		return findByRoleId(roleId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByRoleId(
-		long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByRoleId(roleId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where roleId = &#63;.
@@ -619,8 +404,6 @@ public class ResourcePermissionPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeP;
-	private FinderPath _finderPathWithPaginationCountByC_LikeP;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByC_LikeP;
 
@@ -780,72 +563,8 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, primKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_N_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_N_S;
-	private FinderPath _finderPathCountByC_N_S;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByC_N_S;
-
-	/**
-	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S(
-		long companyId, String name, int scope) {
-
-		return findByC_N_S(
-			companyId, name, scope, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S(
-		long companyId, String name, int scope, int start, int end) {
-
-		return findByC_N_S(companyId, name, scope, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S(
-		long companyId, String name, int scope, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_N_S(
-			companyId, name, scope, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63;.
@@ -952,73 +671,8 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, name, scope});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_S_P;
-	private FinderPath _finderPathCountByC_S_P;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByC_S_P;
-
-	/**
-	 * Returns all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_S_P(
-		long companyId, int scope, String primKey) {
-
-		return findByC_S_P(
-			companyId, scope, primKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_S_P(
-		long companyId, int scope, String primKey, int start, int end) {
-
-		return findByC_S_P(companyId, scope, primKey, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_S_P(
-		long companyId, int scope, String primKey, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_S_P(
-			companyId, scope, primKey, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and scope = &#63; and primKey = &#63;.
@@ -1125,78 +779,8 @@ public class ResourcePermissionPersistenceImpl
 			new Object[] {companyId, scope, primKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_N_S_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_N_S_P;
-	private FinderPath _finderPathCountByC_N_S_P;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByC_N_S_P;
-
-	/**
-	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String primKey) {
-
-		return findByC_N_S_P(
-			companyId, name, scope, primKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String primKey, int start,
-		int end) {
-
-		return findByC_N_S_P(companyId, name, scope, primKey, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String primKey, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_N_S_P(
-			companyId, name, scope, primKey, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;.
@@ -1294,78 +878,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKeys the prim keys
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String[] primKeys) {
-
-		return findByC_N_S_P(
-			companyId, name, scope, primKeys, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKeys the prim keys
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String[] primKeys, int start,
-		int end) {
-
-		return findByC_N_S_P(
-			companyId, name, scope, primKeys, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKeys the prim keys
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_P(
-		long companyId, String name, int scope, String[] primKeys, int start,
-		int end, OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_N_S_P(
-			companyId, name, scope, primKeys, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1451,78 +963,8 @@ public class ResourcePermissionPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_N_S_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_N_S_R;
-	private FinderPath _finderPathCountByC_N_S_R;
 	private CollectionPersistenceFinder<ResourcePermission>
 		_collectionPersistenceFinderByC_N_S_R;
-
-	/**
-	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R(
-		long companyId, String name, int scope, long roleId) {
-
-		return findByC_N_S_R(
-			companyId, name, scope, roleId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R(
-		long companyId, String name, int scope, long roleId, int start,
-		int end) {
-
-		return findByC_N_S_R(companyId, name, scope, roleId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R(
-		long companyId, String name, int scope, long roleId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_N_S_R(
-			companyId, name, scope, roleId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63;.
@@ -2009,23 +1451,6 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 	/**
-	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param primKey the prim key
-	 * @param roleId the role ID
-	 * @return the matching resource permission, or <code>null</code> if a matching resource permission could not be found
-	 */
-	@Override
-	public ResourcePermission fetchByC_N_S_P_R(
-		long companyId, String name, int scope, String primKey, long roleId) {
-
-		return fetchByC_N_S_P_R(companyId, name, scope, primKey, roleId, true);
-	}
-
-	/**
 	 * Returns the resource permission where companyId = &#63; and name = &#63; and scope = &#63; and primKey = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -2481,79 +1906,6 @@ public class ResourcePermissionPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindByC_N_S_R_V;
 	private FinderPath _finderPathCountByC_N_S_R_V;
 	private FinderPath _finderPathWithPaginationCountByC_N_S_R_V;
-
-	/**
-	 * Returns all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @return the matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R_V(
-		long companyId, String name, int scope, long roleId,
-		boolean viewActionId) {
-
-		return findByC_N_S_R_V(
-			companyId, name, scope, roleId, viewActionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @return the range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R_V(
-		long companyId, String name, int scope, long roleId,
-		boolean viewActionId, int start, int end) {
-
-		return findByC_N_S_R_V(
-			companyId, name, scope, roleId, viewActionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ResourcePermissionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param scope the scope
-	 * @param roleId the role ID
-	 * @param viewActionId the view action ID
-	 * @param start the lower bound of the range of resource permissions
-	 * @param end the upper bound of the range of resource permissions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching resource permissions
-	 */
-	@Override
-	public List<ResourcePermission> findByC_N_S_R_V(
-		long companyId, String name, int scope, long roleId,
-		boolean viewActionId, int start, int end,
-		OrderByComparator<ResourcePermission> orderByComparator) {
-
-		return findByC_N_S_R_V(
-			companyId, name, scope, roleId, viewActionId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the resource permissions where companyId = &#63; and name = &#63; and scope = &#63; and roleId = &#63; and viewActionId = &#63;.
@@ -3629,27 +2981,23 @@ public class ResourcePermissionPersistenceImpl
 	 * Initializes the resource permission persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"name"}, true);
-
-		_finderPathWithoutPaginationFindByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			true, null);
-
-		_finderPathCountByName = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByName = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByName,
-			_finderPathWithoutPaginationFindByName, _finderPathCountByName,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, null),
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3657,27 +3005,23 @@ public class ResourcePermissionPersistenceImpl
 				"resourcePermission.", "name", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getName));
 
-		_finderPathWithPaginationFindByScope = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByScope",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"scope"}, true);
-
-		_finderPathWithoutPaginationFindByScope = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByScope",
-			new String[] {Integer.class.getName()}, new String[] {"scope"},
-			true);
-
-		_finderPathCountByScope = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByScope",
-			new String[] {Integer.class.getName()}, new String[] {"scope"},
-			false);
-
 		_collectionPersistenceFinderByScope = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByScope,
-			_finderPathWithoutPaginationFindByScope, _finderPathCountByScope,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByScope",
+				new String[] {
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"scope"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByScope",
+				new String[] {Integer.class.getName()}, new String[] {"scope"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByScope",
+				new String[] {Integer.class.getName()}, new String[] {"scope"},
+				false),
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3685,28 +3029,26 @@ public class ResourcePermissionPersistenceImpl
 				"resourcePermission.", "scope", FinderColumn.Type.INTEGER, "=",
 				false, true, true, ResourcePermission::getScope));
 
-		_finderPathWithPaginationFindByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"roleId"}, true);
-
-		_finderPathWithoutPaginationFindByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"}, true);
-
-		_finderPathCountByRoleId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
-			new String[] {Long.class.getName()}, new String[] {"roleId"},
-			false);
-
 		_collectionPersistenceFinderByRoleId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRoleId,
-				_finderPathWithoutPaginationFindByRoleId,
-				_finderPathCountByRoleId, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRoleId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"roleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRoleId",
+					new String[] {Long.class.getName()},
+					new String[] {"roleId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRoleId",
+					new String[] {Long.class.getName()},
+					new String[] {"roleId"}, false),
+				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3714,24 +3056,22 @@ public class ResourcePermissionPersistenceImpl
 					"resourcePermission.", "roleId", FinderColumn.Type.LONG,
 					"=", true, true, ResourcePermission::getRoleId));
 
-		_finderPathWithPaginationFindByC_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeP",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "primKey"}, true);
-
-		_finderPathWithPaginationCountByC_LikeP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeP",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "primKey"}, false);
-
 		_collectionPersistenceFinderByC_LikeP =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeP, null,
-				_finderPathWithPaginationCountByC_LikeP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeP",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "primKey"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeP",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "primKey"}, false),
 				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3743,34 +3083,30 @@ public class ResourcePermissionPersistenceImpl
 					"resourcePermission.", "primKey", FinderColumn.Type.STRING,
 					"LIKE", true, true, ResourcePermission::getPrimKey));
 
-		_finderPathWithPaginationFindByC_N_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name", "scope"}, true);
-
-		_finderPathWithoutPaginationFindByC_N_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "name", "scope"}, 0, 2, true, null);
-
-		_finderPathCountByC_N_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "name", "scope"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_N_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_N_S,
-			_finderPathWithoutPaginationFindByC_N_S, _finderPathCountByC_N_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "name", "scope"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "name", "scope"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "name", "scope"}, 0, 2, false, null),
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3784,34 +3120,32 @@ public class ResourcePermissionPersistenceImpl
 				"resourcePermission.", "scope", FinderColumn.Type.INTEGER, "=",
 				true, true, ResourcePermission::getScope));
 
-		_finderPathWithPaginationFindByC_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "scope", "primKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "scope", "primKey"}, 0, 4, true, null);
-
-		_finderPathCountByC_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_P",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "scope", "primKey"}, 0, 4, false, null);
-
 		_collectionPersistenceFinderByC_S_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S_P,
-			_finderPathWithoutPaginationFindByC_S_P, _finderPathCountByC_S_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "scope", "primKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "scope", "primKey"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S_P",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "scope", "primKey"}, 0, 4, false,
+				null),
 			_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 			_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 			ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3825,39 +3159,36 @@ public class ResourcePermissionPersistenceImpl
 				"resourcePermission.", "primKey", FinderColumn.Type.STRING, "=",
 				true, true, ResourcePermission::getPrimKey));
 
-		_finderPathWithPaginationFindByC_N_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "primKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_N_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "primKey"}, 0, 10, true,
-			null);
-
-		_finderPathCountByC_N_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_N_S_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "primKey"}, 0, 10,
-			false, null);
-
 		_collectionPersistenceFinderByC_N_S_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_N_S_P,
-				_finderPathWithoutPaginationFindByC_N_S_P,
-				_finderPathCountByC_N_S_P, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "primKey"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), String.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "primKey"}, 0,
+					10, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_N_S_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), String.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "primKey"}, 0,
+					10, false, null),
+				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3874,39 +3205,36 @@ public class ResourcePermissionPersistenceImpl
 					"resourcePermission.", "primKey", FinderColumn.Type.STRING,
 					"=", false, true, true, ResourcePermission::getPrimKey));
 
-		_finderPathWithPaginationFindByC_N_S_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "roleId"}, true);
-
-		_finderPathWithoutPaginationFindByC_N_S_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "roleId"}, 0, 2, true,
-			null);
-
-		_finderPathCountByC_N_S_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Long.class.getName()
-			},
-			new String[] {"companyId", "name", "scope", "roleId"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByC_N_S_R =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_N_S_R,
-				_finderPathWithoutPaginationFindByC_N_S_R,
-				_finderPathCountByC_N_S_R, _SQL_SELECT_RESOURCEPERMISSION_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_S_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "roleId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_S_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Long.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "roleId"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_S_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Long.class.getName()
+					},
+					new String[] {"companyId", "name", "scope", "roleId"}, 0, 2,
+					false, null),
+				_SQL_SELECT_RESOURCEPERMISSION_WHERE,
 				_SQL_COUNT_RESOURCEPERMISSION_WHERE,
 				ResourcePermissionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -4060,4 +3388,4 @@ public class ResourcePermissionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:712855904
+// LIFERAY-SERVICE-BUILDER-HASH:-1258478800

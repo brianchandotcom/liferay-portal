@@ -1,0 +1,55 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_CATEGORIES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_AEO_READINESS",
+			"key": "aeoReadiness",
+			"name": "AEO Readiness",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_CONTENT_STRUCTURE",
+			"key": "contentStructure",
+			"name": "Content Structure",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_CRAWLABILITY",
+			"key": "crawlability",
+			"name": "Crawlability",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_IMAGES",
+			"key": "images",
+			"name": "Images",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_METADATA",
+			"key": "metadata",
+			"name": "Metadata",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_PAGE_STRUCTURE",
+			"key": "pageStructure",
+			"name": "Page Structure",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_STRUCTURED_DATA",
+			"key": "structuredData",
+			"name": "Structured Data",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_CATEGORY_URLS",
+			"key": "urls",
+			"name": "URLs",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Scan Insight Categories",
+	"system": true
+}

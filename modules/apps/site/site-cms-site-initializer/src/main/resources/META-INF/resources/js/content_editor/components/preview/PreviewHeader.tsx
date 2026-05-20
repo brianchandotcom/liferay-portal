@@ -32,7 +32,7 @@ export default function PreviewHeader({
 				symbol="times"
 			/>
 
-			<div>
+			<div className="d-flex">
 				<span className="font-weight-bold text-6" id={titleId}>
 					{sub(Liferay.Language.get('x-preview'), title)}
 				</span>

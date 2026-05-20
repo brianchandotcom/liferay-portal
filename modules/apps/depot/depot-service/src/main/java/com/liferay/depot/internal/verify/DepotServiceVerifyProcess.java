@@ -6,7 +6,7 @@
 package com.liferay.depot.internal.verify;
 
 import com.liferay.depot.constants.DepotRolesConstants;
-import com.liferay.depot.internal.util.DepotRoleUtil;
+import com.liferay.depot.util.DepotRoleUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.CompanyLocalService;

@@ -135,7 +135,8 @@ public class PersonalApplicationURLUtil {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, portletId, layout, PortletRequest.RENDER_PHASE);
 
-		String backURL = ParamUtil.getString(httpServletRequest, "currentURL");
+		String backURL = ParamUtil.getString(
+			httpServletRequest, "currentURL", themeDisplay.getURLCurrent());
 
 		liferayPortletURL.setParameter("backURL", backURL);
 

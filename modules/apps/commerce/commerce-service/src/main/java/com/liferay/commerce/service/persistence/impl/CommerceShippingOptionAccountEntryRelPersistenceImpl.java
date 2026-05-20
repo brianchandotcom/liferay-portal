@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,73 +80,14 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
-	 * Returns all the commerce shipping option account entry rels where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByAccountEntryId(
-		long accountEntryId) {
-
-		return findByAccountEntryId(
-			accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping option account entry rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @return the range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return findByAccountEntryId(accountEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping option account entry rels where accountEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		OrderByComparator<CommerceShippingOptionAccountEntryRel>
-			orderByComparator) {
-
-		return findByAccountEntryId(
-			accountEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping option account entry rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param accountEntryId the account entry ID
@@ -237,73 +177,14 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceChannelId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceChannelId;
-	private FinderPath _finderPathCountByCommerceChannelId;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByCommerceChannelId;
 
 	/**
-	 * Returns all the commerce shipping option account entry rels where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @return the matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId) {
-
-		return findByCommerceChannelId(
-			commerceChannelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping option account entry rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @return the range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end) {
-
-		return findByCommerceChannelId(commerceChannelId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping option account entry rels where commerceChannelId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end,
-		OrderByComparator<CommerceShippingOptionAccountEntryRel>
-			orderByComparator) {
-
-		return findByCommerceChannelId(
-			commerceChannelId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping option account entry rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceChannelId the commerce channel ID
@@ -396,78 +277,14 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceChannelId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceShippingOptionKey;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceShippingOptionKey;
-	private FinderPath _finderPathCountByCommerceShippingOptionKey;
 	private CollectionPersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_collectionPersistenceFinderByCommerceShippingOptionKey;
 
 	/**
-	 * Returns all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
-	 *
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @return the matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel>
-		findByCommerceShippingOptionKey(String commerceShippingOptionKey) {
-
-		return findByCommerceShippingOptionKey(
-			commerceShippingOptionKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @return the range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel>
-		findByCommerceShippingOptionKey(
-			String commerceShippingOptionKey, int start, int end) {
-
-		return findByCommerceShippingOptionKey(
-			commerceShippingOptionKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingOptionKey the commerce shipping option key
-	 * @param start the lower bound of the range of commerce shipping option account entry rels
-	 * @param end the upper bound of the range of commerce shipping option account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping option account entry rels
-	 */
-	@Override
-	public List<CommerceShippingOptionAccountEntryRel>
-		findByCommerceShippingOptionKey(
-			String commerceShippingOptionKey, int start, int end,
-			OrderByComparator<CommerceShippingOptionAccountEntryRel>
-				orderByComparator) {
-
-		return findByCommerceShippingOptionKey(
-			commerceShippingOptionKey, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping option account entry rels where commerceShippingOptionKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingOptionAccountEntryRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceShippingOptionKey the commerce shipping option key
@@ -569,7 +386,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceShippingOptionKey});
 	}
 
-	private FinderPath _finderPathFetchByA_C;
 	private UniquePersistenceFinder<CommerceShippingOptionAccountEntryRel>
 		_uniquePersistenceFinderByA_C;
 
@@ -604,20 +420,6 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 		}
 
 		return commerceShippingOptionAccountEntryRel;
-	}
-
-	/**
-	 * Returns the commerce shipping option account entry rel where accountEntryId = &#63; and commerceChannelId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @return the matching commerce shipping option account entry rel, or <code>null</code> if a matching commerce shipping option account entry rel could not be found
-	 */
-	@Override
-	public CommerceShippingOptionAccountEntryRel fetchByA_C(
-		long accountEntryId, long commerceChannelId) {
-
-		return fetchByA_C(accountEntryId, commerceChannelId, true);
 	}
 
 	/**
@@ -915,29 +717,27 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
 		_collectionPersistenceFinderByAccountEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -947,29 +747,28 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceShippingOptionAccountEntryRel::getAccountEntryId));
 
-		_finderPathWithPaginationFindByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceChannelId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceChannelId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceChannelId", new String[] {Long.class.getName()},
-			new String[] {"commerceChannelId"}, true);
-
-		_finderPathCountByCommerceChannelId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceChannelId", new String[] {Long.class.getName()},
-			new String[] {"commerceChannelId"}, false);
-
 		_collectionPersistenceFinderByCommerceChannelId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceChannelId,
-				_finderPathWithoutPaginationFindByCommerceChannelId,
-				_finderPathCountByCommerceChannelId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceChannelId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceChannelId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceChannelId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceChannelId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceChannelId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceChannelId"}, false),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -981,34 +780,30 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					CommerceShippingOptionAccountEntryRel::
 						getCommerceChannelId));
 
-		_finderPathWithPaginationFindByCommerceShippingOptionKey =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceShippingOptionKey",
-				new String[] {
-					String.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceShippingOptionKey"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceShippingOptionKey =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceShippingOptionKey",
-				new String[] {String.class.getName()},
-				new String[] {"commerceShippingOptionKey"}, 0, 1, true, null);
-
-		_finderPathCountByCommerceShippingOptionKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceShippingOptionKey",
-			new String[] {String.class.getName()},
-			new String[] {"commerceShippingOptionKey"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByCommerceShippingOptionKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceShippingOptionKey,
-				_finderPathWithoutPaginationFindByCommerceShippingOptionKey,
-				_finderPathCountByCommerceShippingOptionKey,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceShippingOptionKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceShippingOptionKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceShippingOptionKey",
+					new String[] {String.class.getName()},
+					new String[] {"commerceShippingOptionKey"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceShippingOptionKey",
+					new String[] {String.class.getName()},
+					new String[] {"commerceShippingOptionKey"}, 0, 1, false,
+					null),
 				_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				_SQL_COUNT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE,
 				CommerceShippingOptionAccountEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1020,15 +815,14 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 					CommerceShippingOptionAccountEntryRel::
 						getCommerceShippingOptionKey));
 
-		_finderPathFetchByA_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "commerceChannelId"}, 0, 0, false,
-			CommerceShippingOptionAccountEntryRel::getAccountEntryId,
-			CommerceShippingOptionAccountEntryRel::getCommerceChannelId);
-
 		_uniquePersistenceFinderByA_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountEntryId", "commerceChannelId"}, 0, 0,
+				false, CommerceShippingOptionAccountEntryRel::getAccountEntryId,
+				CommerceShippingOptionAccountEntryRel::getCommerceChannelId),
 			_SQL_SELECT_COMMERCESHIPPINGOPTIONACCOUNTENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceShippingOptionAccountEntryRel.", "accountEntryId",
@@ -1112,4 +906,4 @@ public class CommerceShippingOptionAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1635187269
+// LIFERAY-SERVICE-BUILDER-HASH:1914662705

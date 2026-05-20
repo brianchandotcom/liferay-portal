@@ -32,11 +32,9 @@ test('LPD-44010 Check no delete dropdown in order admin page without delete perm
 	commerceAdminOrdersPage,
 	page,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -206,7 +204,7 @@ test('LPD-45268 Notes tab should not be visible if user does not have required p
 	commerceAdminOrdersPage,
 	page,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
 

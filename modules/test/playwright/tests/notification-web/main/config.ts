@@ -8,5 +8,6 @@ export const config = {
 	testDir: 'tests/notification-web/main',
 	use: {
 		permissions: ['clipboard-read', 'clipboard-write'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

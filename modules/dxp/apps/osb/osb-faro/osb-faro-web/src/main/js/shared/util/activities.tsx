@@ -26,20 +26,11 @@ export const INTERVAL_MAP = {
 };
 
 type SessionEvent = {
-	attributes: SessionEventAttribute;
+	attributes: Record<string, unknown>;
 	description: string;
-	subtitle: string;
+	subtitle: string | undefined;
 	time: moment.Moment;
 	title: string;
-};
-
-type SessionEventAttribute = {
-	assetTitle?: string;
-	canonicalUrl: string;
-	header: string;
-	referrer: string;
-	pageTitle: string;
-	url: string;
 };
 
 export type UserSessionAttributes = {
@@ -62,11 +53,13 @@ export type VerticalTimelineHeader = {
 };
 
 export type VerticalTimelineSession = {
+	applicationId: string;
 	attributes: UserSessionAttributes;
 	device: string;
 	endTime: Date;
 	nestedItems: SessionEvent[];
 	time: moment.Moment;
+	userAgent: string;
 };
 
 /**
@@ -108,30 +101,32 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 			assetTitle,
 			canonicalUrl,
 			createDate,
+			eventDate,
+			eventId,
 			name,
-			pageTitle,
-			referrer,
-			url
-		}) => {
-			const isAsset = ['Blog', 'Document', 'Form', 'WebContent'].includes(
-				applicationId
-			);
-
-			return {
-				attributes: {
-					...(isAsset && {assetTitle}),
-					canonicalUrl: getSafeDecodedURIComponent(canonicalUrl),
-					header: Liferay.Language.get('event-attributes'),
-					pageTitle,
-					referrer: getSafeDecodedURIComponent(referrer),
-					url: getSafeDecodedURIComponent(url)
-				},
-				description: assetTitle,
-				subtitle: getSafeDecodedURIComponent(canonicalUrl),
-				time: moment(createDate),
-				title: name
-			};
-		}
+			properties
+		}) => ({
+			attributes: {
+				applicationId,
+				...(eventDate && {eventDate}),
+				eventId,
+				...(properties?.length && {
+					properties: Object.fromEntries(
+						properties.map(({name: propName, value}) => [
+							propName,
+							value
+						])
+					)
+				})
+			},
+			description: assetTitle,
+			subtitle:
+				applicationId !== 'HubSpot'
+					? getSafeDecodedURIComponent(canonicalUrl)
+					: undefined,
+			time: moment(createDate),
+			title: name
+		})
 	);
 
 /**
@@ -158,7 +153,7 @@ export const formatSessions = (
 	sessions: UserSession[]
 ): (VerticalTimelineHeader | VerticalTimelineSession)[] =>
 	flow(
-		groupBy(({createDate}) =>
+		groupBy(({createDate}: UserSession) =>
 			moment.utc(createDate).startOf('day').format()
 		),
 		mapValues((items: unknown) =>
@@ -177,6 +172,9 @@ export const formatSessions = (
 					timezoneOffset,
 					userAgent
 				}) => ({
+					applicationId:
+						(events as unknown as UserSessionEvent[])[0]
+							?.applicationId ?? '',
 					attributes: {
 						contentLanguageID,
 						devicePixelRatioz,
@@ -193,7 +191,8 @@ export const formatSessions = (
 					nestedItems: formatEvents(
 						events as unknown as UserSessionEvent[]
 					),
-					time: createDate
+					time: createDate,
+					userAgent
 				})
 			)
 		),

@@ -1,5 +1,5 @@
 import * as data from 'test/data';
-import * as useDataSource from 'shared/hooks/useDataSource';
+import * as useDataSources from 'shared/context/dataSources';
 import BaseListPage from '../BaseListPage';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -68,11 +68,11 @@ const WrappedComponent = ({alerts, empty, query}) => (
 
 jest.unmock('react-dom');
 
-const mockUseDataSource = useDataSource;
+const mockUseDataSource = useDataSources;
 
 describe('BaseListPage', () => {
 	afterEach(cleanup);
-	mockUseDataSource.useDataSource = jest.fn(() => mockSuccessState);
+	mockUseDataSource.useDataSources = jest.fn(() => mockSuccessState);
 
 	it('should render', async () => {
 		const {getByText} = render(<WrappedComponent />);
@@ -136,7 +136,7 @@ describe('BaseListPage', () => {
 
 describe('BaseListPage with no Data Source', () => {
 	it('should render EmptyState', () => {
-		mockUseDataSource.useDataSource = jest.fn(() => mockEmptyState);
+		mockUseDataSource.useDataSources = jest.fn(() => mockEmptyState);
 
 		const {getByText} = render(<WrappedComponent />);
 

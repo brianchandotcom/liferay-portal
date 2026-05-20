@@ -9,6 +9,14 @@ import {toRouteObjects} from '../../utils/routes';
 import AdminLayout from './AdminLayout';
 import {adminRoutes} from './adminRoutes';
 
+if (!window.location.pathname.endsWith('/')) {
+	window.history.replaceState(
+		null,
+		'',
+		`${window.location.pathname}/${window.location.hash}`
+	);
+}
+
 function AdminRoutes() {
 	return useRoutes([
 		{

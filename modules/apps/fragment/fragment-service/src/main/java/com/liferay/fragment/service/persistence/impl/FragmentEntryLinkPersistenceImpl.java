@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -99,66 +98,14 @@ public class FragmentEntryLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the fragment entry links where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -242,7 +189,6 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<FragmentEntryLink>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -273,18 +219,6 @@ public class FragmentEntryLinkPersistenceImpl
 		}
 
 		return fragmentEntryLink;
-	}
-
-	/**
-	 * Returns the fragment entry link where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
-	 */
-	@Override
-	public FragmentEntryLink fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -332,73 +266,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the fragment entry links where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -489,69 +364,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -636,70 +456,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRendererKey;
-	private FinderPath _finderPathWithoutPaginationFindByRendererKey;
-	private FinderPath _finderPathCountByRendererKey;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByRendererKey;
 
 	/**
-	 * Returns all the fragment entry links where rendererKey = &#63;.
-	 *
-	 * @param rendererKey the renderer key
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByRendererKey(String rendererKey) {
-		return findByRendererKey(
-			rendererKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByRendererKey(
-		String rendererKey, int start, int end) {
-
-		return findByRendererKey(rendererKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where rendererKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByRendererKey(
-		String rendererKey, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByRendererKey(
-			rendererKey, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param rendererKey the renderer key
@@ -785,66 +549,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {rendererKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByType;
 
 	/**
-	 * Returns all the fragment entry links where type = &#63;.
-	 *
-	 * @param type the type
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByType(int type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByType(int type, int start, int end) {
-		return findByType(type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByType(
-		int type, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByType(type, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param type the type
@@ -928,72 +640,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
-	private FinderPath _finderPathCountByG_P;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_P;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P(long groupId, long plid) {
-		return findByG_P(
-			groupId, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P(
-		long groupId, long plid, int start, int end) {
-
-		return findByG_P(groupId, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P(
-		long groupId, long plid, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_P(groupId, plid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1084,75 +738,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R;
-	private FinderPath _finderPathWithoutPaginationFindByC_R;
-	private FinderPath _finderPathCountByC_R;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByC_R;
 
 	/**
-	 * Returns all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKey the renderer key
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String rendererKey) {
-
-		return findByC_R(
-			companyId, rendererKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String rendererKey, int start, int end) {
-
-		return findByC_R(companyId, rendererKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String rendererKey, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByC_R(
-			companyId, rendererKey, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1230,73 +823,10 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKeys the renderer keys
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String[] rendererKeys) {
-
-		return findByC_R(
-			companyId, rendererKeys, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKeys the renderer keys
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String[] rendererKeys, int start, int end) {
-
-		return findByC_R(companyId, rendererKeys, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param rendererKeys the renderer keys
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByC_R(
-		long companyId, String[] rendererKeys, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByC_R(
-			companyId, rendererKeys, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where companyId = &#63; and rendererKey = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1358,79 +888,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {companyId, ArrayUtil.sortedUnique(rendererKeys)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFEERC_FESERC;
-	private FinderPath _finderPathWithoutPaginationFindByFEERC_FESERC;
-	private FinderPath _finderPathCountByFEERC_FESERC;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByFEERC_FESERC;
 
 	/**
-	 * Returns all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC) {
-
-		return findByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC, int start,
-		int end) {
-
-		return findByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC(
-		String fragmentEntryERC, String fragmentEntryScopeERC, int start,
-		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByFEERC_FESERC(
-			fragmentEntryERC, fragmentEntryScopeERC, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param fragmentEntryERC the fragment entry erc
@@ -1529,82 +994,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_OFELERC_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_OFELERC_P;
-	private FinderPath _finderPathCountByG_OFELERC_P;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_OFELERC_P;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param originalFragmentEntryLinkERC the original fragment entry link erc
-	 * @param plid the plid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_OFELERC_P(
-		long groupId, String originalFragmentEntryLinkERC, long plid) {
-
-		return findByG_OFELERC_P(
-			groupId, originalFragmentEntryLinkERC, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param originalFragmentEntryLinkERC the original fragment entry link erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_OFELERC_P(
-		long groupId, String originalFragmentEntryLinkERC, long plid, int start,
-		int end) {
-
-		return findByG_OFELERC_P(
-			groupId, originalFragmentEntryLinkERC, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param originalFragmentEntryLinkERC the original fragment entry link erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_OFELERC_P(
-		long groupId, String originalFragmentEntryLinkERC, long plid, int start,
-		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_OFELERC_P(
-			groupId, originalFragmentEntryLinkERC, plid, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and originalFragmentEntryLinkERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1710,83 +1107,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, originalFragmentEntryLinkERC, plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_FEERC_FESERC;
-	private FinderPath _finderPathWithoutPaginationFindByG_FEERC_FESERC;
-	private FinderPath _finderPathCountByG_FEERC_FESERC;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_FEERC_FESERC;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
-
-		return findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int start, int end) {
-
-		return findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_FEERC_FESERC(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1896,82 +1224,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, fragmentEntryERC, fragmentEntryScopeERC});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_P;
-	private FinderPath _finderPathCountByG_S_P;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_S_P;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long segmentsExperienceId, long plid) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceId, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long segmentsExperienceId, long plid, int start,
-		int end) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceId, plid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long segmentsExperienceId, long plid, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceId, plid, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2057,79 +1317,10 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long[] segmentsExperienceIds, long plid) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceIds, plid, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long[] segmentsExperienceIds, long plid, int start,
-		int end) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceIds, plid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P(
-		long groupId, long[] segmentsExperienceIds, long plid, int start,
-		int end, OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_P(
-			groupId, segmentsExperienceIds, plid, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2207,79 +1398,14 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C;
-	private FinderPath _finderPathCountByG_C_C;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_C_C;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_C_C(
-		long groupId, long classNameId, long classPK) {
-
-		return findByG_C_C(
-			groupId, classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end) {
-
-		return findByG_C_C(groupId, classNameId, classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_C_C(
-			groupId, classNameId, classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2377,78 +1503,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_D;
-	private FinderPath _finderPathCountByG_P_D;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_P_D;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P_D(
-		long groupId, long plid, boolean deleted) {
-
-		return findByG_P_D(
-			groupId, plid, deleted, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P_D(
-		long groupId, long plid, boolean deleted, int start, int end) {
-
-		return findByG_P_D(groupId, plid, deleted, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_P_D(
-		long groupId, long plid, boolean deleted, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_P_D(
-			groupId, plid, deleted, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2546,84 +1608,14 @@ public class FragmentEntryLinkPersistenceImpl
 			finderCache, new Object[] {groupId, plid, deleted});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByFEERC_FESERC_D;
-	private FinderPath _finderPathWithoutPaginationFindByFEERC_FESERC_D;
-	private FinderPath _finderPathCountByFEERC_FESERC_D;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByFEERC_FESERC_D;
 
 	/**
-	 * Returns all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC_D(
-		String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
-
-		return findByFEERC_FESERC_D(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC_D(
-		String fragmentEntryERC, String fragmentEntryScopeERC, boolean deleted,
-		int start, int end) {
-
-		return findByFEERC_FESERC_D(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByFEERC_FESERC_D(
-		String fragmentEntryERC, String fragmentEntryScopeERC, boolean deleted,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByFEERC_FESERC_D(
-			fragmentEntryERC, fragmentEntryScopeERC, deleted, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param fragmentEntryERC the fragment entry erc
@@ -2736,88 +1728,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {fragmentEntryERC, fragmentEntryScopeERC, deleted});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_FEERC_FESERC_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_FEERC_FESERC_C;
-	private FinderPath _finderPathCountByG_FEERC_FESERC_C;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_FEERC_FESERC_C;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId) {
-
-		return findByG_FEERC_FESERC_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId, int start, int end) {
-
-		return findByG_FEERC_FESERC_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_FEERC_FESERC_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2946,88 +1864,14 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_FEERC_FESERC_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_FEERC_FESERC_P;
-	private FinderPath _finderPathCountByG_FEERC_FESERC_P;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_FEERC_FESERC_P;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param plid the plid
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_P(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long plid) {
-
-		return findByG_FEERC_FESERC_P(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_P(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long plid, int start, int end) {
-
-		return findByG_FEERC_FESERC_P(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param plid the plid
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_P(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long plid, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_FEERC_FESERC_P(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, plid, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3153,88 +1997,14 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_FEERC_FESERC_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_FEERC_FESERC_D;
-	private FinderPath _finderPathCountByG_FEERC_FESERC_D;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_FEERC_FESERC_D;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_D(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted) {
-
-		return findByG_FEERC_FESERC_D(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_D(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted, int start, int end) {
-
-		return findByG_FEERC_FESERC_D(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted, start,
-			end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_D(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		boolean deleted, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_FEERC_FESERC_D(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, deleted, start,
-			end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3363,88 +2133,14 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_C_C;
-	private FinderPath _finderPathCountByG_S_C_C;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_S_C_C;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_C_C(
-		long groupId, long segmentsExperienceId, long classNameId,
-		long classPK) {
-
-		return findByG_S_C_C(
-			groupId, segmentsExperienceId, classNameId, classPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_C_C(
-		long groupId, long segmentsExperienceId, long classNameId, long classPK,
-		int start, int end) {
-
-		return findByG_S_C_C(
-			groupId, segmentsExperienceId, classNameId, classPK, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_C_C(
-		long groupId, long segmentsExperienceId, long classNameId, long classPK,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_C_C(
-			groupId, segmentsExperienceId, classNameId, classPK, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3562,86 +2258,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, segmentsExperienceId, classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S_P_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_P_D;
-	private FinderPath _finderPathCountByG_S_P_D;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_S_P_D;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long segmentsExperienceId, long plid, boolean deleted) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceId, plid, deleted, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long segmentsExperienceId, long plid, boolean deleted,
-		int start, int end) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceId, plid, deleted, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long segmentsExperienceId, long plid, boolean deleted,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceId, plid, deleted, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3738,84 +2362,10 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long[] segmentsExperienceIds, long plid,
-		boolean deleted) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceIds, plid, deleted, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long[] segmentsExperienceIds, long plid, boolean deleted,
-		int start, int end) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceIds, plid, deleted, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = any &#63; and plid = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceIds the segments experience IDs
-	 * @param plid the plid
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_D(
-		long groupId, long[] segmentsExperienceIds, long plid, boolean deleted,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_P_D(
-			groupId, segmentsExperienceIds, plid, deleted, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and deleted = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -3905,87 +2455,14 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S_P_R;
-	private FinderPath _finderPathWithoutPaginationFindByG_S_P_R;
-	private FinderPath _finderPathCountByG_S_P_R;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_S_P_R;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param rendererKey the renderer key
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_R(
-		long groupId, long segmentsExperienceId, long plid,
-		String rendererKey) {
-
-		return findByG_S_P_R(
-			groupId, segmentsExperienceId, plid, rendererKey, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_R(
-		long groupId, long segmentsExperienceId, long plid, String rendererKey,
-		int start, int end) {
-
-		return findByG_S_P_R(
-			groupId, segmentsExperienceId, plid, rendererKey, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param segmentsExperienceId the segments experience ID
-	 * @param plid the plid
-	 * @param rendererKey the renderer key
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_S_P_R(
-		long groupId, long segmentsExperienceId, long plid, String rendererKey,
-		int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_S_P_R(
-			groupId, segmentsExperienceId, plid, rendererKey, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and segmentsExperienceId = &#63; and plid = &#63; and rendererKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -4103,91 +2580,14 @@ public class FragmentEntryLinkPersistenceImpl
 			new Object[] {groupId, segmentsExperienceId, plid, rendererKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_FEERC_FESERC_C_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_FEERC_FESERC_C_C;
-	private FinderPath _finderPathCountByG_FEERC_FESERC_C_C;
 	private CollectionPersistenceFinder<FragmentEntryLink>
 		_collectionPersistenceFinderByG_FEERC_FESERC_C_C;
 
 	/**
-	 * Returns all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId, long classPK) {
-
-		return findByG_FEERC_FESERC_C_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @return the range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId, long classPK, int start, int end) {
-
-		return findByG_FEERC_FESERC_C_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param fragmentEntryERC the fragment entry erc
-	 * @param fragmentEntryScopeERC the fragment entry scope erc
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of fragment entry links
-	 * @param end the upper bound of the range of fragment entry links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching fragment entry links
-	 */
-	@Override
-	public List<FragmentEntryLink> findByG_FEERC_FESERC_C_C(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC,
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<FragmentEntryLink> orderByComparator) {
-
-		return findByG_FEERC_FESERC_C_C(
-			groupId, fragmentEntryERC, fragmentEntryScopeERC, classNameId,
-			classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the fragment entry links where groupId = &#63; and fragmentEntryERC = &#63; and fragmentEntryScopeERC = &#63; and classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FragmentEntryLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -4325,7 +2725,6 @@ public class FragmentEntryLinkPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<FragmentEntryLink>
 		_uniquePersistenceFinderByERC_G;
 
@@ -4359,20 +2758,6 @@ public class FragmentEntryLinkPersistenceImpl
 		}
 
 		return fragmentEntryLink;
-	}
-
-	/**
-	 * Returns the fragment entry link where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching fragment entry link, or <code>null</code> if a matching fragment entry link could not be found
-	 */
-	@Override
-	public FragmentEntryLink fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -4810,27 +3195,23 @@ public class FragmentEntryLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4838,16 +3219,15 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentEntryLink::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(FragmentEntryLink::getUuid),
-			FragmentEntryLink::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(FragmentEntryLink::getUuid),
+				FragmentEntryLink::getGroupId),
+			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, FragmentEntryLink::getUuid),
@@ -4855,30 +3235,26 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, FragmentEntryLink::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -4889,29 +3265,26 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -4919,29 +3292,25 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getGroupId));
 
-		_finderPathWithPaginationFindByRendererKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRendererKey",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"rendererKey"}, true);
-
-		_finderPathWithoutPaginationFindByRendererKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRendererKey",
-			new String[] {String.class.getName()}, new String[] {"rendererKey"},
-			0, 1, true, null);
-
-		_finderPathCountByRendererKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRendererKey",
-			new String[] {String.class.getName()}, new String[] {"rendererKey"},
-			0, 1, false, null);
-
 		_collectionPersistenceFinderByRendererKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByRendererKey,
-				_finderPathWithoutPaginationFindByRendererKey,
-				_finderPathCountByRendererKey,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRendererKey",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"rendererKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByRendererKey", new String[] {String.class.getName()},
+					new String[] {"rendererKey"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByRendererKey", new String[] {String.class.getName()},
+					new String[] {"rendererKey"}, 0, 1, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4951,27 +3320,23 @@ public class FragmentEntryLinkPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getRendererKey));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {Integer.class.getName()}, new String[] {"type_"},
-			true);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {Integer.class.getName()}, new String[] {"type_"},
-			false);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {Integer.class.getName()}, new String[] {"type_"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {Integer.class.getName()}, new String[] {"type_"},
+				false),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -4979,28 +3344,24 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "type", FinderColumn.Type.INTEGER, "=",
 				true, true, FragmentEntryLink::getType));
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "plid"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "plid"}, true);
-
-		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "plid"}, false);
-
 		_collectionPersistenceFinderByG_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P,
-			_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "plid"}, false),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -5011,28 +3372,24 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntryLink::getPlid));
 
-		_finderPathWithPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "rendererKey"}, true);
-
-		_finderPathWithoutPaginationFindByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "rendererKey"}, 0, 2, true, null);
-
-		_finderPathCountByC_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "rendererKey"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R,
-			_finderPathWithoutPaginationFindByC_R, _finderPathCountByC_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "rendererKey"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "rendererKey"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "rendererKey"}, 0, 2, false, null),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -5043,32 +3400,35 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "rendererKey", FinderColumn.Type.STRING,
 				"=", false, true, true, FragmentEntryLink::getRendererKey));
 
-		_finderPathWithPaginationFindByFEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFEERC_FESERC",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"}, true);
-
-		_finderPathWithoutPaginationFindByFEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFEERC_FESERC",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"}, 0, 3,
-			true, null);
-
-		_finderPathCountByFEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFEERC_FESERC",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"}, 0, 3,
-			false, null);
-
 		_collectionPersistenceFinderByFEERC_FESERC =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFEERC_FESERC,
-				_finderPathWithoutPaginationFindByFEERC_FESERC,
-				_finderPathCountByFEERC_FESERC,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFEERC_FESERC",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFEERC_FESERC",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"},
+					0, 3, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFEERC_FESERC",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"fragmentEntryERC", "fragmentEntryScopeERC"},
+					0, 3, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5082,39 +3442,43 @@ public class FragmentEntryLinkPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC));
 
-		_finderPathWithPaginationFindByG_OFELERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_OFELERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "originalFragmentEntryLinkERC", "plid"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_OFELERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_OFELERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "originalFragmentEntryLinkERC", "plid"}, 0,
-			2, true, null);
-
-		_finderPathCountByG_OFELERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_OFELERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "originalFragmentEntryLinkERC", "plid"}, 0,
-			2, false, null);
-
 		_collectionPersistenceFinderByG_OFELERC_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_OFELERC_P,
-				_finderPathWithoutPaginationFindByG_OFELERC_P,
-				_finderPathCountByG_OFELERC_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_OFELERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "originalFragmentEntryLinkERC", "plid"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_OFELERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "originalFragmentEntryLinkERC", "plid"
+					},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_OFELERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "originalFragmentEntryLinkERC", "plid"
+					},
+					0, 2, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5130,45 +3494,44 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntryLink::getPlid));
 
-		_finderPathWithPaginationFindByG_FEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FEERC_FESERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_FEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_FEERC_FESERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
-			},
-			0, 6, true, null);
-
-		_finderPathCountByG_FEERC_FESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_FEERC_FESERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
-			},
-			0, 6, false, null);
-
 		_collectionPersistenceFinderByG_FEERC_FESERC =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_FEERC_FESERC,
-				_finderPathWithoutPaginationFindByG_FEERC_FESERC,
-				_finderPathCountByG_FEERC_FESERC,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_FEERC_FESERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_FEERC_FESERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_FEERC_FESERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5185,32 +3548,31 @@ public class FragmentEntryLinkPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getFragmentEntryScopeERC));
 
-		_finderPathWithPaginationFindByG_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid"}, true);
-
-		_finderPathWithoutPaginationFindByG_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid"}, true);
-
-		_finderPathCountByG_S_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid"}, false);
-
 		_collectionPersistenceFinderByG_S_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_S_P,
-			_finderPathWithoutPaginationFindByG_S_P, _finderPathCountByG_S_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "segmentsExperienceId", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "segmentsExperienceId", "plid"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "segmentsExperienceId", "plid"},
+				false),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -5225,32 +3587,30 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=", true,
 				true, FragmentEntryLink::getPlid));
 
-		_finderPathWithPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, true);
-
-		_finderPathCountByG_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByG_C_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C_C,
-			_finderPathWithoutPaginationFindByG_C_C, _finderPathCountByG_C_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "classPK"}, false),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -5264,34 +3624,30 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG, "=",
 				true, true, FragmentEntryLink::getClassPK));
 
-		_finderPathWithPaginationFindByG_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "plid", "deleted"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "plid", "deleted"}, true);
-
-		_finderPathCountByG_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "plid", "deleted"}, false);
-
 		_collectionPersistenceFinderByG_P_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_P_D,
-			_finderPathWithoutPaginationFindByG_P_D, _finderPathCountByG_P_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "plid", "deleted"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "plid", "deleted"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"groupId", "plid", "deleted"}, false),
 			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 			_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 			FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -5305,45 +3661,44 @@ public class FragmentEntryLinkPersistenceImpl
 				"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN, "=",
 				true, true, FragmentEntryLink::isDeleted));
 
-		_finderPathWithPaginationFindByFEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFEERC_FESERC_D",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByFEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFEERC_FESERC_D",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
-			},
-			0, 3, true, null);
-
-		_finderPathCountByFEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFEERC_FESERC_D",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
-			},
-			0, 3, false, null);
-
 		_collectionPersistenceFinderByFEERC_FESERC_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFEERC_FESERC_D,
-				_finderPathWithoutPaginationFindByFEERC_FESERC_D,
-				_finderPathCountByFEERC_FESERC_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFEERC_FESERC_D",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFEERC_FESERC_D",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
+					},
+					0, 3, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFEERC_FESERC_D",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"fragmentEntryERC", "fragmentEntryScopeERC", "deleted"
+					},
+					0, 3, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5360,50 +3715,47 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN,
 					"=", true, true, FragmentEntryLink::isDeleted));
 
-		_finderPathWithPaginationFindByG_FEERC_FESERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FEERC_FESERC_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_FEERC_FESERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_FEERC_FESERC_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId"
-			},
-			0, 6, true, null);
-
-		_finderPathCountByG_FEERC_FESERC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_FEERC_FESERC_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId"
-			},
-			0, 6, false, null);
-
 		_collectionPersistenceFinderByG_FEERC_FESERC_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_FEERC_FESERC_C,
-				_finderPathWithoutPaginationFindByG_FEERC_FESERC_C,
-				_finderPathCountByG_FEERC_FESERC_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_FEERC_FESERC_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_FEERC_FESERC_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_FEERC_FESERC_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5423,47 +3775,47 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "classNameId", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassNameId));
 
-		_finderPathWithPaginationFindByG_FEERC_FESERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FEERC_FESERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC", "plid"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_FEERC_FESERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_FEERC_FESERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC", "plid"
-			},
-			0, 6, true, null);
-
-		_finderPathCountByG_FEERC_FESERC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_FEERC_FESERC_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC", "plid"
-			},
-			0, 6, false, null);
-
 		_collectionPersistenceFinderByG_FEERC_FESERC_P =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_FEERC_FESERC_P,
-				_finderPathWithoutPaginationFindByG_FEERC_FESERC_P,
-				_finderPathCountByG_FEERC_FESERC_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_FEERC_FESERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"plid"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_FEERC_FESERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"plid"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_FEERC_FESERC_P",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"plid"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5483,50 +3835,47 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "plid", FinderColumn.Type.LONG, "=",
 					true, true, FragmentEntryLink::getPlid));
 
-		_finderPathWithPaginationFindByG_FEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FEERC_FESERC_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"deleted"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_FEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_FEERC_FESERC_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"deleted"
-			},
-			0, 6, true, null);
-
-		_finderPathCountByG_FEERC_FESERC_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_FEERC_FESERC_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"deleted"
-			},
-			0, 6, false, null);
-
 		_collectionPersistenceFinderByG_FEERC_FESERC_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_FEERC_FESERC_D,
-				_finderPathWithoutPaginationFindByG_FEERC_FESERC_D,
-				_finderPathCountByG_FEERC_FESERC_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_FEERC_FESERC_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"deleted"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_FEERC_FESERC_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"deleted"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_FEERC_FESERC_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"deleted"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5546,46 +3895,45 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN,
 					"=", true, true, FragmentEntryLink::isDeleted));
 
-		_finderPathWithPaginationFindByG_S_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "classNameId", "classPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_S_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "classNameId", "classPK"
-			},
-			true);
-
-		_finderPathCountByG_S_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "classNameId", "classPK"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_S_C_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S_C_C,
-				_finderPathWithoutPaginationFindByG_S_C_C,
-				_finderPathCountByG_S_C_C, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "classNameId",
+						"classPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "classNameId",
+						"classPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_C_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "classNameId",
+						"classPK"
+					},
+					false),
+				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -5603,40 +3951,42 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassPK));
 
-		_finderPathWithPaginationFindByG_S_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid", "deleted"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_S_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid", "deleted"},
-			true);
-
-		_finderPathCountByG_S_P_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_P_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"groupId", "segmentsExperienceId", "plid", "deleted"},
-			false);
-
 		_collectionPersistenceFinderByG_S_P_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S_P_D,
-				_finderPathWithoutPaginationFindByG_S_P_D,
-				_finderPathCountByG_S_P_D, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "deleted"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "deleted"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_S_P_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "deleted"
+					},
+					false),
+				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -5654,46 +4004,42 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "deleted", FinderColumn.Type.BOOLEAN,
 					"=", true, true, FragmentEntryLink::isDeleted));
 
-		_finderPathWithPaginationFindByG_S_P_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "plid", "rendererKey"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_S_P_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "plid", "rendererKey"
-			},
-			0, 8, true, null);
-
-		_finderPathCountByG_S_P_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_P_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"groupId", "segmentsExperienceId", "plid", "rendererKey"
-			},
-			0, 8, false, null);
-
 		_collectionPersistenceFinderByG_S_P_R =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S_P_R,
-				_finderPathWithoutPaginationFindByG_S_P_R,
-				_finderPathCountByG_S_P_R, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S_P_R",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "rendererKey"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S_P_R",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "rendererKey"
+					},
+					0, 8, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S_P_R",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "segmentsExperienceId", "plid", "rendererKey"
+					},
+					0, 8, false, null),
+				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -5712,53 +4058,50 @@ public class FragmentEntryLinkPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FragmentEntryLink::getRendererKey));
 
-		_finderPathWithPaginationFindByG_FEERC_FESERC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_FEERC_FESERC_C_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId", "classPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_FEERC_FESERC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_FEERC_FESERC_C_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId", "classPK"
-			},
-			0, 6, true, null);
-
-		_finderPathCountByG_FEERC_FESERC_C_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByG_FEERC_FESERC_C_C",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
-				"classNameId", "classPK"
-			},
-			0, 6, false, null);
-
 		_collectionPersistenceFinderByG_FEERC_FESERC_C_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_FEERC_FESERC_C_C,
-				_finderPathWithoutPaginationFindByG_FEERC_FESERC_C_C,
-				_finderPathCountByG_FEERC_FESERC_C_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_FEERC_FESERC_C_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId", "classPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_FEERC_FESERC_C_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId", "classPK"
+					},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_FEERC_FESERC_C_C",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"groupId", "fragmentEntryERC", "fragmentEntryScopeERC",
+						"classNameId", "classPK"
+					},
+					0, 6, false, null),
 				_SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
 				_SQL_COUNT_FRAGMENTENTRYLINK_WHERE,
 				FragmentEntryLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -5781,16 +4124,16 @@ public class FragmentEntryLinkPersistenceImpl
 					"fragmentEntryLink.", "classPK", FinderColumn.Type.LONG,
 					"=", true, true, FragmentEntryLink::getClassPK));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(FragmentEntryLink::getExternalReferenceCode),
-			FragmentEntryLink::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_FRAGMENTENTRYLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					FragmentEntryLink::getExternalReferenceCode),
+				FragmentEntryLink::getGroupId),
+			_SQL_SELECT_FRAGMENTENTRYLINK_WHERE, "",
 			new FinderColumn<>(
 				"fragmentEntryLink.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -5871,4 +4214,4 @@ public class FragmentEntryLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1082559857
+// LIFERAY-SERVICE-BUILDER-HASH:1615956167

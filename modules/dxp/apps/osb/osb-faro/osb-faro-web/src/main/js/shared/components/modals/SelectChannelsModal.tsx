@@ -49,9 +49,7 @@ const SelectChannelsModal: React.FC<ISelectChannelsModalProps> = ({
 	});
 
 	const {data, error, loading} = useRequest({
-		dataSourceFn: API.channels.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.channels.search,
 		variables: {
 			cur: page,
 			delta,

@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal.writer;
 
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.batch.engine.csv.ColumnDescriptor;
 import com.liferay.batch.engine.csv.ColumnDescriptorProvider;
@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -228,7 +229,10 @@ public class ColumnValuesExtractor {
 
 		if (ItemClassIndexUtil.isSingleColumnAdoptableValue(fieldClass)) {
 			if (ItemClassIndexUtil.isDate(fieldClass)) {
-				DateFormat dateFormat = new ISO8601DateFormat();
+				ObjectMapper objectMapper =
+					ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
+				DateFormat dateFormat = objectMapper.getDateFormat();
 
 				return new UnsafeFunction
 					<Object, Object, ReflectiveOperationException>() {

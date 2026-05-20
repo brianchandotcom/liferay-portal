@@ -103,6 +103,20 @@ public class ImportProcessSerDes {
 			sb.append(importProcess.getId());
 		}
 
+		if (importProcess.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(importProcess.getName()));
+
+			sb.append("\"");
+		}
+
 		if (importProcess.getStatus() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -111,20 +125,6 @@ public class ImportProcessSerDes {
 			sb.append("\"status\": ");
 
 			sb.append(String.valueOf(importProcess.getStatus()));
-		}
-
-		if (importProcess.getTitle() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(importProcess.getTitle()));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -182,18 +182,18 @@ public class ImportProcessSerDes {
 			map.put("id", String.valueOf(importProcess.getId()));
 		}
 
+		if (importProcess.getName() == null) {
+			map.put("name", null);
+		}
+		else {
+			map.put("name", String.valueOf(importProcess.getName()));
+		}
+
 		if (importProcess.getStatus() == null) {
 			map.put("status", null);
 		}
 		else {
 			map.put("status", String.valueOf(importProcess.getStatus()));
-		}
-
-		if (importProcess.getTitle() == null) {
-			map.put("title", null);
-		}
-		else {
-			map.put("title", String.valueOf(importProcess.getTitle()));
 		}
 
 		return map;
@@ -226,10 +226,10 @@ public class ImportProcessSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "status")) {
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
+			else if (Objects.equals(jsonParserFieldName, "status")) {
 				return false;
 			}
 
@@ -265,15 +265,15 @@ public class ImportProcessSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "name")) {
+				if (jsonParserFieldValue != null) {
+					importProcess.setName((String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
 					importProcess.setStatus(
 						StatusSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "title")) {
-				if (jsonParserFieldValue != null) {
-					importProcess.setTitle((String)jsonParserFieldValue);
 				}
 			}
 		}
@@ -357,4 +357,4 @@ public class ImportProcessSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1429408930
+// LIFERAY-REST-BUILDER-HASH:1954220324

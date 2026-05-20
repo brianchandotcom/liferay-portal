@@ -8,7 +8,6 @@ package com.liferay.portal.tools.service.builder.test.compat740.service.persiste
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +68,6 @@ public class CacheDisabledEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByName;
 	private UniquePersistenceFinder<CacheDisabledEntry>
 		_uniquePersistenceFinderByName;
 
@@ -99,17 +97,6 @@ public class CacheDisabledEntryPersistenceImpl
 		}
 
 		return cacheDisabledEntry;
-	}
-
-	/**
-	 * Returns the cache disabled entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching cache disabled entry, or <code>null</code> if a matching cache disabled entry could not be found
-	 */
-	@Override
-	public CacheDisabledEntry fetchByName(String name) {
-		return fetchByName(name, true);
 	}
 
 	/**
@@ -331,14 +318,13 @@ public class CacheDisabledEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByName = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByName",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, convertNullFunction(CacheDisabledEntry::getName));
-
 		_uniquePersistenceFinderByName = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByName, _SQL_SELECT_CACHEDISABLEDENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByName",
+				new String[] {String.class.getName()}, new String[] {"name"}, 0,
+				1, false, convertNullFunction(CacheDisabledEntry::getName)),
+			_SQL_SELECT_CACHEDISABLEDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"cacheDisabledEntry.", "name", FinderColumn.Type.STRING, "=",
 				true, true, CacheDisabledEntry::getName));
@@ -397,4 +383,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1237667989
+// LIFERAY-SERVICE-BUILDER-HASH:1022509594

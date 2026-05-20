@@ -40,14 +40,6 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	public ClassName findByValue(String value) throws NoSuchClassNameException;
 
 	/**
-	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param value the value
-	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
-	 */
-	public ClassName fetchByValue(String value);
-
-	/**
 	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param value the value
@@ -110,5 +102,15 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	 */
 	public ClassName fetchByPrimaryKey(long classNameId);
 
+	/**
+	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param value the value
+	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
+	 */
+	public default ClassName fetchByValue(String value) {
+		return fetchByValue(value, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1603666387
+// LIFERAY-SERVICE-BUILDER-HASH:1500179597

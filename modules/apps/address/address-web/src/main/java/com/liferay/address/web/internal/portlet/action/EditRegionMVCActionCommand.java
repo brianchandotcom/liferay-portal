@@ -68,7 +68,7 @@ public class EditRegionMVCActionCommand
 				long countryId = ParamUtil.getLong(actionRequest, "countryId");
 
 				region = _regionService.addRegion(
-					countryId, active, name, position, regionCode,
+					null, countryId, active, name, position, regionCode,
 					ServiceContextFactory.getInstance(
 						Region.class.getName(), actionRequest));
 
@@ -82,7 +82,8 @@ public class EditRegionMVCActionCommand
 			}
 			else {
 				region = _regionService.updateRegion(
-					regionId, active, name, position, regionCode);
+					region.getExternalReferenceCode(), regionId, active, name,
+					position, regionCode);
 			}
 
 			if (region != null) {

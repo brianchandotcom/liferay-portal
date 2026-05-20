@@ -200,7 +200,7 @@ describe('VerticalTimeline', () => {
 		);
 
 		const sessionAttributes = await waitFor(
-			() => getAllByText('Session Attributes')[0]
+			() => getAllByText(/Session Attributes/)[0]
 		);
 
 		expect(sessionAttributes).toHaveTextContent(SESSION_ATTRIBUTES_TITLE);

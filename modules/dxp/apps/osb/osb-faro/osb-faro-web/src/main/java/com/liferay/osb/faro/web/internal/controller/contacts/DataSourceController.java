@@ -8,9 +8,6 @@ package com.liferay.osb.faro.web.internal.controller.contacts;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.oauth2.provider.model.OAuth2Application;
-import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
-import com.liferay.oauth2.provider.service.OAuth2AuthorizationService;
 import com.liferay.osb.faro.contacts.model.constants.ContactsConstants;
 import com.liferay.osb.faro.engine.client.constants.FieldMappingConstants;
 import com.liferay.osb.faro.engine.client.exception.InvalidFilterException;
@@ -40,6 +37,7 @@ import com.liferay.osb.faro.engine.client.model.provider.SalesforceProvider;
 import com.liferay.osb.faro.engine.client.util.EngineServiceURLUtil;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
 import com.liferay.osb.faro.model.FaroProject;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.annotations.PATCH;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
 import com.liferay.osb.faro.web.internal.antivirus.ClamAVScanner;
@@ -65,6 +63,7 @@ import com.liferay.osb.faro.web.internal.util.ContactsCSVHelper;
 import com.liferay.osb.faro.web.internal.util.FieldMappingUtil;
 import com.liferay.osb.faro.web.internal.util.OAuthUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -384,19 +383,6 @@ public class DataSourceController extends BaseFaroController {
 					resourceBundle, "data-source-already-disconnected"));
 		}
 
-		Provider provider = dataSource.getProvider();
-
-		if (StringUtil.equals(provider.getType(), DemandbaseProvider.TYPE)) {
-			OAuth2Application oAuth2Application =
-				_oAuth2ApplicationLocalService.fetchOAuth2Application(
-					getCompanyId(), DemandbaseProvider.TYPE);
-
-			if (oAuth2Application != null) {
-				_oAuth2AuthorizationService.revokeAllOAuth2Authorizations(
-					oAuth2Application.getOAuth2ApplicationId());
-			}
-		}
-
 		contactsEngineClient.disconnectDataSource(faroProject, id);
 	}
 
@@ -416,10 +402,25 @@ public class DataSourceController extends BaseFaroController {
 		faroProjectLocalService.updateFaroProject(faroProject);
 	}
 
+	public String generateDataSourceAccessToken(
+		long groupId, long faroProjectId) {
+
+		String json = JSONUtil.put(
+			"token", _tokenManager.getToken(null, faroProjectId)
+		).put(
+			"url",
+			StringBundler.concat(
+				FaroPropsValues.FARO_URL, "/o/faro/contacts/", groupId,
+				"/data_source/connect")
+		).toString();
+
+		return Base64.encode(json.getBytes(StandardCharsets.UTF_8));
+	}
+
 	@GET
 	@Path("/{id}/channel-data-sources")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public FaroResultsDisplay getChannelDataSourceDisplay(
+	public FaroResultsDisplay getChannelDataSourceFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("enabled") Boolean enabled,
 			@QueryParam("name") String name, @QueryParam("cur") int cur,
@@ -905,7 +906,7 @@ public class DataSourceController extends BaseFaroController {
 	@GET
 	@Path("/{id}/groups")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getGroups(
+	public FaroResultsDisplay getGroupsFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @QueryParam("name") String name,
 			@DefaultValue("-1") @QueryParam("parentGroupId") long parentGroupId,
@@ -994,7 +995,7 @@ public class DataSourceController extends BaseFaroController {
 	@GET
 	@Path("/{id}/organizations")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getOrganizations(
+	public FaroResultsDisplay getOrganizationsFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@DefaultValue(StringPool.BLANK) @QueryParam("name") String name,
 			@DefaultValue("-1") @QueryParam("parentOrganizationId") long
@@ -1054,7 +1055,7 @@ public class DataSourceController extends BaseFaroController {
 	@GET
 	@Path("/{id}/user_groups")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getUserGroups(
+	public FaroResultsDisplay getUserGroupsFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("name") String name, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta)
@@ -1855,12 +1856,6 @@ public class DataSourceController extends BaseFaroController {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Reference
-	private OAuth2AuthorizationService _oAuth2AuthorizationService;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

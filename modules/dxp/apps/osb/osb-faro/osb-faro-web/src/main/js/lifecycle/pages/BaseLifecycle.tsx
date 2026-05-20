@@ -3,6 +3,8 @@ import * as breadcrumbs from 'shared/util/breadcrumbs';
 import AccountsDataSet from 'shared/components/AccountsDataSet';
 import BasePage from 'shared/components/base-page';
 import GlobalFilters from '../components/GlobalFilters';
+import LifecycleChart from 'lifecycle/components/LifecycleChart';
+import Loading from 'shared/components/Loading';
 import OverviewSection from '../components/OverviewSection';
 import React, {useContext} from 'react';
 import {ChannelContext} from 'shared/context/channel';
@@ -10,51 +12,77 @@ import {
 	LifecycleContextProvider,
 	useLifecycle
 } from '../context/LifecycleContext';
-import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 import {SectionHeader} from 'shared/components/SectionHeader';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const LifecycleOverview = () => {
-	const {filters} = useLifecycle();
+	const {filters, lifecycleId} = useLifecycle();
 
 	const {groupId} = useParams();
 
 	const {data: overviewData, loading: overviewLoading} = useRequest({
-		dataSourceFn: API.lifecycle.fetchOverviewMetrics as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.lifecycle.fetchOverviewMetrics,
 		variables: {
 			country: filters.countryFilter,
-			groupId,
+			groupId: groupId!,
 			industry: filters.industryFilter,
-			lifecycleId: 1
+			lifecycleId
 		}
 	});
 
 	return <OverviewSection loading={overviewLoading} metrics={overviewData} />;
 };
 
+const LifecycleStagesSection = () => {
+	const {filters, lifecycleId} = useLifecycle();
+
+	const {groupId} = useParams();
+
+	const {
+		data: stagesData,
+		error: stagesError,
+		loading: stagesLoading
+	} = useRequest({
+		dataSourceFn: API.lifecycle.fetchLifecycleStages,
+		variables: {
+			country: filters.countryFilter,
+			groupId,
+			industry: filters.industryFilter,
+			lifecycleId
+		}
+	});
+
+	return (
+		<LifecycleChart
+			error={!!stagesError}
+			loading={stagesLoading}
+			stages={stagesData}
+		/>
+	);
+};
+
 const LifecycleAccounts = () => {
-	const {filters} = useLifecycle();
+	const {filters, lifecycleId} = useLifecycle();
 
 	const {channelId, groupId} = useParams();
 
 	return (
-		<>
+		<section>
 			<SectionHeader
 				icon='box-container'
 				title={Liferay.Language.get('accounts')}
 			/>
 
 			<AccountsDataSet
+				apiURL={`/o/faro/contacts/${groupId!}/account-lifecycle/${lifecycleId}/accounts`}
 				channelId={channelId!}
 				countryFilter={filters.countryFilter}
 				groupId={groupId!}
 				industryFilter={filters.industryFilter}
-				lifecycleStageFilter={LifecycleStages.AT_RISK}
+				lifecycleStageFilter={filters.lifecycleStageFilter}
 			/>
-		</>
+		</section>
 	);
 };
 
@@ -63,8 +91,15 @@ const BaseLifecycle = () => {
 
 	const {channelId, groupId} = useParams();
 
+	const {data: lifecycles, loading: lifecyclesLoading} = useRequest({
+		dataSourceFn: API.lifecycle.fetchLifecycles,
+		variables: {groupId: groupId!}
+	});
+
+	const lifecycleId = lifecycles?.[0]?.id ?? '1';
+
 	return (
-		<LifecycleContextProvider>
+		<LifecycleContextProvider lifecycleId={lifecycleId}>
 			<BasePage documentTitle={Liferay.Language.get('lifecycles')}>
 				<BasePage.Header
 					breadcrumbs={[
@@ -89,9 +124,17 @@ const BaseLifecycle = () => {
 					</div>
 				</BasePage.SubHeader>
 				<BasePage.Body>
-					<LifecycleOverview />
+					{lifecyclesLoading || !lifecycleId ? (
+						<Loading />
+					) : (
+						<>
+							<LifecycleOverview />
 
-					<LifecycleAccounts />
+							<LifecycleStagesSection />
+
+							<LifecycleAccounts />
+						</>
+					)}
 				</BasePage.Body>
 			</BasePage>
 		</LifecycleContextProvider>

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -80,67 +79,14 @@ public class DDMFieldPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStorageId;
-	private FinderPath _finderPathWithoutPaginationFindByStorageId;
-	private FinderPath _finderPathCountByStorageId;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByStorageId;
 
 	/**
-	 * Returns all the ddm fields where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(long storageId) {
-		return findByStorageId(
-			storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(long storageId, int start, int end) {
-		return findByStorageId(storageId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return findByStorageId(storageId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -223,70 +169,14 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {storageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByStructureVersionId;
-	private FinderPath _finderPathWithoutPaginationFindByStructureVersionId;
-	private FinderPath _finderPathCountByStructureVersionId;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByStructureVersionId;
 
 	/**
-	 * Returns all the ddm fields where structureVersionId = &#63;.
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @return the matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStructureVersionId(long structureVersionId) {
-		return findByStructureVersionId(
-			structureVersionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where structureVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStructureVersionId(
-		long structureVersionId, int start, int end) {
-
-		return findByStructureVersionId(structureVersionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm fields where structureVersionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param structureVersionId the structure version ID
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByStructureVersionId(
-		long structureVersionId, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return findByStructureVersionId(
-			structureVersionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where structureVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param structureVersionId the structure version ID
@@ -373,73 +263,14 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {structureVersionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_F;
-	private FinderPath _finderPathWithoutPaginationFindByC_F;
-	private FinderPath _finderPathCountByC_F;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByC_F;
 
 	/**
-	 * Returns all the ddm fields where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @return the matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByC_F(long companyId, String fieldType) {
-		return findByC_F(
-			companyId, fieldType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByC_F(
-		long companyId, String fieldType, int start, int end) {
-
-		return findByC_F(companyId, fieldType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm fields where companyId = &#63; and fieldType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param fieldType the field type
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByC_F(
-		long companyId, String fieldType, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return findByC_F(
-			companyId, fieldType, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where companyId = &#63; and fieldType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -530,73 +361,14 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {companyId, fieldType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_F;
-	private FinderPath _finderPathWithoutPaginationFindByS_F;
-	private FinderPath _finderPathCountByS_F;
 	private CollectionPersistenceFinder<DDMField>
 		_collectionPersistenceFinderByS_F;
 
 	/**
-	 * Returns all the ddm fields where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @return the matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByS_F(long storageId, String fieldName) {
-		return findByS_F(
-			storageId, fieldName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @return the range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByS_F(
-		long storageId, String fieldName, int start, int end) {
-
-		return findByS_F(storageId, fieldName, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param fieldName the field name
-	 * @param start the lower bound of the range of ddm fields
-	 * @param end the upper bound of the range of ddm fields (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm fields
-	 */
-	@Override
-	public List<DDMField> findByS_F(
-		long storageId, String fieldName, int start, int end,
-		OrderByComparator<DDMField> orderByComparator) {
-
-		return findByS_F(
-			storageId, fieldName, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm fields where storageId = &#63; and fieldName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -687,7 +459,6 @@ public class DDMFieldPersistenceImpl
 			finderCache, new Object[] {storageId, fieldName});
 	}
 
-	private FinderPath _finderPathFetchByS_I;
 	private UniquePersistenceFinder<DDMField> _uniquePersistenceFinderByS_I;
 
 	/**
@@ -718,18 +489,6 @@ public class DDMFieldPersistenceImpl
 		}
 
 		return ddmField;
-	}
-
-	/**
-	 * Returns the ddm field where storageId = &#63; and instanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param storageId the storage ID
-	 * @param instanceId the instance ID
-	 * @return the matching ddm field, or <code>null</code> if a matching ddm field could not be found
-	 */
-	@Override
-	public DDMField fetchByS_I(long storageId, String instanceId) {
-		return fetchByS_I(storageId, instanceId, true);
 	}
 
 	/**
@@ -1015,86 +774,77 @@ public class DDMFieldPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"storageId"}, true);
-
-		_finderPathWithoutPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			true);
-
-		_finderPathCountByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			false);
-
 		_collectionPersistenceFinderByStorageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStorageId,
-				_finderPathWithoutPaginationFindByStorageId,
-				_finderPathCountByStorageId, _SQL_SELECT_DDMFIELD_WHERE,
-				_SQL_COUNT_DDMFIELD_WHERE, DDMFieldModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, false),
+				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
+				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 					true, DDMField::getStorageId));
 
-		_finderPathWithPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStructureVersionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathWithoutPaginationFindByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, true);
-
-		_finderPathCountByStructureVersionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByStructureVersionId", new String[] {Long.class.getName()},
-			new String[] {"structureVersionId"}, false);
-
 		_collectionPersistenceFinderByStructureVersionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStructureVersionId,
-				_finderPathWithoutPaginationFindByStructureVersionId,
-				_finderPathCountByStructureVersionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByStructureVersionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"structureVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStructureVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"structureVersionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStructureVersionId",
+					new String[] {Long.class.getName()},
+					new String[] {"structureVersionId"}, false),
 				_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 				DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ddmField.", "structureVersionId", FinderColumn.Type.LONG,
 					"=", true, true, DDMField::getStructureVersionId));
 
-		_finderPathWithPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "fieldType"}, true);
-
-		_finderPathWithoutPaginationFindByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, 0, 2, true, null);
-
-		_finderPathCountByC_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "fieldType"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_F,
-			_finderPathWithoutPaginationFindByC_F, _finderPathCountByC_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_F",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "fieldType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "fieldType"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "fieldType"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1104,28 +854,24 @@ public class DDMFieldPersistenceImpl
 				"ddmField.", "fieldType", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldType));
 
-		_finderPathWithPaginationFindByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_F",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"storageId", "fieldName"}, true);
-
-		_finderPathWithoutPaginationFindByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, 0, 2, true, null);
-
-		_finderPathCountByS_F = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_F",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "fieldName"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByS_F = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_F,
-			_finderPathWithoutPaginationFindByS_F, _finderPathCountByS_F,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_F",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"storageId", "fieldName"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "fieldName"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_F",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "fieldName"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELD_WHERE, _SQL_COUNT_DDMFIELD_WHERE,
 			DDMFieldModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1135,15 +881,15 @@ public class DDMFieldPersistenceImpl
 				"ddmField.", "fieldName", FinderColumn.Type.STRING, "=", true,
 				true, DDMField::getFieldName));
 
-		_finderPathFetchByS_I = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "instanceId"}, 0, 2, false,
-			DDMField::getStorageId,
-			convertNullFunction(DDMField::getInstanceId));
-
 		_uniquePersistenceFinderByS_I = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_I, _SQL_SELECT_DDMFIELD_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_I",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "instanceId"}, 0, 2, false,
+				DDMField::getStorageId,
+				convertNullFunction(DDMField::getInstanceId)),
+			_SQL_SELECT_DDMFIELD_WHERE, "",
 			new FinderColumn<>(
 				"ddmField.", "storageId", FinderColumn.Type.LONG, "=", true,
 				true, DDMField::getStorageId),
@@ -1220,4 +966,4 @@ public class DDMFieldPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:660830429
+// LIFERAY-SERVICE-BUILDER-HASH:300960618

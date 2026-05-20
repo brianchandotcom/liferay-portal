@@ -16,12 +16,14 @@ import usePreviewState from './usePreviewState';
 
 type Props = {
 	getPreviewDataURL: string;
+	languageId: Liferay.Language.Locale;
 	onCloseModal: () => void;
 	title: string;
 };
 
 export default function PreviewModal({
 	getPreviewDataURL,
+	languageId,
 	onCloseModal,
 	title,
 }: Props) {
@@ -30,7 +32,7 @@ export default function PreviewModal({
 		previewURL,
 		showDisplayPageTemplateAlert,
 		...selectorProps
-	} = usePreviewState(getPreviewDataURL);
+	} = usePreviewState(getPreviewDataURL, languageId);
 
 	const {observer, onClose} = useModal({
 		onClose: onCloseModal,

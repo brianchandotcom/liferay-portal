@@ -37,6 +37,7 @@ import com.liferay.osb.faro.util.DateUtil;
 import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.annotations.Unauthenticated;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
+import com.liferay.osb.faro.web.internal.controller.contacts.DataSourceController;
 import com.liferay.osb.faro.web.internal.controller.contacts.FieldMappingController;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.osb.faro.web.internal.exception.FaroValidationException;
@@ -319,7 +320,13 @@ public class ProjectController extends BaseFaroController {
 				faroProject.getWeDeployKey());
 		}
 
-		return new ProjectDisplay(faroProject);
+		ProjectDisplay projectDisplay = new ProjectDisplay(faroProject);
+
+		projectDisplay.setDataSourceAccessToken(
+			_dataSourceController.generateDataSourceAccessToken(
+				faroProject.getGroupId(), faroProject.getFaroProjectId()));
+
+		return projectDisplay;
 	}
 
 	@Path("/trial")
@@ -377,7 +384,19 @@ public class ProjectController extends BaseFaroController {
 				corpProjectUuid);
 
 		if (faroProject != null) {
-			return new ProjectDisplay(faroProject);
+			ProjectDisplay projectDisplay = new ProjectDisplay(faroProject);
+
+			if (Objects.equals(
+					faroProject.getState(),
+					FaroProjectConstants.STATE_NOT_READY)) {
+
+				projectDisplay.setDataSourceAccessToken(
+					_dataSourceController.generateDataSourceAccessToken(
+						faroProject.getGroupId(),
+						faroProject.getFaroProjectId()));
+			}
+
+			return projectDisplay;
 		}
 
 		return _createUnprovisioned(
@@ -1130,7 +1149,14 @@ public class ProjectController extends BaseFaroController {
 				faroProject.getWeDeployKey());
 		}
 
-		return new ProjectDisplay(faroProject, friendlyURL);
+		ProjectDisplay projectDisplay = new ProjectDisplay(
+			faroProject, friendlyURL);
+
+		projectDisplay.setDataSourceAccessToken(
+			_dataSourceController.generateDataSourceAccessToken(
+				faroProject.getGroupId(), faroProject.getFaroProjectId()));
+
+		return projectDisplay;
 	}
 
 	private String _getDeletionFailedErrorMessage(User user) {
@@ -1686,6 +1712,9 @@ public class ProjectController extends BaseFaroController {
 	@Reference
 	private ContactsLayoutTemplateLocalService
 		_contactsLayoutTemplateLocalService;
+
+	@Reference
+	private DataSourceController _dataSourceController;
 
 	@Reference
 	private FaroNotificationLocalService _faroNotificationLocalService;

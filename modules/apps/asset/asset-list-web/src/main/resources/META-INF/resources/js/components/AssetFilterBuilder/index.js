@@ -145,9 +145,9 @@ function Rule({
 	vocabularyIds,
 }) {
 	return (
-		<div className="align-items-baseline c-gap-3 d-flex justify-content-between">
+		<div className="align-items-baseline c-gap-2 d-flex">
 			<div className="border-top-0 panel panel-default">
-				<div className="align-items-baseline c-gap-3 d-flex flex-wrap mb-0 panel-body">
+				<div className="align-items-baseline c-gap-2 d-flex flex-wrap mb-0 panel-body">
 					<ClayForm.Group className="flex-shrink-0">
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('query-contains')}
@@ -239,15 +239,15 @@ function Rule({
 				</div>
 			</div>
 
-			{!disabled && (
+			{index > 0 && !disabled && (
 				<ClayButton
 					aria-label={Liferay.Language.get('delete-condition')}
-					className="container-trash p-2"
+					borderless
+					className="asset-filter-builder-remove container-trash"
 					data-index={index}
 					displayType="secondary"
 					monospaced
 					onClick={onDeleteRule}
-					size="sm"
 					title={Liferay.Language.get('delete-condition')}
 				>
 					<ClayIcon symbol="trash" />
@@ -335,20 +335,20 @@ function AssetFilterBuilder({
 
 				{!disabled && (
 					<li className="timeline-item">
-						<div className="bg-white d-inline-block position-relative timeline-increment">
-							<ClayButton
-								aria-label={Liferay.Language.get(
-									'add-condition'
-								)}
-								className="rounded-circle"
-								monospaced
-								onClick={handleAddRule}
-								size="sm"
-								title={Liferay.Language.get('add-condition')}
-							>
+						<ClayButton
+							aria-label={Liferay.Language.get('add-option')}
+							borderless
+							className="asset-filter-builder-add"
+							displayType="secondary"
+							onClick={handleAddRule}
+							type="button"
+						>
+							<span className="inline-item inline-item-before">
 								<ClayIcon symbol="plus" />
-							</ClayButton>
-						</div>
+							</span>
+
+							{Liferay.Language.get('add-option')}
+						</ClayButton>
 					</li>
 				)}
 			</ul>

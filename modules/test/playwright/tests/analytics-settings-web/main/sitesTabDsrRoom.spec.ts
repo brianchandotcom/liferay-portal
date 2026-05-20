@@ -6,13 +6,11 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
-import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from '../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
 import {acceptsCookiesBanner} from '../../osb-faro-web/main/utils/portal';
 import {
@@ -24,11 +22,11 @@ import {
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
 		'LPD-66359': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -44,7 +42,7 @@ test.afterEach(async ({apiHelpers}) => {
 test(
 	'Digital Sales Room appears in the analytics property Sites tab',
 	{tag: '@LPD-88808'},
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page}) => {
 		const account = await apiHelpers.headlessAdminUser.postAccount({
 			type: 'business',
 		});
@@ -54,13 +52,6 @@ test(
 		await apiHelpers.headlessDigitalSalesRoom.addRoom({
 			accountEntryId: account.id,
 			name: roomName,
-		});
-
-		const channelName = 'My Property - ' + getRandomString();
-
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
 		});
 
 		const {token} = await createDataSource(page);
@@ -73,7 +64,7 @@ test(
 
 		await connectToAnalyticsCloud(page, {token});
 
-		const channelRow = await findChannel({channelName, page});
+		const channelRow = await findChannel({channelName: channel.name, page});
 
 		await channelRow.locator('button').click();
 
@@ -100,12 +91,5 @@ test(
 				name: roomName,
 			})
 		).toBeVisible();
-
-		await test.step('Delete channel', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );

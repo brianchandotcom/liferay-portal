@@ -112,6 +112,7 @@ public class AssetLibraryDTOConverter
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getDescriptionMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
+				setFriendlyURL(group::getFriendlyURL);
 				setId(depotEntry::getDepotEntryId);
 				setName(() -> group.getName(dtoConverterContext.getLocale()));
 				setName_i18n(

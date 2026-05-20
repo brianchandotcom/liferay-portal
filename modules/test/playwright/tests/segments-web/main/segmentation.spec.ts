@@ -13,6 +13,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
@@ -37,7 +38,7 @@ export const test = mergeTests(
 const userEmailAddress = getRandomString() + '@liferay.com';
 
 test.beforeEach(async ({page}) => {
-	page.setViewportSize({height: 1080, width: 1920});
+	await page.setViewportSize({height: 1080, width: 1920});
 
 	page.on('dialog', async (dialog) => {
 		await dialog.accept();
@@ -459,7 +460,7 @@ test(
 
 			await segmentsPage.addSegmentField('URL', 'Session', segmentName);
 
-			await segmentsPage.fillField('http://localhost:8080');
+			await segmentsPage.fillField(liferayConfig.environment.baseUrl);
 
 			await segmentsPage.saveButton.click();
 
@@ -471,7 +472,9 @@ test(
 
 			await page.waitForLoadState('networkidle');
 
-			await segmentsPage.viewCriterionValue('http://localhost:8080');
+			await segmentsPage.viewCriterionValue(
+				liferayConfig.environment.baseUrl
+			);
 		});
 	}
 );
@@ -1331,7 +1334,7 @@ test(
 
 			await segmentsPage.addSegmentField('URL', 'Session', segmentName2);
 
-			await segmentsPage.fillField('http://localhost:8080');
+			await segmentsPage.fillField(liferayConfig.environment.baseUrl);
 
 			await segmentsPage.saveButton.click();
 		});
@@ -1341,7 +1344,9 @@ test(
 
 			await page.waitForLoadState('networkidle');
 
-			await segmentsPage.viewCriterionValue('http://localhost:8080');
+			await segmentsPage.viewCriterionValue(
+				liferayConfig.environment.baseUrl
+			);
 		});
 	}
 );

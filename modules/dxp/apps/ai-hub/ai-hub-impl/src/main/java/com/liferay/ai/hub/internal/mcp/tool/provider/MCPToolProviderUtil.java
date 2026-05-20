@@ -11,10 +11,13 @@ import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -80,14 +83,29 @@ public class MCPToolProviderUtil {
 			return null;
 		}
 
+		String userToken;
+
+		try {
+			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+
+			userToken = EncryptorUtil.decrypt(
+				company.getKeyObj(), (String)workflowContext.get("userToken"));
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
+
 		List<McpClient> mcpClients = TransformUtil.transform(
 			_getMCPServerObjectEntries(
 				companyId, dtoConverterRegistry, groupId, locale,
 				mcpServerExternalReferenceCodes, objectEntryManager, userId),
 			objectEntry -> {
 				McpTransport mcpTransport = _createMcpTransport(
-					objectEntry.getProperties(),
-					GetterUtil.getString(workflowContext.get("userToken")));
+					objectEntry.getProperties(), userToken);
 
 				return new DefaultMcpClient.Builder(
 				).transport(

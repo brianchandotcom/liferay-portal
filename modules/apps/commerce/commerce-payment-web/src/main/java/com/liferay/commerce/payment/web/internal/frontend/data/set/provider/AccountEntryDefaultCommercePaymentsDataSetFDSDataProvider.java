@@ -80,7 +80,7 @@ public class AccountEntryDefaultCommercePaymentsDataSetFDSDataProvider
 					CommercePaymentMethodGroupRel
 						commercePaymentMethodGroupRel =
 							_commercePaymentMethodGroupRelService.
-								getCommercePaymentMethodGroupRel(
+								fetchCommercePaymentMethodGroupRel(
 									commerceChannelAccountEntryRel.
 										getClassPK());
 

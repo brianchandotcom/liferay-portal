@@ -27,12 +27,14 @@ public class RegionServiceWrapper
 
 	@Override
 	public Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _regionService.addRegion(
-			countryId, active, name, position, regionCode, serviceContext);
+			externalReferenceCode, countryId, active, name, position,
+			regionCode, serviceContext);
 	}
 
 	@Override
@@ -50,6 +52,15 @@ public class RegionServiceWrapper
 	@Override
 	public Region fetchRegion(long countryId, String regionCode) {
 		return _regionService.fetchRegion(countryId, regionCode);
+	}
+
+	@Override
+	public Region fetchRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionService.fetchRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	/**
@@ -74,6 +85,15 @@ public class RegionServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _regionService.getRegion(countryId, regionCode);
+	}
+
+	@Override
+	public Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _regionService.getRegionByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	@Override
@@ -157,12 +177,13 @@ public class RegionServiceWrapper
 
 	@Override
 	public Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _regionService.updateRegion(
-			regionId, active, name, position, regionCode);
+			externalReferenceCode, regionId, active, name, position,
+			regionCode);
 	}
 
 	@Override
@@ -178,4 +199,4 @@ public class RegionServiceWrapper
 	private RegionService _regionService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1860298099
+// LIFERAY-SERVICE-BUILDER-HASH:-231685761

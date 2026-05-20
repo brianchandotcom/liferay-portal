@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPortletPreferenceValueException;
 import com.liferay.portal.kernel.log.Log;
@@ -75,73 +74,14 @@ public class PortletPreferenceValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByPortletPreferencesId;
-	private FinderPath _finderPathWithoutPaginationFindByPortletPreferencesId;
-	private FinderPath _finderPathCountByPortletPreferencesId;
 	private CollectionPersistenceFinder<PortletPreferenceValue>
 		_collectionPersistenceFinderByPortletPreferencesId;
 
 	/**
-	 * Returns all the portlet preference values where portletPreferencesId = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @return the matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByPortletPreferencesId(
-		long portletPreferencesId) {
-
-		return findByPortletPreferencesId(
-			portletPreferencesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preference values where portletPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @return the range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByPortletPreferencesId(
-		long portletPreferencesId, int start, int end) {
-
-		return findByPortletPreferencesId(
-			portletPreferencesId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByPortletPreferencesId(
-		long portletPreferencesId, int start, int end,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		return findByPortletPreferencesId(
-			portletPreferencesId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -234,76 +174,14 @@ public class PortletPreferenceValuePersistenceImpl
 			new Object[] {portletPreferencesId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_N;
-	private FinderPath _finderPathWithoutPaginationFindByP_N;
-	private FinderPath _finderPathCountByP_N;
 	private CollectionPersistenceFinder<PortletPreferenceValue>
 		_collectionPersistenceFinderByP_N;
 
 	/**
-	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @return the matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N(
-		long portletPreferencesId, String name) {
-
-		return findByP_N(
-			portletPreferencesId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @return the range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N(
-		long portletPreferencesId, String name, int start, int end) {
-
-		return findByP_N(portletPreferencesId, name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N(
-		long portletPreferencesId, String name, int start, int end,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		return findByP_N(
-			portletPreferencesId, name, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -399,79 +277,14 @@ public class PortletPreferenceValuePersistenceImpl
 			new Object[] {portletPreferencesId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_N_SV;
-	private FinderPath _finderPathWithoutPaginationFindByC_N_SV;
-	private FinderPath _finderPathCountByC_N_SV;
 	private CollectionPersistenceFinder<PortletPreferenceValue>
 		_collectionPersistenceFinderByC_N_SV;
 
 	/**
-	 * Returns all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @return the matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByC_N_SV(
-		long companyId, String name, String smallValue) {
-
-		return findByC_N_SV(
-			companyId, name, smallValue, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @return the range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByC_N_SV(
-		long companyId, String name, String smallValue, int start, int end) {
-
-		return findByC_N_SV(companyId, name, smallValue, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByC_N_SV(
-		long companyId, String name, String smallValue, int start, int end,
-		OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		return findByC_N_SV(
-			companyId, name, smallValue, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preference values where companyId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -572,7 +385,6 @@ public class PortletPreferenceValuePersistenceImpl
 			new Object[] {companyId, name, smallValue});
 	}
 
-	private FinderPath _finderPathFetchByP_I_N;
 	private UniquePersistenceFinder<PortletPreferenceValue>
 		_uniquePersistenceFinderByP_I_N;
 
@@ -607,21 +419,6 @@ public class PortletPreferenceValuePersistenceImpl
 		}
 
 		return portletPreferenceValue;
-	}
-
-	/**
-	 * Returns the portlet preference value where portletPreferencesId = &#63; and index = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param index the index
-	 * @param name the name
-	 * @return the matching portlet preference value, or <code>null</code> if a matching portlet preference value could not be found
-	 */
-	@Override
-	public PortletPreferenceValue fetchByP_I_N(
-		long portletPreferencesId, int index, String name) {
-
-		return fetchByP_I_N(portletPreferencesId, index, name, true);
 	}
 
 	/**
@@ -677,82 +474,14 @@ public class PortletPreferenceValuePersistenceImpl
 			new Object[] {portletPreferencesId, index, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_N_SV;
-	private FinderPath _finderPathWithoutPaginationFindByP_N_SV;
-	private FinderPath _finderPathCountByP_N_SV;
 	private CollectionPersistenceFinder<PortletPreferenceValue>
 		_collectionPersistenceFinderByP_N_SV;
 
 	/**
-	 * Returns all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @return the matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N_SV(
-		long portletPreferencesId, String name, String smallValue) {
-
-		return findByP_N_SV(
-			portletPreferencesId, name, smallValue, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @return the range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N_SV(
-		long portletPreferencesId, String name, String smallValue, int start,
-		int end) {
-
-		return findByP_N_SV(
-			portletPreferencesId, name, smallValue, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletPreferencesId the portlet preferences ID
-	 * @param name the name
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portlet preference values
-	 * @param end the upper bound of the range of portlet preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portlet preference values
-	 */
-	@Override
-	public List<PortletPreferenceValue> findByP_N_SV(
-		long portletPreferencesId, String name, String smallValue, int start,
-		int end, OrderByComparator<PortletPreferenceValue> orderByComparator) {
-
-		return findByP_N_SV(
-			portletPreferencesId, name, smallValue, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portlet preference values where portletPreferencesId = &#63; and name = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortletPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portletPreferencesId the portlet preferences ID
@@ -1127,30 +856,28 @@ public class PortletPreferenceValuePersistenceImpl
 	 * Initializes the portlet preference value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByPortletPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPortletPreferencesId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portletPreferencesId"}, true);
-
-		_finderPathWithoutPaginationFindByPortletPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPortletPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portletPreferencesId"}, true);
-
-		_finderPathCountByPortletPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPortletPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portletPreferencesId"}, false);
-
 		_collectionPersistenceFinderByPortletPreferencesId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortletPreferencesId,
-				_finderPathWithoutPaginationFindByPortletPreferencesId,
-				_finderPathCountByPortletPreferencesId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPortletPreferencesId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortletPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portletPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPortletPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portletPreferencesId"}, false),
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1160,28 +887,26 @@ public class PortletPreferenceValuePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PortletPreferenceValue::getPortletPreferencesId));
 
-		_finderPathWithPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"portletPreferencesId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portletPreferencesId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portletPreferencesId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_N,
-			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"portletPreferencesId", "name"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portletPreferencesId", "name"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portletPreferencesId", "name"}, 0, 2, false,
+				null),
 			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 			PortletPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1194,37 +919,34 @@ public class PortletPreferenceValuePersistenceImpl
 				"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
 				"=", true, true, PortletPreferenceValue::getName));
 
-		_finderPathWithPaginationFindByC_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name", "smallValue"}, true);
-
-		_finderPathWithoutPaginationFindByC_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "name", "smallValue"}, 0, 6, true, null);
-
-		_finderPathCountByC_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "name", "smallValue"}, 0, 6, false,
-			null);
-
 		_collectionPersistenceFinderByC_N_SV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_N_SV,
-				_finderPathWithoutPaginationFindByC_N_SV,
-				_finderPathCountByC_N_SV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name", "smallValue"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "name", "smallValue"}, 0, 6,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"companyId", "name", "smallValue"}, 0, 6,
+					false, null),
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1241,19 +963,18 @@ public class PortletPreferenceValuePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					PortletPreferenceValue::getSmallValue));
 
-		_finderPathFetchByP_I_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_N",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portletPreferencesId", "index_", "name"}, 0, 4,
-			false, PortletPreferenceValue::getPortletPreferencesId,
-			PortletPreferenceValue::getIndex,
-			convertNullFunction(PortletPreferenceValue::getName));
-
 		_uniquePersistenceFinderByP_I_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByP_I_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByP_I_N",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"portletPreferencesId", "index_", "name"}, 0, 4,
+				false, PortletPreferenceValue::getPortletPreferencesId,
+				PortletPreferenceValue::getIndex,
+				convertNullFunction(PortletPreferenceValue::getName)),
 			_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE, "",
 			new FinderColumn<>(
 				"portletPreferenceValue.", "portletPreferencesId",
@@ -1266,38 +987,35 @@ public class PortletPreferenceValuePersistenceImpl
 				"portletPreferenceValue.", "name", FinderColumn.Type.STRING,
 				"=", true, true, PortletPreferenceValue::getName));
 
-		_finderPathWithPaginationFindByP_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portletPreferencesId", "name", "smallValue"}, true);
-
-		_finderPathWithoutPaginationFindByP_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portletPreferencesId", "name", "smallValue"}, 0, 6,
-			true, null);
-
-		_finderPathCountByP_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portletPreferencesId", "name", "smallValue"}, 0, 6,
-			false, null);
-
 		_collectionPersistenceFinderByP_N_SV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_N_SV,
-				_finderPathWithoutPaginationFindByP_N_SV,
-				_finderPathCountByP_N_SV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletPreferencesId", "name", "smallValue"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"portletPreferencesId", "name", "smallValue"},
+					0, 6, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"portletPreferencesId", "name", "smallValue"},
+					0, 6, false, null),
 				_SQL_SELECT_PORTLETPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTLETPREFERENCEVALUE_WHERE,
 				PortletPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1350,4 +1068,4 @@ public class PortletPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1022717792
+// LIFERAY-SERVICE-BUILDER-HASH:331906896

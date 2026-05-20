@@ -900,10 +900,9 @@ test('Search and paginate site members', async ({
 	apiHelpers,
 	membershipsPage,
 	page,
+	site,
 }) => {
-	const siteId = await page.evaluate(() => {
-		return String(Liferay.ThemeDisplay.getSiteGroupId());
-	});
+	await page.goto(`/group${site.friendlyUrlPath}/~/control_panel/manage`);
 
 	const siteRole =
 		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
@@ -915,7 +914,7 @@ test('Search and paginate site members', async ({
 
 		await apiHelpers.headlessAdminUser.assignUserToSite(
 			siteRole.id,
-			siteId,
+			site.id,
 			user.id
 		);
 

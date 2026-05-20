@@ -7,6 +7,7 @@ package com.liferay.depot.internal.role.type.contributor;
 
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.internal.roles.admin.role.type.contributor.DepotRoleTypeContributor;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -15,6 +16,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -26,6 +28,76 @@ public class DepotRoleTypeContributorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testGetSubtypes() {
+		DepotRoleTypeContributor depotRoleTypeContributor =
+			new DepotRoleTypeContributor();
+
+		try (MockedStatic<FeatureFlagManagerUtil> mockedStatic =
+				Mockito.mockStatic(FeatureFlagManagerUtil.class)) {
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-17564"))
+			).thenReturn(
+				false
+			);
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-58677"))
+			).thenReturn(
+				false
+			);
+
+			Assert.assertArrayEquals(
+				new String[0], depotRoleTypeContributor.getSubtypes());
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-58677"))
+			).thenReturn(
+				true
+			);
+
+			Assert.assertArrayEquals(
+				new String[] {DepotRolesConstants.SUBTYPE_PROJECT},
+				depotRoleTypeContributor.getSubtypes());
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-17564"))
+			).thenReturn(
+				true
+			);
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-58677"))
+			).thenReturn(
+				false
+			);
+
+			Assert.assertArrayEquals(
+				new String[] {DepotRolesConstants.SUBTYPE_SPACE},
+				depotRoleTypeContributor.getSubtypes());
+
+			mockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					Mockito.anyLong(), Mockito.eq("LPD-58677"))
+			).thenReturn(
+				true
+			);
+
+			Assert.assertArrayEquals(
+				new String[] {
+					DepotRolesConstants.SUBTYPE_PROJECT,
+					DepotRolesConstants.SUBTYPE_SPACE
+				},
+				depotRoleTypeContributor.getSubtypes());
+		}
+	}
 
 	@Test
 	public void testIsAllowAssignMembersWithAdministrator() {

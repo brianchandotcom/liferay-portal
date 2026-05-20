@@ -22,6 +22,8 @@ if (commerceTaxFixedRateAddressRel != null) {
 <aui:input name="commerceTaxFixedRateAddressRelId" type="hidden" value="<%= commerceTaxFixedRateAddressRelId %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
+<liferay-ui:error exception="<%= NoSuchCPTaxCategoryException.class %>" message="the-tax-category-could-not-be-found" />
+
 <div class="row">
 	<div class="col-md-6">
 		<aui:select disabled="<%= commerceTaxFixedRateAddressRel != null %>" label="tax-category" name="CPTaxCategoryId">

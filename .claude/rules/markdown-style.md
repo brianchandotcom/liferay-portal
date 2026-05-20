@@ -57,6 +57,7 @@ curl \
 ## Headings
 
 - Apply Title Case at every level, including table headers.
+- Do not number headings (`### Do the Thing`, not `### 1. Do the Thing`).
 - Follow every heading with a blank line before the body content.
 - Use correct casing for brand and product names (Arquillian, Atlassian, Git, GitHub, Gradle, Jira, JUnit, Liferay, Mockito, Playwright, Poshi, REST API, TypeScript).
 

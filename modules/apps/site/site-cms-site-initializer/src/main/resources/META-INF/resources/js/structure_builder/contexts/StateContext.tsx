@@ -30,7 +30,6 @@ import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
-import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
 import normalizeString from '../utils/normalizeString';
 import addChild from '../utils/state/addChild';
@@ -507,27 +506,12 @@ function reducer(state: State, action: Action): State {
 					uuid: child.parent,
 				}) || nextStructure) as Structure | RepeatableGroup;
 
-				const copyUuid = getUuid();
-
-				const copy = {...child, uuid: copyUuid};
-
-				if (copy.type === 'referenced-structure') {
-					copy.relationshipName = getRandomName();
-				}
-				else if (copy.type === 'repeatable-group') {
-					copy.erc = getRandomId();
-					copy.name = getRandomName({capitalize: true});
-					copy.relationshipERC = getRandomId();
-					copy.relationshipName = getRandomName();
-				}
-				else {
-					copy.erc = getRandomId();
-					copy.name = findAvailableFieldName(
-						parent.children,
-						state.history.deletedChildren,
-						child.name
-					);
-				}
+				const copy = cloneChild({
+					child,
+					deletedChildren: state.history.deletedChildren,
+					parent: parent.uuid,
+					siblings: parent.children,
+				});
 
 				const updatedChildren = addChild({
 					child: copy,
@@ -536,7 +520,7 @@ function reducer(state: State, action: Action): State {
 
 				nextStructure = {...nextStructure, children: updatedChildren};
 
-				newSelection.push(copyUuid);
+				newSelection.push(copy.uuid);
 			}
 
 			return {

@@ -51,7 +51,7 @@
 				"en_US": "Commerce Product to Entitlement Definition"
 			},
 			"name": "commerceProductToEntitlementDefinition",
-			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT_DEFINITION",
 			"objectDefinitionExternalReferenceCode2": "C_ENTITLEMENT_DEFINITION",
 			"type": "oneToMany"
 		},
@@ -62,7 +62,7 @@
 				"en_US": "Commerce Product to License Key"
 			},
 			"name": "commerceProductToLicenseKey",
-			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT_DEFINITION",
 			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
 			"type": "oneToMany"
 		},

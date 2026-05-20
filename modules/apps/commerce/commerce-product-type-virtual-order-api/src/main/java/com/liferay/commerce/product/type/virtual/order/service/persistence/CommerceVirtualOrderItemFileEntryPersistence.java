@@ -33,48 +33,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	 */
 
 	/**
-	 * Returns all the commerce virtual order item file entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
-		String uuid);
-
-	/**
-	 * Returns a range of all the commerce virtual order item file entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @return the range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceVirtualOrderItemFileEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -148,16 +106,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 		throws NoSuchVirtualOrderItemFileEntryException;
 
 	/**
-	 * Returns the commerce virtual order item file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
-	 */
-	public CommerceVirtualOrderItemFileEntry fetchByUUID_G(
-		String uuid, long groupId);
-
-	/**
 	 * Returns the commerce virtual order item file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -187,51 +135,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	 * @return the number of matching commerce virtual order item file entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @return the range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceVirtualOrderItemFileEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
@@ -300,50 +203,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @return the matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry>
-		findByCommerceVirtualOrderItemId(long commerceVirtualOrderItemId);
-
-	/**
-	 * Returns a range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @return the range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry>
-		findByCommerceVirtualOrderItemId(
-			long commerceVirtualOrderItemId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry>
-		findByCommerceVirtualOrderItemId(
-			long commerceVirtualOrderItemId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceVirtualOrderItemFileEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
 	 *
 	 * <p>
@@ -408,51 +267,6 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	 */
 	public int countByCommerceVirtualOrderItemId(
 		long commerceVirtualOrderItemId);
-
-	/**
-	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @return the matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
-		long commerceVirtualOrderItemId, long fileEntryId);
-
-	/**
-	 * Returns a range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @return the range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
-		long commerceVirtualOrderItemId, long fileEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
-	 * @param fileEntryId the file entry ID
-	 * @param start the lower bound of the range of commerce virtual order item file entries
-	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce virtual order item file entries
-	 */
-	public java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
-		long commerceVirtualOrderItemId, long fileEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceVirtualOrderItemFileEntry> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
@@ -563,5 +377,248 @@ public interface CommerceVirtualOrderItemFileEntryPersistence
 	public CommerceVirtualOrderItemFileEntry fetchByPrimaryKey(
 		long commerceVirtualOrderItemFileEntryId);
 
+	/**
+	 * Returns the commerce virtual order item file entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce virtual order item file entry, or <code>null</code> if a matching commerce virtual order item file entry could not be found
+	 */
+	public default CommerceVirtualOrderItemFileEntry fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns all the commerce virtual order item file entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
+		String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce virtual order item file entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @return the range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceVirtualOrderItemFileEntry> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByUuid_C(String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @return the range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByUuid_C(String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce virtual order item file entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByUuid_C(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceVirtualOrderItemFileEntry> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @return the matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByCommerceVirtualOrderItemId(long commerceVirtualOrderItemId) {
+
+		return findByCommerceVirtualOrderItemId(
+			commerceVirtualOrderItemId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @return the range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByCommerceVirtualOrderItemId(
+			long commerceVirtualOrderItemId, int start, int end) {
+
+		return findByCommerceVirtualOrderItemId(
+			commerceVirtualOrderItemId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry>
+		findByCommerceVirtualOrderItemId(
+			long commerceVirtualOrderItemId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceVirtualOrderItemFileEntry> orderByComparator) {
+
+		return findByCommerceVirtualOrderItemId(
+			commerceVirtualOrderItemId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @param fileEntryId the file entry ID
+	 * @return the matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
+		long commerceVirtualOrderItemId, long fileEntryId) {
+
+		return findByC_F(
+			commerceVirtualOrderItemId, fileEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @return the range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
+		long commerceVirtualOrderItemId, long fileEntryId, int start, int end) {
+
+		return findByC_F(
+			commerceVirtualOrderItemId, fileEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce virtual order item file entries where commerceVirtualOrderItemId = &#63; and fileEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.type.virtual.order.model.impl.CommerceVirtualOrderItemFileEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceVirtualOrderItemId the commerce virtual order item ID
+	 * @param fileEntryId the file entry ID
+	 * @param start the lower bound of the range of commerce virtual order item file entries
+	 * @param end the upper bound of the range of commerce virtual order item file entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce virtual order item file entries
+	 */
+	public default java.util.List<CommerceVirtualOrderItemFileEntry> findByC_F(
+		long commerceVirtualOrderItemId, long fileEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceVirtualOrderItemFileEntry> orderByComparator) {
+
+		return findByC_F(
+			commerceVirtualOrderItemId, fileEntryId, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:286021941
+// LIFERAY-SERVICE-BUILDER-HASH:-1284083853

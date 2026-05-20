@@ -103,6 +103,16 @@ export async function viewNameOnTableList({
 	}
 }
 
+export async function viewNameListInOrder({
+	itemNames,
+	page,
+}: {
+	itemNames: string[];
+	page: Page;
+}) {
+	await expect(page.locator('.table-title')).toHaveText(itemNames);
+}
+
 export async function searchByTerm({
 	page,
 	searchTerm,

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,69 +74,14 @@ public class SocialActivityCounterPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<SocialActivityCounter>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the social activity counters where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the social activity counters where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @return the range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the social activity counters where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity counters where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -224,75 +168,14 @@ public class SocialActivityCounterPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<SocialActivityCounter>
 		_collectionPersistenceFinderByC_C;
 
 	/**
-	 * Returns all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByC_C(
-		long classNameId, long classPK) {
-
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @return the range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity counters where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -387,85 +270,14 @@ public class SocialActivityCounterPersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_O;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_O;
-	private FinderPath _finderPathCountByG_C_C_O;
 	private CollectionPersistenceFinder<SocialActivityCounter>
 		_collectionPersistenceFinderByG_C_C_O;
 
 	/**
-	 * Returns all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @return the matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByG_C_C_O(
-		long groupId, long classNameId, long classPK, int ownerType) {
-
-		return findByG_C_C_O(
-			groupId, classNameId, classPK, ownerType, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @return the range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByG_C_C_O(
-		long groupId, long classNameId, long classPK, int ownerType, int start,
-		int end) {
-
-		return findByG_C_C_O(
-			groupId, classNameId, classPK, ownerType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of social activity counters
-	 * @param end the upper bound of the range of social activity counters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching social activity counters
-	 */
-	@Override
-	public List<SocialActivityCounter> findByG_C_C_O(
-		long groupId, long classNameId, long classPK, int ownerType, int start,
-		int end, OrderByComparator<SocialActivityCounter> orderByComparator) {
-
-		return findByG_C_C_O(
-			groupId, classNameId, classPK, ownerType, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the social activity counters where groupId = &#63; and classNameId = &#63; and classPK = &#63; and ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SocialActivityCounterModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -576,7 +388,6 @@ public class SocialActivityCounterPersistenceImpl
 			new Object[] {groupId, classNameId, classPK, ownerType});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C_N_O_S;
 	private UniquePersistenceFinder<SocialActivityCounter>
 		_uniquePersistenceFinderByG_C_C_N_O_S;
 
@@ -618,26 +429,6 @@ public class SocialActivityCounterPersistenceImpl
 		}
 
 		return socialActivityCounter;
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and startPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param startPeriod the start period
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByG_C_C_N_O_S(
-		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int startPeriod) {
-
-		return fetchByG_C_C_N_O_S(
-			groupId, classNameId, classPK, name, ownerType, startPeriod, true);
 	}
 
 	/**
@@ -711,7 +502,6 @@ public class SocialActivityCounterPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C_N_O_E;
 	private UniquePersistenceFinder<SocialActivityCounter>
 		_uniquePersistenceFinderByG_C_C_N_O_E;
 
@@ -753,26 +543,6 @@ public class SocialActivityCounterPersistenceImpl
 		}
 
 		return socialActivityCounter;
-	}
-
-	/**
-	 * Returns the social activity counter where groupId = &#63; and classNameId = &#63; and classPK = &#63; and name = &#63; and ownerType = &#63; and endPeriod = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param name the name
-	 * @param ownerType the owner type
-	 * @param endPeriod the end period
-	 * @return the matching social activity counter, or <code>null</code> if a matching social activity counter could not be found
-	 */
-	@Override
-	public SocialActivityCounter fetchByG_C_C_N_O_E(
-		long groupId, long classNameId, long classPK, String name,
-		int ownerType, int endPeriod) {
-
-		return fetchByG_C_C_N_O_E(
-			groupId, classNameId, classPK, name, ownerType, endPeriod, true);
 	}
 
 	/**
@@ -1126,29 +896,25 @@ public class SocialActivityCounterPersistenceImpl
 	 * Initializes the social activity counter persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE,
 				SocialActivityCounterModelImpl.ORDER_BY_JPQL,
@@ -1157,28 +923,24 @@ public class SocialActivityCounterPersistenceImpl
 					"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SocialActivityCounter::getGroupId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
 			_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE,
 			SocialActivityCounterModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1190,40 +952,41 @@ public class SocialActivityCounterPersistenceImpl
 				"socialActivityCounter.", "classPK", FinderColumn.Type.LONG,
 				"=", true, true, SocialActivityCounter::getClassPK));
 
-		_finderPathWithPaginationFindByG_C_C_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_O",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "ownerType"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_O",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "ownerType"},
-			true);
-
-		_finderPathCountByG_C_C_O = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_O",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "ownerType"},
-			false);
-
 		_collectionPersistenceFinderByG_C_C_O =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_O,
-				_finderPathWithoutPaginationFindByG_C_C_O,
-				_finderPathCountByG_C_C_O,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_O",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "ownerType"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_O",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "ownerType"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_O",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "ownerType"
+					},
+					false),
 				_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE,
 				_SQL_COUNT_SOCIALACTIVITYCOUNTER_WHERE,
 				SocialActivityCounterModelImpl.ORDER_BY_JPQL,
@@ -1243,26 +1006,25 @@ public class SocialActivityCounterPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					SocialActivityCounter::getOwnerType));
 
-		_finderPathFetchByG_C_C_N_O_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classPK", "name", "ownerType",
-				"startPeriod"
-			},
-			0, 8, false, SocialActivityCounter::getGroupId,
-			SocialActivityCounter::getClassNameId,
-			SocialActivityCounter::getClassPK,
-			convertNullFunction(SocialActivityCounter::getName),
-			SocialActivityCounter::getOwnerType,
-			SocialActivityCounter::getStartPeriod);
-
 		_uniquePersistenceFinderByG_C_C_N_O_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C_N_O_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"groupId", "classNameId", "classPK", "name", "ownerType",
+					"startPeriod"
+				},
+				0, 8, false, SocialActivityCounter::getGroupId,
+				SocialActivityCounter::getClassNameId,
+				SocialActivityCounter::getClassPK,
+				convertNullFunction(SocialActivityCounter::getName),
+				SocialActivityCounter::getOwnerType,
+				SocialActivityCounter::getStartPeriod),
 			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE, "",
 			new FinderColumn<>(
 				"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
@@ -1285,26 +1047,25 @@ public class SocialActivityCounterPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				SocialActivityCounter::getStartPeriod));
 
-		_finderPathFetchByG_C_C_N_O_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_E",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classPK", "name", "ownerType",
-				"endPeriod"
-			},
-			0, 8, false, SocialActivityCounter::getGroupId,
-			SocialActivityCounter::getClassNameId,
-			SocialActivityCounter::getClassPK,
-			convertNullFunction(SocialActivityCounter::getName),
-			SocialActivityCounter::getOwnerType,
-			SocialActivityCounter::getEndPeriod);
-
 		_uniquePersistenceFinderByG_C_C_N_O_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C_N_O_E,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_N_O_E",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"groupId", "classNameId", "classPK", "name", "ownerType",
+					"endPeriod"
+				},
+				0, 8, false, SocialActivityCounter::getGroupId,
+				SocialActivityCounter::getClassNameId,
+				SocialActivityCounter::getClassPK,
+				convertNullFunction(SocialActivityCounter::getName),
+				SocialActivityCounter::getOwnerType,
+				SocialActivityCounter::getEndPeriod),
 			_SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE, "",
 			new FinderColumn<>(
 				"socialActivityCounter.", "groupId", FinderColumn.Type.LONG,
@@ -1363,4 +1124,4 @@ public class SocialActivityCounterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-780453014
+// LIFERAY-SERVICE-BUILDER-HASH:729733460

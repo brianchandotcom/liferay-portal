@@ -2,7 +2,7 @@ import {debounce} from 'lodash/fp';
 import {useCallback, useRef, useState} from 'react';
 import {useDeepEqualEffect} from 'shared/hooks/useDeepEqualEffect';
 
-export const useRequest = ({
+export const useRequest = <TParams extends object, TData>({
 	dataSourceFn,
 	debounceDelay = 0,
 	initialState = {
@@ -15,17 +15,13 @@ export const useRequest = ({
 	skipRequest = false,
 	variables
 }: {
-	dataSourceFn?: (params: {[key: string]: any}) => Promise<any> | undefined;
+	dataSourceFn?: (params: TParams) => Promise<TData> | undefined;
 	debounceDelay?: number;
-	initialState?: {
-		data: any;
-		error: boolean;
-		loading: boolean;
-	};
+	initialState?: {data: TData | null; error: boolean; loading: boolean};
 	normalize?: (params: any) => any;
 	resetStateIfSkipingRequest?: boolean;
 	skipRequest?: boolean;
-	variables: {[key: string]: any};
+	variables: TParams;
 }) => {
 	const requestAbortControllerRef = useRef<AbortController>();
 	const debounceRef = useRef<ReturnType<typeof debounce>>();

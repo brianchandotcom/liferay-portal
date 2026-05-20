@@ -13,6 +13,7 @@ resource "aws_iam_policy" "secret_store_policy" {
 					Resource=concat(
 						[
 							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.certificates}*",
+							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.credentials}*",
 							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.licenses}*",
 						],
 						[

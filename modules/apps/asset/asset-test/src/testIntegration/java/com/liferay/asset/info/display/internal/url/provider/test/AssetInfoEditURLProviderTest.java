@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -60,7 +61,9 @@ public class AssetInfoEditURLProviderTest {
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		String backURL = "http://localhost:8080/test";
+		String backURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/test";
 
 		mockHttpServletRequest.setParameter("backURL", backURL);
 
@@ -69,7 +72,9 @@ public class AssetInfoEditURLProviderTest {
 		mockHttpServletRequest.setParameter("backURLTitle", backURLTitle);
 
 		mockHttpServletRequest.setParameter(
-			"redirect", "http://localhost:8080/redirect");
+			"redirect",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/redirect");
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);

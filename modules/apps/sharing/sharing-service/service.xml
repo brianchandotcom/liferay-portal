@@ -40,6 +40,9 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
+		<finder name="ToTicketId" return-type="Collection">
+			<finder-column name="toTicketId" />
+		</finder>
 		<finder name="ToUserGroupId" return-type="Collection">
 			<finder-column name="toUserGroupId" />
 		</finder>

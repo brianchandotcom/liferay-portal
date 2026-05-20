@@ -6,39 +6,28 @@ import InterestDisplay from './InterestDisplay';
 import OrganizationDisplay from './OrganizationDisplay';
 import React from 'react';
 import SessionDisplay from './SessionDisplay';
-import VocabularyDisplay from './VocabularyDisplay';
+import {getRemoteCriterionTypeByPropertyKey} from 'segment/segment-editor/dynamic/criterion-types/registry';
 import {IDisplayComponentProps} from '../types';
+
+const NON_REMOTE_DISPLAYS: Record<string, React.ComponentType<any>> = {
+	account: AccountDisplay,
+	event: EventDisplay,
+	individual: IndividualDisplay,
+	interest: InterestDisplay,
+	organization: OrganizationDisplay,
+	session: SessionDisplay,
+	web: BehaviorDisplay
+};
 
 const DisplayComponent: React.FC<IDisplayComponentProps> = ({
 	criterion,
 	property,
 	segmentType
 }) => {
-	const getDisplayComponent = (propertyKey: string) => {
-		switch (propertyKey) {
-			case 'account':
-				return AccountDisplay;
-			case 'event':
-				return EventDisplay;
-			case 'session':
-				return SessionDisplay;
-			case 'interest':
-				return InterestDisplay;
-			case 'vocabulary':
-				return VocabularyDisplay;
-			case 'web':
-				return BehaviorDisplay;
-			case 'organization':
-				return OrganizationDisplay;
-			case 'individual':
-			default:
-				return IndividualDisplay;
-		}
-	};
-
-	const Display = getDisplayComponent(
-		property.propertyKey
-	) as React.FC<IDisplayComponentProps>;
+	const Display = (getRemoteCriterionTypeByPropertyKey(property.propertyKey)
+		?.DisplayComponent ??
+		NON_REMOTE_DISPLAYS[property.propertyKey] ??
+		IndividualDisplay) as React.FC<IDisplayComponentProps>;
 
 	return (
 		<Display

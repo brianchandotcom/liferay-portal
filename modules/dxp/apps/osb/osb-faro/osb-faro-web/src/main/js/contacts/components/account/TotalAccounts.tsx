@@ -19,9 +19,7 @@ const renderAccountValue = (metric?: Metric) =>
 
 const TotalAccounts = ({groupId}: {groupId: string}) => {
 	const {data, loading} = useRequest({
-		dataSourceFn: API.accounts.fetchMetrics as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.accounts.fetchMetrics,
 		variables: {
 			groupId
 		}

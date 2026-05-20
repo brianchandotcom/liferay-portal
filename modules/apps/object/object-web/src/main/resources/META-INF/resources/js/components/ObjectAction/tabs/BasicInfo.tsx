@@ -74,6 +74,7 @@ export default function BasicInfo({
 				<Input
 					disabled={isApproved || values.system}
 					error={errors.name}
+					id="actionNameInput"
 					label={Liferay.Language.get('action-name')}
 					name="name"
 					onChange={handleChange}
@@ -85,6 +86,7 @@ export default function BasicInfo({
 					component="textarea"
 					disabled={values.system}
 					error={errors.description}
+					id="actionDescriptionInput"
 					label={Liferay.Language.get('description')}
 					name="description"
 					onChange={handleChange}

@@ -198,4 +198,4 @@ public interface ConvertNullEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2017998543
+// LIFERAY-SERVICE-BUILDER-HASH:-1866558047

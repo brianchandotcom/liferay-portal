@@ -16,6 +16,8 @@ components:
                     description:
                         The external domain.
                     type: string
+                p-9-: b
+                p-10-: a
 info:
     title: Change Tracking REST
     version: v1.0

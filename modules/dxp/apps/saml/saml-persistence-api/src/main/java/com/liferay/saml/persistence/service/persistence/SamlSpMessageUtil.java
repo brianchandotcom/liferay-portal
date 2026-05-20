@@ -268,20 +268,6 @@ public class SamlSpMessageUtil {
 	}
 
 	/**
-	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param samlIdpResponseKey the saml idp response key
-	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
-	 */
-	public static SamlSpMessage fetchBySIEI_SIRK(
-		String samlIdpEntityId, String samlIdpResponseKey) {
-
-		return getPersistence().fetchBySIEI_SIRK(
-			samlIdpEntityId, samlIdpResponseKey);
-	}
-
-	/**
 	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpEntityId the saml idp entity ID
@@ -376,6 +362,20 @@ public class SamlSpMessageUtil {
 		return getPersistence().fetchByPrimaryKey(samlSpMessageId);
 	}
 
+	/**
+	 * Returns the saml sp message where samlIdpEntityId = &#63; and samlIdpResponseKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param samlIdpEntityId the saml idp entity ID
+	 * @param samlIdpResponseKey the saml idp response key
+	 * @return the matching saml sp message, or <code>null</code> if a matching saml sp message could not be found
+	 */
+	public static SamlSpMessage fetchBySIEI_SIRK(
+		String samlIdpEntityId, String samlIdpResponseKey) {
+
+		return getPersistence().fetchBySIEI_SIRK(
+			samlIdpEntityId, samlIdpResponseKey);
+	}
+
 	public static SamlSpMessagePersistence getPersistence() {
 		return _persistence;
 	}
@@ -387,4 +387,4 @@ public class SamlSpMessageUtil {
 	private static volatile SamlSpMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1219031791
+// LIFERAY-SERVICE-BUILDER-HASH:960003189

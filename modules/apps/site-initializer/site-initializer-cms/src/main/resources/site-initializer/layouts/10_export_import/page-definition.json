@@ -1,0 +1,21 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetName": "com_liferay_exportimport_web_portlet_ExportImportPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "cms-master"
+		}
+	},
+	"version": 1.1
+}

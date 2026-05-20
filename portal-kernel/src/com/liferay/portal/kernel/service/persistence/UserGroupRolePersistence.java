@@ -33,47 +33,6 @@ public interface UserGroupRolePersistence
 	 */
 
 	/**
-	 * Returns all the user group roles where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByUserId(long userId);
-
-	/**
-	 * Returns a range of all the user group roles where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @return the range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByUserId(
-		long userId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user group roles where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByUserId(
-		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the user group roles where userId = &#63;.
 	 *
 	 * <p>
@@ -133,47 +92,6 @@ public interface UserGroupRolePersistence
 	 * @return the number of matching user group roles
 	 */
 	public int countByUserId(long userId);
-
-	/**
-	 * Returns all the user group roles where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the user group roles where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @return the range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user group roles where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user group roles where groupId = &#63;.
@@ -237,47 +155,6 @@ public interface UserGroupRolePersistence
 	public int countByGroupId(long groupId);
 
 	/**
-	 * Returns all the user group roles where roleId = &#63;.
-	 *
-	 * @param roleId the role ID
-	 * @return the matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByRoleId(long roleId);
-
-	/**
-	 * Returns a range of all the user group roles where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @return the range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByRoleId(
-		long roleId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user group roles where roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByRoleId(
-		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the user group roles where roleId = &#63;.
 	 *
 	 * <p>
@@ -337,50 +214,6 @@ public interface UserGroupRolePersistence
 	 * @return the number of matching user group roles
 	 */
 	public int countByRoleId(long roleId);
-
-	/**
-	 * Returns all the user group roles where userId = &#63; and groupId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @return the matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByU_G(long userId, long groupId);
-
-	/**
-	 * Returns a range of all the user group roles where userId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @return the range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByU_G(
-		long userId, long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user group roles where userId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByU_G(
-		long userId, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user group roles where userId = &#63; and groupId = &#63;.
@@ -447,50 +280,6 @@ public interface UserGroupRolePersistence
 	 * @return the number of matching user group roles
 	 */
 	public int countByU_G(long userId, long groupId);
-
-	/**
-	 * Returns all the user group roles where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @return the matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByG_R(long groupId, long roleId);
-
-	/**
-	 * Returns a range of all the user group roles where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @return the range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByG_R(
-		long groupId, long roleId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the user group roles where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of user group roles
-	 * @param end the upper bound of the range of user group roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user group roles
-	 */
-	public java.util.List<UserGroupRole> findByG_R(
-		long groupId, long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the user group roles where groupId = &#63; and roleId = &#63;.
@@ -571,16 +360,6 @@ public interface UserGroupRolePersistence
 		throws NoSuchUserGroupRoleException;
 
 	/**
-	 * Returns the user group role where userId = &#63; and groupId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @return the matching user group role, or <code>null</code> if a matching user group role could not be found
-	 */
-	public UserGroupRole fetchByU_G_R(long userId, long groupId, long roleId);
-
-	/**
 	 * Returns the user group role where userId = &#63; and groupId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -651,5 +430,286 @@ public interface UserGroupRolePersistence
 	 */
 	public UserGroupRole fetchByPrimaryKey(long userGroupRoleId);
 
+	/**
+	 * Returns the user group role where userId = &#63; and groupId = &#63; and roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the matching user group role, or <code>null</code> if a matching user group role could not be found
+	 */
+	public default UserGroupRole fetchByU_G_R(
+		long userId, long groupId, long roleId) {
+
+		return fetchByU_G_R(userId, groupId, roleId, true);
+	}
+
+	/**
+	 * Returns all the user group roles where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByUserId(long userId) {
+		return findByUserId(
+			userId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user group roles where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @return the range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByUserId(
+		long userId, int start, int end) {
+
+		return findByUserId(userId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user group roles where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByUserId(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
+			orderByComparator) {
+
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the user group roles where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByGroupId(long groupId) {
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user group roles where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @return the range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user group roles where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the user group roles where roleId = &#63;.
+	 *
+	 * @param roleId the role ID
+	 * @return the matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByRoleId(long roleId) {
+		return findByRoleId(
+			roleId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user group roles where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @return the range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByRoleId(
+		long roleId, int start, int end) {
+
+		return findByRoleId(roleId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user group roles where roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByRoleId(
+		long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
+			orderByComparator) {
+
+		return findByRoleId(roleId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the user group roles where userId = &#63; and groupId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @return the matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByU_G(
+		long userId, long groupId) {
+
+		return findByU_G(
+			userId, groupId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user group roles where userId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @return the range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByU_G(
+		long userId, long groupId, int start, int end) {
+
+		return findByU_G(userId, groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user group roles where userId = &#63; and groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByU_G(
+		long userId, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
+			orderByComparator) {
+
+		return findByU_G(userId, groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the user group roles where groupId = &#63; and roleId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @return the matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByG_R(
+		long groupId, long roleId) {
+
+		return findByG_R(
+			groupId, roleId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the user group roles where groupId = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @return the range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByG_R(
+		long groupId, long roleId, int start, int end) {
+
+		return findByG_R(groupId, roleId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the user group roles where groupId = &#63; and roleId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.UserGroupRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param roleId the role ID
+	 * @param start the lower bound of the range of user group roles
+	 * @param end the upper bound of the range of user group roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching user group roles
+	 */
+	public default java.util.List<UserGroupRole> findByG_R(
+		long groupId, long roleId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<UserGroupRole>
+			orderByComparator) {
+
+		return findByG_R(groupId, roleId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1120667261
+// LIFERAY-SERVICE-BUILDER-HASH:1312894597

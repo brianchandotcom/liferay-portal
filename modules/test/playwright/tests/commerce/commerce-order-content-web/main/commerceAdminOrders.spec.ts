@@ -25,11 +25,9 @@ test(
 	'Orders can be bulk deleted on admin orders page',
 	{tag: '@LPD-55981'},
 	async ({apiHelpers, commerceAdminOrdersPage, page}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const channel =
 			await apiHelpers.headlessCommerceAdminChannel.postChannel({

@@ -66,19 +66,19 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testAssetPublisher() {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/ap-page/-/asset_publisher/BNPTUvWUBXIr/";
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-			"/BNPTUvWUBXIr/content/id?p_r_p_assetEntryId=43152",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_redirect=",
-			"http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2F",
-			"ap-page%3Fp_p_id=com_liferay_asset_publisher_web_portlet_",
-			"AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr&p_p_lifecycle=0&p_p_state=normal",
-			"&p_p_mode=view",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false",
-			"&p_r_p_assetEntryId=43152");
+			portalURL, "content/id?p_r_p_assetEntryId=43152&_com_liferay_",
+			"asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_BNPTUv",
+			"WUBXIr_redirect=http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fap-",
+			"page%3Fp_p_id=com_liferay_asset_publisher_web_portlet_Asset",
+			"PublisherPortlet_INSTANCE_BNPTUvWUBXIr&p_p_lifecycle=0&p_p_state=",
+			"normal&p_p_mode=view&_com_liferay_asset_publisher_web_portlet_",
+			"AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=",
+			"false&p_r_p_assetEntryId=43152");
 
 		String className1 = JournalArticle.class.getName();
 		String className2 = BlogsEntry.class.getName();
@@ -90,17 +90,15 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className1 + "_PORTLET_12345678";
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/ap-page/-/asset_publisher",
-			"/BNPTUvWUBXIr/blog/id?p_r_p_assetEntryId=25134",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_redirect=http://localhost:8080/web/guest",
-			"/ap-page?p_p_id=com_liferay_asset_publisher_web_portlet_",
-			"AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr&p_p_lifecycle=0&p_p_state=normal",
-			"&p_p_mode=view",
-			"&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
-			"INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false",
-			"&p_r_p_assetEntryId=25134");
+			portalURL, "blog/id?p_r_p_assetEntryId=25134&_com_liferay_asset_",
+			"publisher_web_portlet_AssetPublisherPortlet_INSTANCE_BNPTUvWUBXIr",
+			"_redirect=http://localhost:",
+			PortalUtil.getPortalServerPort(false), "/web/guest/ap-page?p_p_id=",
+			"com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_",
+			"INSTANCE_BNPTUvWUBXIr&p_p_lifecycle=0&p_p_state=normal&p_p_mode=",
+			"view&_com_liferay_asset_publisher_web_portlet_AssetPublisher",
+			"Portlet_INSTANCE_BNPTUvWUBXIr_cur=0&p_r_p_resetCur=false&p_r_p_",
+			"assetEntryId=25134");
 
 		AssetEntry assetEntry1 = getAssetEntry(className1, classPK1);
 
@@ -160,10 +158,13 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testBlogs() {
-		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/blogs/-/blogs/blog-2",
-			"?_com_liferay_blogs_web_portlet_BlogsPortlet",
-			"_redirect=%2Fweb%2Fguest%2Fassetpublisher");
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/blogs/-/blogs/";
+
+		String urlString =
+			portalURL + "blog-2?_com_liferay_blogs_web_portlet_BlogsPortlet_" +
+				"redirect=%2Fweb%2Fguest%2Fassetpublisher";
 
 		String className = "com_liferay_blogs_web_portlet_BlogsPortlet";
 		int classPK = 12345;
@@ -176,9 +177,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		String uuid = "abcde-efgh";
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/blogs/-/blogs/", urlTitle,
-			"?_com_liferay_blogs_web_portlet_BlogsPortlet",
-			"_redirect=/web/guest/assetpublisher");
+			portalURL, urlTitle, "?_com_liferay_blogs_web_portlet_Blogs",
+			"Portlet_redirect=/web/guest/assetpublisher");
 
 		AssetEntry assetEntry = getAssetEntry(className, classPK);
 
@@ -216,10 +216,14 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testDocumentLibraryDLFileEntry() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			"/guest/document-and-media/-/document_library/oagkfEivnD1J",
+			"/view_file/");
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/39730?",
-			"_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			portalURL, "39730?_com_liferay_document_library_web_portlet",
+			"_DLPortlet_INSTANCE");
 
 		String className = DLFileEntry.class.getName();
 		long fileEntryId = 33333;
@@ -228,9 +232,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className + "_PORTLET_" + fileEntryId;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/", fileEntryId,
-			"?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			portalURL, fileEntryId, "?_com_liferay_document_library_web_",
+			"portlet_DLPortlet_INSTANCE");
 
 		DLFileEntry dlFileEntry = Mockito.mock(DLFileEntry.class);
 
@@ -261,10 +264,14 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testDocumentLibraryDLFolder() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			"/guest/document-and-media/-/document_library/oagkfEivnD1J",
+			"/view_file/");
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/39730?",
-			"_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			portalURL, "39730?_com_liferay_document_library_web_portlet_",
+			"DLPortlet_INSTANCE");
 
 		String className = DLFolder.class.getName();
 		long folderId = 33333;
@@ -273,9 +280,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className + "_PORTLET_" + folderId;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/", folderId,
-			"?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			portalURL, folderId, "?_com_liferay_document_library_web_portlet",
+			"_DLPortlet_INSTANCE");
 
 		DLFolder dlFolder = Mockito.mock(DLFolder.class);
 
@@ -306,11 +312,13 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testMessageBoardsCategory() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false),
+			"/web/guest/message-boards/-/message_boards/category/");
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/message-boards/-/message_boards",
-			"/category/39748?",
-			"_com_liferay_message_boards_web_portlet_MBPortlet_redirect=",
-			"%2Fweb%2Fguest%2Fassetpublisher");
+			portalURL, "39748?_com_liferay_message_boards_web_portlet_",
+			"MBPortlet_redirect=%2Fweb%2Fguest%2Fassetpublisher");
 
 		String className = "com.liferay.message.boards.model.MBCategory";
 		long categoryId = 22222;
@@ -319,10 +327,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className + "_PORTLET_" + categoryId;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/message-boards/-/message_boards",
-			"/category/", categoryId,
-			"?_com_liferay_message_boards_web_portlet_MBPortlet_redirect=/web",
-			"/guest/assetpublisher");
+			portalURL, categoryId, "?_com_liferay_message_boards_web_portlet_",
+			"MBPortlet_redirect=/web/guest/assetpublisher");
 
 		Mockito.doReturn(
 			MBCategory.class.getName()
@@ -345,11 +351,13 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testMessageBoardsMessage() {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/web/guest/message-boards/-/message_boards/message/";
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/message-boards/-/message_boards",
-			"/message/39753?",
-			"_com_liferay_message_boards_web_portlet_MBPortlet_redirect=",
-			"%2Fweb%2Fguest%2Fassetpublisher");
+			portalURL, "39753?_com_liferay_message_boards_web_portlet_",
+			"MBPortlet_redirect=%2Fweb%2Fguest%2Fassetpublisher");
 
 		String className = "com_liferay_message_web_portlet_MessagePortlet";
 		long groupId = RandomTestUtil.randomLong();
@@ -357,10 +365,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		long messageId = 123456;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/message-boards/-/message_boards",
-			"/message/", messageId,
-			"?_com_liferay_message_boards_web_portlet_MBPortlet_redirect=/web",
-			"/guest/assetpublisher");
+			portalURL, messageId, "?_com_liferay_message_boards_web_portlet_",
+			"MBPortlet_redirect=/web/guest/assetpublisher");
 
 		String expectedUID = className + "_PORTLET_" + 123456;
 
@@ -393,9 +399,11 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testURLClassNameClassPK() {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
 		String urlString =
-			"http://localhost:8080/web/guest/blabal?" +
-				"className=ABCDE&classPK=34567";
+			portalURL + "/web/guest/blabal?className=ABCDE&classPK=34567";
 
 		String className = "EDCBA";
 		int classPK = 76543;
@@ -403,8 +411,8 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = "ABCDE_PORTLET_34567";
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/blabal?className=", className,
-			"&classPK=", classPK);
+			portalURL, "/web/guest/blabal?className=", className, "&classPK=",
+			classPK);
 
 		_setUpDestinationAssetEntry(getAssetEntry(className, classPK));
 
@@ -414,9 +422,11 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testURLClassNameIDClassPK() {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
 		String urlString =
-			"http://localhost:8080/web/guest/blabal?classNameId" +
-				"=142857&classPK=34567";
+			portalURL + "/web/guest/blabal?classNameId=142857&classPK=34567";
 
 		String className = "ClassNamePortlet";
 		long classNameId1 = 142857;
@@ -427,7 +437,7 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = "ClassNamePortlet_PORTLET_34567";
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/blabal?classNameId=", classNameId2,
+			portalURL, "/web/guest/blabal?classNameId=", classNameId2,
 			"&classPK=", classPK2);
 
 		AssetEntry assetEntry1 = getAssetEntry(className, classPK1);
@@ -460,10 +470,11 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testURLClassUUID() {
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
 		String uuid1 = "abcde-efgh";
 
-		String urlString =
-			"http://localhost:8080/web/guest/blabal?classUuid=" + uuid1;
+		String urlString = portalURL + "/web/guest/blabal?classUuid=" + uuid1;
 
 		String className = "ABCDE";
 		long classPK = 8885;
@@ -473,7 +484,7 @@ public class SimilarResultsUidsAndDestinationsTest
 
 		String expectedUID = "ABCDE_PORTLET_8885";
 		String expectedDestination =
-			"http://localhost:8080/web/guest/blabal?classUuid=" + uuid2;
+			portalURL + "/web/guest/blabal?classUuid=" + uuid2;
 
 		AssetEntry assetEntry1 = getAssetEntry(className, classPK);
 
@@ -496,8 +507,10 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testURLEntryId() {
-		String urlString =
-			"http://localhost:8080/web/guest/blabal?entryId=12345";
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
+		String urlString = portalURL + "/web/guest/blabal?entryId=12345";
 
 		String className = "ClassNamePortlet";
 		long classPK = 9995;
@@ -506,7 +519,7 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className + "_PORTLET_" + classPK;
 
 		String expectedDestination =
-			"http://localhost:8080/web/guest/blabal?entryId=" + entryId;
+			portalURL + "/web/guest/blabal?entryId=" + entryId;
 
 		AssetEntry assetEntry = getAssetEntry(className, classPK);
 
@@ -530,7 +543,10 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testURLUID() {
-		String urlString = "http://localhost:8080/web/guest/blabal?uid=old";
+		String portalURL =
+			"http://localhost:" + PortalUtil.getPortalServerPort(false);
+
+		String urlString = portalURL + "/web/guest/blabal?uid=old";
 
 		String uid = "new";
 
@@ -542,8 +558,7 @@ public class SimilarResultsUidsAndDestinationsTest
 
 		String expectedUID = "old";
 
-		String expectedDestination =
-			"http://localhost:8080/web/guest/blabal?uid=new";
+		String expectedDestination = portalURL + "/web/guest/blabal?uid=new";
 
 		_assertSimilarResultsContributor(
 			urlString, expectedUID, expectedDestination);
@@ -551,13 +566,15 @@ public class SimilarResultsUidsAndDestinationsTest
 
 	@Test
 	public void testWikiDisplay() {
+		String portalURL = StringBundler.concat(
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			"/guest/wiki?p_p_id=com_liferay_wiki_web_portlet_WikiDisplay",
+			"Portlet_INSTANCE&");
+
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/wiki",
-			"?p_p_id=com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"_nodeName=OLDNODE",
-			"&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"_title=OLDTITLE");
+			portalURL, "_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
+			"_INSTANCE_nodeName=OLDNODE&_com_liferay_wiki_web_portlet_Wiki",
+			"DisplayPortlet_INSTANCE_title=OLDTITLE");
 
 		String className = WikiPage.class.getName();
 		long classPK = 12345;
@@ -570,12 +587,9 @@ public class SimilarResultsUidsAndDestinationsTest
 		String expectedUID = className + "_PORTLET_" + classPK;
 
 		String expectedDestination = StringBundler.concat(
-			"http://localhost:8080/web/guest/wiki",
-			"?p_p_id=com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"_nodeName=", nodeName,
-			"&_com_liferay_wiki_web_portlet_WikiDisplayPortlet_INSTANCE",
-			"_title=", title);
+			portalURL, "_com_liferay_wiki_web_portlet_WikiDisplayPortlet",
+			"_INSTANCE_nodeName=", nodeName, "&_com_liferay_wiki_web_portlet_",
+			"WikiDisplayPortlet_INSTANCE_title=", title);
 
 		_setUpDestinationClassName(className);
 

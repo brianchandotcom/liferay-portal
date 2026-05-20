@@ -62,6 +62,10 @@ components:
                     description:
                         The asset library's external reference code.
                     type: string
+                friendlyURL:
+                    description:
+                        The asset library's friendly URL.
+                    type: string
                 id:
                     description:
                         The asset library's ID.

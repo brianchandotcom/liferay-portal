@@ -180,7 +180,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionRelId);
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setNameMap(nameMap);
-		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		if (cpDefinitionOptionRel.isPriceTypeStatic()) {
 			cpDefinitionOptionValueRel.setPrice(
@@ -191,6 +190,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setQuantity(
 			BigDecimalUtil.get(quantity, BigDecimal.ONE));
 		cpDefinitionOptionValueRel.setUnitOfMeasureKey(unitOfMeasureKey);
+		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 
@@ -272,7 +272,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			cpDefinitionOptionRelId);
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setNameMap(nameMap);
-		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		if (cpDefinitionOptionRel.isPriceTypeStatic()) {
 			cpDefinitionOptionValueRel.setPrice(BigDecimal.ZERO);
@@ -280,6 +279,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		cpDefinitionOptionValueRel.setPriority(priority);
 		cpDefinitionOptionValueRel.setQuantity(BigDecimal.ZERO);
+		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 		_validatePriceableCPDefinitionOptionValue(
@@ -849,7 +849,6 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		cpDefinitionOptionValueRel.setKey(key);
 		cpDefinitionOptionValueRel.setNameMap(nameMap);
 		cpDefinitionOptionValueRel.setPriority(priority);
-		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		if (cpDefinitionOptionRel.isPriceTypeStatic()) {
 			cpDefinitionOptionValueRel.setPrice(price);
@@ -857,6 +856,7 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 
 		cpDefinitionOptionValueRel.setQuantity(quantity);
 		cpDefinitionOptionValueRel.setUnitOfMeasureKey(unitOfMeasureKey);
+		cpDefinitionOptionValueRel.setExpandoBridgeAttributes(serviceContext);
 
 		_validateLinkedCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);
 		_validatePriceableCPDefinitionOptionValue(

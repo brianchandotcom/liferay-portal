@@ -4,7 +4,7 @@
  */
 
 import {ObjectDefinition} from '@liferay/object-admin-rest-client-js';
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -28,6 +28,17 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 	}),
 	loginTest()
+);
+
+const testWithModalExportImport = mergeTests(
+	cmsPagesTest,
+	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true},
+		'LPD-57655': {enabled: false},
+	}),
+	loginTest(),
+	structureBuilderPagesTest
 );
 
 test(
@@ -451,7 +462,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'Export and Import Content Structures actions open the export modal from the breadcrumb',
 	{tag: '@LPD-78381'},
 	async ({page, structuresPage}) => {
@@ -469,7 +480,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'CMS Administrator can export and import content structures',
 	{tag: '@LPD-87533'},
 	async ({apiHelpers, page, structuresPage}) => {
@@ -544,7 +555,7 @@ test(
 	}
 );
 
-test(
+testWithModalExportImport(
 	'Export Content Structures list includes only object definitions from CMS folders',
 	{tag: '@LPD-78381'},
 	async ({apiHelpers, page, structuresPage}) => {
@@ -858,5 +869,68 @@ test(
 		await expect(
 			page.locator('.label-secondary', {hasText: spaceName2})
 		).toBeVisible();
+	}
+);
+
+async function applySpaceFilter(
+	page: Page,
+	{exclude = false, space}: {exclude?: boolean; space: string}
+) {
+	await page.getByRole('button', {exact: true, name: 'Filter'}).click();
+	await page.getByRole('menuitem', {exact: true, name: 'Space'}).click();
+	await page.getByRole('checkbox', {exact: true, name: space}).check();
+
+	if (exclude) {
+		await page.getByRole('switch', {exact: true, name: 'Exclude'}).click();
+	}
+
+	await page.getByRole('button', {exact: true, name: 'Add Filter'}).click();
+
+	const chipName = exclude ? `Space: (Exclude) ${space}` : `Space: ${space}`;
+
+	await expect(page.getByRole('button', {name: chipName})).toBeVisible();
+}
+
+test(
+	'Content Structures list can be filtered by space with include and exclude',
+	{tag: '@LPD-89342'},
+	async ({apiHelpers, page, structureBuilderPage, structuresPage}) => {
+		const spaceName1 = `Space ${getRandomString()}`;
+		const spaceName2 = `Space ${getRandomString()}`;
+		const structureLabel = `Structure${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName1,
+			settings: {},
+		});
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName2,
+			settings: {},
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+			spaces: [spaceName1],
+		});
+
+		const row = structuresPage.getItem(structureLabel);
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {space: spaceName1});
+		await expect(row).toBeVisible();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {space: spaceName2});
+		await expect(row).toBeHidden();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {exclude: true, space: spaceName1});
+		await expect(row).toBeHidden();
+
+		await structuresPage.goto();
+		await applySpaceFilter(page, {exclude: true, space: spaceName2});
+		await expect(row).toBeVisible();
 	}
 );

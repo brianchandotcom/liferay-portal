@@ -36,46 +36,6 @@ public interface MBThreadPersistence
 	 */
 
 	/**
-	 * Returns all the message boards threads where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the message boards threads where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid(String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the message boards threads where uuid = &#63;.
 	 *
 	 * <p>
@@ -148,15 +108,6 @@ public interface MBThreadPersistence
 		throws NoSuchThreadException;
 
 	/**
-	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -185,50 +136,6 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -297,47 +204,6 @@ public interface MBThreadPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the message boards threads where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63;.
 	 *
 	 * <p>
@@ -382,29 +248,6 @@ public interface MBThreadPersistence
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
-
-	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByGroupId(
-		long groupId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63;.
@@ -458,14 +301,6 @@ public interface MBThreadPersistence
 		throws NoSuchThreadException;
 
 	/**
-	 * Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param rootMessageId the root message ID
-	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	public MBThread fetchByRootMessageId(long rootMessageId);
-
-	/**
 	 * Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param rootMessageId the root message ID
@@ -491,50 +326,6 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads
 	 */
 	public int countByRootMessageId(long rootMessageId);
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(long groupId, long categoryId);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(
-		long groupId, long categoryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(
-		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
@@ -586,32 +377,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C(
-		long groupId, long categoryId);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C(
-		long groupId, long categoryId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63;.
 	 *
 	 * <p>
@@ -631,32 +396,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C(
-		long groupId, long[] categoryIds);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C(
-		long groupId, long[] categoryIds, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
 	 *
 	 * <p>
@@ -671,54 +410,6 @@ public interface MBThreadPersistence
 	 * @return the ordered range of matching message boards threads that the user has permission to view
 	 */
 	public java.util.List<MBThread> filterFindByG_C(
-		long groupId, long[] categoryIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(long groupId, long[] categoryIds);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(
-		long groupId, long[] categoryIds, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C(
 		long groupId, long[] categoryIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -953,50 +644,6 @@ public interface MBThreadPersistence
 	public int filterCountByG_NotC(long groupId, long categoryId);
 
 	/**
-	 * Returns all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_S(long groupId, int status);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_S(
-		long groupId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_S(
-		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1046,31 +693,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_S(long groupId, int status);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_S(
-		long groupId, int status, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1114,50 +736,6 @@ public interface MBThreadPersistence
 	 * @return the number of matching message boards threads that the user has permission to view
 	 */
 	public int filterCountByG_S(long groupId, int status);
-
-	/**
-	 * Returns all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByC_P(long categoryId, double priority);
-
-	/**
-	 * Returns a range of all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByC_P(
-		long categoryId, double priority, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByC_P(
-		long categoryId, double priority, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards threads where categoryId = &#63; and priority = &#63;.
@@ -1226,51 +804,6 @@ public interface MBThreadPersistence
 	public int countByC_P(long categoryId, double priority);
 
 	/**
-	 * Returns all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByL_P(
-		Date lastPostDate, double priority);
-
-	/**
-	 * Returns a range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByL_P(
-		Date lastPostDate, double priority, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByL_P(
-		Date lastPostDate, double priority, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
 	 *
 	 * <p>
@@ -1337,54 +870,6 @@ public interface MBThreadPersistence
 	public int countByL_P(Date lastPostDate, double priority);
 
 	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
 	 *
 	 * <p>
@@ -1437,34 +922,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_L(
-		long groupId, long categoryId, Date lastPostDate);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
 	 *
 	 * <p>
@@ -1513,54 +970,6 @@ public interface MBThreadPersistence
 	 */
 	public int filterCountByG_C_L(
 		long groupId, long categoryId, Date lastPostDate);
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -1615,34 +1024,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_S(
-		long groupId, long categoryId, int status);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_S(
-		long groupId, long categoryId, int status, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1663,34 +1044,6 @@ public interface MBThreadPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_S(
-		long groupId, long[] categoryIds, int status);
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	public java.util.List<MBThread> filterFindByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1706,58 +1059,6 @@ public interface MBThreadPersistence
 	 * @return the ordered range of matching message boards threads that the user has permission to view
 	 */
 	public java.util.List<MBThread> filterFindByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
-			orderByComparator);
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
-		long groupId, long[] categoryIds, int status);
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	public java.util.List<MBThread> findByG_C_S(
 		long groupId, long[] categoryIds, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
 			orderByComparator);
@@ -2545,5 +1846,909 @@ public interface MBThreadPersistence
 	 */
 	public MBThread fetchByPrimaryKey(long threadId);
 
+	/**
+	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 */
+	public default MBThread fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param rootMessageId the root message ID
+	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
+	 */
+	public default MBThread fetchByRootMessageId(long rootMessageId) {
+		return fetchByRootMessageId(rootMessageId, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByGroupId(long groupId) {
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByGroupId(long groupId) {
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long categoryId) {
+
+		return findByG_C(
+			groupId, categoryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long categoryId, int start, int end) {
+
+		return findByG_C(groupId, categoryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_C(
+			groupId, categoryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long[] categoryIds) {
+
+		return findByG_C(
+			groupId, categoryIds,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long[] categoryIds, int start, int end) {
+
+		return findByG_C(groupId, categoryIds, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C(
+		long groupId, long[] categoryIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_C(
+			groupId, categoryIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C(
+		long groupId, long categoryId) {
+
+		return filterFindByG_C(
+			groupId, categoryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C(
+		long groupId, long categoryId, int start, int end) {
+
+		return filterFindByG_C(groupId, categoryId, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C(
+		long groupId, long[] categoryIds) {
+
+		return filterFindByG_C(
+			groupId, categoryIds,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C(
+		long groupId, long[] categoryIds, int start, int end) {
+
+		return filterFindByG_C(groupId, categoryIds, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_S(
+		long groupId, int status) {
+
+		return findByG_S(
+			groupId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_S(
+		long groupId, int status, int start, int end) {
+
+		return findByG_S(groupId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_S(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_S(groupId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_S(
+		long groupId, int status) {
+
+		return filterFindByG_S(
+			groupId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_S(
+		long groupId, int status, int start, int end) {
+
+		return filterFindByG_S(groupId, status, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads where categoryId = &#63; and priority = &#63;.
+	 *
+	 * @param categoryId the category ID
+	 * @param priority the priority
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByC_P(
+		long categoryId, double priority) {
+
+		return findByC_P(
+			categoryId, priority,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where categoryId = &#63; and priority = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param categoryId the category ID
+	 * @param priority the priority
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByC_P(
+		long categoryId, double priority, int start, int end) {
+
+		return findByC_P(categoryId, priority, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where categoryId = &#63; and priority = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param categoryId the category ID
+	 * @param priority the priority
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByC_P(
+		long categoryId, double priority, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByC_P(
+			categoryId, priority, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where lastPostDate = &#63; and priority = &#63;.
+	 *
+	 * @param lastPostDate the last post date
+	 * @param priority the priority
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByL_P(
+		Date lastPostDate, double priority) {
+
+		return findByL_P(
+			lastPostDate, priority,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastPostDate the last post date
+	 * @param priority the priority
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByL_P(
+		Date lastPostDate, double priority, int start, int end) {
+
+		return findByL_P(lastPostDate, priority, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lastPostDate the last post date
+	 * @param priority the priority
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByL_P(
+		Date lastPostDate, double priority, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByL_P(
+			lastPostDate, priority, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param lastPostDate the last post date
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_L(
+		long groupId, long categoryId, Date lastPostDate) {
+
+		return findByG_C_L(
+			groupId, categoryId, lastPostDate,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param lastPostDate the last post date
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_L(
+		long groupId, long categoryId, Date lastPostDate, int start, int end) {
+
+		return findByG_C_L(
+			groupId, categoryId, lastPostDate, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param lastPostDate the last post date
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_L(
+		long groupId, long categoryId, Date lastPostDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_C_L(
+			groupId, categoryId, lastPostDate, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param lastPostDate the last post date
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_L(
+		long groupId, long categoryId, Date lastPostDate) {
+
+		return filterFindByG_C_L(
+			groupId, categoryId, lastPostDate,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param lastPostDate the last post date
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_L(
+		long groupId, long categoryId, Date lastPostDate, int start, int end) {
+
+		return filterFindByG_C_L(
+			groupId, categoryId, lastPostDate, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long categoryId, int status) {
+
+		return findByG_C_S(
+			groupId, categoryId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long categoryId, int status, int start, int end) {
+
+		return findByG_C_S(groupId, categoryId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long categoryId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_C_S(
+			groupId, categoryId, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long[] categoryIds, int status) {
+
+		return findByG_C_S(
+			groupId, categoryIds, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long[] categoryIds, int status, int start, int end) {
+
+		return findByG_C_S(
+			groupId, categoryIds, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards threads
+	 */
+	public default java.util.List<MBThread> findByG_C_S(
+		long groupId, long[] categoryIds, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBThread>
+			orderByComparator) {
+
+		return findByG_C_S(
+			groupId, categoryIds, status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_S(
+		long groupId, long categoryId, int status) {
+
+		return filterFindByG_C_S(
+			groupId, categoryId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryId the category ID
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_S(
+		long groupId, long categoryId, int status, int start, int end) {
+
+		return filterFindByG_C_S(groupId, categoryId, status, start, end, null);
+	}
+
+	/**
+	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @return the matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_S(
+		long groupId, long[] categoryIds, int status) {
+
+		return filterFindByG_C_S(
+			groupId, categoryIds, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBThreadModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param categoryIds the category IDs
+	 * @param status the status
+	 * @param start the lower bound of the range of message boards threads
+	 * @param end the upper bound of the range of message boards threads (not inclusive)
+	 * @return the range of matching message boards threads that the user has permission to view
+	 */
+	public default java.util.List<MBThread> filterFindByG_C_S(
+		long groupId, long[] categoryIds, int status, int start, int end) {
+
+		return filterFindByG_C_S(
+			groupId, categoryIds, status, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:504149910
+// LIFERAY-SERVICE-BUILDER-HASH:41908678

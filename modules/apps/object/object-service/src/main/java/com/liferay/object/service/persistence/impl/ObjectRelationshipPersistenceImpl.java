@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -90,68 +89,14 @@ public class ObjectRelationshipPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object relationships where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -236,73 +181,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object relationships where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -393,69 +279,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the object relationships where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -541,72 +372,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId1;
-	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId1;
-	private FinderPath _finderPathCountByObjectDefinitionId1;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByObjectDefinitionId1;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId1(
-		long objectDefinitionId1) {
-
-		return findByObjectDefinitionId1(
-			objectDefinitionId1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId1(
-		long objectDefinitionId1, int start, int end) {
-
-		return findByObjectDefinitionId1(objectDefinitionId1, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId1(
-		long objectDefinitionId1, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByObjectDefinitionId1(
-			objectDefinitionId1, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -695,72 +468,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectDefinitionId2;
-	private FinderPath _finderPathWithoutPaginationFindByObjectDefinitionId2;
-	private FinderPath _finderPathCountByObjectDefinitionId2;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByObjectDefinitionId2;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId2 = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId2(
-		long objectDefinitionId2) {
-
-		return findByObjectDefinitionId2(
-			objectDefinitionId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId2(
-		long objectDefinitionId2, int start, int end) {
-
-		return findByObjectDefinitionId2(objectDefinitionId2, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByObjectDefinitionId2(
-		long objectDefinitionId2, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByObjectDefinitionId2(
-			objectDefinitionId2, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId2 the object definition id2
@@ -849,7 +564,6 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2});
 	}
 
-	private FinderPath _finderPathFetchByObjectFieldId2;
 	private UniquePersistenceFinder<ObjectRelationship>
 		_uniquePersistenceFinderByObjectFieldId2;
 
@@ -880,17 +594,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 
 		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship where objectFieldId2 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectFieldId2 the object field id2
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByObjectFieldId2(long objectFieldId2) {
-		return fetchByObjectFieldId2(objectFieldId2, true);
 	}
 
 	/**
@@ -936,73 +639,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectFieldId2});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParameterObjectFieldId;
-	private FinderPath _finderPathWithoutPaginationFindByParameterObjectFieldId;
-	private FinderPath _finderPathCountByParameterObjectFieldId;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByParameterObjectFieldId;
 
 	/**
-	 * Returns all the object relationships where parameterObjectFieldId = &#63;.
-	 *
-	 * @param parameterObjectFieldId the parameter object field ID
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByParameterObjectFieldId(
-		long parameterObjectFieldId) {
-
-		return findByParameterObjectFieldId(
-			parameterObjectFieldId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where parameterObjectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parameterObjectFieldId the parameter object field ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByParameterObjectFieldId(
-		long parameterObjectFieldId, int start, int end) {
-
-		return findByParameterObjectFieldId(
-			parameterObjectFieldId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where parameterObjectFieldId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parameterObjectFieldId the parameter object field ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByParameterObjectFieldId(
-		long parameterObjectFieldId, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByParameterObjectFieldId(
-			parameterObjectFieldId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where parameterObjectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param parameterObjectFieldId the parameter object field ID
@@ -1092,73 +736,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {parameterObjectFieldId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_U;
-	private FinderPath _finderPathWithoutPaginationFindByC_U;
-	private FinderPath _finderPathCountByC_U;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByC_U;
 
 	/**
-	 * Returns all the object relationships where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByC_U(long companyId, long userId) {
-		return findByC_U(
-			companyId, userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return findByC_U(companyId, userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where companyId = &#63; and userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByC_U(
-			companyId, userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1249,76 +834,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {companyId, userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_E;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_E;
-	private FinderPath _finderPathCountByODI1_E;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_E;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param edge the edge
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_E(
-		long objectDefinitionId1, boolean edge) {
-
-		return findByODI1_E(
-			objectDefinitionId1, edge, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param edge the edge
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_E(
-		long objectDefinitionId1, boolean edge, int start, int end) {
-
-		return findByODI1_E(objectDefinitionId1, edge, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param edge the edge
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_E(
-		long objectDefinitionId1, boolean edge, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_E(
-			objectDefinitionId1, edge, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and edge = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1411,76 +934,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, edge});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_N;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_N;
-	private FinderPath _finderPathCountByODI1_N;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_N;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param name the name
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_N(
-		long objectDefinitionId1, String name) {
-
-		return findByODI1_N(
-			objectDefinitionId1, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param name the name
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_N(
-		long objectDefinitionId1, String name, int start, int end) {
-
-		return findByODI1_N(objectDefinitionId1, name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param name the name
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_N(
-		long objectDefinitionId1, String name, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_N(
-			objectDefinitionId1, name, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1573,76 +1034,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_R;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_R;
-	private FinderPath _finderPathCountByODI1_R;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_R;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R(
-		long objectDefinitionId1, boolean reverse) {
-
-		return findByODI1_R(
-			objectDefinitionId1, reverse, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R(
-		long objectDefinitionId1, boolean reverse, int start, int end) {
-
-		return findByODI1_R(objectDefinitionId1, reverse, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R(
-		long objectDefinitionId1, boolean reverse, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_R(
-			objectDefinitionId1, reverse, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -1735,76 +1134,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, reverse});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI2_E;
-	private FinderPath _finderPathWithoutPaginationFindByODI2_E;
-	private FinderPath _finderPathCountByODI2_E;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI2_E;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param edge the edge
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_E(
-		long objectDefinitionId2, boolean edge) {
-
-		return findByODI2_E(
-			objectDefinitionId2, edge, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param edge the edge
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_E(
-		long objectDefinitionId2, boolean edge, int start, int end) {
-
-		return findByODI2_E(objectDefinitionId2, edge, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param edge the edge
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_E(
-		long objectDefinitionId2, boolean edge, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI2_E(
-			objectDefinitionId2, edge, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and edge = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId2 the object definition id2
@@ -1897,76 +1234,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, edge});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI2_R;
-	private FinderPath _finderPathWithoutPaginationFindByODI2_R;
-	private FinderPath _finderPathCountByODI2_R;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI2_R;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R(
-		long objectDefinitionId2, boolean reverse) {
-
-		return findByODI2_R(
-			objectDefinitionId2, reverse, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R(
-		long objectDefinitionId2, boolean reverse, int start, int end) {
-
-		return findByODI2_R(objectDefinitionId2, reverse, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R(
-		long objectDefinitionId2, boolean reverse, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI2_R(
-			objectDefinitionId2, reverse, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId2 the object definition id2
@@ -2059,7 +1334,6 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, reverse});
 	}
 
-	private FinderPath _finderPathFetchByDTN_R;
 	private UniquePersistenceFinder<ObjectRelationship>
 		_uniquePersistenceFinderByDTN_R;
 
@@ -2092,20 +1366,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 
 		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship where dbTableName = &#63; and reverse = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param dbTableName the db table name
-	 * @param reverse the reverse
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByDTN_R(
-		String dbTableName, boolean reverse) {
-
-		return fetchByDTN_R(dbTableName, reverse, true);
 	}
 
 	/**
@@ -2154,7 +1414,6 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {dbTableName, reverse});
 	}
 
-	private FinderPath _finderPathFetchByERC_C_ODI1;
 	private UniquePersistenceFinder<ObjectRelationship>
 		_uniquePersistenceFinderByERC_C_ODI1;
 
@@ -2192,23 +1451,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 
 		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship where externalReferenceCode = &#63; and companyId = &#63; and objectDefinitionId1 = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param objectDefinitionId1 the object definition id1
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByERC_C_ODI1(
-		String externalReferenceCode, long companyId,
-		long objectDefinitionId1) {
-
-		return fetchByERC_C_ODI1(
-			externalReferenceCode, companyId, objectDefinitionId1, true);
 	}
 
 	/**
@@ -2273,83 +1515,14 @@ public class ObjectRelationshipPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_ODI2_T;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_ODI2_T;
-	private FinderPath _finderPathCountByODI1_ODI2_T;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_ODI2_T;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param type the type
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_T(
-		long objectDefinitionId1, long objectDefinitionId2, String type) {
-
-		return findByODI1_ODI2_T(
-			objectDefinitionId1, objectDefinitionId2, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_T(
-		long objectDefinitionId1, long objectDefinitionId2, String type,
-		int start, int end) {
-
-		return findByODI1_ODI2_T(
-			objectDefinitionId1, objectDefinitionId2, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_T(
-		long objectDefinitionId1, long objectDefinitionId2, String type,
-		int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_ODI2_T(
-			objectDefinitionId1, objectDefinitionId2, type, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -2456,83 +1629,14 @@ public class ObjectRelationshipPersistenceImpl
 			new Object[] {objectDefinitionId1, objectDefinitionId2, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_DT_R;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_DT_R;
-	private FinderPath _finderPathCountByODI1_DT_R;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_DT_R;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param deletionType the deletion type
-	 * @param reverse the reverse
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_DT_R(
-		long objectDefinitionId1, String deletionType, boolean reverse) {
-
-		return findByODI1_DT_R(
-			objectDefinitionId1, deletionType, reverse, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param deletionType the deletion type
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_DT_R(
-		long objectDefinitionId1, String deletionType, boolean reverse,
-		int start, int end) {
-
-		return findByODI1_DT_R(
-			objectDefinitionId1, deletionType, reverse, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param deletionType the deletion type
-	 * @param reverse the reverse
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_DT_R(
-		long objectDefinitionId1, String deletionType, boolean reverse,
-		int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_DT_R(
-			objectDefinitionId1, deletionType, reverse, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and deletionType = &#63; and reverse = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -2639,82 +1743,14 @@ public class ObjectRelationshipPersistenceImpl
 			new Object[] {objectDefinitionId1, deletionType, reverse});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_R_T;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_R_T;
-	private FinderPath _finderPathCountByODI1_R_T;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_R_T;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R_T(
-		long objectDefinitionId1, boolean reverse, String type) {
-
-		return findByODI1_R_T(
-			objectDefinitionId1, reverse, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R_T(
-		long objectDefinitionId1, boolean reverse, String type, int start,
-		int end) {
-
-		return findByODI1_R_T(
-			objectDefinitionId1, reverse, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_R_T(
-		long objectDefinitionId1, boolean reverse, String type, int start,
-		int end, OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_R_T(
-			objectDefinitionId1, reverse, type, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -2816,82 +1852,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId1, reverse, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI2_R_T;
-	private FinderPath _finderPathWithoutPaginationFindByODI2_R_T;
-	private FinderPath _finderPathCountByODI2_R_T;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI2_R_T;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R_T(
-		long objectDefinitionId2, boolean reverse, String type) {
-
-		return findByODI2_R_T(
-			objectDefinitionId2, reverse, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R_T(
-		long objectDefinitionId2, boolean reverse, String type, int start,
-		int end) {
-
-		return findByODI2_R_T(
-			objectDefinitionId2, reverse, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI2_R_T(
-		long objectDefinitionId2, boolean reverse, String type, int start,
-		int end, OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI2_R_T(
-			objectDefinitionId2, reverse, type, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId2 = &#63; and reverse = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId2 the object definition id2
@@ -2993,88 +1961,14 @@ public class ObjectRelationshipPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId2, reverse, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByODI1_ODI2_N_T;
-	private FinderPath _finderPathWithoutPaginationFindByODI1_ODI2_N_T;
-	private FinderPath _finderPathCountByODI1_ODI2_N_T;
 	private CollectionPersistenceFinder<ObjectRelationship>
 		_collectionPersistenceFinderByODI1_ODI2_N_T;
 
 	/**
-	 * Returns all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_N_T(
-		long objectDefinitionId1, long objectDefinitionId2, String name,
-		String type) {
-
-		return findByODI1_ODI2_N_T(
-			objectDefinitionId1, objectDefinitionId2, name, type,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @return the range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_N_T(
-		long objectDefinitionId1, long objectDefinitionId2, String name,
-		String type, int start, int end) {
-
-		return findByODI1_ODI2_N_T(
-			objectDefinitionId1, objectDefinitionId2, name, type, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of object relationships
-	 * @param end the upper bound of the range of object relationships (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object relationships
-	 */
-	@Override
-	public List<ObjectRelationship> findByODI1_ODI2_N_T(
-		long objectDefinitionId1, long objectDefinitionId2, String name,
-		String type, int start, int end,
-		OrderByComparator<ObjectRelationship> orderByComparator) {
-
-		return findByODI1_ODI2_N_T(
-			objectDefinitionId1, objectDefinitionId2, name, type, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object relationships where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectRelationshipModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectDefinitionId1 the object definition id1
@@ -3196,7 +2090,6 @@ public class ObjectRelationshipPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByODI1_ODI2_N_R_T;
 	private UniquePersistenceFinder<ObjectRelationship>
 		_uniquePersistenceFinderByODI1_ODI2_N_R_T;
 
@@ -3237,26 +2130,6 @@ public class ObjectRelationshipPersistenceImpl
 		}
 
 		return objectRelationship;
-	}
-
-	/**
-	 * Returns the object relationship where objectDefinitionId1 = &#63; and objectDefinitionId2 = &#63; and name = &#63; and reverse = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectDefinitionId1 the object definition id1
-	 * @param objectDefinitionId2 the object definition id2
-	 * @param name the name
-	 * @param reverse the reverse
-	 * @param type the type
-	 * @return the matching object relationship, or <code>null</code> if a matching object relationship could not be found
-	 */
-	@Override
-	public ObjectRelationship fetchByODI1_ODI2_N_R_T(
-		long objectDefinitionId1, long objectDefinitionId2, String name,
-		boolean reverse, String type) {
-
-		return fetchByODI1_ODI2_N_R_T(
-			objectDefinitionId1, objectDefinitionId2, name, reverse, type,
-			true);
 	}
 
 	/**
@@ -3596,27 +2469,23 @@ public class ObjectRelationshipPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 			_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 			ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3624,30 +2493,26 @@ public class ObjectRelationshipPersistenceImpl
 				"objectRelationship.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, ObjectRelationship::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3658,29 +2523,25 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectRelationship::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3689,29 +2550,28 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectRelationship::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectDefinitionId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId1",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1"}, true);
-
-		_finderPathWithoutPaginationFindByObjectDefinitionId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectDefinitionId1", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId1"}, true);
-
-		_finderPathCountByObjectDefinitionId1 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectDefinitionId1", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId1"}, false);
-
 		_collectionPersistenceFinderByObjectDefinitionId1 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectDefinitionId1,
-				_finderPathWithoutPaginationFindByObjectDefinitionId1,
-				_finderPathCountByObjectDefinitionId1,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectDefinitionId1",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectDefinitionId1",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId1"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectDefinitionId1",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId1"}, false),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3721,29 +2581,28 @@ public class ObjectRelationshipPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getObjectDefinitionId1));
 
-		_finderPathWithPaginationFindByObjectDefinitionId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectDefinitionId2",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId2"}, true);
-
-		_finderPathWithoutPaginationFindByObjectDefinitionId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectDefinitionId2", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId2"}, true);
-
-		_finderPathCountByObjectDefinitionId2 = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectDefinitionId2", new String[] {Long.class.getName()},
-			new String[] {"objectDefinitionId2"}, false);
-
 		_collectionPersistenceFinderByObjectDefinitionId2 =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectDefinitionId2,
-				_finderPathWithoutPaginationFindByObjectDefinitionId2,
-				_finderPathCountByObjectDefinitionId2,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectDefinitionId2",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectDefinitionId2",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId2"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectDefinitionId2",
+					new String[] {Long.class.getName()},
+					new String[] {"objectDefinitionId2"}, false),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3753,48 +2612,42 @@ public class ObjectRelationshipPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getObjectDefinitionId2));
 
-		_finderPathFetchByObjectFieldId2 = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId2",
-			new String[] {Long.class.getName()},
-			new String[] {"objectFieldId2"}, 0, 0, false,
-			ObjectRelationship::getObjectFieldId2);
-
 		_uniquePersistenceFinderByObjectFieldId2 =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByObjectFieldId2,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByObjectFieldId2",
+					new String[] {Long.class.getName()},
+					new String[] {"objectFieldId2"}, 0, 0, false,
+					ObjectRelationship::getObjectFieldId2),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE, "",
 				new FinderColumn<>(
 					"objectRelationship.", "objectFieldId2",
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getObjectFieldId2));
 
-		_finderPathWithPaginationFindByParameterObjectFieldId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByParameterObjectFieldId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parameterObjectFieldId"}, true);
-
-		_finderPathWithoutPaginationFindByParameterObjectFieldId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByParameterObjectFieldId",
-				new String[] {Long.class.getName()},
-				new String[] {"parameterObjectFieldId"}, true);
-
-		_finderPathCountByParameterObjectFieldId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParameterObjectFieldId",
-			new String[] {Long.class.getName()},
-			new String[] {"parameterObjectFieldId"}, false);
-
 		_collectionPersistenceFinderByParameterObjectFieldId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParameterObjectFieldId,
-				_finderPathWithoutPaginationFindByParameterObjectFieldId,
-				_finderPathCountByParameterObjectFieldId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParameterObjectFieldId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parameterObjectFieldId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParameterObjectFieldId",
+					new String[] {Long.class.getName()},
+					new String[] {"parameterObjectFieldId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParameterObjectFieldId",
+					new String[] {Long.class.getName()},
+					new String[] {"parameterObjectFieldId"}, false),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3804,28 +2657,24 @@ public class ObjectRelationshipPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectRelationship::getParameterObjectFieldId));
 
-		_finderPathWithPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathWithoutPaginationFindByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, true);
-
-		_finderPathCountByC_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "userId"}, false);
-
 		_collectionPersistenceFinderByC_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_U,
-			_finderPathWithoutPaginationFindByC_U, _finderPathCountByC_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "userId"}, false),
 			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 			_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 			ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -3836,30 +2685,30 @@ public class ObjectRelationshipPersistenceImpl
 				"objectRelationship.", "userId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectRelationship::getUserId));
 
-		_finderPathWithPaginationFindByODI1_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_E",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "edge"}, true);
-
-		_finderPathWithoutPaginationFindByODI1_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId1", "edge"}, true);
-
-		_finderPathCountByODI1_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId1", "edge"}, false);
-
 		_collectionPersistenceFinderByODI1_E =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_E,
-				_finderPathWithoutPaginationFindByODI1_E,
-				_finderPathCountByODI1_E, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "edge"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "edge"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "edge"}, false),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3871,30 +2720,28 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "edge", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isEdge));
 
-		_finderPathWithPaginationFindByODI1_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "name"}, true);
-
-		_finderPathWithoutPaginationFindByODI1_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId1", "name"}, 0, 2, true, null);
-
-		_finderPathCountByODI1_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectDefinitionId1", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByODI1_N =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_N,
-				_finderPathWithoutPaginationFindByODI1_N,
-				_finderPathCountByODI1_N, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_N",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectDefinitionId1", "name"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectDefinitionId1", "name"}, 0, 2, false,
+					null),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3906,30 +2753,30 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "name", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getName));
 
-		_finderPathWithPaginationFindByODI1_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_R",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "reverse"}, true);
-
-		_finderPathWithoutPaginationFindByODI1_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId1", "reverse"}, true);
-
-		_finderPathCountByODI1_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId1", "reverse"}, false);
-
 		_collectionPersistenceFinderByODI1_R =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_R,
-				_finderPathWithoutPaginationFindByODI1_R,
-				_finderPathCountByODI1_R, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse"}, false),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3941,30 +2788,30 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathWithPaginationFindByODI2_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_E",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId2", "edge"}, true);
-
-		_finderPathWithoutPaginationFindByODI2_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId2", "edge"}, true);
-
-		_finderPathCountByODI2_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId2", "edge"}, false);
-
 		_collectionPersistenceFinderByODI2_E =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI2_E,
-				_finderPathWithoutPaginationFindByODI2_E,
-				_finderPathCountByODI2_E, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "edge"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "edge"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_E",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "edge"}, false),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -3976,30 +2823,30 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "edge", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isEdge));
 
-		_finderPathWithPaginationFindByODI2_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_R",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId2", "reverse"}, true);
-
-		_finderPathWithoutPaginationFindByODI2_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId2", "reverse"}, true);
-
-		_finderPathCountByODI2_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_R",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"objectDefinitionId2", "reverse"}, false);
-
 		_collectionPersistenceFinderByODI2_R =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI2_R,
-				_finderPathWithoutPaginationFindByODI2_R,
-				_finderPathCountByODI2_R, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_R",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse"}, false),
+				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -4011,16 +2858,15 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathFetchByDTN_R = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByDTN_R",
-			new String[] {String.class.getName(), Boolean.class.getName()},
-			new String[] {"dbTableName", "reverse"}, 0, 1, false,
-			convertNullFunction(ObjectRelationship::getDBTableName),
-			ObjectRelationship::isReverse);
-
 		_uniquePersistenceFinderByDTN_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByDTN_R, _SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByDTN_R",
+				new String[] {String.class.getName(), Boolean.class.getName()},
+				new String[] {"dbTableName", "reverse"}, 0, 1, false,
+				convertNullFunction(ObjectRelationship::getDBTableName),
+				ObjectRelationship::isReverse),
+			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE, "",
 			new FinderColumn<>(
 				"objectRelationship.", "dbTableName", FinderColumn.Type.STRING,
 				"=", true, true, ObjectRelationship::getDBTableName),
@@ -4028,22 +2874,22 @@ public class ObjectRelationshipPersistenceImpl
 				"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 				"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathFetchByERC_C_ODI1 = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI1",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"externalReferenceCode", "companyId", "objectDefinitionId1"
-			},
-			0, 1, false,
-			convertNullFunction(ObjectRelationship::getExternalReferenceCode),
-			ObjectRelationship::getCompanyId,
-			ObjectRelationship::getObjectDefinitionId1);
-
 		_uniquePersistenceFinderByERC_C_ODI1 = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C_ODI1,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C_ODI1",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"externalReferenceCode", "companyId", "objectDefinitionId1"
+				},
+				0, 1, false,
+				convertNullFunction(
+					ObjectRelationship::getExternalReferenceCode),
+				ObjectRelationship::getCompanyId,
+				ObjectRelationship::getObjectDefinitionId1),
 			_SQL_SELECT_OBJECTRELATIONSHIP_WHERE, "",
 			new FinderColumn<>(
 				"objectRelationship.", "externalReferenceCode",
@@ -4057,45 +2903,43 @@ public class ObjectRelationshipPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ObjectRelationship::getObjectDefinitionId1));
 
-		_finderPathWithPaginationFindByODI1_ODI2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_ODI2_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "type_"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByODI1_ODI2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_ODI2_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "type_"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByODI1_ODI2_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_ODI2_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "type_"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByODI1_ODI2_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_ODI2_T,
-				_finderPathWithoutPaginationFindByODI1_ODI2_T,
-				_finderPathCountByODI1_ODI2_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_ODI2_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByODI1_ODI2_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "type_"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByODI1_ODI2_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "type_"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4112,39 +2956,43 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getType));
 
-		_finderPathWithPaginationFindByODI1_DT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_DT_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "deletionType", "reverse"},
-			true);
-
-		_finderPathWithoutPaginationFindByODI1_DT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_DT_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "deletionType", "reverse"}, 0,
-			2, true, null);
-
-		_finderPathCountByODI1_DT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_DT_R",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "deletionType", "reverse"}, 0,
-			2, false, null);
-
 		_collectionPersistenceFinderByODI1_DT_R =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_DT_R,
-				_finderPathWithoutPaginationFindByODI1_DT_R,
-				_finderPathCountByODI1_DT_R,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_DT_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "deletionType", "reverse"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByODI1_DT_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "deletionType", "reverse"
+					},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByODI1_DT_R",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "deletionType", "reverse"
+					},
+					0, 2, false, null),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4161,38 +3009,36 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "reverse", FinderColumn.Type.BOOLEAN,
 					"=", true, true, ObjectRelationship::isReverse));
 
-		_finderPathWithPaginationFindByODI1_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "reverse", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByODI1_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "reverse", "type_"}, 0, 4,
-			true, null);
-
-		_finderPathCountByODI1_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"objectDefinitionId1", "reverse", "type_"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByODI1_R_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_R_T,
-				_finderPathWithoutPaginationFindByODI1_R_T,
-				_finderPathCountByODI1_R_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse", "type_"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse", "type_"}, 0,
+					4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByODI1_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"objectDefinitionId1", "reverse", "type_"}, 0,
+					4, false, null),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4208,38 +3054,36 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getType));
 
-		_finderPathWithPaginationFindByODI2_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectDefinitionId2", "reverse", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByODI2_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"objectDefinitionId2", "reverse", "type_"}, 0, 4,
-			true, null);
-
-		_finderPathCountByODI2_R_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI2_R_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"objectDefinitionId2", "reverse", "type_"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByODI2_R_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI2_R_T,
-				_finderPathWithoutPaginationFindByODI2_R_T,
-				_finderPathCountByODI2_R_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI2_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse", "type_"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI2_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse", "type_"}, 0,
+					4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByODI2_R_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"objectDefinitionId2", "reverse", "type_"}, 0,
+					4, false, null),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4255,46 +3099,47 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getType));
 
-		_finderPathWithPaginationFindByODI1_ODI2_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByODI1_ODI2_N_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByODI1_ODI2_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByODI1_ODI2_N_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
-			},
-			0, 12, true, null);
-
-		_finderPathCountByODI1_ODI2_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByODI1_ODI2_N_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "name", "type_"
-			},
-			0, 12, false, null);
-
 		_collectionPersistenceFinderByODI1_ODI2_N_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByODI1_ODI2_N_T,
-				_finderPathWithoutPaginationFindByODI1_ODI2_N_T,
-				_finderPathCountByODI1_ODI2_N_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByODI1_ODI2_N_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "name",
+						"type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByODI1_ODI2_N_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "name",
+						"type_"
+					},
+					0, 12, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByODI1_ODI2_N_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "name",
+						"type_"
+					},
+					0, 12, false, null),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE,
 				_SQL_COUNT_OBJECTRELATIONSHIP_WHERE,
 				ObjectRelationshipModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4314,26 +3159,25 @@ public class ObjectRelationshipPersistenceImpl
 					"objectRelationship.", "type", FinderColumn.Type.STRING,
 					"=", true, true, ObjectRelationship::getType));
 
-		_finderPathFetchByODI1_ODI2_N_R_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByODI1_ODI2_N_R_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"objectDefinitionId1", "objectDefinitionId2", "name", "reverse",
-				"type_"
-			},
-			0, 20, false, ObjectRelationship::getObjectDefinitionId1,
-			ObjectRelationship::getObjectDefinitionId2,
-			convertNullFunction(ObjectRelationship::getName),
-			ObjectRelationship::isReverse,
-			convertNullFunction(ObjectRelationship::getType));
-
 		_uniquePersistenceFinderByODI1_ODI2_N_R_T =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByODI1_ODI2_N_R_T,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByODI1_ODI2_N_R_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"objectDefinitionId1", "objectDefinitionId2", "name",
+						"reverse", "type_"
+					},
+					0, 20, false, ObjectRelationship::getObjectDefinitionId1,
+					ObjectRelationship::getObjectDefinitionId2,
+					convertNullFunction(ObjectRelationship::getName),
+					ObjectRelationship::isReverse,
+					convertNullFunction(ObjectRelationship::getType)),
 				_SQL_SELECT_OBJECTRELATIONSHIP_WHERE, "",
 				new FinderColumn<>(
 					"objectRelationship.", "objectDefinitionId1",
@@ -4422,4 +3266,4 @@ public class ObjectRelationshipPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1036375736
+// LIFERAY-SERVICE-BUILDER-HASH:-1935148699

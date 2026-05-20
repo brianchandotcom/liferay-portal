@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -99,7 +100,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, true, true);
 
 		Assert.assertTrue(
-			downloadURL, downloadURL.startsWith("http://localhost:8080"));
+			downloadURL,
+			downloadURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -122,7 +125,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, true, false);
 
 		Assert.assertFalse(
-			downloadURL, downloadURL.startsWith("http://localhost:8080"));
+			downloadURL,
+			downloadURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -169,7 +174,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, false, true);
 
 		Assert.assertTrue(
-			downloadURL, downloadURL.startsWith("http://localhost:8080"));
+			downloadURL,
+			downloadURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -222,7 +229,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, false, true);
 
 		Assert.assertTrue(
-			previewURL, previewURL.startsWith("http://localhost:8080"));
+			previewURL,
+			previewURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -245,7 +254,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, true, false);
 
 		Assert.assertFalse(
-			previewURL, previewURL.startsWith("http://localhost:8080"));
+			previewURL,
+			previewURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -291,7 +302,9 @@ public class DLURLHelperTest {
 			StringPool.BLANK, false, true);
 
 		Assert.assertTrue(
-			previewURL, previewURL.startsWith("http://localhost:8080"));
+			previewURL,
+			previewURL.startsWith(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false)));
 	}
 
 	@Test
@@ -375,12 +388,19 @@ public class DLURLHelperTest {
 	private ThemeDisplay _getThemeDisplay() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setPortalURL("http://localhost:8080");
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
+		themeDisplay.setPortalURL("http://localhost:" + portalServerPort);
+
 		themeDisplay.setRequest(new MockHttpServletRequest());
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		long groupId = _group.getGroupId();
+
+		themeDisplay.setScopeGroupId(groupId);
+
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
-		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setServerPort(portalServerPort);
+		themeDisplay.setSiteGroupId(groupId);
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;

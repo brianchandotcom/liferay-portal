@@ -25,9 +25,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 	const {selectedChannel} = useChannelContext();
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
 			groupId
@@ -117,6 +115,7 @@ const List: React.FC<IListProps> = ({channelId, groupId}) => {
 						<TotalAccounts groupId={groupId} />
 
 						<AccountsDataSet
+							apiURL={`/o/faro/contacts/${groupId}/account/search`}
 							channelId={channelId}
 							groupId={groupId}
 							loading={dataSourceLoading}

@@ -404,6 +404,8 @@ public abstract class BaseWorkspaceGitRepository
 			prepareGitWorkingDirectory();
 
 			setUpAdditionalCaches();
+
+			_uploadGitArchive();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -669,8 +671,6 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		_initializeGitWorkingDirectory();
-
-		_uploadGitArchive();
 	}
 
 	protected void setSetUp(boolean setUp) {
@@ -1344,7 +1344,7 @@ public abstract class BaseWorkspaceGitRepository
 				JenkinsResultsParserUtil.getBuildProperty(
 					"git.archive.dot.git.dir.required", getDirectoryName(),
 					System.getenv("CI_TEST_SUITE"), System.getenv("DIST_TYPE"),
-					jobName));
+					jobName, System.getenv("JOB_VARIANT")));
 		}
 		catch (IOException ioException) {
 			return false;
@@ -1447,13 +1447,15 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	private void _uploadGitArchive() throws IOException {
-		if (!JenkinsResultsParserUtil.isCloudCINode()) {
+		if (!_isGitArchiveEnabled() || _snapshot ||
+			!JenkinsResultsParserUtil.isCloudCINode()) {
+
 			return;
 		}
 
 		String jobName = _getJobName();
 
-		if (!jobName.contains("-batch") && !jobName.contains("-downstream")) {
+		if (JenkinsResultsParserUtil.isTopLevelJobName(jobName)) {
 			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
 			File archiveFile = gitWorkingDirectory.archive(

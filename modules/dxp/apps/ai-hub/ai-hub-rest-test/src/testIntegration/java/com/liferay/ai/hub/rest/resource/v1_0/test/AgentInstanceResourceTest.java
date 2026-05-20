@@ -977,12 +977,6 @@ public class AgentInstanceResourceTest
 					TestPropsValues.getCompanyId());
 
 				Assert.assertEquals(
-					"Bearer " + tokenJSONObject.getString("accessToken"),
-					EncryptorUtil.decrypt(
-						company.getKeyObj(),
-						GetterUtil.getString(
-							workflowContext.get("accessToken"))));
-				Assert.assertEquals(
 					tokenJSONObject.getString("userToken"),
 					EncryptorUtil.decrypt(
 						company.getKeyObj(),

@@ -31,15 +31,16 @@ public class CountryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.CountryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Country addCountry(
-			String a2, String a3, boolean active, boolean billingAllowed,
-			String idd, String name, String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			boolean zipRequired, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCountry(
-			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
+			externalReferenceCode, a2, a3, active, billingAllowed, idd, name,
+			number, position, shippingAllowed, subjectToVAT, zipRequired,
+			serviceContext);
 	}
 
 	/**
@@ -84,6 +85,14 @@ public class CountryServiceUtil {
 	@Deprecated
 	public static Country fetchCountryByA3(String a3) {
 		return getService().fetchCountryByA3(a3);
+	}
+
+	public static Country fetchCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static List<Country> getCompanyCountries(long companyId) {
@@ -168,6 +177,14 @@ public class CountryServiceUtil {
 		return getService().getCountryByA3(a3);
 	}
 
+	public static Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().getCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
 	public static Country getCountryByName(long companyId, String name)
 		throws PortalException {
 
@@ -214,14 +231,15 @@ public class CountryServiceUtil {
 	}
 
 	public static Country updateCountry(
-			long countryId, String a2, String a3, boolean active,
-			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT)
+			String externalReferenceCode, long countryId, String a2, String a3,
+			boolean active, boolean billingAllowed, String idd, String name,
+			String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT)
 		throws PortalException {
 
 		return getService().updateCountry(
-			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT);
+			externalReferenceCode, countryId, a2, a3, active, billingAllowed,
+			idd, name, number, position, shippingAllowed, subjectToVAT);
 	}
 
 	public static Country updateGroupFilterEnabled(
@@ -243,4 +261,4 @@ public class CountryServiceUtil {
 	private static volatile CountryService _service;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1320345040
+// LIFERAY-SERVICE-BUILDER-HASH:-1910016994

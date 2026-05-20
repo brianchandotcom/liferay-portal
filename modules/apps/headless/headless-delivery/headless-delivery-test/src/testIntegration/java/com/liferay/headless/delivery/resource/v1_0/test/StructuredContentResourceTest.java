@@ -534,6 +534,7 @@ public class StructuredContentResourceTest
 
 		_testPatchStructuredContentWithDateExpired();
 		_testPatchStructuredContentWithLocalizedContentFields();
+		_testPatchStructuredContentWithNestedContentFields();
 		_testPatchStructuredContentWithNewLocale();
 		_testPatchStructuredContentWithRandomTitle();
 		_testPatchStructuredContentWithUnlocalizedContentFields();
@@ -2948,6 +2949,75 @@ public class StructuredContentResourceTest
 		_assertData(
 			patchContentFieldValue_I18n,
 			GetterUtil.getString(postFrenchData.get("data")), "fr-FR");
+	}
+
+	private void _testPatchStructuredContentWithNestedContentFields()
+		throws Exception {
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.postSiteStructuredContent(
+				testGroup.getGroupId(),
+				_randomComplexStructuredContent(
+					_dlFileEntry.getFileEntryId(), false));
+
+		String randomString = RandomTestUtil.randomString(10);
+
+		structuredContentResource.patchStructuredContent(
+			postStructuredContent.getId(),
+			new StructuredContent() {
+				{
+					setContentFields(
+						new ContentField[] {
+							new ContentField() {
+								{
+									name = "Fieldset39810423";
+									nestedContentFields = new ContentField[] {
+										new ContentField() {
+											{
+												contentFieldValue =
+													new ContentFieldValue() {
+														{
+															data = randomString;
+														}
+													};
+												name = "Text97681688";
+											}
+										}
+									};
+								}
+							}
+						});
+				}
+			});
+
+		StructuredContent getStructuredContent =
+			structuredContentResource.getStructuredContent(
+				postStructuredContent.getId());
+
+		String patchedData = null;
+
+		for (ContentField contentField :
+				getStructuredContent.getContentFields()) {
+
+			if (!Objects.equals(contentField.getName(), "Fieldset39810423")) {
+				continue;
+			}
+
+			for (ContentField nestedContentField :
+					contentField.getNestedContentFields()) {
+
+				if (Objects.equals(
+						nestedContentField.getName(), "Text97681688")) {
+
+					ContentFieldValue contentFieldValue =
+						nestedContentField.getContentFieldValue();
+
+					patchedData = contentFieldValue.getData();
+				}
+			}
+		}
+
+		Assert.assertEquals(randomString, patchedData);
 	}
 
 	private void _testPatchStructuredContentWithNewLocale() throws Exception {

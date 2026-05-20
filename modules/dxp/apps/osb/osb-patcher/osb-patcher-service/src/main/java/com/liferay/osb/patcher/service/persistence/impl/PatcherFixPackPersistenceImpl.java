@@ -84,7 +84,6 @@ public class PatcherFixPackPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByPatcherBuildId;
 	private UniquePersistenceFinder<PatcherFixPack>
 		_uniquePersistenceFinderByPatcherBuildId;
 
@@ -114,17 +113,6 @@ public class PatcherFixPackPersistenceImpl
 		}
 
 		return patcherFixPack;
-	}
-
-	/**
-	 * Returns the patcher fix pack where patcherBuildId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param patcherBuildId the patcher build ID
-	 * @return the matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPatcherBuildId(long patcherBuildId) {
-		return fetchByPatcherBuildId(patcherBuildId, true);
 	}
 
 	/**
@@ -169,67 +157,8 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {patcherBuildId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPatcherFixComponentId;
-	private FinderPath _finderPathWithoutPaginationFindByPatcherFixComponentId;
-	private FinderPath _finderPathCountByPatcherFixComponentId;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPatcherFixComponentId;
-
-	/**
-	 * Returns all the patcher fix packs where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @return the matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPatcherFixComponentId(
-		long patcherFixComponentId) {
-
-		return findByPatcherFixComponentId(
-			patcherFixComponentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs where patcherFixComponentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPatcherFixComponentId(
-		long patcherFixComponentId, int start, int end) {
-
-		return findByPatcherFixComponentId(
-			patcherFixComponentId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPatcherFixComponentId(
-		long patcherFixComponentId, int start, int end,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return findByPatcherFixComponentId(
-			patcherFixComponentId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63;.
@@ -302,40 +231,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @return the matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPatcherFixComponentId(
-		long patcherFixComponentId) {
-
-		return filterFindByPatcherFixComponentId(
-			patcherFixComponentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPatcherFixComponentId(
-		long patcherFixComponentId, int start, int end) {
-
-		return filterFindByPatcherFixComponentId(
-			patcherFixComponentId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix packs that the user has permissions to view where patcherFixComponentId = &#63;.
 	 *
 	 * <p>
@@ -393,61 +288,8 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {patcherFixComponentId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByVersion;
-	private FinderPath _finderPathWithoutPaginationFindByVersion;
-	private FinderPath _finderPathCountByVersion;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByVersion;
-
-	/**
-	 * Returns all the patcher fix packs where version = &#63;.
-	 *
-	 * @param version the version
-	 * @return the matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByVersion(int version) {
-		return findByVersion(
-			version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs where version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByVersion(int version, int start, int end) {
-		return findByVersion(version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs where version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByVersion(
-		int version, int start, int end,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return findByVersion(version, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fix packs where version = &#63;.
@@ -515,37 +357,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fix packs that the user has permission to view where version = &#63;.
-	 *
-	 * @param version the version
-	 * @return the matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByVersion(int version) {
-		return filterFindByVersion(
-			version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs that the user has permission to view where version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByVersion(
-		int version, int start, int end) {
-
-		return filterFindByVersion(version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix packs that the user has permissions to view where version = &#63;.
 	 *
 	 * <p>
@@ -602,73 +413,8 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPFCI_PPVI;
-	private FinderPath _finderPathWithoutPaginationFindByPFCI_PPVI;
-	private FinderPath _finderPathCountByPFCI_PPVI;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPFCI_PPVI;
-
-	/**
-	 * Returns all the patcher fix packs where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_PPVI(
-		long patcherFixComponentId, long patcherProjectVersionId) {
-
-		return findByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_PPVI(
-		long patcherFixComponentId, long patcherProjectVersionId, int start,
-		int end) {
-
-		return findByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_PPVI(
-		long patcherFixComponentId, long patcherProjectVersionId, int start,
-		int end, OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return findByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
@@ -745,44 +491,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_PPVI(
-		long patcherFixComponentId, long patcherProjectVersionId) {
-
-		return filterFindByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_PPVI(
-		long patcherFixComponentId, long patcherProjectVersionId, int start,
-		int end) {
-
-		return filterFindByPFCI_PPVI(
-			patcherFixComponentId, patcherProjectVersionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix packs that the user has permissions to view where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63;.
 	 *
 	 * <p>
@@ -854,71 +562,8 @@ public class PatcherFixPackPersistenceImpl
 			new Object[] {patcherFixComponentId, patcherProjectVersionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPFCI_V;
-	private FinderPath _finderPathWithoutPaginationFindByPFCI_V;
-	private FinderPath _finderPathCountByPFCI_V;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPFCI_V;
-
-	/**
-	 * Returns all the patcher fix packs where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @return the matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_V(
-		long patcherFixComponentId, int version) {
-
-		return findByPFCI_V(
-			patcherFixComponentId, version, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_V(
-		long patcherFixComponentId, int version, int start, int end) {
-
-		return findByPFCI_V(patcherFixComponentId, version, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_V(
-		long patcherFixComponentId, int version, int start, int end,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return findByPFCI_V(
-			patcherFixComponentId, version, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fix packs where patcherFixComponentId = &#63; and version = &#63;.
@@ -993,43 +638,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @return the matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_V(
-		long patcherFixComponentId, int version) {
-
-		return filterFindByPFCI_V(
-			patcherFixComponentId, version, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs that the user has permission to view where patcherFixComponentId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param version the version
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_V(
-		long patcherFixComponentId, int version, int start, int end) {
-
-		return filterFindByPFCI_V(
-			patcherFixComponentId, version, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix packs that the user has permissions to view where patcherFixComponentId = &#63; and version = &#63;.
 	 *
 	 * <p>
@@ -1091,7 +699,6 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {patcherFixComponentId, version});
 	}
 
-	private FinderPath _finderPathFetchByPFCI_N;
 	private UniquePersistenceFinder<PatcherFixPack>
 		_uniquePersistenceFinderByPFCI_N;
 
@@ -1125,20 +732,6 @@ public class PatcherFixPackPersistenceImpl
 		}
 
 		return patcherFixPack;
-	}
-
-	/**
-	 * Returns the patcher fix pack where patcherProjectVersionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param name the name
-	 * @return the matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_N(
-		long patcherProjectVersionId, String name) {
-
-		return fetchByPFCI_N(patcherProjectVersionId, name, true);
 	}
 
 	/**
@@ -1189,71 +782,8 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {patcherProjectVersionId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPFCI_S;
-	private FinderPath _finderPathWithoutPaginationFindByPFCI_S;
-	private FinderPath _finderPathCountByPFCI_S;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPFCI_S;
-
-	/**
-	 * Returns all the patcher fix packs where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @return the matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_S(
-		long patcherProjectVersionId, int status) {
-
-		return findByPFCI_S(
-			patcherProjectVersionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_S(
-		long patcherProjectVersionId, int status, int start, int end) {
-
-		return findByPFCI_S(patcherProjectVersionId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix packs where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix packs
-	 */
-	@Override
-	public List<PatcherFixPack> findByPFCI_S(
-		long patcherProjectVersionId, int status, int start, int end,
-		OrderByComparator<PatcherFixPack> orderByComparator) {
-
-		return findByPFCI_S(
-			patcherProjectVersionId, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the patcher fix packs where patcherProjectVersionId = &#63; and status = &#63;.
@@ -1328,43 +858,6 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 	/**
-	 * Returns all the patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @return the matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_S(
-		long patcherProjectVersionId, int status) {
-
-		return filterFindByPFCI_S(
-			patcherProjectVersionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix packs that the user has permission to view where patcherProjectVersionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixPackModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param status the status
-	 * @param start the lower bound of the range of patcher fix packs
-	 * @param end the upper bound of the range of patcher fix packs (not inclusive)
-	 * @return the range of matching patcher fix packs that the user has permission to view
-	 */
-	@Override
-	public List<PatcherFixPack> filterFindByPFCI_S(
-		long patcherProjectVersionId, int status, int start, int end) {
-
-		return filterFindByPFCI_S(
-			patcherProjectVersionId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix packs that the user has permissions to view where patcherProjectVersionId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1426,8 +919,6 @@ public class PatcherFixPackPersistenceImpl
 			finderCache, new Object[] {patcherProjectVersionId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPFCI_PPVI_GtV;
-	private FinderPath _finderPathWithPaginationCountByPFCI_PPVI_GtV;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPFCI_PPVI_GtV;
 
@@ -1708,8 +1199,6 @@ public class PatcherFixPackPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPFCI_PPVI_LtV;
-	private FinderPath _finderPathWithPaginationCountByPFCI_PPVI_LtV;
 	private FilterCollectionPersistenceFinder<PatcherFixPack>
 		_collectionPersistenceFinderByPFCI_PPVI_LtV;
 
@@ -1990,7 +1479,6 @@ public class PatcherFixPackPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByPFCI_PPVI_N_V;
 	private UniquePersistenceFinder<PatcherFixPack>
 		_uniquePersistenceFinderByPFCI_PPVI_N_V;
 
@@ -2030,25 +1518,6 @@ public class PatcherFixPackPersistenceImpl
 		}
 
 		return patcherFixPack;
-	}
-
-	/**
-	 * Returns the patcher fix pack where patcherFixComponentId = &#63; and patcherProjectVersionId = &#63; and name = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param patcherFixComponentId the patcher fix component ID
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param name the name
-	 * @param version the version
-	 * @return the matching patcher fix pack, or <code>null</code> if a matching patcher fix pack could not be found
-	 */
-	@Override
-	public PatcherFixPack fetchByPFCI_PPVI_N_V(
-		long patcherFixComponentId, long patcherProjectVersionId, String name,
-		int version) {
-
-		return fetchByPFCI_PPVI_N_V(
-			patcherFixComponentId, patcherProjectVersionId, name, version,
-			true);
 	}
 
 	/**
@@ -2647,57 +2116,52 @@ public class PatcherFixPackPersistenceImpl
 				"OSBPatcher_PFixes_PFixPacks", "companyId", "patcherFixPackId",
 				"patcherFixId", this, PatcherFix.class);
 
-		_finderPathFetchByPatcherBuildId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPatcherBuildId",
-			new String[] {Long.class.getName()},
-			new String[] {"patcherBuildId"}, 0, 0, false,
-			PatcherFixPack::getPatcherBuildId);
-
 		_uniquePersistenceFinderByPatcherBuildId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByPatcherBuildId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByPatcherBuildId",
+					new String[] {Long.class.getName()},
+					new String[] {"patcherBuildId"}, 0, 0, false,
+					PatcherFixPack::getPatcherBuildId),
 				_SQL_SELECT_PATCHERFIXPACK_WHERE, "",
 				new FinderColumn<>(
 					"patcherFixPack.", "patcherBuildId", FinderColumn.Type.LONG,
 					"=", true, true, PatcherFixPack::getPatcherBuildId));
 
-		_finderPathWithPaginationFindByPatcherFixComponentId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByPatcherFixComponentId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"patcherFixComponentId"}, true);
-
-		_finderPathWithoutPaginationFindByPatcherFixComponentId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByPatcherFixComponentId",
-				new String[] {Long.class.getName()},
-				new String[] {"patcherFixComponentId"}, true);
-
-		_finderPathCountByPatcherFixComponentId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPatcherFixComponentId", new String[] {Long.class.getName()},
-			new String[] {"patcherFixComponentId"}, false);
-
 		_collectionPersistenceFinderByPatcherFixComponentId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPatcherFixComponentId,
-				_finderPathWithoutPaginationFindByPatcherFixComponentId,
-				_finderPathCountByPatcherFixComponentId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPatcherFixComponentId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"patcherFixComponentId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPatcherFixComponentId",
+					new String[] {Long.class.getName()},
+					new String[] {"patcherFixComponentId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPatcherFixComponentId",
+					new String[] {Long.class.getName()},
+					new String[] {"patcherFixComponentId"}, false),
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2705,82 +2169,83 @@ public class PatcherFixPackPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFixPack::getPatcherFixComponentId));
 
-		_finderPathWithPaginationFindByVersion = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVersion",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"version"}, true);
-
-		_finderPathWithoutPaginationFindByVersion = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVersion",
-			new String[] {Integer.class.getName()}, new String[] {"version"},
-			true);
-
-		_finderPathCountByVersion = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVersion",
-			new String[] {Integer.class.getName()}, new String[] {"version"},
-			false);
-
 		_collectionPersistenceFinderByVersion =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByVersion,
-				_finderPathWithoutPaginationFindByVersion,
-				_finderPathCountByVersion, _SQL_SELECT_PATCHERFIXPACK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVersion",
+					new String[] {
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVersion",
+					new String[] {Integer.class.getName()},
+					new String[] {"version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVersion",
+					new String[] {Integer.class.getName()},
+					new String[] {"version"}, false),
+				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, PatcherFixPack::getVersion));
 
-		_finderPathWithPaginationFindByPFCI_PPVI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_PPVI",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"patcherFixComponentId", "patcherProjectVersionId"},
-			true);
-
-		_finderPathWithoutPaginationFindByPFCI_PPVI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPFCI_PPVI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"patcherFixComponentId", "patcherProjectVersionId"},
-			true);
-
-		_finderPathCountByPFCI_PPVI = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPFCI_PPVI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"patcherFixComponentId", "patcherProjectVersionId"},
-			false);
-
 		_collectionPersistenceFinderByPFCI_PPVI =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPFCI_PPVI,
-				_finderPathWithoutPaginationFindByPFCI_PPVI,
-				_finderPathCountByPFCI_PPVI, _SQL_SELECT_PATCHERFIXPACK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_PPVI",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPFCI_PPVI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPFCI_PPVI",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId"
+					},
+					false),
+				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2792,40 +2257,40 @@ public class PatcherFixPackPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFixPack::getPatcherProjectVersionId));
 
-		_finderPathWithPaginationFindByPFCI_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_V",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"patcherFixComponentId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByPFCI_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPFCI_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"patcherFixComponentId", "version"}, true);
-
-		_finderPathCountByPFCI_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPFCI_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"patcherFixComponentId", "version"}, false);
-
 		_collectionPersistenceFinderByPFCI_V =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPFCI_V,
-				_finderPathWithoutPaginationFindByPFCI_V,
-				_finderPathCountByPFCI_V, _SQL_SELECT_PATCHERFIXPACK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"patcherFixComponentId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPFCI_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"patcherFixComponentId", "version"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPFCI_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"patcherFixComponentId", "version"}, false),
+				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2836,16 +2301,15 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"=", true, true, PatcherFixPack::getVersion));
 
-		_finderPathFetchByPFCI_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"patcherProjectVersionId", "name"}, 0, 2, false,
-			PatcherFixPack::getPatcherProjectVersionId,
-			convertNullFunction(PatcherFixPack::getName));
-
 		_uniquePersistenceFinderByPFCI_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByPFCI_N, _SQL_SELECT_PATCHERFIXPACK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"patcherProjectVersionId", "name"}, 0, 2, false,
+				PatcherFixPack::getPatcherProjectVersionId,
+				convertNullFunction(PatcherFixPack::getName)),
+			_SQL_SELECT_PATCHERFIXPACK_WHERE, "",
 			new FinderColumn<>(
 				"patcherFixPack.", "patcherProjectVersionId",
 				FinderColumn.Type.LONG, "=", true, true,
@@ -2854,40 +2318,40 @@ public class PatcherFixPackPersistenceImpl
 				"patcherFixPack.", "name", FinderColumn.Type.STRING, "=", true,
 				true, PatcherFixPack::getName));
 
-		_finderPathWithPaginationFindByPFCI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"patcherProjectVersionId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByPFCI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPFCI_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"patcherProjectVersionId", "status"}, true);
-
-		_finderPathCountByPFCI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPFCI_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"patcherProjectVersionId", "status"}, false);
-
 		_collectionPersistenceFinderByPFCI_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPFCI_S,
-				_finderPathWithoutPaginationFindByPFCI_S,
-				_finderPathCountByPFCI_S, _SQL_SELECT_PATCHERFIXPACK_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"patcherProjectVersionId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPFCI_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"patcherProjectVersionId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPFCI_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"patcherProjectVersionId", "status"}, false),
+				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2898,44 +2362,47 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, PatcherFixPack::getStatus));
 
-		_finderPathWithPaginationFindByPFCI_PPVI_GtV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_PPVI_GtV",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"patcherFixComponentId", "patcherProjectVersionId", "version"
-			},
-			true);
-
-		_finderPathWithPaginationCountByPFCI_PPVI_GtV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByPFCI_PPVI_GtV",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"patcherFixComponentId", "patcherProjectVersionId", "version"
-			},
-			false);
-
 		_collectionPersistenceFinderByPFCI_PPVI_GtV =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPFCI_PPVI_GtV, null,
-				_finderPathWithPaginationCountByPFCI_PPVI_GtV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPFCI_PPVI_GtV",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId",
+						"version"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByPFCI_PPVI_GtV",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId",
+						"version"
+					},
+					false),
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2950,44 +2417,47 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					">", true, true, PatcherFixPack::getVersion));
 
-		_finderPathWithPaginationFindByPFCI_PPVI_LtV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPFCI_PPVI_LtV",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"patcherFixComponentId", "patcherProjectVersionId", "version"
-			},
-			true);
-
-		_finderPathWithPaginationCountByPFCI_PPVI_LtV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByPFCI_PPVI_LtV",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"patcherFixComponentId", "patcherProjectVersionId", "version"
-			},
-			false);
-
 		_collectionPersistenceFinderByPFCI_PPVI_LtV =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPFCI_PPVI_LtV, null,
-				_finderPathWithPaginationCountByPFCI_PPVI_LtV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPFCI_PPVI_LtV",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId",
+						"version"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByPFCI_PPVI_LtV",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"patcherFixComponentId", "patcherProjectVersionId",
+						"version"
+					},
+					false),
 				_SQL_SELECT_PATCHERFIXPACK_WHERE,
 				_SQL_COUNT_PATCHERFIXPACK_WHERE,
 				PatcherFixPackModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					PatcherFixPackImpl.class, PatcherFixPack.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE,
+					"patcherFixPack", "OSBPatcher_PatcherFixPack",
+					"patcherFixPack.patcherFixPackId",
+					"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
+					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId",
+					"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ",
 					PatcherFixPackModelImpl.ORDER_BY_SQL,
 					PatcherFixPackModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3002,23 +2472,22 @@ public class PatcherFixPackPersistenceImpl
 					"patcherFixPack.", "version", FinderColumn.Type.INTEGER,
 					"<", true, true, PatcherFixPack::getVersion));
 
-		_finderPathFetchByPFCI_PPVI_N_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_PPVI_N_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"patcherFixComponentId", "patcherProjectVersionId", "name",
-				"version"
-			},
-			0, 4, false, PatcherFixPack::getPatcherFixComponentId,
-			PatcherFixPack::getPatcherProjectVersionId,
-			convertNullFunction(PatcherFixPack::getName),
-			PatcherFixPack::getVersion);
-
 		_uniquePersistenceFinderByPFCI_PPVI_N_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByPFCI_PPVI_N_V,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByPFCI_PPVI_N_V",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"patcherFixComponentId", "patcherProjectVersionId", "name",
+					"version"
+				},
+				0, 4, false, PatcherFixPack::getPatcherFixComponentId,
+				PatcherFixPack::getPatcherProjectVersionId,
+				convertNullFunction(PatcherFixPack::getName),
+				PatcherFixPack::getVersion),
 			_SQL_SELECT_PATCHERFIXPACK_WHERE, "",
 			new FinderColumn<>(
 				"patcherFixPack.", "patcherFixComponentId",
@@ -3095,28 +2564,6 @@ public class PatcherFixPackPersistenceImpl
 	private static final String _SQL_COUNT_PATCHERFIXPACK_WHERE =
 		"SELECT COUNT(patcherFixPack) FROM PatcherFixPack patcherFixPack WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"patcherFixPack.patcherFixPackId";
-
-	private static final String _FILTER_SQL_SELECT_PATCHERFIXPACK_WHERE =
-		"SELECT DISTINCT {patcherFixPack.*} FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {OSBPatcher_PatcherFixPack.*} FROM (SELECT DISTINCT patcherFixPack.patcherFixPackId FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_PATCHERFIXPACK_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFixPack ON TEMP_TABLE.patcherFixPackId = OSBPatcher_PatcherFixPack.patcherFixPackId";
-
-	private static final String _FILTER_SQL_COUNT_PATCHERFIXPACK_WHERE =
-		"SELECT COUNT(DISTINCT patcherFixPack.patcherFixPackId) AS COUNT_VALUE FROM OSBPatcher_PatcherFixPack patcherFixPack WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "patcherFixPack";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"OSBPatcher_PatcherFixPack";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No PatcherFixPack exists with the key {";
 
@@ -3129,4 +2576,4 @@ public class PatcherFixPackPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1999594203
+// LIFERAY-SERVICE-BUILDER-HASH:-2028945424

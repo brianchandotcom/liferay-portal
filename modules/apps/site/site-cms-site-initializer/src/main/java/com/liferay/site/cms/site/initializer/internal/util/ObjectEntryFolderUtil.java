@@ -18,18 +18,22 @@ import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepository;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Jürgen Kappler
@@ -43,10 +47,10 @@ public class ObjectEntryFolderUtil {
 
 		_addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-			depotEntry.getGroup(), "Contents", "Contents");
+			depotEntry.getGroup(), "contents", "Contents");
 		_addObjectEntryFolder(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-			depotEntry.getGroup(), "Files", "Files");
+			depotEntry.getGroup(), "files", "Files");
 
 		_addObjectEntryFolderFileRepository(
 			depotEntry.getGroup(), attachmentManager);
@@ -72,7 +76,7 @@ public class ObjectEntryFolderUtil {
 	}
 
 	private static void _addObjectEntryFolder(
-			String externalReferenceCode, Group group, String label,
+			String externalReferenceCode, Group group, String labelKey,
 			String name)
 		throws PortalException {
 
@@ -86,14 +90,19 @@ public class ObjectEntryFolderUtil {
 			return;
 		}
 
+		Map<Locale, String> labels = new HashMap<>();
+
+		Set<Locale> locales = LanguageUtil.getAvailableLocales(
+			group.getGroupId());
+
+		for (Locale locale : locales) {
+			labels.put(locale, LanguageUtil.get(locale, labelKey, name));
+		}
+
 		ObjectEntryFolderLocalServiceUtil.addObjectEntryFolder(
 			externalReferenceCode, group.getGroupId(), group.getCreatorUserId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			"",
-			HashMapBuilder.put(
-				LocaleUtil.ENGLISH, label
-			).build(),
-			name, ServiceContextThreadLocal.getServiceContext());
+			"", labels, name, ServiceContextThreadLocal.getServiceContext());
 	}
 
 	private static void _addObjectEntryFolderFileRepository(

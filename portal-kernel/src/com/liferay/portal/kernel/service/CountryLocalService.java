@@ -81,10 +81,10 @@ public interface CountryLocalService
 	public Country addCountry(Country country);
 
 	public Country addCountry(
-			String a2, String a3, boolean active, boolean billingAllowed,
-			String idd, String name, String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			boolean zipRequired, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -222,6 +222,10 @@ public interface CountryLocalService
 	public Country fetchCountryByA3(long companyId, String a3);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country fetchCountryByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountryByName(long companyId, String name);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -307,6 +311,11 @@ public interface CountryLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(long companyId, String name)
 		throws PortalException;
 
@@ -340,6 +349,12 @@ public interface CountryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getOrAddEmptyCountry(
+			String externalReferenceCode, String a2, String a3, long companyId,
+			String name, long userId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -379,9 +394,10 @@ public interface CountryLocalService
 	public Country updateCountry(Country country);
 
 	public Country updateCountry(
-			long countryId, String a2, String a3, boolean active,
-			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT)
+			String externalReferenceCode, long countryId, String a2, String a3,
+			boolean active, boolean billingAllowed, String idd, String name,
+			String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT)
 		throws PortalException;
 
 	public CountryLocalization updateCountryLocalization(
@@ -411,4 +427,4 @@ public interface CountryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-766498133
+// LIFERAY-SERVICE-BUILDER-HASH:-1470862526

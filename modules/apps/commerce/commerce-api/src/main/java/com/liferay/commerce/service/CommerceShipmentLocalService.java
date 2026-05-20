@@ -114,10 +114,12 @@ public interface CommerceShipmentLocalService
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceShipment deleteCommerceShipment(
-		CommerceShipment commerceShipment);
+			CommerceShipment commerceShipment)
+		throws PortalException;
 
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -474,4 +476,4 @@ public interface CommerceShipmentLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:856579958
+// LIFERAY-SERVICE-BUILDER-HASH:-1797303613

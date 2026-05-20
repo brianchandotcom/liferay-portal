@@ -125,55 +125,6 @@ public class COREntryRelUtil {
 	}
 
 	/**
-	 * Returns all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rels
-	 */
-	public static List<COREntryRel> findByCOREntryId(long COREntryId) {
-		return getPersistence().findByCOREntryId(COREntryId);
-	}
-
-	/**
-	 * Returns a range of all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @return the range of matching cor entry rels
-	 */
-	public static List<COREntryRel> findByCOREntryId(
-		long COREntryId, int start, int end) {
-
-		return getPersistence().findByCOREntryId(COREntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cor entry rels where COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cor entry rels
-	 */
-	public static List<COREntryRel> findByCOREntryId(
-		long COREntryId, int start, int end,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		return getPersistence().findByCOREntryId(
-			COREntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cor entry rels where COREntryId = &#63;.
 	 *
 	 * <p>
@@ -244,60 +195,6 @@ public class COREntryRelUtil {
 	 */
 	public static int countByCOREntryId(long COREntryId) {
 		return getPersistence().countByCOREntryId(COREntryId);
-	}
-
-	/**
-	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rels
-	 */
-	public static List<COREntryRel> findByC_C(
-		long classNameId, long COREntryId) {
-
-		return getPersistence().findByC_C(classNameId, COREntryId);
-	}
-
-	/**
-	 * Returns a range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @return the range of matching cor entry rels
-	 */
-	public static List<COREntryRel> findByC_C(
-		long classNameId, long COREntryId, int start, int end) {
-
-		return getPersistence().findByC_C(classNameId, COREntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param COREntryId the cor entry ID
-	 * @param start the lower bound of the range of cor entry rels
-	 * @param end the upper bound of the range of cor entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cor entry rels
-	 */
-	public static List<COREntryRel> findByC_C(
-		long classNameId, long COREntryId, int start, int end,
-		OrderByComparator<COREntryRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, COREntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -399,20 +296,6 @@ public class COREntryRelUtil {
 	}
 
 	/**
-	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param COREntryId the cor entry ID
-	 * @return the matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
-	 */
-	public static COREntryRel fetchByC_C_C(
-		long classNameId, long classPK, long COREntryId) {
-
-		return getPersistence().fetchByC_C_C(classNameId, classPK, COREntryId);
-	}
-
-	/**
 	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -511,6 +394,123 @@ public class COREntryRelUtil {
 		return getPersistence().fetchByPrimaryKey(COREntryRelId);
 	}
 
+	/**
+	 * Returns the cor entry rel where classNameId = &#63; and classPK = &#63; and COREntryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param COREntryId the cor entry ID
+	 * @return the matching cor entry rel, or <code>null</code> if a matching cor entry rel could not be found
+	 */
+	public static COREntryRel fetchByC_C_C(
+		long classNameId, long classPK, long COREntryId) {
+
+		return getPersistence().fetchByC_C_C(classNameId, classPK, COREntryId);
+	}
+
+	/**
+	 * Returns all the cor entry rels where COREntryId = &#63;.
+	 *
+	 * @param COREntryId the cor entry ID
+	 * @return the matching cor entry rels
+	 */
+	public static List<COREntryRel> findByCOREntryId(long COREntryId) {
+		return getPersistence().findByCOREntryId(COREntryId);
+	}
+
+	/**
+	 * Returns a range of all the cor entry rels where COREntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param COREntryId the cor entry ID
+	 * @param start the lower bound of the range of cor entry rels
+	 * @param end the upper bound of the range of cor entry rels (not inclusive)
+	 * @return the range of matching cor entry rels
+	 */
+	public static List<COREntryRel> findByCOREntryId(
+		long COREntryId, int start, int end) {
+
+		return getPersistence().findByCOREntryId(COREntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cor entry rels where COREntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param COREntryId the cor entry ID
+	 * @param start the lower bound of the range of cor entry rels
+	 * @param end the upper bound of the range of cor entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entry rels
+	 */
+	public static List<COREntryRel> findByCOREntryId(
+		long COREntryId, int start, int end,
+		OrderByComparator<COREntryRel> orderByComparator) {
+
+		return getPersistence().findByCOREntryId(
+			COREntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param COREntryId the cor entry ID
+	 * @return the matching cor entry rels
+	 */
+	public static List<COREntryRel> findByC_C(
+		long classNameId, long COREntryId) {
+
+		return getPersistence().findByC_C(classNameId, COREntryId);
+	}
+
+	/**
+	 * Returns a range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param COREntryId the cor entry ID
+	 * @param start the lower bound of the range of cor entry rels
+	 * @param end the upper bound of the range of cor entry rels (not inclusive)
+	 * @return the range of matching cor entry rels
+	 */
+	public static List<COREntryRel> findByC_C(
+		long classNameId, long COREntryId, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, COREntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cor entry rels where classNameId = &#63; and COREntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.order.rule.model.impl.COREntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param COREntryId the cor entry ID
+	 * @param start the lower bound of the range of cor entry rels
+	 * @param end the upper bound of the range of cor entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cor entry rels
+	 */
+	public static List<COREntryRel> findByC_C(
+		long classNameId, long COREntryId, int start, int end,
+		OrderByComparator<COREntryRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, COREntryId, start, end, orderByComparator);
+	}
+
 	public static COREntryRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -522,4 +522,4 @@ public class COREntryRelUtil {
 	private static volatile COREntryRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-798478271
+// LIFERAY-SERVICE-BUILDER-HASH:2107608319

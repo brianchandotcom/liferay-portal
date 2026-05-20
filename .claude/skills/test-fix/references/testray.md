@@ -1,6 +1,6 @@
 # Fetch Failure Data From Testray
 
-Pull a single Testray case result through the REST API at `https://testray.liferay.com`. The caller supplies either a positive integer case result ID or a test name as `${ARGUMENTS}`.
+Pull a single Testray case result through the REST API at `https://testray.liferay.com`. The caller supplies a positive integer case result ID, a test name, or a Testray build URL as `${ARGUMENTS}`.
 
 ## Preconditions
 
@@ -23,23 +23,9 @@ export ACCESS_TOKEN=$(curl \
 
 ## Resolve a Test Name to a Case Result ID
 
-Skip when the input is already a positive integer. Otherwise, resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
+Skip when the input is not a test name. Otherwise, resolve the name through the master project's team routine. Every step that fails aborts the resolution — surface the reason and ask the user to retry with a case result ID directly. Do not silently fall back to a different project or routine.
 
-1. Resolve the master project ID from the most recent `[master]` build:
-
-	```bash
-	curl \
-		--data-urlencode "filter=startswith(name, '[master]')" \
-		--data-urlencode "pageSize=1" \
-		--data-urlencode "sort=dateCreated:desc" \
-		--get \
-		--header "Accept: application/json" \
-		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
-		--silent \
-		--url "https://testray.liferay.com/o/c/builds"
-	```
-
-	Read `r_projectToBuilds_c_projectId` from the first item as `<masterProjectId>` and reuse it below.
+1. Use the canonical master project ID `35392` as `<masterProjectId>`. This is the project that hosts every team routine, browsable at `https://testray.liferay.com/#/project/35392/routines`. Do not derive it from the most recent `[master]` build — fork and sandbox projects also publish `[master]` builds, and routine names like `[master] ci:test:stable` exist on both, so the most recent build may belong to a fork.
 
 1. Fetch every Case with that exact name and keep the single one whose `r_projectToCases_c_projectId` equals `<masterProjectId>`. When zero or more than one match, abort.
 
@@ -85,6 +71,26 @@ Skip when the input is already a positive integer. Otherwise, resolve the name t
 
 	For each item in order, fetch its build (`/o/c/builds/<buildId>`) and read `r_routineToBuilds_c_routineId`. Return the `id` of the first case result whose build routine matches the team routine ID and whose `dueStatus.key` is not `UNTESTED`. The result may be `PASSED` — that is correct when the test currently passes on the team routine. When the loop ends without a match, abort.
 
+## Resolve a Build URL to a Case Result ID
+
+Skip when the input is not a Testray build URL. Otherwise, pick the first unclaimed failure automatically from the build.
+
+Parse `<buildId>` from the URL path and read `<teamIds>` from `filter.testrayTeamIds` when present in the query string. Print the resulting `<buildId>` and `<teamIds>` before running any query, so the parse is auditable rather than asserted.
+
+1. List failed case results on the build, newest first. Append the team predicate only when `<teamIds>` is non-empty, joining multiple IDs with `or`:
+
+	```bash
+	curl \
+		--data-urlencode "filter=r_buildToCaseResult_c_buildId eq '<buildId>' and (r_teamToCaseResult_c_teamId eq '<teamId1>' or r_teamToCaseResult_c_teamId eq '<teamId2>') and dueStatus eq 'FAILED'" \
+		--data-urlencode "pageSize=50" \
+		--data-urlencode "sort=dateCreated:desc" \
+		--get \
+		--header "Accept: application/json" \
+		--header "Authorization: Bearer ${ACCESS_TOKEN}" \
+		--silent \
+		--url "https://testray.liferay.com/o/c/caseresults"
+	```
+
 ## Derive the Failure Data
 
 The case result drives every other lookup:
@@ -97,7 +103,7 @@ curl \
 	--url "https://testray.liferay.com/o/c/caseresults/<caseResultId>"
 ```
 
-When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise, return all four fields.
+When `dueStatus.key` is `PASSED`, return only **Name** below; the rest are skipped. Otherwise, return all five fields.
 
 ### Name
 
@@ -142,6 +148,10 @@ curl \
 ### Error Trace
 
 The `errors` field of the case result.
+
+### Failure Date
+
+The `dateCreated` field of the case result.
 
 ### Last Pass SHA and First Fail SHA
 

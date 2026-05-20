@@ -32,47 +32,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	 */
 
 	/**
-	 * Returns all the object filters where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the object filters where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @return the range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object filters where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the object filters where uuid = &#63;.
 	 *
 	 * <p>
@@ -132,51 +91,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	 * @return the number of matching object filters
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns all the object filters where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the object filters where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @return the range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object filters where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object filters where uuid = &#63; and companyId = &#63;.
@@ -243,47 +157,6 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	 * @return the number of matching object filters
 	 */
 	public int countByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns all the object filters where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @return the matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByObjectFieldId(long objectFieldId);
-
-	/**
-	 * Returns a range of all the object filters where objectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @return the range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByObjectFieldId(
-		long objectFieldId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the object filters where objectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param start the lower bound of the range of object filters
-	 * @param end the upper bound of the range of object filters (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object filters
-	 */
-	public java.util.List<ObjectFilter> findByObjectFieldId(
-		long objectFieldId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the object filters where objectFieldId = &#63;.
@@ -384,5 +257,168 @@ public interface ObjectFilterPersistence extends BasePersistence<ObjectFilter> {
 	 */
 	public ObjectFilter fetchByPrimaryKey(long objectFilterId);
 
+	/**
+	 * Returns all the object filters where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object filters where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @return the range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object filters where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object filters where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object filters where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @return the range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object filters where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the object filters where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @return the matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByObjectFieldId(
+		long objectFieldId) {
+
+		return findByObjectFieldId(
+			objectFieldId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the object filters where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @return the range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByObjectFieldId(
+		long objectFieldId, int start, int end) {
+
+		return findByObjectFieldId(objectFieldId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object filters where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFilterModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object filters
+	 * @param end the upper bound of the range of object filters (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object filters
+	 */
+	public default java.util.List<ObjectFilter> findByObjectFieldId(
+		long objectFieldId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectFilter>
+			orderByComparator) {
+
+		return findByObjectFieldId(
+			objectFieldId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1365384149
+// LIFERAY-SERVICE-BUILDER-HASH:-1365982410

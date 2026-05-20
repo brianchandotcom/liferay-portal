@@ -279,6 +279,8 @@ public class PortletImportControllerImpl implements PortletImportController {
 			ExportImportConfiguration exportImportConfiguration, File file)
 		throws Exception {
 
+		ExportImportThreadLocal.setExportImportConfigurationId(
+			exportImportConfiguration.getExportImportConfigurationId());
 		ExportImportThreadLocal.setPortletImportInProcess(true);
 
 		PortletDataContext portletDataContext = null;
@@ -324,6 +326,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 				throwable);
 
 			throw throwable;
+		}
+		finally {
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
 		}
 	}
 

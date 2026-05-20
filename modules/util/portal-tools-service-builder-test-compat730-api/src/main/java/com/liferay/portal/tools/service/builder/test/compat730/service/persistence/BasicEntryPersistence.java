@@ -530,4 +530,4 @@ public interface BasicEntryPersistence extends BasePersistence<BasicEntry> {
 				MappingEntry> mappingEntries);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1196736510
+// LIFERAY-SERVICE-BUILDER-HASH:-1555877294

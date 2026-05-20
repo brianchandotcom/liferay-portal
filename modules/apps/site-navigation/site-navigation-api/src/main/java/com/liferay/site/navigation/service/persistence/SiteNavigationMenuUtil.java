@@ -129,54 +129,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where uuid = &#63;.
 	 *
 	 * <p>
@@ -262,17 +214,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns the site navigation menu where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the site navigation menu where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -308,60 +249,6 @@ public class SiteNavigationMenuUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -444,55 +331,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where groupId = &#63;.
 	 *
 	 * <p>
@@ -546,34 +384,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByGroupId(long groupId) {
-		return getPersistence().filterFindByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -595,36 +405,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByGroupId(
-		long[] groupIds) {
-
-		return getPersistence().filterFindByGroupId(groupIds);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return getPersistence().filterFindByGroupId(groupIds, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus that the user has permission to view where groupId = any &#63;.
 	 *
 	 * <p>
@@ -642,59 +422,6 @@ public class SiteNavigationMenuUtil {
 		OrderByComparator<SiteNavigationMenu> orderByComparator) {
 
 		return getPersistence().filterFindByGroupId(
-			groupIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(long[] groupIds) {
-		return getPersistence().findByGroupId(groupIds);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return getPersistence().findByGroupId(groupIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByGroupId(
 			groupIds, start, end, orderByComparator);
 	}
 
@@ -768,55 +495,6 @@ public class SiteNavigationMenuUtil {
 	 */
 	public static int filterCountByGroupId(long[] groupIds) {
 		return getPersistence().filterCountByGroupId(groupIds);
-	}
-
-	/**
-	 * Returns all the site navigation menus where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -905,17 +583,6 @@ public class SiteNavigationMenuUtil {
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 
 		return getPersistence().findByG_N(groupId, name);
-	}
-
-	/**
-	 * Returns the site navigation menu where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByG_N(long groupId, String name) {
-		return getPersistence().fetchByG_N(groupId, name);
 	}
 
 	/**
@@ -1313,58 +980,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_T(long groupId, int type) {
-		return getPersistence().findByG_T(groupId, type);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_T(
-		long groupId, int type, int start, int end) {
-
-		return getPersistence().findByG_T(groupId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_T(
-		long groupId, int type, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByG_T(
-			groupId, type, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1423,38 +1038,6 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByG_T(
-		long groupId, int type) {
-
-		return getPersistence().filterFindByG_T(groupId, type);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByG_T(
-		long groupId, int type, int start, int end) {
-
-		return getPersistence().filterFindByG_T(groupId, type, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the site navigation menus that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1506,60 +1089,6 @@ public class SiteNavigationMenuUtil {
 	 */
 	public static int filterCountByG_T(long groupId, int type) {
 		return getPersistence().filterCountByG_T(groupId, type);
-	}
-
-	/**
-	 * Returns all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @return the matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_A(
-		long groupId, boolean auto) {
-
-		return getPersistence().findByG_A(groupId, auto);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_A(
-		long groupId, boolean auto, int start, int end) {
-
-		return getPersistence().findByG_A(groupId, auto, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menus
-	 */
-	public static List<SiteNavigationMenu> findByG_A(
-		long groupId, boolean auto, int start, int end,
-		OrderByComparator<SiteNavigationMenu> orderByComparator) {
-
-		return getPersistence().findByG_A(
-			groupId, auto, start, end, orderByComparator);
 	}
 
 	/**
@@ -1618,38 +1147,6 @@ public class SiteNavigationMenuUtil {
 
 		return getPersistence().fetchByG_A_First(
 			groupId, auto, orderByComparator);
-	}
-
-	/**
-	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @return the matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByG_A(
-		long groupId, boolean auto) {
-
-		return getPersistence().filterFindByG_A(groupId, auto);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param auto the auto
-	 * @param start the lower bound of the range of site navigation menus
-	 * @param end the upper bound of the range of site navigation menus (not inclusive)
-	 * @return the range of matching site navigation menus that the user has permission to view
-	 */
-	public static List<SiteNavigationMenu> filterFindByG_A(
-		long groupId, boolean auto, int start, int end) {
-
-		return getPersistence().filterFindByG_A(groupId, auto, start, end);
 	}
 
 	/**
@@ -1719,19 +1216,6 @@ public class SiteNavigationMenuUtil {
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
 
 		return getPersistence().findByERC_G(externalReferenceCode, groupId);
-	}
-
-	/**
-	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	 */
-	public static SiteNavigationMenu fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**
@@ -1828,6 +1312,518 @@ public class SiteNavigationMenuUtil {
 		return getPersistence().fetchByPrimaryKey(siteNavigationMenuId);
 	}
 
+	/**
+	 * Returns the site navigation menu where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	public static SiteNavigationMenu fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param name the name
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	public static SiteNavigationMenu fetchByG_N(long groupId, String name) {
+		return getPersistence().fetchByG_N(groupId, name);
+	}
+
+	/**
+	 * Returns the site navigation menu where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	public static SiteNavigationMenu fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns all the site navigation menus where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus where groupId = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(long[] groupIds) {
+		return getPersistence().findByGroupId(groupIds);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(
+		long[] groupIds, int start, int end) {
+
+		return getPersistence().findByGroupId(groupIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByGroupId(
+		long[] groupIds, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByGroupId(long groupId) {
+		return getPersistence().filterFindByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns all the site navigation menus that the user has permission to view where groupId = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @return the matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByGroupId(
+		long[] groupIds) {
+
+		return getPersistence().filterFindByGroupId(groupIds);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByGroupId(
+		long[] groupIds, int start, int end) {
+
+		return getPersistence().filterFindByGroupId(groupIds, start, end);
+	}
+
+	/**
+	 * Returns all the site navigation menus where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_T(long groupId, int type) {
+		return getPersistence().findByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_T(
+		long groupId, int type, int start, int end) {
+
+		return getPersistence().findByG_T(groupId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_T(
+		long groupId, int type, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByG_T(
+			groupId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @return the matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByG_T(
+		long groupId, int type) {
+
+		return getPersistence().filterFindByG_T(groupId, type);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param type the type
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByG_T(
+		long groupId, int type, int start, int end) {
+
+		return getPersistence().filterFindByG_T(groupId, type, start, end);
+	}
+
+	/**
+	 * Returns all the site navigation menus where groupId = &#63; and auto = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param auto the auto
+	 * @return the matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_A(
+		long groupId, boolean auto) {
+
+		return getPersistence().findByG_A(groupId, auto);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus where groupId = &#63; and auto = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param auto the auto
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_A(
+		long groupId, boolean auto, int start, int end) {
+
+		return getPersistence().findByG_A(groupId, auto, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the site navigation menus where groupId = &#63; and auto = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param auto the auto
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching site navigation menus
+	 */
+	public static List<SiteNavigationMenu> findByG_A(
+		long groupId, boolean auto, int start, int end,
+		OrderByComparator<SiteNavigationMenu> orderByComparator) {
+
+		return getPersistence().findByG_A(
+			groupId, auto, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param auto the auto
+	 * @return the matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByG_A(
+		long groupId, boolean auto) {
+
+		return getPersistence().filterFindByG_A(groupId, auto);
+	}
+
+	/**
+	 * Returns a range of all the site navigation menus that the user has permission to view where groupId = &#63; and auto = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.site.navigation.model.impl.SiteNavigationMenuModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param auto the auto
+	 * @param start the lower bound of the range of site navigation menus
+	 * @param end the upper bound of the range of site navigation menus (not inclusive)
+	 * @return the range of matching site navigation menus that the user has permission to view
+	 */
+	public static List<SiteNavigationMenu> filterFindByG_A(
+		long groupId, boolean auto, int start, int end) {
+
+		return getPersistence().filterFindByG_A(groupId, auto, start, end);
+	}
+
 	public static SiteNavigationMenuPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1841,4 +1837,4 @@ public class SiteNavigationMenuUtil {
 	private static volatile SiteNavigationMenuPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2020767367
+// LIFERAY-SERVICE-BUILDER-HASH:-1019466656

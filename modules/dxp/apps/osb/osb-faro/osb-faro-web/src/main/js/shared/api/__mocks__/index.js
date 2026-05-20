@@ -19,6 +19,7 @@ import * as notifications from './notifications';
 import * as pagesVisited from './pages-visited';
 import * as preferences from './preferences';
 import * as projects from './projects';
+import * as tags from './tags';
 import * as user from './user';
 import * as vocabularies from './vocabularies';
 
@@ -44,6 +45,7 @@ export {
 	pagesVisited,
 	preferences,
 	projects,
+	tags,
 	user,
 	vocabularies
 };

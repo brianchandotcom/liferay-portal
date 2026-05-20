@@ -121,12 +121,12 @@ public class CartResourceTest extends BaseCartResourceTestCase {
 			true, _serviceContext);
 
 		_country = _countryLocalService.addCountry(
-			"XY", "XYZ", true, true, RandomTestUtil.randomString(),
+			null, "XY", "XYZ", true, true, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), true, true, false, _serviceContext);
 
 		_region = _regionLocalService.addRegion(
-			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			_serviceContext);
 	}

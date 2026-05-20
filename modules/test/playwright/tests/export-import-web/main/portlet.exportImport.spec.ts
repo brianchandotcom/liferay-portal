@@ -11,6 +11,7 @@ import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {performLoginViaApi} from '../../../utils/performLogin';
@@ -103,20 +104,20 @@ test('Can import object with different classname via portlet', async ({
 		});
 
 		await performLoginViaApi({
-			loginUrl: 'http://www.able.com:8080',
+			loginUrl: `http://www.able.com:${liferayConfig.environment.port}`,
 			page,
 			screenName: 'test',
 		});
 
 		virtualInstanceApiHelpers = new DataApiHelpers(
 			page,
-			'http://www.able.com:8080'
+			`http://www.able.com:${liferayConfig.environment.port}`
 		);
 	});
 
 	await test.step('Object Definition into Virtual Instance', async () => {
 		await page.goto(
-			`http://www.able.com:8080/group/guest${PORTLET_URLS.objects}`
+			`http://www.able.com:${liferayConfig.environment.port}/group/guest${PORTLET_URLS.objects}`
 		);
 
 		await clickAndExpectToBeVisible({
@@ -133,7 +134,9 @@ test('Can import object with different classname via portlet', async ({
 	});
 
 	await test.step('Import Object Entry into Virtual Instance & Verify', async () => {
-		await page.goto(`http://www.able.com:8080`);
+		await page.goto(
+			`http://www.able.com:${liferayConfig.environment.port}`
+		);
 
 		await globalMenuPage.goToObjectDefinition(objectDefinition.name);
 

@@ -1,3 +1,7 @@
+variable "arn_partition" {
+	default="aws"
+	type=string
+}
 variable "db_subnet_group_name" {
 	type=string
 }

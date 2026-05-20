@@ -7,8 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 
 import '../../../css/content_editor/ContentEditorSidePanel.scss';
 
-import {Button, VerticalBar} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
+import {VerticalBar} from '@clayui/core';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {datetimeUtils} from '@liferay/object-js-components-web';
 import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
@@ -363,15 +362,15 @@ function SidePanel(props: SidePanelProps) {
 			<VerticalBar.Bar displayType="light" items={items}>
 				{(item) => (
 					<VerticalBar.Item divider={item.divider} key={item.title}>
-						<Button
+						<ClayButtonWithIcon
 							aria-label={item.title}
+							data-canonical-name={item.title}
 							data-tooltip-align="left"
 							displayType={null}
 							ref={panel === item.title ? buttonRef : null}
+							symbol={item.icon}
 							title={item.title}
-						>
-							<ClayIcon symbol={item.icon} />
-						</Button>
+						/>
 					</VerticalBar.Item>
 				)}
 			</VerticalBar.Bar>

@@ -68,8 +68,8 @@ describe('IndividualsOverviewCDP', () => {
 			useCurrentUser: jest.fn(() => ({isAdmin: () => true}))
 		}));
 
-		jest.doMock('shared/hooks/useDataSource', () => ({
-			useDataSource: jest.fn(() => ({empty: false}))
+		jest.doMock('shared/context/dataSources', () => ({
+			useDataSources: jest.fn(() => ({empty: false}))
 		}));
 
 		jest.doMock('react-router-dom', () => ({

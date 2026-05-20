@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,12 +74,14 @@ public class UpdateLanguageAction implements Action {
 					themeDisplay.getUserId(), languageId);
 			}
 
-			HttpSession httpSession = httpServletRequest.getSession();
+			if (Validator.isNull(themeDisplay.getDoAsUserId())) {
+				HttpSession httpSession = httpServletRequest.getSession();
 
-			httpSession.setAttribute(WebKeys.LOCALE, locale);
+				httpSession.setAttribute(WebKeys.LOCALE, locale);
 
-			LanguageUtil.updateCookie(
-				httpServletRequest, httpServletResponse, locale);
+				LanguageUtil.updateCookie(
+					httpServletRequest, httpServletResponse, locale);
+			}
 		}
 
 		// Send redirect
@@ -306,6 +309,13 @@ public class UpdateLanguageAction implements Action {
 
 		if (Validator.isNotNull(queryString)) {
 			redirect = redirect + queryString;
+		}
+
+		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+			return HttpComponentsUtil.setParameter(
+				PortalUtil.addPreservedParameters(
+					themeDisplay, layout, redirect, true),
+				"doAsUserLanguageId", LocaleUtil.toLanguageId(locale));
 		}
 
 		return redirect;

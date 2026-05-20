@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
@@ -15,9 +16,12 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 	readonly globalMenuPage: GlobalMenuPage;
 	readonly creationMenuItem: (menuItemName: string) => Locator;
 	readonly creationMenuNewButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly managementToolbarItemLink: (productName: string) => Locator;
+	readonly productRowActionsButton: (productName: string) => Locator;
 	readonly managementToolbarSearchInput: Locator;
 	readonly modalAddButton: Locator;
+	readonly modalBody: Locator;
 	readonly modalCancelButton: Locator;
 	readonly page: Page;
 	readonly menuItemProductType: (productType: string) => Locator;
@@ -63,15 +67,25 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 				exact: true,
 				name: menuItemName,
 			});
-		this.creationMenuNewButton = page.locator(
-			'[data-testid="fdsCreationActionButton"]'
-		);
+		this.creationMenuNewButton = page
+			.getByTestId('managementToolbar')
+			.locator('[data-testid="fdsCreationActionButton"]');
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.managementToolbarItemLink = (productName: string) =>
 			page.getByRole('link', {exact: true, name: productName});
+		this.productRowActionsButton = (productName: string) =>
+			page
+				.getByRole('row')
+				.filter({hasText: productName})
+				.getByRole('button');
 		this.managementToolbarSearchInput = page
 			.getByTestId('managementToolbar')
 			.getByPlaceholder('Search', {exact: true});
 		this.modalAddButton = page.getByRole('button', {name: 'Add'});
+		this.modalBody = page.locator('.fds-modal-body');
 		this.modalCancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.page = page;
 		this.menuItemProductType = (productType: string) =>
@@ -159,7 +173,7 @@ export class CommerceAdminProductPage extends CommerceDNDTablePage {
 
 		await this.creationMenuNewButton.click();
 		await this.creationMenuItem('Generate All SKU Combinations').click();
-		await this.page.waitForLoadState('load');
+		await waitForAlert(this.page);
 	}
 
 	async addSku(skuName: string, option = {name: '', value: ''}) {

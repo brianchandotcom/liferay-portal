@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.log.Log;
@@ -65,68 +64,14 @@ public class UserNotificationDeliveryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<UserNotificationDelivery>
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the user notification deliveries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user notification deliveries
-	 */
-	@Override
-	public List<UserNotificationDelivery> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification deliveries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification deliveries
-	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
-	 * @return the range of matching user notification deliveries
-	 */
-	@Override
-	public List<UserNotificationDelivery> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user notification deliveries where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification deliveries
-	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification deliveries
-	 */
-	@Override
-	public List<UserNotificationDelivery> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<UserNotificationDelivery> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification deliveries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationDeliveryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -213,7 +158,6 @@ public class UserNotificationDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByU_P_C_N_D;
 	private UniquePersistenceFinder<UserNotificationDelivery>
 		_uniquePersistenceFinderByU_P_C_N_D;
 
@@ -254,26 +198,6 @@ public class UserNotificationDeliveryPersistenceImpl
 		}
 
 		return userNotificationDelivery;
-	}
-
-	/**
-	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param portletId the portlet ID
-	 * @param classNameId the class name ID
-	 * @param notificationType the notification type
-	 * @param deliveryType the delivery type
-	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 */
-	@Override
-	public UserNotificationDelivery fetchByU_P_C_N_D(
-		long userId, String portletId, long classNameId, int notificationType,
-		int deliveryType) {
-
-		return fetchByU_P_C_N_D(
-			userId, portletId, classNameId, notificationType, deliveryType,
-			true);
 	}
 
 	/**
@@ -533,28 +457,25 @@ public class UserNotificationDeliveryPersistenceImpl
 	 * Initializes the user notification delivery persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE,
 				UserNotificationDeliveryModelImpl.ORDER_BY_JPQL,
@@ -564,25 +485,24 @@ public class UserNotificationDeliveryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					UserNotificationDelivery::getUserId));
 
-		_finderPathFetchByU_P_C_N_D = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"userId", "portletId", "classNameId", "notificationType",
-				"deliveryType"
-			},
-			0, 2, false, UserNotificationDelivery::getUserId,
-			convertNullFunction(UserNotificationDelivery::getPortletId),
-			UserNotificationDelivery::getClassNameId,
-			UserNotificationDelivery::getNotificationType,
-			UserNotificationDelivery::getDeliveryType);
-
 		_uniquePersistenceFinderByU_P_C_N_D = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_P_C_N_D,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_P_C_N_D",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {
+					"userId", "portletId", "classNameId", "notificationType",
+					"deliveryType"
+				},
+				0, 2, false, UserNotificationDelivery::getUserId,
+				convertNullFunction(UserNotificationDelivery::getPortletId),
+				UserNotificationDelivery::getClassNameId,
+				UserNotificationDelivery::getNotificationType,
+				UserNotificationDelivery::getDeliveryType),
 			_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE, "",
 			new FinderColumn<>(
 				"userNotificationDelivery.", "userId", FinderColumn.Type.LONG,
@@ -638,4 +558,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-858695043
+// LIFERAY-SERVICE-BUILDER-HASH:2094577975

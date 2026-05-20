@@ -6,8 +6,11 @@
 package com.liferay.address.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateRegionException;
+import com.liferay.portal.kernel.exception.NoSuchRegionException;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Organization;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -152,6 +156,48 @@ public class RegionLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyRegion() throws Exception {
+
+		// Lazy referencing disabled
+
+		Country country = _addCountry();
+
+		try {
+			_regionLocalService.getOrAddEmptyRegion(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), country.getCountryId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.fail();
+		}
+		catch (NoSuchRegionException noSuchRegionException) {
+			Assert.assertNotNull(noSuchRegionException);
+		}
+
+		// Lazy referencing enabled
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			Region region = _regionLocalService.getOrAddEmptyRegion(
+				externalReferenceCode, TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), country.getCountryId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.assertEquals(
+				externalReferenceCode, region.getExternalReferenceCode());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, region.getStatus());
+			Assert.assertEquals(
+				region,
+				_regionLocalService.fetchRegionByExternalReferenceCode(
+					externalReferenceCode, TestPropsValues.getCompanyId()));
+		}
+	}
+
+	@Test
 	public void testSearchRegions() throws Exception {
 		String keywords = RandomTestUtil.randomString();
 
@@ -262,12 +308,39 @@ public class RegionLocalServiceTest {
 		String regionCode = RandomTestUtil.randomString();
 
 		region = _regionLocalService.updateRegion(
-			region.getRegionId(), active, name, position, regionCode);
+			region.getExternalReferenceCode(), region.getRegionId(), active,
+			name, position, regionCode);
 
 		Assert.assertEquals(active, region.isActive());
 		Assert.assertEquals(name, region.getName());
 		Assert.assertEquals(position, region.getPosition(), 0);
 		Assert.assertEquals(regionCode, region.getRegionCode());
+	}
+
+	@Test
+	public void testUpdateRegionWithLazyReferencingEnabled() throws Exception {
+		Country country = _addCountry();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			Region region = _regionLocalService.getOrAddEmptyRegion(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), country.getCountryId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			String name = RandomTestUtil.randomString();
+			String regionCode = RandomTestUtil.randomString();
+
+			region = _regionLocalService.updateRegion(
+				region.getExternalReferenceCode(), region.getRegionId(), true,
+				name, 0D, regionCode);
+
+			Assert.assertEquals(name, region.getName());
+			Assert.assertEquals(regionCode, region.getRegionCode());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, region.getStatus());
+		}
 	}
 
 	private Country _addCountry() throws Exception {
@@ -276,7 +349,7 @@ public class RegionLocalServiceTest {
 
 	private Country _addCountry(String a2, String a3) throws Exception {
 		return _countryLocalService.addCountry(
-			a2, a3, true, RandomTestUtil.randomBoolean(),
+			null, a2, a3, true, RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean(),
@@ -296,8 +369,8 @@ public class RegionLocalServiceTest {
 		throws Exception {
 
 		return _regionLocalService.addRegion(
-			countryId, active, name, RandomTestUtil.randomDouble(), regionCode,
-			ServiceContextTestUtil.getServiceContext());
+			null, countryId, active, name, RandomTestUtil.randomDouble(),
+			regionCode, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private Region _addRegion(long countryId) throws Exception {

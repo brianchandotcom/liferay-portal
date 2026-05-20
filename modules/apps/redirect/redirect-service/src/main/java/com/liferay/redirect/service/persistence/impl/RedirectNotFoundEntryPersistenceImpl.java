@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -84,69 +83,14 @@ public class RedirectNotFoundEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<RedirectNotFoundEntry>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the redirect not found entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching redirect not found entries
-	 */
-	@Override
-	public List<RedirectNotFoundEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the redirect not found entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectNotFoundEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of redirect not found entries
-	 * @param end the upper bound of the range of redirect not found entries (not inclusive)
-	 * @return the range of matching redirect not found entries
-	 */
-	@Override
-	public List<RedirectNotFoundEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the redirect not found entries where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectNotFoundEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of redirect not found entries
-	 * @param end the upper bound of the range of redirect not found entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching redirect not found entries
-	 */
-	@Override
-	public List<RedirectNotFoundEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<RedirectNotFoundEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the redirect not found entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectNotFoundEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>RedirectNotFoundEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -232,7 +176,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathFetchByG_U;
 	private UniquePersistenceFinder<RedirectNotFoundEntry>
 		_uniquePersistenceFinderByG_U;
 
@@ -263,18 +206,6 @@ public class RedirectNotFoundEntryPersistenceImpl
 		}
 
 		return redirectNotFoundEntry;
-	}
-
-	/**
-	 * Returns the redirect not found entry where groupId = &#63; and url = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param url the url
-	 * @return the matching redirect not found entry, or <code>null</code> if a matching redirect not found entry could not be found
-	 */
-	@Override
-	public RedirectNotFoundEntry fetchByG_U(long groupId, String url) {
-		return fetchByG_U(groupId, url, true);
 	}
 
 	/**
@@ -560,29 +491,25 @@ public class RedirectNotFoundEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE,
 				_SQL_COUNT_REDIRECTNOTFOUNDENTRY_WHERE,
 				RedirectNotFoundEntryModelImpl.ORDER_BY_JPQL,
@@ -591,15 +518,14 @@ public class RedirectNotFoundEntryPersistenceImpl
 					"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, RedirectNotFoundEntry::getGroupId));
 
-		_finderPathFetchByG_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "url"}, 0, 2, false,
-			RedirectNotFoundEntry::getGroupId,
-			convertNullFunction(RedirectNotFoundEntry::getUrl));
-
 		_uniquePersistenceFinderByG_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_U,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_U",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "url"}, 0, 2, false,
+				RedirectNotFoundEntry::getGroupId,
+				convertNullFunction(RedirectNotFoundEntry::getUrl)),
 			_SQL_SELECT_REDIRECTNOTFOUNDENTRY_WHERE, "",
 			new FinderColumn<>(
 				"redirectNotFoundEntry.", "groupId", FinderColumn.Type.LONG,
@@ -674,4 +600,4 @@ public class RedirectNotFoundEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:490453945
+// LIFERAY-SERVICE-BUILDER-HASH:-1344497443

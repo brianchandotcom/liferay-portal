@@ -6,32 +6,35 @@
 package com.liferay.portal.search.elasticsearch8.internal.logging;
 
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.elasticsearch8.internal.ElasticsearchIndexWriter;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
-import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
+import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.BulkDocumentRequestExecutor;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.logging.ExpectedLog;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * @author Bryan Engler
@@ -41,134 +44,162 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			ExpectedLogMethodTestRule.INSTANCE, LiferayUnitTestRule.INSTANCE);
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testAddDocument() {
-		expectedException.expect(ElasticsearchException.class);
-		expectedException.expectMessage(
-			"failed to parse field [expirationDate] of type [date]");
-
-		addDocument(
-			DocumentCreationHelpers.singleKeyword(
-				Field.EXPIRATION_DATE, "text"));
-	}
-
-	@Test
-	public void testAddDocuments() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Bulk add failed");
-
-		List<Document> documents = new ArrayList<>();
-
-		Document document = new DocumentImpl();
-
-		document.addKeyword(Field.EXPIRATION_DATE, "text");
-
-		documents.add(document);
-
-		IndexWriter indexWriter = getIndexWriter();
-
+	public void testAddDocument() throws SearchException {
 		try {
-			indexWriter.addDocuments(createSearchContext(), documents);
+			addDocument(
+				DocumentCreationHelpers.singleKeyword(
+					Field.EXPIRATION_DATE, "text"));
+
+			Assert.fail();
 		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
+		catch (ElasticsearchException elasticsearchException) {
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
+			_assertElasticsearchException(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				elasticsearchException, "document_parsing_exception");
 		}
 	}
 
 	@Test
-	public void testCommit() {
-		expectedException.expect(ElasticsearchException.class);
-		expectedException.expectMessage(
-			"[index_not_found_exception] no such index");
+	public void testAddDocuments() throws SearchException {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
+			Document document = new DocumentImpl();
+
+			document.addKeyword(Field.EXPIRATION_DATE, "text");
+
+			IndexWriter indexWriter = getIndexWriter();
+
+			try {
+				indexWriter.addDocuments(
+					createSearchContext(), Arrays.asList(document));
+
+				Assert.fail();
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk add failed", systemException.getMessage());
+			}
+
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
+		}
+	}
+
+	@Test
+	public void testCommit() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(1);
+		searchContext.setCompanyId(_COMPANY_ID);
 
 		IndexWriter indexWriter = getIndexWriter();
 
 		try {
 			indexWriter.commit(searchContext);
+
+			Assert.fail();
 		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
-		}
-	}
-
-	@ExpectedLog(
-		expectedClass = ElasticsearchIndexWriter.class,
-		expectedLevel = ExpectedLog.Level.INFO, expectedLog = "no such index"
-	)
-	@Test
-	public void testDeleteDocument() {
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(1);
-
-		IndexWriter indexWriter = getIndexWriter();
-
-		try {
-			indexWriter.deleteDocument(searchContext, "1");
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
+		catch (ElasticsearchException elasticsearchException) {
+			_assertElasticsearchException(
+				message -> Assert.assertEquals(
+					"no such index [" + _COMPANY_ID + "]", message),
+				elasticsearchException, "index_not_found_exception");
 		}
 	}
 
 	@Test
-	public void testDeleteDocuments() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Bulk delete failed");
+	public void testDeleteDocument() throws SearchException {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ElasticsearchIndexWriter.class.getName(),
+				LoggerTestUtil.INFO)) {
 
-		SearchContext searchContext = new SearchContext();
+			SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(1);
+			searchContext.setCompanyId(_COMPANY_ID);
 
-		List<String> uids = new ArrayList<>();
+			IndexWriter indexWriter = getIndexWriter();
 
-		uids.add("1");
+			indexWriter.deleteDocument(searchContext, _UID);
 
-		IndexWriter indexWriter = getIndexWriter();
-
-		try {
-			indexWriter.deleteDocuments(searchContext, uids);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
+			_assertLogCapture(
+				message -> Assert.assertEquals(
+					StringBundler.concat(
+						ElasticsearchException.class.getName(),
+						": [es/delete] failed: [index_not_found_exception] no ",
+						"such index [", _COMPANY_ID, "]"),
+					message),
+				logCapture, LoggerTestUtil.INFO);
 		}
 	}
 
 	@Test
-	public void testDeleteEntityDocuments() {
-		expectedException.expect(ElasticsearchException.class);
-		expectedException.expectMessage(
-			"[index_not_found_exception] no such index");
+	public void testDeleteDocuments() throws SearchException {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
+			SearchContext searchContext = new SearchContext();
+
+			searchContext.setCompanyId(_COMPANY_ID);
+
+			IndexWriter indexWriter = getIndexWriter();
+
+			try {
+				indexWriter.deleteDocuments(searchContext, Arrays.asList(_UID));
+
+				Assert.fail();
+			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk delete failed", systemException.getMessage());
+			}
+
+			String expectedMessage = "no such index [" + _COMPANY_ID + "]";
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
+		}
+	}
+
+	@Test
+	public void testDeleteEntityDocuments() throws SearchException {
 		SearchContext searchContext = new SearchContext();
 
-		searchContext.setCompanyId(1);
+		searchContext.setCompanyId(_COMPANY_ID);
 
 		IndexWriter indexWriter = getIndexWriter();
 
 		try {
 			indexWriter.deleteEntityDocuments(searchContext, "test");
+
+			Assert.fail();
 		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
-			}
+		catch (ElasticsearchException elasticsearchException) {
+			_assertElasticsearchException(
+				message -> Assert.assertEquals(
+					"no such index [" + _COMPANY_ID + "]", message),
+				elasticsearchException, "index_not_found_exception");
 		}
 	}
 
@@ -176,7 +207,7 @@ public class ElasticsearchIndexWriterExceptionsTest
 	public void testPartiallyUpdateDocument() throws SearchException {
 		Document document = new DocumentImpl();
 
-		document.addKeyword(Field.UID, "1");
+		document.addKeyword(Field.UID, _UID);
 
 		IndexWriter indexWriter = getIndexWriter();
 
@@ -187,74 +218,115 @@ public class ElasticsearchIndexWriterExceptionsTest
 	public void testPartiallyUpdateDocuments() throws SearchException {
 		Document document = new DocumentImpl();
 
-		List<Document> documents = new ArrayList<>();
-
-		document.addKeyword(Field.UID, "1");
-
-		documents.add(document);
+		document.addKeyword(Field.UID, _UID);
 
 		IndexWriter indexWriter = getIndexWriter();
 
-		indexWriter.partiallyUpdateDocuments(createSearchContext(), documents);
+		indexWriter.partiallyUpdateDocuments(
+			createSearchContext(), Arrays.asList(document));
 	}
 
 	@Test
-	public void testUpdateDocument() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Update failed");
+	public void testUpdateDocument() throws SearchException {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		Document document = new DocumentImpl();
+			Document document = new DocumentImpl();
 
-		document.addKeyword(Field.EXPIRATION_DATE, "text");
-		document.addKeyword(Field.UID, "1");
+			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.UID, _UID);
 
-		IndexWriter indexWriter = getIndexWriter();
+			IndexWriter indexWriter = getIndexWriter();
 
-		try {
-			indexWriter.updateDocument(createSearchContext(), document);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
+			try {
+				indexWriter.updateDocument(createSearchContext(), document);
+
+				Assert.fail();
 			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Update failed", systemException.getMessage());
+			}
+
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
 		}
 	}
 
 	@Test
-	public void testUpdateDocuments() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage("Bulk update failed");
+	public void testUpdateDocuments() throws SearchException {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				BulkDocumentRequestExecutor.class.getName(),
+				LoggerTestUtil.ERROR)) {
 
-		List<Document> documents = new ArrayList<>();
+			Document document = new DocumentImpl();
 
-		Document document = new DocumentImpl();
+			document.addKeyword(Field.EXPIRATION_DATE, "text");
+			document.addKeyword(Field.UID, _UID);
 
-		document.addKeyword(Field.EXPIRATION_DATE, "text");
-		document.addKeyword(Field.UID, "1");
+			IndexWriter indexWriter = getIndexWriter();
 
-		documents.add(document);
+			try {
+				indexWriter.updateDocuments(
+					createSearchContext(), Arrays.asList(document));
 
-		IndexWriter indexWriter = getIndexWriter();
-
-		try {
-			indexWriter.updateDocuments(createSearchContext(), documents);
-		}
-		catch (SearchException searchException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(searchException);
+				Assert.fail();
 			}
+			catch (SystemException systemException) {
+				Assert.assertEquals(
+					"Bulk update failed", systemException.getMessage());
+			}
+
+			String expectedMessage =
+				"failed to parse field [expirationDate] of type [date] in " +
+					"document with id";
+
+			_assertLogCapture(
+				message -> Assert.assertTrue(
+					message + " does not contain " + expectedMessage,
+					message.contains(expectedMessage)),
+				logCapture, LoggerTestUtil.ERROR);
 		}
 	}
-
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
 		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ElasticsearchIndexWriterExceptionsTest.class);
+	private void _assertElasticsearchException(
+		Consumer<String> consumer,
+		ElasticsearchException elasticsearchException, String expectedType) {
+
+		ErrorCause errorCause = elasticsearchException.error();
+
+		Assert.assertEquals(expectedType, errorCause.type());
+		consumer.accept(errorCause.reason());
+	}
+
+	private void _assertLogCapture(
+		Consumer<String> consumer, LogCapture logCapture, String logLevel) {
+
+		List<LogEntry> logEntries = logCapture.getLogEntries();
+
+		Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+		LogEntry logEntry = logEntries.get(0);
+
+		Assert.assertEquals(logLevel, logEntry.getPriority());
+		consumer.accept(logEntry.getMessage());
+	}
+
+	private static final long _COMPANY_ID = 1;
+
+	private static final String _UID = "1";
 
 }

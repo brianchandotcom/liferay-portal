@@ -63,6 +63,16 @@ public class TestrayRun {
 		return _testrayBuild;
 	}
 
+	public TestrayServer getTestrayServer() {
+		TestrayBuild testrayBuild = getTestrayBuild();
+
+		if (testrayBuild == null) {
+			return null;
+		}
+
+		return testrayBuild.getTestrayServer();
+	}
+
 	public static class Factor {
 
 		public Factor(String name, String value) {

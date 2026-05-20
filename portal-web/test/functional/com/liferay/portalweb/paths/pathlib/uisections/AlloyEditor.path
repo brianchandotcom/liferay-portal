@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>EDITOR</td>
-	<td>//div[contains(@class,'cke_editable_inline') and contains(@id,'_${key_editor}')] | //div[contains(@class,'form-group')]//textarea[contains(@id,'_${key_editor}')]</td>
+	<td>//div[contains(@class,'cke_editable_inline') and contains(@id,'_${key_editor}')] | //div[contains(@class,'ck-editor__editable') and contains(@id,'_${key_editor}')] | //div[contains(@class,'form-group')]//textarea[contains(@id,'_${key_editor}')]</td>
 	<td></td>
 </tr>
 <tr>

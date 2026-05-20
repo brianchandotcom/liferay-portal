@@ -28,6 +28,7 @@ import java.util.Objects;
 /**
  * @author Joshua Cords
  * @author Felipe Lorenz
+ * @author Selena Aungst
  */
 public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 
@@ -69,6 +70,23 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 					"dependencies/limit_search_to_these_sites.json"));
 
 			preparedStatement.executeUpdate();
+		}
+
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select sxpElementId, elementDefinitionJSON from SXPElement");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SXPElement set elementDefinitionJSON = ? where " +
+						"sxpElementId = ?")) {
+
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				while (resultSet.next()) {
+					_upgradeSXPElement(preparedStatement2, resultSet);
+				}
+
+				preparedStatement2.executeBatch();
+			}
 		}
 	}
 
@@ -126,6 +144,88 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 		}
 
 		return false;
+	}
+
+	private boolean _removeLegacyFieldMappingLabels(
+		JSONArray elementInstanceJSONArray) {
+
+		boolean changed = false;
+
+		for (int i = 0; i < elementInstanceJSONArray.length(); i++) {
+			JSONObject elementDefinitionJSONObject =
+				JSONUtil.getValueAsJSONObject(
+					elementInstanceJSONArray.getJSONObject(i),
+					"JSONObject/sxpElement", "JSONObject/elementDefinition");
+
+			if (elementDefinitionJSONObject == null) {
+				continue;
+			}
+
+			if (_removeLegacyFieldMappingLabels(elementDefinitionJSONObject)) {
+				changed = true;
+			}
+		}
+
+		return changed;
+	}
+
+	private boolean _removeLegacyFieldMappingLabels(
+		JSONObject elementDefinitionJSONObject) {
+
+		JSONArray fieldSetsJSONArray = JSONUtil.getValueAsJSONArray(
+			elementDefinitionJSONObject, "JSONObject/uiConfiguration",
+			"JSONArray/fieldSets");
+
+		if (fieldSetsJSONArray == null) {
+			return false;
+		}
+
+		boolean changed = false;
+
+		for (int i = 0; i < fieldSetsJSONArray.length(); i++) {
+			JSONObject fieldSetJSONObject = fieldSetsJSONArray.getJSONObject(i);
+
+			if (fieldSetJSONObject == null) {
+				continue;
+			}
+
+			JSONArray fieldsJSONArray = fieldSetJSONObject.getJSONArray(
+				"fields");
+
+			if (fieldsJSONArray == null) {
+				continue;
+			}
+
+			for (int j = 0; j < fieldsJSONArray.length(); j++) {
+				JSONObject fieldJSONObject = fieldsJSONArray.getJSONObject(j);
+
+				if (fieldJSONObject == null) {
+					continue;
+				}
+
+				JSONArray fieldMappingsJSONArray = fieldJSONObject.getJSONArray(
+					"fieldMappings");
+
+				if (fieldMappingsJSONArray == null) {
+					continue;
+				}
+
+				for (int k = 0; k < fieldMappingsJSONArray.length(); k++) {
+					JSONObject fieldMappingJSONObject =
+						fieldMappingsJSONArray.getJSONObject(k);
+
+					if ((fieldMappingJSONObject != null) &&
+						fieldMappingJSONObject.has("label")) {
+
+						fieldMappingJSONObject.remove("label");
+
+						changed = true;
+					}
+				}
+			}
+		}
+
+		return changed;
 	}
 
 	private void _upgradeConfigurationEntry(
@@ -214,25 +314,75 @@ public class SXPBlueprintAndSXPElementUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
+		long sxpBlueprintId = resultSet.getLong("sxpBlueprintId");
+
 		try {
 			JSONArray elementInstanceJSONArray = _jsonFactory.createJSONArray(
 				elementInstancesJSON);
 
-			if (!_hasLimitSearchToTheseSites(elementInstanceJSONArray)) {
+			boolean changed = _removeLegacyFieldMappingLabels(
+				elementInstanceJSONArray);
+
+			if (_hasLimitSearchToTheseSites(elementInstanceJSONArray)) {
+				elementInstancesJSON = _fixElementInstancesJSON(
+					elementInstanceJSONArray);
+				changed = true;
+			}
+			else if (changed) {
+				elementInstancesJSON = elementInstanceJSONArray.toString();
+			}
+
+			if (!changed) {
 				return;
 			}
 
-			preparedStatement2.setString(
-				1, _fixElementInstancesJSON(elementInstanceJSONArray));
-			preparedStatement2.setLong(2, resultSet.getLong("sxpBlueprintId"));
+			preparedStatement2.setString(1, elementInstancesJSON);
+			preparedStatement2.setLong(2, sxpBlueprintId);
 
 			preparedStatement2.addBatch();
 		}
 		catch (Exception exception) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
+			if (_log.isWarnEnabled()) {
+				_log.warn(
 					"Unable to upgrade search experiences blueprint " +
-						resultSet.getLong("sxpBlueprintId"),
+						sxpBlueprintId,
+					exception);
+			}
+		}
+	}
+
+	private void _upgradeSXPElement(
+			PreparedStatement preparedStatement2, ResultSet resultSet)
+		throws SQLException {
+
+		String elementDefinitionJSON = resultSet.getString(
+			"elementDefinitionJSON");
+
+		if (Validator.isBlank(elementDefinitionJSON)) {
+			return;
+		}
+
+		long sxpElementId = resultSet.getLong("sxpElementId");
+
+		try {
+			JSONObject elementDefinitionJSONObject =
+				_jsonFactory.createJSONObject(elementDefinitionJSON);
+
+			if (!_removeLegacyFieldMappingLabels(elementDefinitionJSONObject)) {
+				return;
+			}
+
+			preparedStatement2.setString(
+				1, elementDefinitionJSONObject.toString());
+			preparedStatement2.setLong(2, sxpElementId);
+
+			preparedStatement2.addBatch();
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to upgrade search experiences element " +
+						sxpElementId,
 					exception);
 			}
 		}

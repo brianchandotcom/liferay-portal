@@ -56,6 +56,7 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 					"of valid Liferay versions."));
 		}
 
+		addSourceFormatterProperty("upgrade.to.liferay.version", toVersion);
 		addSourceFormatterProperty("upgrade.to.release.version", toVersion);
 
 		super.exec();

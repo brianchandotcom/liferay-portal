@@ -1,0 +1,95 @@
+{
+	"friendlyURL": "/export-import",
+	"hidden": true,
+	"name": "Export / Import",
+	"name_i18n": {
+		"ar_SA": "استيراد/تصدير",
+		"bg_BG": "Експорт / Импорт",
+		"ca_AD": "Exporta/Importa",
+		"ca_ES": "Exporta/Importa",
+		"ca_ES_VALENCIA": "Exporta/Importa",
+		"cs_CZ": "Import / Export",
+		"da_DK": "Eksporter / importer",
+		"de_AT": "Exportieren / Importieren",
+		"de_CH": "Exportieren / Importieren",
+		"de_DE": "Exportieren / Importieren",
+		"el_GR": "Εξαγωγή/εισαγωγή",
+		"en_US": "Export / Import",
+		"es_AR": "Exportación/Importación",
+		"es_CO": "Exportación/Importación",
+		"es_ES": "Exportación/Importación",
+		"es_MX": "Exportación/Importación",
+		"et_EE": "Eksport / import",
+		"eu_ES": "Esportatu / Inportatu",
+		"fa_IR": "تولید/بارگذاری فایل آرشیو",
+		"fi_FI": "Tuo / Vie",
+		"fr_BE": "Exportation/Importation",
+		"fr_CA": "Exportation/Importation",
+		"fr_CH": "Exportation/Importation",
+		"fr_FR": "Exportation/Importation",
+		"gl_ES": "Exportación / Importación",
+		"hi_IN": "एक्सपोर्ट / इम्पोर्ट",
+		"hr_HR": "Izvoz / Uvoz",
+		"hu_HU": "Exportálás / Importálás",
+		"in_ID": "Ekspor / Impor",
+		"it_CH": "Esporta / Importa",
+		"it_IT": "Esporta / Importa",
+		"iw_IL": "ייצוא/ייבוא",
+		"ja_JP": "エクスポート/インポート",
+		"km_KH": "Export / Import",
+		"ko_KR": "수출/수입품",
+		"lo_LA": "ສົ່ງອອກ/ນຳເຂົ້າ",
+		"nb_NO": "Eksport / Import",
+		"nl_BE": "Exporteren/Importeren",
+		"nl_NL": "Exporteren/Importeren",
+		"no_NO": "Eksport / Import",
+		"pl_PL": "Eksport / Import",
+		"pt_BR": "Exportar / Importar",
+		"pt_PT": "Exportar / Importar",
+		"ro_RO": "Export / Import",
+		"ru_RU": "Экспорт / Импорт",
+		"sk_SK": "Export alebo import",
+		"sl_SI": "Izvoz / uvoz",
+		"sr_RS": "Извоз / увоз",
+		"sr_RS_latin": "Izvoz / uvoz",
+		"sv_SE": "Export/import",
+		"ta_IN": "ஏற்றுமதி / இறக்குமதி",
+		"th_TH": "อิมพอร์ต/เอ็กพอร์ต",
+		"tr_TR": "Gönderim / Alım",
+		"uk_UA": "Експорт / Імпорт",
+		"vi_VN": "Xuất / Nhập dữ liệu",
+		"zh_CN": "导出/导入",
+		"zh_TW": "匯出/匯入"
+	},
+	"permissions": [
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "Asset Library Administrator",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+				"VIEW"
+			],
+			"roleName": "CMS Administrator",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		},
+		{
+			"actionIds": [
+			],
+			"roleName": "Site Member",
+			"scope": 4
+		}
+	],
+	"private": false,
+	"system": false,
+	"type": "content"
+}

@@ -254,6 +254,21 @@ public abstract class RegionLocalServiceBaseImpl
 		return regionPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Region fetchRegionByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return regionPersistence.fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return regionPersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the region with the primary key.
 	 *
@@ -775,4 +790,4 @@ public abstract class RegionLocalServiceBaseImpl
 		RegionLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1265801374
+// LIFERAY-SERVICE-BUILDER-HASH:1748132497

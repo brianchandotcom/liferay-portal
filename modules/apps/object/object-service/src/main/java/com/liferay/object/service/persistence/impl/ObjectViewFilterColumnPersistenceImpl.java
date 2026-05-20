@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -79,68 +78,14 @@ public class ObjectViewFilterColumnPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectViewFilterColumn>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object view filter columns where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object view filter columns where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @return the range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object view filter columns where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object view filter columns where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -226,75 +171,14 @@ public class ObjectViewFilterColumnPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectViewFilterColumn>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object view filter columns where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object view filter columns where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @return the range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object view filter columns where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object view filter columns where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -385,70 +269,14 @@ public class ObjectViewFilterColumnPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectViewId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectViewId;
-	private FinderPath _finderPathCountByObjectViewId;
 	private CollectionPersistenceFinder<ObjectViewFilterColumn>
 		_collectionPersistenceFinderByObjectViewId;
 
 	/**
-	 * Returns all the object view filter columns where objectViewId = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @return the matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByObjectViewId(long objectViewId) {
-		return findByObjectViewId(
-			objectViewId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object view filter columns where objectViewId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectViewId the object view ID
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @return the range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByObjectViewId(
-		long objectViewId, int start, int end) {
-
-		return findByObjectViewId(objectViewId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object view filter columns where objectViewId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectViewId the object view ID
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByObjectViewId(
-		long objectViewId, int start, int end,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return findByObjectViewId(
-			objectViewId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object view filter columns where objectViewId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectViewId the object view ID
@@ -534,76 +362,14 @@ public class ObjectViewFilterColumnPersistenceImpl
 			finderCache, new Object[] {objectViewId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByOVI_OFN;
-	private FinderPath _finderPathWithoutPaginationFindByOVI_OFN;
-	private FinderPath _finderPathCountByOVI_OFN;
 	private CollectionPersistenceFinder<ObjectViewFilterColumn>
 		_collectionPersistenceFinderByOVI_OFN;
 
 	/**
-	 * Returns all the object view filter columns where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @return the matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByOVI_OFN(
-		long objectViewId, String objectFieldName) {
-
-		return findByOVI_OFN(
-			objectViewId, objectFieldName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the object view filter columns where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @return the range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByOVI_OFN(
-		long objectViewId, String objectFieldName, int start, int end) {
-
-		return findByOVI_OFN(objectViewId, objectFieldName, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object view filter columns where objectViewId = &#63; and objectFieldName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectViewId the object view ID
-	 * @param objectFieldName the object field name
-	 * @param start the lower bound of the range of object view filter columns
-	 * @param end the upper bound of the range of object view filter columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object view filter columns
-	 */
-	@Override
-	public List<ObjectViewFilterColumn> findByOVI_OFN(
-		long objectViewId, String objectFieldName, int start, int end,
-		OrderByComparator<ObjectViewFilterColumn> orderByComparator) {
-
-		return findByOVI_OFN(
-			objectViewId, objectFieldName, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object view filter columns where objectViewId = &#63; and objectFieldName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectViewFilterColumnModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectViewId the object view ID
@@ -929,27 +695,23 @@ public class ObjectViewFilterColumnPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTVIEWFILTERCOLUMN_WHERE,
 			_SQL_COUNT_OBJECTVIEWFILTERCOLUMN_WHERE,
 			ObjectViewFilterColumnModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -958,30 +720,25 @@ public class ObjectViewFilterColumnPersistenceImpl
 				"objectViewFilterColumn.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, ObjectViewFilterColumn::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				ObjectViewFilterColumnModelImpl.ORDER_BY_JPQL,
@@ -994,29 +751,26 @@ public class ObjectViewFilterColumnPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectViewFilterColumn::getCompanyId));
 
-		_finderPathWithPaginationFindByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectViewId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectViewId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectViewId",
-			new String[] {Long.class.getName()}, new String[] {"objectViewId"},
-			true);
-
-		_finderPathCountByObjectViewId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectViewId",
-			new String[] {Long.class.getName()}, new String[] {"objectViewId"},
-			false);
-
 		_collectionPersistenceFinderByObjectViewId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectViewId,
-				_finderPathWithoutPaginationFindByObjectViewId,
-				_finderPathCountByObjectViewId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectViewId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectViewId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectViewId", new String[] {Long.class.getName()},
+					new String[] {"objectViewId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectViewId", new String[] {Long.class.getName()},
+					new String[] {"objectViewId"}, false),
 				_SQL_SELECT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				ObjectViewFilterColumnModelImpl.ORDER_BY_JPQL,
@@ -1026,31 +780,27 @@ public class ObjectViewFilterColumnPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					ObjectViewFilterColumn::getObjectViewId));
 
-		_finderPathWithPaginationFindByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOVI_OFN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"objectViewId", "objectFieldName"}, true);
-
-		_finderPathWithoutPaginationFindByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOVI_OFN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectViewId", "objectFieldName"}, 0, 2, true, null);
-
-		_finderPathCountByOVI_OFN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVI_OFN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"objectViewId", "objectFieldName"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByOVI_OFN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOVI_OFN,
-				_finderPathWithoutPaginationFindByOVI_OFN,
-				_finderPathCountByOVI_OFN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOVI_OFN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectViewId", "objectFieldName"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOVI_OFN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectViewId", "objectFieldName"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOVI_OFN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"objectViewId", "objectFieldName"}, 0, 2,
+					false, null),
 				_SQL_SELECT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				_SQL_COUNT_OBJECTVIEWFILTERCOLUMN_WHERE,
 				ObjectViewFilterColumnModelImpl.ORDER_BY_JPQL,
@@ -1130,4 +880,4 @@ public class ObjectViewFilterColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-440018986
+// LIFERAY-SERVICE-BUILDER-HASH:-432690814

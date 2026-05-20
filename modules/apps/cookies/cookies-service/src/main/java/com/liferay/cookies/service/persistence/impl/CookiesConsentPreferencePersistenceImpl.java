@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -75,68 +74,14 @@ public class CookiesConsentPreferencePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the cookies consent preferences where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -222,72 +167,14 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByExpirationDate;
-	private FinderPath _finderPathWithoutPaginationFindByExpirationDate;
-	private FinderPath _finderPathCountByExpirationDate;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByExpirationDate;
 
 	/**
-	 * Returns all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * @param expirationDate the expiration date
-	 * @return the matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate) {
-
-		return findByExpirationDate(
-			expirationDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate, int start, int end) {
-
-		return findByExpirationDate(expirationDate, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cookies consent preferences where expirationDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param expirationDate the expiration date
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByExpirationDate(
-		Date expirationDate, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return findByExpirationDate(
-			expirationDate, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where expirationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
 	 * </p>
 	 *
 	 * @param expirationDate the expiration date
@@ -373,74 +260,14 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {expirationDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D;
-	private FinderPath _finderPathWithoutPaginationFindByU_D;
-	private FinderPath _finderPathCountByU_D;
 	private CollectionPersistenceFinder<CookiesConsentPreference>
 		_collectionPersistenceFinderByU_D;
 
 	/**
-	 * Returns all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @return the matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByU_D(
-		long userId, String domain) {
-
-		return findByU_D(
-			userId, domain, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @return the range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByU_D(
-		long userId, String domain, int start, int end) {
-
-		return findByU_D(userId, domain, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param start the lower bound of the range of cookies consent preferences
-	 * @param end the upper bound of the range of cookies consent preferences (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cookies consent preferences
-	 */
-	@Override
-	public List<CookiesConsentPreference> findByU_D(
-		long userId, String domain, int start, int end,
-		OrderByComparator<CookiesConsentPreference> orderByComparator) {
-
-		return findByU_D(userId, domain, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cookies consent preferences where userId = &#63; and domain = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CookiesConsentPreferenceModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -531,7 +358,6 @@ public class CookiesConsentPreferencePersistenceImpl
 			finderCache, new Object[] {userId, domain});
 	}
 
-	private FinderPath _finderPathFetchByU_D_N;
 	private UniquePersistenceFinder<CookiesConsentPreference>
 		_uniquePersistenceFinderByU_D_N;
 
@@ -566,21 +392,6 @@ public class CookiesConsentPreferencePersistenceImpl
 		}
 
 		return cookiesConsentPreference;
-	}
-
-	/**
-	 * Returns the cookies consent preference where userId = &#63; and domain = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param domain the domain
-	 * @param name the name
-	 * @return the matching cookies consent preference, or <code>null</code> if a matching cookies consent preference could not be found
-	 */
-	@Override
-	public CookiesConsentPreference fetchByU_D_N(
-		long userId, String domain, String name) {
-
-		return fetchByU_D_N(userId, domain, name, true);
 	}
 
 	/**
@@ -823,28 +634,25 @@ public class CookiesConsentPreferencePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -854,29 +662,27 @@ public class CookiesConsentPreferencePersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CookiesConsentPreference::getUserId));
 
-		_finderPathWithPaginationFindByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByExpirationDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"expirationDate"}, true);
-
-		_finderPathWithoutPaginationFindByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByExpirationDate",
-			new String[] {Date.class.getName()},
-			new String[] {"expirationDate"}, true);
-
-		_finderPathCountByExpirationDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByExpirationDate",
-			new String[] {Date.class.getName()},
-			new String[] {"expirationDate"}, false);
-
 		_collectionPersistenceFinderByExpirationDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByExpirationDate,
-				_finderPathWithoutPaginationFindByExpirationDate,
-				_finderPathCountByExpirationDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByExpirationDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"expirationDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByExpirationDate", new String[] {Date.class.getName()},
+					new String[] {"expirationDate"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByExpirationDate",
+					new String[] {Date.class.getName()},
+					new String[] {"expirationDate"}, false),
 				_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 				_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 				CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -886,28 +692,24 @@ public class CookiesConsentPreferencePersistenceImpl
 					FinderColumn.Type.DATE, "=", true, true,
 					CookiesConsentPreference::getExpirationDate));
 
-		_finderPathWithPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "domain"}, true);
-
-		_finderPathWithoutPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, 0, 2, true, null);
-
-		_finderPathCountByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "domain"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByU_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_D,
-			_finderPathWithoutPaginationFindByU_D, _finderPathCountByU_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "domain"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "domain"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "domain"}, 0, 2, false, null),
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE,
 			_SQL_COUNT_COOKIESCONSENTPREFERENCE_WHERE,
 			CookiesConsentPreferenceModelImpl.ORDER_BY_JPQL,
@@ -919,19 +721,18 @@ public class CookiesConsentPreferencePersistenceImpl
 				"cookiesConsentPreference.", "domain", FinderColumn.Type.STRING,
 				"=", true, true, CookiesConsentPreference::getDomain));
 
-		_finderPathFetchByU_D_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_D_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"userId", "domain", "name"}, 0, 6, false,
-			CookiesConsentPreference::getUserId,
-			convertNullFunction(CookiesConsentPreference::getDomain),
-			convertNullFunction(CookiesConsentPreference::getName));
-
 		_uniquePersistenceFinderByU_D_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_D_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_D_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"userId", "domain", "name"}, 0, 6, false,
+				CookiesConsentPreference::getUserId,
+				convertNullFunction(CookiesConsentPreference::getDomain),
+				convertNullFunction(CookiesConsentPreference::getName)),
 			_SQL_SELECT_COOKIESCONSENTPREFERENCE_WHERE, "",
 			new FinderColumn<>(
 				"cookiesConsentPreference.", "userId", FinderColumn.Type.LONG,
@@ -1009,4 +810,4 @@ public class CookiesConsentPreferencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1680330265
+// LIFERAY-SERVICE-BUILDER-HASH:-1946579596

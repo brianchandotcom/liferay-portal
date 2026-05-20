@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -76,7 +75,6 @@ public class FaroProjectPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByGroupId;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByGroupId;
 
@@ -106,17 +104,6 @@ public class FaroProjectPersistenceImpl
 		}
 
 		return faroProject;
-	}
-
-	/**
-	 * Returns the faro project where groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject fetchByGroupId(long groupId) {
-		return fetchByGroupId(groupId, true);
 	}
 
 	/**
@@ -159,66 +146,14 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<FaroProject>
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the faro projects where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro projects where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of faro projects
-	 * @param end the upper bound of the range of faro projects (not inclusive)
-	 * @return the range of matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByUserId(long userId, int start, int end) {
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro projects where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of faro projects
-	 * @param end the upper bound of the range of faro projects (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<FaroProject> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro projects where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -302,7 +237,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByCorpProjectUuid;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByCorpProjectUuid;
 
@@ -332,17 +266,6 @@ public class FaroProjectPersistenceImpl
 		}
 
 		return faroProject;
-	}
-
-	/**
-	 * Returns the faro project where corpProjectUuid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param corpProjectUuid the corp project uuid
-	 * @return the matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject fetchByCorpProjectUuid(String corpProjectUuid) {
-		return fetchByCorpProjectUuid(corpProjectUuid, true);
 	}
 
 	/**
@@ -387,70 +310,14 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {corpProjectUuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByServerLocation;
-	private FinderPath _finderPathWithoutPaginationFindByServerLocation;
-	private FinderPath _finderPathCountByServerLocation;
 	private CollectionPersistenceFinder<FaroProject>
 		_collectionPersistenceFinderByServerLocation;
 
 	/**
-	 * Returns all the faro projects where serverLocation = &#63;.
-	 *
-	 * @param serverLocation the server location
-	 * @return the matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByServerLocation(String serverLocation) {
-		return findByServerLocation(
-			serverLocation, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro projects where serverLocation = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
-	 * </p>
-	 *
-	 * @param serverLocation the server location
-	 * @param start the lower bound of the range of faro projects
-	 * @param end the upper bound of the range of faro projects (not inclusive)
-	 * @return the range of matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByServerLocation(
-		String serverLocation, int start, int end) {
-
-		return findByServerLocation(serverLocation, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro projects where serverLocation = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
-	 * </p>
-	 *
-	 * @param serverLocation the server location
-	 * @param start the lower bound of the range of faro projects
-	 * @param end the upper bound of the range of faro projects (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro projects
-	 */
-	@Override
-	public List<FaroProject> findByServerLocation(
-		String serverLocation, int start, int end,
-		OrderByComparator<FaroProject> orderByComparator) {
-
-		return findByServerLocation(
-			serverLocation, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro projects where serverLocation = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroProjectModelImpl</code>.
 	 * </p>
 	 *
 	 * @param serverLocation the server location
@@ -536,7 +403,6 @@ public class FaroProjectPersistenceImpl
 			finderCache, new Object[] {serverLocation});
 	}
 
-	private FinderPath _finderPathFetchByWeDeployKey;
 	private UniquePersistenceFinder<FaroProject>
 		_uniquePersistenceFinderByWeDeployKey;
 
@@ -566,17 +432,6 @@ public class FaroProjectPersistenceImpl
 		}
 
 		return faroProject;
-	}
-
-	/**
-	 * Returns the faro project where weDeployKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param weDeployKey the we deploy key
-	 * @return the matching faro project, or <code>null</code> if a matching faro project could not be found
-	 */
-	@Override
-	public FaroProject fetchByWeDeployKey(String weDeployKey) {
-		return fetchByWeDeployKey(weDeployKey, true);
 	}
 
 	/**
@@ -806,96 +661,91 @@ public class FaroProjectPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByGroupId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"}, 0, 0,
-			false, FaroProject::getGroupId);
-
 		_uniquePersistenceFinderByGroupId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByGroupId, _SQL_SELECT_FAROPROJECT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByGroupId",
+				new String[] {Long.class.getName()}, new String[] {"groupId"},
+				0, 0, false, FaroProject::getGroupId),
+			_SQL_SELECT_FAROPROJECT_WHERE, "",
 			new FinderColumn<>(
 				"faroProject.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, FaroProject::getGroupId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId, _SQL_SELECT_FAROPROJECT_WHERE,
-				_SQL_COUNT_FAROPROJECT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
+				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "userId", FinderColumn.Type.LONG, "=", true,
 					true, FaroProject::getUserId));
 
-		_finderPathFetchByCorpProjectUuid = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
-			new String[] {String.class.getName()},
-			new String[] {"corpProjectUuid"}, 0, 1, false,
-			convertNullFunction(FaroProject::getCorpProjectUuid));
-
 		_uniquePersistenceFinderByCorpProjectUuid =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCorpProjectUuid,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByCorpProjectUuid",
+					new String[] {String.class.getName()},
+					new String[] {"corpProjectUuid"}, 0, 1, false,
+					convertNullFunction(FaroProject::getCorpProjectUuid)),
 				_SQL_SELECT_FAROPROJECT_WHERE, "",
 				new FinderColumn<>(
 					"faroProject.", "corpProjectUuid", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getCorpProjectUuid));
 
-		_finderPathWithPaginationFindByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByServerLocation",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"serverLocation"}, true);
-
-		_finderPathWithoutPaginationFindByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByServerLocation",
-			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, 0, 1, true, null);
-
-		_finderPathCountByServerLocation = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByServerLocation",
-			new String[] {String.class.getName()},
-			new String[] {"serverLocation"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByServerLocation =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByServerLocation,
-				_finderPathWithoutPaginationFindByServerLocation,
-				_finderPathCountByServerLocation, _SQL_SELECT_FAROPROJECT_WHERE,
-				_SQL_COUNT_FAROPROJECT_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByServerLocation",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"serverLocation"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByServerLocation",
+					new String[] {String.class.getName()},
+					new String[] {"serverLocation"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByServerLocation",
+					new String[] {String.class.getName()},
+					new String[] {"serverLocation"}, 0, 1, false, null),
+				_SQL_SELECT_FAROPROJECT_WHERE, _SQL_COUNT_FAROPROJECT_WHERE,
 				FaroProjectModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroProject.", "serverLocation", FinderColumn.Type.STRING,
 					"=", true, true, FaroProject::getServerLocation));
 
-		_finderPathFetchByWeDeployKey = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
-			new String[] {String.class.getName()}, new String[] {"weDeployKey"},
-			0, 1, false, convertNullFunction(FaroProject::getWeDeployKey));
-
 		_uniquePersistenceFinderByWeDeployKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByWeDeployKey, _SQL_SELECT_FAROPROJECT_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByWeDeployKey",
+				new String[] {String.class.getName()},
+				new String[] {"weDeployKey"}, 0, 1, false,
+				convertNullFunction(FaroProject::getWeDeployKey)),
+			_SQL_SELECT_FAROPROJECT_WHERE, "",
 			new FinderColumn<>(
 				"faroProject.", "weDeployKey", FinderColumn.Type.STRING, "=",
 				true, true, FaroProject::getWeDeployKey));
@@ -969,4 +819,4 @@ public class FaroProjectPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:433744398
+// LIFERAY-SERVICE-BUILDER-HASH:-1459987115

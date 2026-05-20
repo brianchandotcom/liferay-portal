@@ -5,7 +5,7 @@ liferay-aihub-etc-spring-boot-oaua:
     .serviceScheme: http
     name: Liferay AI Hub Etc Spring Boot OAuth Application User Agent
     type: oAuthApplicationUserAgent
-liferay-aihub-etc-spring-boot-object-action-crawl:
+liferay-aihub-etc-spring-boot-object-action-crawler:
     name: Liferay AI Hub Etc Spring Boot Object Action Crawler
     oAuth2ApplicationExternalReferenceCode: liferay-aihub-etc-spring-boot-oaua
     resourcePath: /object/action/crawler

@@ -4,7 +4,10 @@
  */
 
 export enum EEntityFieldType {
+	BOOLEAN = 'boolean',
 	COLLECTION = 'collection',
+	COLLECTION_INTEGER = 'collection-integer',
+	COLLECTION_STRING = 'collection-string',
 	DATE = 'date',
 	DATE_TIME = 'date-time',
 	INTEGER = 'integer',

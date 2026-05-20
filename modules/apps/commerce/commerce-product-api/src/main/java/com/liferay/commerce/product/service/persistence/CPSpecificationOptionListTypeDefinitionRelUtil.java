@@ -145,62 +145,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 	}
 
 	/**
-	 * Returns all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @return the matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(long CPSpecificationOptionId) {
-
-		return getPersistence().findByCPSpecificationOptionId(
-			CPSpecificationOptionId);
-	}
-
-	/**
-	 * Returns a range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @return the range of matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(
-			long CPSpecificationOptionId, int start, int end) {
-
-		return getPersistence().findByCPSpecificationOptionId(
-			CPSpecificationOptionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(
-			long CPSpecificationOptionId, int start, int end,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().findByCPSpecificationOptionId(
-			CPSpecificationOptionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
 	 *
 	 * <p>
@@ -286,62 +230,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 
 		return getPersistence().countByCPSpecificationOptionId(
 			CPSpecificationOptionId);
-	}
-
-	/**
-	 * Returns all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(long listTypeDefinitionId) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId);
-	}
-
-	/**
-	 * Returns a range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @return the range of matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(
-			long listTypeDefinitionId, int start, int end) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp specification option list type definition rels
-	 */
-	public static List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(
-			long listTypeDefinitionId, int start, int end,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -441,20 +329,6 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 			NoSuchCPSpecificationOptionListTypeDefinitionRelException {
 
 		return getPersistence().findByC_L(
-			CPSpecificationOptionId, listTypeDefinitionId);
-	}
-
-	/**
-	 * Returns the cp specification option list type definition rel where CPSpecificationOptionId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	public static CPSpecificationOptionListTypeDefinitionRel fetchByC_L(
-		long CPSpecificationOptionId, long listTypeDefinitionId) {
-
-		return getPersistence().fetchByC_L(
 			CPSpecificationOptionId, listTypeDefinitionId);
 	}
 
@@ -570,6 +444,132 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 			CPSpecificationOptionListTypeDefinitionRelId);
 	}
 
+	/**
+	 * Returns the cp specification option list type definition rel where CPSpecificationOptionId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CPSpecificationOptionId the cp specification option ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
+	 */
+	public static CPSpecificationOptionListTypeDefinitionRel fetchByC_L(
+		long CPSpecificationOptionId, long listTypeDefinitionId) {
+
+		return getPersistence().fetchByC_L(
+			CPSpecificationOptionId, listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
+	 *
+	 * @param CPSpecificationOptionId the cp specification option ID
+	 * @return the matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByCPSpecificationOptionId(long CPSpecificationOptionId) {
+
+		return getPersistence().findByCPSpecificationOptionId(
+			CPSpecificationOptionId);
+	}
+
+	/**
+	 * Returns a range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPSpecificationOptionId the cp specification option ID
+	 * @param start the lower bound of the range of cp specification option list type definition rels
+	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
+	 * @return the range of matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByCPSpecificationOptionId(
+			long CPSpecificationOptionId, int start, int end) {
+
+		return getPersistence().findByCPSpecificationOptionId(
+			CPSpecificationOptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param CPSpecificationOptionId the cp specification option ID
+	 * @param start the lower bound of the range of cp specification option list type definition rels
+	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByCPSpecificationOptionId(
+			long CPSpecificationOptionId, int start, int end,
+			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
+				orderByComparator) {
+
+		return getPersistence().findByCPSpecificationOptionId(
+			CPSpecificationOptionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByListTypeDefinitionId(long listTypeDefinitionId) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns a range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of cp specification option list type definition rels
+	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
+	 * @return the range of matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByListTypeDefinitionId(
+			long listTypeDefinitionId, int start, int end) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of cp specification option list type definition rels
+	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp specification option list type definition rels
+	 */
+	public static List<CPSpecificationOptionListTypeDefinitionRel>
+		findByListTypeDefinitionId(
+			long listTypeDefinitionId, int start, int end,
+			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
+				orderByComparator) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end, orderByComparator);
+	}
+
 	public static CPSpecificationOptionListTypeDefinitionRelPersistence
 		getPersistence() {
 
@@ -586,4 +586,4 @@ public class CPSpecificationOptionListTypeDefinitionRelUtil {
 		CPSpecificationOptionListTypeDefinitionRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1217975522
+// LIFERAY-SERVICE-BUILDER-HASH:1611747288

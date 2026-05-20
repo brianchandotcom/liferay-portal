@@ -566,4 +566,4 @@ public interface ERCVersionedEntryPersistence
 	public Set<String> getBadColumnNames();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1957134489
+// LIFERAY-SERVICE-BUILDER-HASH:541623575

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -70,70 +69,14 @@ public class PatcherFixRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByChildPatcherFixId;
-	private FinderPath _finderPathWithoutPaginationFindByChildPatcherFixId;
-	private FinderPath _finderPathCountByChildPatcherFixId;
 	private CollectionPersistenceFinder<PatcherFixRel>
 		_collectionPersistenceFinderByChildPatcherFixId;
 
 	/**
-	 * Returns all the patcher fix rels where childPatcherFixId = &#63;.
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @return the matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByChildPatcherFixId(long childPatcherFixId) {
-		return findByChildPatcherFixId(
-			childPatcherFixId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix rels where childPatcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param start the lower bound of the range of patcher fix rels
-	 * @param end the upper bound of the range of patcher fix rels (not inclusive)
-	 * @return the range of matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByChildPatcherFixId(
-		long childPatcherFixId, int start, int end) {
-
-		return findByChildPatcherFixId(childPatcherFixId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix rels where childPatcherFixId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param childPatcherFixId the child patcher fix ID
-	 * @param start the lower bound of the range of patcher fix rels
-	 * @param end the upper bound of the range of patcher fix rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByChildPatcherFixId(
-		long childPatcherFixId, int start, int end,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		return findByChildPatcherFixId(
-			childPatcherFixId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix rels where childPatcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param childPatcherFixId the child patcher fix ID
@@ -221,72 +164,14 @@ public class PatcherFixRelPersistenceImpl
 			finderCache, new Object[] {childPatcherFixId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentPatcherFixId;
-	private FinderPath _finderPathWithoutPaginationFindByParentPatcherFixId;
-	private FinderPath _finderPathCountByParentPatcherFixId;
 	private CollectionPersistenceFinder<PatcherFixRel>
 		_collectionPersistenceFinderByParentPatcherFixId;
 
 	/**
-	 * Returns all the patcher fix rels where parentPatcherFixId = &#63;.
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @return the matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByParentPatcherFixId(
-		long parentPatcherFixId) {
-
-		return findByParentPatcherFixId(
-			parentPatcherFixId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the patcher fix rels where parentPatcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param start the lower bound of the range of patcher fix rels
-	 * @param end the upper bound of the range of patcher fix rels (not inclusive)
-	 * @return the range of matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByParentPatcherFixId(
-		long parentPatcherFixId, int start, int end) {
-
-		return findByParentPatcherFixId(parentPatcherFixId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher fix rels where parentPatcherFixId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentPatcherFixId the parent patcher fix ID
-	 * @param start the lower bound of the range of patcher fix rels
-	 * @param end the upper bound of the range of patcher fix rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher fix rels
-	 */
-	@Override
-	public List<PatcherFixRel> findByParentPatcherFixId(
-		long parentPatcherFixId, int start, int end,
-		OrderByComparator<PatcherFixRel> orderByComparator) {
-
-		return findByParentPatcherFixId(
-			parentPatcherFixId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher fix rels where parentPatcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PatcherFixRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param parentPatcherFixId the parent patcher fix ID
@@ -549,29 +434,28 @@ public class PatcherFixRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByChildPatcherFixId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"childPatcherFixId"}, true);
-
-		_finderPathWithoutPaginationFindByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByChildPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"childPatcherFixId"}, true);
-
-		_finderPathCountByChildPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByChildPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"childPatcherFixId"}, false);
-
 		_collectionPersistenceFinderByChildPatcherFixId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByChildPatcherFixId,
-				_finderPathWithoutPaginationFindByChildPatcherFixId,
-				_finderPathCountByChildPatcherFixId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByChildPatcherFixId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"childPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByChildPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"childPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByChildPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"childPatcherFixId"}, false),
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
 				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -579,29 +463,28 @@ public class PatcherFixRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PatcherFixRel::getChildPatcherFixId));
 
-		_finderPathWithPaginationFindByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentPatcherFixId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentPatcherFixId"}, true);
-
-		_finderPathWithoutPaginationFindByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByParentPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"parentPatcherFixId"}, true);
-
-		_finderPathCountByParentPatcherFixId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentPatcherFixId", new String[] {Long.class.getName()},
-			new String[] {"parentPatcherFixId"}, false);
-
 		_collectionPersistenceFinderByParentPatcherFixId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentPatcherFixId,
-				_finderPathWithoutPaginationFindByParentPatcherFixId,
-				_finderPathCountByParentPatcherFixId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentPatcherFixId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentPatcherFixId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentPatcherFixId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentPatcherFixId"}, false),
 				_SQL_SELECT_PATCHERFIXREL_WHERE, _SQL_COUNT_PATCHERFIXREL_WHERE,
 				PatcherFixRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -672,4 +555,4 @@ public class PatcherFixRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-516384111
+// LIFERAY-SERVICE-BUILDER-HASH:-1771446871

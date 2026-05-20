@@ -96,62 +96,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the site navigation menu items where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63;.
@@ -243,7 +189,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<SiteNavigationMenuItem>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -275,18 +220,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		}
 
 		return siteNavigationMenuItem;
-	}
-
-	/**
-	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -335,69 +268,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -494,63 +366,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the site navigation menu items where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
@@ -642,67 +459,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindBySiteNavigationMenuId;
-	private FinderPath _finderPathWithoutPaginationFindBySiteNavigationMenuId;
-	private FinderPath _finderPathCountBySiteNavigationMenuId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderBySiteNavigationMenuId;
-
-	/**
-	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId, int start, int end) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findBySiteNavigationMenuId(
-		long siteNavigationMenuId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findBySiteNavigationMenuId(
-			siteNavigationMenuId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
@@ -798,71 +556,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId;
-	private FinderPath _finderPathCountByParentSiteNavigationMenuItemId;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
-
-	/**
-	 * Returns all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId, int start, int end) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByParentSiteNavigationMenuItemId(
-		long parentSiteNavigationMenuItemId, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -964,62 +659,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			count(finderCache, new Object[] {parentSiteNavigationMenuItemId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByType;
-
-	/**
-	 * Returns all the site navigation menu items where type = &#63;.
-	 *
-	 * @param type the type
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(String type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(
-		String type, int start, int end) {
-
-		return findByType(type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByType(
-		String type, int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByType(type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
@@ -1111,75 +752,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_P;
-	private FinderPath _finderPathWithoutPaginationFindByS_P;
-	private FinderPath _finderPathCountByS_P;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByS_P;
-
-	/**
-	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @return the matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @return the range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		int start, int end) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SiteNavigationMenuItemModelImpl</code>.
-	 * </p>
-	 *
-	 * @param siteNavigationMenuId the site navigation menu ID
-	 * @param parentSiteNavigationMenuItemId the parent site navigation menu item ID
-	 * @param start the lower bound of the range of site navigation menu items
-	 * @param end the upper bound of the range of site navigation menu items (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching site navigation menu items
-	 */
-	@Override
-	public List<SiteNavigationMenuItem> findByS_P(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		int start, int end,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
-
-		return findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
@@ -1294,8 +868,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_LikeN;
-	private FinderPath _finderPathWithPaginationCountByS_LikeN;
 	private CollectionPersistenceFinder<SiteNavigationMenuItem>
 		_collectionPersistenceFinderByS_LikeN;
 
@@ -1455,7 +1027,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId, name});
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<SiteNavigationMenuItem>
 		_uniquePersistenceFinderByERC_G;
 
@@ -1489,20 +1060,6 @@ public class SiteNavigationMenuItemPersistenceImpl
 		}
 
 		return siteNavigationMenuItem;
-	}
-
-	/**
-	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching site navigation menu item, or <code>null</code> if a matching site navigation menu item could not be found
-	 */
-	@Override
-	public SiteNavigationMenuItem fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -1943,27 +1500,23 @@ public class SiteNavigationMenuItemPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1972,15 +1525,14 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, SiteNavigationMenuItem::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(SiteNavigationMenuItem::getUuid),
-			SiteNavigationMenuItem::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(SiteNavigationMenuItem::getUuid),
+				SiteNavigationMenuItem::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE, "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "uuid", FinderColumn.Type.STRING,
@@ -1989,30 +1541,25 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, SiteNavigationMenuItem::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2025,29 +1572,25 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2057,30 +1600,28 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getCompanyId));
 
-		_finderPathWithPaginationFindBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findBySiteNavigationMenuId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"siteNavigationMenuId"}, true);
-
-		_finderPathWithoutPaginationFindBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findBySiteNavigationMenuId", new String[] {Long.class.getName()},
-			new String[] {"siteNavigationMenuId"}, true);
-
-		_finderPathCountBySiteNavigationMenuId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countBySiteNavigationMenuId", new String[] {Long.class.getName()},
-			new String[] {"siteNavigationMenuId"}, false);
-
 		_collectionPersistenceFinderBySiteNavigationMenuId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindBySiteNavigationMenuId,
-				_finderPathWithoutPaginationFindBySiteNavigationMenuId,
-				_finderPathCountBySiteNavigationMenuId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findBySiteNavigationMenuId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"siteNavigationMenuId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findBySiteNavigationMenuId",
+					new String[] {Long.class.getName()},
+					new String[] {"siteNavigationMenuId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countBySiteNavigationMenuId",
+					new String[] {Long.class.getName()},
+					new String[] {"siteNavigationMenuId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2090,35 +1631,28 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getSiteNavigationMenuId));
 
-		_finderPathWithPaginationFindByParentSiteNavigationMenuItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByParentSiteNavigationMenuItemId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"parentSiteNavigationMenuItemId"}, true);
-
-		_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByParentSiteNavigationMenuItemId",
-				new String[] {Long.class.getName()},
-				new String[] {"parentSiteNavigationMenuItemId"}, true);
-
-		_finderPathCountByParentSiteNavigationMenuItemId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByParentSiteNavigationMenuItemId",
-			new String[] {Long.class.getName()},
-			new String[] {"parentSiteNavigationMenuItemId"}, false);
-
 		_collectionPersistenceFinderByParentSiteNavigationMenuItemId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByParentSiteNavigationMenuItemId,
-				_finderPathWithoutPaginationFindByParentSiteNavigationMenuItemId,
-				_finderPathCountByParentSiteNavigationMenuItemId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByParentSiteNavigationMenuItemId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentSiteNavigationMenuItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentSiteNavigationMenuItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentSiteNavigationMenuItemId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentSiteNavigationMenuItemId",
+					new String[] {Long.class.getName()},
+					new String[] {"parentSiteNavigationMenuItemId"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2128,27 +1662,23 @@ public class SiteNavigationMenuItemPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, false, null),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2157,37 +1687,33 @@ public class SiteNavigationMenuItemPersistenceImpl
 				"siteNavigationMenuItem.", "type", FinderColumn.Type.STRING,
 				"=", true, true, SiteNavigationMenuItem::getType));
 
-		_finderPathWithPaginationFindByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			true);
-
-		_finderPathCountByS_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {
-				"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_P,
-			_finderPathWithoutPaginationFindByS_P, _finderPathCountByS_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_P",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"siteNavigationMenuId", "parentSiteNavigationMenuItemId"
+				},
+				false),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 			_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 			SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2201,24 +1727,22 @@ public class SiteNavigationMenuItemPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				SiteNavigationMenuItem::getParentSiteNavigationMenuItemId));
 
-		_finderPathWithPaginationFindByS_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"siteNavigationMenuId", "name"}, true);
-
-		_finderPathWithPaginationCountByS_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"siteNavigationMenuId", "name"}, false);
-
 		_collectionPersistenceFinderByS_LikeN =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByS_LikeN, null,
-				_finderPathWithPaginationCountByS_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"siteNavigationMenuId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"siteNavigationMenuId", "name"}, false),
 				_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE,
 				_SQL_COUNT_SITENAVIGATIONMENUITEM_WHERE,
 				SiteNavigationMenuItemModelImpl.ORDER_BY_JPQL,
@@ -2231,16 +1755,15 @@ public class SiteNavigationMenuItemPersistenceImpl
 					"siteNavigationMenuItem.", "name", FinderColumn.Type.STRING,
 					"LIKE", true, true, SiteNavigationMenuItem::getName));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(
-				SiteNavigationMenuItem::getExternalReferenceCode),
-			SiteNavigationMenuItem::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					SiteNavigationMenuItem::getExternalReferenceCode),
+				SiteNavigationMenuItem::getGroupId),
 			_SQL_SELECT_SITENAVIGATIONMENUITEM_WHERE, "",
 			new FinderColumn<>(
 				"siteNavigationMenuItem.", "externalReferenceCode",
@@ -2322,4 +1845,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:240801365
+// LIFERAY-SERVICE-BUILDER-HASH:1009692403

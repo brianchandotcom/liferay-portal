@@ -7,24 +7,20 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {webContentDisplayPageTest} from '../../../fixtures/webContentDisplayPageTest';
-import {liferayConfig} from '../../../liferay.config';
-import getRandomString from '../../../utils/getRandomString';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	assetPublisherPagesTest,
 	pageEditorPagesTest,
 	productMenuPageTest,
@@ -35,38 +31,10 @@ export const test = mergeTests(
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
-
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
-const pageTitle = 'My Page';
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers, page}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});
 
 test(
 	'Web content appears on card shows the pages that the web content appears on.',
@@ -75,7 +43,7 @@ test(
 		tag: '@LRAC-8456',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const webContentTitle = 'Web Content Title';
 
 		const date1 = new Date();
@@ -89,7 +57,7 @@ test(
 				channelId: channel.id,
 				eventDate: date1.toISOString(),
 				eventId: 'webContentViewed',
-				title: pageTitle,
+				title: 'My Page',
 				userId: 'user1',
 			},
 		]);

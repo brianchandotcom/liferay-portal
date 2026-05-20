@@ -33,48 +33,6 @@ public interface PermissionCheckFinderEntryPersistence
 	 */
 
 	/**
-	 * Returns all the permission check finder entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
-		long groupId);
-
-	/**
-	 * Returns a range of all the permission check finder entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @return the range of matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the permission check finder entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<PermissionCheckFinderEntry> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the permission check finder entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -121,30 +79,6 @@ public interface PermissionCheckFinderEntryPersistence
 			<PermissionCheckFinderEntry> orderByComparator);
 
 	/**
-	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching permission check finder entries that the user has permission to view
-	 */
-	public java.util.List<PermissionCheckFinderEntry> filterFindByGroupId(
-		long groupId);
-
-	/**
-	 * Returns a range of all the permission check finder entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @return the range of matching permission check finder entries that the user has permission to view
-	 */
-	public java.util.List<PermissionCheckFinderEntry> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the permission check finder entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -163,30 +97,6 @@ public interface PermissionCheckFinderEntryPersistence
 			<PermissionCheckFinderEntry> orderByComparator);
 
 	/**
-	 * Returns all the permission check finder entries that the user has permission to view where groupId = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching permission check finder entries that the user has permission to view
-	 */
-	public java.util.List<PermissionCheckFinderEntry> filterFindByGroupId(
-		long[] groupIds);
-
-	/**
-	 * Returns a range of all the permission check finder entries that the user has permission to view where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @return the range of matching permission check finder entries that the user has permission to view
-	 */
-	public java.util.List<PermissionCheckFinderEntry> filterFindByGroupId(
-		long[] groupIds, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the permission check finder entries that the user has permission to view where groupId = any &#63;.
 	 *
 	 * <p>
@@ -200,52 +110,6 @@ public interface PermissionCheckFinderEntryPersistence
 	 * @return the ordered range of matching permission check finder entries that the user has permission to view
 	 */
 	public java.util.List<PermissionCheckFinderEntry> filterFindByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<PermissionCheckFinderEntry> orderByComparator);
-
-	/**
-	 * Returns all the permission check finder entries where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
-		long[] groupIds);
-
-	/**
-	 * Returns a range of all the permission check finder entries where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @return the range of matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
-		long[] groupIds, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the permission check finder entries where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of permission check finder entries
-	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching permission check finder entries
-	 */
-	public java.util.List<PermissionCheckFinderEntry> findByGroupId(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<PermissionCheckFinderEntry> orderByComparator);
@@ -350,5 +214,175 @@ public interface PermissionCheckFinderEntryPersistence
 	public PermissionCheckFinderEntry fetchByPrimaryKey(
 		long permissionCheckFinderEntryId);
 
+	/**
+	 * Returns all the permission check finder entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long groupId) {
+
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the permission check finder entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @return the range of matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the permission check finder entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<PermissionCheckFinderEntry> orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the permission check finder entries where groupId = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @return the matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long[] groupIds) {
+
+		return findByGroupId(
+			groupIds, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the permission check finder entries where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @return the range of matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long[] groupIds, int start, int end) {
+
+		return findByGroupId(groupIds, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the permission check finder entries where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching permission check finder entries
+	 */
+	public default java.util.List<PermissionCheckFinderEntry> findByGroupId(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<PermissionCheckFinderEntry> orderByComparator) {
+
+		return findByGroupId(groupIds, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the permission check finder entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching permission check finder entries that the user has permission to view
+	 */
+	public default java.util.List<PermissionCheckFinderEntry>
+		filterFindByGroupId(long groupId) {
+
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the permission check finder entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @return the range of matching permission check finder entries that the user has permission to view
+	 */
+	public default java.util.List<PermissionCheckFinderEntry>
+		filterFindByGroupId(long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the permission check finder entries that the user has permission to view where groupId = any &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @return the matching permission check finder entries that the user has permission to view
+	 */
+	public default java.util.List<PermissionCheckFinderEntry>
+		filterFindByGroupId(long[] groupIds) {
+
+		return filterFindByGroupId(
+			groupIds, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the permission check finder entries that the user has permission to view where groupId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.PermissionCheckFinderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param start the lower bound of the range of permission check finder entries
+	 * @param end the upper bound of the range of permission check finder entries (not inclusive)
+	 * @return the range of matching permission check finder entries that the user has permission to view
+	 */
+	public default java.util.List<PermissionCheckFinderEntry>
+		filterFindByGroupId(long[] groupIds, int start, int end) {
+
+		return filterFindByGroupId(groupIds, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1754822347
+// LIFERAY-SERVICE-BUILDER-HASH:-726776395

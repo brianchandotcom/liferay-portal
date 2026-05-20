@@ -71,4 +71,4 @@ public interface AutoEscapeEntryPersistence
 	public AutoEscapeEntry fetchByPrimaryKey(long autoEscapeEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1259878970
+// LIFERAY-SERVICE-BUILDER-HASH:436977222

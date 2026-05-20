@@ -1,6 +1,11 @@
 import * as data from 'test/data';
 import * as ODataUtil from '../odata';
 import * as Utils from '../utils';
+import {
+	ALL_APPLICATION_IDS,
+	ALL_EVENT_IDS,
+	CustomFunctionOperators
+} from '../constants';
 import {CustomValue} from 'shared/util/records';
 import {List, Map} from 'immutable';
 
@@ -642,6 +647,366 @@ describe('odata', () => {
 				"((not (cookies/any(c:c eq 'keyTest1=valueTest1'))) and ((not (cookies/any(c:c eq 'keyTest2=valueTest2'))) or (cookies/any(c:c eq 'keyTest3=valueTest3') and cookies/any(c:c eq 'keyTest4=valueTest4'))) and name eq 'test')";
 
 			testConversionToAndFrom(testQuery);
+		});
+	});
+
+	describe('vocabularies.filterByCount', () => {
+		function encodeFilter(filterStr) {
+			return filterStr.replace(/'/g, "''");
+		}
+
+		function buildVocabQuery(filterStr, operator = 'ge', count = 1) {
+			return `(activities.filterByCount(filter='${encodeFilter(
+				`(${filterStr})`
+			)}',operator='${operator}',value=${count}))`;
+		}
+
+		function makeVocabFilterCriteria(innerItems) {
+			return [
+				{
+					conjunctionName: 'and',
+					criteriaGroupId: 'group_01',
+					items: [
+						{
+							operatorName:
+								CustomFunctionOperators.VocabulariesFilter,
+							propertyName: 'vocab-id',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: new CustomValue({
+								criterionGroup: new Map({
+									conjunctionName: 'and',
+									criteriaGroupId: 'group_01',
+									items: new List(
+										innerItems.map(item => new Map(item))
+									)
+								}),
+								operator: 'ge',
+								value: 1
+							})
+						}
+					]
+				}
+			];
+		}
+
+		const BASE_VOC_ITEMS = [
+			{
+				operatorName: 'eq',
+				propertyName: 'vocabularies/id',
+				rowId: 'row_01',
+				touched: false,
+				valid: true,
+				value: 'vocab-id'
+			},
+			{
+				operatorName: 'eq',
+				propertyName: 'vocabularies/name',
+				rowId: 'row_01',
+				touched: false,
+				valid: true,
+				value: 'My Vocabulary'
+			}
+		];
+
+		const DAY_ITEM = {
+			operatorName: 'gt',
+			propertyName: 'day',
+			rowId: 'row_01',
+			touched: false,
+			valid: true,
+			value: '2023-01-01'
+		};
+
+		it('should round-trip a vocabulary filter with specific asset type and no specific event', () => {
+			testConversionToAndFrom(
+				buildVocabQuery(
+					"vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and activityKey eq 'WebContent' and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should round-trip a vocabulary filter with specific asset type and specific event', () => {
+			testConversionToAndFrom(
+				buildVocabQuery(
+					"vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and activityKey eq 'WebContent#webContentViewed' and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should build a vocabulary filter query for any asset type using applicationId in and eventId in', () => {
+			const appIds = ALL_APPLICATION_IDS.map(id => `'${id}'`).join(',');
+			const eventIds = ALL_EVENT_IDS.map(id => `'${id}'`).join(',');
+
+			expect(
+				ODataUtil.buildQueryString(
+					makeVocabFilterCriteria([
+						...BASE_VOC_ITEMS,
+						{
+							operatorName: 'in',
+							propertyName: 'applicationId',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: ALL_APPLICATION_IDS
+						},
+						{
+							operatorName: 'in',
+							propertyName: 'eventId',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: ALL_EVENT_IDS
+						},
+						DAY_ITEM
+					])
+				)
+			).toEqual(
+				buildVocabQuery(
+					`vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and (applicationId in (${appIds}) and eventId in (${eventIds})) and day gt '2023-01-01'`
+				)
+			);
+		});
+
+		it('should build a vocabulary filter query with a single category', () => {
+			expect(
+				ODataUtil.buildQueryString(
+					makeVocabFilterCriteria([
+						...BASE_VOC_ITEMS,
+						{
+							operatorName: 'eq',
+							propertyName: 'activityKey',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: 'WebContent'
+						},
+						{
+							operatorName: 'in',
+							propertyName: 'categories',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: [{id: 'cat-1', name: 'Category One'}]
+						},
+						DAY_ITEM
+					])
+				)
+			).toEqual(
+				buildVocabQuery(
+					"vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and activityKey eq 'WebContent' and ((categories/id eq 'cat-1' and categories/name eq 'Category One')) and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should build a vocabulary filter query with multiple categories using OR grouping', () => {
+			expect(
+				ODataUtil.buildQueryString(
+					makeVocabFilterCriteria([
+						...BASE_VOC_ITEMS,
+						{
+							operatorName: 'eq',
+							propertyName: 'activityKey',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: 'WebContent'
+						},
+						{
+							operatorName: 'in',
+							propertyName: 'categories',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: [
+								{id: 'cat-1', name: 'Category One'},
+								{id: 'cat-2', name: 'Category Two'}
+							]
+						},
+						DAY_ITEM
+					])
+				)
+			).toEqual(
+				buildVocabQuery(
+					"vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and activityKey eq 'WebContent' and ((categories/id eq 'cat-1' and categories/name eq 'Category One') or (categories/id eq 'cat-2' and categories/name eq 'Category Two')) and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should build a vocabulary filter query without categories', () => {
+			const result = ODataUtil.buildQueryString(
+				makeVocabFilterCriteria([
+					...BASE_VOC_ITEMS,
+					{
+						operatorName: 'eq',
+						propertyName: 'activityKey',
+						rowId: 'row_01',
+						touched: false,
+						valid: true,
+						value: 'WebContent'
+					},
+					DAY_ITEM
+				])
+			);
+
+			expect(result).toEqual(
+				buildVocabQuery(
+					"vocabularies/id eq 'vocab-id' and vocabularies/name eq 'My Vocabulary' and activityKey eq 'WebContent' and day gt '2023-01-01'"
+				)
+			);
+			expect(result).not.toContain('categories');
+		});
+	});
+
+	describe('tags.filterByCount', () => {
+		function encodeFilter(filterStr) {
+			return filterStr.replace(/'/g, "''");
+		}
+
+		function buildTagQuery(filterStr, operator = 'ge', count = 1) {
+			return `(activities.filterByCount(filter='${encodeFilter(
+				`(${filterStr})`
+			)}',operator='${operator}',value=${count}))`;
+		}
+
+		function makeTagFilterCriteria(innerItems) {
+			return [
+				{
+					conjunctionName: 'and',
+					criteriaGroupId: 'group_01',
+					items: [
+						{
+							operatorName: CustomFunctionOperators.TagsFilter,
+							propertyName: 'tag-id',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: new CustomValue({
+								criterionGroup: new Map({
+									conjunctionName: 'and',
+									criteriaGroupId: 'group_01',
+									items: new List(
+										innerItems.map(item => new Map(item))
+									)
+								}),
+								operator: 'ge',
+								value: 1
+							})
+						}
+					]
+				}
+			];
+		}
+
+		const BASE_TAG_ITEMS = [
+			{
+				operatorName: 'eq',
+				propertyName: 'tags/id',
+				rowId: 'row_01',
+				touched: false,
+				valid: true,
+				value: 'tag-id'
+			},
+			{
+				operatorName: 'eq',
+				propertyName: 'tags/name',
+				rowId: 'row_01',
+				touched: false,
+				valid: true,
+				value: 'My Tag'
+			}
+		];
+
+		const DAY_ITEM = {
+			operatorName: 'gt',
+			propertyName: 'day',
+			rowId: 'row_01',
+			touched: false,
+			valid: true,
+			value: '2023-01-01'
+		};
+
+		it('should round-trip a tag filter with specific asset type and no specific event', () => {
+			testConversionToAndFrom(
+				buildTagQuery(
+					"tags/id eq 'tag-id' and tags/name eq 'My Tag' and activityKey eq 'WebContent' and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should round-trip a tag filter with specific asset type and specific event', () => {
+			testConversionToAndFrom(
+				buildTagQuery(
+					"tags/id eq 'tag-id' and tags/name eq 'My Tag' and activityKey eq 'WebContent#webContentViewed' and day gt '2023-01-01'"
+				)
+			);
+		});
+
+		it('should build a tag filter query for any asset type using applicationId in and eventId in', () => {
+			const appIds = ALL_APPLICATION_IDS.map(id => `'${id}'`).join(',');
+			const eventIds = ALL_EVENT_IDS.map(id => `'${id}'`).join(',');
+
+			expect(
+				ODataUtil.buildQueryString(
+					makeTagFilterCriteria([
+						...BASE_TAG_ITEMS,
+						{
+							operatorName: 'in',
+							propertyName: 'applicationId',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: ALL_APPLICATION_IDS
+						},
+						{
+							operatorName: 'in',
+							propertyName: 'eventId',
+							rowId: 'row_01',
+							touched: false,
+							valid: true,
+							value: ALL_EVENT_IDS
+						},
+						DAY_ITEM
+					])
+				)
+			).toEqual(
+				buildTagQuery(
+					`tags/id eq 'tag-id' and tags/name eq 'My Tag' and (applicationId in (${appIds}) and eventId in (${eventIds})) and day gt '2023-01-01'`
+				)
+			);
+		});
+
+		it('should build a tag filter query without categories even when a categories item is present', () => {
+			const result = ODataUtil.buildQueryString(
+				makeTagFilterCriteria([
+					...BASE_TAG_ITEMS,
+					{
+						operatorName: 'eq',
+						propertyName: 'activityKey',
+						rowId: 'row_01',
+						touched: false,
+						valid: true,
+						value: 'WebContent'
+					},
+					{
+						operatorName: 'in',
+						propertyName: 'categories',
+						rowId: 'row_01',
+						touched: false,
+						valid: true,
+						value: [{id: 'cat-1', name: 'Category One'}]
+					},
+					DAY_ITEM
+				])
+			);
+
+			expect(result).toEqual(
+				buildTagQuery(
+					"tags/id eq 'tag-id' and tags/name eq 'My Tag' and activityKey eq 'WebContent' and day gt '2023-01-01'"
+				)
+			);
+			expect(result).not.toContain('categories');
 		});
 	});
 });

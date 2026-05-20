@@ -42,6 +42,17 @@ export function fetchFieldValues({
 	});
 }
 
+export async function fetchLifecycleStatus({
+	accountId,
+	accountLifecycleId,
+	groupId
+}) {
+	return sendRequest({
+		method: 'GET',
+		path: `contacts/${groupId}/account/${accountId}/account-lifecycles/${accountLifecycleId}`
+	});
+}
+
 export function fetchMetrics({groupId}) {
 	return sendRequest({
 		method: 'GET',

@@ -10,7 +10,9 @@ function main {
 		return
 	fi
 
-	_check_utils curl jq tar
+	_check_utils curl jq tar terraform
+
+	_check_terraform_version "1.5.0"
 
 	local config_file
 
@@ -29,6 +31,26 @@ function main {
 	extracted_dir=$(_download_and_extract_files "${provider}" "${version}")
 
 	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${config_file}" "${extracted_dir}/cloud/scripts/versions_${provider}.tfvars"
+}
+
+function _check_terraform_version {
+	local found_version
+
+	found_version=$(terraform --version | awk '/^Terraform v/ {print $2; exit}')
+	found_version="${found_version#v}"
+
+	local required_version="${1}"
+
+	local lowest_version
+
+	lowest_version=$(printf "%s\n%s\n" "${required_version}" "${found_version}" | sort --version-sort | head -n 1)
+
+	if [ "${lowest_version}" != "${required_version}" ]
+	then
+		echo "The installed Terraform version ${found_version} is older than ${required_version}." >&2
+
+		exit 1
+	fi
 }
 
 function _check_utils {

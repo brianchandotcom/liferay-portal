@@ -13,13 +13,21 @@ import ClayLink from '@clayui/link';
 import {AIAssistantChat} from '@liferay/ai-hub-cell-js-components-web';
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
+import {openToast, useSessionState} from 'frontend-js-components-web';
 import {sessionStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
+import {flushSync} from 'react-dom';
 
 import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
 import SchedulePublicationModal from './SchedulePublicationModal';
 import PreviewModal from './preview/PreviewModal';
+import {
+	PREVIEW_CHANNEL_SESSION_KEY,
+	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	PREVIEW_VISIBLE_SESSION_KEY,
+} from './preview/sessionKeys';
+import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 export const EVENT_CLOSE_PREVIEW = 'contentEditor:closePreview';
 
@@ -29,8 +37,12 @@ export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
 const STATUS_DRAFT_CODE = 2;
 
+const SUCCESS_MESSAGE_SESSION_KEY =
+	'com.liferay.site.cms.site.initializer.successMessage';
+
 export default function ContentEditorToolbar({
 	backURL,
+	defaultLanguageId,
 	displayDate: initialDisplayDate,
 	getPreviewDataURL,
 	hasWorkflow,
@@ -39,6 +51,7 @@ export default function ContentEditorToolbar({
 	type,
 }: {
 	backURL: string;
+	defaultLanguageId: Liferay.Language.Locale;
 	displayDate: string;
 	getPreviewDataURL: string;
 	hasWorkflow: boolean;
@@ -48,10 +61,15 @@ export default function ContentEditorToolbar({
 }) {
 	const [displayDate, setDisplayDate] = useState<string>('');
 	const [formId, setFormId] = useState<string | undefined>();
+	const [redirect, setRedirect] = useState<string>(backURL);
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [showPreview, setShowPreview] = useState<boolean>(false);
+	const [showPreview, setShowPreview] = useSessionState<boolean>(
+		PREVIEW_VISIBLE_SESSION_KEY,
+		false
+	);
 	const [showPreviewModal, setShowPreviewModal] = useState<boolean>(false);
 
+	const localizationLanguageId = useLocalizationLanguageId(defaultLanguageId);
 	const previewButtonRef = useRef<HTMLButtonElement>(null);
 
 	const optionsTitle = hasWorkflow
@@ -95,7 +113,7 @@ export default function ContentEditorToolbar({
 				const value = titleInput?.value.trim() || headerTitle;
 
 				sessionStorage.setItem(
-					'com.liferay.site.cms.site.initializer.successMessage',
+					SUCCESS_MESSAGE_SESSION_KEY,
 					sub(message, `<strong>${value}</strong>`),
 					sessionStorage.TYPES.NECESSARY
 				);
@@ -104,17 +122,25 @@ export default function ContentEditorToolbar({
 		[getForm, headerTitle]
 	);
 
-	const handleSaveSuccessMessage = useCallback(() => {
-		setSuccessMessage(Liferay.Language.get('x-was-saved-successfully'));
+	const handleSaveAsDraftClick = useCallback(() => {
+		flushSync(() => setRedirect(window.location.href));
+
+		setSuccessMessage(
+			Liferay.Language.get('the-draft-was-saved-successfully')
+		);
 	}, [setSuccessMessage]);
 
-	const handlePublishSuccessMessage = useCallback(() => {
+	const handlePublishClick = useCallback(() => {
+		flushSync(() => setRedirect(backURL));
+
+		clearSessionStates();
+
 		setSuccessMessage(
 			hasWorkflow
 				? Liferay.Language.get('x-was-submitted-for-workflow')
 				: Liferay.Language.get('x-was-published-successfully')
 		);
-	}, [hasWorkflow, setSuccessMessage]);
+	}, [backURL, hasWorkflow, setSuccessMessage]);
 
 	useEffect(() => {
 		const form = getForm();
@@ -128,7 +154,7 @@ export default function ContentEditorToolbar({
 					event.key === 'Enter' &&
 					isCtrlOrMeta(event)
 				) {
-					handlePublishSuccessMessage();
+					handlePublishClick();
 
 					form.submit();
 				}
@@ -139,7 +165,7 @@ export default function ContentEditorToolbar({
 			return () =>
 				window.removeEventListener('keydown', handlePublishShortcut);
 		}
-	}, [getForm, handlePublishSuccessMessage]);
+	}, [getForm, handlePublishClick]);
 
 	useEffect(() => {
 		const closePreview = () => {
@@ -151,12 +177,26 @@ export default function ContentEditorToolbar({
 		Liferay.on(EVENT_CLOSE_PREVIEW, closePreview);
 
 		return () => Liferay.detach(EVENT_CLOSE_PREVIEW, closePreview);
+	}, [setShowPreview]);
+
+	useEffect(() => {
+		const message = sessionStorage.getItem(
+			SUCCESS_MESSAGE_SESSION_KEY,
+			sessionStorage.TYPES.NECESSARY
+		);
+
+		if (message) {
+			openToast({message, type: 'success'});
+
+			sessionStorage.removeItem(SUCCESS_MESSAGE_SESSION_KEY);
+		}
 	}, []);
 
 	return (
 		<Toolbar
 			backURL={backURL}
 			className="content-editor__toolbar position-fixed"
+			onBackClick={clearSessionStates}
 			title={headerTitle}
 		>
 			{Liferay.FeatureFlags['LPD-62272'] && (
@@ -190,7 +230,7 @@ export default function ContentEditorToolbar({
 						}
 						aria-pressed={showPreview}
 						borderless
-						className={classNames('c-mr-2 d-lg-block d-none', {
+						className={classNames('d-lg-block d-none', {
 							active: showPreview,
 						})}
 						displayType="secondary"
@@ -216,7 +256,8 @@ export default function ContentEditorToolbar({
 
 					<ClayButtonWithIcon
 						aria-label={Liferay.Language.get('preview')}
-						className="c-mr-3 d-lg-none"
+						borderless
+						className="c-mr-1 d-lg-none"
 						displayType="secondary"
 						onClick={() => setShowPreviewModal(true)}
 						size="sm"
@@ -234,6 +275,7 @@ export default function ContentEditorToolbar({
 					className="d-none d-sm-flex"
 					displayType="secondary"
 					href={backURL}
+					onClick={clearSessionStates}
 					small
 				>
 					{Liferay.Language.get('cancel')}
@@ -246,7 +288,7 @@ export default function ContentEditorToolbar({
 					displayType="secondary"
 					form={formId}
 					name="status"
-					onClick={handleSaveSuccessMessage}
+					onClick={handleSaveAsDraftClick}
 					size="sm"
 					type="submit"
 					value={STATUS_DRAFT_CODE}
@@ -272,7 +314,7 @@ export default function ContentEditorToolbar({
 						data-title-set-as-html
 						form={formId}
 						onClick={(event) => {
-							handlePublishSuccessMessage();
+							handlePublishClick();
 
 							Liferay.fire(EVENT_VALIDATE_FORM, {event});
 						}}
@@ -320,7 +362,7 @@ export default function ContentEditorToolbar({
 					form={formId}
 					name="redirect"
 					type="hidden"
-					value={backURL}
+					value={redirect}
 				/>
 
 				{displayDate && (
@@ -347,7 +389,11 @@ export default function ContentEditorToolbar({
 			{showPreviewModal ? (
 				<PreviewModal
 					getPreviewDataURL={getPreviewDataURL}
-					onCloseModal={() => setShowPreviewModal(false)}
+					languageId={localizationLanguageId}
+					onCloseModal={() => {
+						setShowPreviewModal(false);
+						clearSessionStates();
+					}}
 					title={title}
 				/>
 			) : null}
@@ -371,4 +417,12 @@ function getSubmitTitle(title: string) {
 		</kbd>`
 		.replaceAll('\n', '')
 		.replaceAll('\t', '');
+}
+
+function clearSessionStates() {
+	[
+		PREVIEW_VISIBLE_SESSION_KEY,
+		PREVIEW_CHANNEL_SESSION_KEY,
+		PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+	].forEach((key) => sessionStorage.removeItem(key));
 }

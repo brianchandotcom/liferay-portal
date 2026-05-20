@@ -5,8 +5,15 @@
 
 package com.liferay.ant.build.logger;
 
+import com.liferay.jenkins.results.parser.SecurePrintStream;
+
+import java.io.PrintStream;
+
+import java.lang.reflect.Field;
+
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
+import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.Project;
 
 /**
@@ -14,10 +21,30 @@ import org.apache.tools.ant.Project;
  * @author Shuyang Zhou
  * @author Kevin Yen
  */
-public class LiferayBuildLogger implements BuildListener {
+public class LiferayBuildLogger extends DefaultLogger implements BuildListener {
 
 	public LiferayBuildLogger(BuildListener buildListener) {
 		_buildListener = buildListener;
+
+		if (!(buildListener instanceof DefaultLogger)) {
+			return;
+		}
+
+		DefaultLogger defaultLogger = (DefaultLogger)buildListener;
+
+		PrintStream errorPrintStream = _getPrintStream(defaultLogger, "err");
+
+		if (errorPrintStream != null) {
+			defaultLogger.setErrorPrintStream(
+				new SecurePrintStream(errorPrintStream));
+		}
+
+		PrintStream outputPrintStream = _getPrintStream(defaultLogger, "out");
+
+		if (outputPrintStream != null) {
+			defaultLogger.setOutputPrintStream(
+				new SecurePrintStream(outputPrintStream));
+		}
 	}
 
 	@Override
@@ -59,6 +86,27 @@ public class LiferayBuildLogger implements BuildListener {
 	@Override
 	public void taskStarted(BuildEvent buildEvent) {
 		_buildListener.taskStarted(buildEvent);
+	}
+
+	private PrintStream _getPrintStream(
+		DefaultLogger defaultLogger, String fieldName) {
+
+		try {
+			Field field = DefaultLogger.class.getDeclaredField(fieldName);
+
+			field.setAccessible(true);
+
+			Object object = field.get(defaultLogger);
+
+			if (!(object instanceof PrintStream)) {
+				return null;
+			}
+
+			return (PrintStream)object;
+		}
+		catch (IllegalAccessException | NoSuchFieldException exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private final BuildListener _buildListener;

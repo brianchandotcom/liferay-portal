@@ -10,15 +10,15 @@ import SideNav, {NavItem} from './SideNav';
 
 type AppLayoutProps = {
 	navItems: NavItem[];
-	title: string;
+	title?: string;
 };
 
 export default function AppLayout({navItems, title}: AppLayoutProps) {
 	return (
-		<div className="layout">
+		<div className="d-flex p-3" style={{gap: '1rem'}}>
 			<SideNav items={navItems} title={title} />
 
-			<main className="layout__content">
+			<main className="flex-fill overflow-auto">
 				<Suspense fallback={null}>
 					<Outlet />
 				</Suspense>

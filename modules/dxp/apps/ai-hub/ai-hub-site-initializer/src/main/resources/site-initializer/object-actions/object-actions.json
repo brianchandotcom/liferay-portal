@@ -5,12 +5,12 @@
 			"errorMessage": {
 				"en_US": "Crawling failed. Please try again later or contact support."
 			},
-			"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_CRAWL",
+			"externalReferenceCode": "L_AI_HUB_CONTENT_RETRIEVER_CRAWLER",
 			"label": {
-				"en_US": "Crawl"
+				"en_US": "Crawler"
 			},
-			"name": "crawl",
-			"objectActionExecutorKey": "function#liferay-aihub-etc-spring-boot-object-action-crawl",
+			"name": "crawler",
+			"objectActionExecutorKey": "function#liferay-aihub-etc-spring-boot-object-action-crawler",
 			"objectActionTriggerKey": "standalone",
 			"parameters": {
 			}

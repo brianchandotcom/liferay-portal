@@ -16,7 +16,8 @@ import React, {useEffect, useState} from 'react';
 
 import {DEFAULT_FETCH_HEADERS} from '../utils/constants';
 import getDataSetResourceURL from '../utils/getDataSetResourceURL';
-import getFields from '../utils/getFields';
+import getFields, {getFilterableFields} from '../utils/getFields';
+import getOpenApiData from '../utils/getOpenApiData';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import {IDataSet, IFieldTreeItem} from '../utils/types';
 import Actions from './actions/Actions';
@@ -64,6 +65,7 @@ export interface IDataSetSectionProps {
 	dataSet: IDataSet;
 	fieldTreeItems: Array<IFieldTreeItem>;
 	filterClientExtensionRenderers: IClientExtensionRenderer[];
+	filterableFieldTreeItems: Array<IFieldTreeItem>;
 	manageUserViewsURL: string;
 	namespace: string;
 	onActiveSectionChange: (section: number) => void;
@@ -109,6 +111,9 @@ const DataSet = ({
 	const [fieldTreeItems, setFieldTreeItems] = useState<Array<IFieldTreeItem>>(
 		[]
 	);
+	const [filterableFieldTreeItems, setFilterableFieldTreeItems] = useState<
+		Array<IFieldTreeItem>
+	>([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -128,11 +133,21 @@ const DataSet = ({
 
 				const {restApplication, restSchema} = responseJSON;
 
-				getFields({restApplication, restSchema}).then((fields) => {
-					setFieldTreeItems(fields);
+				getOpenApiData({restApplication, restSchema}).then(
+					(oApiData) => {
+						if (!oApiData) {
+							return;
+						}
 
-					setLoading(false);
-				});
+						setFieldTreeItems(getFields(oApiData));
+
+						setFilterableFieldTreeItems(
+							getFilterableFields(oApiData)
+						);
+
+						setLoading(false);
+					}
+				);
 			}
 			else {
 				openDefaultFailureToast();
@@ -176,6 +191,7 @@ const DataSet = ({
 							filterClientExtensionRenderers={
 								filterClientExtensionRenderers
 							}
+							filterableFieldTreeItems={filterableFieldTreeItems}
 							manageUserViewsURL={manageUserViewsURL}
 							namespace={namespace}
 							onActiveSectionChange={(tab) => setActiveIndex(tab)}

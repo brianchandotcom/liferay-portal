@@ -1,17 +1,19 @@
 {
 	"dependencies": {
-		"@clayui/alert": "^3.161.0",
-		"@clayui/button": "^3.161.0",
-		"@clayui/core": "^3.161.0",
-		"@clayui/date-picker": "^3.161.0",
-		"@clayui/form": "^3.161.0",
-		"@clayui/icon": "^3.161.0",
-		"@clayui/layout": "^3.161.0",
-		"@clayui/link": "^3.161.0",
-		"@clayui/loading-indicator": "^3.161.0",
-		"@clayui/modal": "^3.161.0",
-		"@clayui/multi-step-nav": "^3.161.0",
-		"@clayui/progress-bar": "^3.161.0",
+		"@clayui/alert": "^3.163.0",
+		"@clayui/button": "^3.163.0",
+		"@clayui/core": "^3.163.0",
+		"@clayui/date-picker": "^3.163.0",
+		"@clayui/drop-down": "^3.163.0",
+		"@clayui/form": "^3.163.0",
+		"@clayui/icon": "^3.163.0",
+		"@clayui/label": "^3.163.0",
+		"@clayui/layout": "^3.163.0",
+		"@clayui/link": "^3.163.0",
+		"@clayui/loading-indicator": "^3.163.0",
+		"@clayui/modal": "^3.163.0",
+		"@clayui/multi-step-nav": "^3.163.0",
+		"@clayui/progress-bar": "^3.163.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
@@ -20,7 +22,8 @@
 		"frontend-js-web": "*",
 		"jest-fetch-mock": "3.0.3",
 		"react": "18.2.0",
-		"react-dropzone": "11.4.2"
+		"react-dropzone": "11.4.2",
+		"staging-taglib": "*"
 	},
 	"jest": {
 		"modulePathIgnorePatterns": [

@@ -127,54 +127,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns all the o auth2 applications where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 applications where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the o auth2 applications where uuid = &#63;.
 	 *
 	 * <p>
@@ -227,34 +179,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByUuid(String uuid) {
-		return getPersistence().filterFindByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().filterFindByUuid(uuid, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the o auth2 applications that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -302,60 +226,6 @@ public class OAuth2ApplicationUtil {
 	 */
 	public static int filterCountByUuid(String uuid) {
 		return getPersistence().filterCountByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the o auth2 applications where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 applications where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -418,38 +288,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the o auth2 applications that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -501,55 +339,6 @@ public class OAuth2ApplicationUtil {
 	 */
 	public static int filterCountByUuid_C(String uuid, long companyId) {
 		return getPersistence().filterCountByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the o auth2 applications where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 applications where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -606,36 +395,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().fetchByCompanyId_First(
 			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByCompanyId(
-		long companyId) {
-
-		return getPersistence().filterFindByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().filterFindByCompanyId(companyId, start, end);
 	}
 
 	/**
@@ -704,19 +463,6 @@ public class OAuth2ApplicationUtil {
 	}
 
 	/**
-	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param clientId the client ID
-	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByC_C(
-		long companyId, String clientId) {
-
-		return getPersistence().fetchByC_C(companyId, clientId);
-	}
-
-	/**
 	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -753,61 +499,6 @@ public class OAuth2ApplicationUtil {
 	 */
 	public static int countByC_C(long companyId, String clientId) {
 		return getPersistence().countByC_C(companyId, clientId);
-	}
-
-	/**
-	 * Returns all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @return the matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByC_CP(
-		long companyId, int clientProfile) {
-
-		return getPersistence().findByC_CP(companyId, clientProfile);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByC_CP(
-		long companyId, int clientProfile, int start, int end) {
-
-		return getPersistence().findByC_CP(
-			companyId, clientProfile, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 applications
-	 */
-	public static List<OAuth2Application> findByC_CP(
-		long companyId, int clientProfile, int start, int end,
-		OrderByComparator<OAuth2Application> orderByComparator) {
-
-		return getPersistence().findByC_CP(
-			companyId, clientProfile, start, end, orderByComparator);
 	}
 
 	/**
@@ -868,39 +559,6 @@ public class OAuth2ApplicationUtil {
 
 		return getPersistence().fetchByC_CP_First(
 			companyId, clientProfile, orderByComparator);
-	}
-
-	/**
-	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @return the matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByC_CP(
-		long companyId, int clientProfile) {
-
-		return getPersistence().filterFindByC_CP(companyId, clientProfile);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param clientProfile the client profile
-	 * @param start the lower bound of the range of o auth2 applications
-	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
-	 * @return the range of matching o auth2 applications that the user has permission to view
-	 */
-	public static List<OAuth2Application> filterFindByC_CP(
-		long companyId, int clientProfile, int start, int end) {
-
-		return getPersistence().filterFindByC_CP(
-			companyId, clientProfile, start, end);
 	}
 
 	/**
@@ -971,19 +629,6 @@ public class OAuth2ApplicationUtil {
 			NoSuchOAuth2ApplicationException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
-	 */
-	public static OAuth2Application fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -1085,6 +730,361 @@ public class OAuth2ApplicationUtil {
 		return getPersistence().fetchByPrimaryKey(oAuth2ApplicationId);
 	}
 
+	/**
+	 * Returns the o auth2 application where companyId = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param clientId the client ID
+	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application fetchByC_C(
+		long companyId, String clientId) {
+
+		return getPersistence().fetchByC_C(companyId, clientId);
+	}
+
+	/**
+	 * Returns the o auth2 application where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching o auth2 application, or <code>null</code> if a matching o auth2 application could not be found
+	 */
+	public static OAuth2Application fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the o auth2 applications where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 applications where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<OAuth2Application> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByUuid(String uuid) {
+		return getPersistence().filterFindByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().filterFindByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns all the o auth2 applications where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 applications where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<OAuth2Application> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().filterFindByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns all the o auth2 applications where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 applications where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<OAuth2Application> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByCompanyId(
+		long companyId) {
+
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param clientProfile the client profile
+	 * @return the matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByC_CP(
+		long companyId, int clientProfile) {
+
+		return getPersistence().findByC_CP(companyId, clientProfile);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param clientProfile the client profile
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByC_CP(
+		long companyId, int clientProfile, int start, int end) {
+
+		return getPersistence().findByC_CP(
+			companyId, clientProfile, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the o auth2 applications where companyId = &#63; and clientProfile = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param clientProfile the client profile
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching o auth2 applications
+	 */
+	public static List<OAuth2Application> findByC_CP(
+		long companyId, int clientProfile, int start, int end,
+		OrderByComparator<OAuth2Application> orderByComparator) {
+
+		return getPersistence().findByC_CP(
+			companyId, clientProfile, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param clientProfile the client profile
+	 * @return the matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByC_CP(
+		long companyId, int clientProfile) {
+
+		return getPersistence().filterFindByC_CP(companyId, clientProfile);
+	}
+
+	/**
+	 * Returns a range of all the o auth2 applications that the user has permission to view where companyId = &#63; and clientProfile = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.oauth2.provider.model.impl.OAuth2ApplicationModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param clientProfile the client profile
+	 * @param start the lower bound of the range of o auth2 applications
+	 * @param end the upper bound of the range of o auth2 applications (not inclusive)
+	 * @return the range of matching o auth2 applications that the user has permission to view
+	 */
+	public static List<OAuth2Application> filterFindByC_CP(
+		long companyId, int clientProfile, int start, int end) {
+
+		return getPersistence().filterFindByC_CP(
+			companyId, clientProfile, start, end);
+	}
+
 	public static OAuth2ApplicationPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1098,4 +1098,4 @@ public class OAuth2ApplicationUtil {
 	private static volatile OAuth2ApplicationPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2095516002
+// LIFERAY-SERVICE-BUILDER-HASH:-1829015776

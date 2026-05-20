@@ -125,11 +125,9 @@ test(
 	'Product Compare is removed upon logout and login',
 	{tag: ['@LPD-37427', '@LPD-60912']},
 	async ({apiHelpers, globalMenuPage, page, productComparisonPage}) => {
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		await apiHelpers.headlessCommerceAdminChannel.postChannel({
 			siteGroupId: site.id,

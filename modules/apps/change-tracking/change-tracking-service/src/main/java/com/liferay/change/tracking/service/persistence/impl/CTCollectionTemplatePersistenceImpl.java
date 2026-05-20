@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -74,69 +73,14 @@ public class CTCollectionTemplatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<CTCollectionTemplate>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the ct collection templates where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching ct collection templates
-	 */
-	@Override
-	public List<CTCollectionTemplate> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ct collection templates where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ct collection templates
-	 * @param end the upper bound of the range of ct collection templates (not inclusive)
-	 * @return the range of matching ct collection templates
-	 */
-	@Override
-	public List<CTCollectionTemplate> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct collection templates where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ct collection templates
-	 * @param end the upper bound of the range of ct collection templates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct collection templates
-	 */
-	@Override
-	public List<CTCollectionTemplate> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CTCollectionTemplate> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct collection templates where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -200,41 +144,10 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 	/**
-	 * Returns all the ct collection templates that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching ct collection templates that the user has permission to view
-	 */
-	@Override
-	public List<CTCollectionTemplate> filterFindByCompanyId(long companyId) {
-		return filterFindByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ct collection templates that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ct collection templates
-	 * @param end the upper bound of the range of ct collection templates (not inclusive)
-	 * @return the range of matching ct collection templates that the user has permission to view
-	 */
-	@Override
-	public List<CTCollectionTemplate> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return filterFindByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct collection templates that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTCollectionTemplateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -495,41 +408,37 @@ public class CTCollectionTemplatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_CTCOLLECTIONTEMPLATE_WHERE,
 				_SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE,
 				CTCollectionTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					CTCollectionTemplateImpl.class, CTCollectionTemplate.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_WHERE,
-					_FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE,
+					"ctCollectionTemplate", "CTCollectionTemplate",
+					"ctCollectionTemplate.ctCollectionTemplateId",
+					"SELECT DISTINCT {ctCollectionTemplate.*} FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
+					"SELECT {CTCollectionTemplate.*} FROM (SELECT DISTINCT ctCollectionTemplate.ctCollectionTemplateId FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
+					") TEMP_TABLE INNER JOIN CTCollectionTemplate ON TEMP_TABLE.ctCollectionTemplateId = CTCollectionTemplate.ctCollectionTemplateId",
+					"SELECT COUNT(DISTINCT ctCollectionTemplate.ctCollectionTemplateId) AS COUNT_VALUE FROM CTCollectionTemplate ctCollectionTemplate WHERE ",
 					CTCollectionTemplateModelImpl.ORDER_BY_SQL,
 					CTCollectionTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -591,27 +500,6 @@ public class CTCollectionTemplatePersistenceImpl
 	private static final String _SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE =
 		"SELECT COUNT(ctCollectionTemplate) FROM CTCollectionTemplate ctCollectionTemplate WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"ctCollectionTemplate.ctCollectionTemplateId";
-
-	private static final String _FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_WHERE =
-		"SELECT DISTINCT {ctCollectionTemplate.*} FROM CTCollectionTemplate ctCollectionTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {CTCollectionTemplate.*} FROM (SELECT DISTINCT ctCollectionTemplate.ctCollectionTemplateId FROM CTCollectionTemplate ctCollectionTemplate WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_CTCOLLECTIONTEMPLATE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN CTCollectionTemplate ON TEMP_TABLE.ctCollectionTemplateId = CTCollectionTemplate.ctCollectionTemplateId";
-
-	private static final String _FILTER_SQL_COUNT_CTCOLLECTIONTEMPLATE_WHERE =
-		"SELECT COUNT(DISTINCT ctCollectionTemplate.ctCollectionTemplateId) AS COUNT_VALUE FROM CTCollectionTemplate ctCollectionTemplate WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "ctCollectionTemplate";
-
-	private static final String _FILTER_ENTITY_TABLE = "CTCollectionTemplate";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No CTCollectionTemplate exists with the key {";
 
@@ -621,4 +509,4 @@ public class CTCollectionTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1210366987
+// LIFERAY-SERVICE-BUILDER-HASH:631816193

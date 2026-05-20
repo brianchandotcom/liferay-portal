@@ -1,0 +1,31 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_SCAN_INSIGHT_STATES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_DISMISSED",
+			"key": "dismissed",
+			"name": "Dismissed",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_OPEN",
+			"key": "open",
+			"name": "Open",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_RECURRED",
+			"key": "recurred",
+			"name": "Recurred",
+			"system": true
+		},
+		{
+			"externalReferenceCode": "SEO_STUDIO_SCAN_INSIGHT_STATE_RESOLVED",
+			"key": "resolved",
+			"name": "Resolved",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Scan Insight States",
+	"system": true
+}

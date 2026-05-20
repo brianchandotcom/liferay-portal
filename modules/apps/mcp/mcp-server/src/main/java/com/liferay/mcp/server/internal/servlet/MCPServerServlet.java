@@ -160,15 +160,12 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private Servlet _buildServlet(
-		String baseURL, long companyId, String authorization,
+		String authorization, String baseURL, long companyId,
 		MCPServerProfile mcpServerProfile) {
 
 		HttpServletStatelessServerTransport
 			httpServletStatelessServerTransport =
 				HttpServletStatelessServerTransport.builder(
-				).messageEndpoint(
-					(mcpServerProfile != null) ?
-						"/mcp/" + mcpServerProfile._name : "/mcp"
 				).contextExtractor(
 					request -> McpTransportContext.create(
 						HashMapBuilder.<String, Object>put(
@@ -178,6 +175,9 @@ public class MCPServerServlet extends HttpServlet {
 							request.getHeader(
 								"Liferay-AI-Hub-Cell-On-Behalf-Of")
 						).build())
+				).messageEndpoint(
+					(mcpServerProfile != null) ?
+						"/mcp/" + mcpServerProfile._name : "/mcp"
 				).build();
 
 		List<McpStatelessServerFeatures.SyncToolSpecification>
@@ -255,15 +255,15 @@ public class MCPServerServlet extends HttpServlet {
 			httpServletStatelessServerTransport
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
-			).tools(
-				true
 			).prompts(
 				true
+			).tools(
+				true
 			).build()
-		).tools(
-			syncToolSpecifications
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
+		).tools(
+			syncToolSpecifications
 		).build();
 
 		return new GenericServlet() {
@@ -409,8 +409,8 @@ public class MCPServerServlet extends HttpServlet {
 
 			if (profileName.equals(values.get("name"))) {
 				return new MCPServerProfile(
-					profileName,
-					StringUtil.splitLines((String)values.get("endpoints")));
+					StringUtil.splitLines((String)values.get("endpoints")),
+					profileName);
 			}
 		}
 
@@ -471,7 +471,7 @@ public class MCPServerServlet extends HttpServlet {
 					companyId,
 					(mcpServerProfile != null) ? mcpServerProfile._name : null),
 				servletKey -> _buildServlet(
-					baseURL, companyId, authorization, mcpServerProfile));
+					authorization, baseURL, companyId, mcpServerProfile));
 		}
 	}
 
@@ -526,8 +526,6 @@ public class MCPServerServlet extends HttpServlet {
 		JSONObject toolJSONObject = toolsJSONObject.getJSONObject(name);
 
 		return McpSchema.Tool.builder(
-		).name(
-			name
 		).description(
 			toolJSONObject.getString("description")
 		).inputSchema(
@@ -535,6 +533,8 @@ public class MCPServerServlet extends HttpServlet {
 			toolJSONObject.getJSONObject(
 				"schema"
 			).toString()
+		).name(
+			name
 		).build();
 	}
 
@@ -593,9 +593,9 @@ public class MCPServerServlet extends HttpServlet {
 
 	private static class MCPServerProfile {
 
-		public MCPServerProfile(String name, String[] endpoints) {
-			_name = name;
+		public MCPServerProfile(String[] endpoints, String name) {
 			_endpoints = endpoints;
+			_name = name;
 		}
 
 		private final String[] _endpoints;

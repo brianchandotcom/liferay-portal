@@ -1,12 +1,16 @@
 import * as data from 'test/data';
-import CriteriaSidebarCollapse from '../CriteriaSidebarCollapse';
+import CriteriaSidebarCollapse, {
+	getDefaultValue
+} from '../CriteriaSidebarCollapse';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
 import {FieldOwnerTypes} from 'shared/util/constants';
+import {getIndexFromPropertyName} from '../../utils/custom-inputs';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
 import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
+import {PropertyTypes} from '../../utils/constants';
 
 jest.mock('shared/hooks/useCurrentUser', () => ({
 	useCurrentUser: () => ({isAdmin: () => true})
@@ -248,5 +252,110 @@ describe('CriteriaSidebarCollapse', () => {
 		expect(queryByText('Account Name')).toBeInTheDocument();
 
 		expect(queryByText('no-account-data-synced')).toBeNull();
+	});
+});
+
+describe('getDefaultValue', () => {
+	it('should return a YYYY-MM-DD string for PropertyTypes.Date', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myDate', type: PropertyTypes.Date})
+		);
+
+		expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+	});
+
+	it('should return "true" for PropertyTypes.Boolean', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myBool', type: PropertyTypes.Boolean})
+		);
+
+		expect(result).toBe('true');
+	});
+
+	it('should return empty string for PropertyTypes.Text with no options', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myText', type: PropertyTypes.Text})
+		);
+
+		expect(result).toBe('');
+	});
+
+	it('should return first option value for PropertyTypes.Text with options', () => {
+		const result = getDefaultValue(
+			new Property({
+				name: 'myText',
+				options: [{label: 'Option 1', value: 'opt1'}],
+				type: PropertyTypes.Text
+			})
+		);
+
+		expect(result).toBe('opt1');
+	});
+
+	it('should return CustomValueMap with name and score items for PropertyTypes.Interest', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myInterest', type: PropertyTypes.Interest})
+		);
+		const nameIdx = getIndexFromPropertyName(result, 'name');
+		const scoreIdx = getIndexFromPropertyName(result, 'score');
+
+		expect(nameIdx).toBeGreaterThanOrEqual(0);
+		expect(scoreIdx).toBeGreaterThanOrEqual(0);
+		expect(
+			result.getIn(['criterionGroup', 'items', nameIdx, 'value'])
+		).toBe('myInterest');
+		expect(
+			result.getIn(['criterionGroup', 'items', scoreIdx, 'value'])
+		).toBe('true');
+	});
+
+	it('should return CustomValueMap with activityKey, day, operator and value for PropertyTypes.Behavior', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myBehavior', type: PropertyTypes.Behavior})
+		);
+
+		expect(
+			getIndexFromPropertyName(result, 'activityKey')
+		).toBeGreaterThanOrEqual(0);
+		expect(getIndexFromPropertyName(result, 'day')).toBeGreaterThanOrEqual(
+			0
+		);
+		expect(result.get('operator')).toBeTruthy();
+		expect(result.get('value')).toBe(1);
+	});
+
+	it('should return CustomValueMap with eventId set to property name for PropertyTypes.Event', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myEvent', type: PropertyTypes.Event})
+		);
+		const eventIdx = getIndexFromPropertyName(result, 'eventId');
+
+		expect(eventIdx).toBeGreaterThanOrEqual(0);
+		expect(
+			result.getIn(['criterionGroup', 'items', eventIdx, 'value'])
+		).toBe('myEvent');
+		expect(getIndexFromPropertyName(result, 'day')).toBeGreaterThanOrEqual(
+			0
+		);
+	});
+
+	it('should return CustomValueMap with property name as propertyName and empty value for PropertyTypes.AccountText', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myAccount', type: PropertyTypes.AccountText})
+		);
+		const idx = getIndexFromPropertyName(result, 'myAccount');
+
+		expect(idx).toBeGreaterThanOrEqual(0);
+		expect(result.getIn(['criterionGroup', 'items', idx, 'value'])).toBe(
+			''
+		);
+	});
+
+	it('should return empty string for an unrecognized property type', () => {
+		const result = getDefaultValue(
+			new Property({name: 'myProp', type: 'unknown-type'})
+		);
+
+		expect(result).toBe('');
 	});
 });

@@ -7,22 +7,31 @@ import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-import DateFilter, {DateFilterValues} from '../../../components/date_filter';
-import {FormikFieldContentSelector} from '../../../components/forms/formik';
-import {PortletDataHandlerSection} from '../../../types/portletDataHandler';
+import {DateFilterValues} from '../../../components/date_filter';
+import CheckboxSheet from '../../../components/forms/CheckboxSheet';
+import {
+	FormikFieldContentSelector,
+	FormikFieldDateFilter,
+} from '../../../components/forms/formik';
+import {PreviewPortletDataHandlerSection} from '../../../types/portletDataHandler';
+import {PageTreeModalConfiguration} from './PageTreeModal';
 
 const LABEL_ID = 'dataSelection-label';
 
 export default function DataSelection({
+	deletionCount = 0,
 	itemsCount,
 	loading = false,
 	onApplyFilter,
+	pageTreeModalConfiguration,
 	sections,
 }: {
+	deletionCount?: number;
 	itemsCount?: number;
 	loading?: boolean;
 	onApplyFilter: (filterValues: DateFilterValues) => void;
-	sections: PortletDataHandlerSection[];
+	pageTreeModalConfiguration: PageTreeModalConfiguration;
+	sections: PreviewPortletDataHandlerSection[];
 }) {
 	return (
 		<>
@@ -39,11 +48,21 @@ export default function DataSelection({
 			</header>
 
 			<ClayLayout.Sheet>
-				<DateFilter
+				<FormikFieldDateFilter
 					itemsCount={itemsCount}
+					name="dateFilter"
 					onApplyFilter={onApplyFilter}
 				/>
 			</ClayLayout.Sheet>
+
+			{deletionCount > 0 && (
+				<CheckboxSheet
+					description={Liferay.Language.get('deletions-help-export')}
+					label={Liferay.Language.get('export-individual-deletions')}
+					name="deletions"
+					title={Liferay.Language.get('deletions')}
+				/>
+			)}
 
 			<div className="sr-only" role="status">
 				{loading
@@ -58,6 +77,7 @@ export default function DataSelection({
 					<FormikFieldContentSelector
 						aria-labelledby={LABEL_ID}
 						name="contentSelection"
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						sections={sections}
 					/>
 				)}

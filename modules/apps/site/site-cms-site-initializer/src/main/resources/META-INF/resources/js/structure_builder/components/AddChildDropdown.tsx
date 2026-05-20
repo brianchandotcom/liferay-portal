@@ -34,10 +34,14 @@ export default function AddChildDropdown({
 	className,
 	displayType = 'secondary',
 	parentUuid,
+	triggerProps,
 }: {
 	className?: string;
 	displayType?: 'secondary' | 'unstyled';
 	parentUuid?: RepeatableGroup['uuid'];
+	triggerProps?: React.HTMLAttributes<HTMLButtonElement> & {
+		'data-canonical-name'?: string;
+	};
 }) {
 	const dispatch = useStateDispatch();
 	const structure = useSelector(selectStructure);
@@ -121,6 +125,7 @@ export default function AddChildDropdown({
 						size="sm"
 						symbol="plus"
 						title={Liferay.Language.get('add-field')}
+						{...triggerProps}
 					/>
 				}
 			/>

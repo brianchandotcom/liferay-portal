@@ -8,9 +8,10 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import '../../../../css/utilities.scss';
+import {PageTreeModalConfiguration} from '../../../pages/export/components/PageTreeModal';
 import {
-	PortletDataHandlerBoolean,
-	PortletDataHandlerSection as PortletDataHandlerSectionType,
+	PreviewPortletDataHandlerBoolean,
+	PreviewPortletDataHandlerSection as PortletDataHandlerSectionType,
 } from '../../../types/portletDataHandler';
 import {
 	HandlerSelection,
@@ -19,25 +20,31 @@ import {
 	updateSelection,
 } from '../../../utils/contentSelection';
 import PortletDataControl from './PortletDataControl';
+import SectionTags from './SectionTags';
 
 export type SectionSelection = Record<string, HandlerSelection>;
 
 interface ContentSectionProps {
 	onChange: (value: SectionSelection | undefined) => void;
+	pageTreeModalConfiguration?: PageTreeModalConfiguration;
 	section: PortletDataHandlerSectionType;
+	showDeletions?: boolean;
 	value: SectionSelection | undefined;
 }
 
 export default function ContentSection({
 	onChange,
+	pageTreeModalConfiguration,
 	section,
+	showDeletions,
 	value,
 }: ContentSectionProps) {
 	const portletContextsValue = value || {};
 
-	const controls = section.portletDataHandlers.map<PortletDataHandlerBoolean>(
-		(handler) => ({...handler, type: 'Boolean'})
-	);
+	const controls =
+		section.previewPortletDataHandlers.map<PreviewPortletDataHandlerBoolean>(
+			(handler) => ({...handler, type: 'Boolean'})
+		);
 
 	const selected = controls.every((context) =>
 		isSelected(portletContextsValue[context.name], context)
@@ -59,7 +66,7 @@ export default function ContentSection({
 	};
 
 	return (
-		<div className="mb-5 sheet">
+		<div className="mt-0 sheet">
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>
 					<ClayCheckbox
@@ -73,8 +80,17 @@ export default function ContentSection({
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
-					<div className="font-weight-bold h3 mb-0">
+					<div className="align-items-center d-flex font-weight-bold h3 mb-0">
 						{section.label}
+
+						<SectionTags
+							additionCount={section.additionCount}
+							deletionCount={
+								showDeletions
+									? section.deletionCount
+									: undefined
+							}
+						/>
 					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
@@ -93,6 +109,8 @@ export default function ContentSection({
 								)
 							)
 						}
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
+						showDeletions={showDeletions}
 						value={portletContextsValue[context.name]}
 					/>
 				))}

@@ -201,7 +201,7 @@ public class ChannelController extends BaseFaroController {
 	@GET
 	@Path("/{id}/users")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getUsers(
+	public FaroResultsDisplay getUsersFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("available") boolean available,
 			@QueryParam("query") String query,

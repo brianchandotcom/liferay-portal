@@ -59,6 +59,7 @@ export class CommerceChannelDefaultsPage {
 	readonly channelEntryAddButton: (channelEntryName: string) => Locator;
 	readonly channelEntryHeader: (channelEntryHeaderName: string) => Locator;
 	readonly page: Page;
+	readonly paymentMethodRow: (channelName: string) => Locator;
 
 	constructor(page: Page) {
 		this.defaultBillingCommerceAddresses = page.getByTestId(
@@ -197,5 +198,9 @@ export class CommerceChannelDefaultsPage {
 		this.channelEntryHeader = (channelEntryHeaderName: string) => {
 			return page.getByRole('heading', {name: channelEntryHeaderName});
 		};
+		this.paymentMethodRow = (channelName: string) =>
+			this.defaultCommercePaymentMethod
+				.locator('tr')
+				.filter({hasText: channelName});
 	}
 }

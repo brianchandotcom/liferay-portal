@@ -33,47 +33,6 @@ public interface PatcherAccountPersistence
 	 */
 
 	/**
-	 * Returns all the patcher accounts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching patcher accounts
-	 */
-	public java.util.List<PatcherAccount> findByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the patcher accounts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of patcher accounts
-	 * @param end the upper bound of the range of patcher accounts (not inclusive)
-	 * @return the range of matching patcher accounts
-	 */
-	public java.util.List<PatcherAccount> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the patcher accounts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of patcher accounts
-	 * @param end the upper bound of the range of patcher accounts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher accounts
-	 */
-	public java.util.List<PatcherAccount> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the patcher accounts where companyId = &#63;.
 	 *
 	 * <p>
@@ -118,29 +77,6 @@ public interface PatcherAccountPersistence
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
 			orderByComparator);
-
-	/**
-	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching patcher accounts that the user has permission to view
-	 */
-	public java.util.List<PatcherAccount> filterFindByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the patcher accounts that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of patcher accounts
-	 * @param end the upper bound of the range of patcher accounts (not inclusive)
-	 * @return the range of matching patcher accounts that the user has permission to view
-	 */
-	public java.util.List<PatcherAccount> filterFindByCompanyId(
-		long companyId, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the patcher accounts that the user has permissions to view where companyId = &#63;.
@@ -192,14 +128,6 @@ public interface PatcherAccountPersistence
 	 */
 	public PatcherAccount findByAccountEntryCode(String accountEntryCode)
 		throws NoSuchPatcherAccountException;
-
-	/**
-	 * Returns the patcher account where accountEntryCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryCode the account entry code
-	 * @return the matching patcher account, or <code>null</code> if a matching patcher account could not be found
-	 */
-	public PatcherAccount fetchByAccountEntryCode(String accountEntryCode);
 
 	/**
 	 * Returns the patcher account where accountEntryCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -608,5 +536,102 @@ public interface PatcherAccountPersistence
 		java.util.List<com.liferay.osb.patcher.model.PatcherBuild>
 			patcherBuilds);
 
+	/**
+	 * Returns the patcher account where accountEntryCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryCode the account entry code
+	 * @return the matching patcher account, or <code>null</code> if a matching patcher account could not be found
+	 */
+	public default PatcherAccount fetchByAccountEntryCode(
+		String accountEntryCode) {
+
+		return fetchByAccountEntryCode(accountEntryCode, true);
+	}
+
+	/**
+	 * Returns all the patcher accounts where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching patcher accounts
+	 */
+	public default java.util.List<PatcherAccount> findByCompanyId(
+		long companyId) {
+
+		return findByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the patcher accounts where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of patcher accounts
+	 * @param end the upper bound of the range of patcher accounts (not inclusive)
+	 * @return the range of matching patcher accounts
+	 */
+	public default java.util.List<PatcherAccount> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return findByCompanyId(companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher accounts where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of patcher accounts
+	 * @param end the upper bound of the range of patcher accounts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher accounts
+	 */
+	public default java.util.List<PatcherAccount> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<PatcherAccount>
+			orderByComparator) {
+
+		return findByCompanyId(companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the patcher accounts that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching patcher accounts that the user has permission to view
+	 */
+	public default java.util.List<PatcherAccount> filterFindByCompanyId(
+		long companyId) {
+
+		return filterFindByCompanyId(
+			companyId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the patcher accounts that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherAccountModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of patcher accounts
+	 * @param end the upper bound of the range of patcher accounts (not inclusive)
+	 * @return the range of matching patcher accounts that the user has permission to view
+	 */
+	public default java.util.List<PatcherAccount> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return filterFindByCompanyId(companyId, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505964502
+// LIFERAY-SERVICE-BUILDER-HASH:-938384950

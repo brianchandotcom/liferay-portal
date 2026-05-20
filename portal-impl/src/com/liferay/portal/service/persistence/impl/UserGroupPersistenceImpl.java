@@ -96,60 +96,8 @@ public class UserGroupPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the user groups where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user groups where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63;.
@@ -217,35 +165,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the user groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByUuid(String uuid) {
-		return filterFindByUuid(
-			uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups that the user has permission to view where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByUuid(String uuid, int start, int end) {
-		return filterFindByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user groups that the user has permissions to view where uuid = &#63;.
 	 *
 	 * <p>
@@ -303,67 +222,8 @@ public class UserGroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the user groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user groups where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user groups where uuid = &#63; and companyId = &#63;.
@@ -437,39 +297,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the user groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId) {
-		return filterFindByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups that the user has permission to view where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return filterFindByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user groups that the user has permissions to view where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -532,61 +359,8 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the user groups where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user groups where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63;.
@@ -655,37 +429,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the user groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByCompanyId(long companyId) {
-		return filterFindByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user groups that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return filterFindByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user groups that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
@@ -744,68 +487,8 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_P;
-	private FinderPath _finderPathCountByC_P;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByC_P;
-
-	/**
-	 * Returns all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @return the matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId) {
-		return findByC_P(
-			companyId, parentUserGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByC_P(
-		long companyId, long parentUserGroupId, int start, int end) {
-
-		return findByC_P(companyId, parentUserGroupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user groups
-	 */
-	@Override
-	public List<UserGroup> findByC_P(
-		long companyId, long parentUserGroupId, int start, int end,
-		OrderByComparator<UserGroup> orderByComparator) {
-
-		return findByC_P(
-			companyId, parentUserGroupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user groups where companyId = &#63; and parentUserGroupId = &#63;.
@@ -881,42 +564,6 @@ public class UserGroupPersistenceImpl
 	}
 
 	/**
-	 * Returns all the user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @return the matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByC_P(
-		long companyId, long parentUserGroupId) {
-
-		return filterFindByC_P(
-			companyId, parentUserGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user groups that the user has permission to view where companyId = &#63; and parentUserGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserGroupModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param parentUserGroupId the parent user group ID
-	 * @param start the lower bound of the range of user groups
-	 * @param end the upper bound of the range of user groups (not inclusive)
-	 * @return the range of matching user groups that the user has permission to view
-	 */
-	@Override
-	public List<UserGroup> filterFindByC_P(
-		long companyId, long parentUserGroupId, int start, int end) {
-
-		return filterFindByC_P(companyId, parentUserGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the user groups that the user has permissions to view where companyId = &#63; and parentUserGroupId = &#63;.
 	 *
 	 * <p>
@@ -982,7 +629,6 @@ public class UserGroupPersistenceImpl
 			new Object[] {companyId, parentUserGroupId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathFetchByC_N;
 	private UniquePersistenceFinder<UserGroup> _uniquePersistenceFinderByC_N;
 
 	/**
@@ -1012,18 +658,6 @@ public class UserGroupPersistenceImpl
 		}
 
 		return userGroup;
-	}
-
-	/**
-	 * Returns the user group where companyId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param name the name
-	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByC_N(long companyId, String name) {
-		return fetchByC_N(companyId, name, true);
 	}
 
 	/**
@@ -1072,8 +706,6 @@ public class UserGroupPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LikeN;
-	private FinderPath _finderPathWithPaginationCountByC_LikeN;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByC_LikeN;
 
@@ -1300,8 +932,6 @@ public class UserGroupPersistenceImpl
 			companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGtU_C_P;
-	private FinderPath _finderPathWithPaginationCountByGtU_C_P;
 	private FilterCollectionPersistenceFinder<UserGroup>
 		_collectionPersistenceFinderByGtU_C_P;
 
@@ -1564,7 +1194,6 @@ public class UserGroupPersistenceImpl
 			0);
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<UserGroup> _uniquePersistenceFinderByERC_C;
 
 	/**
@@ -1595,20 +1224,6 @@ public class UserGroupPersistenceImpl
 		}
 
 		return userGroup;
-	}
-
-	/**
-	 * Returns the user group where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
-	 */
-	@Override
-	public UserGroup fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -3000,76 +2615,68 @@ public class UserGroupPersistenceImpl
 			"Users_UserGroups", "companyId", "userGroupId", "userId", this,
 			userPersistence);
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid,
-				_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+					new String[] {String.class.getName()},
+					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, UserGroup::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_USERGROUP_WHERE,
-				_SQL_COUNT_USERGROUP_WHERE, UserGroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3079,76 +2686,68 @@ public class UserGroupPersistenceImpl
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_USERGROUP_WHERE,
-				_SQL_COUNT_USERGROUP_WHERE, UserGroupModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
+				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"userGroup.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, UserGroup::getCompanyId));
 
-		_finderPathWithPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "parentUserGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "parentUserGroupId"}, true);
-
-		_finderPathCountByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "parentUserGroupId"}, false);
-
 		_collectionPersistenceFinderByC_P =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_P,
-				_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "parentUserGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "parentUserGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"companyId", "parentUserGroupId"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3158,14 +2757,15 @@ public class UserGroupPersistenceImpl
 					"userGroup.", "parentUserGroupId", FinderColumn.Type.LONG,
 					"=", true, true, UserGroup::getParentUserGroupId));
 
-		_finderPathFetchByC_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, 2, 2, false,
-			UserGroup::getCompanyId, convertCaseFunction(UserGroup::getName));
-
 		_uniquePersistenceFinderByC_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_N, _SQL_SELECT_USERGROUP_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "name"}, 2, 2, false,
+				UserGroup::getCompanyId,
+				convertCaseFunction(UserGroup::getName)),
+			_SQL_SELECT_USERGROUP_WHERE, "",
 			new FinderColumn<>(
 				"userGroup.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, UserGroup::getCompanyId),
@@ -3173,33 +2773,31 @@ public class UserGroupPersistenceImpl
 				"userGroup.", "name", FinderColumn.Type.STRING, "=", false,
 				true, UserGroup::getName));
 
-		_finderPathWithPaginationFindByC_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "name"}, true);
-
-		_finderPathWithPaginationCountByC_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "name"}, false);
-
 		_collectionPersistenceFinderByC_LikeN =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_LikeN, null,
-				_finderPathWithPaginationCountByC_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"companyId", "name"}, false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3209,37 +2807,41 @@ public class UserGroupPersistenceImpl
 					"userGroup.", "name", FinderColumn.Type.STRING, "LIKE",
 					false, true, UserGroup::getName));
 
-		_finderPathWithPaginationFindByGtU_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtU_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userGroupId", "companyId", "parentUserGroupId"},
-			true);
-
-		_finderPathWithPaginationCountByGtU_C_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtU_C_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"userGroupId", "companyId", "parentUserGroupId"},
-			false);
-
 		_collectionPersistenceFinderByGtU_C_P =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGtU_C_P, null,
-				_finderPathWithPaginationCountByGtU_C_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtU_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userGroupId", "companyId", "parentUserGroupId"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGtU_C_P",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"userGroupId", "companyId", "parentUserGroupId"
+					},
+					false),
 				_SQL_SELECT_USERGROUP_WHERE, _SQL_COUNT_USERGROUP_WHERE,
 				UserGroupModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					UserGroupImpl.class, UserGroup.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_USERGROUP_WHERE,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_USERGROUP_WHERE,
+					UserGroupImpl.class, UserGroup.class, "userGroup",
+					"UserGroup", "userGroup.userGroupId",
+					"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ",
+					"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ",
+					") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId",
+					"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ",
 					UserGroupModelImpl.ORDER_BY_SQL,
 					UserGroupModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -3252,15 +2854,15 @@ public class UserGroupPersistenceImpl
 					"userGroup.", "parentUserGroupId", FinderColumn.Type.LONG,
 					"=", true, true, UserGroup::getParentUserGroupId));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(UserGroup::getExternalReferenceCode),
-			UserGroup::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C, _SQL_SELECT_USERGROUP_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false, convertNullFunction(UserGroup::getExternalReferenceCode),
+				UserGroup::getCompanyId),
+			_SQL_SELECT_USERGROUP_WHERE, "",
 			new FinderColumn<>(
 				"userGroup.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, UserGroup::getExternalReferenceCode),
@@ -3311,27 +2913,6 @@ public class UserGroupPersistenceImpl
 	private static final String _SQL_COUNT_USERGROUP_WHERE =
 		"SELECT COUNT(userGroup) FROM UserGroup userGroup WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"userGroup.userGroupId";
-
-	private static final String _FILTER_SQL_SELECT_USERGROUP_WHERE =
-		"SELECT DISTINCT {userGroup.*} FROM UserGroup userGroup WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {UserGroup.*} FROM (SELECT DISTINCT userGroup.userGroupId FROM UserGroup userGroup WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_USERGROUP_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN UserGroup ON TEMP_TABLE.userGroupId = UserGroup.userGroupId";
-
-	private static final String _FILTER_SQL_COUNT_USERGROUP_WHERE =
-		"SELECT COUNT(DISTINCT userGroup.userGroupId) AS COUNT_VALUE FROM UserGroup userGroup WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "userGroup";
-
-	private static final String _FILTER_ENTITY_TABLE = "UserGroup";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No UserGroup exists with the key {";
 
@@ -3347,4 +2928,4 @@ public class UserGroupPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:884338066
+// LIFERAY-SERVICE-BUILDER-HASH:1144137114

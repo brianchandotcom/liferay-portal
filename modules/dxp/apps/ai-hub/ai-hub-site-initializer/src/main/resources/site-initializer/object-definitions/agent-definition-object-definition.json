@@ -36,7 +36,7 @@
 				"en_US": "Description"
 			},
 			"name": "description",
-			"readOnly": "false",
+			"readOnly": false,
 			"readOnlyConditionExpression": "",
 			"system": true,
 			"type": "Clob"
@@ -52,7 +52,7 @@
 				"en_US": "Input Variables"
 			},
 			"name": "inputVariables",
-			"readOnly": "false",
+			"readOnly": false,
 			"required": true,
 			"system": true,
 			"type": "String"
@@ -68,7 +68,7 @@
 				"en_US": "Output Variable"
 			},
 			"name": "outputVariable",
-			"readOnly": "false",
+			"readOnly": false,
 			"required": true,
 			"system": true,
 			"type": "String"
@@ -85,7 +85,7 @@
 			},
 			"localized": true,
 			"name": "title",
-			"readOnly": "false",
+			"readOnly": false,
 			"system": true,
 			"type": "String"
 		},
@@ -100,7 +100,7 @@
 				"en_US": "Workflow Definition Name"
 			},
 			"name": "workflowDefinitionName",
-			"readOnly": "false",
+			"readOnly": false,
 			"required": true,
 			"system": true,
 			"type": "String"
@@ -128,7 +128,7 @@
 				}
 			],
 			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS",
-			"readOnly": "false",
+			"readOnly": false,
 			"relationshipType": "oneToMany",
 			"required": true,
 			"system": true,

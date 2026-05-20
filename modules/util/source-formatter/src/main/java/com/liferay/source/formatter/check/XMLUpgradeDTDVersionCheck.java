@@ -37,8 +37,14 @@ public class XMLUpgradeDTDVersionCheck extends XMLDTDVersionCheck {
 		String[] upgradeToVersionParts = StringUtil.split(
 			_upgradeToVersion, StringPool.PERIOD);
 
-		if (upgradeToVersionParts == null) {
+		if ((upgradeToVersionParts == null) ||
+			(upgradeToVersionParts.length < 2)) {
+
 			return null;
+		}
+
+		if (upgradeToVersionParts[1].startsWith("q")) {
+			return "7_4_0";
 		}
 
 		return StringBundler.concat(

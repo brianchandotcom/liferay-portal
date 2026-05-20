@@ -10,6 +10,8 @@ jobs:
                 uses: actions/checkout@v4
             -   name: Install Helm
                 uses: azure/setup-helm@v4
+            -   name: Install helm-unittest plugin
+                run: helm plugin install --verify=false --version 1.0.3 https://github.com/helm-unittest/helm-unittest
             -   name: Set up Kubeconform
                 uses: bmuschko/setup-kubeconform@v1
                 with:
@@ -19,6 +21,27 @@ jobs:
                 working-directory: ./cloud/helm/${{matrix.chart}}
             -   name: Lint Helm chart
                 run: helm lint .
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Run Helm chart tests
+                run: helm unittest .
+                working-directory: ./cloud/helm/${{matrix.chart}}
+            -   name: Run Bash tests
+                run: |
+                    set -o errexit
+
+                    function main {
+                        local test
+
+                        for test in scripts/tests/*-test.sh tests/*_test.sh
+                        do
+                            if [ -f "${test}" ]
+                            then
+                                bash "${test}"
+                            fi
+                        done
+                    }
+
+                    main
                 working-directory: ./cloud/helm/${{matrix.chart}}
             -   name: Render and validate Helm chart
                 run: |

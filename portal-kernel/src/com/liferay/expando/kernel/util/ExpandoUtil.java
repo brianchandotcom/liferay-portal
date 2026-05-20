@@ -46,11 +46,13 @@ import java.util.TimeZone;
  */
 public class ExpandoUtil {
 
-	public static void fillMissingDefaultLocaleValues(
+	public static List<String> fillMissingDefaultLocaleValues(
 		Map<String, Serializable> expandoBridgeAttributes) {
 
+		List<String> warningMessages = new ArrayList<>();
+
 		if (expandoBridgeAttributes == null) {
-			return;
+			return warningMessages;
 		}
 
 		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
@@ -89,20 +91,25 @@ public class ExpandoUtil {
 				if (_hasLocalizedExpandoValue(localeEntry.getValue())) {
 					localizedMap.put(siteDefaultLocale, localeEntry.getValue());
 
+					String warningMessage = StringBundler.concat(
+						"Using value from locale ",
+						LocaleUtil.toLanguageId(localeEntry.getKey()),
+						" for expando attribute \"", entry.getKey(),
+						"\" because default locale ", siteDefaultLanguageId,
+						" has no value");
+
+					warningMessages.add(warningMessage);
+
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							StringBundler.concat(
-								"Using value from locale ",
-								LocaleUtil.toLanguageId(localeEntry.getKey()),
-								" for expando attribute \"", entry.getKey(),
-								"\" because default locale ",
-								siteDefaultLanguageId, " has no value"));
+						_log.warn(warningMessage);
 					}
 
 					break;
 				}
 			}
 		}
+
+		return warningMessages;
 	}
 
 	public static Map<String, Serializable> getExpandoBridgeAttributes(

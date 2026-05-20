@@ -20,10 +20,15 @@ import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.test.util.logging.ExpectedLog;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.List;
+
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -78,57 +83,97 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 			_elasticsearchEngineAdapterFixture.getSearchEngineAdapter();
 	}
 
-	@ExpectedLog(
-		expectedClass = CountSearchRequestExecutor.class,
-		expectedLevel = ExpectedLog.Level.FINE,
-		expectedLog = "The search engine processed"
-	)
 	@Test
 	public void testCountSearchRequestExecutorLogs() {
-		_searchEngineAdapter.execute(
-			new CountSearchRequest() {
-				{
-					setIndexNames("_all");
-					setQuery(new MatchAllQuery());
-				}
-			});
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				CountSearchRequestExecutor.class.getName(),
+				LoggerTestUtil.DEBUG)) {
+
+			_searchEngineAdapter.execute(
+				new CountSearchRequest() {
+					{
+						setIndexNames(_INDEX_NAME);
+						setQuery(new MatchAllQuery());
+					}
+				});
+
+			_assertSearchRequestExecutorLogEntries(logCapture.getLogEntries());
+		}
 	}
 
-	@ExpectedLog(
-		expectedClass = MultisearchSearchRequestExecutor.class,
-		expectedLevel = ExpectedLog.Level.FINE,
-		expectedLog = "The search engine processed"
-	)
 	@Test
 	public void testMultisearchSearchRequestExecutorLogs() {
-		_searchEngineAdapter.execute(
-			new MultisearchSearchRequest() {
-				{
-					addSearchSearchRequest(
-						new SearchSearchRequest() {
-							{
-								setIndexNames("_all");
-								setQuery(new MatchAllQuery());
-							}
-						});
-				}
-			});
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				MultisearchSearchRequestExecutor.class.getName(),
+				LoggerTestUtil.DEBUG)) {
+
+			_searchEngineAdapter.execute(
+				new MultisearchSearchRequest() {
+					{
+						addSearchSearchRequest(
+							new SearchSearchRequest() {
+								{
+									setIndexNames(_INDEX_NAME);
+									setQuery(new MatchAllQuery());
+								}
+							});
+					}
+				});
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			_assertLogEntry(
+				logEntries.get(0), "The search engine processed",
+				LoggerTestUtil.DEBUG);
+		}
 	}
 
-	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutor.class,
-		expectedLevel = ExpectedLog.Level.FINE,
-		expectedLog = "The search engine processed"
-	)
 	@Test
 	public void testSearchSearchRequestExecutorLogs() {
-		_searchEngineAdapter.execute(
-			new SearchSearchRequest() {
-				{
-					setIndexNames("_all");
-					setQuery(new MatchAllQuery());
-				}
-			});
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SearchSearchRequestExecutor.class.getName(),
+				LoggerTestUtil.DEBUG)) {
+
+			_searchEngineAdapter.execute(
+				new SearchSearchRequest() {
+					{
+						setIndexNames(_INDEX_NAME);
+						setQuery(new MatchAllQuery());
+					}
+				});
+
+			_assertSearchRequestExecutorLogEntries(logCapture.getLogEntries());
+		}
+	}
+
+	private void _assertLogEntry(
+		LogEntry logEntry, String expectedMessage, String logLevel) {
+
+		String message = logEntry.getMessage();
+
+		Assert.assertEquals(logLevel, logEntry.getPriority());
+		Assert.assertTrue(
+			message + " does not start with " + expectedMessage,
+			message.startsWith(expectedMessage));
+	}
+
+	private void _assertSearchRequestExecutorLogEntries(
+		List<LogEntry> logEntries) {
+
+		Assert.assertEquals(logEntries.toString(), 3, logEntries.size());
+
+		_assertLogEntry(
+			logEntries.get(0), "Stack trace for [" + _INDEX_NAME + "]:",
+			LoggerTestUtil.INFO);
+		_assertLogEntry(
+			logEntries.get(1),
+			"Search request string for [" + _INDEX_NAME + "]:",
+			LoggerTestUtil.DEBUG);
+		_assertLogEntry(
+			logEntries.get(2), "The search engine processed the request in",
+			LoggerTestUtil.DEBUG);
 	}
 
 	private void _waitForElasticsearchToStart(
@@ -147,6 +192,8 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 				}
 			});
 	}
+
+	private static final String _INDEX_NAME = "_all";
 
 	private static ElasticsearchConnectionFixture
 		_elasticsearchConnectionFixture;

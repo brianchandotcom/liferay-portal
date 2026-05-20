@@ -1,42 +1,13 @@
 import Card from 'shared/components/Card';
 import React from 'react';
 import {columns, pagination, useSnapshots} from 'shared/util/frontend-data-set';
-import {LifecycleStages} from 'contacts/pages/account/utils/constants';
+import {
+	LifecycleStages,
+	lifecycleStagesLabelMap
+} from 'contacts/pages/account/utils/constants';
 import {Routes} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
-
-type DisplayType = 'danger' | 'info' | 'secondary' | 'success' | 'warning';
-
-const lifecycleStagesLabelMap: Record<
-	LifecycleStages,
-	{displayType: DisplayType; label: string}
-> = {
-	[LifecycleStages.AT_RISK]: {
-		displayType: 'danger',
-		label: Liferay.Language.get('at-risk')
-	},
-	[LifecycleStages.AWARE]: {
-		displayType: 'secondary',
-		label: Liferay.Language.get('aware')
-	},
-	[LifecycleStages.ENGAGED]: {
-		displayType: 'warning',
-		label: Liferay.Language.get('engaged')
-	},
-	[LifecycleStages.ESTABLISHED]: {
-		displayType: 'success',
-		label: Liferay.Language.get('established')
-	},
-	[LifecycleStages.ONBOARDING]: {
-		displayType: 'secondary',
-		label: Liferay.Language.get('onboarding')
-	},
-	[LifecycleStages.PIPELINE]: {
-		displayType: 'info',
-		label: Liferay.Language.get('pipeline')
-	}
-};
 
 const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
 	([stage]) => ({
@@ -46,6 +17,7 @@ const lifecycleStageItems = Object.entries(lifecycleStagesLabelMap).map(
 );
 
 interface IAccountsDataSetProps {
+	apiURL: string;
 	channelId: string;
 	countryFilter?: string;
 	groupId: string;
@@ -63,6 +35,7 @@ const buildSelectionPreloadedData = (value?: string, label?: string) =>
 		: undefined;
 
 const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
+	apiURL,
 	channelId,
 	countryFilter,
 	groupId,
@@ -81,7 +54,7 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	return (
 		<Card>
 			<FrontendDataSet
-				apiURL={`/o/faro/contacts/${groupId}/account/search`}
+				apiURL={apiURL}
 				configInURLBehavior='off'
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({

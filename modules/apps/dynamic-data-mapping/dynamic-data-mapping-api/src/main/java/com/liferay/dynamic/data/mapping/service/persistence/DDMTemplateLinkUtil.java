@@ -125,55 +125,6 @@ public class DDMTemplateLinkUtil {
 	}
 
 	/**
-	 * Returns all the ddm template links where templateId = &#63;.
-	 *
-	 * @param templateId the template ID
-	 * @return the matching ddm template links
-	 */
-	public static List<DDMTemplateLink> findByTemplateId(long templateId) {
-		return getPersistence().findByTemplateId(templateId);
-	}
-
-	/**
-	 * Returns a range of all the ddm template links where templateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param start the lower bound of the range of ddm template links
-	 * @param end the upper bound of the range of ddm template links (not inclusive)
-	 * @return the range of matching ddm template links
-	 */
-	public static List<DDMTemplateLink> findByTemplateId(
-		long templateId, int start, int end) {
-
-		return getPersistence().findByTemplateId(templateId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm template links where templateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param templateId the template ID
-	 * @param start the lower bound of the range of ddm template links
-	 * @param end the upper bound of the range of ddm template links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm template links
-	 */
-	public static List<DDMTemplateLink> findByTemplateId(
-		long templateId, int start, int end,
-		OrderByComparator<DDMTemplateLink> orderByComparator) {
-
-		return getPersistence().findByTemplateId(
-			templateId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm template links where templateId = &#63;.
 	 *
 	 * <p>
@@ -260,17 +211,6 @@ public class DDMTemplateLinkUtil {
 			NoSuchTemplateLinkException {
 
 		return getPersistence().findByC_C(classNameId, classPK);
-	}
-
-	/**
-	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
-	 */
-	public static DDMTemplateLink fetchByC_C(long classNameId, long classPK) {
-		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -365,6 +305,66 @@ public class DDMTemplateLinkUtil {
 		return getPersistence().fetchByPrimaryKey(templateLinkId);
 	}
 
+	/**
+	 * Returns the ddm template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
+	 */
+	public static DDMTemplateLink fetchByC_C(long classNameId, long classPK) {
+		return getPersistence().fetchByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns all the ddm template links where templateId = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @return the matching ddm template links
+	 */
+	public static List<DDMTemplateLink> findByTemplateId(long templateId) {
+		return getPersistence().findByTemplateId(templateId);
+	}
+
+	/**
+	 * Returns a range of all the ddm template links where templateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param templateId the template ID
+	 * @param start the lower bound of the range of ddm template links
+	 * @param end the upper bound of the range of ddm template links (not inclusive)
+	 * @return the range of matching ddm template links
+	 */
+	public static List<DDMTemplateLink> findByTemplateId(
+		long templateId, int start, int end) {
+
+		return getPersistence().findByTemplateId(templateId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm template links where templateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param templateId the template ID
+	 * @param start the lower bound of the range of ddm template links
+	 * @param end the upper bound of the range of ddm template links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm template links
+	 */
+	public static List<DDMTemplateLink> findByTemplateId(
+		long templateId, int start, int end,
+		OrderByComparator<DDMTemplateLink> orderByComparator) {
+
+		return getPersistence().findByTemplateId(
+			templateId, start, end, orderByComparator);
+	}
+
 	public static DDMTemplateLinkPersistence getPersistence() {
 		return _persistence;
 	}
@@ -376,4 +376,4 @@ public class DDMTemplateLinkUtil {
 	private static volatile DDMTemplateLinkPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1920680540
+// LIFERAY-SERVICE-BUILDER-HASH:-1972470312

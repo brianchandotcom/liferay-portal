@@ -6,7 +6,7 @@
 package com.liferay.headless.cms.internal.resource.v1_0;
 
 import com.liferay.depot.constants.DepotConstants;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.cms.dto.v1_0.AssetStatistics;
 import com.liferay.headless.cms.resource.v1_0.AssetStatisticsResource;
 import com.liferay.object.constants.ObjectFolderConstants;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.site.cms.site.initializer.constants.CMSWorkflowConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -49,7 +50,7 @@ public class AssetStatisticsResourceImpl
 		}
 
 		List<Long> depotEntryGroupIds =
-			_depotEntryLocalService.getDepotEntryGroupIds(
+			_depotEntryService.getDepotEntryGroupIds(
 				contextCompany.getCompanyId(), contextUser.getUserId(),
 				DepotConstants.TYPE_SPACE);
 
@@ -71,8 +72,8 @@ public class AssetStatisticsResourceImpl
 			return _toAssetStatistics();
 		}
 
-		Long[] groupIds = depotEntryGroupIds.toArray(new Long[0]);
 		Date date = new Date();
+		Long[] groupIds = depotEntryGroupIds.toArray(new Long[0]);
 
 		return new AssetStatistics() {
 			{
@@ -103,6 +104,11 @@ public class AssetStatisticsResourceImpl
 					() -> _getCount(
 						groupIds, objectDefinitionIds,
 						ObjectEntryTable.INSTANCE.reviewDate.lt(date)));
+				setTotalCount(
+					() -> _getCount(
+						groupIds, objectDefinitionIds,
+						ObjectEntryTable.INSTANCE.status.in(
+							CMSWorkflowConstants.STATUSES)));
 			}
 		};
 	}
@@ -131,6 +137,7 @@ public class AssetStatisticsResourceImpl
 				setExpiringSoonCount(() -> 0L);
 				setInDraftCount(() -> 0L);
 				setReviewDateOverdueCount(() -> 0L);
+				setTotalCount(() -> 0L);
 			}
 		};
 	}
@@ -141,7 +148,7 @@ public class AssetStatisticsResourceImpl
 		AssetStatisticsResourceImpl.class);
 
 	@Reference
-	private DepotEntryLocalService _depotEntryLocalService;
+	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;

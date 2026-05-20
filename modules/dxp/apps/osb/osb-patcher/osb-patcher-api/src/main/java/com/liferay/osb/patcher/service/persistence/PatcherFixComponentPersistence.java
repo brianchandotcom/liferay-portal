@@ -43,14 +43,6 @@ public interface PatcherFixComponentPersistence
 		throws NoSuchPatcherFixComponentException;
 
 	/**
-	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching patcher fix component, or <code>null</code> if a matching patcher fix component could not be found
-	 */
-	public PatcherFixComponent fetchByName(String name);
-
-	/**
 	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -115,5 +107,15 @@ public interface PatcherFixComponentPersistence
 	 */
 	public PatcherFixComponent fetchByPrimaryKey(long patcherFixComponentId);
 
+	/**
+	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching patcher fix component, or <code>null</code> if a matching patcher fix component could not be found
+	 */
+	public default PatcherFixComponent fetchByName(String name) {
+		return fetchByName(name, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1521031348
+// LIFERAY-SERVICE-BUILDER-HASH:-1780984624

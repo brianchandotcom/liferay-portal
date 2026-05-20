@@ -34,47 +34,6 @@ public interface AssetTagGroupRelPersistence
 	 */
 
 	/**
-	 * Returns all the asset tag group rels where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the asset tag group rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @return the range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the asset tag group rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the asset tag group rels where uuid = &#63;.
 	 *
 	 * <p>
@@ -147,15 +106,6 @@ public interface AssetTagGroupRelPersistence
 		throws NoSuchTagGroupRelException;
 
 	/**
-	 * Returns the asset tag group rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the asset tag group rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -184,51 +134,6 @@ public interface AssetTagGroupRelPersistence
 	 * @return the number of matching asset tag group rels
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the asset tag group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @return the range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
@@ -297,47 +202,6 @@ public interface AssetTagGroupRelPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the asset tag group rels where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the asset tag group rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @return the range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the asset tag group rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the asset tag group rels where groupId = &#63;.
 	 *
 	 * <p>
@@ -397,47 +261,6 @@ public interface AssetTagGroupRelPersistence
 	 * @return the number of matching asset tag group rels
 	 */
 	public int countByGroupId(long groupId);
-
-	/**
-	 * Returns all the asset tag group rels where tagId = &#63;.
-	 *
-	 * @param tagId the tag ID
-	 * @return the matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByTagId(long tagId);
-
-	/**
-	 * Returns a range of all the asset tag group rels where tagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tagId the tag ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @return the range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByTagId(
-		long tagId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the asset tag group rels where tagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tagId the tag ID
-	 * @param start the lower bound of the range of asset tag group rels
-	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset tag group rels
-	 */
-	public java.util.List<AssetTagGroupRel> findByTagId(
-		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where tagId = &#63;.
@@ -512,15 +335,6 @@ public interface AssetTagGroupRelPersistence
 		throws NoSuchTagGroupRelException;
 
 	/**
-	 * Returns the asset tag group rel where groupId = &#63; and tagId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param tagId the tag ID
-	 * @return the matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
-	 */
-	public AssetTagGroupRel fetchByG_T(long groupId, long tagId);
-
-	/**
 	 * Returns the asset tag group rel where groupId = &#63; and tagId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -588,5 +402,240 @@ public interface AssetTagGroupRelPersistence
 	 */
 	public AssetTagGroupRel fetchByPrimaryKey(long assetTagGroupRelId);
 
+	/**
+	 * Returns the asset tag group rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
+	 */
+	public default AssetTagGroupRel fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the asset tag group rel where groupId = &#63; and tagId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param tagId the tag ID
+	 * @return the matching asset tag group rel, or <code>null</code> if a matching asset tag group rel could not be found
+	 */
+	public default AssetTagGroupRel fetchByG_T(long groupId, long tagId) {
+		return fetchByG_T(groupId, tagId, true);
+	}
+
+	/**
+	 * Returns all the asset tag group rels where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the asset tag group rels where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @return the range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tag group rels where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the asset tag group rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @return the range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the asset tag group rels where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByGroupId(
+		long groupId) {
+
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the asset tag group rels where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @return the range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tag group rels where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the asset tag group rels where tagId = &#63;.
+	 *
+	 * @param tagId the tag ID
+	 * @return the matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByTagId(long tagId) {
+		return findByTagId(
+			tagId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the asset tag group rels where tagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tagId the tag ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @return the range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByTagId(
+		long tagId, int start, int end) {
+
+		return findByTagId(tagId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset tag group rels where tagId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.asset.model.impl.AssetTagGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tagId the tag ID
+	 * @param start the lower bound of the range of asset tag group rels
+	 * @param end the upper bound of the range of asset tag group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset tag group rels
+	 */
+	public default java.util.List<AssetTagGroupRel> findByTagId(
+		long tagId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AssetTagGroupRel>
+			orderByComparator) {
+
+		return findByTagId(tagId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-407981229
+// LIFERAY-SERVICE-BUILDER-HASH:585083592

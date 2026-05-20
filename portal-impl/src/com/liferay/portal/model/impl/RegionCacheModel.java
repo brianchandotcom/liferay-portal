@@ -67,7 +67,7 @@ public class RegionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -75,6 +75,8 @@ public class RegionCacheModel
 		sb.append(ctCollectionId);
 		sb.append(", uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", defaultLanguageId=");
 		sb.append(defaultLanguageId);
 		sb.append(", regionId=");
@@ -101,6 +103,8 @@ public class RegionCacheModel
 		sb.append(regionCode);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,6 +122,13 @@ public class RegionCacheModel
 		}
 		else {
 			regionImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			regionImpl.setExternalReferenceCode("");
+		}
+		else {
+			regionImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		if (defaultLanguageId == null) {
@@ -178,6 +189,8 @@ public class RegionCacheModel
 			regionImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		regionImpl.setStatus(status);
+
 		regionImpl.resetOriginalValues();
 
 		return regionImpl;
@@ -189,6 +202,7 @@ public class RegionCacheModel
 
 		ctCollectionId = objectInput.readLong();
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 		defaultLanguageId = objectInput.readUTF();
 
 		regionId = objectInput.readLong();
@@ -208,6 +222,8 @@ public class RegionCacheModel
 		position = objectInput.readDouble();
 		regionCode = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -221,6 +237,13 @@ public class RegionCacheModel
 		}
 		else {
 			objectOutput.writeUTF(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
 		}
 
 		if (defaultLanguageId == null) {
@@ -267,11 +290,14 @@ public class RegionCacheModel
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
 	public long ctCollectionId;
 	public String uuid;
+	public String externalReferenceCode;
 	public String defaultLanguageId;
 	public long regionId;
 	public long companyId;
@@ -285,6 +311,7 @@ public class RegionCacheModel
 	public double position;
 	public String regionCode;
 	public long lastPublishDate;
+	public int status;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:49238038
+// LIFERAY-SERVICE-BUILDER-HASH:1950070651

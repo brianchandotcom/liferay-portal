@@ -6,8 +6,6 @@
 package com.liferay.osb.faro.web.internal.controller.contacts;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummaryType;
-import com.liferay.osb.faro.engine.client.model.Results;
-import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.model.display.FaroFDSResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.AssetSummaryTypeDisplay;
@@ -20,8 +18,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-import java.util.function.Function;
-
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -33,28 +29,22 @@ import org.osgi.service.component.annotations.Component;
 public class AssetSummaryTypeController extends BaseFaroController {
 
 	@GET
-	public FaroFDSResultsDisplay getAssetSummaryTypes(
-			@PathParam("groupId") long groupId,
-			@QueryParam("channelId") long channelId,
-			@QueryParam("page") int page,
-			@DefaultValue("20") @QueryParam("pageSize") int pageSize,
-			@QueryParam("rangeEnd") String rangeEnd,
-			@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
-			@QueryParam("rangeStart") String rangeStart)
+	public FaroFDSResultsDisplay<AssetSummaryType>
+			getAssetSummaryTypesFaroFDSResultsDisplay(
+				@PathParam("groupId") long groupId,
+				@QueryParam("channelId") long channelId,
+				@QueryParam("page") int page,
+				@DefaultValue("20") @QueryParam("pageSize") int pageSize,
+				@QueryParam("rangeEnd") String rangeEnd,
+				@DefaultValue("30") @QueryParam("rangeKey") int rangeKey,
+				@QueryParam("rangeStart") String rangeStart)
 		throws Exception {
 
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		Results<AssetSummaryType> results =
+		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAssetSummaryTypes(
-				faroProject, channelId, rangeEnd, rangeKey, rangeStart, page,
-				pageSize);
-
-		Function<AssetSummaryType, AssetSummaryTypeDisplay> function =
-			AssetSummaryTypeDisplay::new;
-
-		return new FaroFDSResultsDisplay(results, function, page, pageSize);
+				faroProjectLocalService.getFaroProjectByGroupId(groupId),
+				channelId, rangeEnd, rangeKey, rangeStart, page, pageSize),
+			AssetSummaryTypeDisplay::new, page, pageSize);
 	}
 
 }

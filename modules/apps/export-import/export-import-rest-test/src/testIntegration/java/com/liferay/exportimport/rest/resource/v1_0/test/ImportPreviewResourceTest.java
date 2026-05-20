@@ -13,8 +13,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportLocalServiceUtil;
 import com.liferay.exportimport.rest.client.dto.v1_0.ImportPreview;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandler;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerSection;
+import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandlerSection;
 import com.liferay.exportimport.rest.client.http.HttpInvoker;
 import com.liferay.exportimport.rest.client.resource.v1_0.ImportPreviewResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -108,7 +108,10 @@ public class ImportPreviewResourceTest
 	}
 
 	@After
-	public void tearDownObjectDefinitions() throws Exception {
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_companyObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -132,13 +135,6 @@ public class ImportPreviewResourceTest
 					_exportLayoutAsFile(testDepotEntryGroup.getGroupId())
 				).build()));
 
-		_testPostImportPreviewWithObjectEntries(
-			file -> importPreviewResource.postAssetLibraryImportPreview(
-				testDepotEntryGroup.getExternalReferenceCode(), null,
-				HashMapBuilder.put(
-					"file", file
-				).build()),
-			testDepotEntryGroup.getGroupId(), _depotObjectDefinition);
 		_testPostImportPreviewWithInvalidFile(
 			file ->
 				importPreviewResource.postAssetLibraryImportPreviewHttpResponse(
@@ -146,6 +142,13 @@ public class ImportPreviewResourceTest
 					HashMapBuilder.put(
 						"file", file
 					).build()));
+		_testPostImportPreviewWithObjectEntries(
+			file -> importPreviewResource.postAssetLibraryImportPreview(
+				testDepotEntryGroup.getExternalReferenceCode(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()),
+			testDepotEntryGroup.getGroupId(), _depotObjectDefinition);
 	}
 
 	@Override
@@ -162,6 +165,12 @@ public class ImportPreviewResourceTest
 					"file", _exportLayoutAsFile(group.getGroupId())
 				).build()));
 
+		_testPostImportPreviewWithInvalidFile(
+			file -> importPreviewResource.postImportPreviewHttpResponse(
+				null,
+				HashMapBuilder.put(
+					"file", file
+				).build()));
 		_testPostImportPreviewWithObjectEntries(
 			file -> importPreviewResource.postImportPreview(
 				null,
@@ -169,13 +178,6 @@ public class ImportPreviewResourceTest
 					"file", file
 				).build()),
 			group.getGroupId(), _companyObjectDefinition);
-
-		_testPostImportPreviewWithInvalidFile(
-			file -> importPreviewResource.postImportPreviewHttpResponse(
-				null,
-				HashMapBuilder.put(
-					"file", file
-				).build()));
 	}
 
 	@Override
@@ -189,6 +191,12 @@ public class ImportPreviewResourceTest
 					"file", _exportLayoutAsFile(testGroup.getGroupId())
 				).build()));
 
+		_testPostImportPreviewWithInvalidFile(
+			file -> importPreviewResource.postSiteImportPreviewHttpResponse(
+				testGroup.getExternalReferenceCode(), null,
+				HashMapBuilder.put(
+					"file", file
+				).build()));
 		_testPostImportPreviewWithObjectEntries(
 			file -> importPreviewResource.postSiteImportPreview(
 				testGroup.getExternalReferenceCode(), null,
@@ -196,12 +204,6 @@ public class ImportPreviewResourceTest
 					"file", file
 				).build()),
 			testGroup.getGroupId(), _siteObjectDefinition);
-		_testPostImportPreviewWithInvalidFile(
-			file -> importPreviewResource.postSiteImportPreviewHttpResponse(
-				testGroup.getExternalReferenceCode(), null,
-				HashMapBuilder.put(
-					"file", file
-				).build()));
 	}
 
 	private void _addObjectEntry(
@@ -248,21 +250,24 @@ public class ImportPreviewResourceTest
 	private long _getAdditionCount(
 		ImportPreview importPreview, String portletId) {
 
-		PortletDataHandlerSection[] portletDataHandlerSections =
-			importPreview.getPortletDataHandlerSections();
+		PreviewPortletDataHandlerSection[] previewPortletDataHandlerSections =
+			importPreview.getPreviewPortletDataHandlerSections();
 
-		if (portletDataHandlerSections == null) {
+		if (previewPortletDataHandlerSections == null) {
 			return 0L;
 		}
 
-		for (PortletDataHandlerSection portletDataHandlerSection :
-				portletDataHandlerSections) {
+		String handlerName = "PORTLET_DATA_" + portletId;
 
-			for (PortletDataHandler portletDataHandler :
-					portletDataHandlerSection.getPortletDataHandlers()) {
+		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
+				previewPortletDataHandlerSections) {
 
-				if (portletId.equals(portletDataHandler.getName())) {
-					return portletDataHandler.getAdditionCount();
+			for (PreviewPortletDataHandler previewPortletDataHandler :
+					previewPortletDataHandlerSection.
+						getPreviewPortletDataHandlers()) {
+
+				if (handlerName.equals(previewPortletDataHandler.getName())) {
+					return previewPortletDataHandler.getAdditionCount();
 				}
 			}
 		}

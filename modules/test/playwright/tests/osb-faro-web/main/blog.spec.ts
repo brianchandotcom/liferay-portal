@@ -7,58 +7,36 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {assetPublisherPagesTest} from '../../../fixtures/assetPublisherPagesTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
 import {changeTimeFilter} from './utils/time-filter';
 import {searchByTerm} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	assetPublisherPagesTest,
 	pageEditorPagesTest,
 	featureFlagsTest({
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
 const pageTitle = 'My Page';
 
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});
-
-test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
+test('View all blogs in the property in assets', async ({
+	analyticsChannel: channel,
+	apiHelpers,
+	page,
+	project,
+}) => {
 	await test.step('Create blog events to appear within the Last 24 hours period in AC', async () => {
 		const date1 = new Date();
 
@@ -121,10 +99,8 @@ test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
 
 		expect(blogTitles.length).toBe(1);
 
-		expect(
-			await page
-				.locator('.blogs-root .table-title')
-				.getByText('My Blog 2')
+		await expect(
+			page.locator('.blogs-root .table-title').getByText('My Blog 2')
 		).toBeVisible();
 
 		await searchByTerm({page, searchTerm: 'My Blog 1'});
@@ -133,10 +109,8 @@ test('View all blogs in the property in assets', async ({apiHelpers, page}) => {
 
 		expect(blogTitles.length).toBe(1);
 
-		expect(
-			await page
-				.locator('.blogs-root .table-title')
-				.getByText('My Blog 1')
+		await expect(
+			page.locator('.blogs-root .table-title').getByText('My Blog 1')
 		).toBeVisible();
 	});
 });

@@ -4,6 +4,11 @@ import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 jest.unmock('react-dom');
 
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({id: 'acc-123'})
+}));
+
 jest.mock('../AccountDetailsModal', () => ({
 	__esModule: true,
 	default: ({onClose}: {onClose: () => void}) => (
@@ -16,23 +21,21 @@ jest.mock('../AccountDetailsModal', () => ({
 }));
 
 const mockAccount = {
-	accountName: 'Acme Corp',
 	accountType: 'Customer',
 	annualRevenue: 5000000,
-	fields: [{name: 'website', value: 'https://acme.com'}],
 	id: 'acc-123',
 	industry: 'Technology',
-	numberOfEmployees: 250
+	numberOfEmployees: 250,
+	website: 'https://acme.com'
 };
 
 describe('AccountInfo', () => {
 	afterEach(cleanup);
 
 	describe('rendering', () => {
-		it('should render the section header and card title', () => {
+		it('should render the card title', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('ACCOUNT DETAILS')).toBeInTheDocument();
 			expect(
 				screen.getByText('General Account Information')
 			).toBeInTheDocument();
@@ -41,7 +44,6 @@ describe('AccountInfo', () => {
 		it('should render every info label', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('Account Name')).toBeInTheDocument();
 			expect(screen.getByText('Account Type')).toBeInTheDocument();
 			expect(screen.getByText('Industry')).toBeInTheDocument();
 			expect(screen.getByText('Company Size')).toBeInTheDocument();
@@ -52,7 +54,6 @@ describe('AccountInfo', () => {
 		it('should render the values from the mock', () => {
 			render(<AccountInfo account={mockAccount} />);
 
-			expect(screen.getByText('Acme Corp')).toBeInTheDocument();
 			expect(screen.getByText('Customer')).toBeInTheDocument();
 			expect(screen.getByText('Technology')).toBeInTheDocument();
 			expect(screen.getByText('250')).toBeInTheDocument();
@@ -78,6 +79,24 @@ describe('AccountInfo', () => {
 			expect(
 				screen.getByRole('button', {name: 'View All'})
 			).toBeInTheDocument();
+		});
+	});
+
+	describe('loading', () => {
+		it('should render the loading indicator and hide the content when loading is true', () => {
+			const {container} = render(
+				<AccountInfo account={mockAccount} loading />
+			);
+
+			expect(
+				container.querySelector('.loading-root')
+			).toBeInTheDocument();
+			expect(
+				screen.queryByText('General Account Information')
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('button', {name: 'View All'})
+			).not.toBeInTheDocument();
 		});
 	});
 

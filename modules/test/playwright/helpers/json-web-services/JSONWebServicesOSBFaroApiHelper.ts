@@ -8,6 +8,7 @@ import {ApiHelpers} from '../ApiHelpers';
 
 type Channel = {
 	id: string;
+	name: string;
 };
 
 type FaroUser = {
@@ -16,6 +17,11 @@ type FaroUser = {
 	id: string;
 	roleName: string;
 	status: number;
+};
+
+type IndividualSegment = {
+	id: string;
+	name: string;
 };
 
 type Project = {
@@ -70,6 +76,46 @@ export class JSONWebServicesOSBFaroApiHelper {
 		).then((response) => response.json());
 	}
 
+	async createIndividualSegment({
+		channelId,
+		filter = '',
+		groupId,
+		name,
+	}: {
+		channelId: string;
+		filter?: string;
+		groupId: string;
+		name: string;
+	}): Promise<IndividualSegment> {
+		const formdata = new FormData();
+
+		formdata.append('channelId', channelId);
+		formdata.append('filter', filter);
+		formdata.append('name', name);
+		formdata.append('segmentType', 'BATCH');
+
+		const header = new Headers();
+
+		header.append('Authorization', _authorization);
+
+		const response = await fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/contacts/${groupId}/individual_segment`,
+			{
+				body: formdata,
+				headers: header,
+				method: 'POST',
+			}
+		);
+
+		if (!response.ok) {
+			throw new Error(
+				`createIndividualSegment failed: ${response.status} ${await response.text()}`
+			);
+		}
+
+		return response.json();
+	}
+
 	async createUser(
 		emailAddress: string,
 		groupId: string,
@@ -116,6 +162,28 @@ export class JSONWebServicesOSBFaroApiHelper {
 				method: 'POST',
 			}
 		).then((response) => response.json());
+	}
+
+	async deleteIndividualSegments(
+		ids: string,
+		groupId: string
+	): Promise<Response> {
+		const formdata = new FormData();
+
+		formdata.append('ids', ids);
+
+		const header = new Headers();
+
+		header.append('Authorization', _authorization);
+
+		return fetch(
+			`${faroConfig.environment.baseUrl}${this.basePath}/contacts/${groupId}/individual_segment`,
+			{
+				body: formdata,
+				headers: header,
+				method: 'DELETE',
+			}
+		).then((response) => response);
 	}
 
 	async deleteChannel(ids: string, groupId: string): Promise<Response> {

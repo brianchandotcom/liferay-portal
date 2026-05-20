@@ -1,0 +1,20 @@
+html#{$cadmin-selector} {
+	.input-sets-item.form-group {
+		margin-bottom: 0;
+	}
+
+	.input-sets-handle {
+		cursor: move;
+		min-height: 44px;
+		min-width: 44px;
+	}
+
+	.input-sets-remove {
+		min-height: 44px;
+		min-width: 44px;
+	}
+
+	.input-sets-add {
+		min-height: 44px;
+	}
+}

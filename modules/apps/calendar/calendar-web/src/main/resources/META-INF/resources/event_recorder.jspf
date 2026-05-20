@@ -9,7 +9,7 @@
 	<div class="calendar-portlet-event-recorder">
 		<div class="scheduler-event-recorder-header">
 			<tpl if="values.permissions.MANAGE_BOOKINGS">
-				<input class="scheduler-event-recorder-content" name="content" value="{content}" />
+				<input aria-label="<liferay-ui:message key="title" />" class="scheduler-event-recorder-content" name="content" value="{content}" />
 			</tpl>
 
 			<tpl if="!values.permissions.MANAGE_BOOKINGS">

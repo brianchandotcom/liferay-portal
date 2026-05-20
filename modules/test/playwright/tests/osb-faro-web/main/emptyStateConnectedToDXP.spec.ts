@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -23,32 +23,25 @@ import {addBreakdownByIndividualAttribute} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
-const siteName = 'My Site ' + randomString;
+const channelName = 'My Property ' + getRandomString();
 
 let channel;
 let project;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	await apiHelpers.headlessAdminSite.postSite({
-		name: siteName,
-	});
-
+test.beforeEach(async ({apiHelpers, page, site}) => {
 	const result = await syncAnalyticsCloud({
 		apiHelpers,
 		channelName,
 		page,
-		siteName,
+		siteName: site.name,
 	});
 
 	channel = result.channel;

@@ -212,7 +212,7 @@ public class CommerceInventoryTestUtil {
 		}
 
 		return CountryLocalServiceUtil.addCountry(
-			a2, a3, true, true, null, RandomTestUtil.randomString(),
+			null, a2, a3, true, true, null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(NumericStringRandomizerBumper.INSTANCE),
 			0, true, false, false, serviceContext);
 	}
@@ -232,7 +232,7 @@ public class CommerceInventoryTestUtil {
 		throws PortalException {
 
 		return RegionLocalServiceUtil.addRegion(
-			countryId, true, RandomTestUtil.randomString(), 0,
+			null, countryId, true, RandomTestUtil.randomString(), 0,
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
@@ -244,8 +244,9 @@ public class CommerceInventoryTestUtil {
 
 		if (country == null) {
 			country = CountryLocalServiceUtil.addCountry(
-				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
-				"000", RandomTestUtil.randomDouble(), true, false, false,
+				null, "ZZ", "ZZZ", true, true, null,
+				RandomTestUtil.randomString(), "000",
+				RandomTestUtil.randomDouble(), true, false, false,
 				serviceContext);
 		}
 
@@ -264,7 +265,7 @@ public class CommerceInventoryTestUtil {
 		}
 
 		return RegionLocalServiceUtil.addRegion(
-			country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 	}

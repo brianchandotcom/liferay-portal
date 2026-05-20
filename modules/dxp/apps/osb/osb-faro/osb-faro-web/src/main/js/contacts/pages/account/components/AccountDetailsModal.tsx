@@ -40,9 +40,7 @@ const AccountDetailsModal: React.FC<IAccountDetailsModalProps> = ({
 	const {search} = useFDSState(FDS_ID);
 
 	const {data} = useRequest({
-		dataSourceFn: API.accounts.fetchDetails as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.accounts.fetchDetails,
 		variables: {accountId, channelId, groupId}
 	});
 

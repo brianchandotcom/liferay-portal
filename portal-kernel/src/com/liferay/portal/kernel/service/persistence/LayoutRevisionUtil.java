@@ -125,58 +125,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId) {
-
-		return getPersistence().findByLayoutSetBranchId(layoutSetBranchId);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end) {
-
-		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByLayoutSetBranchId(
-		long layoutSetBranchId, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByLayoutSetBranchId(
-			layoutSetBranchId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
 	 *
 	 * <p>
@@ -252,54 +200,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where plid = &#63;.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByPlid(long plid) {
-		return getPersistence().findByPlid(plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByPlid(
-		long plid, int start, int end) {
-
-		return getPersistence().findByPlid(plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByPlid(
-		long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByPlid(plid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where plid = &#63;.
 	 *
 	 * <p>
@@ -371,55 +271,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where status = &#63;.
-	 *
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByStatus(int status) {
-		return getPersistence().findByStatus(status);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByStatus(
-		int status, int start, int end) {
-
-		return getPersistence().findByStatus(status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByStatus(
-		int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByStatus(
-			status, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where status = &#63;.
 	 *
 	 * <p>
@@ -488,60 +339,6 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByStatus(int status) {
 		return getPersistence().countByStatus(status);
-	}
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head) {
-
-		return getPersistence().findByL_H(layoutSetBranchId, head);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end) {
-
-		return getPersistence().findByL_H(layoutSetBranchId, head, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H(
-		long layoutSetBranchId, boolean head, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_H(
-			layoutSetBranchId, head, start, end, orderByComparator);
 	}
 
 	/**
@@ -626,60 +423,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid) {
-
-		return getPersistence().findByL_P(layoutSetBranchId, plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end) {
-
-		return getPersistence().findByL_P(layoutSetBranchId, plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P(
-		long layoutSetBranchId, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_P(
-			layoutSetBranchId, plid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -761,61 +504,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status) {
-
-		return getPersistence().findByL_S(layoutSetBranchId, status);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end) {
-
-		return getPersistence().findByL_S(
-			layoutSetBranchId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_S(
-		long layoutSetBranchId, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_S(
-			layoutSetBranchId, status, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -894,58 +582,6 @@ public class LayoutRevisionUtil {
 	 */
 	public static int countByL_S(long layoutSetBranchId, int status) {
 		return getPersistence().countByL_S(layoutSetBranchId, status);
-	}
-
-	/**
-	 * Returns all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByH_P(boolean head, long plid) {
-		return getPersistence().findByH_P(head, plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end) {
-
-		return getPersistence().findByH_P(head, plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByH_P(
-		boolean head, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByH_P(
-			head, plid, start, end, orderByComparator);
 	}
 
 	/**
@@ -1159,67 +795,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid) {
-
-		return getPersistence().findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end) {
-
-		return getPersistence().findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_L_P(
-		long layoutSetBranchId, long layoutBranchId, long plid, int start,
-		int end, OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_L_P(
-			layoutSetBranchId, layoutBranchId, plid, start, end,
-			orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -1308,68 +883,6 @@ public class LayoutRevisionUtil {
 
 		return getPersistence().countByL_L_P(
 			layoutSetBranchId, layoutBranchId, plid);
-	}
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid) {
-
-		return getPersistence().findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end) {
-
-		return getPersistence().findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param parentLayoutRevisionId the parent layout revision ID
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_P(
-		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
-		int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_P_P(
-			layoutSetBranchId, parentLayoutRevisionId, plid, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -1465,65 +978,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid) {
-
-		return getPersistence().findByL_H_P_Collection(
-			layoutSetBranchId, head, plid);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid, int start, int end) {
-
-		return getPersistence().findByL_H_P_Collection(
-			layoutSetBranchId, head, plid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_P_Collection(
-		long layoutSetBranchId, boolean head, long plid, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_H_P_Collection(
-			layoutSetBranchId, head, plid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
 	 *
 	 * <p>
@@ -1616,64 +1070,6 @@ public class LayoutRevisionUtil {
 	}
 
 	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status) {
-
-		return getPersistence().findByL_H_S(layoutSetBranchId, head, status);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status, int start, int end) {
-
-		return getPersistence().findByL_H_S(
-			layoutSetBranchId, head, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param head the head
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_H_S(
-		long layoutSetBranchId, boolean head, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_H_S(
-			layoutSetBranchId, head, status, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1761,64 +1157,6 @@ public class LayoutRevisionUtil {
 		long layoutSetBranchId, boolean head, int status) {
 
 		return getPersistence().countByL_H_S(layoutSetBranchId, head, status);
-	}
-
-	/**
-	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @return the matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status) {
-
-		return getPersistence().findByL_P_S(layoutSetBranchId, plid, status);
-	}
-
-	/**
-	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @return the range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end) {
-
-		return getPersistence().findByL_P_S(
-			layoutSetBranchId, plid, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param plid the plid
-	 * @param status the status
-	 * @param start the lower bound of the range of layout revisions
-	 * @param end the upper bound of the range of layout revisions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout revisions
-	 */
-	public static List<LayoutRevision> findByL_P_S(
-		long layoutSetBranchId, long plid, int status, int start, int end,
-		OrderByComparator<LayoutRevision> orderByComparator) {
-
-		return getPersistence().findByL_P_S(
-			layoutSetBranchId, plid, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1963,6 +1301,668 @@ public class LayoutRevisionUtil {
 		return getPersistence().fetchByPrimaryKey(layoutRevisionId);
 	}
 
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByLayoutSetBranchId(
+		long layoutSetBranchId) {
+
+		return getPersistence().findByLayoutSetBranchId(layoutSetBranchId);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByLayoutSetBranchId(
+		long layoutSetBranchId, int start, int end) {
+
+		return getPersistence().findByLayoutSetBranchId(
+			layoutSetBranchId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByLayoutSetBranchId(
+		long layoutSetBranchId, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByLayoutSetBranchId(
+			layoutSetBranchId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where plid = &#63;.
+	 *
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByPlid(long plid) {
+		return getPersistence().findByPlid(plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByPlid(
+		long plid, int start, int end) {
+
+		return getPersistence().findByPlid(plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByPlid(
+		long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByPlid(plid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where status = &#63;.
+	 *
+	 * @param status the status
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByStatus(int status) {
+		return getPersistence().findByStatus(status);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByStatus(
+		int status, int start, int end) {
+
+		return getPersistence().findByStatus(status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByStatus(
+		int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByStatus(
+			status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H(
+		long layoutSetBranchId, boolean head) {
+
+		return getPersistence().findByL_H(layoutSetBranchId, head);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H(
+		long layoutSetBranchId, boolean head, int start, int end) {
+
+		return getPersistence().findByL_H(layoutSetBranchId, head, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H(
+		long layoutSetBranchId, boolean head, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_H(
+			layoutSetBranchId, head, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P(
+		long layoutSetBranchId, long plid) {
+
+		return getPersistence().findByL_P(layoutSetBranchId, plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P(
+		long layoutSetBranchId, long plid, int start, int end) {
+
+		return getPersistence().findByL_P(layoutSetBranchId, plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P(
+		long layoutSetBranchId, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_P(
+			layoutSetBranchId, plid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param status the status
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_S(
+		long layoutSetBranchId, int status) {
+
+		return getPersistence().findByL_S(layoutSetBranchId, status);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_S(
+		long layoutSetBranchId, int status, int start, int end) {
+
+		return getPersistence().findByL_S(
+			layoutSetBranchId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_S(
+		long layoutSetBranchId, int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_S(
+			layoutSetBranchId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where head = &#63; and plid = &#63;.
+	 *
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByH_P(boolean head, long plid) {
+		return getPersistence().findByH_P(head, plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where head = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param head the head
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByH_P(
+		boolean head, long plid, int start, int end) {
+
+		return getPersistence().findByH_P(head, plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where head = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param head the head
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByH_P(
+		boolean head, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByH_P(
+			head, plid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_L_P(
+		long layoutSetBranchId, long layoutBranchId, long plid) {
+
+		return getPersistence().findByL_L_P(
+			layoutSetBranchId, layoutBranchId, plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_L_P(
+		long layoutSetBranchId, long layoutBranchId, long plid, int start,
+		int end) {
+
+		return getPersistence().findByL_L_P(
+			layoutSetBranchId, layoutBranchId, plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param layoutBranchId the layout branch ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_L_P(
+		long layoutSetBranchId, long layoutBranchId, long plid, int start,
+		int end, OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_L_P(
+			layoutSetBranchId, layoutBranchId, plid, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param parentLayoutRevisionId the parent layout revision ID
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_P(
+		long layoutSetBranchId, long parentLayoutRevisionId, long plid) {
+
+		return getPersistence().findByL_P_P(
+			layoutSetBranchId, parentLayoutRevisionId, plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param parentLayoutRevisionId the parent layout revision ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_P(
+		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
+		int start, int end) {
+
+		return getPersistence().findByL_P_P(
+			layoutSetBranchId, parentLayoutRevisionId, plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and parentLayoutRevisionId = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param parentLayoutRevisionId the parent layout revision ID
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_P(
+		long layoutSetBranchId, long parentLayoutRevisionId, long plid,
+		int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_P_P(
+			layoutSetBranchId, parentLayoutRevisionId, plid, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_P_Collection(
+		long layoutSetBranchId, boolean head, long plid) {
+
+		return getPersistence().findByL_H_P_Collection(
+			layoutSetBranchId, head, plid);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_P_Collection(
+		long layoutSetBranchId, boolean head, long plid, int start, int end) {
+
+		return getPersistence().findByL_H_P_Collection(
+			layoutSetBranchId, head, plid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and plid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param plid the plid
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_P_Collection(
+		long layoutSetBranchId, boolean head, long plid, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_H_P_Collection(
+			layoutSetBranchId, head, plid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param status the status
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_S(
+		long layoutSetBranchId, boolean head, int status) {
+
+		return getPersistence().findByL_H_S(layoutSetBranchId, head, status);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_S(
+		long layoutSetBranchId, boolean head, int status, int start, int end) {
+
+		return getPersistence().findByL_H_S(
+			layoutSetBranchId, head, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and head = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param head the head
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_H_S(
+		long layoutSetBranchId, boolean head, int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_H_S(
+			layoutSetBranchId, head, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param status the status
+	 * @return the matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_S(
+		long layoutSetBranchId, long plid, int status) {
+
+		return getPersistence().findByL_P_S(layoutSetBranchId, plid, status);
+	}
+
+	/**
+	 * Returns a range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @return the range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_S(
+		long layoutSetBranchId, long plid, int status, int start, int end) {
+
+		return getPersistence().findByL_P_S(
+			layoutSetBranchId, plid, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the layout revisions where layoutSetBranchId = &#63; and plid = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.LayoutRevisionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param layoutSetBranchId the layout set branch ID
+	 * @param plid the plid
+	 * @param status the status
+	 * @param start the lower bound of the range of layout revisions
+	 * @param end the upper bound of the range of layout revisions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layout revisions
+	 */
+	public static List<LayoutRevision> findByL_P_S(
+		long layoutSetBranchId, long plid, int status, int start, int end,
+		OrderByComparator<LayoutRevision> orderByComparator) {
+
+		return getPersistence().findByL_P_S(
+			layoutSetBranchId, plid, status, start, end, orderByComparator);
+	}
+
 	public static LayoutRevisionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1974,4 +1974,4 @@ public class LayoutRevisionUtil {
 	private static volatile LayoutRevisionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1586643900
+// LIFERAY-SERVICE-BUILDER-HASH:-2069689786

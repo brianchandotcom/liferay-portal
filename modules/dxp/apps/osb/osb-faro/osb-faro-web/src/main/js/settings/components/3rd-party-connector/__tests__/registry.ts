@@ -23,6 +23,14 @@ describe('connector registry', () => {
 			expect(config?.type).toBe(DataSourceTypes.Hubspot);
 		});
 
+		it('returns the marketo config when looked up by enum value', () => {
+			const config = getConnectorConfig(DataSourceTypes.Marketo);
+
+			expect(config).toBeDefined();
+			expect(config?.slug).toBe('marketo');
+			expect(config?.type).toBe(DataSourceTypes.Marketo);
+		});
+
 		it('is case-insensitive on the lookup key', () => {
 			expect(getConnectorConfig('demandbase')?.slug).toBe('demandbase');
 			expect(getConnectorConfig('HuBsPoT')?.slug).toBe('hubspot');
@@ -44,7 +52,7 @@ describe('connector registry', () => {
 				.map(c => c.slug)
 				.sort();
 
-			expect(slugs).toEqual(['demandbase', 'hubspot']);
+			expect(slugs).toEqual(['demandbase', 'hubspot', 'marketo']);
 		});
 	});
 
@@ -63,7 +71,7 @@ describe('connector registry', () => {
 				.map(c => c.slug)
 				.sort();
 
-			expect(slugs).toEqual(['demandbase', 'hubspot']);
+			expect(slugs).toEqual(['demandbase', 'hubspot', 'marketo']);
 		});
 	});
 });

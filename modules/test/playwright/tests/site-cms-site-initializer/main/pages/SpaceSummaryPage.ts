@@ -16,6 +16,7 @@ export class SpaceSummaryPage {
 
 	readonly addContentButton: Locator;
 	readonly addFileButton: Locator;
+	readonly addMembersButton: Locator;
 	readonly closeButton: Locator;
 	readonly galleryPreview: Locator;
 	readonly userGroupsTab: Locator;
@@ -32,6 +33,11 @@ export class SpaceSummaryPage {
 
 		this.addFileButton = page.getByRole('button', {name: `Add Files`});
 
+		this.addMembersButton = page.getByRole('button', {
+			exact: true,
+			name: 'Add Members',
+		});
+
 		this.closeButton = this.page
 			.locator('.modal-header')
 			.getByLabel('Close', {exact: true});
@@ -42,11 +48,11 @@ export class SpaceSummaryPage {
 
 		this.usersTab = page.getByRole('tab', {name: 'Users'});
 
-		this.viewAllContentLink = this.page.getByRole('button', {
+		this.viewAllContentLink = this.page.getByRole('link', {
 			name: 'View All Content',
 		});
 
-		this.viewAllFilesLink = this.page.getByRole('button', {
+		this.viewAllFilesLink = this.page.getByRole('link', {
 			name: 'View All Files',
 		});
 
@@ -194,13 +200,15 @@ export class SpaceSummaryPage {
 	}
 
 	async connectSite(siteName: string) {
-		await this.page
-			.getByRole('button', {name: 'Connect Sites'})
-			.or(this.page.getByRole('button', {name: 'View All Sites'}))
-			.click();
+		await this.openConnectSitesDialog();
 
-		await this.page.getByRole('dialog').waitFor();
-		await this.page.getByLabel('Site', {exact: true}).click();
+		await this.page
+			.getByLabel('Sites', {exact: true})
+			.selectOption('sites');
+
+		await this.page
+			.getByPlaceholder('Select a Site', {exact: true})
+			.click();
 		await this.page.getByRole('option', {name: siteName}).click();
 		await this.page
 			.getByRole('button', {exact: true, name: 'Connect'})
@@ -212,5 +220,54 @@ export class SpaceSummaryPage {
 			.waitFor();
 
 		await this.closeButton.click();
+	}
+
+	async connectSiteTemplate(siteTemplateName: string) {
+		await this.openConnectSitesDialog();
+
+		await this.page
+			.getByLabel('Sites', {exact: true})
+			.selectOption('site-templates');
+
+		await this.page
+			.getByPlaceholder('Select a Site Template', {exact: true})
+			.click();
+		await this.page.getByRole('option', {name: siteTemplateName}).click();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Connect'})
+			.click();
+
+		await this.page
+			.getByLabel('Connected Sites')
+			.getByText(`${siteTemplateName} (Site Template)`, {exact: true})
+			.waitFor();
+
+		await this.closeButton.click();
+	}
+
+	async disconnectSiteFromModal(name: string) {
+		await this.page
+			.getByLabel('Connected Sites')
+			.getByRole('listitem')
+			.filter({has: this.page.getByText(name, {exact: true})})
+			.getByRole('button', {name: /Actions/i})
+			.click();
+
+		await this.page.getByRole('menuitem', {name: 'Disconnect'}).click();
+	}
+
+	async openConnectedSitesModal() {
+		await this.viewAllSitesLink.click();
+
+		await this.page.getByRole('dialog').waitFor();
+	}
+
+	private async openConnectSitesDialog() {
+		await this.page
+			.getByRole('button', {name: 'Connect Sites'})
+			.or(this.page.getByRole('button', {name: 'View All Sites'}))
+			.click();
+
+		await this.page.getByRole('dialog').waitFor();
 	}
 }

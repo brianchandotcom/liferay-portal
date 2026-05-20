@@ -17,6 +17,13 @@ variable "argocd_namespace" {
 	default="argocd-system"
 	type=string
 }
+variable "argocd_sso_config" {
+	default={}
+	type=object({
+		credentials_secret_name=optional(string, "liferay/credentials/argocd-sso")
+		enable_saml_sso=optional(bool, false)
+	})
+}
 variable "crossplane_namespace" {
 	default="crossplane-system"
 	type=string

@@ -11,6 +11,7 @@ import {
 	TIdpConnection,
 	TSpConnection,
 } from '../../../../helpers/SamlProviderConnectionHelper';
+import {liferayConfig} from '../../../../liferay.config';
 import {IdentityProviderConnectionsPage} from '../../../../pages/saml-web/IdentityProviderConnectionsPage';
 import {ServiceProviderConnectionsPage} from '../../../../pages/saml-web/ServiceProviderConnectionsPage';
 
@@ -57,8 +58,8 @@ export async function connectSpAndIdp(
 	const spConnection: TSpConnection = {
 		entityId: spEntityId,
 		idpName,
-		metadataURL: `http://${spName}:8080${_DEFAULT_METADATA_PATH}`,
-		spDomain: `http://${spName}:8080`,
+		metadataURL: `http://${spName}:${liferayConfig.environment.port}${_DEFAULT_METADATA_PATH}`,
+		spDomain: `http://${spName}:${liferayConfig.environment.port}`,
 		spName,
 		...DEFAULT_SP_CONNECTION_VALUES,
 	};
@@ -67,9 +68,9 @@ export async function connectSpAndIdp(
 
 	const idpConnection: TIdpConnection = {
 		entityId: idpEntityId,
-		idpDomain: `http://${idpName}:8080`,
+		idpDomain: `http://${idpName}:${liferayConfig.environment.port}`,
 		idpName,
-		metadataURL: `http://${idpName}:8080${_DEFAULT_METADATA_PATH}`,
+		metadataURL: `http://${idpName}:${liferayConfig.environment.port}${_DEFAULT_METADATA_PATH}`,
 		spName,
 		...DEFAULT_IDP_CONNECTION_VALUES,
 	};

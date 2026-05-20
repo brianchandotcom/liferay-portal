@@ -6,7 +6,7 @@ import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {Routes, toRoute} from 'shared/util/router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 
 const InterestsPage = () => {
@@ -14,7 +14,7 @@ const InterestsPage = () => {
 	const currentUser = useCurrentUser();
 	const authorized = currentUser.isAdmin();
 
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	return (
 		<BasePage.Body pageContainer>

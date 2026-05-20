@@ -1,6 +1,7 @@
 {
 	"availableLanguageIds": [
-		"en_US, pt_BR"
+		"en_US",
+		"pt_BR"
 	],
 	"contentType": "journal",
 	"dataDefinitionFields": [

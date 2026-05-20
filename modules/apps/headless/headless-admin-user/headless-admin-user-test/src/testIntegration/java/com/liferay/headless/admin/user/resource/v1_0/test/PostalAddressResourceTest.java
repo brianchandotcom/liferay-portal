@@ -90,7 +90,7 @@ public class PostalAddressResourceTest
 			null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 		_country = _countryLocalService.addCountry(
-			"X" + RandomTestUtil.randomString(1),
+			null, "X" + RandomTestUtil.randomString(1),
 			"X" + RandomTestUtil.randomString(2), true, true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextLong(), true,
@@ -461,7 +461,7 @@ public class PostalAddressResourceTest
 
 	private void _testPatchPostalAddressWithAddressRegion() throws Exception {
 		Country country = _countryLocalService.addCountry(
-			"X" + RandomTestUtil.randomString(1),
+			null, "X" + RandomTestUtil.randomString(1),
 			"X" + RandomTestUtil.randomString(2), true, true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextLong(), true,
@@ -471,7 +471,7 @@ public class PostalAddressResourceTest
 			ServiceContextTestUtil.getServiceContext();
 
 		Region region1 = _regionLocalService.addRegion(
-			country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 
@@ -487,7 +487,7 @@ public class PostalAddressResourceTest
 			region1.getTitle(), postalAddress.getAddressRegion());
 
 		Region region2 = _regionLocalService.addRegion(
-			country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.nextDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 

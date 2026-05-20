@@ -333,7 +333,7 @@ test(
 	'Can create and edit a selection filter with API Headless source using composed/complex fields',
 	{tag: '@LPD-25905'},
 	async ({filtersPage, page}) => {
-		const composedFieldName = 'removedBy.name';
+		const composedFieldName = 'dataSetToDataSetTableSections/keywords';
 
 		await test.step('Create a selection filter from API Headless source', async () => {
 			await filtersPage.createSelectionFilterApiHeadless({
@@ -480,6 +480,111 @@ test(
 			await waitForAlert(page);
 
 			await expect(filtersPage.activeToggle.first()).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can create a filter for a boolean field',
+	{tag: '@LPD-56706'},
+	async ({filtersPage, page, picklistApiHelpers}) => {
+		const fieldName = 'active';
+		const picklistEntryKey = '0';
+
+		await picklistApiHelpers.editPicklist({
+			externalReferenceCode: picklistERC,
+			key: picklistEntryKey,
+			value: fieldName,
+		});
+
+		await test.step('Create a selection filter from API Headless source', async () => {
+			await filtersPage.createSelectionFilterPicklist({
+				filterBy: 'externalReferenceCode',
+				filterMode: 'Include',
+				name: SELECTION_PICKLIST_FILTER_NAME,
+				preselectedValues: [fieldName],
+				selectionType: 'Single',
+				source: picklistName,
+				sourceType: 'Object Picklist',
+			});
+
+			await filtersPage.newSelectionFilterForm.filterBySelectButton.click();
+			await filtersPage.fieldSelectModalPage.searchAndSelectField(
+				fieldName
+			);
+			await filtersPage.fieldSelectModalPage.saveAddFieldsModal();
+			await filtersPage.saveAddFilterForm();
+		});
+
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Open the edit filter form', async () => {
+			const filterActionsButton = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByRole('button');
+
+			await expect(filterActionsButton).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: filterActionsButton,
+			});
+
+			const dialogFilterSourceSubtitle = page.getByRole('heading', {
+				name: 'Filter Source',
+			});
+
+			await expect(dialogFilterSourceSubtitle).toBeVisible();
+
+			const dialogFilterOptionsSubtitle = page.getByRole('heading', {
+				name: 'Filter Options',
+			});
+
+			await expect(dialogFilterOptionsSubtitle).toBeVisible();
+		});
+
+		await test.step('Change the filter name', async () => {
+			await filtersPage.newSelectionFilterForm.nameInput.clear();
+
+			await filtersPage.saveAddFilterForm();
+		});
+
+		await test.step('Confirm that a "This field is required." message appears in the form', async () => {
+			await filtersPage.page
+				.getByText('This field is required.')
+				.isVisible();
+		});
+
+		await test.step('Save filter form without errors', async () => {
+			await filtersPage.newSelectionFilterForm.nameInput.fill(
+				SELECTION_PICKLIST_FILTER_NAME
+			);
+
+			await filtersPage.saveAddFilterForm();
+		});
+
+		await test.step('Check that the selection filter is in the list', async () => {
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_PICKLIST_FILTER_NAME,
+				})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('cell', {
+					exact: true,
+					name: SELECTION_DISPLAY_TYPE,
+				})
+			).toBeVisible();
 		});
 	}
 );

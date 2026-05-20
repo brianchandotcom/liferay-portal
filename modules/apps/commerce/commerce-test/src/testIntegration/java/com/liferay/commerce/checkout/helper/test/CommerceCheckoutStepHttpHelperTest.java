@@ -155,13 +155,15 @@ public class CommerceCheckoutStepHttpHelperTest {
 
 		if (_country == null) {
 			_country = _countryLocalService.addCountry(
-				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
-				"000", RandomTestUtil.randomDouble(), true, false, false,
+				null, "ZZ", "ZZZ", true, true, null,
+				RandomTestUtil.randomString(), "000",
+				RandomTestUtil.randomDouble(), true, false, false,
 				_serviceContext);
 
 			_region = _regionLocalService.addRegion(
-				_country.getCountryId(), true, RandomTestUtil.randomString(),
-				RandomTestUtil.randomDouble(), "ZZ", _serviceContext);
+				null, _country.getCountryId(), true,
+				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+				"ZZ", _serviceContext);
 		}
 		else {
 			_region = _regionLocalService.getRegion(

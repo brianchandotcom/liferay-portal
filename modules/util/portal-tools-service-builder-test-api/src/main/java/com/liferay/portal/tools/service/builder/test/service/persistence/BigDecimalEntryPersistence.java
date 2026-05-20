@@ -35,48 +35,6 @@ public interface BigDecimalEntryPersistence
 	 */
 
 	/**
-	 * Returns all the big decimal entries where bigDecimalValue = &#63;.
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @return the matching big decimal entries
-	 */
-	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
-		BigDecimal bigDecimalValue);
-
-	/**
-	 * Returns a range of all the big decimal entries where bigDecimalValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param start the lower bound of the range of big decimal entries
-	 * @param end the upper bound of the range of big decimal entries (not inclusive)
-	 * @return the range of matching big decimal entries
-	 */
-	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
-		BigDecimal bigDecimalValue, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the big decimal entries where bigDecimalValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param bigDecimalValue the big decimal value
-	 * @param start the lower bound of the range of big decimal entries
-	 * @param end the upper bound of the range of big decimal entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching big decimal entries
-	 */
-	public java.util.List<BigDecimalEntry> findByBigDecimalValue(
-		BigDecimal bigDecimalValue, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the big decimal entries where bigDecimalValue = &#63;.
 	 *
 	 * <p>
@@ -568,5 +526,60 @@ public interface BigDecimalEntryPersistence
 			<com.liferay.portal.tools.service.builder.test.model.LVEntry>
 				lvEntries);
 
+	/**
+	 * Returns all the big decimal entries where bigDecimalValue = &#63;.
+	 *
+	 * @param bigDecimalValue the big decimal value
+	 * @return the matching big decimal entries
+	 */
+	public default java.util.List<BigDecimalEntry> findByBigDecimalValue(
+		BigDecimal bigDecimalValue) {
+
+		return findByBigDecimalValue(
+			bigDecimalValue,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the big decimal entries where bigDecimalValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param bigDecimalValue the big decimal value
+	 * @param start the lower bound of the range of big decimal entries
+	 * @param end the upper bound of the range of big decimal entries (not inclusive)
+	 * @return the range of matching big decimal entries
+	 */
+	public default java.util.List<BigDecimalEntry> findByBigDecimalValue(
+		BigDecimal bigDecimalValue, int start, int end) {
+
+		return findByBigDecimalValue(bigDecimalValue, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the big decimal entries where bigDecimalValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.BigDecimalEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param bigDecimalValue the big decimal value
+	 * @param start the lower bound of the range of big decimal entries
+	 * @param end the upper bound of the range of big decimal entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching big decimal entries
+	 */
+	public default java.util.List<BigDecimalEntry> findByBigDecimalValue(
+		BigDecimal bigDecimalValue, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<BigDecimalEntry>
+			orderByComparator) {
+
+		return findByBigDecimalValue(
+			bigDecimalValue, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-556855719
+// LIFERAY-SERVICE-BUILDER-HASH:-1689689114

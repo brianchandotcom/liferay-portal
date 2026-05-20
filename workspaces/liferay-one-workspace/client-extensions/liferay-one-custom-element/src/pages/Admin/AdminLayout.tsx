@@ -12,5 +12,5 @@ import {adminRoutes} from './adminRoutes';
 export default function AdminLayout() {
 	const adminNav = useMemo(() => buildNavItems(adminRoutes), []);
 
-	return <AppLayout navItems={adminNav} title="Admin" />;
+	return <AppLayout navItems={adminNav} />;
 }

@@ -17,7 +17,7 @@ import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {Switch} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 
 const Overview = lazy(
@@ -60,7 +60,7 @@ const WebContent: React.FC<{
 
 	const [filters, setFilters] = useState({});
 
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const decodedTitle = getSafeDecodedURIComponent(title);
 	const decodedType = getSafeDecodedURIComponent(type);

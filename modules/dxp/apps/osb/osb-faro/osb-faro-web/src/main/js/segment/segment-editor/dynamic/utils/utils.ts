@@ -51,6 +51,22 @@ export const createVocabularyProperty = ({
 		type: PropertyTypes.Vocabulary
 	});
 
+export function createTagProperty({
+	id,
+	name
+}: {
+	id: string;
+	name: string;
+}): Property {
+	return new Property({
+		entityName: Liferay.Language.get('tags'),
+		label: name,
+		name: id,
+		propertyKey: 'tag',
+		type: PropertyTypes.Tag
+	});
+}
+
 /**
  * Creates a new group object with items.
  */
@@ -293,7 +309,43 @@ export const findPropertyByCriterion = (
 				| undefined) ??
 			createVocabularyProperty({
 				id: propertyName ?? '',
-				name: propertyName ?? ''
+				name:
+					((value as Map<string, any>)
+						?.getIn(['criterionGroup', 'items'])
+						?.find(
+							(item: Map<string, any>) =>
+								item?.get('propertyName') ===
+								'vocabularies/name'
+						)
+						?.get('value') as string | undefined) ??
+					propertyName ??
+					''
+			})
+		);
+	} else if (
+		[
+			CustomFunctionOperators.TagsFilter,
+			NotOperators.NotTagsFilter
+		].includes(
+			operatorName as unknown as CustomFunctionOperators | NotOperators
+		)
+	) {
+		return (
+			(referencedPropertiesIMap.getIn(['tag', propertyName]) as
+				| Property
+				| undefined) ??
+			createTagProperty({
+				id: propertyName ?? '',
+				name:
+					((value as Map<string, any>)
+						?.getIn(['criterionGroup', 'items'])
+						?.find(
+							(item: Map<string, any>) =>
+								item?.get('propertyName') === 'tags/name'
+						)
+						?.get('value') as string | undefined) ??
+					propertyName ??
+					''
 			})
 		);
 	} else if (operatorName === CustomFunctionOperators.InterestsFilter) {

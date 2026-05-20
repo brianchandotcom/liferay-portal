@@ -204,6 +204,19 @@
 	margin-bottom: 0.5rem;
 }
 
+.aihub-msg-assistant-company-logo {
+	border-radius: 0.5rem;
+	height: 1rem;
+	overflow: hidden;
+	width: 1rem;
+}
+
+.aihub-msg-assistant-company-logo img {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
 .aihub-msg-assistant-icon {
 	align-self: flex-start;
 	display: flex;

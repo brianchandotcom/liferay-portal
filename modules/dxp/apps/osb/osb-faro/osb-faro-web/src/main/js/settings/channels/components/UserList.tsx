@@ -108,15 +108,13 @@ const UserList: React.FC<IUserListProps> = ({
 	});
 
 	const {data, error, loading, refetch} = useRequest({
-		dataSourceFn: API.channels.fetchUsers as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.channels.fetchUsers,
 		variables: {
 			channelId: id,
-			cur: page,
 			delta,
 			groupId,
 			orderIOMap,
+			page,
 			query
 		}
 	});

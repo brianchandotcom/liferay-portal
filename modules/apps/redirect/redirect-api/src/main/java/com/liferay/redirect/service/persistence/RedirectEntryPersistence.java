@@ -33,47 +33,6 @@ public interface RedirectEntryPersistence
 	 */
 
 	/**
-	 * Returns all the redirect entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the redirect entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the redirect entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the redirect entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -146,15 +105,6 @@ public interface RedirectEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the redirect entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public RedirectEntry fetchByUUID_G(String uuid, long groupId);
-
-	/**
 	 * Returns the redirect entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -183,51 +133,6 @@ public interface RedirectEntryPersistence
 	 * @return the number of matching redirect entries
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the redirect entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the redirect entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the redirect entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the redirect entries where uuid = &#63; and companyId = &#63;.
@@ -296,47 +201,6 @@ public interface RedirectEntryPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
-	 * Returns all the redirect entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the redirect entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the redirect entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the redirect entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -383,29 +247,6 @@ public interface RedirectEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the redirect entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching redirect entries that the user has permission to view
-	 */
-	public java.util.List<RedirectEntry> filterFindByGroupId(long groupId);
-
-	/**
-	 * Returns a range of all the redirect entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries that the user has permission to view
-	 */
-	public java.util.List<RedirectEntry> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the redirect entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -445,51 +286,6 @@ public interface RedirectEntryPersistence
 	 * @return the number of matching redirect entries that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
-
-	/**
-	 * Returns all the redirect entries where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @return the matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByG_D(
-		long groupId, String destinationURL);
-
-	/**
-	 * Returns a range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByG_D(
-		long groupId, String destinationURL, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching redirect entries
-	 */
-	public java.util.List<RedirectEntry> findByG_D(
-		long groupId, String destinationURL, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
@@ -539,32 +335,6 @@ public interface RedirectEntryPersistence
 		long groupId, String destinationURL,
 		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
 			orderByComparator);
-
-	/**
-	 * Returns all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @return the matching redirect entries that the user has permission to view
-	 */
-	public java.util.List<RedirectEntry> filterFindByG_D(
-		long groupId, String destinationURL);
-
-	/**
-	 * Returns a range of all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param destinationURL the destination url
-	 * @param start the lower bound of the range of redirect entries
-	 * @param end the upper bound of the range of redirect entries (not inclusive)
-	 * @return the range of matching redirect entries that the user has permission to view
-	 */
-	public java.util.List<RedirectEntry> filterFindByG_D(
-		long groupId, String destinationURL, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the redirect entries that the user has permissions to view where groupId = &#63; and destinationURL = &#63;.
@@ -621,15 +391,6 @@ public interface RedirectEntryPersistence
 	 */
 	public RedirectEntry findByG_S(long groupId, String sourceURL)
 		throws NoSuchEntryException;
-
-	/**
-	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param sourceURL the source url
-	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
-	 */
-	public RedirectEntry fetchByG_S(long groupId, String sourceURL);
 
 	/**
 	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -699,5 +460,312 @@ public interface RedirectEntryPersistence
 	 */
 	public RedirectEntry fetchByPrimaryKey(long redirectEntryId);
 
+	/**
+	 * Returns the redirect entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public default RedirectEntry fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the redirect entry where groupId = &#63; and sourceURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param sourceURL the source url
+	 * @return the matching redirect entry, or <code>null</code> if a matching redirect entry could not be found
+	 */
+	public default RedirectEntry fetchByG_S(long groupId, String sourceURL) {
+		return fetchByG_S(groupId, sourceURL, true);
+	}
+
+	/**
+	 * Returns all the redirect entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid(String uuid) {
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
+			orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the redirect entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
+			orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the redirect entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByGroupId(long groupId) {
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
+			orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the redirect entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching redirect entries that the user has permission to view
+	 */
+	public default java.util.List<RedirectEntry> filterFindByGroupId(
+		long groupId) {
+
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries that the user has permission to view
+	 */
+	public default java.util.List<RedirectEntry> filterFindByGroupId(
+		long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL) {
+
+		return findByG_D(
+			groupId, destinationURL,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL, int start, int end) {
+
+		return findByG_D(groupId, destinationURL, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching redirect entries
+	 */
+	public default java.util.List<RedirectEntry> findByG_D(
+		long groupId, String destinationURL, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RedirectEntry>
+			orderByComparator) {
+
+		return findByG_D(
+			groupId, destinationURL, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @return the matching redirect entries that the user has permission to view
+	 */
+	public default java.util.List<RedirectEntry> filterFindByG_D(
+		long groupId, String destinationURL) {
+
+		return filterFindByG_D(
+			groupId, destinationURL,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the redirect entries that the user has permission to view where groupId = &#63; and destinationURL = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.redirect.model.impl.RedirectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param destinationURL the destination url
+	 * @param start the lower bound of the range of redirect entries
+	 * @param end the upper bound of the range of redirect entries (not inclusive)
+	 * @return the range of matching redirect entries that the user has permission to view
+	 */
+	public default java.util.List<RedirectEntry> filterFindByG_D(
+		long groupId, String destinationURL, int start, int end) {
+
+		return filterFindByG_D(groupId, destinationURL, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1584869333
+// LIFERAY-SERVICE-BUILDER-HASH:-516869485

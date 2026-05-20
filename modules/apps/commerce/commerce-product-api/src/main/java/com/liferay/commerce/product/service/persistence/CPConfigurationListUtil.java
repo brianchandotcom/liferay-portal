@@ -131,54 +131,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration lists where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration lists where uuid = &#63;.
 	 *
 	 * <p>
@@ -266,17 +218,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the cp configuration list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -313,60 +254,6 @@ public class CPConfigurationListUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the cp configuration lists where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -450,55 +337,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration lists where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration lists where companyId = &#63;.
 	 *
 	 * <p>
@@ -571,59 +409,6 @@ public class CPConfigurationListUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the cp configuration lists where parentCPConfigurationListId = &#63;.
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByParentCPConfigurationListId(
-		long parentCPConfigurationListId) {
-
-		return getPersistence().findByParentCPConfigurationListId(
-			parentCPConfigurationListId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByParentCPConfigurationListId(
-		long parentCPConfigurationListId, int start, int end) {
-
-		return getPersistence().findByParentCPConfigurationListId(
-			parentCPConfigurationListId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentCPConfigurationListId the parent cp configuration list ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByParentCPConfigurationListId(
-		long parentCPConfigurationListId, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByParentCPConfigurationListId(
-			parentCPConfigurationListId, start, end, orderByComparator);
 	}
 
 	/**
@@ -709,60 +494,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration lists where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long groupId, long companyId) {
-
-		return getPersistence().findByG_C(groupId, companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long groupId, long companyId, int start, int end) {
-
-		return getPersistence().findByG_C(groupId, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByG_C(
-			groupId, companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
@@ -822,64 +553,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long[] groupIds, long companyId) {
-
-		return getPersistence().findByG_C(groupIds, companyId);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long[] groupIds, long companyId, int start, int end) {
-
-		return getPersistence().findByG_C(groupIds, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C(
-		long[] groupIds, long companyId, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByG_C(
-			groupIds, companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -933,60 +606,6 @@ public class CPConfigurationListUtil {
 	 */
 	public static int countByG_C(long[] groupIds, long companyId) {
 		return getPersistence().countByG_C(groupIds, companyId);
-	}
-
-	/**
-	 * Returns all the cp configuration lists where groupId = &#63; and master = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_M(
-		long groupId, boolean master) {
-
-		return getPersistence().findByG_M(groupId, master);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where groupId = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_M(
-		long groupId, boolean master, int start, int end) {
-
-		return getPersistence().findByG_M(groupId, master, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param master the master
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_M(
-		long groupId, boolean master, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByG_M(
-			groupId, master, start, end, orderByComparator);
 	}
 
 	/**
@@ -1204,64 +823,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long groupId, long companyId, int status) {
-
-		return getPersistence().findByG_C_S(groupId, companyId, status);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long groupId, long companyId, int status, int start, int end) {
-
-		return getPersistence().findByG_C_S(
-			groupId, companyId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long groupId, long companyId, int status, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByG_C_S(
-			groupId, companyId, status, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1322,68 +883,6 @@ public class CPConfigurationListUtil {
 
 		return getPersistence().fetchByG_C_S_First(
 			groupId, companyId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long[] groupIds, long companyId, int status) {
-
-		return getPersistence().findByG_C_S(groupIds, companyId, status);
-	}
-
-	/**
-	 * Returns a range of all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @return the range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long[] groupIds, long companyId, int status, int start, int end) {
-
-		return getPersistence().findByG_C_S(
-			groupIds, companyId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of cp configuration lists
-	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp configuration lists
-	 */
-	public static List<CPConfigurationList> findByG_C_S(
-		long[] groupIds, long companyId, int status, int start, int end,
-		OrderByComparator<CPConfigurationList> orderByComparator) {
-
-		return getPersistence().findByG_C_S(
-			groupIds, companyId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1716,19 +1215,6 @@ public class CPConfigurationListUtil {
 	}
 
 	/**
-	 * Returns the cp configuration list where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
-	 */
-	public static CPConfigurationList fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
 	 * Returns the cp configuration list where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -1828,6 +1314,512 @@ public class CPConfigurationListUtil {
 		return getPersistence().fetchByPrimaryKey(CPConfigurationListId);
 	}
 
+	/**
+	 * Returns the cp configuration list where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the cp configuration list where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching cp configuration list, or <code>null</code> if a matching cp configuration list could not be found
+	 */
+	public static CPConfigurationList fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId) {
+
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end) {
+
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where parentCPConfigurationListId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param parentCPConfigurationListId the parent cp configuration list ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByParentCPConfigurationListId(
+		long parentCPConfigurationListId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByParentCPConfigurationListId(
+			parentCPConfigurationListId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where groupId = &#63; and companyId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long groupId, long companyId) {
+
+		return getPersistence().findByG_C(groupId, companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long groupId, long companyId, int start, int end) {
+
+		return getPersistence().findByG_C(groupId, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long groupId, long companyId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_C(
+			groupId, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long[] groupIds, long companyId) {
+
+		return getPersistence().findByG_C(groupIds, companyId);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long[] groupIds, long companyId, int start, int end) {
+
+		return getPersistence().findByG_C(groupIds, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = any &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C(
+		long[] groupIds, long companyId, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_C(
+			groupIds, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master) {
+
+		return getPersistence().findByG_M(groupId, master);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end) {
+
+		return getPersistence().findByG_M(groupId, master, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and master = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param master the master
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_M(
+		long groupId, boolean master, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_M(
+			groupId, master, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long groupId, long companyId, int status) {
+
+		return getPersistence().findByG_C_S(groupId, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long groupId, long companyId, int status, int start, int end) {
+
+		return getPersistence().findByG_C_S(
+			groupId, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long groupId, long companyId, int status, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_C_S(
+			groupId, companyId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @return the matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long[] groupIds, long companyId, int status) {
+
+		return getPersistence().findByG_C_S(groupIds, companyId, status);
+	}
+
+	/**
+	 * Returns a range of all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @return the range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long[] groupIds, long companyId, int status, int start, int end) {
+
+		return getPersistence().findByG_C_S(
+			groupIds, companyId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the cp configuration lists where groupId = any &#63; and companyId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CPConfigurationListModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupIds the group IDs
+	 * @param companyId the company ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp configuration lists
+	 * @param end the upper bound of the range of cp configuration lists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp configuration lists
+	 */
+	public static List<CPConfigurationList> findByG_C_S(
+		long[] groupIds, long companyId, int status, int start, int end,
+		OrderByComparator<CPConfigurationList> orderByComparator) {
+
+		return getPersistence().findByG_C_S(
+			groupIds, companyId, status, start, end, orderByComparator);
+	}
+
 	public static CPConfigurationListPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1841,4 +1833,4 @@ public class CPConfigurationListUtil {
 	private static volatile CPConfigurationListPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:362858232
+// LIFERAY-SERVICE-BUILDER-HASH:1344203766

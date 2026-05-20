@@ -1091,7 +1091,10 @@ test(
 
 		await contentsPage.saveContentAsDraft();
 
-		// Check that the content is saved as draft
+		// Go back to the Content list and check that the content is saved as
+		// draft
+
+		await contentsPage.goto();
 
 		await expect(
 			page
@@ -1963,6 +1966,56 @@ test(
 		await expect(
 			page.getByRole('button', {name: 'Select Files'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Video selector inserts an uploaded video file as a video element',
+	{tag: '@LPD-88969'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const videoFileBase64 = 'AAAAIGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDE=';
+
+		const applicationName = 'cms/basic-documents';
+
+		const fileName = `sample-${getRandomString()}.mp4`;
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: videoFileBase64,
+					name: fileName,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: fileName,
+			},
+			applicationName,
+			'Default'
+		);
+
+		postedObjectEntries.push({
+			applicationName,
+			id: String(objectEntry.id),
+		});
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent('Basic Web Content');
+
+		await waitForEditor({page});
+
+		await page.getByRole('button', {name: 'Video'}).click();
+
+		await expect(
+			page.getByTestId('visualization-mode-cards')
+		).toBeVisible();
+
+		await page.getByLabel(`Select ${fileName}`).check();
+
+		await page.getByRole('button', {exact: true, name: 'Select'}).click();
+
+		await expect(page.locator('.modal-header')).toBeHidden();
+
+		await expect(page.locator('.ck-editor__editable video')).toBeVisible();
 	}
 );
 

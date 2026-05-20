@@ -7,8 +7,8 @@ package com.liferay.exportimport.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.rest.client.dto.v1_0.ExportPreview;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandler;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerSection;
+import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.client.dto.v1_0.PreviewPortletDataHandlerSection;
 import com.liferay.exportimport.rest.client.resource.v1_0.ExportPreviewResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
@@ -84,7 +84,10 @@ public class ExportPreviewResourceTest
 	}
 
 	@After
-	public void tearDownObjectDefinitions() throws Exception {
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_companyObjectDefinition);
 		_objectDefinitionLocalService.deleteObjectDefinition(
@@ -180,14 +183,17 @@ public class ExportPreviewResourceTest
 	private long _getAdditionCount(
 		ExportPreview exportPreview, String portletId) {
 
-		for (PortletDataHandlerSection portletDataHandlerSection :
-				exportPreview.getPortletDataHandlerSections()) {
+		String name = "PORTLET_DATA_" + portletId;
 
-			for (PortletDataHandler portletDataHandler :
-					portletDataHandlerSection.getPortletDataHandlers()) {
+		for (PreviewPortletDataHandlerSection previewPortletDataHandlerSection :
+				exportPreview.getPreviewPortletDataHandlerSections()) {
 
-				if (portletId.equals(portletDataHandler.getName())) {
-					return portletDataHandler.getAdditionCount();
+			for (PreviewPortletDataHandler previewPortletDataHandler :
+					previewPortletDataHandlerSection.
+						getPreviewPortletDataHandlers()) {
+
+				if (name.equals(previewPortletDataHandler.getName())) {
+					return previewPortletDataHandler.getAdditionCount();
 				}
 			}
 		}

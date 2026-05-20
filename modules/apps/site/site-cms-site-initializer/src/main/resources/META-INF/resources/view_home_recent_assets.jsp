@@ -13,18 +13,16 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 
 <div class="cms-section p-2 p-sm-3">
 	<div class="container-fluid-max">
-		<div id="<%= CMSSiteInitializerFDSNames.HOME_RECENT_ASSETS_SECTION %>">
-			<react:component
-				module="{RecentAssetsHeader} from site-cms-site-initializer"
-				props='<%=
-					HashMapBuilder.<String, Object>put(
-						"label", LanguageUtil.get(request, "view-all")
-					).put(
-						"title", LanguageUtil.get(request, "recent-assets")
-					).put(
-						"url", viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL()
-					).build()
-				%>'
+		<div class="align-items-center d-flex justify-content-between">
+			<span aria-level=2 class="font-weight-semi-bold text-4" role="heading"><liferay-ui:message key="recent-assets" /></span>
+
+			<clay:link
+				borderless="<%= true %>"
+				cssClass="font-weight-semi-bold text-3"
+				data-canonical-name='<%= LanguageUtil.format(request, "view-x", "recent-assets", true) %>'
+				href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>"
+				label='<%= LanguageUtil.get(request, "view-all") %>'
+				small="<%= true %>"
 			/>
 		</div>
 

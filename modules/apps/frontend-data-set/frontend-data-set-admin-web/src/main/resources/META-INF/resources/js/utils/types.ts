@@ -14,6 +14,12 @@ export enum EFieldFormat {
 
 export enum EFieldType {
 	ARRAY = 'array',
+	BOOLEAN = 'boolean',
+	COLLECTION_INTEGER = 'collection-integer',
+	COLLECTION_STRING = 'collection-string',
+	DATE = 'date',
+	DATE_TIME = 'date_time',
+	ID = 'id',
 	INTEGER = 'integer',
 	OBJECT = 'object',
 	STRING = 'string',
@@ -31,6 +37,29 @@ export enum ESelectionFilterSourceType {
 	API_REST_APPLICATION = 'API_REST_APPLICATION',
 }
 
+export interface IProperty {
+	$ref?: string;
+	format?: EFieldFormat;
+	items?: IProperty;
+	type?: EFieldType;
+	['x-parent-map']?: string;
+}
+
+export interface IProperties {
+	[key: string]: IProperty;
+}
+
+export interface IFilterable {
+	[key: string]: IProperty;
+}
+
+export interface ISchemas {
+	[key: string]: {
+		'properties': IProperties;
+		'type': string;
+		'x-filterable'?: IFilterable;
+	};
+}
 export interface IBaseVisualizationMode<Mode extends string> {
 	label: string;
 	mode: Mode;
@@ -96,6 +125,7 @@ export interface IDateFilter extends IFilter {
 
 export interface IField {
 	children?: Array<IField>;
+	entityFieldType?: EFieldType;
 	format?: EFieldFormat;
 	id?: string;
 	label?: string;
@@ -116,6 +146,7 @@ export interface IFieldTreeItem extends IField {
 }
 
 export interface IFilter extends IOrderable {
+	entityFieldType: EFieldType;
 	fieldName: string;
 	filterType?: EFilterType;
 	include?: boolean;

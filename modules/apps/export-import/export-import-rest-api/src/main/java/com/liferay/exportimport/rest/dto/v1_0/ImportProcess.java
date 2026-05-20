@@ -223,6 +223,47 @@ public class ImportProcess implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The import process's name."
+	)
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
+
+			_nameSupplier = null;
+		}
+
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+
+		_nameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
+			try {
+				return nameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The import process's name.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String name;
+
+	@JsonIgnore
+	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The import process's end status."
 	)
 	@Valid
@@ -265,49 +306,6 @@ public class ImportProcess implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The import process's title."
-	)
-	public String getTitle() {
-		if (_titleSupplier != null) {
-			title = _titleSupplier.get();
-
-			_titleSupplier = null;
-		}
-
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-
-		_titleSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setTitle(
-		UnsafeSupplier<String, Exception> titleUnsafeSupplier) {
-
-		_titleSupplier = () -> {
-			try {
-				return titleUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The import process's title.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String title;
-
-	@JsonIgnore
-	private Supplier<String> _titleSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -395,6 +393,22 @@ public class ImportProcess implements Serializable {
 			sb.append(id);
 		}
 
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
 		Status status = getStatus();
 
 		if (status != null) {
@@ -405,22 +419,6 @@ public class ImportProcess implements Serializable {
 			sb.append("\"status\": ");
 
 			sb.append(String.valueOf(status));
-		}
-
-		String title = getTitle();
-
-		if (title != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"title\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(title));
-
-			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -524,4 +522,4 @@ public class ImportProcess implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:239659491
+// LIFERAY-REST-BUILDER-HASH:-794115353

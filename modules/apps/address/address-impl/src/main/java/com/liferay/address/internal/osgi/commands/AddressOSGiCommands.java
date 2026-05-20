@@ -93,7 +93,8 @@ public class AddressOSGiCommands implements OSGiCommands {
 					companyId, name);
 
 				country = _countryLocalService.updateCountry(
-					country.getCountryId(), countryJSONObject.getString("a2"),
+					country.getExternalReferenceCode(), country.getCountryId(),
+					countryJSONObject.getString("a2"),
 					countryJSONObject.getString("a3"), country.isActive(),
 					country.isBillingAllowed(),
 					countryJSONObject.getString("idd"), name,

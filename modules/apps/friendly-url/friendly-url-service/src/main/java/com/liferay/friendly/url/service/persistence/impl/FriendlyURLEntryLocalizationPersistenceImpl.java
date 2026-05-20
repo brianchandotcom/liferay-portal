@@ -82,66 +82,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByFriendlyURLEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByFriendlyURLEntryId;
-	private FinderPath _finderPathCountByFriendlyURLEntryId;
 	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
 		_collectionPersistenceFinderByFriendlyURLEntryId;
-
-	/**
-	 * Returns all the friendly url entry localizations where friendlyURLEntryId = &#63;.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @return the matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
-		long friendlyURLEntryId) {
-
-		return findByFriendlyURLEntryId(
-			friendlyURLEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @return the range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
-		long friendlyURLEntryId, int start, int end) {
-
-		return findByFriendlyURLEntryId(friendlyURLEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByFriendlyURLEntryId(
-		long friendlyURLEntryId, int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return findByFriendlyURLEntryId(
-			friendlyURLEntryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where friendlyURLEntryId = &#63;.
@@ -236,7 +178,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {friendlyURLEntryId});
 	}
 
-	private FinderPath _finderPathFetchByFriendlyURLEntryId_LanguageId;
 	private UniquePersistenceFinder<FriendlyURLEntryLocalization>
 		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId;
 
@@ -272,21 +213,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		}
 
 		return friendlyURLEntryLocalization;
-	}
-
-	/**
-	 * Returns the friendly url entry localization where friendlyURLEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param friendlyURLEntryId the friendly url entry ID
-	 * @param languageId the language ID
-	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	@Override
-	public FriendlyURLEntryLocalization fetchByFriendlyURLEntryId_LanguageId(
-		long friendlyURLEntryId, String languageId) {
-
-		return fetchByFriendlyURLEntryId_LanguageId(
-			friendlyURLEntryId, languageId, true);
 	}
 
 	/**
@@ -339,74 +265,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {friendlyURLEntryId, languageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_U;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_U;
-	private FinderPath _finderPathCountByG_C_U;
 	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
 		_collectionPersistenceFinderByG_C_U;
-
-	/**
-	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @return the matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_U(
-		long groupId, long classNameId, String urlTitle) {
-
-		return findByG_C_U(
-			groupId, classNameId, urlTitle, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @return the range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_U(
-		long groupId, long classNameId, String urlTitle, int start, int end) {
-
-		return findByG_C_U(groupId, classNameId, urlTitle, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_U(
-		long groupId, long classNameId, String urlTitle, int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return findByG_C_U(
-			groupId, classNameId, urlTitle, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
@@ -511,81 +371,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId, urlTitle});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_U_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_U_C;
-	private FinderPath _finderPathCountByC_C_U_C;
 	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
 		_collectionPersistenceFinderByC_C_U_C;
-
-	/**
-	 * Returns all the friendly url entry localizations where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByC_C_U_C(
-		long companyId, long classNameId, String urlTitle,
-		long ctCollectionId) {
-
-		return findByC_C_U_C(
-			companyId, classNameId, urlTitle, ctCollectionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entry localizations where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @return the range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByC_C_U_C(
-		long companyId, long classNameId, String urlTitle, long ctCollectionId,
-		int start, int end) {
-
-		return findByC_C_U_C(
-			companyId, classNameId, urlTitle, ctCollectionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entry localizations where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param urlTitle the url title
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByC_C_U_C(
-		long companyId, long classNameId, String urlTitle, long ctCollectionId,
-		int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return findByC_C_U_C(
-			companyId, classNameId, urlTitle, ctCollectionId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where companyId = &#63; and classNameId = &#63; and urlTitle = &#63; and ctCollectionId = &#63;.
@@ -710,80 +497,8 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {companyId, classNameId, urlTitle, ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_L;
-	private FinderPath _finderPathCountByG_C_C_L;
 	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
 		_collectionPersistenceFinderByG_C_C_L;
-
-	/**
-	 * Returns all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @return the matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_C_L(
-		long groupId, long classNameId, long classPK, String languageId) {
-
-		return findByG_C_C_L(
-			groupId, classNameId, classPK, languageId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @return the range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_C_L(
-		long groupId, long classNameId, long classPK, String languageId,
-		int start, int end) {
-
-		return findByG_C_C_L(
-			groupId, classNameId, classPK, languageId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FriendlyURLEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of friendly url entry localizations
-	 * @param end the upper bound of the range of friendly url entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching friendly url entry localizations
-	 */
-	@Override
-	public List<FriendlyURLEntryLocalization> findByG_C_C_L(
-		long groupId, long classNameId, long classPK, String languageId,
-		int start, int end,
-		OrderByComparator<FriendlyURLEntryLocalization> orderByComparator) {
-
-		return findByG_C_C_L(
-			groupId, classNameId, classPK, languageId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the friendly url entry localizations where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63;.
@@ -902,7 +617,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {groupId, classNameId, classPK, languageId});
 	}
 
-	private FinderPath _finderPathFetchByG_C_L_U;
 	private UniquePersistenceFinder<FriendlyURLEntryLocalization>
 		_uniquePersistenceFinderByG_C_L_U;
 
@@ -938,22 +652,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 		}
 
 		return friendlyURLEntryLocalization;
-	}
-
-	/**
-	 * Returns the friendly url entry localization where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @return the matching friendly url entry localization, or <code>null</code> if a matching friendly url entry localization could not be found
-	 */
-	@Override
-	public FriendlyURLEntryLocalization fetchByG_C_L_U(
-		long groupId, long classNameId, String languageId, String urlTitle) {
-
-		return fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle, true);
 	}
 
 	/**
@@ -1015,8 +713,6 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 			new Object[] {groupId, classNameId, languageId, urlTitle});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_NotL_U;
-	private FinderPath _finderPathWithPaginationCountByG_C_NotL_U;
 	private CollectionPersistenceFinder<FriendlyURLEntryLocalization>
 		_collectionPersistenceFinderByG_C_NotL_U;
 
@@ -1479,29 +1175,28 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByFriendlyURLEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFriendlyURLEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"friendlyURLEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByFriendlyURLEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByFriendlyURLEntryId", new String[] {Long.class.getName()},
-			new String[] {"friendlyURLEntryId"}, true);
-
-		_finderPathCountByFriendlyURLEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByFriendlyURLEntryId", new String[] {Long.class.getName()},
-			new String[] {"friendlyURLEntryId"}, false);
-
 		_collectionPersistenceFinderByFriendlyURLEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFriendlyURLEntryId,
-				_finderPathWithoutPaginationFindByFriendlyURLEntryId,
-				_finderPathCountByFriendlyURLEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFriendlyURLEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"friendlyURLEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFriendlyURLEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"friendlyURLEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFriendlyURLEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"friendlyURLEntryId"}, false),
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -1511,19 +1206,17 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getFriendlyURLEntryId));
 
-		_finderPathFetchByFriendlyURLEntryId_LanguageId =
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY,
-				"fetchByFriendlyURLEntryId_LanguageId",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"friendlyURLEntryId", "languageId"}, 0, 2, false,
-				FriendlyURLEntryLocalization::getFriendlyURLEntryId,
-				convertNullFunction(
-					FriendlyURLEntryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByFriendlyURLEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByFriendlyURLEntryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByFriendlyURLEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"friendlyURLEntryId", "languageId"}, 0, 2,
+					false, FriendlyURLEntryLocalization::getFriendlyURLEntryId,
+					convertNullFunction(
+						FriendlyURLEntryLocalization::getLanguageId)),
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"friendlyURLEntryLocalization.", "friendlyURLEntryId",
@@ -1534,36 +1227,32 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FriendlyURLEntryLocalization::getLanguageId));
 
-		_finderPathWithPaginationFindByG_C_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "urlTitle"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_C_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_C_U = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_C_U,
-			_finderPathWithoutPaginationFindByG_C_U, _finderPathCountByG_C_U,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "urlTitle"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "classNameId", "urlTitle"}, 0, 4,
+				false, null),
 			_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 			_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 			FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -1581,46 +1270,41 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				FriendlyURLEntryLocalization::getUrlTitle));
 
-		_finderPathWithPaginationFindByC_C_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "urlTitle", "ctCollectionId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_C_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "urlTitle", "ctCollectionId"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByC_C_U_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_U_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"companyId", "classNameId", "urlTitle", "ctCollectionId"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByC_C_U_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_U_C,
-				_finderPathWithoutPaginationFindByC_C_U_C,
-				_finderPathCountByC_C_U_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "urlTitle", "ctCollectionId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "urlTitle", "ctCollectionId"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_U_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Long.class.getName()
+					},
+					new String[] {
+						"companyId", "classNameId", "urlTitle", "ctCollectionId"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -1642,40 +1326,41 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					FriendlyURLEntryLocalization::getCtCollectionId));
 
-		_finderPathWithPaginationFindByG_C_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "languageId"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "languageId"}, 0,
-			8, true, null);
-
-		_finderPathCountByG_C_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classPK", "languageId"}, 0,
-			8, false, null);
-
 		_collectionPersistenceFinderByG_C_C_L =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_L,
-				_finderPathWithoutPaginationFindByG_C_C_L,
-				_finderPathCountByG_C_C_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "languageId"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "languageId"
+					},
+					0, 8, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classPK", "languageId"
+					},
+					0, 8, false, null),
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -1697,20 +1382,22 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					FriendlyURLEntryLocalization::getLanguageId));
 
-		_finderPathFetchByG_C_L_U = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_L_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
-			0, 12, false, FriendlyURLEntryLocalization::getGroupId,
-			FriendlyURLEntryLocalization::getClassNameId,
-			convertNullFunction(FriendlyURLEntryLocalization::getLanguageId),
-			convertNullFunction(FriendlyURLEntryLocalization::getUrlTitle));
-
 		_uniquePersistenceFinderByG_C_L_U = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_L_U,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_L_U",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				new String[] {
+					"groupId", "classNameId", "languageId", "urlTitle"
+				},
+				0, 12, false, FriendlyURLEntryLocalization::getGroupId,
+				FriendlyURLEntryLocalization::getClassNameId,
+				convertNullFunction(
+					FriendlyURLEntryLocalization::getLanguageId),
+				convertNullFunction(FriendlyURLEntryLocalization::getUrlTitle)),
 			_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE, "",
 			new FinderColumn<>(
 				"friendlyURLEntryLocalization.", "groupId",
@@ -1729,30 +1416,32 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				FriendlyURLEntryLocalization::getUrlTitle));
 
-		_finderPathWithPaginationFindByG_C_NotL_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotL_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
-			true);
-
-		_finderPathWithPaginationCountByG_C_NotL_U = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotL_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "languageId", "urlTitle"},
-			false);
-
 		_collectionPersistenceFinderByG_C_NotL_U =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_NotL_U, null,
-				_finderPathWithPaginationCountByG_C_NotL_U,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotL_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "languageId", "urlTitle"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotL_U",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "languageId", "urlTitle"
+					},
+					false),
 				_SQL_SELECT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_FRIENDLYURLENTRYLOCALIZATION_WHERE,
 				FriendlyURLEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -1844,4 +1533,4 @@ public class FriendlyURLEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1628795063
+// LIFERAY-SERVICE-BUILDER-HASH:-1652867850

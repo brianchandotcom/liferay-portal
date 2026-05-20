@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.ActionType;
 import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
@@ -120,8 +121,11 @@ public class KaleoActionLocalServiceImpl
 		long companyId, String kaleoClassName, long kaleoClassPK,
 		String executionType) {
 
-		return kaleoActionPersistence.findByC_KCN_KCPK_ET(
-			companyId, kaleoClassName, kaleoClassPK, executionType);
+		return ListUtil.filter(
+			kaleoActionPersistence.findByC_KCN_KCPK(
+				companyId, kaleoClassName, kaleoClassPK),
+			kaleoAction -> executionType.equals(
+				kaleoAction.getExecutionType()));
 	}
 
 	@Reference

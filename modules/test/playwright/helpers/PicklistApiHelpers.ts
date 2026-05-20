@@ -26,6 +26,16 @@ export class PicklistApiHelpers extends ApiHelpers {
 		return this.delete(url);
 	}
 
+	async deleteBatchPicklist(names: Array<string>, picklistItems: Array<any>) {
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/batch`;
+
+		const items = picklistItems
+			.filter((item) => names.includes(item.name))
+			.map((item) => ({id: item.id}));
+
+		return this.delete(url, {data: items});
+	}
+
 	async editPicklist({
 		externalReferenceCode,
 		key,
@@ -53,5 +63,13 @@ export class PicklistApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions/by-external-reference-code/${externalReferenceCode}`;
 
 		return this.get(url);
+	}
+
+	async getPicklists() {
+		const url = `${this.baseUrl}headless-admin-list-type/v1.0/list-type-definitions`;
+
+		const picklists = await this.get(url);
+
+		return picklists.items;
 	}
 }

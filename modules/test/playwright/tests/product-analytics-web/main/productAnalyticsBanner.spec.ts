@@ -246,7 +246,7 @@ test(
 		});
 
 		await test.step('Verify Product Analytics Banner is no longer present', async () => {
-			page.reload();
+			await page.reload();
 
 			await expect(
 				productAnalyticsBannerPage.bannerLocator
@@ -306,7 +306,7 @@ test(
 		await acceptAll.click();
 
 		await test.step('Verify Product Analytics Banner is no longer present', async () => {
-			page.reload();
+			await page.reload();
 
 			await expect(
 				productAnalyticsBannerPage.bannerLocator

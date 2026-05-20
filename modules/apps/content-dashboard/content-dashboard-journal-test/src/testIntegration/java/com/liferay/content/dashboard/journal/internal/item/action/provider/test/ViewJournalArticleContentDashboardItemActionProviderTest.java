@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -116,7 +117,11 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			themeDisplay.setRequest(mockHttpServletRequest);
 
-			themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+			String urlCurrent =
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/currentURL";
+
+			themeDisplay.setURLCurrent(urlCurrent);
 
 			serviceContext.setRequest(mockHttpServletRequest);
 
@@ -134,11 +139,8 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				url.contains(
 					StringUtil.toLowerCase(
 						journalArticle.getTitle(LocaleUtil.US))));
-
-			String escapeURL = HtmlUtil.escapeURL(
-				"http://localhost:8080/currentURL");
-
-			Assert.assertTrue(url.contains("p_l_back_url=" + escapeURL));
+			Assert.assertTrue(
+				url.contains("p_l_back_url=" + HtmlUtil.escapeURL(urlCurrent)));
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -297,7 +299,9 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 
 			themeDisplay.setRequest(mockHttpServletRequest);
 
-			themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+			themeDisplay.setURLCurrent(
+				"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+					"/currentURL");
 
 			serviceContext.setRequest(mockHttpServletRequest);
 

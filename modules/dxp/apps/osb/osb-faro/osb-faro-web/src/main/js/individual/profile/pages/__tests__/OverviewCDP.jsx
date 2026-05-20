@@ -7,7 +7,7 @@ import {Individual} from 'shared/util/records';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useRequest} from 'shared/hooks/useRequest';
 
 jest.unmock('react-dom');
@@ -16,8 +16,8 @@ jest.mock('shared/hooks/useCurrentUser', () => ({
 	useCurrentUser: jest.fn()
 }));
 
-jest.mock('shared/hooks/useDataSource', () => ({
-	useDataSource: jest.fn()
+jest.mock('shared/context/dataSources', () => ({
+	useDataSources: jest.fn()
 }));
 
 jest.mock('shared/hooks/useRequest', () => ({
@@ -37,7 +37,7 @@ jest.mock('../../hoc/ProfileCardCDP', () => ({
 }));
 
 const mockedUseCurrentUser = useCurrentUser;
-const mockedUseDataSource = useDataSource;
+const mockedUseDataSource = useDataSources;
 const mockedUseRequest = useRequest;
 
 const mockIndividual = data.getImmutableMock(Individual, data.mockIndividual);

@@ -84,12 +84,12 @@ public class AccountChannelEntryResourceTest
 			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS, 10, serviceContext);
 
 		_country = CountryLocalServiceUtil.addCountry(
-			"XY", "XYZ", true, true, null, RandomTestUtil.randomString(),
+			null, "XY", "XYZ", true, true, null, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), true,
 			false, false, serviceContext);
 
 		_region = RegionLocalServiceUtil.addRegion(
-			_country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, _country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 			serviceContext);
 

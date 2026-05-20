@@ -286,9 +286,7 @@ const MembershipMetrics: React.FC<PropsFromRedux> = ({addAlert}) => {
 	const {groupId, id} = useParams<{groupId: string; id: string}>();
 
 	const {data, error, loading} = useRequest({
-		dataSourceFn: fetchMembershipMetrics as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: fetchMembershipMetrics,
 		variables: {groupId, individualSegmentId: id}
 	});
 

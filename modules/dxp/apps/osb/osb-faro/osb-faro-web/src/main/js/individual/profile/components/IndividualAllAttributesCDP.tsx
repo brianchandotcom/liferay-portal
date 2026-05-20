@@ -96,9 +96,7 @@ const IndividualDetailsCDP = ({
 	const {query} = useQueryParams();
 
 	const response = useRequest({
-		dataSourceFn: API.individuals.fetchDetails as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.individuals.fetchDetails,
 		variables: {groupId, individualId}
 	});
 

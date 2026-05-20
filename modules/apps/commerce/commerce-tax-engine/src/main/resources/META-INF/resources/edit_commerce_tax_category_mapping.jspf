@@ -20,6 +20,8 @@ if (commerceTaxCategoryMapping != null) {
 <aui:input name="commerceTaxCategoryMappingId" type="hidden" value="<%= commerceTaxCategoryMappingId %>" />
 <aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
 
+<liferay-ui:error exception="<%= NoSuchCPTaxCategoryException.class %>" message="the-tax-category-could-not-be-found" />
+
 <div class="row">
 	<div class="col-md-6">
 		<aui:select disabled="<%= commerceTaxCategoryMapping != null %>" label="tax-category" name="CPTaxCategoryId" value="<%= (commerceTaxCategoryMapping == null) ? null : commerceTaxCategoryMapping.getCPTaxCategoryId() %>">

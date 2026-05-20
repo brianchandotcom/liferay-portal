@@ -69,4 +69,4 @@ public interface RSVEntryPersistence extends BasePersistence<RSVEntry> {
 	public RSVEntry fetchByPrimaryKey(long rsvEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1991600994
+// LIFERAY-SERVICE-BUILDER-HASH:-1626968862

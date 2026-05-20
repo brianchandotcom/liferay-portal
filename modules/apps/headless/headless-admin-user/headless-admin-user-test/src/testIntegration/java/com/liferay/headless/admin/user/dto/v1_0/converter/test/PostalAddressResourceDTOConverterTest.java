@@ -59,7 +59,7 @@ public class PostalAddressResourceDTOConverterTest {
 	@Before
 	public void setUp() throws Exception {
 		Country country = _countryLocalService.addCountry(
-			"XY", "XYZ", RandomTestUtil.randomBoolean(),
+			null, "XY", "XYZ", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),

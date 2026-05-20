@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -336,16 +338,21 @@ public class DownloadObjectEntryFolderCMSServlet extends BaseCMSServlet {
 		}
 
 		List<ObjectEntryFolder> objectEntryFolders =
-			_objectEntryFolderService.getObjectEntryFolders(
+			_objectEntryFolderLocalService.getObjectEntryFolders(
 				groupId, themeDisplay.getCompanyId(), objectEntryFolderId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
-			_zipObjectEntryFolder(
-				groupId, objectEntryFolder.getObjectEntryFolderId(),
-				StringBundler.concat(
-					path, StringPool.SLASH, objectEntryFolder.getName()),
-				themeDisplay, zipWriter);
+			if (_objectEntryFolderModelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), objectEntryFolder,
+					ActionKeys.VIEW)) {
+
+				_zipObjectEntryFolder(
+					groupId, objectEntryFolder.getObjectEntryFolderId(),
+					StringBundler.concat(
+						path, StringPool.SLASH, objectEntryFolder.getName()),
+					themeDisplay, zipWriter);
+			}
 		}
 	}
 
@@ -357,6 +364,15 @@ public class DownloadObjectEntryFolderCMSServlet extends BaseCMSServlet {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;

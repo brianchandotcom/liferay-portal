@@ -1,21 +1,25 @@
 import React from 'react';
 import {act, renderHook} from '@testing-library/react';
 import {LifecycleContextProvider, useLifecycle} from '../LifecycleContext';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 jest.unmock('react-dom');
 
 const wrapper = ({children}: {children: React.ReactNode}) => (
-	<LifecycleContextProvider>{children}</LifecycleContextProvider>
+	<LifecycleContextProvider lifecycleId='1'>
+		{children}
+	</LifecycleContextProvider>
 );
 
 describe('LifecycleContext', () => {
-	it('should expose empty filters by default', () => {
+	it('should default lifecycleStageFilter to AT_RISK and leave other filters empty', () => {
 		const {result} = renderHook(() => useLifecycle(), {wrapper});
 
 		expect(result.current.filters).toEqual({
 			countryFilter: '',
 			filterString: '',
-			industryFilter: ''
+			industryFilter: '',
+			lifecycleStageFilter: LifecycleStages.AT_RISK
 		});
 	});
 
@@ -27,7 +31,8 @@ describe('LifecycleContext', () => {
 		expect(result.current.filters).toEqual({
 			countryFilter: '',
 			filterString: "industry eq 'Tech'",
-			industryFilter: 'Tech'
+			industryFilter: 'Tech',
+			lifecycleStageFilter: LifecycleStages.AT_RISK
 		});
 	});
 
@@ -42,13 +47,28 @@ describe('LifecycleContext', () => {
 		);
 	});
 
+	it('should swap lifecycleStageFilter to the value provided', () => {
+		const {result} = renderHook(() => useLifecycle(), {wrapper});
+
+		act(() =>
+			result.current.updateFilters({
+				lifecycleStageFilter: LifecycleStages.AWARE
+			})
+		);
+
+		expect(result.current.filters.lifecycleStageFilter).toBe(
+			LifecycleStages.AWARE
+		);
+	});
+
 	it('should reset filters to their initial values', () => {
 		const {result} = renderHook(() => useLifecycle(), {wrapper});
 
 		act(() =>
 			result.current.updateFilters({
 				countryFilter: 'US',
-				industryFilter: 'Tech'
+				industryFilter: 'Tech',
+				lifecycleStageFilter: LifecycleStages.AWARE
 			})
 		);
 		act(() => result.current.resetFilters());
@@ -56,7 +76,8 @@ describe('LifecycleContext', () => {
 		expect(result.current.filters).toEqual({
 			countryFilter: '',
 			filterString: '',
-			industryFilter: ''
+			industryFilter: '',
+			lifecycleStageFilter: LifecycleStages.AT_RISK
 		});
 	});
 });

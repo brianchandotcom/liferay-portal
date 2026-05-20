@@ -98,60 +98,8 @@ public class LayoutPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the layouts where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where uuid = &#63;.
@@ -240,7 +188,6 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G_P;
 	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByUUID_G_P;
 
 	/**
@@ -273,21 +220,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return layout;
-	}
-
-	/**
-	 * Returns the layout where uuid = &#63; and groupId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchByUUID_G_P(
-		String uuid, long groupId, boolean privateLayout) {
-
-		return fetchByUUID_G_P(uuid, groupId, privateLayout, true);
 	}
 
 	/**
@@ -344,67 +276,8 @@ public class LayoutPersistenceImpl
 			new Object[] {uuid, groupId, privateLayout});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the layouts where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where uuid = &#63; and companyId = &#63;.
@@ -500,61 +373,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByGroupId;
-
-	/**
-	 * Returns all the layouts where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63;.
@@ -621,35 +441,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByGroupId(long groupId, int start, int end) {
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -707,61 +498,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the layouts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where companyId = &#63;.
@@ -850,62 +588,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByParentPlid;
-	private FinderPath _finderPathWithoutPaginationFindByParentPlid;
-	private FinderPath _finderPathCountByParentPlid;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByParentPlid;
-
-	/**
-	 * Returns all the layouts where parentPlid = &#63;.
-	 *
-	 * @param parentPlid the parent plid
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByParentPlid(long parentPlid) {
-		return findByParentPlid(
-			parentPlid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where parentPlid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentPlid the parent plid
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByParentPlid(long parentPlid, int start, int end) {
-		return findByParentPlid(parentPlid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where parentPlid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentPlid the parent plid
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByParentPlid(
-		long parentPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByParentPlid(
-			parentPlid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where parentPlid = &#63;.
@@ -994,64 +678,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {parentPlid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByIconImageId;
-	private FinderPath _finderPathWithoutPaginationFindByIconImageId;
-	private FinderPath _finderPathCountByIconImageId;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByIconImageId;
-
-	/**
-	 * Returns all the layouts where iconImageId = &#63;.
-	 *
-	 * @param iconImageId the icon image ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByIconImageId(long iconImageId) {
-		return findByIconImageId(
-			iconImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where iconImageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param iconImageId the icon image ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByIconImageId(
-		long iconImageId, int start, int end) {
-
-		return findByIconImageId(iconImageId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param iconImageId the icon image ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByIconImageId(
-		long iconImageId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByIconImageId(
-			iconImageId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
@@ -1141,70 +769,8 @@ public class LayoutPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {iconImageId});
 	}
 
-	private FinderPath
-		_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC;
-	private FinderPath
-		_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC;
-	private FinderPath _finderPathCountByLayoutSetPrototypeLayoutERC;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByLayoutSetPrototypeLayoutERC;
-
-	/**
-	 * Returns all the layouts where layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByLayoutSetPrototypeLayoutERC(
-		String layoutSetPrototypeLayoutERC) {
-
-		return findByLayoutSetPrototypeLayoutERC(
-			layoutSetPrototypeLayoutERC, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByLayoutSetPrototypeLayoutERC(
-		String layoutSetPrototypeLayoutERC, int start, int end) {
-
-		return findByLayoutSetPrototypeLayoutERC(
-			layoutSetPrototypeLayoutERC, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByLayoutSetPrototypeLayoutERC(
-		String layoutSetPrototypeLayoutERC, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByLayoutSetPrototypeLayoutERC(
-			layoutSetPrototypeLayoutERC, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where layoutSetPrototypeLayoutERC = &#63;.
@@ -1306,67 +872,8 @@ public class LayoutPersistenceImpl
 			new Object[] {layoutSetPrototypeLayoutERC});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P;
-	private FinderPath _finderPathWithoutPaginationFindByG_P;
-	private FinderPath _finderPathCountByG_P;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P(long groupId, boolean privateLayout) {
-		return findByG_P(
-			groupId, privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P(
-		long groupId, boolean privateLayout, int start, int end) {
-
-		return findByG_P(groupId, privateLayout, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P(
-		long groupId, boolean privateLayout, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P(
-			groupId, privateLayout, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63;.
@@ -1441,39 +948,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P(long groupId, boolean privateLayout) {
-		return filterFindByG_P(
-			groupId, privateLayout, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P(
-		long groupId, boolean privateLayout, int start, int end) {
-
-		return filterFindByG_P(groupId, privateLayout, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63;.
 	 *
 	 * <p>
@@ -1539,66 +1013,8 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_T;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_T(long groupId, String type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_T(
-		long groupId, String type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_T(
-		long groupId, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and type = &#63;.
@@ -1670,39 +1086,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_T(long groupId, String type) {
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_T(
-		long groupId, String type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1765,73 +1148,8 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_MLPTEERC;
-	private FinderPath _finderPathWithoutPaginationFindByG_MLPTEERC;
-	private FinderPath _finderPathCountByG_MLPTEERC;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_MLPTEERC;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_MLPTEERC(
-		long groupId, String masterLayoutPageTemplateEntryERC) {
-
-		return findByG_MLPTEERC(
-			groupId, masterLayoutPageTemplateEntryERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_MLPTEERC(
-		long groupId, String masterLayoutPageTemplateEntryERC, int start,
-		int end) {
-
-		return findByG_MLPTEERC(
-			groupId, masterLayoutPageTemplateEntryERC, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_MLPTEERC(
-		long groupId, String masterLayoutPageTemplateEntryERC, int start,
-		int end, OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_MLPTEERC(
-			groupId, masterLayoutPageTemplateEntryERC, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
@@ -1908,44 +1226,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_MLPTEERC(
-		long groupId, String masterLayoutPageTemplateEntryERC) {
-
-		return filterFindByG_MLPTEERC(
-			groupId, masterLayoutPageTemplateEntryERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_MLPTEERC(
-		long groupId, String masterLayoutPageTemplateEntryERC, int start,
-		int end) {
-
-		return filterFindByG_MLPTEERC(
-			groupId, masterLayoutPageTemplateEntryERC, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
@@ -2017,68 +1297,8 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, masterLayoutPageTemplateEntryERC}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_I;
-	private FinderPath _finderPathWithoutPaginationFindByP_I;
-	private FinderPath _finderPathCountByP_I;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByP_I;
-
-	/**
-	 * Returns all the layouts where privateLayout = &#63; and iconImageId = &#63;.
-	 *
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByP_I(boolean privateLayout, long iconImageId) {
-		return findByP_I(
-			privateLayout, iconImageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId, int start, int end) {
-
-		return findByP_I(privateLayout, iconImageId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByP_I(
-			privateLayout, iconImageId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
@@ -2179,67 +1399,8 @@ public class LayoutPersistenceImpl
 			new Object[] {privateLayout, iconImageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByC_C;
-
-	/**
-	 * Returns all the layouts where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(long classNameId, long classPK) {
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63;.
@@ -2324,66 +1485,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts where classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(long classNameId, long[] classPKs) {
-		return findByC_C(
-			classNameId, classPKs, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(
-		long classNameId, long[] classPKs, int start, int end) {
-
-		return findByC_C(classNameId, classPKs, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPKs the class pks
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByC_C(
-		long classNameId, long[] classPKs, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPKs, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts where classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -2450,78 +1551,8 @@ public class LayoutPersistenceImpl
 			new Object[] {classNameId, ArrayUtil.sortedUnique(classPKs)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByPLPTEERC_PLPTESERC;
-	private FinderPath _finderPathWithoutPaginationFindByPLPTEERC_PLPTESERC;
-	private FinderPath _finderPathCountByPLPTEERC_PLPTESERC;
 	private CollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByPLPTEERC_PLPTESERC;
-
-	/**
-	 * Returns all the layouts where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63;.
-	 *
-	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc
-	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByPLPTEERC_PLPTESERC(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC) {
-
-		return findByPLPTEERC_PLPTESERC(
-			portletLayoutPageTemplateEntryERC,
-			portletLayoutPageTemplateEntryScopeERC, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc
-	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByPLPTEERC_PLPTESERC(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC, int start, int end) {
-
-		return findByPLPTEERC_PLPTESERC(
-			portletLayoutPageTemplateEntryERC,
-			portletLayoutPageTemplateEntryScopeERC, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portletLayoutPageTemplateEntryERC the portlet layout page template entry erc
-	 * @param portletLayoutPageTemplateEntryScopeERC the portlet layout page template entry scope erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByPLPTEERC_PLPTESERC(
-		String portletLayoutPageTemplateEntryERC,
-		String portletLayoutPageTemplateEntryScopeERC, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByPLPTEERC_PLPTESERC(
-			portletLayoutPageTemplateEntryERC,
-			portletLayoutPageTemplateEntryScopeERC, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where portletLayoutPageTemplateEntryERC = &#63; and portletLayoutPageTemplateEntryScopeERC = &#63;.
@@ -2649,7 +1680,6 @@ public class LayoutPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByG_P_L;
 	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByG_P_L;
 
 	/**
@@ -2682,21 +1712,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return layout;
-	}
-
-	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutId the layout ID
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchByG_P_L(
-		long groupId, boolean privateLayout, long layoutId) {
-
-		return fetchByG_P_L(groupId, privateLayout, layoutId, true);
 	}
 
 	/**
@@ -2757,71 +1772,6 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P;
 	private FinderPath _finderPathCountByG_P_P;
 	private FinderPath _finderPathWithPaginationCountByG_P_P;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P(
-		long groupId, boolean privateLayout, long parentLayoutId) {
-
-		return findByG_P_P(
-			groupId, privateLayout, parentLayoutId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end) {
-
-		return findByG_P_P(
-			groupId, privateLayout, parentLayoutId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end, OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_P(
-			groupId, privateLayout, parentLayoutId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
@@ -3018,46 +1968,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return null;
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P(
-		long groupId, boolean privateLayout, long parentLayoutId) {
-
-		return filterFindByG_P_P(
-			groupId, privateLayout, parentLayoutId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P(
-		long groupId, boolean privateLayout, long parentLayoutId, int start,
-		int end) {
-
-		return filterFindByG_P_P(
-			groupId, privateLayout, parentLayoutId, start, end, null);
 	}
 
 	/**
@@ -4009,73 +2919,8 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_PARENTLAYOUTID_7_SQL =
 		"layout.parentLayoutId IN (";
 
-	private FinderPath _finderPathWithPaginationFindByG_P_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_T;
-	private FinderPath _finderPathCountByG_P_T;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P_T;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String type) {
-
-		return findByG_P_T(
-			groupId, privateLayout, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String type, int start, int end) {
-
-		return findByG_P_T(groupId, privateLayout, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String type, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_T(
-			groupId, privateLayout, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -4166,45 +3011,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_T(
-		long groupId, boolean privateLayout, String type) {
-
-		return filterFindByG_P_T(
-			groupId, privateLayout, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param type the type
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_T(
-		long groupId, boolean privateLayout, String type, int start, int end) {
-
-		return filterFindByG_P_T(
-			groupId, privateLayout, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -4226,48 +3032,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_T.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, type}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param types the types
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_T(
-		long groupId, boolean privateLayout, String[] types) {
-
-		return filterFindByG_P_T(
-			groupId, privateLayout, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param types the types
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_T(
-		long groupId, boolean privateLayout, String[] types, int start,
-		int end) {
-
-		return filterFindByG_P_T(
-			groupId, privateLayout, types, start, end, null);
+			new Object[] {groupId, privateLayout, new String[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -4296,73 +3062,6 @@ public class LayoutPersistenceImpl
 				groupId, privateLayout, ArrayUtil.sortedUnique(types)
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param types the types
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String[] types) {
-
-		return findByG_P_T(
-			groupId, privateLayout, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param types the types
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String[] types, int start,
-		int end) {
-
-		return findByG_P_T(groupId, privateLayout, types, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param types the types
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_T(
-		long groupId, boolean privateLayout, String[] types, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_T(
-			groupId, privateLayout, types, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4458,7 +3157,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_T.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, type}, groupId);
+			new Object[] {groupId, privateLayout, new String[] {type}},
+			groupId);
 	}
 
 	/**
@@ -4481,75 +3181,8 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
-	private FinderPath _finderPathCountByG_P_S;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P_S;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_S(
-		long groupId, boolean privateLayout, boolean system) {
-
-		return findByG_P_S(
-			groupId, privateLayout, system, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_S(
-		long groupId, boolean privateLayout, boolean system, int start,
-		int end) {
-
-		return findByG_P_S(groupId, privateLayout, system, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_S(
-		long groupId, boolean privateLayout, boolean system, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_S(
-			groupId, privateLayout, system, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and system = &#63;.
@@ -4624,46 +3257,6 @@ public class LayoutPersistenceImpl
 		return _collectionPersistenceFinderByG_P_S.fetchFirst(
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {groupId, privateLayout, system}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_S(
-		long groupId, boolean privateLayout, boolean system) {
-
-		return filterFindByG_P_S(
-			groupId, privateLayout, system, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_S(
-		long groupId, boolean privateLayout, boolean system, int start,
-		int end) {
-
-		return filterFindByG_P_S(
-			groupId, privateLayout, system, start, end, null);
 	}
 
 	/**
@@ -4742,7 +3335,6 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout, system}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_P_F;
 	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByG_P_F;
 
 	/**
@@ -4775,21 +3367,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return layout;
-	}
-
-	/**
-	 * Returns the layout where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly url
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchByG_P_F(
-		long groupId, boolean privateLayout, String friendlyURL) {
-
-		return fetchByG_P_F(groupId, privateLayout, friendlyURL, true);
 	}
 
 	/**
@@ -4846,78 +3423,8 @@ public class LayoutPersistenceImpl
 			new Object[] {groupId, privateLayout, friendlyURL});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_LSPLE;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_LSPLE;
-	private FinderPath _finderPathCountByG_P_LSPLE;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P_LSPLE;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_LSPLE(
-		long groupId, boolean privateLayout,
-		String layoutSetPrototypeLayoutERC) {
-
-		return findByG_P_LSPLE(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_LSPLE(
-		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
-		int start, int end) {
-
-		return findByG_P_LSPLE(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_LSPLE(
-		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
-		int start, int end, OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_LSPLE(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
@@ -5001,48 +3508,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_LSPLE(
-		long groupId, boolean privateLayout,
-		String layoutSetPrototypeLayoutERC) {
-
-		return filterFindByG_P_LSPLE(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param layoutSetPrototypeLayoutERC the layout set prototype layout erc
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_LSPLE(
-		long groupId, boolean privateLayout, String layoutSetPrototypeLayoutERC,
-		int start, int end) {
-
-		return filterFindByG_P_LSPLE(
-			groupId, privateLayout, layoutSetPrototypeLayoutERC, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and layoutSetPrototypeLayoutERC = &#63;.
 	 *
 	 * <p>
@@ -5122,74 +3587,8 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_ST;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_ST;
-	private FinderPath _finderPathCountByG_P_ST;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P_ST;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int status) {
-
-		return findByG_P_ST(
-			groupId, privateLayout, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int status, int start, int end) {
-
-		return findByG_P_ST(groupId, privateLayout, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int status, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_ST(
-			groupId, privateLayout, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and status = &#63;.
@@ -5280,45 +3679,6 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_ST(
-		long groupId, boolean privateLayout, int status) {
-
-		return filterFindByG_P_ST(
-			groupId, privateLayout, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param status the status
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_ST(
-		long groupId, boolean privateLayout, int status, int start, int end) {
-
-		return filterFindByG_P_ST(
-			groupId, privateLayout, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and privateLayout = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -5340,48 +3700,8 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_ST.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, status}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param statuses the statuses
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_ST(
-		long groupId, boolean privateLayout, int[] statuses) {
-
-		return filterFindByG_P_ST(
-			groupId, privateLayout, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_ST(
-		long groupId, boolean privateLayout, int[] statuses, int start,
-		int end) {
-
-		return filterFindByG_P_ST(
-			groupId, privateLayout, statuses, start, end, null);
+			new Object[] {groupId, privateLayout, new int[] {status}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -5410,74 +3730,6 @@ public class LayoutPersistenceImpl
 				groupId, privateLayout, ArrayUtil.sortedUnique(statuses)
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param statuses the statuses
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int[] statuses) {
-
-		return findByG_P_ST(
-			groupId, privateLayout, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int[] statuses, int start,
-		int end) {
-
-		return findByG_P_ST(groupId, privateLayout, statuses, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_ST(
-		long groupId, boolean privateLayout, int[] statuses, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_ST(
-			groupId, privateLayout, statuses, start, end, orderByComparator,
-			true);
 	}
 
 	/**
@@ -5573,7 +3825,7 @@ public class LayoutPersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_ST.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, privateLayout, status}, groupId);
+			new Object[] {groupId, privateLayout, new int[] {status}}, groupId);
 	}
 
 	/**
@@ -5600,76 +3852,6 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithoutPaginationFindByG_P_P_H;
 	private FinderPath _finderPathCountByG_P_P_H;
 	private FinderPath _finderPathWithPaginationCountByG_P_P_H;
-
-	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_H(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden) {
-
-		return findByG_P_P_H(
-			groupId, privateLayout, parentLayoutId, hidden, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_H(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden, int start, int end) {
-
-		return findByG_P_P_H(
-			groupId, privateLayout, parentLayoutId, hidden, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_H(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_P_H(
-			groupId, privateLayout, parentLayoutId, hidden, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
@@ -5878,49 +4060,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return null;
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P_H(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden) {
-
-		return filterFindByG_P_P_H(
-			groupId, privateLayout, parentLayoutId, hidden, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and hidden = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param hidden the hidden
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P_H(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean hidden, int start, int end) {
-
-		return filterFindByG_P_P_H(
-			groupId, privateLayout, parentLayoutId, hidden, start, end, null);
 	}
 
 	/**
@@ -6951,76 +5090,6 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithPaginationCountByG_P_P_S;
 
 	/**
-	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @return the matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_S(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean system) {
-
-		return findByG_P_P_S(
-			groupId, privateLayout, parentLayoutId, system, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_S(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean system, int start, int end) {
-
-		return findByG_P_P_S(
-			groupId, privateLayout, parentLayoutId, system, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layouts
-	 */
-	@Override
-	public List<Layout> findByG_P_P_S(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean system, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
-
-		return findByG_P_P_S(
-			groupId, privateLayout, parentLayoutId, system, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
 	 *
 	 * <p>
@@ -7227,49 +5296,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return null;
-	}
-
-	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @return the matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P_S(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean system) {
-
-		return filterFindByG_P_P_S(
-			groupId, privateLayout, parentLayoutId, system, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and parentLayoutId = &#63; and system = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param privateLayout the private layout
-	 * @param parentLayoutId the parent layout ID
-	 * @param system the system
-	 * @param start the lower bound of the range of layouts
-	 * @param end the upper bound of the range of layouts (not inclusive)
-	 * @return the range of matching layouts that the user has permission to view
-	 */
-	@Override
-	public List<Layout> filterFindByG_P_P_S(
-		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean system, int start, int end) {
-
-		return filterFindByG_P_P_S(
-			groupId, privateLayout, parentLayoutId, system, start, end, null);
 	}
 
 	/**
@@ -8274,8 +6300,6 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_P_S_SYSTEM_2_SQL =
 		"layout.system_ = ?";
 
-	private FinderPath _finderPathWithPaginationFindByG_P_P_LteP;
-	private FinderPath _finderPathWithPaginationCountByG_P_P_LteP;
 	private FilterCollectionPersistenceFinder<Layout>
 		_collectionPersistenceFinderByG_P_P_LteP;
 
@@ -8558,7 +6582,6 @@ public class LayoutPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<Layout> _uniquePersistenceFinderByERC_G;
 
 	/**
@@ -8589,18 +6612,6 @@ public class LayoutPersistenceImpl
 		}
 
 		return layout;
-	}
-
-	/**
-	 * Returns the layout where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
-	 */
-	@Override
-	public Layout fetchByERC_G(String externalReferenceCode, long groupId) {
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -9047,45 +7058,41 @@ public class LayoutPersistenceImpl
 	 * Initializes the layout persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 			LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"layout.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Layout::getUuid));
 
-		_finderPathFetchByUUID_G_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_P",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"uuid_", "groupId", "privateLayout"}, 0, 1, false,
-			convertNullFunction(Layout::getUuid), Layout::getGroupId,
-			Layout::isPrivateLayout);
-
 		_uniquePersistenceFinderByUUID_G_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G_P, _SQL_SELECT_LAYOUT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G_P",
+				new String[] {
+					String.class.getName(), Long.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"uuid_", "groupId", "privateLayout"}, 0, 1, false,
+				convertNullFunction(Layout::getUuid), Layout::getGroupId,
+				Layout::isPrivateLayout),
+			_SQL_SELECT_LAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"layout.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				Layout::getUuid),
@@ -9096,32 +7103,27 @@ public class LayoutPersistenceImpl
 				"layout.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 				true, true, Layout::isPrivateLayout));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layout.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, Layout::getUuid),
@@ -9129,160 +7131,142 @@ public class LayoutPersistenceImpl
 					"layout.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FinderColumn<>(
 					"layout.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getCompanyId));
 
-		_finderPathWithPaginationFindByParentPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentPlid",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentPlid"}, true);
-
-		_finderPathWithoutPaginationFindByParentPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByParentPlid",
-			new String[] {Long.class.getName()}, new String[] {"parentPlid"},
-			true);
-
-		_finderPathCountByParentPlid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByParentPlid",
-			new String[] {Long.class.getName()}, new String[] {"parentPlid"},
-			false);
-
 		_collectionPersistenceFinderByParentPlid =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByParentPlid,
-				_finderPathWithoutPaginationFindByParentPlid,
-				_finderPathCountByParentPlid, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByParentPlid",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentPlid"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByParentPlid", new String[] {Long.class.getName()},
+					new String[] {"parentPlid"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByParentPlid", new String[] {Long.class.getName()},
+					new String[] {"parentPlid"}, false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FinderColumn<>(
 					"layout.", "parentPlid", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getParentPlid));
 
-		_finderPathWithPaginationFindByIconImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIconImageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"iconImageId"}, true);
-
-		_finderPathWithoutPaginationFindByIconImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByIconImageId",
-			new String[] {Long.class.getName()}, new String[] {"iconImageId"},
-			true);
-
-		_finderPathCountByIconImageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByIconImageId",
-			new String[] {Long.class.getName()}, new String[] {"iconImageId"},
-			false);
-
 		_collectionPersistenceFinderByIconImageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByIconImageId,
-				_finderPathWithoutPaginationFindByIconImageId,
-				_finderPathCountByIconImageId, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByIconImageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"iconImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByIconImageId", new String[] {Long.class.getName()},
+					new String[] {"iconImageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByIconImageId", new String[] {Long.class.getName()},
+					new String[] {"iconImageId"}, false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"layout.", "iconImageId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getIconImageId));
 
-		_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByLayoutSetPrototypeLayoutERC",
-				new String[] {
-					String.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"layoutSetPrototypeLayoutERC"}, true);
-
-		_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByLayoutSetPrototypeLayoutERC",
-				new String[] {String.class.getName()},
-				new String[] {"layoutSetPrototypeLayoutERC"}, 0, 1, true, null);
-
-		_finderPathCountByLayoutSetPrototypeLayoutERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutSetPrototypeLayoutERC",
-			new String[] {String.class.getName()},
-			new String[] {"layoutSetPrototypeLayoutERC"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByLayoutSetPrototypeLayoutERC =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByLayoutSetPrototypeLayoutERC,
-				_finderPathWithoutPaginationFindByLayoutSetPrototypeLayoutERC,
-				_finderPathCountByLayoutSetPrototypeLayoutERC,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLayoutSetPrototypeLayoutERC",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"layoutSetPrototypeLayoutERC"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLayoutSetPrototypeLayoutERC",
+					new String[] {String.class.getName()},
+					new String[] {"layoutSetPrototypeLayoutERC"}, 0, 1, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLayoutSetPrototypeLayoutERC",
+					new String[] {String.class.getName()},
+					new String[] {"layoutSetPrototypeLayoutERC"}, 0, 1, false,
+					null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
@@ -9291,38 +7275,38 @@ public class LayoutPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getLayoutSetPrototypeLayoutERC));
 
-		_finderPathWithPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout"}, true);
-
-		_finderPathWithoutPaginationFindByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, true);
-
-		_finderPathCountByG_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "privateLayout"}, false);
-
 		_collectionPersistenceFinderByG_P =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P,
-				_finderPathWithoutPaginationFindByG_P, _finderPathCountByG_P,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "privateLayout"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "privateLayout"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "privateLayout"}, false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9332,39 +7316,35 @@ public class LayoutPersistenceImpl
 					"layout.", "privateLayout", FinderColumn.Type.BOOLEAN, "=",
 					true, true, Layout::isPrivateLayout));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T,
-				_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9374,39 +7354,38 @@ public class LayoutPersistenceImpl
 					"layout.", "type", FinderColumn.Type.STRING, "=", true,
 					true, Layout::getType));
 
-		_finderPathWithPaginationFindByG_MLPTEERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_MLPTEERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "masterLPTEERC"}, true);
-
-		_finderPathWithoutPaginationFindByG_MLPTEERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_MLPTEERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "masterLPTEERC"}, 0, 2, true, null);
-
-		_finderPathCountByG_MLPTEERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_MLPTEERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "masterLPTEERC"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_MLPTEERC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_MLPTEERC,
-				_finderPathWithoutPaginationFindByG_MLPTEERC,
-				_finderPathCountByG_MLPTEERC, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_MLPTEERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "masterLPTEERC"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_MLPTEERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "masterLPTEERC"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_MLPTEERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "masterLPTEERC"}, 0, 2, false,
+					null),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9417,28 +7396,24 @@ public class LayoutPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getMasterLayoutPageTemplateEntryERC));
 
-		_finderPathWithPaginationFindByP_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_I",
-			new String[] {
-				Boolean.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"privateLayout", "iconImageId"}, true);
-
-		_finderPathWithoutPaginationFindByP_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_I",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"privateLayout", "iconImageId"}, true);
-
-		_finderPathCountByP_I = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I",
-			new String[] {Boolean.class.getName(), Long.class.getName()},
-			new String[] {"privateLayout", "iconImageId"}, false);
-
 		_collectionPersistenceFinderByP_I = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_I,
-			_finderPathWithoutPaginationFindByP_I, _finderPathCountByP_I,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_I",
+				new String[] {
+					Boolean.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"privateLayout", "iconImageId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_I",
+				new String[] {Boolean.class.getName(), Long.class.getName()},
+				new String[] {"privateLayout", "iconImageId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_I",
+				new String[] {Boolean.class.getName(), Long.class.getName()},
+				new String[] {"privateLayout", "iconImageId"}, false),
 			_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 			LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -9448,28 +7423,24 @@ public class LayoutPersistenceImpl
 				"layout.", "iconImageId", FinderColumn.Type.LONG, "=", true,
 				true, Layout::getIconImageId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 			LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -9479,36 +7450,37 @@ public class LayoutPersistenceImpl
 				"layout.", "classPK", FinderColumn.Type.LONG, "=", false, true,
 				true, Layout::getClassPK));
 
-		_finderPathWithPaginationFindByPLPTEERC_PLPTESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPLPTEERC_PLPTESERC",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"portletLPTEERC", "portletLPTESERC"}, true);
-
-		_finderPathWithoutPaginationFindByPLPTEERC_PLPTESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPLPTEERC_PLPTESERC",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"portletLPTEERC", "portletLPTESERC"}, 0, 3, true,
-			null);
-
-		_finderPathCountByPLPTEERC_PLPTESERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPLPTEERC_PLPTESERC",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"portletLPTEERC", "portletLPTESERC"}, 0, 3, false,
-			null);
-
 		_collectionPersistenceFinderByPLPTEERC_PLPTESERC =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPLPTEERC_PLPTESERC,
-				_finderPathWithoutPaginationFindByPLPTEERC_PLPTESERC,
-				_finderPathCountByPLPTEERC_PLPTESERC, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPLPTEERC_PLPTESERC",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portletLPTEERC", "portletLPTESERC"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPLPTEERC_PLPTESERC",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"portletLPTEERC", "portletLPTESERC"}, 0, 3,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPLPTEERC_PLPTESERC",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"portletLPTEERC", "portletLPTESERC"}, 0, 3,
+					false, null),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FinderColumn<>(
 					"layout.", "portletLayoutPageTemplateEntryERC",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -9518,17 +7490,18 @@ public class LayoutPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getPortletLayoutPageTemplateEntryScopeERC));
 
-		_finderPathFetchByG_P_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "layoutId"}, 0, 0, false,
-			Layout::getGroupId, Layout::isPrivateLayout, Layout::getLayoutId);
-
 		_uniquePersistenceFinderByG_P_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_L, _SQL_SELECT_LAYOUT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "layoutId"}, 0, 0,
+				false, Layout::getGroupId, Layout::isPrivateLayout,
+				Layout::getLayoutId),
+			_SQL_SELECT_LAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"layout.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Layout::getGroupId),
@@ -9572,47 +7545,44 @@ public class LayoutPersistenceImpl
 			},
 			new String[] {"groupId", "privateLayout", "parentLayoutId"}, false);
 
-		_finderPathWithPaginationFindByG_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "type_"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_P_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "type_"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_P_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_T,
-				_finderPathWithoutPaginationFindByG_P_T,
-				_finderPathCountByG_P_T, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "type_"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "type_"}, 0, 4,
+					false, null),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9625,45 +7595,42 @@ public class LayoutPersistenceImpl
 					"layout.", "type", FinderColumn.Type.STRING, "=", false,
 					true, true, Layout::getType));
 
-		_finderPathWithPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "system_"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "system_"}, true);
-
-		_finderPathCountByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_S",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "system_"}, false);
-
 		_collectionPersistenceFinderByG_P_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_S,
-				_finderPathWithoutPaginationFindByG_P_S,
-				_finderPathCountByG_P_S, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "system_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_S",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "system_"},
+					false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9676,18 +7643,18 @@ public class LayoutPersistenceImpl
 					"layout.", "system", FinderColumn.Type.BOOLEAN, "=", true,
 					true, Layout::isSystem));
 
-		_finderPathFetchByG_P_F = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_F",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "friendlyURL"}, 0, 4,
-			false, Layout::getGroupId, Layout::isPrivateLayout,
-			convertNullFunction(Layout::getFriendlyURL));
-
 		_uniquePersistenceFinderByG_P_F = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_P_F, _SQL_SELECT_LAYOUT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_P_F",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "privateLayout", "friendlyURL"}, 0, 4,
+				false, Layout::getGroupId, Layout::isPrivateLayout,
+				convertNullFunction(Layout::getFriendlyURL)),
+			_SQL_SELECT_LAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"layout.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				Layout::getGroupId),
@@ -9698,54 +7665,55 @@ public class LayoutPersistenceImpl
 				"layout.", "friendlyURL", FinderColumn.Type.STRING, "=", true,
 				true, Layout::getFriendlyURL));
 
-		_finderPathWithPaginationFindByG_P_LSPLE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_LSPLE",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_LSPLE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_LSPLE",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_P_LSPLE = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_LSPLE",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "layoutSetPrototypeLayoutERC"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_P_LSPLE =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_LSPLE,
-				_finderPathWithoutPaginationFindByG_P_LSPLE,
-				_finderPathCountByG_P_LSPLE, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_LSPLE",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout",
+						"layoutSetPrototypeLayoutERC"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_P_LSPLE",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout",
+						"layoutSetPrototypeLayoutERC"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_P_LSPLE",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout",
+						"layoutSetPrototypeLayoutERC"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9759,45 +7727,42 @@ public class LayoutPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					Layout::getLayoutSetPrototypeLayoutERC));
 
-		_finderPathWithPaginationFindByG_P_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_ST",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_ST",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "status"}, true);
-
-		_finderPathCountByG_P_ST = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_ST",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "privateLayout", "status"}, false);
-
 		_collectionPersistenceFinderByG_P_ST =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_ST,
-				_finderPathWithoutPaginationFindByG_P_ST,
-				_finderPathCountByG_P_ST, _SQL_SELECT_LAYOUT_WHERE,
-				_SQL_COUNT_LAYOUT_WHERE, LayoutModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "layout.system = [$FALSE$]",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_ST",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_ST",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_ST",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "privateLayout", "status"}, false),
+				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
+				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"layout.system = [$FALSE$]",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9902,44 +7867,42 @@ public class LayoutPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationFindByG_P_P_LteP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_P_LteP",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "parentLayoutId", "priority"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_P_P_LteP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_P_LteP",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "privateLayout", "parentLayoutId", "priority"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_P_P_LteP =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_P_LteP, null,
-				_finderPathWithPaginationCountByG_P_P_LteP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_P_LteP",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout", "parentLayoutId", "priority"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_P_LteP",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "privateLayout", "parentLayoutId", "priority"
+					},
+					false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUT_WHERE,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUT_WHERE,
+					LayoutImpl.class, Layout.class, "layout", "Layout",
+					"layout.plid",
+					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
+					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
+					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
+					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
 					LayoutModelImpl.ORDER_BY_SQL,
 					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -9955,15 +7918,15 @@ public class LayoutPersistenceImpl
 					"layout.", "priority", FinderColumn.Type.INTEGER, "<=",
 					true, true, Layout::getPriority));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(Layout::getExternalReferenceCode),
-			Layout::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_LAYOUT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(Layout::getExternalReferenceCode),
+				Layout::getGroupId),
+			_SQL_SELECT_LAYOUT_WHERE, "",
 			new FinderColumn<>(
 				"layout.", "externalReferenceCode", FinderColumn.Type.STRING,
 				"=", true, true, Layout::getExternalReferenceCode),
@@ -10036,4 +7999,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1572228861
+// LIFERAY-SERVICE-BUILDER-HASH:252872862

@@ -37,6 +37,7 @@ public class RegionWrapper
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("defaultLanguageId", getDefaultLanguageId());
 		attributes.put("regionId", getRegionId());
 		attributes.put("companyId", getCompanyId());
@@ -50,6 +51,7 @@ public class RegionWrapper
 		attributes.put("position", getPosition());
 		attributes.put("regionCode", getRegionCode());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -72,6 +74,13 @@ public class RegionWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		String defaultLanguageId = (String)attributes.get("defaultLanguageId");
@@ -151,6 +160,12 @@ public class RegionWrapper
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	@Override
@@ -221,6 +236,16 @@ public class RegionWrapper
 	@Override
 	public String getDefaultLanguageId() {
 		return model.getDefaultLanguageId();
+	}
+
+	/**
+	 * Returns the external reference code of this region.
+	 *
+	 * @return the external reference code of this region
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	@Override
@@ -306,6 +331,16 @@ public class RegionWrapper
 	@Override
 	public long getRegionId() {
 		return model.getRegionId();
+	}
+
+	/**
+	 * Returns the status of this region.
+	 *
+	 * @return the status of this region
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	@Override
@@ -449,6 +484,16 @@ public class RegionWrapper
 	}
 
 	/**
+	 * Sets the external reference code of this region.
+	 *
+	 * @param externalReferenceCode the external reference code of this region
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
+	}
+
+	/**
 	 * Sets the last publish date of this region.
 	 *
 	 * @param lastPublishDate the last publish date of this region
@@ -528,6 +573,16 @@ public class RegionWrapper
 		model.setRegionId(regionId);
 	}
 
+	/**
+	 * Sets the status of this region.
+	 *
+	 * @param status the status of this region
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
+	}
+
 	@Override
 	public void setTitleCurrentLanguageId(String languageId) {
 		model.setTitleCurrentLanguageId(languageId);
@@ -601,4 +656,4 @@ public class RegionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:985624125
+// LIFERAY-SERVICE-BUILDER-HASH:-28109533

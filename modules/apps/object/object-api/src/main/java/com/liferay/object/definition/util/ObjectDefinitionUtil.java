@@ -8,6 +8,7 @@ package com.liferay.object.definition.util;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
@@ -38,6 +39,15 @@ public class ObjectDefinitionUtil {
 		sb.append(RandomUtil.nextInt(10));
 
 		return sb.toString();
+	}
+
+	public static String getItemClassName(ObjectDefinition objectDefinition) {
+		if (objectDefinition.isSystem()) {
+			return objectDefinition.getClassName() + StringPool.POUND +
+				objectDefinition.getObjectDefinitionId();
+		}
+
+		return objectDefinition.getClassName();
 	}
 
 	public static String getModifiableSystemObjectDefinitionRESTContextPath(
@@ -141,6 +151,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"AIHubContentRetriever", "/ai-hub/content-retrievers"
 		).put(
+			"AIHubCrawlerJob", "/ai-hub/crawler-jobs"
+		).put(
 			"AIHubInstructionDefinition", "/ai-hub/instruction-definitions"
 		).put(
 			"AIHubMCPServer", "/ai-hub/mcp-servers"
@@ -210,27 +222,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"DSRTemplate", "/digital-sales-room/templates"
 		).put(
-			"FDSAction", "/data-set-manager/actions"
-		).put(
-			"FDSCardsSection", "/data-set-manager/cards-sections"
-		).put(
-			"FDSClientExtensionFilter",
-			"/data-set-manager/client-extension-filters"
-		).put(
-			"FDSDateFilter", "/data-set-manager/date-filters"
-		).put(
-			"FDSDynamicFilter", "/data-set-manager/selection-filters"
-		).put(
-			"FDSEntry", "/data-set-manager/entries"
-		).put(
-			"FDSField", "/data-set-manager/table-sections"
-		).put(
-			"FDSListSection", "/data-set-manager/list-sections"
-		).put(
-			"FDSSort", "/data-set-manager/sorts"
-		).put(
-			"FDSView", "/data-set-manager/data-sets"
-		).put(
 			"FunctionalCookieEntry", "/functional-cookies-entries"
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
@@ -244,6 +235,14 @@ public class ObjectDefinitionUtil {
 			"PerformanceCookieEntry", "/performance-cookies-entries"
 		).put(
 			"PersonalizationCookieEntry", "/personalization-cookies-entries"
+		).put(
+			"SEOStudioDomain", "/seo-studio/domains"
+		).put(
+			"SEOStudioInstance", "/seo-studio/instances"
+		).put(
+			"SEOStudioScan", "/seo-studio/scans"
+		).put(
+			"SEOStudioScanInsight", "/seo-studio/scan-insights"
 		).build();
 
 }

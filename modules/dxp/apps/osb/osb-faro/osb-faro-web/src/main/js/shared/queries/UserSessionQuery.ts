@@ -6,9 +6,12 @@ export interface UserSessionEvent {
 	assetTitle: string;
 	canonicalUrl: string;
 	createDate: string;
+	eventDate: string;
+	eventId: string;
 	name: string;
 	pageDescription: string;
 	pageTitle: string;
+	properties: Array<{name: string; value: string}>;
 	referrer: string;
 	url: string;
 }
@@ -17,6 +20,7 @@ export interface UserSession {
 	browserName: string;
 	completeDate: Date;
 	contentLanguageID: string;
+	createDate: string;
 	description: string;
 	devicePixelRatioz: number;
 	deviceType: string;
@@ -64,6 +68,7 @@ export default gql`
 			channelId: $channelId
 			entityId: $entityId
 			entityType: $entityType
+			includeWebhookEvents: true
 			keywords: $keywords
 			page: $page
 			rangeEnd: $rangeEnd
@@ -84,10 +89,16 @@ export default gql`
 						assetTitle
 						canonicalUrl
 						createDate
+						eventDate
+						eventId
 						name
 						pageDescription
 						pageKeywords
 						pageTitle
+						properties {
+							name
+							value
+						}
 						referrer
 						url
 					}

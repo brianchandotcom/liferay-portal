@@ -64,9 +64,6 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		AuthTokenUtil.checkCSRFToken(
-			httpServletRequest, EditDiscussionStrutsAction.class.getName());
-
 		String namespace = ParamUtil.getString(httpServletRequest, "namespace");
 
 		HttpServletRequest namespacedHttpServletRequest =
@@ -77,6 +74,9 @@ public class EditDiscussionStrutsAction implements StrutsAction {
 			namespacedHttpServletRequest, Constants.CMD);
 
 		try {
+			AuthTokenUtil.checkCSRFToken(
+				httpServletRequest, EditDiscussionStrutsAction.class.getName());
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				long commentId = _updateComment(namespacedHttpServletRequest);
 

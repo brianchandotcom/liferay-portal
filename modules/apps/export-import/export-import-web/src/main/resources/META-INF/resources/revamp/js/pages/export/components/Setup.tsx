@@ -42,7 +42,7 @@ export default function Setup() {
 
 				<FormikFieldText
 					label={Liferay.Language.get('file-name')}
-					name="filename"
+					name="fileName"
 					placeholder={Liferay.Language.get('add-an-export-name')}
 					required
 				/>

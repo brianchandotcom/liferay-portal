@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.translation.exception.XLIFFFileException;
 import com.liferay.translation.manager.Translation;
 import com.liferay.translation.manager.TranslationManager;
 import com.liferay.translation.test.util.TranslationTestUtil;
@@ -46,6 +47,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +110,144 @@ public class TranslationManagerTest {
 
 		_testGetXLIFFFile("test-journal-article-v12.xlf", _MIMETYPE_XLIFF_1_2);
 		_testGetXLIFFFile("test-journal-article.xlf", _MIMETYPE_XLIFF_2_0);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFFileFailsWithInvalidSourceLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, _INVALID_LANGUAGE_ID, _TARGET_LANGUAGE_IDS[0]);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFFileFailsWithInvalidTargetLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFFile(
+			JournalArticle.class.getName(),
+			_journalArticle.getResourcePrimKey(), _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_INVALID_LANGUAGE_ID);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithInvalidSourceLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US, _INVALID_LANGUAGE_ID,
+			_TARGET_LANGUAGE_IDS);
+	}
+
+	@Test(expected = XLIFFFileException.MustBeSupportedLanguage.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithInvalidTargetLanguageId()
+		throws Exception {
+
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US),
+			new String[] {_INVALID_LANGUAGE_ID});
+	}
+
+	@Test(expected = XLIFFFileException.MustHaveValidParameter.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithNullClassPKs() throws Exception {
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(), null, _MIMETYPE_XLIFF_1_2,
+			LocaleUtil.US, LocaleUtil.toLanguageId(LocaleUtil.US),
+			_TARGET_LANGUAGE_IDS);
+	}
+
+	@Test(expected = XLIFFFileException.MustHaveValidParameter.class)
+	@TestInfo("LPD-85963")
+	public void testGetXLIFFZipFileFailsWithNullTargetLanguageIds()
+		throws Exception {
+
+		_translationManager.getXLIFFZipFile(
+			JournalArticle.class.getName(),
+			new long[] {_journalArticle.getResourcePrimKey()},
+			_MIMETYPE_XLIFF_1_2, LocaleUtil.US,
+			LocaleUtil.toLanguageId(LocaleUtil.US), null);
+	}
+
+	@Test
+	@TestInfo("LPD-90056")
+	public void testGetXLIFFZipFileForObjectEntry() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						Collections.singletonMap(
+							LocaleUtil.getDefault(), "Title")
+					).localized(
+						true
+					).name(
+						"title"
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		String englishTitle = RandomTestUtil.randomString();
+		String spanishTitle = RandomTestUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"en_US",
+			HashMapBuilder.put(
+				"title_i18n",
+				(Serializable)HashMapBuilder.put(
+					"en_US", englishTitle
+				).put(
+					"es_ES", spanishTitle
+				).build()
+			).build(),
+			serviceContext);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			File xliffZipFile = _translationManager.getXLIFFZipFile(
+				objectDefinition.getClassName(),
+				new long[] {objectEntry.getObjectEntryId()},
+				_MIMETYPE_XLIFF_1_2, LocaleUtil.US, "en_US",
+				_TARGET_LANGUAGE_IDS);
+
+			try (ZipFile zipFile = new ZipFile(xliffZipFile)) {
+				Enumeration<? extends ZipEntry> zipEntriesEnumeration =
+					zipFile.entries();
+
+				ZipEntry zipEntry = zipEntriesEnumeration.nextElement();
+
+				Assert.assertNotNull(zipEntry);
+
+				String xliffContent = StringUtil.read(
+					zipFile.getInputStream(zipEntry));
+
+				Assert.assertTrue(
+					xliffContent.contains("<![CDATA[" + englishTitle + "]]>"));
+				Assert.assertTrue(
+					xliffContent.contains("<![CDATA[" + spanishTitle + "]]>"));
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -370,6 +510,8 @@ public class TranslationManagerTest {
 
 		_assertProcessXLIFFTranslationSuccess(failureMessages, successMessages);
 	}
+
+	private static final String _INVALID_LANGUAGE_ID = "xx_XX";
 
 	private static final String _MIMETYPE_XLIFF_1_2 = "application/x-xliff+xml";
 

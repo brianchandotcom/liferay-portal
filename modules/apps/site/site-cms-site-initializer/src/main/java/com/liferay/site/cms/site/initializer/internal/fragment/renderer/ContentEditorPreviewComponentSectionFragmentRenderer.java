@@ -16,7 +16,9 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -100,6 +102,10 @@ public class ContentEditorPreviewComponentSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return HashMapBuilder.<String, Object>put(
+			"defaultLanguageId",
+			() -> LocaleUtil.toLanguageId(
+				PortalUtil.getSiteDefaultLocale(objectEntry.getGroupId()))
+		).put(
 			"getPreviewDataURL",
 			StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),

@@ -77,63 +77,8 @@ public class NotificationQueueEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the notification queue entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the notification queue entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where companyId = &#63;.
@@ -203,37 +148,6 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the notification queue entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByCompanyId(long companyId) {
-		return filterFindByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return filterFindByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the notification queue entries that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
@@ -291,67 +205,8 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathWithoutPaginationFindByNotificationTemplateId;
-	private FinderPath _finderPathCountByNotificationTemplateId;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByNotificationTemplateId;
-
-	/**
-	 * Returns all the notification queue entries where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @return the matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByNotificationTemplateId(
-		long notificationTemplateId) {
-
-		return findByNotificationTemplateId(
-			notificationTemplateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries where notificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByNotificationTemplateId(
-		long notificationTemplateId, int start, int end) {
-
-		return findByNotificationTemplateId(
-			notificationTemplateId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the notification queue entries where notificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByNotificationTemplateId(
-		long notificationTemplateId, int start, int end,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return findByNotificationTemplateId(
-			notificationTemplateId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where notificationTemplateId = &#63;.
@@ -425,40 +280,6 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the notification queue entries that the user has permission to view where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @return the matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByNotificationTemplateId(
-		long notificationTemplateId) {
-
-		return filterFindByNotificationTemplateId(
-			notificationTemplateId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries that the user has permission to view where notificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByNotificationTemplateId(
-		long notificationTemplateId, int start, int end) {
-
-		return filterFindByNotificationTemplateId(
-			notificationTemplateId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the notification queue entries that the user has permissions to view where notificationTemplateId = &#63;.
 	 *
 	 * <p>
@@ -518,8 +339,6 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {notificationTemplateId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtSentDate;
-	private FinderPath _finderPathWithPaginationCountByLtSentDate;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByLtSentDate;
 
@@ -731,66 +550,8 @@ public class NotificationQueueEntryPersistenceImpl
 			finderCache, new Object[] {sentDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_S;
-	private FinderPath _finderPathWithoutPaginationFindByT_S;
-	private FinderPath _finderPathCountByT_S;
 	private FilterCollectionPersistenceFinder<NotificationQueueEntry>
 		_collectionPersistenceFinderByT_S;
-
-	/**
-	 * Returns all the notification queue entries where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByT_S(String type, int status) {
-		return findByT_S(
-			type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries where type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByT_S(
-		String type, int status, int start, int end) {
-
-		return findByT_S(type, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the notification queue entries where type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notification queue entries
-	 */
-	@Override
-	public List<NotificationQueueEntry> findByT_S(
-		String type, int status, int start, int end,
-		OrderByComparator<NotificationQueueEntry> orderByComparator) {
-
-		return findByT_S(type, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the notification queue entries where type = &#63; and status = &#63;.
@@ -860,41 +621,6 @@ public class NotificationQueueEntryPersistenceImpl
 
 		return _collectionPersistenceFinderByT_S.fetchFirst(
 			finderCache, new Object[] {type, status}, orderByComparator);
-	}
-
-	/**
-	 * Returns all the notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByT_S(
-		String type, int status) {
-
-		return filterFindByT_S(
-			type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the notification queue entries that the user has permission to view where type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>NotificationQueueEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of notification queue entries
-	 * @param end the upper bound of the range of notification queue entries (not inclusive)
-	 * @return the range of matching notification queue entries that the user has permission to view
-	 */
-	@Override
-	public List<NotificationQueueEntry> filterFindByT_S(
-		String type, int status, int start, int end) {
-
-		return filterFindByT_S(type, status, start, end, null);
 	}
 
 	/**
@@ -1182,41 +908,38 @@ public class NotificationQueueEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1225,45 +948,41 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationQueueEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByNotificationTemplateId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"notificationTemplateId"}, true);
-
-		_finderPathWithoutPaginationFindByNotificationTemplateId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByNotificationTemplateId",
-				new String[] {Long.class.getName()},
-				new String[] {"notificationTemplateId"}, true);
-
-		_finderPathCountByNotificationTemplateId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByNotificationTemplateId",
-			new String[] {Long.class.getName()},
-			new String[] {"notificationTemplateId"}, false);
-
 		_collectionPersistenceFinderByNotificationTemplateId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotificationTemplateId,
-				_finderPathWithoutPaginationFindByNotificationTemplateId,
-				_finderPathCountByNotificationTemplateId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByNotificationTemplateId",
+					new String[] {Long.class.getName()},
+					new String[] {"notificationTemplateId"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1272,35 +991,35 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					NotificationQueueEntry::getNotificationTemplateId));
 
-		_finderPathWithPaginationFindByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"sentDate"}, true);
-
-		_finderPathWithPaginationCountByLtSentDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
-			new String[] {Date.class.getName()}, new String[] {"sentDate"},
-			false);
-
 		_collectionPersistenceFinderByLtSentDate =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtSentDate, null,
-				_finderPathWithPaginationCountByLtSentDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtSentDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"sentDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtSentDate",
+					new String[] {Date.class.getName()},
+					new String[] {"sentDate"}, false),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1309,41 +1028,42 @@ public class NotificationQueueEntryPersistenceImpl
 					FinderColumn.Type.DATE, "<", true, true,
 					NotificationQueueEntry::getSentDate));
 
-		_finderPathWithPaginationFindByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, 0, 1, true, null);
-
-		_finderPathCountByT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"type_", "status"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByT_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByT_S,
-				_finderPathWithoutPaginationFindByT_S, _finderPathCountByT_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"type_", "status"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
+					new String[] {
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {"type_", "status"}, 0, 1, false, null),
 				_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
+					NotificationQueueEntry.class, "notificationQueueEntry",
+					"NotificationQueueEntry",
+					"notificationQueueEntry.notificationQueueEntryId",
+					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
+					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
+					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
 					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
 					NotificationQueueEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -1409,28 +1129,6 @@ public class NotificationQueueEntryPersistenceImpl
 	private static final String _SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE =
 		"SELECT COUNT(notificationQueueEntry) FROM NotificationQueueEntry notificationQueueEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"notificationQueueEntry.notificationQueueEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_WHERE =
-			"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_NOTIFICATIONQUEUEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId";
-
-	private static final String _FILTER_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE =
-		"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "notificationQueueEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "NotificationQueueEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No NotificationQueueEntry exists with the key {";
 
@@ -1443,4 +1141,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1007055021
+// LIFERAY-SERVICE-BUILDER-HASH:-1188826341

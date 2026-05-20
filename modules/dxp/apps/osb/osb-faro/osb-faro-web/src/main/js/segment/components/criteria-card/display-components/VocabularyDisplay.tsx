@@ -1,19 +1,15 @@
 import DateFilterConjunctionDisplay from './DateFilterConjunctionDisplay';
 import React from 'react';
 import {
-	APPLICATION_ID_ASSET_TYPE_MAP,
-	EVENT_ID_EVENT_TYPE_MAP
-} from 'segment/segment-editor/dynamic/utils/constants';
-import {
 	ASSET_TYPE_OPTIONS,
 	EVENT_TYPE_OPTIONS,
+	getAssetTypeFromValue,
+	getConjunctionCriterionFromValue,
+	getEventTypeFromValue,
 	OCCURRENCE_OPTIONS
-} from 'segment/segment-editor/dynamic/inputs/VocabularyInput';
+} from 'segment/segment-editor/dynamic/inputs/shared/remote-filter-input-helpers';
 import {CustomValue} from 'shared/util/records';
-import {
-	getFilterCriterionIMap,
-	getIndexFromPropertyName
-} from 'segment/segment-editor/dynamic/utils/custom-inputs';
+import {getIndexFromPropertyName} from 'segment/segment-editor/dynamic/utils/custom-inputs';
 import {getOperatorLabel, maybeFormatToKnownType} from '../utils';
 import {IDisplayComponentProps} from '../types';
 
@@ -29,58 +25,25 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 	const operatorKey = maybeFormatToKnownType(operatorName ?? '', value);
 	const operatorLabel = getOperatorLabel(operatorKey, type);
 
-	const appIdIndex = valueIMap
-		? getIndexFromPropertyName(valueIMap, 'applicationId')
-		: -1;
-
-	const activityKeyIndex = valueIMap
-		? getIndexFromPropertyName(valueIMap, 'activityKey')
-		: -1;
-
-	const isAnyAsset = appIdIndex >= 0;
-
-	const activityKey =
-		activityKeyIndex >= 0
-			? (valueIMap?.getIn([
-					'criterionGroup',
-					'items',
-					activityKeyIndex,
-					'value'
-			  ]) as string)
-			: undefined;
-
-	const [applicationId, eventId] = activityKey?.split('#') ?? [];
-
-	const assetType = isAnyAsset
-		? 'any'
-		: APPLICATION_ID_ASSET_TYPE_MAP[applicationId] ?? 'any';
-	const eventType = eventId
-		? EVENT_ID_EVENT_TYPE_MAP[eventId] ?? 'all'
-		: 'all';
+	const assetType = getAssetTypeFromValue(valueIMap);
+	const eventType = getEventTypeFromValue(valueIMap);
 
 	const occurrenceOperator = valueIMap?.get('operator') as string | null;
 	const occurrenceCount = valueIMap?.get('value') as number | null;
 
 	const eventTypeLabel =
 		EVENT_TYPE_OPTIONS.find(({value}) => value === eventType)?.label ??
-		eventType;
+		String(eventType);
 
 	const assetTypeLabel =
 		ASSET_TYPE_OPTIONS.find(({value}) => value === assetType)?.label ??
-		assetType;
+		String(assetType);
 
 	const occurrenceLabel =
 		OCCURRENCE_OPTIONS.find(({value}) => value === occurrenceOperator)
 			?.label ?? '';
 
-	const dayIndex = valueIMap
-		? getIndexFromPropertyName(valueIMap, 'day')
-		: -1;
-
-	const conjunctionCriterion =
-		dayIndex >= 0
-			? getFilterCriterionIMap(valueIMap!, dayIndex)?.toJS()
-			: undefined;
+	const conjunctionCriterion = getConjunctionCriterionFromValue(valueIMap);
 
 	const categoryNames: string[] = (() => {
 		if (!valueIMap) return [];
@@ -158,27 +121,33 @@ const VocabularyDisplay: React.FC<IDisplayComponentProps> = ({
 
 			<span>{operatorLabel}</span>
 
-			<span>{Liferay.Language.get('triggered')}</span>
+			<span>{Liferay.Language.get('triggered').toLowerCase()}</span>
 
 			<b>{eventTypeLabel}</b>
 
-			<span>{Liferay.Language.get('on-the-vocabulary')}</span>
+			<span>
+				{Liferay.Language.get('on-the-vocabulary').toLowerCase()}
+			</span>
 
 			<b>{vocabularyName}</b>
 
 			{categoryNames.length > 0 && (
 				<>
-					<span>{Liferay.Language.get('on-the-categories')}</span>
+					<span>
+						{Liferay.Language.get(
+							'on-the-categories'
+						).toLowerCase()}
+					</span>
 
 					<b>{categoryNames.join(', ')}</b>
 				</>
 			)}
 
-			<span>{Liferay.Language.get('for')}</span>
+			<span>{Liferay.Language.get('for').toLowerCase()}</span>
 
 			<b>{assetTypeLabel}</b>
 
-			<span>{Liferay.Language.get('asset-type')}</span>
+			<span>{Liferay.Language.get('asset-type').toLowerCase()}</span>
 
 			<span>{occurrenceLabel}</span>
 

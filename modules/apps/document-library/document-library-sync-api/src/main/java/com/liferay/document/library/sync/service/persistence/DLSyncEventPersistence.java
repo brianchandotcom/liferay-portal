@@ -143,14 +143,6 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	public DLSyncEvent findByTypePK(long typePK) throws NoSuchEventException;
 
 	/**
-	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param typePK the type pk
-	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
-	 */
-	public DLSyncEvent fetchByTypePK(long typePK);
-
-	/**
 	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param typePK the type pk
@@ -212,5 +204,15 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	 */
 	public DLSyncEvent fetchByPrimaryKey(long syncEventId);
 
+	/**
+	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param typePK the type pk
+	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
+	 */
+	public default DLSyncEvent fetchByTypePK(long typePK) {
+		return fetchByTypePK(typePK, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-37038042
+// LIFERAY-SERVICE-BUILDER-HASH:450971950

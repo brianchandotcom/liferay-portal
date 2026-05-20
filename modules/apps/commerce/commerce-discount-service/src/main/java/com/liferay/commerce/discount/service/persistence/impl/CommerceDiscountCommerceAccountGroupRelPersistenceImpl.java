@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,74 +80,14 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceDiscountId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceDiscountId;
-	private FinderPath _finderPathCountByCommerceDiscountId;
 	private CollectionPersistenceFinder<CommerceDiscountCommerceAccountGroupRel>
 		_collectionPersistenceFinderByCommerceDiscountId;
 
 	/**
-	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(long commerceDiscountId) {
-
-		return findByCommerceDiscountId(
-			commerceDiscountId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @return the range of matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(long commerceDiscountId, int start, int end) {
-
-		return findByCommerceDiscountId(commerceDiscountId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(
-			long commerceDiscountId, int start, int end,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		return findByCommerceDiscountId(
-			commerceDiscountId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -244,76 +183,14 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			finderCache, new Object[] {commerceDiscountId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCommerceAccountGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceAccountGroupId;
-	private FinderPath _finderPathCountByCommerceAccountGroupId;
 	private CollectionPersistenceFinder<CommerceDiscountCommerceAccountGroupRel>
 		_collectionPersistenceFinderByCommerceAccountGroupId;
 
 	/**
-	 * Returns all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(long commerceAccountGroupId) {
-
-		return findByCommerceAccountGroupId(
-			commerceAccountGroupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @return the range of matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end) {
-
-		return findByCommerceAccountGroupId(
-			commerceAccountGroupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount commerce account group rels
-	 */
-	@Override
-	public List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end,
-			OrderByComparator<CommerceDiscountCommerceAccountGroupRel>
-				orderByComparator) {
-
-		return findByCommerceAccountGroupId(
-			commerceAccountGroupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceAccountGroupId the commerce account group ID
@@ -410,7 +287,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 			finderCache, new Object[] {commerceAccountGroupId});
 	}
 
-	private FinderPath _finderPathFetchByCDI_CAGI;
 	private UniquePersistenceFinder<CommerceDiscountCommerceAccountGroupRel>
 		_uniquePersistenceFinderByCDI_CAGI;
 
@@ -445,21 +321,6 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 		}
 
 		return commerceDiscountCommerceAccountGroupRel;
-	}
-
-	/**
-	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	@Override
-	public CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
-		long commerceDiscountId, long commerceAccountGroupId) {
-
-		return fetchByCDI_CAGI(
-			commerceDiscountId, commerceAccountGroupId, true);
 	}
 
 	/**
@@ -764,29 +625,28 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceDiscountId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceDiscountId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceDiscountId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceDiscountId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceDiscountId", new String[] {Long.class.getName()},
-			new String[] {"commerceDiscountId"}, true);
-
-		_finderPathCountByCommerceDiscountId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceDiscountId", new String[] {Long.class.getName()},
-			new String[] {"commerceDiscountId"}, false);
-
 		_collectionPersistenceFinderByCommerceDiscountId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceDiscountId,
-				_finderPathWithoutPaginationFindByCommerceDiscountId,
-				_finderPathCountByCommerceDiscountId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceDiscountId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceDiscountId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceDiscountId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceDiscountId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceDiscountId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceDiscountId"}, false),
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
@@ -798,33 +658,28 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 					CommerceDiscountCommerceAccountGroupRel::
 						getCommerceDiscountId));
 
-		_finderPathWithPaginationFindByCommerceAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCommerceAccountGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceAccountGroupId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceAccountGroupId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceAccountGroupId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceAccountGroupId"}, true);
-
-		_finderPathCountByCommerceAccountGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceAccountGroupId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceAccountGroupId"}, false);
-
 		_collectionPersistenceFinderByCommerceAccountGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceAccountGroupId,
-				_finderPathWithoutPaginationFindByCommerceAccountGroupId,
-				_finderPathCountByCommerceAccountGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceAccountGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceAccountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAccountGroupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceAccountGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceAccountGroupId"}, false),
 				_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				_SQL_COUNT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE,
 				CommerceDiscountCommerceAccountGroupRelModelImpl.ORDER_BY_JPQL,
@@ -836,16 +691,16 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 					CommerceDiscountCommerceAccountGroupRel::
 						getCommerceAccountGroupId));
 
-		_finderPathFetchByCDI_CAGI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CAGI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"commerceDiscountId", "commerceAccountGroupId"}, 0, 0,
-			false,
-			CommerceDiscountCommerceAccountGroupRel::getCommerceDiscountId,
-			CommerceDiscountCommerceAccountGroupRel::getCommerceAccountGroupId);
-
 		_uniquePersistenceFinderByCDI_CAGI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCDI_CAGI,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCDI_CAGI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"commerceDiscountId", "commerceAccountGroupId"},
+				0, 0, false,
+				CommerceDiscountCommerceAccountGroupRel::getCommerceDiscountId,
+				CommerceDiscountCommerceAccountGroupRel::
+					getCommerceAccountGroupId),
 			_SQL_SELECT_COMMERCEDISCOUNTCOMMERCEACCOUNTGROUPREL_WHERE, "",
 			new FinderColumn<>(
 				"commerceDiscountCommerceAccountGroupRel.",
@@ -931,4 +786,4 @@ public class CommerceDiscountCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-621535428
+// LIFERAY-SERVICE-BUILDER-HASH:-77264116

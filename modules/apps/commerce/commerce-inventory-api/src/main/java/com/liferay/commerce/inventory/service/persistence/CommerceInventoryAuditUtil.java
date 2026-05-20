@@ -261,65 +261,6 @@ public class CommerceInventoryAuditUtil {
 	}
 
 	/**
-	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @return the matching commerce inventory audits
-	 */
-	public static List<CommerceInventoryAudit> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey) {
-
-		return getPersistence().findByC_S_U(companyId, sku, unitOfMeasureKey);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory audits
-	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
-	 * @return the range of matching commerce inventory audits
-	 */
-	public static List<CommerceInventoryAudit> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start,
-		int end) {
-
-		return getPersistence().findByC_S_U(
-			companyId, sku, unitOfMeasureKey, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param sku the sku
-	 * @param unitOfMeasureKey the unit of measure key
-	 * @param start the lower bound of the range of commerce inventory audits
-	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory audits
-	 */
-	public static List<CommerceInventoryAudit> findByC_S_U(
-		long companyId, String sku, String unitOfMeasureKey, int start, int end,
-		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
-
-		return getPersistence().findByC_S_U(
-			companyId, sku, unitOfMeasureKey, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
 	 *
 	 * <p>
@@ -466,6 +407,65 @@ public class CommerceInventoryAuditUtil {
 		return getPersistence().fetchByPrimaryKey(commerceInventoryAuditId);
 	}
 
+	/**
+	 * Returns all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @return the matching commerce inventory audits
+	 */
+	public static List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return getPersistence().findByC_S_U(companyId, sku, unitOfMeasureKey);
+	}
+
+	/**
+	 * Returns a range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @param start the lower bound of the range of commerce inventory audits
+	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
+	 * @return the range of matching commerce inventory audits
+	 */
+	public static List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start,
+		int end) {
+
+		return getPersistence().findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce inventory audits where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryAuditModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param sku the sku
+	 * @param unitOfMeasureKey the unit of measure key
+	 * @param start the lower bound of the range of commerce inventory audits
+	 * @param end the upper bound of the range of commerce inventory audits (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory audits
+	 */
+	public static List<CommerceInventoryAudit> findByC_S_U(
+		long companyId, String sku, String unitOfMeasureKey, int start, int end,
+		OrderByComparator<CommerceInventoryAudit> orderByComparator) {
+
+		return getPersistence().findByC_S_U(
+			companyId, sku, unitOfMeasureKey, start, end, orderByComparator);
+	}
+
 	public static CommerceInventoryAuditPersistence getPersistence() {
 		return _persistence;
 	}
@@ -479,4 +479,4 @@ public class CommerceInventoryAuditUtil {
 	private static volatile CommerceInventoryAuditPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1134444539
+// LIFERAY-SERVICE-BUILDER-HASH:-725282309

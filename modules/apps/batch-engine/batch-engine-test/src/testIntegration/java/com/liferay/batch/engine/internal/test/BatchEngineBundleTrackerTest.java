@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.test.util.ZipFileTestUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -144,18 +145,15 @@ public class BatchEngineBundleTrackerTest {
 
 	@Test
 	public void testProcessBatchEngineBundleOnUpgrade() throws Exception {
-		boolean upgradeClient = ReflectionTestUtil.getAndSetFieldValue(
-			DBUpgrader.class, "_upgradeClient", false);
+		boolean upgradeClient = UpgradeProcessUtil.isUpgradeClient();
 
 		try {
-			ReflectionTestUtil.setFieldValue(
-				DBUpgrader.class, "_upgradeClient", true);
+			UpgradeProcessUtil.setUpgradeClient(true);
 
 			_testProcessBatchEngineBundle(null, "batch1");
 		}
 		finally {
-			ReflectionTestUtil.setFieldValue(
-				DBUpgrader.class, "_upgradeClient", upgradeClient);
+			UpgradeProcessUtil.setUpgradeClient(upgradeClient);
 		}
 	}
 

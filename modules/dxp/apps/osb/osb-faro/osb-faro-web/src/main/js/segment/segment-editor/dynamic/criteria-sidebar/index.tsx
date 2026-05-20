@@ -1,11 +1,11 @@
-import * as API from 'shared/api';
 import ClayDropDown from '@clayui/drop-down';
 import CriteriaSidebarCollapse from './CriteriaSidebarCollapse';
 import CriteriaSidebarSearchBar from './CriteriaSidebarSearchBar';
+import Loading from 'shared/components/Loading';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
-import {createVocabularyProperty} from '../utils/utils';
-import {CustomFunctionOperators, NotOperators} from '../utils/constants';
+import {extractRemoteCriterionEntries} from '../criterion-types/extract';
+import {getRemoteCriterionTypeByPropertyKey} from '../criterion-types/registry';
 import {List} from 'immutable';
 import {Option, Picker} from '@clayui/core';
 import {PaginationBar} from '@clayui/pagination-bar';
@@ -14,36 +14,7 @@ import {ReferencedObjectsContext} from '../context/referencedObjects';
 import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from '../utils/odata';
 
-const VOCABULARY_OPERATORS = new Set([
-	CustomFunctionOperators.VocabulariesFilter,
-	NotOperators.NotVocabulariesFilter
-]);
-
-function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
-	if (!criteria) return [];
-
-	if (criteria.items) {
-		return criteria.items.flatMap(extractVocabularies);
-	}
-
-	if (
-		criteria.propertyName &&
-		VOCABULARY_OPERATORS.has(criteria.operatorName)
-	) {
-		const id = criteria.propertyName;
-		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
-		const nameItem = items?.find?.(
-			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
-		);
-		const name = (nameItem?.get?.('value') as string) ?? id;
-
-		return [{id, name}];
-	}
-
-	return [];
-}
-
-const VOCABULARY_PAGE_SIZE = 12;
+const REMOTE_PAGE_SIZE = 12;
 
 const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	account: 'attributes',
@@ -51,6 +22,7 @@ const PROPERTY_KEY_TO_GROUP: Record<string, string> = {
 	interest: 'page-topics',
 	organization: 'attributes',
 	session: 'attributes',
+	tag: 'asset-categorization',
 	vocabulary: 'asset-categorization',
 	web: 'behavioral'
 };
@@ -94,98 +66,100 @@ export default function CriteriaSidebar({
 		string | null
 	>(() => propertyGroupsIList.first()?.propertyKey ?? null);
 
-	const [vocabularyQuery, setVocabularyQuery] = useState<{
+	const [remoteQuery, setRemoteQuery] = useState<{
 		keywords: string;
 		page: number;
 	}>({keywords: '', page: 1});
-	const [vocabularyItems, setVocabularyItems] = useState<List<Property>>(
-		List()
-	);
-	const [vocabularyTotalCount, setVocabularyTotalCount] = useState(0);
+	const [remoteItems, setRemoteItems] = useState<List<Property>>(List());
+	const [remoteLoading, setRemoteLoading] = useState(false);
+
+	const [remoteTotalCount, setRemoteTotalCount] = useState(0);
 
 	const {addProperty} = useContext(ReferencedObjectsContext);
+
+	const selectedRemoteCriterionType =
+		getRemoteCriterionTypeByPropertyKey(selectedPropertyKey);
+	const isRemoteSection = !!selectedRemoteCriterionType;
+	const remoteKeywords = isRemoteSection ? searchValue : '';
 
 	useEffect(() => {
 		if (type !== SegmentTypes.Batch || !criteriaString || !addProperty) {
 			return;
 		}
 
-		const vocabularies = extractVocabularies(
+		extractRemoteCriterionEntries(
 			translateQueryToCriteria(criteriaString)
-		);
-
-		if (!vocabularies.length) return;
-
-		vocabularies.forEach(({id, name}) => {
-			addProperty(createVocabularyProperty({id, name}));
+		).forEach(({criterionType, id, name}) => {
+			addProperty(criterionType.createProperty({id, name}));
 		});
 	}, []);
 
-	const isVocabularySection = selectedPropertyKey === 'vocabulary';
-	const vocabularyKeywords = isVocabularySection ? searchValue : '';
-
 	useEffect(() => {
-		setVocabularyQuery(q =>
-			q.keywords === vocabularyKeywords
+		setRemoteQuery(q =>
+			q.keywords === remoteKeywords
 				? q
-				: {keywords: vocabularyKeywords, page: 1}
+				: {keywords: remoteKeywords, page: 1}
 		);
-	}, [vocabularyKeywords]);
+	}, [remoteKeywords]);
 
 	useEffect(() => {
-		if (
-			type !== SegmentTypes.Batch ||
-			selectedPropertyKey !== 'vocabulary'
-		) {
+		setRemoteItems(List());
+		setRemoteTotalCount(0);
+		setRemoteQuery(q => (q.page === 1 ? q : {...q, page: 1}));
+	}, [selectedPropertyKey]);
+
+	useEffect(() => {
+		if (type !== SegmentTypes.Batch || !selectedRemoteCriterionType) {
 			return;
 		}
 
-		API.vocabularies
-			.search({
+		setRemoteLoading(true);
+
+		selectedRemoteCriterionType
+			.api({
 				channelId,
 				groupId,
-				keywords: vocabularyQuery.keywords,
-				page: vocabularyQuery.page,
-				pageSize: VOCABULARY_PAGE_SIZE
+				keywords: remoteQuery.keywords,
+				page: remoteQuery.page,
+				pageSize: REMOTE_PAGE_SIZE
 			})
-			.then(
-				(result: {
-					items: Array<{id: string; name: string}>;
-					totalCount: number;
-				}) => {
-					const properties: List<Property> = List(
-						(result.items ?? []).map(createVocabularyProperty)
+			.then(result => {
+				const properties: List<Property> = List(
+					(result.items ?? []).map(
+						selectedRemoteCriterionType.createProperty
+					)
+				);
+
+				setRemoteItems(properties);
+				setRemoteTotalCount(result.totalCount ?? 0);
+
+				if (addProperty) {
+					properties.forEach(
+						property => property && addProperty(property)
 					);
-
-					setVocabularyItems(properties);
-					setVocabularyTotalCount(result.totalCount ?? 0);
-
-					if (addProperty) {
-						properties.forEach(
-							property => property && addProperty(property)
-						);
-					}
 				}
-			);
-	}, [channelId, groupId, type, selectedPropertyKey, vocabularyQuery]);
+			})
+			.finally(() => setRemoteLoading(false));
+	}, [channelId, groupId, type, selectedRemoteCriterionType, remoteQuery]);
 
 	const effectivePropertyGroupsIList = useMemo(
 		() =>
 			propertyGroupsIList
 				.map(group => {
-					if (!group || group.propertyKey !== 'vocabulary') {
+					if (
+						!group ||
+						!getRemoteCriterionTypeByPropertyKey(group.propertyKey)
+					) {
 						return group as PropertyGroup;
 					}
 
 					return group.set(
 						'propertySubgroups',
-						List([
-							new PropertySubgroup({properties: vocabularyItems})
-						])
+						List([new PropertySubgroup({properties: remoteItems})])
 					) as PropertyGroup;
 				})
 				.toList(),
-		[propertyGroupsIList, vocabularyItems]
+		[propertyGroupsIList, remoteItems]
 	);
 
 	const groupedBySection = propertyGroupsIList
@@ -248,26 +222,30 @@ export default function CriteriaSidebar({
 			</div>
 
 			<div className='sidebar-collapse'>
-				<CriteriaSidebarCollapse
-					propertyGroupsIList={effectivePropertyGroupsIList}
-					propertyKey={selectedPropertyKey ?? ''}
-					searchValue={isVocabularySection ? '' : searchValue}
-				/>
-
-				{isVocabularySection && vocabularyTotalCount > 0 && (
-					<PaginationBar className='justify-content-center sidebar-pagination mt-2'>
-						<ClayPaginationWithBasicItems
-							active={vocabularyQuery.page}
-							onActiveChange={page =>
-								setVocabularyQuery(q => ({...q, page}))
-							}
-							totalPages={Math.ceil(
-								vocabularyTotalCount / VOCABULARY_PAGE_SIZE
-							)}
-						/>
-					</PaginationBar>
+				{isRemoteSection && remoteLoading ? (
+					<Loading overlay />
+				) : (
+					<CriteriaSidebarCollapse
+						propertyGroupsIList={effectivePropertyGroupsIList}
+						propertyKey={selectedPropertyKey ?? ''}
+						searchValue={isRemoteSection ? '' : searchValue}
+					/>
 				)}
 			</div>
+
+			{isRemoteSection && remoteTotalCount > 0 && (
+				<PaginationBar className='justify-content-center sidebar-pagination'>
+					<ClayPaginationWithBasicItems
+						active={remoteQuery.page}
+						onActiveChange={page =>
+							setRemoteQuery(q => ({...q, page}))
+						}
+						totalPages={Math.ceil(
+							remoteTotalCount / REMOTE_PAGE_SIZE
+						)}
+					/>
+				</PaginationBar>
+			)}
 		</div>
 	);
 }

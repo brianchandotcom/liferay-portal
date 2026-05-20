@@ -27,6 +27,7 @@ import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelper;
 import com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -53,6 +54,9 @@ import java.io.Serializable;
 
 import java.sql.Blob;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -61,6 +65,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.zip.ZipInputStream;
@@ -179,6 +184,43 @@ public class BatchEngineExportTaskExecutorTest
 		_assertExportedValues(
 			blogsEntries, fieldNames,
 			_readRowValuesList(_csvFilterFunction, batchEngineExportTask));
+	}
+
+	@Test
+	@TestInfo("LPD-85261")
+	public void testExportBlogPostingsToJSONFileWithDateCreatedFieldName()
+		throws Exception {
+
+		BlogsEntry blogsEntry = blogsEntryLocalService.addEntry(
+			user.getUserId(), "headline", "alternativeHeadline", null,
+			"articleBody", new Date(baseDate.getTime()), false, false, null,
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+				user.getUserId()));
+
+		_exportBlogPostings("JSON", Arrays.asList("dateCreated"), _parameters);
+
+		BatchEngineExportTask batchEngineExportTask =
+			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
+				_batchEngineExportTask.getBatchEngineExportTaskId());
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+			StringUtil.read(
+				_getZipInputStream(
+					_batchEngineExportTaskLocalService.openContentInputStream(
+						batchEngineExportTask.getBatchEngineExportTaskId()))));
+
+		JSONObject jsonObject = jsonArray.getJSONObject(initialCount);
+
+		DateFormat dateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+		dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		Assert.assertEquals(
+			blogsEntry.getCreateDate(),
+			dateFormat.parse(jsonObject.getString("dateCreated")));
 	}
 
 	@Test

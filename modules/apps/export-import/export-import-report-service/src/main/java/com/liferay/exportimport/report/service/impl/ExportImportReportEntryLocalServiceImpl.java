@@ -122,6 +122,14 @@ public class ExportImportReportEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getExportImportReportEntriesCount(
+		long companyId, long exportImportConfigurationId) {
+
+		return exportImportReportEntryPersistence.countByC_E(
+			companyId, exportImportConfigurationId);
+	}
+
+	@Override
 	public ExportImportReportEntry getOrAddEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId,

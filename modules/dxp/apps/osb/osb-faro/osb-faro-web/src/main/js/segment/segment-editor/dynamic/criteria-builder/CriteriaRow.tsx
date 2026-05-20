@@ -23,6 +23,7 @@ import React from 'react';
 import RowActions from 'shared/components/RowActions';
 import SessionInput from '../inputs/SessionInput';
 import StringInput from '../inputs/StringInput';
+import TagInput from '../inputs/TagInput';
 import VocabularyInput from '../inputs/VocabularyInput';
 import {
 	AddProperty,
@@ -448,7 +449,8 @@ class CriteriaRow extends React.Component<
 			[PropertyTypes.SessionGeolocation]: GeolocationInput,
 			[PropertyTypes.SessionNumber]: SessionInput,
 			[PropertyTypes.SessionText]: SessionInput,
-			[PropertyTypes.Text]: StringInput
+			[PropertyTypes.Text]: StringInput,
+			[PropertyTypes.Tag]: TagInput
 		};
 
 		const InputComponent: React.ElementType =

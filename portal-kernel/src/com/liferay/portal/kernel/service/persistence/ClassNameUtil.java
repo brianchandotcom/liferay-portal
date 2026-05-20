@@ -138,16 +138,6 @@ public class ClassNameUtil {
 	}
 
 	/**
-	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param value the value
-	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
-	 */
-	public static ClassName fetchByValue(String value) {
-		return getPersistence().fetchByValue(value);
-	}
-
-	/**
 	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param value the value
@@ -230,6 +220,16 @@ public class ClassNameUtil {
 		return getPersistence().fetchByPrimaryKey(classNameId);
 	}
 
+	/**
+	 * Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param value the value
+	 * @return the matching class name, or <code>null</code> if a matching class name could not be found
+	 */
+	public static ClassName fetchByValue(String value) {
+		return getPersistence().fetchByValue(value);
+	}
+
 	public static ClassNamePersistence getPersistence() {
 		return _persistence;
 	}
@@ -241,4 +241,4 @@ public class ClassNameUtil {
 	private static volatile ClassNamePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-29757939
+// LIFERAY-SERVICE-BUILDER-HASH:-1411249951

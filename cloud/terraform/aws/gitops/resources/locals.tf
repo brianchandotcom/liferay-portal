@@ -122,6 +122,7 @@ locals {
 	oidc_provider=replace(data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer, "https://", "")
 	secret_prefixes={
 		certificates="liferay/certificates/"
+		credentials="liferay/credentials/"
 		licenses="liferay/licenses/"
 	}
 	secret_store_name="${var.deployment_name}-secret-store"

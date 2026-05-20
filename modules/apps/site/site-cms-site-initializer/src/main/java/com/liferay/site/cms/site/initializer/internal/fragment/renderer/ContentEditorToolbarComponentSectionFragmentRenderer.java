@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
@@ -116,6 +118,10 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 			layoutDisplayPageObjectProvider, objectDefinition, themeDisplay);
 
 		return hashMapWrapper.put(
+			"defaultLanguageId",
+			() -> LocaleUtil.toLanguageId(
+				PortalUtil.getSiteDefaultLocale(objectEntry.getGroupId()))
+		).put(
 			"displayDate",
 			() -> {
 				String restoredDisplayDate =

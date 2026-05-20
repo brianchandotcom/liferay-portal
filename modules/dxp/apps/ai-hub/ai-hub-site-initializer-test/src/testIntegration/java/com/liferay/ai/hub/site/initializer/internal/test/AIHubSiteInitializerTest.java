@@ -12,6 +12,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -73,23 +74,45 @@ public class AIHubSiteInitializerTest {
 		siteInitializer.initialize(TestPropsValues.getGroupId());
 
 		_assertListTypeDefinitionExists(
-			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES");
+			"L_AI_HUB_CRAWLER_JOB_STATUSES", "abandoned", "dispatched",
+			"failed", "queued", "running", "succeeded");
+		_assertListTypeDefinitionExists(
+			"L_AI_HUB_INSTRUCTION_DEFINITION_SCOPES", "clickToChat", "cms",
+			"everywhere");
 
 		_assertObjectDefinitionExists("L_AI_HUB_AGENT_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_CHATBOT");
 		_assertObjectDefinitionExists("L_AI_HUB_CONTENT_RETRIEVER");
+		_assertObjectDefinitionExists("L_AI_HUB_CRAWLER_JOB");
 		_assertObjectDefinitionExists("L_AI_HUB_INSTRUCTION_DEFINITION");
 		_assertObjectDefinitionExists("L_AI_HUB_MCP_SERVER");
 
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS");
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS");
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_CONTENT_RETRIEVERS", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
-			"L_ACCOUNT", "L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS");
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_CRAWLER_JOBS", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_ACCOUNT_TO_L_AI_HUB_MCP_SERVERS", "L_ACCOUNT",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS",
 			"L_AI_HUB_AGENT_DEFINITION",
-			"L_AI_HUB_AGENT_DEFINITIONS_TO_L_AI_HUB_CONTENT_RETRIEVERS");
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_assertObjectRelationshipExists(
+			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+			"L_AI_HUB_CONTENT_RETRIEVER_TO_L_AI_HUB_CRAWLER_JOBS",
+			"L_AI_HUB_CONTENT_RETRIEVER",
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
@@ -112,7 +135,8 @@ public class AIHubSiteInitializerTest {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
-	private void _assertListTypeDefinitionExists(String externalReferenceCode)
+	private void _assertListTypeDefinitionExists(
+			String externalReferenceCode, String... listTypeEntryKeys)
 		throws Exception {
 
 		ListTypeDefinition listTypeDefinition =
@@ -120,11 +144,14 @@ public class AIHubSiteInitializerTest {
 				fetchListTypeDefinitionByExternalReferenceCode(
 					externalReferenceCode, TestPropsValues.getCompanyId());
 
-		ListTypeEntry listTypeEntry =
-			_listTypeEntryLocalService.getListTypeEntry(
-				listTypeDefinition.getListTypeDefinitionId(), "clickToChat");
+		for (String listTypeEntryKey : listTypeEntryKeys) {
+			ListTypeEntry listTypeEntry =
+				_listTypeEntryLocalService.getListTypeEntry(
+					listTypeDefinition.getListTypeDefinitionId(),
+					listTypeEntryKey);
 
-		Assert.assertTrue(listTypeEntry.isSystem());
+			Assert.assertTrue(listTypeEntry.isSystem());
+		}
 	}
 
 	private void _assertObjectDefinitionExists(String externalReferenceCode)
@@ -140,21 +167,24 @@ public class AIHubSiteInitializerTest {
 	}
 
 	private void _assertObjectRelationshipExists(
-			String objectDefinitionERC, String objectRelationshipERC)
+			String deletionType, String externalReferenceCode,
+			String objectDefinitionExternalReferenceCode, String type)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					objectDefinitionERC, TestPropsValues.getCompanyId());
+					objectDefinitionExternalReferenceCode,
+					TestPropsValues.getCompanyId());
 
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.
 				fetchObjectRelationshipByExternalReferenceCode(
-					objectRelationshipERC,
+					externalReferenceCode,
 					objectDefinition.getObjectDefinitionId());
 
-		Assert.assertNotNull(objectRelationship);
+		Assert.assertEquals(deletionType, objectRelationship.getDeletionType());
+		Assert.assertEquals(type, objectRelationship.getType());
 	}
 
 	private void _assertWorkflowDefinitionExists(

@@ -18,7 +18,6 @@ const NumberErrorMessage = `${Liferay.Language.get(
 )} ${Liferay.Language.get('please-enter-a-valid-number')}`;
 
 const FileSizeField = ({
-	handleAddClick,
 	handleRemoveClick,
 	index,
 	mimeType = '',
@@ -28,92 +27,90 @@ const FileSizeField = ({
 	const [sizeErrorMessage, setSizeErrorMessage] = useState('');
 
 	return (
-		<ClayLayout.Row className="mt-4 size-limit-row">
-			<ClayLayout.Col md="6">
-				<label htmlFor="mimeType">
-					{Liferay.Language.get('mime-type-field-label')}
+		<div className="file-size-mimetypes-item">
+			<div className="file-size-mimetypes-item-content">
+				<ClayLayout.Row>
+					<ClayLayout.Col md="6">
+						<label htmlFor="mimeType">
+							{Liferay.Language.get('mime-type-field-label')}
 
-					<span
-						className="inline-item-after"
-						title={Liferay.Language.get('mime-type-help-message')}
+							<span
+								className="inline-item-after"
+								title={Liferay.Language.get(
+									'mime-type-help-message'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
+
+						<ClayInput
+							defaultValue={mimeType}
+							id="mimeType"
+							name={`${portletNamespace}mimeType_${index}`}
+							type="text"
+						/>
+					</ClayLayout.Col>
+
+					<ClayLayout.Col
+						className={sizeErrorMessage ? 'has-error' : ''}
+						md="6"
 					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+						<label htmlFor="size">
+							{Liferay.Language.get('maximum-file-size')}
 
-				<ClayInput
-					defaultValue={mimeType}
-					id="mimeType"
-					name={`${portletNamespace}mimeType_${index}`}
-					type="text"
-				/>
-			</ClayLayout.Col>
+							<span
+								className="inline-item-after"
+								title={Liferay.Language.get(
+									'maximum-file-size-help-message'
+								)}
+							>
+								<ClayIcon symbol="question-circle-full" />
+							</span>
+						</label>
 
-			<ClayLayout.Col
-				className={sizeErrorMessage ? 'has-error' : ''}
-				md="6"
-			>
-				<label htmlFor="size">
-					{Liferay.Language.get('maximum-file-size')}
+						<ClayInput
+							defaultValue={size}
+							id="size"
+							name={`${portletNamespace}size_${index}`}
+							onChange={({target}) => {
+								setSizeErrorMessage(
+									target.validity.valid &&
+										Number(target.value) >= 0
+										? ''
+										: NumberErrorMessage
+								);
+							}}
+							type="number"
+						/>
 
-					<span
-						className="inline-item-after"
-						title={Liferay.Language.get(
-							'maximum-file-size-help-message'
+						{sizeErrorMessage && (
+							<ClayForm.FeedbackGroup>
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+									{sizeErrorMessage}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
 						)}
-					>
-						<ClayIcon symbol="question-circle-full" />
-					</span>
-				</label>
+					</ClayLayout.Col>
+				</ClayLayout.Row>
+			</div>
 
-				<ClayInput
-					defaultValue={size}
-					id="size"
-					name={`${portletNamespace}size_${index}`}
-					onChange={({target}) => {
-						setSizeErrorMessage(
-							target.validity.valid && Number(target.value) >= 0
-								? ''
-								: NumberErrorMessage
-						);
-					}}
-					type="number"
-				/>
-
-				{index > 0 && (
-					<ClayButton
-						aria-label={Liferay.Language.get('remove')}
-						className="dm-field-repeatable-delete-button"
-						onClick={() => handleRemoveClick(index)}
-						small
-						title={Liferay.Language.get('remove')}
-						type="button"
-					>
-						<ClayIcon symbol="hr" />
-					</ClayButton>
-				)}
-
+			{index > 0 && (
 				<ClayButton
-					className="dm-field-repeatable-add-button"
-					onClick={() => handleAddClick(index)}
-					small
-					title={Liferay.Language.get('add')}
+					aria-label={Liferay.Language.get('remove')}
+					borderless
+					className="file-size-mimetypes-remove"
+					displayType="secondary"
+					monospaced
+					onClick={() => handleRemoveClick(index)}
 					type="button"
 				>
-					<ClayIcon symbol="plus" />
+					<ClayIcon symbol="trash" />
 				</ClayButton>
-
-				{sizeErrorMessage && (
-					<ClayForm.FeedbackGroup>
-						<ClayForm.FeedbackItem>
-							<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-							{sizeErrorMessage}
-						</ClayForm.FeedbackItem>
-					</ClayForm.FeedbackGroup>
-				)}
-			</ClayLayout.Col>
-		</ClayLayout.Row>
+			)}
+		</div>
 	);
 };
 
@@ -124,16 +121,12 @@ const FileSizeMimetypes = ({
 }) => {
 	const emptyRow = () => ({id: uuidv4(), mimeType: '', size: ''});
 
-	const addRow = (index) => {
-		const tempList = [...sizesList];
-		tempList.splice(index + 1, 0, emptyRow());
-		setSizesList(tempList);
+	const addRow = () => {
+		setSizesList((prevSizesList) => [...prevSizesList, emptyRow()]);
 	};
 
 	const removeRow = (index) => {
-		const tempList = [...sizesList];
-		tempList.splice(index, 1);
-		setSizesList(tempList);
+		setSizesList((prevSizesList) => prevSizesList.toSpliced(index, 1));
 	};
 
 	const [sizesList, setSizesList] = useState(
@@ -148,7 +141,6 @@ const FileSizeMimetypes = ({
 
 			{sizesList.map((item, index) => (
 				<FileSizeField
-					handleAddClick={addRow}
 					handleRemoveClick={removeRow}
 					index={index}
 					key={item.id}
@@ -157,6 +149,21 @@ const FileSizeMimetypes = ({
 					size={item.size}
 				/>
 			))}
+
+			<ClayButton
+				aria-label={Liferay.Language.get('add-option')}
+				borderless
+				className="file-size-mimetypes-add"
+				displayType="secondary"
+				onClick={addRow}
+				type="button"
+			>
+				<span className="inline-item inline-item-before">
+					<ClayIcon symbol="plus" />
+				</span>
+
+				{Liferay.Language.get('add-option')}
+			</ClayButton>
 		</>
 	);
 };

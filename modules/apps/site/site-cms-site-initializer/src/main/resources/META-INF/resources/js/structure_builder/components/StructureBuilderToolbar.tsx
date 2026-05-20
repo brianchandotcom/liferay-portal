@@ -61,6 +61,7 @@ export default function StructureBuilderToolbar() {
 			<Toolbar.Item className="d-none d-sm-flex">
 				<ClayLink
 					className="btn btn-outline-borderless btn-outline-secondary btn-sm"
+					data-canonical-name={Liferay.Language.get('cancel')}
 					href="structures"
 				>
 					{Liferay.Language.get('cancel')}
@@ -100,6 +101,7 @@ function CustomizeEditorButton() {
 			aria-label={`${Liferay.Language.get('customize-editor')} ${Liferay.Language.get('opens-new-window')}`}
 			borderless
 			className="font-weight-semi-bold mr-md-2"
+			data-canonical-name={Liferay.Language.get('customize-editor')}
 			displayType="primary"
 			onClick={() => {
 				if (
@@ -216,6 +218,7 @@ function SaveButton() {
 
 			<ClayButtonWithIcon
 				className="d-md-none"
+				data-canonical-name={Liferay.Language.get('save-mobile')}
 				displayType="secondary"
 				onClick={onSave}
 				size="sm"

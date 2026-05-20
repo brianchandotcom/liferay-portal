@@ -135,62 +135,6 @@ public class NotificationTemplateAttachmentUtil {
 	}
 
 	/**
-	 * Returns all the notification template attachments where notificationTemplateId = &#63;.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @return the matching notification template attachments
-	 */
-	public static List<NotificationTemplateAttachment>
-		findByNotificationTemplateId(long notificationTemplateId) {
-
-		return getPersistence().findByNotificationTemplateId(
-			notificationTemplateId);
-	}
-
-	/**
-	 * Returns a range of all the notification template attachments where notificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationTemplateAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param start the lower bound of the range of notification template attachments
-	 * @param end the upper bound of the range of notification template attachments (not inclusive)
-	 * @return the range of matching notification template attachments
-	 */
-	public static List<NotificationTemplateAttachment>
-		findByNotificationTemplateId(
-			long notificationTemplateId, int start, int end) {
-
-		return getPersistence().findByNotificationTemplateId(
-			notificationTemplateId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the notification template attachments where notificationTemplateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationTemplateAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param start the lower bound of the range of notification template attachments
-	 * @param end the upper bound of the range of notification template attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching notification template attachments
-	 */
-	public static List<NotificationTemplateAttachment>
-		findByNotificationTemplateId(
-			long notificationTemplateId, int start, int end,
-			OrderByComparator<NotificationTemplateAttachment>
-				orderByComparator) {
-
-		return getPersistence().findByNotificationTemplateId(
-			notificationTemplateId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the notification template attachments where notificationTemplateId = &#63;.
 	 *
 	 * <p>
@@ -290,20 +234,6 @@ public class NotificationTemplateAttachmentUtil {
 			NoSuchNotificationTemplateAttachmentException {
 
 		return getPersistence().findByNTI_OFI(
-			notificationTemplateId, objectFieldId);
-	}
-
-	/**
-	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param notificationTemplateId the notification template ID
-	 * @param objectFieldId the object field ID
-	 * @return the matching notification template attachment, or <code>null</code> if a matching notification template attachment could not be found
-	 */
-	public static NotificationTemplateAttachment fetchByNTI_OFI(
-		long notificationTemplateId, long objectFieldId) {
-
-		return getPersistence().fetchByNTI_OFI(
 			notificationTemplateId, objectFieldId);
 	}
 
@@ -415,6 +345,76 @@ public class NotificationTemplateAttachmentUtil {
 			notificationTemplateAttachmentId);
 	}
 
+	/**
+	 * Returns the notification template attachment where notificationTemplateId = &#63; and objectFieldId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param objectFieldId the object field ID
+	 * @return the matching notification template attachment, or <code>null</code> if a matching notification template attachment could not be found
+	 */
+	public static NotificationTemplateAttachment fetchByNTI_OFI(
+		long notificationTemplateId, long objectFieldId) {
+
+		return getPersistence().fetchByNTI_OFI(
+			notificationTemplateId, objectFieldId);
+	}
+
+	/**
+	 * Returns all the notification template attachments where notificationTemplateId = &#63;.
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @return the matching notification template attachments
+	 */
+	public static List<NotificationTemplateAttachment>
+		findByNotificationTemplateId(long notificationTemplateId) {
+
+		return getPersistence().findByNotificationTemplateId(
+			notificationTemplateId);
+	}
+
+	/**
+	 * Returns a range of all the notification template attachments where notificationTemplateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationTemplateAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param start the lower bound of the range of notification template attachments
+	 * @param end the upper bound of the range of notification template attachments (not inclusive)
+	 * @return the range of matching notification template attachments
+	 */
+	public static List<NotificationTemplateAttachment>
+		findByNotificationTemplateId(
+			long notificationTemplateId, int start, int end) {
+
+		return getPersistence().findByNotificationTemplateId(
+			notificationTemplateId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the notification template attachments where notificationTemplateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.notification.model.impl.NotificationTemplateAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param notificationTemplateId the notification template ID
+	 * @param start the lower bound of the range of notification template attachments
+	 * @param end the upper bound of the range of notification template attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching notification template attachments
+	 */
+	public static List<NotificationTemplateAttachment>
+		findByNotificationTemplateId(
+			long notificationTemplateId, int start, int end,
+			OrderByComparator<NotificationTemplateAttachment>
+				orderByComparator) {
+
+		return getPersistence().findByNotificationTemplateId(
+			notificationTemplateId, start, end, orderByComparator);
+	}
+
 	public static NotificationTemplateAttachmentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -429,4 +429,4 @@ public class NotificationTemplateAttachmentUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1247285185
+// LIFERAY-SERVICE-BUILDER-HASH:-613261967

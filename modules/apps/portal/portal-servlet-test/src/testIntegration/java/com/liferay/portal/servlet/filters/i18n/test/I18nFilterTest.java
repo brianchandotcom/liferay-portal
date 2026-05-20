@@ -182,6 +182,11 @@ public class I18nFilterTest {
 	}
 
 	@Test
+	public void testGetRequestedLanguageId() throws Exception {
+		_testGetRequestedLanguageIdWithImpersonation();
+	}
+
+	@Test
 	public void testGuestEnglishPreferredWithoutSessionCookieVirtualHostAlgorithm3()
 		throws Exception {
 
@@ -414,6 +419,34 @@ public class I18nFilterTest {
 		Assert.assertEquals(
 			i18nLanguageId,
 			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+	}
+
+	private void _testGetRequestedLanguageIdWithImpersonation()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setParameter(
+			"doAsUserLanguageId", LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+
+		HttpSession httpSession = mockHttpServletRequest.getSession();
+
+		httpSession.setAttribute(WebKeys.LOCALE, LocaleUtil.US);
+
+		_user = UserTestUtil.addUser(
+			null, LocaleUtil.US, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new long[] {_group.getGroupId()});
+
+		mockHttpServletRequest.setAttribute(WebKeys.USER, _user);
+
+		Assert.assertEquals(
+			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+			ReflectionTestUtil.invoke(
+				_i18nFilter, "getRequestedLanguageId",
+				new Class<?>[] {HttpServletRequest.class, String.class},
+				mockHttpServletRequest,
+				LocaleUtil.toLanguageId(LocaleUtil.US)));
 	}
 
 	@DeleteAfterTestRun

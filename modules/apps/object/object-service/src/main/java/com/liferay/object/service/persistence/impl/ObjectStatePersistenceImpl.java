@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,66 +80,14 @@ public class ObjectStatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<ObjectState>
 		_collectionPersistenceFinderByUuid;
 
 	/**
-	 * Returns all the object states where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object states where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @return the range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object states where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object states where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -223,73 +170,14 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<ObjectState>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
-	 * Returns all the object states where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object states where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @return the range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object states where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object states where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -380,70 +268,14 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByListTypeEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByListTypeEntryId;
-	private FinderPath _finderPathCountByListTypeEntryId;
 	private CollectionPersistenceFinder<ObjectState>
 		_collectionPersistenceFinderByListTypeEntryId;
 
 	/**
-	 * Returns all the object states where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @return the matching object states
-	 */
-	@Override
-	public List<ObjectState> findByListTypeEntryId(long listTypeEntryId) {
-		return findByListTypeEntryId(
-			listTypeEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object states where listTypeEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @return the range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByListTypeEntryId(
-		long listTypeEntryId, int start, int end) {
-
-		return findByListTypeEntryId(listTypeEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object states where listTypeEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByListTypeEntryId(
-		long listTypeEntryId, int start, int end,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		return findByListTypeEntryId(
-			listTypeEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object states where listTypeEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param listTypeEntryId the list type entry ID
@@ -529,70 +361,14 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {listTypeEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByObjectStateFlowId;
-	private FinderPath _finderPathWithoutPaginationFindByObjectStateFlowId;
-	private FinderPath _finderPathCountByObjectStateFlowId;
 	private CollectionPersistenceFinder<ObjectState>
 		_collectionPersistenceFinderByObjectStateFlowId;
 
 	/**
-	 * Returns all the object states where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @return the matching object states
-	 */
-	@Override
-	public List<ObjectState> findByObjectStateFlowId(long objectStateFlowId) {
-		return findByObjectStateFlowId(
-			objectStateFlowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the object states where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @return the range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end) {
-
-		return findByObjectStateFlowId(objectStateFlowId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the object states where objectStateFlowId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object states
-	 * @param end the upper bound of the range of object states (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object states
-	 */
-	@Override
-	public List<ObjectState> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end,
-		OrderByComparator<ObjectState> orderByComparator) {
-
-		return findByObjectStateFlowId(
-			objectStateFlowId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the object states where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectStateModelImpl</code>.
 	 * </p>
 	 *
 	 * @param objectStateFlowId the object state flow ID
@@ -680,7 +456,6 @@ public class ObjectStatePersistenceImpl
 			finderCache, new Object[] {objectStateFlowId});
 	}
 
-	private FinderPath _finderPathFetchByLTEI_OSFI;
 	private UniquePersistenceFinder<ObjectState>
 		_uniquePersistenceFinderByLTEI_OSFI;
 
@@ -714,20 +489,6 @@ public class ObjectStatePersistenceImpl
 		}
 
 		return objectState;
-	}
-
-	/**
-	 * Returns the object state where listTypeEntryId = &#63; and objectStateFlowId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param objectStateFlowId the object state flow ID
-	 * @return the matching object state, or <code>null</code> if a matching object state could not be found
-	 */
-	@Override
-	public ObjectState fetchByLTEI_OSFI(
-		long listTypeEntryId, long objectStateFlowId) {
-
-		return fetchByLTEI_OSFI(listTypeEntryId, objectStateFlowId, true);
 	}
 
 	/**
@@ -997,58 +758,49 @@ public class ObjectStatePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 			ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"objectState.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, ObjectState::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_OBJECTSTATE_WHERE,
-				_SQL_COUNT_OBJECTSTATE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "uuid", FinderColumn.Type.STRING, "=", true,
@@ -1057,73 +809,71 @@ public class ObjectStatePersistenceImpl
 					"objectState.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, ObjectState::getCompanyId));
 
-		_finderPathWithPaginationFindByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByListTypeEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"listTypeEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByListTypeEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"listTypeEntryId"}, true);
-
-		_finderPathCountByListTypeEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByListTypeEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"listTypeEntryId"}, false);
-
 		_collectionPersistenceFinderByListTypeEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByListTypeEntryId,
-				_finderPathWithoutPaginationFindByListTypeEntryId,
-				_finderPathCountByListTypeEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByListTypeEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"listTypeEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByListTypeEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByListTypeEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeEntryId"}, false),
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "listTypeEntryId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getListTypeEntryId));
 
-		_finderPathWithPaginationFindByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectStateFlowId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"objectStateFlowId"}, true);
-
-		_finderPathWithoutPaginationFindByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByObjectStateFlowId", new String[] {Long.class.getName()},
-			new String[] {"objectStateFlowId"}, true);
-
-		_finderPathCountByObjectStateFlowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByObjectStateFlowId", new String[] {Long.class.getName()},
-			new String[] {"objectStateFlowId"}, false);
-
 		_collectionPersistenceFinderByObjectStateFlowId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByObjectStateFlowId,
-				_finderPathWithoutPaginationFindByObjectStateFlowId,
-				_finderPathCountByObjectStateFlowId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByObjectStateFlowId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"objectStateFlowId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByObjectStateFlowId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectStateFlowId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByObjectStateFlowId",
+					new String[] {Long.class.getName()},
+					new String[] {"objectStateFlowId"}, false),
 				_SQL_SELECT_OBJECTSTATE_WHERE, _SQL_COUNT_OBJECTSTATE_WHERE,
 				ObjectStateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"objectState.", "objectStateFlowId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectState::getObjectStateFlowId));
 
-		_finderPathFetchByLTEI_OSFI = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLTEI_OSFI",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"listTypeEntryId", "objectStateFlowId"}, 0, 0, false,
-			ObjectState::getListTypeEntryId, ObjectState::getObjectStateFlowId);
-
 		_uniquePersistenceFinderByLTEI_OSFI = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByLTEI_OSFI, _SQL_SELECT_OBJECTSTATE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByLTEI_OSFI",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"listTypeEntryId", "objectStateFlowId"}, 0, 0,
+				false, ObjectState::getListTypeEntryId,
+				ObjectState::getObjectStateFlowId),
+			_SQL_SELECT_OBJECTSTATE_WHERE, "",
 			new FinderColumn<>(
 				"objectState.", "listTypeEntryId", FinderColumn.Type.LONG, "=",
 				true, true, ObjectState::getListTypeEntryId),
@@ -1200,4 +950,4 @@ public class ObjectStatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1225345604
+// LIFERAY-SERVICE-BUILDER-HASH:-186724401

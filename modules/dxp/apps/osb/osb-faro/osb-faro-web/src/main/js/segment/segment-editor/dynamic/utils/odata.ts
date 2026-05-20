@@ -21,8 +21,13 @@ import {fromJS, Map} from 'immutable';
 import {generateGroupId, generateRowId, isCriterionGroup} from './utils';
 import {get, invert, isFinite, isNull, isString, isUndefined} from 'lodash';
 import {getPropertyValue, setPropertyValue} from './custom-inputs';
+import {
+	getRemoteCriterionTypeByOperator,
+	REMOTE_CRITERION_TYPES
+} from '../criterion-types/registry';
 import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {filter as oDataFilterFn} from 'odata-v4-parser';
+import {RemoteCriterionType} from '../criterion-types/RemoteCriterionType';
 
 const OPERATORS = {
 	...CustomFunctionOperators,
@@ -165,25 +170,30 @@ const PARAM_REGEX = /\s+((?:criterionGroup|operator|value)=)/g;
 export const trimSpacesBeforeParams = (queryString: string): string =>
 	queryString.replace(PARAM_REGEX, '$1');
 
-const buildVocabularyFilterString = (criterionGroup: any): string => {
+const buildRemoteFilterString = (
+	criterionGroup: any,
+	criterionType: RemoteCriterionType
+): string => {
 	const items: any[] = criterionGroup?.items ?? [];
 
 	const find = (name: string) =>
 		items.find((item: any) => item.propertyName === name);
 
-	const vocIdItem = find('vocabularies/id');
-	const vocNameItem = find('vocabularies/name');
+	const idItem = find(criterionType.idProperty);
+	const nameItem = find(criterionType.nameProperty);
 	const activityKeyItem = find('activityKey');
 	const appIdItem = find('applicationId');
 	const eventIdItem = find('eventId');
-	const categoriesItem = find('categories');
 	const dayItem = find('day');
+	const categoriesItem = criterionType.supportsCategories
+		? find('categories')
+		: undefined;
 
 	const parts: string[] = [];
 
-	if (vocIdItem && vocNameItem) {
-		parts.push(`vocabularies/id eq '${vocIdItem.value}'`);
-		parts.push(`vocabularies/name eq '${vocNameItem.value}'`);
+	if (idItem && nameItem) {
+		parts.push(`${criterionType.idProperty} eq '${idItem.value}'`);
+		parts.push(`${criterionType.nameProperty} eq '${nameItem.value}'`);
 	}
 
 	if (appIdItem && eventIdItem) {
@@ -216,7 +226,9 @@ const buildVocabularyFilterString = (criterionGroup: any): string => {
 		);
 	}
 
-	return parts.join(' and ');
+	const result = parts.join(' and ');
+
+	return result ? `(${result})` : result;
 };
 
 /**
@@ -266,15 +278,17 @@ const buildQueryString = (
 						);
 					}
 				} else if (isValueType(CustomFunctionOperators, operatorName)) {
-					if (
-						operatorName ===
-						CustomFunctionOperators.VocabulariesFilter
-					) {
+					const remoteCriterionType =
+						getRemoteCriterionTypeByOperator(operatorName);
+
+					if (remoteCriterionType) {
 						const criterionGroup = value
 							.get('criterionGroup')
 							?.toJS();
-						const filterString =
-							buildVocabularyFilterString(criterionGroup);
+						const filterString = buildRemoteFilterString(
+							criterionGroup,
+							remoteCriterionType
+						);
 						const occurrenceOperator = value.get('operator');
 						const occurrenceCount = value.get('value');
 
@@ -675,6 +689,332 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 	return formatCriteria(criteria);
 };
 
+const escapeRegExp = (value: string): string =>
+	value.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
+
+/**
+ * Parses an already-extracted inner filter string (the content of the
+ * `filter='...'` parameter, with OData `''` escaping already resolved) into a
+ * flat list of criterion items plus the matched RemoteCriterionType and entity
+ * id.  Returns null when the filter does not match any registered remote
+ * criterion type (e.g. vocabulary, tag).
+ */
+const buildInnerFilterItems = (
+	innerFilter: string
+): {
+	entityId: string;
+	items: Criterion[];
+	matchedType: RemoteCriterionType;
+} | null => {
+	let matchedType: RemoteCriterionType | undefined;
+	let entityId = '';
+	let entityName = '';
+
+	for (const criterionType of REMOTE_CRITERION_TYPES) {
+		const idMatch = innerFilter.match(
+			new RegExp(`${escapeRegExp(criterionType.idProperty)} eq '([^']+)'`)
+		);
+
+		if (!idMatch) {
+			continue;
+		}
+
+		matchedType = criterionType;
+		entityId = idMatch[1];
+
+		const nameMatch = innerFilter.match(
+			new RegExp(
+				`${escapeRegExp(criterionType.nameProperty)} eq '([^']+)'`
+			)
+		);
+		entityName = nameMatch?.[1] ?? entityId;
+
+		break;
+	}
+
+	if (!matchedType) {
+		return null;
+	}
+
+	const items: Criterion[] = [
+		{
+			operatorName: RelationalOperators.EQ,
+			propertyName: matchedType.idProperty,
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: entityId
+		} as unknown as Criterion,
+		{
+			operatorName: RelationalOperators.EQ,
+			propertyName: matchedType.nameProperty,
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: entityName
+		} as unknown as Criterion
+	];
+
+	const appIdMatch = innerFilter.match(/applicationId in \(([^)]+)\)/);
+	const eventIdMatch = innerFilter.match(/eventId in \(([^)]+)\)/);
+
+	if (appIdMatch && eventIdMatch) {
+		const parseIds = (s: string) =>
+			s.split(',').map(id => id.trim().replace(/^'|'$/g, ''));
+
+		items.push({
+			operatorName: RelationalOperators.In,
+			propertyName: 'applicationId',
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: parseIds(appIdMatch[1])
+		} as unknown as Criterion);
+
+		items.push({
+			operatorName: RelationalOperators.In,
+			propertyName: 'eventId',
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: parseIds(eventIdMatch[1])
+		} as unknown as Criterion);
+	} else {
+		const activityKeyMatch = innerFilter.match(/activityKey eq '([^']+)'/);
+
+		if (activityKeyMatch) {
+			items.push({
+				operatorName: RelationalOperators.EQ,
+				propertyName: 'activityKey',
+				rowId: generateRowId(),
+				touched: false,
+				valid: true,
+				value: activityKeyMatch[1]
+			} as unknown as Criterion);
+		}
+	}
+
+	if (matchedType.supportsCategories) {
+		const catRegex =
+			/\(categories\/id eq '([^']+)' and categories\/name eq '([^']+)'\)/g;
+		const categoryItems: Array<{id: string; name: string}> = [];
+		let catMatch: RegExpExecArray | null;
+
+		while ((catMatch = catRegex.exec(innerFilter)) !== null) {
+			categoryItems.push({id: catMatch[1], name: catMatch[2]});
+		}
+
+		if (categoryItems.length > 0) {
+			items.push({
+				operatorName: RelationalOperators.In,
+				propertyName: 'categories',
+				rowId: generateRowId(),
+				touched: false,
+				valid: true,
+				value: categoryItems
+			} as unknown as Criterion);
+		}
+	}
+
+	const dayMatch = innerFilter.match(/day (gt|ge|lt|le|eq|ne) '([^']+)'/);
+
+	if (dayMatch) {
+		items.push({
+			operatorName: dayMatch[1],
+			propertyName: 'day',
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: dayMatch[2]
+		} as unknown as Criterion);
+	}
+
+	return {entityId, items, matchedType};
+};
+
+const parseRemoteFilterByCount = (
+	queryString: string
+): CriterionGroup | null => {
+	const match = queryString.match(
+		/activities\.filterByCount\(filter='((?:[^']|'')*)'\s*(?:,operator='([^']*)')?(?:,value=(\d+))?\)/
+	);
+
+	if (!match) {
+		return null;
+	}
+
+	const filterContent = match[1].replace(/''/g, "'");
+	const occurrenceOperator = match[2] ?? null;
+	const occurrenceValue = match[3] !== undefined ? parseInt(match[3]) : null;
+
+	const innerFilter =
+		filterContent.startsWith('(') && filterContent.endsWith(')')
+			? filterContent.slice(1, -1)
+			: filterContent;
+
+	const result = buildInnerFilterItems(innerFilter);
+
+	if (!result) {
+		return null;
+	}
+
+	const {entityId, items, matchedType} = result;
+
+	const criterionGroup: CriterionGroup = {
+		conjunctionName: Conjunctions.And,
+		criteriaGroupId: generateGroupId(),
+		items
+	};
+
+	const customValue = new CustomValue(
+		Map({
+			criterionGroup: fromJS(criterionGroup),
+			operator: occurrenceOperator,
+			value: occurrenceValue
+		})
+	);
+
+	return wrapInCriteriaGroup([
+		{
+			operatorName: matchedType.positiveOperator,
+			propertyName: entityId,
+			rowId: generateRowId(),
+			touched: false,
+			valid: true,
+			value: customValue
+		} as unknown as Criteria
+	]);
+};
+
+/**
+ * Splits an OData filter string at top-level conjunction operators (and/or),
+ * respecting parentheses nesting and single-quoted strings (including escaped
+ * '' sequences). Returns the detected conjunction and the individual parts.
+ */
+const splitTopLevelConjunction = (
+	queryString: string
+): {conjunction: string; parts: string[]} => {
+	const stripped =
+		queryString.startsWith('(') && queryString.endsWith(')')
+			? queryString.slice(1, -1).trim()
+			: queryString.trim();
+
+	const parts: string[] = [];
+	let conjunction = Conjunctions.And;
+	let current = '';
+	let depth = 0;
+	let inString = false;
+	let i = 0;
+
+	while (i < stripped.length) {
+		const char = stripped[i];
+
+		if (inString) {
+			if (char === "'" && stripped[i + 1] === "'") {
+				current += "''";
+				i += 2;
+				continue;
+			} else if (char === "'") {
+				inString = false;
+			}
+
+			current += char;
+		} else if (char === "'") {
+			inString = true;
+			current += char;
+		} else if (char === '(') {
+			depth++;
+			current += char;
+		} else if (char === ')') {
+			depth--;
+			current += char;
+		} else if (depth === 0) {
+			const remaining = stripped.slice(i);
+
+			if (/^ and /i.test(remaining)) {
+				parts.push(current.trim());
+				conjunction = Conjunctions.And;
+				current = '';
+				i += 5;
+				continue;
+			} else if (/^ or /i.test(remaining)) {
+				parts.push(current.trim());
+				conjunction = Conjunctions.Or;
+				current = '';
+				i += 4;
+				continue;
+			} else {
+				current += char;
+			}
+		} else {
+			current += char;
+		}
+
+		i++;
+	}
+
+	if (current.trim()) {
+		parts.push(current.trim());
+	}
+
+	return {conjunction, parts};
+};
+
+/**
+ * Parses a query string that may contain multiple top-level criteria joined by
+ * and/or, where some parts are filterByCount calls and others are standard
+ * OData expressions. Returns a CriterionGroup combining all parsed criteria.
+ */
+const parseMultipleCriteria = (queryString: string): CriterionGroup | null => {
+	const {conjunction, parts} = splitTopLevelConjunction(queryString);
+
+	const criteriaItems: Criteria[] = [];
+
+	for (const part of parts) {
+		if (part.startsWith('activities.filterByCount(')) {
+			const result = parseRemoteFilterByCount(part);
+
+			if (result?.items?.length) {
+				criteriaItems.push(...result.items);
+			}
+		} else {
+			try {
+				const encodedQuotes = encodeDoubleQuotesToOdataQuotes(part);
+				const trimSpaces = trimSpacesBeforeParams(encodedQuotes);
+				const encodedSpecialCharacters =
+					encodeSpecialCharacters(trimSpaces);
+				const substrings = convertBetweenToSubstring(
+					encodedSpecialCharacters
+				);
+				const token = oDataFilterFn(substrings);
+				const stringified = JSON.stringify(token);
+				const decodedSpecialCharacters =
+					decodeSpecialCharacters(stringified);
+				const oDataASTNode = JSON.parse(decodedSpecialCharacters);
+				const criteriaArray = toCriteria({oDataASTNode});
+				const parsed = isCriterionGroup(criteriaArray[0])
+					? criteriaArray[0]
+					: wrapInCriteriaGroup(criteriaArray);
+				const decoded = decodeValueFromCriteria(parsed);
+
+				criteriaItems.push(...decoded.items);
+			} catch {
+				// skip unparseable parts
+			}
+		}
+	}
+
+	if (!criteriaItems.length) {
+		return null;
+	}
+
+	return {
+		conjunctionName: conjunction,
+		criteriaGroupId: generateGroupId(),
+		items: criteriaItems
+	};
+};
+
 /**
  * Converts an OData filter query string to an object that can be used by the
  * criteria builder
@@ -704,7 +1044,17 @@ const translateQueryToCriteria = (queryString: string): Criteria => {
 
 		criteria = decodeValueFromCriteria(criteria);
 	} catch (e) {
-		criteria = null;
+		try {
+			criteria = parseMultipleCriteria(queryString);
+		} catch (innerError) {
+			// eslint-disable-next-line no-console
+			console.error(
+				'Faro: parseMultipleCriteria fallback failed for queryString',
+				queryString,
+				innerError
+			);
+			criteria = null;
+		}
 	}
 
 	return criteria;
@@ -848,6 +1198,10 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 
 	const {name, namespace} = fn.value;
 
+	let detectedFilterType: 'tag' | 'vocabulary' | null = null;
+	let detectedEntityId: string | null = null;
+	let detectedEntityName: string | null = null;
+
 	const customValue = new CustomValue(
 		params.value.reduce((accIMap: Map<string, any>, cur: any) => {
 			const {
@@ -858,11 +1212,55 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 			} = cur.value;
 
 			if (name === 'filter') {
-				const criterionGroupIMap = fromJS(
-					translateQueryToCriteria(parseNestedOdataString(value.raw))
-				);
+				const rawFilterFull = parseNestedOdataString(value.raw);
+				const rawFilter =
+					rawFilterFull.startsWith('(') && rawFilterFull.endsWith(')')
+						? rawFilterFull.slice(1, -1)
+						: rawFilterFull;
 
-				return accIMap.set('criterionGroup', criterionGroupIMap);
+				const innerResult = buildInnerFilterItems(rawFilter);
+
+				if (innerResult) {
+					return accIMap.set(
+						'criterionGroup',
+						fromJS({
+							conjunctionName: Conjunctions.And,
+							criteriaGroupId: generateGroupId(),
+							items: innerResult.items
+						})
+					);
+				}
+
+				const parsed = translateQueryToCriteria(rawFilter);
+				const criterionGroupIMap = fromJS(parsed);
+
+				if (!parsed) {
+					const vocIdMatch = rawFilter.match(
+						/vocabularies\/id eq '([^']+)'/
+					);
+					const tagIdMatch = rawFilter.match(/tags\/id eq '([^']+)'/);
+
+					if (vocIdMatch) {
+						detectedFilterType = 'vocabulary';
+						detectedEntityId = vocIdMatch[1];
+						detectedEntityName =
+							rawFilter.match(
+								/vocabularies\/name eq '([^']+)'/
+							)?.[1] ?? null;
+					} else if (tagIdMatch) {
+						detectedFilterType = 'tag';
+						detectedEntityId = tagIdMatch[1];
+						detectedEntityName =
+							rawFilter.match(/tags\/name eq '([^']+)'/)?.[1] ??
+							null;
+					}
+				}
+
+				return detectedEntityName
+					? accIMap
+							.set('criterionGroup', criterionGroupIMap)
+							.set('_name', detectedEntityName)
+					: accIMap.set('criterionGroup', criterionGroupIMap);
 			} else if (name === 'value' && isFinite(parseInt(value.raw))) {
 				return accIMap.set(name, parseInt(value.raw));
 			} else {
@@ -877,15 +1275,23 @@ const transformCustomFunctionNode = ({oDataASTNode}: Context): Criterion[] => {
 		0,
 		'propertyName'
 	]);
-	const isVocabularyFilter = firstItemPropertyName === 'vocabularies/id';
+	const isVocabularyFilter =
+		firstItemPropertyName === 'vocabularies/id' ||
+		detectedFilterType === 'vocabulary';
+	const isTagFilter =
+		firstItemPropertyName === 'tags/id' || detectedFilterType === 'tag';
 
 	const operatorName = isVocabularyFilter
 		? CustomFunctionOperators.VocabulariesFilter
+		: isTagFilter
+		? CustomFunctionOperators.TagsFilter
 		: getOperatorNameFromFunctionName(name, namespace);
 
-	const propertyName = isVocabularyFilter
-		? customValue.getIn(['criterionGroup', 'items', 0, 'value'])
-		: firstItemPropertyName;
+	const propertyName =
+		isVocabularyFilter || isTagFilter
+			? customValue.getIn(['criterionGroup', 'items', 0, 'value']) ??
+			  detectedEntityId
+			: firstItemPropertyName;
 
 	let touched:
 		| boolean

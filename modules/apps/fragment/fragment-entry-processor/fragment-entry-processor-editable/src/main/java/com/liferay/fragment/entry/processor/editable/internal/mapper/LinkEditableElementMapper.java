@@ -115,13 +115,13 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			processEditableTag = true;
 		}
 
-		boolean replaceLink = false;
+		boolean reuseExistingLink = false;
 
 		if ((firstChildElement != null) && processEditableTag &&
 			StringUtil.equalsIgnoreCase(firstChildElement.tagName(), "a")) {
 
 			linkElement = firstChildElement;
-			replaceLink = true;
+			reuseExistingLink = true;
 		}
 
 		String target = configJSONObject.getString("target");
@@ -158,8 +158,11 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		Element parentElement = element.parent();
 
-		_replaceLinkContent(
-			element, empty, firstChildElement, linkElement, replaceLink);
+		int index = element.siblingIndex();
+
+		if (!reuseExistingLink) {
+			_replaceLinkContent(element, empty, linkElement);
+		}
 
 		if (((linkElement != element) || processEditableTag) && !empty &&
 			(linkElement.parent() != element)) {
@@ -173,7 +176,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 				element.replaceWith(linkElement);
 			}
 			else {
-				parentElement.appendChild(linkElement);
+				parentElement.insertChildren(index, linkElement);
 			}
 		}
 	}
@@ -224,36 +227,19 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 	}
 
 	private void _replaceLinkContent(
-		Element element, boolean empty, Element firstChildElement,
-		Element linkElement, boolean replaceLink) {
+		Element element, boolean empty, Element linkElement) {
 
-		if (replaceLink) {
-			if (linkElement == firstChildElement) {
-				return;
-			}
+		if (linkElement == element) {
+			return;
+		}
 
-			linkElement.empty();
+		linkElement.empty();
 
-			if (firstChildElement.childNodeSize() == 0) {
-				linkElement.appendChild(firstChildElement);
-			}
-			else {
-				linkElement.appendChildren(firstChildElement.childNodes());
-			}
+		if (empty) {
+			linkElement.appendChild(element);
 		}
 		else {
-			if (linkElement == element) {
-				return;
-			}
-
-			linkElement.empty();
-
-			if (empty) {
-				linkElement.appendChild(element);
-			}
-			else {
-				linkElement.appendChildren(element.childNodes());
-			}
+			linkElement.appendChildren(element.childNodes());
 		}
 	}
 

@@ -119,6 +119,14 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 			cpDefinitionId);
 	}
 
+	@Override
+	public void deleteCPDefinitionGroupedEntriesByEntryCProductId(
+		long entryCProductId) {
+
+		_cpDefinitionGroupedEntryLocalService.
+			deleteCPDefinitionGroupedEntriesByEntryCProductId(entryCProductId);
+	}
+
 	/**
 	 * Deletes the cp definition grouped entry from the database. Also notifies the appropriate model listeners.
 	 *
@@ -631,4 +639,4 @@ public class CPDefinitionGroupedEntryLocalServiceWrapper
 		_cpDefinitionGroupedEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-569886602
+// LIFERAY-SERVICE-BUILDER-HASH:-1039658457

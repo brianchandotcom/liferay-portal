@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -81,70 +80,14 @@ public class DepotAppCustomizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByDepotEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByDepotEntryId;
-	private FinderPath _finderPathCountByDepotEntryId;
 	private CollectionPersistenceFinder<DepotAppCustomization>
 		_collectionPersistenceFinderByDepotEntryId;
 
 	/**
-	 * Returns all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @return the matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(long depotEntryId) {
-		return findByDepotEntryId(
-			depotEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot app customizations
-	 * @param end the upper bound of the range of depot app customizations (not inclusive)
-	 * @return the range of matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(
-		long depotEntryId, int start, int end) {
-
-		return findByDepotEntryId(depotEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the depot app customizations where depotEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param start the lower bound of the range of depot app customizations
-	 * @param end the upper bound of the range of depot app customizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching depot app customizations
-	 */
-	@Override
-	public List<DepotAppCustomization> findByDepotEntryId(
-		long depotEntryId, int start, int end,
-		OrderByComparator<DepotAppCustomization> orderByComparator) {
-
-		return findByDepotEntryId(
-			depotEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the depot app customizations where depotEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DepotAppCustomizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param depotEntryId the depot entry ID
@@ -230,7 +173,6 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private FinderPath _finderPathFetchByD_E;
 	private UniquePersistenceFinder<DepotAppCustomization>
 		_uniquePersistenceFinderByD_E;
 
@@ -263,20 +205,6 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 
 		return depotAppCustomization;
-	}
-
-	/**
-	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param enabled the enabled
-	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization fetchByD_E(
-		long depotEntryId, boolean enabled) {
-
-		return fetchByD_E(depotEntryId, enabled, true);
 	}
 
 	/**
@@ -325,7 +253,6 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId, enabled});
 	}
 
-	private FinderPath _finderPathFetchByD_P;
 	private UniquePersistenceFinder<DepotAppCustomization>
 		_uniquePersistenceFinderByD_P;
 
@@ -358,20 +285,6 @@ public class DepotAppCustomizationPersistenceImpl
 		}
 
 		return depotAppCustomization;
-	}
-
-	/**
-	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param depotEntryId the depot entry ID
-	 * @param portletId the portlet ID
-	 * @return the matching depot app customization, or <code>null</code> if a matching depot app customization could not be found
-	 */
-	@Override
-	public DepotAppCustomization fetchByD_P(
-		long depotEntryId, String portletId) {
-
-		return fetchByD_P(depotEntryId, portletId, true);
 	}
 
 	/**
@@ -676,29 +589,26 @@ public class DepotAppCustomizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByDepotEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"depotEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			true);
-
-		_finderPathCountByDepotEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByDepotEntryId",
-			new String[] {Long.class.getName()}, new String[] {"depotEntryId"},
-			false);
-
 		_collectionPersistenceFinderByDepotEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByDepotEntryId,
-				_finderPathWithoutPaginationFindByDepotEntryId,
-				_finderPathCountByDepotEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByDepotEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByDepotEntryId", new String[] {Long.class.getName()},
+					new String[] {"depotEntryId"}, false),
 				_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE,
 				_SQL_COUNT_DEPOTAPPCUSTOMIZATION_WHERE,
 				DepotAppCustomizationModelImpl.ORDER_BY_JPQL,
@@ -708,15 +618,14 @@ public class DepotAppCustomizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DepotAppCustomization::getDepotEntryId));
 
-		_finderPathFetchByD_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"depotEntryId", "enabled"}, 0, 0, false,
-			DepotAppCustomization::getDepotEntryId,
-			DepotAppCustomization::isEnabled);
-
 		_uniquePersistenceFinderByD_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_E,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_E",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"depotEntryId", "enabled"}, 0, 0, false,
+				DepotAppCustomization::getDepotEntryId,
+				DepotAppCustomization::isEnabled),
 			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
@@ -726,15 +635,14 @@ public class DepotAppCustomizationPersistenceImpl
 				"depotAppCustomization.", "enabled", FinderColumn.Type.BOOLEAN,
 				"=", true, true, DepotAppCustomization::isEnabled));
 
-		_finderPathFetchByD_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"depotEntryId", "portletId"}, 0, 2, false,
-			DepotAppCustomization::getDepotEntryId,
-			convertNullFunction(DepotAppCustomization::getPortletId));
-
 		_uniquePersistenceFinderByD_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByD_P,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByD_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"depotEntryId", "portletId"}, 0, 2, false,
+				DepotAppCustomization::getDepotEntryId,
+				convertNullFunction(DepotAppCustomization::getPortletId)),
 			_SQL_SELECT_DEPOTAPPCUSTOMIZATION_WHERE, "",
 			new FinderColumn<>(
 				"depotAppCustomization.", "depotEntryId",
@@ -813,4 +721,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1054755588
+// LIFERAY-SERVICE-BUILDER-HASH:-391202167

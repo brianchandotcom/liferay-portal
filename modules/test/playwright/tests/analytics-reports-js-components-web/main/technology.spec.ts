@@ -62,9 +62,9 @@ async function expectMatchingChartData({
 	// eslint-disable-next-line @liferay/no-get-data-attribute
 	const chartData = await chartElement.getAttribute('data-qa-chart-data');
 
-	chartLegends.forEach((chartLegend) => {
-		expect(page.getByText(chartLegend)).toBeVisible();
-	});
+	for (const chartLegend of chartLegends) {
+		await expect(page.getByText(chartLegend)).toBeVisible();
+	}
 
 	expect(chartData).toBe(expectedResult);
 }

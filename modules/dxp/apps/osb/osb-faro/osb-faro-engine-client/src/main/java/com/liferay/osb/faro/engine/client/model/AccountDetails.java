@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.engine.client.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,8 +23,16 @@ public class AccountDetails {
 
 	public static class Field {
 
+		public Long getDataSourceId() {
+			return _dataSourceId;
+		}
+
 		public String getDataSourceName() {
 			return _dataSourceName;
+		}
+
+		public Date getModifiedDate() {
+			return _modifiedDate;
 		}
 
 		public String getName() {
@@ -34,8 +43,16 @@ public class AccountDetails {
 			return _value;
 		}
 
+		public void setDataSourceId(Long dataSourceId) {
+			_dataSourceId = dataSourceId;
+		}
+
 		public void setDataSourceName(String dataSourceName) {
 			_dataSourceName = dataSourceName;
+		}
+
+		public void setModifiedDate(Date modifiedDate) {
+			_modifiedDate = modifiedDate;
 		}
 
 		public void setName(String name) {
@@ -46,7 +63,9 @@ public class AccountDetails {
 			_value = value;
 		}
 
+		private Long _dataSourceId;
 		private String _dataSourceName;
+		private Date _modifiedDate;
 		private String _name;
 		private String _value;
 

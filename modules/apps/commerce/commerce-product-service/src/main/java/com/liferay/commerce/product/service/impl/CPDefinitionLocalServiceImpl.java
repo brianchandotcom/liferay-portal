@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.service.impl;
 
 import com.liferay.account.model.AccountGroupRel;
+import com.liferay.account.model.AccountGroupRelTable;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -19,6 +20,7 @@ import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.product.configuration.CProductVersionConfiguration;
 import com.liferay.commerce.product.constants.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.exception.CPDefinitionDeliveryMaxSubscriptionCyclesException;
 import com.liferay.commerce.product.exception.CPDefinitionDisplayDateException;
 import com.liferay.commerce.product.exception.CPDefinitionExpirationDateException;
@@ -35,6 +37,7 @@ import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CPDefinitionLocalization;
+import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
@@ -43,7 +46,10 @@ import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceOptionValueRel;
 import com.liferay.commerce.product.model.CProduct;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.model.impl.CPDefinitionImpl;
 import com.liferay.commerce.product.model.impl.CPDefinitionModelImpl;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryLocalService;
@@ -56,6 +62,8 @@ import com.liferay.commerce.product.service.CPDisplayLayoutLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceOptionValueRelLocalService;
 import com.liferay.commerce.product.service.CProductLocalService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.service.base.CPDefinitionLocalServiceBaseImpl;
 import com.liferay.commerce.product.service.persistence.CPAttachmentFileEntryPersistence;
@@ -85,6 +93,9 @@ import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -1724,6 +1735,47 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinition> getCPDefinitions(
+		long companyId, long accountEntryId, long[] accountGroupIds,
+		long[] commerceChannelGroupIds, boolean published, int[] statuses,
+		int start, int end, OrderByComparator<CPDefinition> orderByComparator) {
+
+		GroupByStep groupByStep = _getGroupByStep(
+			DSLQueryFactoryUtil.select(
+				CPDefinitionTable.INSTANCE
+			).from(
+				CPDefinitionTable.INSTANCE
+			).leftJoinOn(
+				CPDefinitionLocalizationTable.INSTANCE,
+				CPDefinitionLocalizationTable.INSTANCE.CPDefinitionId.eq(
+					CPDefinitionTable.INSTANCE.CPDefinitionId
+				).and(
+					CPDefinitionLocalizationTable.INSTANCE.languageId.eq(
+						CPDefinitionTable.INSTANCE.defaultLanguageId)
+				)
+			),
+			companyId, accountEntryId, accountGroupIds, commerceChannelGroupIds,
+			published, statuses);
+
+		if (orderByComparator != null) {
+			return dslQuery(
+				groupByStep.orderBy(
+					CPDefinitionTable.INSTANCE, orderByComparator
+				).limit(
+					start, end
+				));
+		}
+
+		return dslQuery(
+			groupByStep.orderBy(
+				CPDefinitionLocalizationTable.INSTANCE.name.ascending(),
+				CPDefinitionTable.INSTANCE.modifiedDate.descending()
+			).limit(
+				start, end
+			));
+	}
+
+	@Override
 	public int getCPDefinitionsCount(
 		long groupId, boolean subscriptionEnabled) {
 
@@ -2979,6 +3031,109 @@ public class CPDefinitionLocalServiceImpl
 		}
 	}
 
+	private Predicate _getAccountGroupPredicate(long[] accountGroupIds) {
+		Predicate accountGroupFilterPredicate =
+			CPDefinitionTable.INSTANCE.accountGroupFilterEnabled.eq(false);
+
+		if (ArrayUtil.isEmpty(accountGroupIds)) {
+			return accountGroupFilterPredicate;
+		}
+
+		return Predicate.withParentheses(
+			accountGroupFilterPredicate.or(
+				CPDefinitionTable.INSTANCE.CPDefinitionId.in(
+					DSLQueryFactoryUtil.select(
+						AccountGroupRelTable.INSTANCE.classPK
+					).from(
+						AccountGroupRelTable.INSTANCE
+					).where(
+						AccountGroupRelTable.INSTANCE.classNameId.eq(
+							_classNameLocalService.getClassNameId(
+								CPDefinition.class.getName())
+						).and(
+							AccountGroupRelTable.INSTANCE.accountGroupId.in(
+								ArrayUtil.toArray(accountGroupIds))
+						)
+					))));
+	}
+
+	private long[] _getCommerceChannelIds(
+		long accountEntryId, long[] commerceChannelGroupIds) {
+
+		if (commerceChannelGroupIds == null) {
+			return null;
+		}
+
+		long[] commerceChannelIds = new long[commerceChannelGroupIds.length];
+
+		for (int i = 0; i < commerceChannelGroupIds.length; i++) {
+			long groupId = commerceChannelGroupIds[i];
+
+			if (groupId <= 0) {
+				return null;
+			}
+
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannelByGroupClassPK(
+					groupId);
+
+			if (commerceChannel == null) {
+				return null;
+			}
+
+			int count =
+				_commerceChannelAccountEntryRelLocalService.
+					getCommerceChannelAccountEntryRelsCount(
+						commerceChannel.getCommerceChannelId(), null,
+						CommerceChannelAccountEntryRelConstants.
+							TYPE_ELIGIBILITY);
+
+			if (count != 0) {
+				CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
+					_commerceChannelAccountEntryRelLocalService.
+						fetchCommerceChannelAccountEntryRel(
+							accountEntryId,
+							commerceChannel.getCommerceChannelId(),
+							CommerceChannelAccountEntryRelConstants.
+								TYPE_ELIGIBILITY);
+
+				if (commerceChannelAccountEntryRel == null) {
+					return null;
+				}
+			}
+
+			commerceChannelIds[i] = commerceChannel.getCommerceChannelId();
+		}
+
+		return commerceChannelIds;
+	}
+
+	private Predicate _getCommerceChannelPredicate(long[] commerceChannelIds) {
+		Predicate channelFilterPredicate =
+			CPDefinitionTable.INSTANCE.channelFilterEnabled.eq(false);
+
+		if (ArrayUtil.isEmpty(commerceChannelIds)) {
+			return channelFilterPredicate;
+		}
+
+		return Predicate.withParentheses(
+			channelFilterPredicate.or(
+				CPDefinitionTable.INSTANCE.CPDefinitionId.in(
+					DSLQueryFactoryUtil.select(
+						CommerceChannelRelTable.INSTANCE.classPK
+					).from(
+						CommerceChannelRelTable.INSTANCE
+					).where(
+						CommerceChannelRelTable.INSTANCE.classNameId.eq(
+							_classNameLocalService.getClassNameId(
+								CPDefinition.class.getName())
+						).and(
+							CommerceChannelRelTable.INSTANCE.commerceChannelId.
+								in(ArrayUtil.toArray(commerceChannelIds))
+						)
+					))));
+	}
+
 	private List<CPDefinition> _getCPDefinitions(Hits hits)
 		throws PortalException {
 
@@ -3009,6 +3164,37 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		return cpDefinitions;
+	}
+
+	private GroupByStep _getGroupByStep(
+		JoinStep joinStep, long companyId, long accountEntryId,
+		long[] accountGroupIds, long[] commerceChannelGroupIds,
+		boolean published, int[] statuses) {
+
+		Predicate predicate = CPDefinitionTable.INSTANCE.companyId.eq(
+			companyId);
+
+		if (published) {
+			predicate = predicate.and(
+				CPDefinitionTable.INSTANCE.published.eq(true));
+		}
+
+		if (ArrayUtil.isNotEmpty(statuses) &&
+			!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+
+			predicate = predicate.and(
+				CPDefinitionTable.INSTANCE.status.in(
+					ArrayUtil.toArray(statuses)));
+		}
+
+		predicate = predicate.and(
+			_getAccountGroupPredicate(accountGroupIds)
+		).and(
+			_getCommerceChannelPredicate(
+				_getCommerceChannelIds(accountEntryId, commerceChannelGroupIds))
+		);
+
+		return joinStep.where(predicate);
 	}
 
 	private String _getIndexFieldName(String optionKey, String languageId) {
@@ -3375,6 +3561,13 @@ public class CPDefinitionLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;

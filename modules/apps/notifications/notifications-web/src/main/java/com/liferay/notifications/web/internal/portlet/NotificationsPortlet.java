@@ -334,6 +334,8 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (userNotificationEvent == null) {
 			_sendRedirect(actionRequest, actionResponse);
+
+			return;
 		}
 
 		UserNotificationFeedEntry userNotificationFeedEntry =
@@ -343,12 +345,16 @@ public class NotificationsPortlet extends MVCPortlet {
 
 		if (userNotificationFeedEntry == null) {
 			_sendRedirect(actionRequest, actionResponse);
+
+			return;
 		}
 
 		String link = userNotificationFeedEntry.getLink();
 
 		if (Validator.isNull(link)) {
 			_sendRedirect(actionRequest, actionResponse);
+
+			return;
 		}
 
 		actionResponse.sendRedirect(

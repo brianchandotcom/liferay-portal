@@ -7,10 +7,15 @@ package com.liferay.ai.hub.web.internal.fragment.renderer;
 
 import com.liferay.ai.hub.web.internal.display.context.EditChatbotDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.field.attachment.AttachmentManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.portal.kernel.language.Language;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author José Abelenda
@@ -28,12 +33,26 @@ public class EditChatbotFragmentRenderer
 	protected EditChatbotDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new EditChatbotDisplayContext(httpServletRequest);
+		return new EditChatbotDisplayContext(
+			_attachmentManager, httpServletRequest, _language,
+			_objectDefinitionLocalService, _objectFieldLocalService);
 	}
 
 	@Override
 	protected String getJSPPath() {
 		return "/edit_chatbot.jsp";
 	}
+
+	@Reference
+	private AttachmentManager _attachmentManager;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

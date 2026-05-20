@@ -230,6 +230,13 @@ public class I18nFilter extends BasePortalFilter {
 	protected String getRequestedLanguageId(
 		HttpServletRequest httpServletRequest, String userLanguageId) {
 
+		String doAsUserLanguageId = httpServletRequest.getParameter(
+			"doAsUserLanguageId");
+
+		if (Validator.isNotNull(doAsUserLanguageId)) {
+			return doAsUserLanguageId;
+		}
+
 		String requestedLanguageId = null;
 
 		HttpSession httpSession = httpServletRequest.getSession();

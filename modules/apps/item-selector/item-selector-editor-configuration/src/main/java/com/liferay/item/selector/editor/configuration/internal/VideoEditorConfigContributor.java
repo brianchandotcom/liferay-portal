@@ -61,6 +61,8 @@ public class VideoEditorConfigContributor extends BaseEditorConfigContributor {
 				"filebrowserVideoBrowseLinkUrl", itemSelectorURL.toString()
 			).put(
 				"filebrowserVideoBrowseUrl", itemSelectorURL.toString()
+			).put(
+				"itemSelectorRememberSelectionFolder", true
 			);
 		}
 	}

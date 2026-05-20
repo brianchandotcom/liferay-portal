@@ -13,7 +13,7 @@ import {compose, withIndividual} from 'shared/hoc';
 import {CSVType} from 'shared/components/download-report/utils';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useRequest} from 'shared/hooks/useRequest';
 
 const AssociatedSegments = lazy(
@@ -84,7 +84,7 @@ export const IndividualProfileRoutes = ({
 	id,
 	individual
 }: IIndividualProfileRoutesProps) => {
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const {selectedChannel} = useContext(ChannelContext);
 
@@ -95,9 +95,7 @@ export const IndividualProfileRoutes = ({
 	const entityName = individual.name || Liferay.Language.get('unknown');
 
 	const {data: dataSourceData} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
 			groupId

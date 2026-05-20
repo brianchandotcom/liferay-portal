@@ -46,6 +46,12 @@ exports[`WithPropertyGroups should pass propertyGroups to the WrappedComponent 1
       </div>
     </div>
     <div>
+      Tags
+      <div>
+        Tags-0: 0
+      </div>
+    </div>
+    <div>
       Organization
       <div>
         Organization-0: 6

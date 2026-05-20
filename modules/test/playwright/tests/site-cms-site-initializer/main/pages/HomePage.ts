@@ -42,8 +42,8 @@ export class HomePage {
 		this.knowledgeBaseButton = page.getByRole('button', {
 			name: 'Knowledge Base',
 		});
-		this.viewAllButton = page.getByRole('button', {
-			name: 'View All ',
+		this.viewAllButton = page.getByRole('link', {
+			name: 'View All',
 		});
 		this.vocabularyButton = page.getByRole('button', {
 			name: 'Vocabulary',

@@ -45,7 +45,7 @@ public class RegionLocalizationTableReferenceDefinitionTest
 		super.setUp();
 
 		_country = _countryLocalService.addCountry(
-			"a1", "a11", RandomTestUtil.randomBoolean(),
+			null, "a1", "a11", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
@@ -53,7 +53,7 @@ public class RegionLocalizationTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext());
 
 		_region = _regionLocalService.addRegion(
-			_country.getCountryId(), RandomTestUtil.randomBoolean(),
+			null, _country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());

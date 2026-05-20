@@ -5,11 +5,7 @@
 
 package com.liferay.exportimport.rest.client.serdes.v1_0;
 
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerBoolean;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerChoice;
 import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerControl;
-import com.liferay.exportimport.rest.client.dto.v1_0.PortletDataHandlerSetting;
-import com.liferay.exportimport.rest.client.dto.v1_0.Type;
 import com.liferay.exportimport.rest.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -50,32 +46,27 @@ public class PortletDataHandlerControlSerDes {
 			return "null";
 		}
 
-		PortletDataHandlerControl.Type type =
-			portletDataHandlerControl.getType();
+		StringBuilder sb = new StringBuilder();
 
-		if (type != null) {
-			String typeString = type.toString();
+		sb.append("{");
 
-			if (typeString.equals("Boolean")) {
-				return PortletDataHandlerBooleanSerDes.toJSON(
-					(PortletDataHandlerBoolean)portletDataHandlerControl);
+		if (portletDataHandlerControl.getName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
 
-			if (typeString.equals("Choice")) {
-				return PortletDataHandlerChoiceSerDes.toJSON(
-					(PortletDataHandlerChoice)portletDataHandlerControl);
-			}
+			sb.append("\"name\": ");
 
-			if (typeString.equals("Setting")) {
-				return PortletDataHandlerSettingSerDes.toJSON(
-					(PortletDataHandlerSetting)portletDataHandlerControl);
-			}
+			sb.append("\"");
 
-			throw new IllegalArgumentException("Unknown type " + typeString);
+			sb.append(_escape(portletDataHandlerControl.getName()));
+
+			sb.append("\"");
 		}
-		else {
-			throw new IllegalArgumentException("Missing type parameter");
-		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> toMap(String json) {
@@ -95,37 +86,12 @@ public class PortletDataHandlerControlSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (portletDataHandlerControl.getDisabled() == null) {
-			map.put("disabled", null);
-		}
-		else {
-			map.put(
-				"disabled",
-				String.valueOf(portletDataHandlerControl.getDisabled()));
-		}
-
-		if (portletDataHandlerControl.getLabel() == null) {
-			map.put("label", null);
-		}
-		else {
-			map.put(
-				"label", String.valueOf(portletDataHandlerControl.getLabel()));
-		}
-
 		if (portletDataHandlerControl.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put(
 				"name", String.valueOf(portletDataHandlerControl.getName()));
-		}
-
-		if (portletDataHandlerControl.getType() == null) {
-			map.put("type", null);
-		}
-		else {
-			map.put(
-				"type", String.valueOf(portletDataHandlerControl.getType()));
 		}
 
 		return map;
@@ -136,7 +102,7 @@ public class PortletDataHandlerControlSerDes {
 
 		@Override
 		protected PortletDataHandlerControl createDTO() {
-			return null;
+			return new PortletDataHandlerControl();
 		}
 
 		@Override
@@ -146,16 +112,7 @@ public class PortletDataHandlerControlSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "disabled")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
+			if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
 
@@ -163,62 +120,14 @@ public class PortletDataHandlerControlSerDes {
 		}
 
 		@Override
-		public PortletDataHandlerControl parseToDTO(String json) {
-			Map<String, Object> jsonMap = parseToMap(json);
-
-			Object type = jsonMap.get("type");
-
-			if (type != null) {
-				String typeString = type.toString();
-
-				if (typeString.equals("Boolean")) {
-					return PortletDataHandlerBoolean.toDTO(json);
-				}
-
-				if (typeString.equals("Choice")) {
-					return PortletDataHandlerChoice.toDTO(json);
-				}
-
-				if (typeString.equals("Setting")) {
-					return PortletDataHandlerSetting.toDTO(json);
-				}
-
-				throw new IllegalArgumentException(
-					"Unknown type " + typeString);
-			}
-			else {
-				throw new IllegalArgumentException("Missing type parameter");
-			}
-		}
-
-		@Override
 		protected void setField(
 			PortletDataHandlerControl portletDataHandlerControl,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "disabled")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandlerControl.setDisabled(
-						(Boolean)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "label")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandlerControl.setLabel(
-						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					portletDataHandlerControl.setName(
 						(String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "type")) {
-				if (jsonParserFieldValue != null) {
-					portletDataHandlerControl.setType(
-						PortletDataHandlerControl.Type.create(
-							(String)jsonParserFieldValue));
 				}
 			}
 		}
@@ -302,4 +211,4 @@ public class PortletDataHandlerControlSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2001146587
+// LIFERAY-REST-BUILDER-HASH:147882684

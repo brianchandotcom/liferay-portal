@@ -44,13 +44,18 @@ export class FieldSelectModalPage {
 		expected: boolean;
 		fieldName: string;
 	}) {
-		const treeItem = this.fieldSelectModalContainer.locator(
-			`.treeview-link[data-id$="${dataId ?? fieldName}"]`
-		);
+		const treeItem = dataId
+			? this.fieldSelectModalContainer.locator(
+					`.treeview-link[data-id="${dataId}"]`
+				)
+			: this.fieldSelectModalContainer.getByRole('treeitem', {
+					exact: true,
+					name: fieldName,
+				});
 
-		await treeItem.filter({hasText: fieldName}).click();
+		await treeItem.click();
 
-		const checkbox = treeItem.locator('input[type="checkbox"]');
+		const checkbox = treeItem.getByRole('checkbox');
 
 		if (expected) {
 			await checkbox.check();

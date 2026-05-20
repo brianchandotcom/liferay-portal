@@ -3951,17 +3951,23 @@ public class ServiceBuilder {
 				"Util.java"));
 
 		if (entity.hasPersistence()) {
-			JavaClass javaClass = _getJavaClass(
+			JavaClass implJavaClass = _getJavaClass(
 				StringBundler.concat(
 					_outputPath, "/service/persistence/impl/", entity.getName(),
 					"PersistenceImpl.java"));
 
+			JavaClass interfaceJavaClass = _getJavaClass(
+				StringBundler.concat(
+					_serviceOutputPath, "/service/persistence/",
+					entity.getName(), "Persistence.java"));
+
 			Map<String, Object> context = _getContext();
 
 			context.put("entity", entity);
-			context.put("methods", _getMethods(javaClass));
+			context.put(
+				"methods", _getMethods(implJavaClass, interfaceJavaClass));
 
-			context = _putDeprecatedKeys(context, javaClass);
+			context = _putDeprecatedKeys(context, implJavaClass);
 
 			String content = _processTemplate(_tplPersistenceUtil, context);
 
@@ -6071,6 +6077,28 @@ public class ServiceBuilder {
 		for (JavaMethod javaMethod : javaClass.getMethods(false)) {
 			if (!cacheFieldMethods.contains(javaMethod.getName())) {
 				methods.add(javaMethod);
+			}
+		}
+
+		return methods;
+	}
+
+	private List<JavaMethod> _getMethods(
+		JavaClass implJavaClass, JavaClass interfaceJavaClass) {
+
+		List<JavaMethod> methods = _getMethods(implJavaClass);
+
+		Set<String> seenSignatures = new HashSet<>();
+
+		for (JavaMethod method : methods) {
+			seenSignatures.add(_getMethodSignature(method, true));
+		}
+
+		for (JavaMethod method : interfaceJavaClass.getMethods(true)) {
+			if (method.isDefault() &&
+				seenSignatures.add(_getMethodSignature(method, true))) {
+
+				methods.add(method);
 			}
 		}
 

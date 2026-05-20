@@ -118,15 +118,41 @@ function getOdataString({
 		return '';
 	}
 
-	const quotedSelectedItems = selectedItems.map((item) =>
-		entityFieldType === EEntityFieldType.STRING ||
-		(typeof item.value === 'string' &&
-			entityFieldType !== EEntityFieldType.INTEGER)
-			? `'${item.value}'`
-			: item.value
-	);
+	const quotedSelectedItems = selectedItems.map((item) => {
+		if (
+			entityFieldType === EEntityFieldType.INTEGER ||
+			entityFieldType === EEntityFieldType.COLLECTION_INTEGER
+		) {
+			return item.value;
+		}
 
-	if (entityFieldType === EEntityFieldType.COLLECTION) {
+		if (
+			entityFieldType === EEntityFieldType.STRING ||
+			entityFieldType === EEntityFieldType.COLLECTION_STRING
+		) {
+			return `'${item.value}'`;
+		}
+
+		if (entityFieldType === EEntityFieldType.BOOLEAN) {
+			let parsedValue =
+				typeof item.value === 'string'
+					? item.value
+					: String(item.value);
+
+			item.value === '0' && (parsedValue = `false`);
+			item.value === '1' && (parsedValue = `true`);
+
+			return parsedValue.toLocaleLowerCase();
+		}
+
+		return item.value;
+	});
+
+	if (
+		entityFieldType === EEntityFieldType.COLLECTION_STRING ||
+		entityFieldType === EEntityFieldType.COLLECTION_INTEGER ||
+		entityFieldType === EEntityFieldType.COLLECTION
+	) {
 		return `${id}/any(x:${quotedSelectedItems
 			.map((value) => `(x ${exclude ? 'ne' : 'eq'} ${value})`)
 			.join(exclude ? ' and ' : ' or ')})`;
@@ -218,10 +244,12 @@ function SelectionFilter({
 			fetchData(apiURL, searchOptions.query, searchOptions.currentPage)
 				.then((response) => {
 					const selectionItems = response.items.map((item: any) => {
+						const rawLabel = itemLabel
+							? getValueFromItem(item, itemLabel.split('.'))
+							: item.label;
+
 						return {
-							label: itemLabel
-								? getValueFromItem(item, itemLabel.split('.'))
-								: item.label,
+							label: rawLabel === null ? '' : String(rawLabel),
 							value: itemKey
 								? getValueFromItem(item, itemKey.split('.'))
 								: item.value,
@@ -389,7 +417,7 @@ function SelectionFilter({
 										}}
 										key={selectedItem.value}
 									>
-										{selectedItem.label}
+										{selectedItem.label.toString()}
 									</ClayLabel>
 								))}
 							</div>
@@ -426,7 +454,7 @@ function SelectionFilter({
 						className="inline-scroller mx-n2 px-2"
 						ref={setScrollingArea}
 					>
-						{items.map(({label, value}) => {
+						{items.map(({label, value}, index) => {
 							const newValue = {
 								label,
 								value,
@@ -440,8 +468,8 @@ function SelectionFilter({
 											(element) => element.value === value
 										)
 									)}
-									key={value}
-									label={label}
+									key={`${value}-${index}`}
+									label={label.toString()}
 									multiple={multiple}
 									onChange={() => {
 										setSelectedItems(

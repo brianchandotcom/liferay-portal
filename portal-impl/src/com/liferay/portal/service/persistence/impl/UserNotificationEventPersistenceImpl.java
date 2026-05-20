@@ -67,62 +67,8 @@ public class UserNotificationEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the user notification events where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63;.
@@ -215,69 +161,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where uuid = &#63; and companyId = &#63;.
@@ -375,62 +260,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByUserId;
-
-	/**
-	 * Returns all the user notification events where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63;.
@@ -523,62 +354,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByType;
-	private FinderPath _finderPathWithoutPaginationFindByType;
-	private FinderPath _finderPathCountByType;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByType;
-
-	/**
-	 * Returns all the user notification events where type = &#63;.
-	 *
-	 * @param type the type
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(String type) {
-		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(
-		String type, int start, int end) {
-
-		return findByType(type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByType(
-		String type, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByType(type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where type = &#63;.
@@ -671,69 +448,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT;
-	private FinderPath _finderPathCountByU_DT;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType) {
-
-		return findByU_DT(
-			userId, deliveryType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType, int start, int end) {
-
-		return findByU_DT(userId, deliveryType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT(
-		long userId, int deliveryType, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT(
-			userId, deliveryType, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63;.
@@ -834,69 +550,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D;
-	private FinderPath _finderPathWithoutPaginationFindByU_D;
-	private FinderPath _finderPathCountByU_D;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_D;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered) {
-
-		return findByU_D(
-			userId, delivered, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered, int start, int end) {
-
-		return findByU_D(userId, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D(
-		long userId, boolean delivered, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D(
-			userId, delivered, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63;.
@@ -994,68 +649,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, delivered});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_A;
-	private FinderPath _finderPathCountByU_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived) {
-
-		return findByU_A(
-			userId, archived, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived, int start, int end) {
-
-		return findByU_A(userId, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_A(
-		long userId, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_A(userId, archived, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and archived = &#63;.
@@ -1153,74 +748,8 @@ public class UserNotificationEventPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_D;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_D;
-	private FinderPath _finderPathCountByU_DT_D;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered) {
-
-		return findByU_DT_D(
-			userId, deliveryType, delivered, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered, int start, int end) {
-
-		return findByU_DT_D(userId, deliveryType, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D(
-		long userId, int deliveryType, boolean delivered, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D(
-			userId, deliveryType, delivered, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -1329,74 +858,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_A;
-	private FinderPath _finderPathCountByU_DT_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived) {
-
-		return findByU_DT_A(
-			userId, deliveryType, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived, int start, int end) {
-
-		return findByU_DT_A(userId, deliveryType, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_A(
-		long userId, int deliveryType, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_A(
-			userId, deliveryType, archived, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and archived = &#63;.
@@ -1505,76 +968,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D_AR;
-	private FinderPath _finderPathWithoutPaginationFindByU_D_AR;
-	private FinderPath _finderPathCountByU_D_AR;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_D_AR;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired, int start,
-		int end) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR(
-		long userId, boolean delivered, boolean actionRequired, int start,
-		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_AR(
-			userId, delivered, actionRequired, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -1686,73 +1081,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, actionRequired});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_D_A;
-	private FinderPath _finderPathCountByU_D_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_D_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived) {
-
-		return findByU_D_A(
-			userId, delivered, archived, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived, int start, int end) {
-
-		return findByU_D_A(userId, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_A(
-		long userId, boolean delivered, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_A(
-			userId, delivered, archived, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and archived = &#63;.
@@ -1861,75 +1191,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_AR_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_AR_A;
-	private FinderPath _finderPathCountByU_AR_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived) {
-
-		return findByU_AR_A(
-			userId, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived, int start,
-		int end) {
-
-		return findByU_AR_A(userId, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_AR_A(
-		long userId, boolean actionRequired, boolean archived, int start,
-		int end, OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_AR_A(
-			userId, actionRequired, archived, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -2040,8 +1303,6 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, actionRequired, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_T_GteT_D;
-	private FinderPath _finderPathWithPaginationCountByU_T_GteT_D;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_T_GteT_D;
 
@@ -2228,80 +1489,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, timestamp, delivered});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_T_DT_D;
-	private FinderPath _finderPathWithoutPaginationFindByU_T_DT_D;
-	private FinderPath _finderPathCountByU_T_DT_D;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_T_DT_D;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered,
-		int start, int end) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D(
-		long userId, String type, int deliveryType, boolean delivered,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_T_DT_D(
-			userId, type, deliveryType, delivered, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63;.
@@ -2419,81 +1608,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, deliveryType, delivered});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_D_AR;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_AR;
-	private FinderPath _finderPathCountByU_DT_D_AR;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D_AR;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, int start, int end) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_AR(
-			userId, deliveryType, delivered, actionRequired, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63;.
@@ -2617,80 +1733,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered, actionRequired});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_D_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_A;
-	private FinderPath _finderPathCountByU_DT_D_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived,
-		int start, int end) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_A(
-		long userId, int deliveryType, boolean delivered, boolean archived,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_A(
-			userId, deliveryType, delivered, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -2808,81 +1852,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, delivered, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_AR_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_AR_A;
-	private FinderPath _finderPathCountByU_DT_AR_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired,
-		boolean archived) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired, boolean archived,
-		int start, int end) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_AR_A(
-		long userId, int deliveryType, boolean actionRequired, boolean archived,
-		int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_AR_A(
-			userId, deliveryType, actionRequired, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -3003,81 +1974,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, deliveryType, actionRequired, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_D_AR_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_D_AR_A;
-	private FinderPath _finderPathCountByU_D_AR_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_D_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived, int start, int end) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_D_AR_A(
-		long userId, boolean delivered, boolean actionRequired,
-		boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_D_AR_A(
-			userId, delivered, actionRequired, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -3199,84 +2097,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, delivered, actionRequired, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_T_DT_D_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_T_DT_D_A;
-	private FinderPath _finderPathCountByU_T_DT_D_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_T_DT_D_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived, int start, int end) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param type the type
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_T_DT_D_A(
-		long userId, String type, int deliveryType, boolean delivered,
-		boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_T_DT_D_A(
-			userId, type, deliveryType, delivered, archived, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and type = &#63; and deliveryType = &#63; and delivered = &#63; and archived = &#63;.
@@ -3405,85 +2227,8 @@ public class UserNotificationEventPersistenceImpl
 			new Object[] {userId, type, deliveryType, delivered, archived});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByU_DT_D_AR_A;
-	private FinderPath _finderPathWithoutPaginationFindByU_DT_D_AR_A;
-	private FinderPath _finderPathCountByU_DT_D_AR_A;
 	private CollectionPersistenceFinder<UserNotificationEvent>
 		_collectionPersistenceFinderByU_DT_D_AR_A;
-
-	/**
-	 * Returns all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @return the matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @return the range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived, int start, int end) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived, start,
-			end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserNotificationEventModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param deliveryType the delivery type
-	 * @param delivered the delivered
-	 * @param actionRequired the action required
-	 * @param archived the archived
-	 * @param start the lower bound of the range of user notification events
-	 * @param end the upper bound of the range of user notification events (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching user notification events
-	 */
-	@Override
-	public List<UserNotificationEvent> findByU_DT_D_AR_A(
-		long userId, int deliveryType, boolean delivered,
-		boolean actionRequired, boolean archived, int start, int end,
-		OrderByComparator<UserNotificationEvent> orderByComparator) {
-
-		return findByU_DT_D_AR_A(
-			userId, deliveryType, delivered, actionRequired, archived, start,
-			end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the user notification events where userId = &#63; and deliveryType = &#63; and delivered = &#63; and actionRequired = &#63; and archived = &#63;.
@@ -3828,27 +2573,23 @@ public class UserNotificationEventPersistenceImpl
 	 * Initializes the user notification event persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3857,30 +2598,25 @@ public class UserNotificationEventPersistenceImpl
 				"userNotificationEvent.", "uuid", FinderColumn.Type.STRING, "=",
 				true, true, UserNotificationEvent::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -3893,28 +2629,25 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					UserNotificationEvent::getCompanyId));
 
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -3923,27 +2656,23 @@ public class UserNotificationEventPersistenceImpl
 					"userNotificationEvent.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, UserNotificationEvent::getUserId));
 
-		_finderPathWithPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"type_"}, true);
-
-		_finderPathWithoutPaginationFindByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
-			new String[] {String.class.getName()}, new String[] {"type_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByType = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByType,
-			_finderPathWithoutPaginationFindByType, _finderPathCountByType,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByType",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"type_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByType",
+				new String[] {String.class.getName()}, new String[] {"type_"},
+				0, 1, false, null),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3952,28 +2681,24 @@ public class UserNotificationEventPersistenceImpl
 				"userNotificationEvent.", "type", FinderColumn.Type.STRING, "=",
 				true, true, UserNotificationEvent::getType));
 
-		_finderPathWithPaginationFindByU_DT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "deliveryType"}, true);
-
-		_finderPathWithoutPaginationFindByU_DT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId", "deliveryType"}, true);
-
-		_finderPathCountByU_DT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"userId", "deliveryType"}, false);
-
 		_collectionPersistenceFinderByU_DT = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_DT,
-			_finderPathWithoutPaginationFindByU_DT, _finderPathCountByU_DT,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "deliveryType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId", "deliveryType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"userId", "deliveryType"}, false),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -3986,28 +2711,24 @@ public class UserNotificationEventPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				UserNotificationEvent::getDeliveryType));
 
-		_finderPathWithPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "delivered"}, true);
-
-		_finderPathWithoutPaginationFindByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"userId", "delivered"}, true);
-
-		_finderPathCountByU_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"userId", "delivered"}, false);
-
 		_collectionPersistenceFinderByU_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_D,
-			_finderPathWithoutPaginationFindByU_D, _finderPathCountByU_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "delivered"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"userId", "delivered"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"userId", "delivered"}, false),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4020,28 +2741,24 @@ public class UserNotificationEventPersistenceImpl
 				FinderColumn.Type.BOOLEAN, "=", true, true,
 				UserNotificationEvent::isDelivered));
 
-		_finderPathWithPaginationFindByU_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "archived"}, true);
-
-		_finderPathWithoutPaginationFindByU_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"userId", "archived"}, true);
-
-		_finderPathCountByU_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"userId", "archived"}, false);
-
 		_collectionPersistenceFinderByU_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_A,
-			_finderPathWithoutPaginationFindByU_A, _finderPathCountByU_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "archived"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"userId", "archived"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_A",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"userId", "archived"}, false),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4053,36 +2770,33 @@ public class UserNotificationEventPersistenceImpl
 				"userNotificationEvent.", "archived", FinderColumn.Type.BOOLEAN,
 				"=", true, true, UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered"}, true);
-
-		_finderPathWithoutPaginationFindByU_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered"}, true);
-
-		_finderPathCountByU_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered"}, false);
-
 		_collectionPersistenceFinderByU_DT_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_D,
-				_finderPathWithoutPaginationFindByU_DT_D,
-				_finderPathCountByU_DT_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "delivered"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "delivered"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "delivered"},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4099,36 +2813,32 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isDelivered));
 
-		_finderPathWithPaginationFindByU_DT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "archived"}, true);
-
-		_finderPathWithoutPaginationFindByU_DT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "archived"}, true);
-
-		_finderPathCountByU_DT_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "archived"}, false);
-
 		_collectionPersistenceFinderByU_DT_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_A,
-				_finderPathWithoutPaginationFindByU_DT_A,
-				_finderPathCountByU_DT_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "archived"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "archived"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "deliveryType", "archived"}, false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4145,36 +2855,35 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired"}, true);
-
-		_finderPathWithoutPaginationFindByU_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired"}, true);
-
-		_finderPathCountByU_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_AR",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired"}, false);
-
 		_collectionPersistenceFinderByU_D_AR =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_D_AR,
-				_finderPathWithoutPaginationFindByU_D_AR,
-				_finderPathCountByU_D_AR,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "delivered", "actionRequired"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "delivered", "actionRequired"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_AR",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "delivered", "actionRequired"},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4191,34 +2900,30 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isActionRequired));
 
-		_finderPathWithPaginationFindByU_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "delivered", "archived"}, true);
-
-		_finderPathWithoutPaginationFindByU_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "archived"}, true);
-
-		_finderPathCountByU_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "archived"}, false);
-
 		_collectionPersistenceFinderByU_D_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByU_D_A,
-			_finderPathWithoutPaginationFindByU_D_A, _finderPathCountByU_D_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"userId", "delivered", "archived"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"userId", "delivered", "archived"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_A",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Boolean.class.getName()
+				},
+				new String[] {"userId", "delivered", "archived"}, false),
 			_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 			_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 			UserNotificationEventModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -4234,36 +2939,35 @@ public class UserNotificationEventPersistenceImpl
 				"userNotificationEvent.", "archived", FinderColumn.Type.BOOLEAN,
 				"=", true, true, UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "actionRequired", "archived"}, true);
-
-		_finderPathWithoutPaginationFindByU_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "actionRequired", "archived"}, true);
-
-		_finderPathCountByU_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"userId", "actionRequired", "archived"}, false);
-
 		_collectionPersistenceFinderByU_AR_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_AR_A,
-				_finderPathWithoutPaginationFindByU_AR_A,
-				_finderPathCountByU_AR_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "actionRequired", "archived"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "actionRequired", "archived"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"userId", "actionRequired", "archived"},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4280,28 +2984,28 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_T_GteT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_GteT_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "type_", "timestamp", "delivered"}, true);
-
-		_finderPathWithPaginationCountByU_T_GteT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_T_GteT_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "type_", "timestamp", "delivered"}, false);
-
 		_collectionPersistenceFinderByU_T_GteT_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_T_GteT_D, null,
-				_finderPathWithPaginationCountByU_T_GteT_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_GteT_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId", "type_", "timestamp", "delivered"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByU_T_GteT_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"userId", "type_", "timestamp", "delivered"},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4321,40 +3025,42 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isDelivered));
 
-		_finderPathWithPaginationFindByU_T_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "type_", "deliveryType", "delivered"},
-			true);
-
-		_finderPathWithoutPaginationFindByU_T_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T_DT_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "type_", "deliveryType", "delivered"}, 0, 2,
-			true, null);
-
-		_finderPathCountByU_T_DT_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T_DT_D",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "type_", "deliveryType", "delivered"}, 0, 2,
-			false, null);
-
 		_collectionPersistenceFinderByU_T_DT_D =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_T_DT_D,
-				_finderPathWithoutPaginationFindByU_T_DT_D,
-				_finderPathCountByU_T_DT_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T_DT_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered"
+					},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_T_DT_D",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered"
+					},
+					0, 2, false, null),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4374,46 +3080,43 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isDelivered));
 
-		_finderPathWithPaginationFindByU_DT_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByU_DT_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_AR",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired"
-			},
-			true);
-
-		_finderPathCountByU_DT_D_AR = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_AR",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired"
-			},
-			false);
-
 		_collectionPersistenceFinderByU_DT_D_AR =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_D_AR,
-				_finderPathWithoutPaginationFindByU_DT_D_AR,
-				_finderPathCountByU_DT_D_AR,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByU_DT_D_AR",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_DT_D_AR",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired"
+					},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4434,40 +3137,42 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isActionRequired));
 
-		_finderPathWithPaginationFindByU_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered", "archived"},
-			true);
-
-		_finderPathWithoutPaginationFindByU_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered", "archived"},
-			true);
-
-		_finderPathCountByU_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "deliveryType", "delivered", "archived"},
-			false);
-
 		_collectionPersistenceFinderByU_DT_D_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_D_A,
-				_finderPathWithoutPaginationFindByU_DT_D_A,
-				_finderPathCountByU_DT_D_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_DT_D_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "archived"
+					},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4487,47 +3192,44 @@ public class UserNotificationEventPersistenceImpl
 					"userNotificationEvent.", "archived",
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
-
-		_finderPathWithPaginationFindByU_DT_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "actionRequired", "archived"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByU_DT_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "actionRequired", "archived"
-			},
-			true);
-
-		_finderPathCountByU_DT_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "actionRequired", "archived"
-			},
-			false);
 
 		_collectionPersistenceFinderByU_DT_AR_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_AR_A,
-				_finderPathWithoutPaginationFindByU_DT_AR_A,
-				_finderPathCountByU_DT_AR_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "actionRequired", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByU_DT_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "actionRequired", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_DT_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "actionRequired", "archived"
+					},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4548,40 +3250,42 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired", "archived"},
-			true);
-
-		_finderPathWithoutPaginationFindByU_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired", "archived"},
-			true);
-
-		_finderPathCountByU_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_D_AR_A",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"userId", "delivered", "actionRequired", "archived"},
-			false);
-
 		_collectionPersistenceFinderByU_D_AR_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_D_AR_A,
-				_finderPathWithoutPaginationFindByU_D_AR_A,
-				_finderPathCountByU_D_AR_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_D_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "delivered", "actionRequired", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_D_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "delivered", "actionRequired", "archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_D_AR_A",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "delivered", "actionRequired", "archived"
+					},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4602,48 +3306,49 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_T_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"userId", "type_", "deliveryType", "delivered", "archived"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByU_T_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_T_DT_D_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "type_", "deliveryType", "delivered", "archived"
-			},
-			0, 2, true, null);
-
-		_finderPathCountByU_T_DT_D_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_T_DT_D_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "type_", "deliveryType", "delivered", "archived"
-			},
-			0, 2, false, null);
-
 		_collectionPersistenceFinderByU_T_DT_D_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_T_DT_D_A,
-				_finderPathWithoutPaginationFindByU_T_DT_D_A,
-				_finderPathCountByU_T_DT_D_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_T_DT_D_A",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered",
+						"archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByU_T_DT_D_A",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered",
+						"archived"
+					},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_T_DT_D_A",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "type_", "deliveryType", "delivered",
+						"archived"
+					},
+					0, 2, false, null),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4667,51 +3372,49 @@ public class UserNotificationEventPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					UserNotificationEvent::isArchived));
 
-		_finderPathWithPaginationFindByU_DT_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired",
-				"archived"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByU_DT_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByU_DT_D_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired",
-				"archived"
-			},
-			true);
-
-		_finderPathCountByU_DT_D_AR_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_DT_D_AR_A",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Boolean.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {
-				"userId", "deliveryType", "delivered", "actionRequired",
-				"archived"
-			},
-			false);
-
 		_collectionPersistenceFinderByU_DT_D_AR_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByU_DT_D_AR_A,
-				_finderPathWithoutPaginationFindByU_DT_D_AR_A,
-				_finderPathCountByU_DT_D_AR_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByU_DT_D_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired",
+						"archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByU_DT_D_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired",
+						"archived"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByU_DT_D_AR_A",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Boolean.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {
+						"userId", "deliveryType", "delivered", "actionRequired",
+						"archived"
+					},
+					false),
 				_SQL_SELECT_USERNOTIFICATIONEVENT_WHERE,
 				_SQL_COUNT_USERNOTIFICATIONEVENT_WHERE,
 				UserNotificationEventModelImpl.ORDER_BY_JPQL,
@@ -4769,4 +3472,4 @@ public class UserNotificationEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1499586170
+// LIFERAY-SERVICE-BUILDER-HASH:1777434380

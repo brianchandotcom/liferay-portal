@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.DuplicateCountryExternalReferenceCodeException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.service.CountryLocalServiceUtil;
@@ -121,6 +122,8 @@ public class CountryPersistenceTest {
 
 		newCountry.setUuid(RandomTestUtil.randomString());
 
+		newCountry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newCountry.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		newCountry.setCompanyId(RandomTestUtil.nextLong());
@@ -159,6 +162,8 @@ public class CountryPersistenceTest {
 
 		newCountry.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newCountry.setStatus(RandomTestUtil.nextInt());
+
 		_countries.add(_persistence.update(newCountry));
 
 		Country existingCountry = _persistence.findByPrimaryKey(
@@ -170,6 +175,9 @@ public class CountryPersistenceTest {
 			existingCountry.getCtCollectionId(),
 			newCountry.getCtCollectionId());
 		Assert.assertEquals(existingCountry.getUuid(), newCountry.getUuid());
+		Assert.assertEquals(
+			existingCountry.getExternalReferenceCode(),
+			newCountry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCountry.getDefaultLanguageId(),
 			newCountry.getDefaultLanguageId());
@@ -211,6 +219,27 @@ public class CountryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingCountry.getLastPublishDate()),
 			Time.getShortTimestamp(newCountry.getLastPublishDate()));
+		Assert.assertEquals(
+			existingCountry.getStatus(), newCountry.getStatus());
+	}
+
+	@Test(expected = DuplicateCountryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		Country country = addCountry();
+
+		Country newCountry = addCountry();
+
+		newCountry.setCompanyId(country.getCompanyId());
+
+		newCountry = _persistence.update(newCountry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newCountry);
+
+		newCountry.setExternalReferenceCode(country.getExternalReferenceCode());
+
+		_persistence.update(newCountry);
 	}
 
 	@Test
@@ -344,6 +373,15 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_C() throws Exception {
+		_persistence.countByERC_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_C("null", 0L);
+
+		_persistence.countByERC_C((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		Country newCountry = addCountry();
 
@@ -369,13 +407,13 @@ public class CountryPersistenceTest {
 	protected OrderByComparator<Country> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"Country", "mvccVersion", true, "ctCollectionId", true, "uuid",
-			true, "defaultLanguageId", true, "countryId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "a2", true, "a3", true, "active", true,
-			"billingAllowed", true, "groupFilterEnabled", true, "idd", true,
-			"name", true, "number", true, "position", true, "shippingAllowed",
-			true, "subjectToVAT", true, "zipRequired", true, "lastPublishDate",
-			true);
+			true, "externalReferenceCode", true, "defaultLanguageId", true,
+			"countryId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "a2", true, "a3",
+			true, "active", true, "billingAllowed", true, "groupFilterEnabled",
+			true, "idd", true, "name", true, "number", true, "position", true,
+			"shippingAllowed", true, "subjectToVAT", true, "zipRequired", true,
+			"lastPublishDate", true, "status", true);
 	}
 
 	@Test
@@ -673,6 +711,17 @@ public class CountryPersistenceTest {
 			ReflectionTestUtil.invoke(
 				country, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "number_"));
+
+		Assert.assertEquals(
+			country.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(country.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				country, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
 	}
 
 	protected Country addCountry() throws Exception {
@@ -685,6 +734,8 @@ public class CountryPersistenceTest {
 		country.setCtCollectionId(RandomTestUtil.nextLong());
 
 		country.setUuid(RandomTestUtil.randomString());
+
+		country.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		country.setDefaultLanguageId(RandomTestUtil.randomString());
 
@@ -724,6 +775,8 @@ public class CountryPersistenceTest {
 
 		country.setLastPublishDate(RandomTestUtil.nextDate());
 
+		country.setStatus(RandomTestUtil.nextInt());
+
 		_countries.add(_persistence.update(country));
 
 		return country;
@@ -734,4 +787,4 @@ public class CountryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:434115926
+// LIFERAY-SERVICE-BUILDER-HASH:2019342251

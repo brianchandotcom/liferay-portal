@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
@@ -70,69 +69,14 @@ public class WhereClauseEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByName_Nickname;
-	private FinderPath _finderPathWithoutPaginationFindByName_Nickname;
-	private FinderPath _finderPathCountByName_Nickname;
 	private CollectionPersistenceFinder<WhereClauseEntry>
 		_collectionPersistenceFinderByName_Nickname;
 
 	/**
-	 * Returns all the where clause entries where name = &#63;.
-	 *
-	 * @param name the name
-	 * @return the matching where clause entries
-	 */
-	@Override
-	public List<WhereClauseEntry> findByName_Nickname(String name) {
-		return findByName_Nickname(
-			name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the where clause entries where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WhereClauseEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of where clause entries
-	 * @param end the upper bound of the range of where clause entries (not inclusive)
-	 * @return the range of matching where clause entries
-	 */
-	@Override
-	public List<WhereClauseEntry> findByName_Nickname(
-		String name, int start, int end) {
-
-		return findByName_Nickname(name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the where clause entries where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WhereClauseEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of where clause entries
-	 * @param end the upper bound of the range of where clause entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching where clause entries
-	 */
-	@Override
-	public List<WhereClauseEntry> findByName_Nickname(
-		String name, int start, int end,
-		OrderByComparator<WhereClauseEntry> orderByComparator) {
-
-		return findByName_Nickname(name, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the where clause entries where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WhereClauseEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WhereClauseEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param name the name
@@ -391,29 +335,28 @@ public class WhereClauseEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName_Nickname",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"name"}, true);
-
-		_finderPathWithoutPaginationFindByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			true, null);
-
-		_finderPathCountByName_Nickname = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName_Nickname",
-			new String[] {String.class.getName()}, new String[] {"name"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByName_Nickname =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByName_Nickname,
-				_finderPathWithoutPaginationFindByName_Nickname,
-				_finderPathCountByName_Nickname,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByName_Nickname",
+					new String[] {
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByName_Nickname",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByName_Nickname",
+					new String[] {String.class.getName()},
+					new String[] {"name"}, 0, 1, false, null),
 				_SQL_SELECT_WHERECLAUSEENTRY_WHERE,
 				_SQL_COUNT_WHERECLAUSEENTRY_WHERE,
 				WhereClauseEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -485,4 +428,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1051674584
+// LIFERAY-SERVICE-BUILDER-HASH:1285341243

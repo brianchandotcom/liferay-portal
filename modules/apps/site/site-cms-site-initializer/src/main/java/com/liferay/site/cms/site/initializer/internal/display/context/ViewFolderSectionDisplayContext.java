@@ -124,11 +124,13 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 					ActionUtil.getViewFolderURL(
 						objectEntryFolder.getObjectEntryFolderId(),
 						themeDisplay),
-					objectEntryFolder.getName());
+					objectEntryFolder.getLabel(themeDisplay.getLocale()));
 			}
 		}
 
-		addBreadcrumbItem(jsonArray, true, null, objectEntryFolder.getName());
+		addBreadcrumbItem(
+			jsonArray, true, null,
+			objectEntryFolder.getLabel(themeDisplay.getLocale()));
 
 		return HashMapBuilder.<String, Object>put(
 			"breadcrumbItems", jsonArray

@@ -5,13 +5,25 @@
 
 package com.liferay.commerce.internal.permission;
 
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.permission.CommerceShipmentPermission;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceShipmentItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -111,10 +123,65 @@ public class CommerceShipmentPermissionImpl
 			return true;
 		}
 
+		if (Objects.equals(actionId, ActionKeys.VIEW) &&
+			_containsCommerceOrderViewPermission(
+				commerceShipment.getCommerceShipmentId(), permissionChecker)) {
+
+			return true;
+		}
+
 		return permissionChecker.hasPermission(
 			null, CommerceShipment.class.getName(),
 			commerceShipment.getCommerceShipmentId(), actionId);
 	}
+
+	private boolean _containsCommerceOrderViewPermission(
+			long commerceShipmentId, PermissionChecker permissionChecker)
+		throws PortalException {
+
+		Set<Long> commerceOrderIds = new HashSet<>(
+			TransformUtil.transform(
+				_commerceShipmentItemLocalService.getCommerceShipmentItems(
+					commerceShipmentId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null),
+				commerceShipmentItem -> {
+					CommerceOrderItem commerceOrderItem =
+						_commerceOrderItemLocalService.fetchCommerceOrderItem(
+							commerceShipmentItem.getCommerceOrderItemId());
+
+					if (commerceOrderItem == null) {
+						return null;
+					}
+
+					return commerceOrderItem.getCommerceOrderId();
+				}));
+
+		if (commerceOrderIds.isEmpty()) {
+			return false;
+		}
+
+		for (long commerceOrderId : commerceOrderIds) {
+			if (!_commerceOrderModelResourcePermission.contains(
+					permissionChecker, commerceOrderId, ActionKeys.VIEW)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"
+	)
+	private ModelResourcePermission<CommerceOrder>
+		_commerceOrderModelResourcePermission;
+
+	@Reference
+	private CommerceShipmentItemLocalService _commerceShipmentItemLocalService;
 
 	@Reference
 	private CommerceShipmentLocalService _commerceShipmentLocalService;

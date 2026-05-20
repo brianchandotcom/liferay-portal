@@ -5,10 +5,13 @@
 
 import {
 	BLACKLISTED_FIELDS,
-	ISchemas,
+	getFilterableFields,
 	getValidFields,
 } from '../../src/main/resources/META-INF/resources/js/utils/getFields';
-import {IField} from '../../src/main/resources/META-INF/resources/js/utils/types';
+import {
+	IField,
+	ISchemas,
+} from '../../src/main/resources/META-INF/resources/js/utils/types';
 
 /*
  * A points to B using scalar field via $ref
@@ -292,5 +295,118 @@ describe('getValidFields', () => {
 				c_a.children && assertChildren(c_a.children[1], []);
 			}
 		}
+	});
+});
+
+describe('getFilterableFields', () => {
+	it('Function is defined', () => {
+		expect(getFilterableFields).toBeDefined();
+	});
+
+	it('Returns an empty array when the schema has no x-filterable property', () => {
+		expect(
+			getFilterableFields({
+				restSchema: 'Simple',
+				schemas: simpleSchema,
+			})
+		).toEqual([]);
+	});
+
+	it('Maps scalar filterable paths to fields with a matching entityFieldType', () => {
+		const filterableSchema = {
+			Filterable: {
+				'properties': {},
+				'type': 'object',
+				'x-filterable': {
+					code: {type: 'integer'},
+					label: {type: 'string'},
+				},
+			},
+		} as ISchemas;
+
+		expect(
+			getFilterableFields({
+				restSchema: 'Filterable',
+				schemas: filterableSchema,
+			})
+		).toEqual([
+			{
+				entityFieldType: 'integer',
+				label: 'code',
+				name: 'code',
+				type: 'integer',
+			},
+			{
+				entityFieldType: 'string',
+				label: 'label',
+				name: 'label',
+				type: 'string',
+			},
+		]);
+	});
+
+	it('Prefixes entityFieldType with "collection-" for array filterable paths', () => {
+		const filterableSchema = {
+			Filterable: {
+				'properties': {},
+				'type': 'object',
+				'x-filterable': {
+					old_codes: {
+						items: {type: 'integer'},
+						type: 'array',
+					},
+					tags: {
+						items: {type: 'string'},
+						type: 'array',
+					},
+				},
+			},
+		} as ISchemas;
+
+		expect(
+			getFilterableFields({
+				restSchema: 'Filterable',
+				schemas: filterableSchema,
+			})
+		).toEqual([
+			{
+				entityFieldType: 'collection-integer',
+				label: 'old_codes',
+				name: 'old_codes',
+				type: 'array',
+			},
+			{
+				entityFieldType: 'collection-string',
+				label: 'tags',
+				name: 'tags',
+				type: 'array',
+			},
+		]);
+	});
+
+	it('Sets entityFieldType to "string" for date_time filterable paths', () => {
+		const filterableSchema = {
+			Filterable: {
+				'properties': {},
+				'type': 'object',
+				'x-filterable': {
+					createdAt: {type: 'date_time'},
+				},
+			},
+		} as ISchemas;
+
+		expect(
+			getFilterableFields({
+				restSchema: 'Filterable',
+				schemas: filterableSchema,
+			})
+		).toEqual([
+			{
+				entityFieldType: 'string',
+				label: 'createdAt',
+				name: 'createdAt',
+				type: 'date_time',
+			},
+		]);
 	});
 });

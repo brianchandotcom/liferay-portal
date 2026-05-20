@@ -48,8 +48,9 @@ public interface RegionService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the region remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RegionServiceUtil} if injection and service tracking are not available.
 	 */
 	public Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteRegion(long regionId) throws PortalException;
@@ -59,6 +60,11 @@ public interface RegionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region fetchRegion(long countryId, String regionCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region fetchRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -72,6 +78,11 @@ public interface RegionService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region getRegion(long countryId, String regionCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -119,9 +130,9 @@ public interface RegionService extends BaseService {
 		throws PortalException;
 
 	public Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-920159411
+// LIFERAY-SERVICE-BUILDER-HASH:1388620326

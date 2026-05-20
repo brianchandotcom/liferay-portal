@@ -57,7 +57,8 @@ public class ViewVersionHistoryDisplayContext {
 			"/o", _objectDefinition.getRESTContextPath(), "/scopes/",
 			_objectEntry.getGroupId(), "/by-external-reference-code/",
 			_objectEntry.getExternalReferenceCode(),
-			"/versions?nestedFields=file.thumbnailURL");
+			"/versions?nestedFields=file.metadata,file.previewURL,",
+			"file.thumbnailURL");
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {

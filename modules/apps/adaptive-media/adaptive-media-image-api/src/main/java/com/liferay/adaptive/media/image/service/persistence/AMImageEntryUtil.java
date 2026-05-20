@@ -125,54 +125,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns all the am image entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the am image entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -259,17 +211,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the am image entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the am image entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -306,58 +247,6 @@ public class AMImageEntryUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the am image entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -441,55 +330,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns all the am image entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the am image entries where groupId = &#63;.
 	 *
 	 * <p>
@@ -559,55 +399,6 @@ public class AMImageEntryUtil {
 	 */
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
-	}
-
-	/**
-	 * Returns all the am image entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -681,58 +472,6 @@ public class AMImageEntryUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the am image entries where configurationUuid = &#63;.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByConfigurationUuid(
-		String configurationUuid) {
-
-		return getPersistence().findByConfigurationUuid(configurationUuid);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where configurationUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByConfigurationUuid(
-		String configurationUuid, int start, int end) {
-
-		return getPersistence().findByConfigurationUuid(
-			configurationUuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where configurationUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByConfigurationUuid(
-		String configurationUuid, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByConfigurationUuid(
-			configurationUuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -811,55 +550,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns all the am image entries where fileVersionId = &#63;.
-	 *
-	 * @param fileVersionId the file version ID
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByFileVersionId(long fileVersionId) {
-		return getPersistence().findByFileVersionId(fileVersionId);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByFileVersionId(
-		long fileVersionId, int start, int end) {
-
-		return getPersistence().findByFileVersionId(fileVersionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where fileVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fileVersionId the file version ID
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByFileVersionId(
-		long fileVersionId, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByFileVersionId(
-			fileVersionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the am image entries where fileVersionId = &#63;.
 	 *
 	 * <p>
@@ -931,61 +621,6 @@ public class AMImageEntryUtil {
 	 */
 	public static int countByFileVersionId(long fileVersionId) {
 		return getPersistence().countByFileVersionId(fileVersionId);
-	}
-
-	/**
-	 * Returns all the am image entries where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @return the matching am image entries
-	 */
-	public static List<AMImageEntry> findByC_C(
-		long companyId, String configurationUuid) {
-
-		return getPersistence().findByC_C(companyId, configurationUuid);
-	}
-
-	/**
-	 * Returns a range of all the am image entries where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @return the range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByC_C(
-		long companyId, String configurationUuid, int start, int end) {
-
-		return getPersistence().findByC_C(
-			companyId, configurationUuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the am image entries where companyId = &#63; and configurationUuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param configurationUuid the configuration uuid
-	 * @param start the lower bound of the range of am image entries
-	 * @param end the upper bound of the range of am image entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching am image entries
-	 */
-	public static List<AMImageEntry> findByC_C(
-		long companyId, String configurationUuid, int start, int end,
-		OrderByComparator<AMImageEntry> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			companyId, configurationUuid, start, end, orderByComparator);
 	}
 
 	/**
@@ -1086,19 +721,6 @@ public class AMImageEntryUtil {
 	}
 
 	/**
-	 * Returns the am image entry where configurationUuid = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param configurationUuid the configuration uuid
-	 * @param fileVersionId the file version ID
-	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
-	 */
-	public static AMImageEntry fetchByC_F(
-		String configurationUuid, long fileVersionId) {
-
-		return getPersistence().fetchByC_F(configurationUuid, fileVersionId);
-	}
-
-	/**
 	 * Returns the am image entry where configurationUuid = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param configurationUuid the configuration uuid
@@ -1191,6 +813,384 @@ public class AMImageEntryUtil {
 		return getPersistence().fetchByPrimaryKey(amImageEntryId);
 	}
 
+	/**
+	 * Returns the am image entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
+	 */
+	public static AMImageEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the am image entry where configurationUuid = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param configurationUuid the configuration uuid
+	 * @param fileVersionId the file version ID
+	 * @return the matching am image entry, or <code>null</code> if a matching am image entry could not be found
+	 */
+	public static AMImageEntry fetchByC_F(
+		String configurationUuid, long fileVersionId) {
+
+		return getPersistence().fetchByC_F(configurationUuid, fileVersionId);
+	}
+
+	/**
+	 * Returns all the am image entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where configurationUuid = &#63;.
+	 *
+	 * @param configurationUuid the configuration uuid
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByConfigurationUuid(
+		String configurationUuid) {
+
+		return getPersistence().findByConfigurationUuid(configurationUuid);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where configurationUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param configurationUuid the configuration uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByConfigurationUuid(
+		String configurationUuid, int start, int end) {
+
+		return getPersistence().findByConfigurationUuid(
+			configurationUuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where configurationUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param configurationUuid the configuration uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByConfigurationUuid(
+		String configurationUuid, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByConfigurationUuid(
+			configurationUuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where fileVersionId = &#63;.
+	 *
+	 * @param fileVersionId the file version ID
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByFileVersionId(long fileVersionId) {
+		return getPersistence().findByFileVersionId(fileVersionId);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where fileVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByFileVersionId(
+		long fileVersionId, int start, int end) {
+
+		return getPersistence().findByFileVersionId(fileVersionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where fileVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fileVersionId the file version ID
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByFileVersionId(
+		long fileVersionId, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByFileVersionId(
+			fileVersionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the am image entries where companyId = &#63; and configurationUuid = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param configurationUuid the configuration uuid
+	 * @return the matching am image entries
+	 */
+	public static List<AMImageEntry> findByC_C(
+		long companyId, String configurationUuid) {
+
+		return getPersistence().findByC_C(companyId, configurationUuid);
+	}
+
+	/**
+	 * Returns a range of all the am image entries where companyId = &#63; and configurationUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param configurationUuid the configuration uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @return the range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByC_C(
+		long companyId, String configurationUuid, int start, int end) {
+
+		return getPersistence().findByC_C(
+			companyId, configurationUuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the am image entries where companyId = &#63; and configurationUuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.adaptive.media.image.model.impl.AMImageEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param configurationUuid the configuration uuid
+	 * @param start the lower bound of the range of am image entries
+	 * @param end the upper bound of the range of am image entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching am image entries
+	 */
+	public static List<AMImageEntry> findByC_C(
+		long companyId, String configurationUuid, int start, int end,
+		OrderByComparator<AMImageEntry> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			companyId, configurationUuid, start, end, orderByComparator);
+	}
+
 	public static AMImageEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1202,4 +1202,4 @@ public class AMImageEntryUtil {
 	private static volatile AMImageEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-973583332
+// LIFERAY-SERVICE-BUILDER-HASH:985095500

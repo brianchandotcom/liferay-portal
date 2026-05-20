@@ -6,51 +6,49 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {
 	addBreakdownByAttribute,
 	viewBreakdownRechartsData,
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
-import {createSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
 
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
-const pageTitle = 'My Page';
-const siteName = 'My Site ' + randomString;
+const channelName = 'My Property ' + getRandomString();
 
 let channel;
 let project;
 
-test.beforeEach(async ({apiHelpers, page}) => {
-	await apiHelpers.headlessAdminSite.postSite({
-		name: siteName,
-	});
-
-	await createSitePage({
-		apiHelpers,
-		pageTitle,
-		siteName,
+test.beforeEach(async ({apiHelpers, page, site}) => {
+	await apiHelpers.headlessDelivery.createSitePage({
+		pageDefinition: getPageDefinition([
+			getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			}),
+		]),
+		siteId: site.id,
+		title: 'My Page',
 	});
 
 	const result = await syncAnalyticsCloud({
 		apiHelpers,
 		channelName,
 		page,
-		siteName,
+		siteName: site.name,
 	});
 
 	channel = result.channel;
@@ -202,7 +200,9 @@ test(
 		await test.step('Go to Distribution tab', async () => {
 			await page.getByRole('link', {name: 'Distribution'}).click();
 
-			expect(page.getByText('Distribution by attribute')).toBeVisible();
+			await expect(
+				page.getByText('Distribution by attribute')
+			).toBeVisible();
 		});
 
 		await test.step('Add a new breakdown', async () => {
@@ -212,7 +212,7 @@ test(
 		});
 
 		await test.step('Check if the correct results appear (email and maximum count)', async () => {
-			expect(
+			await expect(
 				page.getByText(`${individualName}@liferay.com - 100.0%`)
 			).toBeVisible();
 		});

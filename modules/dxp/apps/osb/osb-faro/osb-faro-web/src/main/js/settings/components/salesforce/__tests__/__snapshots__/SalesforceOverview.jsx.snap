@@ -371,14 +371,18 @@ exports[`SalesforceOverview should render 1`] = `
                 <div
                   class="mb-4"
                 >
-                  <span
-                    class="text-3 text-secondary font-weight-semi-bold"
+                  <div
+                    class="mb-4"
                   >
-                    CONNECTION STATUS
-                  </span>
-                  <hr
-                    class="my-2"
-                  />
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      CONNECTION STATUS
+                    </span>
+                    <hr
+                      class="my-2"
+                    />
+                  </div>
                   <div
                     class="alert alert-success"
                   >
@@ -421,14 +425,18 @@ exports[`SalesforceOverview should render 1`] = `
                 <div
                   class="mb-4"
                 >
-                  <span
-                    class="text-3 text-secondary font-weight-semi-bold"
+                  <div
+                    class="mb-4"
                   >
-                    DATA SOURCE DETAILS
-                  </span>
-                  <hr
-                    class="my-2"
-                  />
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      DATA SOURCE DETAILS
+                    </span>
+                    <hr
+                      class="my-2"
+                    />
+                  </div>
                   <div
                     class="input-group d-flex mt-3"
                   >
@@ -718,14 +726,18 @@ exports[`SalesforceOverview should render 1`] = `
                   >
                     Properties allow you to aggregate data on your users and DXP sites and channels. The data source data will be available in any property they are assigned to.
                   </p>
-                  <span
-                    class="text-3 text-secondary font-weight-semi-bold"
+                  <div
+                    class="mb-4"
                   >
-                    DATA AVAILABILITY
-                  </span>
-                  <hr
-                    class="my-2"
-                  />
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      DATA AVAILABILITY
+                    </span>
+                    <hr
+                      class="my-2"
+                    />
+                  </div>
                   <p
                     class="text-4 text-secondary"
                   >

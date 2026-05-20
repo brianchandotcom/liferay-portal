@@ -22,7 +22,7 @@ This is faster than `gradlew buildREST` — a single JVM scans `${basedir}/../mo
 
 ## Autocommit
 
-After the regen, check for drift with `git diff --quiet` over the regen output paths. When the check shows drift, stage all changes (`git add --all`) and invoke the `commit` skill with the hint `buildREST`. The commit skill produces `<TICKET> buildREST`.
+After the regen, check for drift with `git diff --quiet` over the regen output paths. When the check shows drift, stage all changes (`git add --all`) and create a commit titled `<TICKET> buildREST`.
 
 When the commit fails, record the failure and continue to the next validation.
 

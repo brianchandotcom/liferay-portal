@@ -33,49 +33,6 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 */
 
 	/**
-	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @return the matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(long commerceDiscountId);
-
-	/**
-	 * Returns a range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @return the range of matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(long commerceDiscountId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceDiscountId(
-			long commerceDiscountId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountCommerceAccountGroupRel> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
 	 *
 	 * <p>
@@ -138,50 +95,6 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	 * @return the number of matching commerce discount commerce account group rels
 	 */
 	public int countByCommerceDiscountId(long commerceDiscountId);
-
-	/**
-	 * Returns all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(long commerceAccountGroupId);
-
-	/**
-	 * Returns a range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @return the range of matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @param start the lower bound of the range of commerce discount commerce account group rels
-	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce discount commerce account group rels
-	 */
-	public java.util.List<CommerceDiscountCommerceAccountGroupRel>
-		findByCommerceAccountGroupId(
-			long commerceAccountGroupId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceDiscountCommerceAccountGroupRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
@@ -260,16 +173,6 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 		throws NoSuchDiscountCommerceAccountGroupRelException;
 
 	/**
-	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceDiscountId the commerce discount ID
-	 * @param commerceAccountGroupId the commerce account group ID
-	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
-	 */
-	public CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
-		long commerceDiscountId, long commerceAccountGroupId);
-
-	/**
 	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param commerceDiscountId the commerce discount ID
@@ -346,5 +249,134 @@ public interface CommerceDiscountCommerceAccountGroupRelPersistence
 	public CommerceDiscountCommerceAccountGroupRel fetchByPrimaryKey(
 		long commerceDiscountCommerceAccountGroupRelId);
 
+	/**
+	 * Returns the commerce discount commerce account group rel where commerceDiscountId = &#63; and commerceAccountGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @return the matching commerce discount commerce account group rel, or <code>null</code> if a matching commerce discount commerce account group rel could not be found
+	 */
+	public default CommerceDiscountCommerceAccountGroupRel fetchByCDI_CAGI(
+		long commerceDiscountId, long commerceAccountGroupId) {
+
+		return fetchByCDI_CAGI(
+			commerceDiscountId, commerceAccountGroupId, true);
+	}
+
+	/**
+	 * Returns all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @return the matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceDiscountId(long commerceDiscountId) {
+
+		return findByCommerceDiscountId(
+			commerceDiscountId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount commerce account group rels
+	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
+	 * @return the range of matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceDiscountId(long commerceDiscountId, int start, int end) {
+
+		return findByCommerceDiscountId(
+			commerceDiscountId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceDiscountId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceDiscountId the commerce discount ID
+	 * @param start the lower bound of the range of commerce discount commerce account group rels
+	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceDiscountId(
+			long commerceDiscountId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceDiscountCommerceAccountGroupRel> orderByComparator) {
+
+		return findByCommerceDiscountId(
+			commerceDiscountId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @return the matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(long commerceAccountGroupId) {
+
+		return findByCommerceAccountGroupId(
+			commerceAccountGroupId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @param start the lower bound of the range of commerce discount commerce account group rels
+	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
+	 * @return the range of matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(
+			long commerceAccountGroupId, int start, int end) {
+
+		return findByCommerceAccountGroupId(
+			commerceAccountGroupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce discount commerce account group rels where commerceAccountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.discount.model.impl.CommerceDiscountCommerceAccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAccountGroupId the commerce account group ID
+	 * @param start the lower bound of the range of commerce discount commerce account group rels
+	 * @param end the upper bound of the range of commerce discount commerce account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce discount commerce account group rels
+	 */
+	public default java.util.List<CommerceDiscountCommerceAccountGroupRel>
+		findByCommerceAccountGroupId(
+			long commerceAccountGroupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceDiscountCommerceAccountGroupRel> orderByComparator) {
+
+		return findByCommerceAccountGroupId(
+			commerceAccountGroupId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2051776030
+// LIFERAY-SERVICE-BUILDER-HASH:1399600446

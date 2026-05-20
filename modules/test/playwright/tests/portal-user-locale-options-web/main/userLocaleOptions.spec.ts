@@ -24,11 +24,9 @@ test('LPD-46913 Language should change properly for admins even if the site does
 	siteSettingsLocalizationPage,
 	userLocaleOptionsPage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	await siteSettingsLocalizationPage.goto(site.friendlyUrlPath);
 

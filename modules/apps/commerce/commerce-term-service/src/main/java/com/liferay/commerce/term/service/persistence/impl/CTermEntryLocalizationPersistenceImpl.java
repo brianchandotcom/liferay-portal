@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -81,72 +80,14 @@ public class CTermEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByCommerceTermEntryId;
-	private FinderPath _finderPathCountByCommerceTermEntryId;
 	private CollectionPersistenceFinder<CTermEntryLocalization>
 		_collectionPersistenceFinderByCommerceTermEntryId;
 
 	/**
-	 * Returns all the c term entry localizations where commerceTermEntryId = &#63;.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @return the matching c term entry localizations
-	 */
-	@Override
-	public List<CTermEntryLocalization> findByCommerceTermEntryId(
-		long commerceTermEntryId) {
-
-		return findByCommerceTermEntryId(
-			commerceTermEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the c term entry localizations where commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTermEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of c term entry localizations
-	 * @param end the upper bound of the range of c term entry localizations (not inclusive)
-	 * @return the range of matching c term entry localizations
-	 */
-	@Override
-	public List<CTermEntryLocalization> findByCommerceTermEntryId(
-		long commerceTermEntryId, int start, int end) {
-
-		return findByCommerceTermEntryId(commerceTermEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the c term entry localizations where commerceTermEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTermEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param start the lower bound of the range of c term entry localizations
-	 * @param end the upper bound of the range of c term entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching c term entry localizations
-	 */
-	@Override
-	public List<CTermEntryLocalization> findByCommerceTermEntryId(
-		long commerceTermEntryId, int start, int end,
-		OrderByComparator<CTermEntryLocalization> orderByComparator) {
-
-		return findByCommerceTermEntryId(
-			commerceTermEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the c term entry localizations where commerceTermEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTermEntryLocalizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTermEntryLocalizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param commerceTermEntryId the commerce term entry ID
@@ -235,7 +176,6 @@ public class CTermEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {commerceTermEntryId});
 	}
 
-	private FinderPath _finderPathFetchByCommerceTermEntryId_LanguageId;
 	private UniquePersistenceFinder<CTermEntryLocalization>
 		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId;
 
@@ -271,21 +211,6 @@ public class CTermEntryLocalizationPersistenceImpl
 		}
 
 		return cTermEntryLocalization;
-	}
-
-	/**
-	 * Returns the c term entry localization where commerceTermEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param commerceTermEntryId the commerce term entry ID
-	 * @param languageId the language ID
-	 * @return the matching c term entry localization, or <code>null</code> if a matching c term entry localization could not be found
-	 */
-	@Override
-	public CTermEntryLocalization fetchByCommerceTermEntryId_LanguageId(
-		long commerceTermEntryId, String languageId) {
-
-		return fetchByCommerceTermEntryId_LanguageId(
-			commerceTermEntryId, languageId, true);
 	}
 
 	/**
@@ -562,29 +487,28 @@ public class CTermEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCommerceTermEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, true);
-
-		_finderPathCountByCommerceTermEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceTermEntryId", new String[] {Long.class.getName()},
-			new String[] {"commerceTermEntryId"}, false);
-
 		_collectionPersistenceFinderByCommerceTermEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCommerceTermEntryId,
-				_finderPathWithoutPaginationFindByCommerceTermEntryId,
-				_finderPathCountByCommerceTermEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCommerceTermEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"commerceTermEntryId"}, false),
 				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_CTERMENTRYLOCALIZATION_WHERE,
 				CTermEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -594,18 +518,16 @@ public class CTermEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTermEntryLocalization::getCommerceTermEntryId));
 
-		_finderPathFetchByCommerceTermEntryId_LanguageId =
-			createUniqueFinderPath(
-				FINDER_CLASS_NAME_ENTITY,
-				"fetchByCommerceTermEntryId_LanguageId",
-				new String[] {Long.class.getName(), String.class.getName()},
-				new String[] {"commerceTermEntryId", "languageId"}, 0, 2, false,
-				CTermEntryLocalization::getCommerceTermEntryId,
-				convertNullFunction(CTermEntryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByCommerceTermEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCommerceTermEntryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByCommerceTermEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"commerceTermEntryId", "languageId"}, 0, 2,
+					false, CTermEntryLocalization::getCommerceTermEntryId,
+					convertNullFunction(CTermEntryLocalization::getLanguageId)),
 				_SQL_SELECT_CTERMENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"cTermEntryLocalization.", "commerceTermEntryId",
@@ -682,4 +604,4 @@ public class CTermEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1839639878
+// LIFERAY-SERVICE-BUILDER-HASH:114471369

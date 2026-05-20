@@ -5,7 +5,7 @@ import React from 'react';
 import TitleEditor from 'shared/components/TitleEditor';
 import {Routes, toRoute} from 'shared/util/router';
 import {useChannelContext} from 'shared/context/channel';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 
 interface IEventAnalysisToolbarProps extends React.HTMLAttributes<HTMLElement> {
@@ -15,7 +15,7 @@ interface IEventAnalysisToolbarProps extends React.HTMLAttributes<HTMLElement> {
 const EventAnalysisToolbar: React.FC<IEventAnalysisToolbarProps> = ({
 	isValid
 }) => {
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const {channelId, groupId} = useParams();
 

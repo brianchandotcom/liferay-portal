@@ -5,26 +5,39 @@
 
 package com.liferay.notifications.web.internal.portlet;
 
+import com.liferay.bulk.selection.BulkSelection;
+import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDelivery;
+import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.UserNotificationDeliveryImpl;
+import com.liferay.portal.model.impl.UserNotificationEventImpl;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
+
+import jakarta.portlet.ActionRequest;
+import jakarta.portlet.ActionResponse;
+import jakarta.portlet.PortletRequest;
 
 import java.util.List;
 
@@ -35,11 +48,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
  * @author Marco Galluzzi
+ * @author Alessio Antonio Rendina
  */
 public class NotificationsPortletTest {
 
@@ -50,15 +65,19 @@ public class NotificationsPortletTest {
 
 	@Before
 	public void setUp() {
-		_notificationsPortlet = new NotificationsPortlet();
-
 		ReflectionTestUtil.setFieldValue(
 			_notificationsPortlet, "_language", Mockito.mock(Language.class));
 		ReflectionTestUtil.setFieldValue(
+			_notificationsPortlet, "_portal", _portal);
+		ReflectionTestUtil.setFieldValue(
 			_notificationsPortlet, "_userNotificationDeliveryLocalService",
 			_userNotificationDeliveryLocalService);
-
-		_user = new UserImpl();
+		ReflectionTestUtil.setFieldValue(
+			_notificationsPortlet, "_userNotificationEventBulkSelectionFactory",
+			_userNotificationEventBulkSelectionFactory);
+		ReflectionTestUtil.setFieldValue(
+			_notificationsPortlet, "_userNotificationEventLocalService",
+			_userNotificationEventLocalService);
 
 		_user.setUserId(RandomTestUtil.randomLong());
 
@@ -69,7 +88,203 @@ public class NotificationsPortletTest {
 
 	@After
 	public void tearDown() {
+		_serviceContextFactoryMockedStatic.close();
 		_userNotificationManagerUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testMarkNotificationAsReadWithNullLink() throws Exception {
+		Mockito.when(
+			_userNotificationEventBulkSelectionFactory.create(
+				ArgumentMatchers.anyMap())
+		).thenReturn(
+			Mockito.mock(BulkSelection.class)
+		);
+
+		UserNotificationFeedEntry userNotificationFeedEntry = Mockito.mock(
+			UserNotificationFeedEntry.class);
+
+		Mockito.when(
+			userNotificationFeedEntry.getLink()
+		).thenReturn(
+			null
+		);
+
+		UserNotificationEvent userNotificationEvent =
+			_addUserNotificationEvent();
+
+		_userNotificationManagerUtilMockedStatic.when(
+			() -> UserNotificationManagerUtil.interpret(
+				ArgumentMatchers.anyString(),
+				ArgumentMatchers.eq(userNotificationEvent),
+				ArgumentMatchers.any())
+		).thenReturn(
+			userNotificationFeedEntry
+		);
+
+		_serviceContextFactoryMockedStatic.when(
+			() -> ServiceContextFactory.getInstance(
+				ArgumentMatchers.any(PortletRequest.class))
+		).thenReturn(
+			new ServiceContext()
+		);
+
+		String escapedRedirect = "https://localhost/escaped";
+		String redirect = "https://localhost/redirect";
+
+		Mockito.when(
+			_portal.escapeRedirect(redirect)
+		).thenReturn(
+			escapedRedirect
+		);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"userNotificationEventId",
+			String.valueOf(userNotificationEvent.getUserNotificationEventId()));
+		mockLiferayPortletActionRequest.setParameter("redirect", redirect);
+
+		ActionResponse actionResponse = Mockito.mock(ActionResponse.class);
+
+		ReflectionTestUtil.invoke(
+			_notificationsPortlet, "_markAsRead",
+			new Class<?>[] {
+				String.class, ActionRequest.class, ActionResponse.class,
+				ThemeDisplay.class
+			},
+			"markNotificationAsRead", mockLiferayPortletActionRequest,
+			actionResponse,
+			mockLiferayPortletActionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
+
+		Mockito.verify(
+			actionResponse
+		).sendRedirect(
+			escapedRedirect
+		);
+
+		Mockito.verifyNoMoreInteractions(actionResponse);
+	}
+
+	@Test
+	public void testMarkNotificationAsReadWithNullUserNotificationEvent()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEventBulkSelectionFactory.create(
+				ArgumentMatchers.anyMap())
+		).thenReturn(
+			Mockito.mock(BulkSelection.class)
+		);
+
+		String escapedRedirect = "https://localhost/escaped";
+		String redirect = "https://localhost/redirect";
+
+		Mockito.when(
+			_portal.escapeRedirect(redirect)
+		).thenReturn(
+			escapedRedirect
+		);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"userNotificationEventId",
+			String.valueOf(RandomTestUtil.randomLong()));
+		mockLiferayPortletActionRequest.setParameter("redirect", redirect);
+
+		ActionResponse actionResponse = Mockito.mock(ActionResponse.class);
+
+		ReflectionTestUtil.invoke(
+			_notificationsPortlet, "_markAsRead",
+			new Class<?>[] {
+				String.class, ActionRequest.class, ActionResponse.class,
+				ThemeDisplay.class
+			},
+			"markNotificationAsRead", mockLiferayPortletActionRequest,
+			actionResponse,
+			mockLiferayPortletActionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
+
+		Mockito.verify(
+			actionResponse
+		).sendRedirect(
+			escapedRedirect
+		);
+
+		Mockito.verifyNoMoreInteractions(actionResponse);
+	}
+
+	@Test
+	public void testMarkNotificationAsReadWithNullUserNotificationFeedEntry()
+		throws Exception {
+
+		Mockito.when(
+			_userNotificationEventBulkSelectionFactory.create(
+				ArgumentMatchers.anyMap())
+		).thenReturn(
+			Mockito.mock(BulkSelection.class)
+		);
+
+		UserNotificationEvent userNotificationEvent =
+			_addUserNotificationEvent();
+
+		_userNotificationManagerUtilMockedStatic.when(
+			() -> UserNotificationManagerUtil.interpret(
+				ArgumentMatchers.anyString(),
+				ArgumentMatchers.eq(userNotificationEvent),
+				ArgumentMatchers.any())
+		).thenReturn(
+			null
+		);
+
+		_serviceContextFactoryMockedStatic.when(
+			() -> ServiceContextFactory.getInstance(
+				ArgumentMatchers.any(PortletRequest.class))
+		).thenReturn(
+			new ServiceContext()
+		);
+
+		String escapedRedirect = "https://localhost/escaped";
+		String redirect = "https://localhost/redirect";
+
+		Mockito.when(
+			_portal.escapeRedirect(redirect)
+		).thenReturn(
+			escapedRedirect
+		);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"userNotificationEventId",
+			String.valueOf(userNotificationEvent.getUserNotificationEventId()));
+		mockLiferayPortletActionRequest.setParameter("redirect", redirect);
+
+		ActionResponse actionResponse = Mockito.mock(ActionResponse.class);
+
+		ReflectionTestUtil.invoke(
+			_notificationsPortlet, "_markAsRead",
+			new Class<?>[] {
+				String.class, ActionRequest.class, ActionResponse.class,
+				ThemeDisplay.class
+			},
+			"markNotificationAsRead", mockLiferayPortletActionRequest,
+			actionResponse,
+			mockLiferayPortletActionRequest.getAttribute(
+				WebKeys.THEME_DISPLAY));
+
+		Mockito.verify(
+			actionResponse
+		).sendRedirect(
+			escapedRedirect
+		);
+
+		Mockito.verifyNoMoreInteractions(actionResponse);
 	}
 
 	@Test
@@ -130,6 +345,24 @@ public class NotificationsPortletTest {
 		return userNotificationDelivery;
 	}
 
+	private UserNotificationEvent _addUserNotificationEvent() {
+		UserNotificationEvent userNotificationEvent =
+			new UserNotificationEventImpl();
+
+		userNotificationEvent.setUserNotificationEventId(
+			RandomTestUtil.randomLong());
+		userNotificationEvent.setUserId(_user.getUserId());
+
+		Mockito.when(
+			_userNotificationEventLocalService.fetchUserNotificationEvent(
+				userNotificationEvent.getUserNotificationEventId())
+		).thenReturn(
+			userNotificationEvent
+		);
+
+		return userNotificationEvent;
+	}
+
 	private String _getExpectedWarningMessage(
 		UserNotificationDelivery userNotificationDelivery) {
 
@@ -171,14 +404,24 @@ public class NotificationsPortletTest {
 		);
 	}
 
-	private static final MockedStatic<UserNotificationManagerUtil>
-		_userNotificationManagerUtilMockedStatic = Mockito.mockStatic(
-			UserNotificationManagerUtil.class);
-
-	private NotificationsPortlet _notificationsPortlet;
-	private User _user;
+	private final NotificationsPortlet _notificationsPortlet =
+		new NotificationsPortlet();
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private final MockedStatic<ServiceContextFactory>
+		_serviceContextFactoryMockedStatic = Mockito.mockStatic(
+			ServiceContextFactory.class);
+	private final User _user = new UserImpl();
 	private final UserNotificationDeliveryLocalService
 		_userNotificationDeliveryLocalService = Mockito.mock(
 			UserNotificationDeliveryLocalService.class);
+	private final BulkSelectionFactory<UserNotificationEvent>
+		_userNotificationEventBulkSelectionFactory = Mockito.mock(
+			BulkSelectionFactory.class);
+	private final UserNotificationEventLocalService
+		_userNotificationEventLocalService = Mockito.mock(
+			UserNotificationEventLocalService.class);
+	private final MockedStatic<UserNotificationManagerUtil>
+		_userNotificationManagerUtilMockedStatic = Mockito.mockStatic(
+			UserNotificationManagerUtil.class);
 
 }

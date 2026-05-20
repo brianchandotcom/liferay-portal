@@ -1,4 +1,6 @@
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
+import ClayLink from '@clayui/link';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {FC, useState} from 'react';
@@ -7,7 +9,6 @@ import TextTruncate from './TextTruncate';
 import {Colors} from 'shared/util/colors-size';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {Link} from 'react-router-dom';
-import {UserSessionAttributes} from 'shared/util/activities';
 
 const DEVICE_ICONS_MAP = {
 	any: {
@@ -28,12 +29,25 @@ const DEVICE_ICONS_MAP = {
 	}
 };
 
-const ATTRIBUTE_CLASSES_MAP = {
-	title: 'attribute-important'
-};
+const LIFERAY_DXP_APPLICATION_IDS = new Set([
+	'Blog',
+	'Comment',
+	'Custom',
+	'Document',
+	'Form',
+	'Layout',
+	'ObjectEntry',
+	'Page',
+	'Ratings',
+	'WebContent'
+]);
+
+const normalizeApplicationId = (applicationId: string): string =>
+	LIFERAY_DXP_APPLICATION_IDS.has(applicationId) ? 'DXP' : applicationId;
 
 type ITEM_SHAPE = {
-	attributes: UserSessionAttributes;
+	applicationId: string;
+	attributes: Record<string, unknown>;
 	browserName: string;
 	description: string;
 	device: string;
@@ -45,6 +59,7 @@ type ITEM_SHAPE = {
 	title: string;
 	totalEvents: number;
 	url: string;
+	userAgent: string;
 };
 
 type ITimelineItemProps = {
@@ -60,6 +75,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 	className,
 	initialExpanded = false,
 	item: {
+		applicationId,
 		attributes,
 		browserName,
 		description,
@@ -71,7 +87,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 		time,
 		title,
 		totalEvents,
-		url
+		url,
+		userAgent
 	},
 	timeZoneId
 }) => {
@@ -93,6 +110,7 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 							nestedItems={nestedItems}
 							time={time}
 							timeZoneId={timeZoneId}
+							userAgent={userAgent}
 						/>
 					)}
 
@@ -118,9 +136,11 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 
 						{expandable && !!nestedItems && (
 							<TimelinePanelBodyContentDetails
+								applicationId={applicationId}
 								browserName={browserName}
 								device={device}
 								itemCount={nestedItems.length}
+								userAgent={userAgent}
 							/>
 						)}
 
@@ -132,8 +152,8 @@ const TimelineItem: FC<ITimelineItemProps> = ({
 						)}
 					</TimelinePanelBody>
 
-					{expanded && (
-						<TimelineItemAttributes attributes={attributes} />
+					{expanded && !!attributes && (
+						<TimelineItemAttributes payload={attributes} />
 					)}
 				</div>
 
@@ -182,25 +202,46 @@ const TimelinePanelBody: FC<{
 };
 
 const TimelinePanelBodyContentDetails: FC<{
+	applicationId: string;
 	browserName: string;
 	device: string;
 	itemCount: number;
-}> = ({browserName, device, itemCount}) => {
+	userAgent: string;
+}> = ({applicationId, browserName, device, itemCount, userAgent}) => {
 	const {title: deviceIconTitle, ...otherIconAttributes} =
 		(DEVICE_ICONS_MAP as any)[device.toLowerCase()] || DEVICE_ICONS_MAP.any;
 
 	return (
 		<div className='timeline-panel-body-content-details'>
 			<div className='icon-group'>
-				<ClayIcon
-					className='event-icon icon-root'
-					symbol='ac_event_icon'
-				/>
+				{applicationId && (
+					<div className='align-items-center d-flex'>
+						<ClayLabel
+							className='label-lg mr-3'
+							displayType={
+								userAgent?.toLowerCase().includes('webhook')
+									? 'success'
+									: 'info'
+							}
+						>
+							<strong>
+								{normalizeApplicationId(
+									applicationId
+								).toUpperCase()}
+							</strong>
+						</ClayLabel>
+
+						<ClayIcon
+							className='event-icon icon-root'
+							symbol='ac_event_icon'
+						/>
+					</div>
+				)}
 
 				<span className='item-count'>{itemCount}</span>
 
 				<span
-					className='device-icon'
+					className='device-icon mr-2'
 					data-tooltip
 					data-tooltip-align='bottom'
 					title={`${deviceIconTitle}\n${browserName}`}
@@ -223,7 +264,7 @@ const TimelinePanelBodyContentText: FC<{
 	title: string;
 	totalEvents: number;
 	url: string;
-}> = ({className, description, header, subtitle, title, totalEvents, url}) => {
+}> = ({className, header, subtitle, title, totalEvents, url}) => {
 	const eventTitle =
 		title && !header ? <TextTruncate title={`${title}`} /> : title;
 
@@ -250,9 +291,16 @@ const TimelinePanelBodyContentText: FC<{
 				</>
 			)}
 
-			{description && <span className='description'>{description}</span>}
-
-			{subtitle && <TextTruncate className='subtitle' title={subtitle} />}
+			{subtitle && (
+				<ClayLink
+					className='d-inline-block subtitle'
+					href={subtitle}
+					rel='noopener noreferrer'
+					target='_blank'
+				>
+					<TextTruncate title={subtitle} />
+				</ClayLink>
+			)}
 		</div>
 	);
 };
@@ -262,7 +310,10 @@ const TimelineElement: FC<{
 	nestedItems: ITEM_SHAPE[];
 	time: string;
 	timeZoneId: string;
-}> = ({endTime, nestedItems, time, timeZoneId}) => {
+	userAgent: string;
+}> = ({endTime, nestedItems, time, timeZoneId, userAgent}) => {
+	const isSession = !!nestedItems;
+
 	const timeRange = !nestedItems ? (
 		formatDateToTimeZone(time, 'h:mma', timeZoneId)
 	) : (
@@ -281,7 +332,16 @@ const TimelineElement: FC<{
 		<>
 			<div className='timeline-line' />
 
-			<div className='timeline-increment'>
+			<div
+				className={getCN('timeline-increment', {
+					'timeline-increment-dxp':
+						isSession &&
+						!userAgent?.toLowerCase().includes('webhook'),
+					'timeline-increment-webhook':
+						isSession &&
+						userAgent?.toLowerCase().includes('webhook')
+				})}
+			>
 				<Sticker circle display='point' size='lg' />
 
 				{time && (
@@ -294,29 +354,13 @@ const TimelineElement: FC<{
 	);
 };
 
-const TimelineItemAttributes: FC<{attributes: UserSessionAttributes}> = ({
-	attributes: {header: attributesTitle, ...otherValues} = {}
+const TimelineItemAttributes: FC<{payload: Record<string, unknown>}> = ({
+	payload
 }) => (
 	<div className='timeline-panel-body-content'>
-		<div className='timeline-panel-body-content-text'>
-			<div className='attributes-title'>
-				<span className='label-root'>{attributesTitle}</span>
-			</div>
-
-			{Object.entries(otherValues).map(([key, value]) => (
-				<div className='attributes-item' key={key}>
-					<span className='attribute-key'>{`${key}`}</span>
-
-					<TextTruncate
-						className={getCN(
-							'attribute-value',
-							(ATTRIBUTE_CLASSES_MAP as any)[key]
-						)}
-						title={value || '""'}
-					/>
-				</div>
-			))}
-		</div>
+		<code className='attributes-payload'>
+			{JSON.stringify(payload, null, 2)}
+		</code>
 	</div>
 );
 

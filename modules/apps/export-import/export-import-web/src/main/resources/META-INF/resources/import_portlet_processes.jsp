@@ -96,12 +96,25 @@ else {
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 					</liferay-portlet:actionURL>
 
+					<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="viewReportEntriesURL">
+						<portlet:param name="mvcRenderCommandName" value="/export_import/view_import_report_entries" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+					</liferay-portlet:renderURL>
+
 					<liferay-ui:icon-menu
 						direction="left-side"
 						icon="<%= StringPool.BLANK %>"
 						markupView="lexicon"
 						showWhenSingleIcon="<%= true %>"
 					>
+						<c:if test="<%= (backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_COMPLETED_WITH_ERRORS) || (backgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
+							<li>
+								<a class="dropdown-item" href="<%= viewReportEntriesURL %>">
+									<liferay-ui:message key="view-report-entries" />
+								</a>
+							</li>
+						</c:if>
+
 						<liferay-ui:icon-delete
 							label="<%= true %>"
 							message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'

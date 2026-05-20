@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editCustomElementPageTest} from './fixtures/editCustomElementPageTest';
@@ -155,7 +156,7 @@ test(
 		await editCustomElementPage.nameInput.fill(NAME);
 		await editCustomElementPage.htmlElementNameInput.fill('test-element');
 		await editCustomElementPage.javaScriptURLInput.fill(
-			'http://localhost:8080'
+			liferayConfig.environment.baseUrl
 		);
 
 		await editCustomElementPage.publish(WaitAction.SUCCESS);

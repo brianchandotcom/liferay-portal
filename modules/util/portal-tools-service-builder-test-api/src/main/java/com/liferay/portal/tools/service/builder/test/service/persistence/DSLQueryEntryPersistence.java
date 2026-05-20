@@ -71,4 +71,4 @@ public interface DSLQueryEntryPersistence
 	public DSLQueryEntry fetchByPrimaryKey(long dslQueryEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1146360244
+// LIFERAY-SERVICE-BUILDER-HASH:2140456628

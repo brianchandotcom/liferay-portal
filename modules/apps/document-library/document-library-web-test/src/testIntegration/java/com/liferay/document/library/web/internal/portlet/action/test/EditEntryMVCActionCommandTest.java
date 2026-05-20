@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -284,10 +285,14 @@ public class EditEntryMVCActionCommandTest {
 			themeDisplay.setPermissionChecker(
 				PermissionThreadLocal.getPermissionChecker());
 			themeDisplay.setRequest(new MockHttpServletRequest());
-			themeDisplay.setScopeGroupId(_group.getGroupId());
+
+			long groupId = _group.getGroupId();
+
+			themeDisplay.setScopeGroupId(groupId);
+
 			themeDisplay.setServerName("localhost");
-			themeDisplay.setServerPort(8080);
-			themeDisplay.setSiteGroupId(_group.getGroupId());
+			themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
+			themeDisplay.setSiteGroupId(groupId);
 			themeDisplay.setUser(TestPropsValues.getUser());
 
 			return themeDisplay;

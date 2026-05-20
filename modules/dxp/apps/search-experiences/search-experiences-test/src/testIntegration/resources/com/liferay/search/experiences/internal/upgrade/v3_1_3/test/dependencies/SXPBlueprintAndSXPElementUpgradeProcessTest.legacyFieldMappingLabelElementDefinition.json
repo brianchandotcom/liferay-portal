@@ -1,0 +1,18 @@
+{
+	"uiConfiguration": {
+		"fieldSets": [
+			{
+				"fields": [
+					{
+						"fieldMappings": [
+							{
+								"field": "title",
+								"label": "LegacyFieldMappingLabelSentinel"
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+}

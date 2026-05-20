@@ -33,56 +33,6 @@ public interface SamlPeerBindingPersistence
 	 */
 
 	/**
-	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @return the matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_D_SNIV(
-		long companyId, boolean deleted, String samlNameIdValue);
-
-	/**
-	 * Returns a range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param start the lower bound of the range of saml peer bindings
-	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
-	 * @return the range of matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_D_SNIV(
-		long companyId, boolean deleted, String samlNameIdValue, int start,
-		int end);
-
-	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param deleted the deleted
-	 * @param samlNameIdValue the saml name ID value
-	 * @param start the lower bound of the range of saml peer bindings
-	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_D_SNIV(
-		long companyId, boolean deleted, String samlNameIdValue, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
 	 *
 	 * <p>
@@ -155,59 +105,6 @@ public interface SamlPeerBindingPersistence
 	 */
 	public int countByC_D_SNIV(
 		long companyId, boolean deleted, String samlNameIdValue);
-
-	/**
-	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @return the matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted);
-
-	/**
-	 * Returns a range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of saml peer bindings
-	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
-	 * @return the range of matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted,
-		int start, int end);
-
-	/**
-	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param samlPeerEntityId the saml peer entity ID
-	 * @param deleted the deleted
-	 * @param start the lower bound of the range of saml peer bindings
-	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching saml peer bindings
-	 */
-	public java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
-		long companyId, long userId, String samlPeerEntityId, boolean deleted,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
@@ -327,5 +224,139 @@ public interface SamlPeerBindingPersistence
 	 */
 	public SamlPeerBinding fetchByPrimaryKey(long samlPeerBindingId);
 
+	/**
+	 * Returns all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param deleted the deleted
+	 * @param samlNameIdValue the saml name ID value
+	 * @return the matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue) {
+
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param deleted the deleted
+	 * @param samlNameIdValue the saml name ID value
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @return the range of matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue, int start,
+		int end) {
+
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param deleted the deleted
+	 * @param samlNameIdValue the saml name ID value
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_D_SNIV(
+		long companyId, boolean deleted, String samlNameIdValue, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
+			orderByComparator) {
+
+		return findByC_D_SNIV(
+			companyId, deleted, samlNameIdValue, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param deleted the deleted
+	 * @return the matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
+		long companyId, long userId, String samlPeerEntityId, boolean deleted) {
+
+		return findByC_U_SPEI_D(
+			companyId, userId, samlPeerEntityId, deleted,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param deleted the deleted
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @return the range of matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
+		long companyId, long userId, String samlPeerEntityId, boolean deleted,
+		int start, int end) {
+
+		return findByC_U_SPEI_D(
+			companyId, userId, samlPeerEntityId, deleted, start, end, null,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.saml.persistence.model.impl.SamlPeerBindingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param samlPeerEntityId the saml peer entity ID
+	 * @param deleted the deleted
+	 * @param start the lower bound of the range of saml peer bindings
+	 * @param end the upper bound of the range of saml peer bindings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saml peer bindings
+	 */
+	public default java.util.List<SamlPeerBinding> findByC_U_SPEI_D(
+		long companyId, long userId, String samlPeerEntityId, boolean deleted,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SamlPeerBinding>
+			orderByComparator) {
+
+		return findByC_U_SPEI_D(
+			companyId, userId, samlPeerEntityId, deleted, start, end,
+			orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-558749640
+// LIFERAY-SERVICE-BUILDER-HASH:883562724

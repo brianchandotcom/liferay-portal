@@ -125,52 +125,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns all the kb folders where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching kb folders
-	 */
-	public static List<KBFolder> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the kb folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders
-	 */
-	public static List<KBFolder> findByUuid(String uuid, int start, int end) {
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb folders where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb folders
-	 */
-	public static List<KBFolder> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb folders where uuid = &#63;.
 	 *
 	 * <p>
@@ -254,17 +208,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	public static KBFolder fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -300,58 +243,6 @@ public class KBFolderUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the kb folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching kb folders
-	 */
-	public static List<KBFolder> findByUuid_C(String uuid, long companyId) {
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the kb folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders
-	 */
-	public static List<KBFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb folders where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb folders
-	 */
-	public static List<KBFolder> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -433,55 +324,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns all the kb folders where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching kb folders
-	 */
-	public static List<KBFolder> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the kb folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders
-	 */
-	public static List<KBFolder> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb folders where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb folders
-	 */
-	public static List<KBFolder> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb folders where companyId = &#63;.
 	 *
 	 * <p>
@@ -553,61 +395,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @return the matching kb folders
-	 */
-	public static List<KBFolder> findByG_P(
-		long groupId, long parentKBFolderId) {
-
-		return getPersistence().findByG_P(groupId, parentKBFolderId);
-	}
-
-	/**
-	 * Returns a range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders
-	 */
-	public static List<KBFolder> findByG_P(
-		long groupId, long parentKBFolderId, int start, int end) {
-
-		return getPersistence().findByG_P(
-			groupId, parentKBFolderId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb folders
-	 */
-	public static List<KBFolder> findByG_P(
-		long groupId, long parentKBFolderId, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		return getPersistence().findByG_P(
-			groupId, parentKBFolderId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
 	 *
 	 * <p>
@@ -663,39 +450,6 @@ public class KBFolderUtil {
 
 		return getPersistence().fetchByG_P_First(
 			groupId, parentKBFolderId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @return the matching kb folders that the user has permission to view
-	 */
-	public static List<KBFolder> filterFindByG_P(
-		long groupId, long parentKBFolderId) {
-
-		return getPersistence().filterFindByG_P(groupId, parentKBFolderId);
-	}
-
-	/**
-	 * Returns a range of all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders that the user has permission to view
-	 */
-	public static List<KBFolder> filterFindByG_P(
-		long groupId, long parentKBFolderId, int start, int end) {
-
-		return getPersistence().filterFindByG_P(
-			groupId, parentKBFolderId, start, end);
 	}
 
 	/**
@@ -769,20 +523,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param name the name
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	public static KBFolder fetchByG_P_N(
-		long groupId, long parentKBFolderId, String name) {
-
-		return getPersistence().fetchByG_P_N(groupId, parentKBFolderId, name);
-	}
-
-	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -846,21 +586,6 @@ public class KBFolderUtil {
 	}
 
 	/**
-	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param urlTitle the url title
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	public static KBFolder fetchByG_P_UT(
-		long groupId, long parentKBFolderId, String urlTitle) {
-
-		return getPersistence().fetchByG_P_UT(
-			groupId, parentKBFolderId, urlTitle);
-	}
-
-	/**
 	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -906,64 +631,6 @@ public class KBFolderUtil {
 
 		return getPersistence().countByG_P_UT(
 			groupId, parentKBFolderId, urlTitle);
-	}
-
-	/**
-	 * Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @return the matching kb folders
-	 */
-	public static List<KBFolder> findByG_P_S(
-		long groupId, long parentKBFolderId, int status) {
-
-		return getPersistence().findByG_P_S(groupId, parentKBFolderId, status);
-	}
-
-	/**
-	 * Returns a range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders
-	 */
-	public static List<KBFolder> findByG_P_S(
-		long groupId, long parentKBFolderId, int status, int start, int end) {
-
-		return getPersistence().findByG_P_S(
-			groupId, parentKBFolderId, status, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb folders
-	 */
-	public static List<KBFolder> findByG_P_S(
-		long groupId, long parentKBFolderId, int status, int start, int end,
-		OrderByComparator<KBFolder> orderByComparator) {
-
-		return getPersistence().findByG_P_S(
-			groupId, parentKBFolderId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1025,42 +692,6 @@ public class KBFolderUtil {
 
 		return getPersistence().fetchByG_P_S_First(
 			groupId, parentKBFolderId, status, orderByComparator);
-	}
-
-	/**
-	 * Returns all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @return the matching kb folders that the user has permission to view
-	 */
-	public static List<KBFolder> filterFindByG_P_S(
-		long groupId, long parentKBFolderId, int status) {
-
-		return getPersistence().filterFindByG_P_S(
-			groupId, parentKBFolderId, status);
-	}
-
-	/**
-	 * Returns a range of all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentKBFolderId the parent kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb folders
-	 * @param end the upper bound of the range of kb folders (not inclusive)
-	 * @return the range of matching kb folders that the user has permission to view
-	 */
-	public static List<KBFolder> filterFindByG_P_S(
-		long groupId, long parentKBFolderId, int status, int start, int end) {
-
-		return getPersistence().filterFindByG_P_S(
-			groupId, parentKBFolderId, status, start, end);
 	}
 
 	/**
@@ -1141,19 +772,6 @@ public class KBFolderUtil {
 		throws com.liferay.knowledge.base.exception.NoSuchFolderException {
 
 		return getPersistence().findByERC_G(externalReferenceCode, groupId);
-	}
-
-	/**
-	 * Returns the kb folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
-	 */
-	public static KBFolder fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
 	}
 
 	/**
@@ -1246,6 +864,388 @@ public class KBFolderUtil {
 		return getPersistence().fetchByPrimaryKey(kbFolderId);
 	}
 
+	/**
+	 * Returns the kb folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public static KBFolder fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param name the name
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public static KBFolder fetchByG_P_N(
+		long groupId, long parentKBFolderId, String name) {
+
+		return getPersistence().fetchByG_P_N(groupId, parentKBFolderId, name);
+	}
+
+	/**
+	 * Returns the kb folder where groupId = &#63; and parentKBFolderId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param urlTitle the url title
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public static KBFolder fetchByG_P_UT(
+		long groupId, long parentKBFolderId, String urlTitle) {
+
+		return getPersistence().fetchByG_P_UT(
+			groupId, parentKBFolderId, urlTitle);
+	}
+
+	/**
+	 * Returns the kb folder where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
+	 */
+	public static KBFolder fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return getPersistence().fetchByERC_G(externalReferenceCode, groupId);
+	}
+
+	/**
+	 * Returns all the kb folders where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching kb folders
+	 */
+	public static List<KBFolder> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the kb folders where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders
+	 */
+	public static List<KBFolder> findByUuid(String uuid, int start, int end) {
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb folders where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb folders
+	 */
+	public static List<KBFolder> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<KBFolder> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching kb folders
+	 */
+	public static List<KBFolder> findByUuid_C(String uuid, long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the kb folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders
+	 */
+	public static List<KBFolder> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb folders where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb folders
+	 */
+	public static List<KBFolder> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<KBFolder> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb folders where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching kb folders
+	 */
+	public static List<KBFolder> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the kb folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders
+	 */
+	public static List<KBFolder> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb folders where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb folders
+	 */
+	public static List<KBFolder> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<KBFolder> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @return the matching kb folders
+	 */
+	public static List<KBFolder> findByG_P(
+		long groupId, long parentKBFolderId) {
+
+		return getPersistence().findByG_P(groupId, parentKBFolderId);
+	}
+
+	/**
+	 * Returns a range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders
+	 */
+	public static List<KBFolder> findByG_P(
+		long groupId, long parentKBFolderId, int start, int end) {
+
+		return getPersistence().findByG_P(
+			groupId, parentKBFolderId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb folders
+	 */
+	public static List<KBFolder> findByG_P(
+		long groupId, long parentKBFolderId, int start, int end,
+		OrderByComparator<KBFolder> orderByComparator) {
+
+		return getPersistence().findByG_P(
+			groupId, parentKBFolderId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @return the matching kb folders that the user has permission to view
+	 */
+	public static List<KBFolder> filterFindByG_P(
+		long groupId, long parentKBFolderId) {
+
+		return getPersistence().filterFindByG_P(groupId, parentKBFolderId);
+	}
+
+	/**
+	 * Returns a range of all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders that the user has permission to view
+	 */
+	public static List<KBFolder> filterFindByG_P(
+		long groupId, long parentKBFolderId, int start, int end) {
+
+		return getPersistence().filterFindByG_P(
+			groupId, parentKBFolderId, start, end);
+	}
+
+	/**
+	 * Returns all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param status the status
+	 * @return the matching kb folders
+	 */
+	public static List<KBFolder> findByG_P_S(
+		long groupId, long parentKBFolderId, int status) {
+
+		return getPersistence().findByG_P_S(groupId, parentKBFolderId, status);
+	}
+
+	/**
+	 * Returns a range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders
+	 */
+	public static List<KBFolder> findByG_P_S(
+		long groupId, long parentKBFolderId, int status, int start, int end) {
+
+		return getPersistence().findByG_P_S(
+			groupId, parentKBFolderId, status, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the kb folders where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kb folders
+	 */
+	public static List<KBFolder> findByG_P_S(
+		long groupId, long parentKBFolderId, int status, int start, int end,
+		OrderByComparator<KBFolder> orderByComparator) {
+
+		return getPersistence().findByG_P_S(
+			groupId, parentKBFolderId, status, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param status the status
+	 * @return the matching kb folders that the user has permission to view
+	 */
+	public static List<KBFolder> filterFindByG_P_S(
+		long groupId, long parentKBFolderId, int status) {
+
+		return getPersistence().filterFindByG_P_S(
+			groupId, parentKBFolderId, status);
+	}
+
+	/**
+	 * Returns a range of all the kb folders that the user has permission to view where groupId = &#63; and parentKBFolderId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.knowledge.base.model.impl.KBFolderModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param parentKBFolderId the parent kb folder ID
+	 * @param status the status
+	 * @param start the lower bound of the range of kb folders
+	 * @param end the upper bound of the range of kb folders (not inclusive)
+	 * @return the range of matching kb folders that the user has permission to view
+	 */
+	public static List<KBFolder> filterFindByG_P_S(
+		long groupId, long parentKBFolderId, int status, int start, int end) {
+
+		return getPersistence().filterFindByG_P_S(
+			groupId, parentKBFolderId, status, start, end);
+	}
+
 	public static KBFolderPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1257,4 +1257,4 @@ public class KBFolderUtil {
 	private static volatile KBFolderPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-673034453
+// LIFERAY-SERVICE-BUILDER-HASH:-886249659

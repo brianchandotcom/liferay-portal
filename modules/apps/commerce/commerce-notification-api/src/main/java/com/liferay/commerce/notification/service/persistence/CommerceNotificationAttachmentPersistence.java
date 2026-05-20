@@ -35,48 +35,6 @@ public interface CommerceNotificationAttachmentPersistence
 	 */
 
 	/**
-	 * Returns all the commerce notification attachments where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid(
-		String uuid);
-
-	/**
-	 * Returns a range of all the commerce notification attachments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @return the range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationAttachment> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63;.
 	 *
 	 * <p>
@@ -150,16 +108,6 @@ public interface CommerceNotificationAttachmentPersistence
 		throws NoSuchNotificationAttachmentException;
 
 	/**
-	 * Returns the commerce notification attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce notification attachment, or <code>null</code> if a matching commerce notification attachment could not be found
-	 */
-	public CommerceNotificationAttachment fetchByUUID_G(
-		String uuid, long groupId);
-
-	/**
 	 * Returns the commerce notification attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -189,51 +137,6 @@ public interface CommerceNotificationAttachmentPersistence
 	 * @return the number of matching commerce notification attachments
 	 */
 	public int countByUUID_G(String uuid, long groupId);
-
-	/**
-	 * Returns all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @return the range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommerceNotificationAttachment> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
@@ -300,51 +203,6 @@ public interface CommerceNotificationAttachmentPersistence
 	 * @return the number of matching commerce notification attachments
 	 */
 	public int countByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @return the matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment>
-		findByCommerceNotificationQueueEntryId(
-			long commerceNotificationQueueEntryId);
-
-	/**
-	 * Returns a range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @return the range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment>
-		findByCommerceNotificationQueueEntryId(
-			long commerceNotificationQueueEntryId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
-	 * @param start the lower bound of the range of commerce notification attachments
-	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce notification attachments
-	 */
-	public java.util.List<CommerceNotificationAttachment>
-		findByCommerceNotificationQueueEntryId(
-			long commerceNotificationQueueEntryId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CommerceNotificationAttachment> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
@@ -455,5 +313,189 @@ public interface CommerceNotificationAttachmentPersistence
 	public CommerceNotificationAttachment fetchByPrimaryKey(
 		long commerceNotificationAttachmentId);
 
+	/**
+	 * Returns the commerce notification attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce notification attachment, or <code>null</code> if a matching commerce notification attachment could not be found
+	 */
+	public default CommerceNotificationAttachment fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns all the commerce notification attachments where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid(
+		String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @return the range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceNotificationAttachment> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @return the range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommerceNotificationAttachment> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
+	 *
+	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
+	 * @return the matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment>
+		findByCommerceNotificationQueueEntryId(
+			long commerceNotificationQueueEntryId) {
+
+		return findByCommerceNotificationQueueEntryId(
+			commerceNotificationQueueEntryId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @return the range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment>
+		findByCommerceNotificationQueueEntryId(
+			long commerceNotificationQueueEntryId, int start, int end) {
+
+		return findByCommerceNotificationQueueEntryId(
+			commerceNotificationQueueEntryId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.notification.model.impl.CommerceNotificationAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceNotificationQueueEntryId the commerce notification queue entry ID
+	 * @param start the lower bound of the range of commerce notification attachments
+	 * @param end the upper bound of the range of commerce notification attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce notification attachments
+	 */
+	public default java.util.List<CommerceNotificationAttachment>
+		findByCommerceNotificationQueueEntryId(
+			long commerceNotificationQueueEntryId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CommerceNotificationAttachment> orderByComparator) {
+
+		return findByCommerceNotificationQueueEntryId(
+			commerceNotificationQueueEntryId, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:42217778
+// LIFERAY-SERVICE-BUILDER-HASH:1446298865

@@ -90,7 +90,7 @@ describe('transformFDSBulkActions', () => {
 	});
 
 	describe('isVisible (allItemsSelectedActive=true)', () => {
-		it('shows non-download actions even when no items are passed', () => {
+		it('shows actions other than download and duplicate even when no items are passed', () => {
 			expect(isVisibleFor('delete')({allItemsSelectedActive: true})).toBe(
 				true
 			);
@@ -99,6 +99,12 @@ describe('transformFDSBulkActions', () => {
 		it('hides download to prevent downloading the entire data set', () => {
 			expect(
 				isVisibleFor('download')({allItemsSelectedActive: true})
+			).toBe(false);
+		});
+
+		it('hides duplicate to prevent duplicating the entire data set', () => {
+			expect(
+				isVisibleFor('duplicate')({allItemsSelectedActive: true})
 			).toBe(false);
 		});
 	});

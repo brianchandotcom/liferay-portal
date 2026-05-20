@@ -35,10 +35,8 @@ const AccountProfileRoutes = () => {
 
 	const {channelId, groupId, id} = useParams();
 
-	const {data} = useRequest({
-		dataSourceFn: API.accounts.fetch as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+	const {data, loading} = useRequest({
+		dataSourceFn: API.accounts.fetch,
 		variables: {accountId: id!, channelId: channelId!, groupId: groupId!}
 	});
 
@@ -50,6 +48,7 @@ const AccountProfileRoutes = () => {
 			documentTitle={`${accountName} - ${Liferay.Language.get(
 				'account'
 			)}`}
+			fluid
 		>
 			<BasePage.Header
 				breadcrumbs={[
@@ -80,7 +79,7 @@ const AccountProfileRoutes = () => {
 				<Suspense fallback={<Loading />}>
 					<Switch>
 						<BundleRouter
-							componentProps={{account: data}}
+							componentProps={{account: data, loading}}
 							data={Profile}
 							exact
 							path={Routes.CONTACTS_ACCOUNT_PROFILE}

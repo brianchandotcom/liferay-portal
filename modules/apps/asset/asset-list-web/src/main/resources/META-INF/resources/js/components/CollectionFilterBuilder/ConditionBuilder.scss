@@ -1,0 +1,39 @@
+.condition-builder {
+	&__row.layout__row-builder-item {
+		border-left: 4px solid #2e5aac;
+	}
+
+	&__select {
+		min-width: 160px;
+	}
+
+	&__value-input .form-control-sm {
+		min-width: 160px;
+	}
+
+	&__asset-selector {
+		.form-control,
+		.form-control-tag-group {
+			border-radius: 0.5rem;
+			font-size: 0.875rem;
+			height: auto;
+			line-height: 1.5;
+			min-height: 2rem;
+			min-width: 160px;
+			padding: 0 0.25rem;
+
+			.form-control-inset {
+				margin: 3px 0 2px 8px;
+			}
+
+			.label {
+				margin: 3px 4px 3px 0;
+			}
+		}
+
+		.btn {
+			font-size: 0.875rem;
+			padding: 0.1875rem 0.75rem;
+		}
+	}
+}

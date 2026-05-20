@@ -83,71 +83,8 @@ public class OAuth2ScopeGrantPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath
-		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId;
-	private FinderPath _finderPathCountByOAuth2ApplicationScopeAliasesId;
 	private CollectionPersistenceFinder<OAuth2ScopeGrant>
 		_collectionPersistenceFinderByOAuth2ApplicationScopeAliasesId;
-
-	/**
-	 * Returns all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @return the matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>.
-	 * </p>
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @return the range of matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId, int start, int end) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>OAuth2ScopeGrantModelImpl</code>.
-	 * </p>
-	 *
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param start the lower bound of the range of o auth2 scope grants
-	 * @param end the upper bound of the range of o auth2 scope grants (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching o auth2 scope grants
-	 */
-	@Override
-	public List<OAuth2ScopeGrant> findByOAuth2ApplicationScopeAliasesId(
-		long oAuth2ApplicationScopeAliasesId, int start, int end,
-		OrderByComparator<OAuth2ScopeGrant> orderByComparator) {
-
-		return findByOAuth2ApplicationScopeAliasesId(
-			oAuth2ApplicationScopeAliasesId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the o auth2 scope grants where oAuth2ApplicationScopeAliasesId = &#63;.
@@ -249,7 +186,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 			count(finderCache, new Object[] {oAuth2ApplicationScopeAliasesId});
 	}
 
-	private FinderPath _finderPathFetchByC_O_A_B_S;
 	private UniquePersistenceFinder<OAuth2ScopeGrant>
 		_uniquePersistenceFinderByC_O_A_B_S;
 
@@ -291,26 +227,6 @@ public class OAuth2ScopeGrantPersistenceImpl
 		}
 
 		return oAuth2ScopeGrant;
-	}
-
-	/**
-	 * Returns the o auth2 scope grant where companyId = &#63; and oAuth2ApplicationScopeAliasesId = &#63; and applicationName = &#63; and bundleSymbolicName = &#63; and scope = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param oAuth2ApplicationScopeAliasesId the o auth2 application scope aliases ID
-	 * @param applicationName the application name
-	 * @param bundleSymbolicName the bundle symbolic name
-	 * @param scope the scope
-	 * @return the matching o auth2 scope grant, or <code>null</code> if a matching o auth2 scope grant could not be found
-	 */
-	@Override
-	public OAuth2ScopeGrant fetchByC_O_A_B_S(
-		long companyId, long oAuth2ApplicationScopeAliasesId,
-		String applicationName, String bundleSymbolicName, String scope) {
-
-		return fetchByC_O_A_B_S(
-			companyId, oAuth2ApplicationScopeAliasesId, applicationName,
-			bundleSymbolicName, scope, true);
 	}
 
 	/**
@@ -938,35 +854,28 @@ public class OAuth2ScopeGrantPersistenceImpl
 				"OA2Auths_OA2ScopeGrants", "companyId", "oAuth2ScopeGrantId",
 				"oAuth2AuthorizationId", this, OAuth2Authorization.class);
 
-		_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByOAuth2ApplicationScopeAliasesId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"oA2AScopeAliasesId"}, true);
-
-		_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByOAuth2ApplicationScopeAliasesId",
-				new String[] {Long.class.getName()},
-				new String[] {"oA2AScopeAliasesId"}, true);
-
-		_finderPathCountByOAuth2ApplicationScopeAliasesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByOAuth2ApplicationScopeAliasesId",
-			new String[] {Long.class.getName()},
-			new String[] {"oA2AScopeAliasesId"}, false);
-
 		_collectionPersistenceFinderByOAuth2ApplicationScopeAliasesId =
 			new CollectionPersistenceFinder<>(
 				this,
-				_finderPathWithPaginationFindByOAuth2ApplicationScopeAliasesId,
-				_finderPathWithoutPaginationFindByOAuth2ApplicationScopeAliasesId,
-				_finderPathCountByOAuth2ApplicationScopeAliasesId,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByOAuth2ApplicationScopeAliasesId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"oA2AScopeAliasesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOAuth2ApplicationScopeAliasesId",
+					new String[] {Long.class.getName()},
+					new String[] {"oA2AScopeAliasesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOAuth2ApplicationScopeAliasesId",
+					new String[] {Long.class.getName()},
+					new String[] {"oA2AScopeAliasesId"}, false),
 				_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE,
 				_SQL_COUNT_OAUTH2SCOPEGRANT_WHERE,
 				OAuth2ScopeGrantModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -976,25 +885,24 @@ public class OAuth2ScopeGrantPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId));
 
-		_finderPathFetchByC_O_A_B_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"companyId", "oA2AScopeAliasesId", "applicationName",
-				"bundleSymbolicName", "scope"
-			},
-			0, 28, false, OAuth2ScopeGrant::getCompanyId,
-			OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
-			convertNullFunction(OAuth2ScopeGrant::getApplicationName),
-			convertNullFunction(OAuth2ScopeGrant::getBundleSymbolicName),
-			convertNullFunction(OAuth2ScopeGrant::getScope));
-
 		_uniquePersistenceFinderByC_O_A_B_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_O_A_B_S,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_O_A_B_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "oA2AScopeAliasesId", "applicationName",
+					"bundleSymbolicName", "scope"
+				},
+				0, 28, false, OAuth2ScopeGrant::getCompanyId,
+				OAuth2ScopeGrant::getOAuth2ApplicationScopeAliasesId,
+				convertNullFunction(OAuth2ScopeGrant::getApplicationName),
+				convertNullFunction(OAuth2ScopeGrant::getBundleSymbolicName),
+				convertNullFunction(OAuth2ScopeGrant::getScope)),
 			_SQL_SELECT_OAUTH2SCOPEGRANT_WHERE, "",
 			new FinderColumn<>(
 				"oAuth2ScopeGrant.", "companyId", FinderColumn.Type.LONG, "=",
@@ -1090,4 +998,4 @@ public class OAuth2ScopeGrantPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-893802029
+// LIFERAY-SERVICE-BUILDER-HASH:248514199

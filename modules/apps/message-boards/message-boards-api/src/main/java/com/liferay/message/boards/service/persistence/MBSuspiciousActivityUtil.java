@@ -130,54 +130,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns all the message boards suspicious activities where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the message boards suspicious activities where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @return the range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63;.
 	 *
 	 * <p>
@@ -266,19 +218,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -315,60 +254,6 @@ public class MBSuspiciousActivityUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @return the range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -452,55 +337,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns all the message boards suspicious activities where messageId = &#63;.
-	 *
-	 * @param messageId the message ID
-	 * @return the matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByMessageId(long messageId) {
-		return getPersistence().findByMessageId(messageId);
-	}
-
-	/**
-	 * Returns a range of all the message boards suspicious activities where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @return the range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByMessageId(
-		long messageId, int start, int end) {
-
-		return getPersistence().findByMessageId(messageId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param messageId the message ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByMessageId(
-		long messageId, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().findByMessageId(
-			messageId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
 	 *
 	 * <p>
@@ -573,55 +409,6 @@ public class MBSuspiciousActivityUtil {
 	 */
 	public static int countByMessageId(long messageId) {
 		return getPersistence().countByMessageId(messageId);
-	}
-
-	/**
-	 * Returns all the message boards suspicious activities where threadId = &#63;.
-	 *
-	 * @param threadId the thread ID
-	 * @return the matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByThreadId(long threadId) {
-		return getPersistence().findByThreadId(threadId);
-	}
-
-	/**
-	 * Returns a range of all the message boards suspicious activities where threadId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param threadId the thread ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @return the range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByThreadId(
-		long threadId, int start, int end) {
-
-		return getPersistence().findByThreadId(threadId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards suspicious activities where threadId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
-	 * </p>
-	 *
-	 * @param threadId the thread ID
-	 * @param start the lower bound of the range of message boards suspicious activities
-	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards suspicious activities
-	 */
-	public static List<MBSuspiciousActivity> findByThreadId(
-		long threadId, int start, int end,
-		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
-
-		return getPersistence().findByThreadId(
-			threadId, start, end, orderByComparator);
 	}
 
 	/**
@@ -715,17 +502,6 @@ public class MBSuspiciousActivityUtil {
 	}
 
 	/**
-	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param messageId the message ID
-	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByU_M(long userId, long messageId) {
-		return getPersistence().fetchByU_M(userId, messageId);
-	}
-
-	/**
 	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -777,17 +553,6 @@ public class MBSuspiciousActivityUtil {
 			NoSuchSuspiciousActivityException {
 
 		return getPersistence().findByU_T(userId, threadId);
-	}
-
-	/**
-	 * Returns the message boards suspicious activity where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param threadId the thread ID
-	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
-	 */
-	public static MBSuspiciousActivity fetchByU_T(long userId, long threadId) {
-		return getPersistence().fetchByU_T(userId, threadId);
 	}
 
 	/**
@@ -886,6 +651,241 @@ public class MBSuspiciousActivityUtil {
 		return getPersistence().fetchByPrimaryKey(suspiciousActivityId);
 	}
 
+	/**
+	 * Returns the message boards suspicious activity where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 */
+	public static MBSuspiciousActivity fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the message boards suspicious activity where userId = &#63; and messageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param messageId the message ID
+	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 */
+	public static MBSuspiciousActivity fetchByU_M(long userId, long messageId) {
+		return getPersistence().fetchByU_M(userId, messageId);
+	}
+
+	/**
+	 * Returns the message boards suspicious activity where userId = &#63; and threadId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param threadId the thread ID
+	 * @return the matching message boards suspicious activity, or <code>null</code> if a matching message boards suspicious activity could not be found
+	 */
+	public static MBSuspiciousActivity fetchByU_T(long userId, long threadId) {
+		return getPersistence().fetchByU_T(userId, threadId);
+	}
+
+	/**
+	 * Returns all the message boards suspicious activities where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the message boards suspicious activities where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @return the range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @return the range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * @param messageId the message ID
+	 * @return the matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessageId(long messageId) {
+		return getPersistence().findByMessageId(messageId);
+	}
+
+	/**
+	 * Returns a range of all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param messageId the message ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @return the range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessageId(
+		long messageId, int start, int end) {
+
+		return getPersistence().findByMessageId(messageId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where messageId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param messageId the message ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByMessageId(
+		long messageId, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().findByMessageId(
+			messageId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the message boards suspicious activities where threadId = &#63;.
+	 *
+	 * @param threadId the thread ID
+	 * @return the matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByThreadId(long threadId) {
+		return getPersistence().findByThreadId(threadId);
+	}
+
+	/**
+	 * Returns a range of all the message boards suspicious activities where threadId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @return the range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByThreadId(
+		long threadId, int start, int end) {
+
+		return getPersistence().findByThreadId(threadId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the message boards suspicious activities where threadId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.message.boards.model.impl.MBSuspiciousActivityModelImpl</code>.
+	 * </p>
+	 *
+	 * @param threadId the thread ID
+	 * @param start the lower bound of the range of message boards suspicious activities
+	 * @param end the upper bound of the range of message boards suspicious activities (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching message boards suspicious activities
+	 */
+	public static List<MBSuspiciousActivity> findByThreadId(
+		long threadId, int start, int end,
+		OrderByComparator<MBSuspiciousActivity> orderByComparator) {
+
+		return getPersistence().findByThreadId(
+			threadId, start, end, orderByComparator);
+	}
+
 	public static MBSuspiciousActivityPersistence getPersistence() {
 		return _persistence;
 	}
@@ -899,4 +899,4 @@ public class MBSuspiciousActivityUtil {
 	private static volatile MBSuspiciousActivityPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:187942019
+// LIFERAY-SERVICE-BUILDER-HASH:1714107755

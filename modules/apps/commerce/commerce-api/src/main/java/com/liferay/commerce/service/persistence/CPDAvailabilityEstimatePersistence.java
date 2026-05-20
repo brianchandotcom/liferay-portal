@@ -33,47 +33,6 @@ public interface CPDAvailabilityEstimatePersistence
 	 */
 
 	/**
-	 * Returns all the cpd availability estimates where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid(String uuid);
-
-	/**
-	 * Returns a range of all the cpd availability estimates where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @return the range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid(
-		String uuid, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid(
-		String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDAvailabilityEstimate> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63;.
 	 *
 	 * <p>
@@ -133,51 +92,6 @@ public interface CPDAvailabilityEstimatePersistence
 	 * @return the number of matching cpd availability estimates
 	 */
 	public int countByUuid(String uuid);
-
-	/**
-	 * Returns all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid_C(
-		String uuid, long companyId);
-
-	/**
-	 * Returns a range of all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @return the range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid_C(
-		String uuid, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CPDAvailabilityEstimate> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
@@ -244,51 +158,6 @@ public interface CPDAvailabilityEstimatePersistence
 	 * @return the number of matching cpd availability estimates
 	 */
 	public int countByUuid_C(String uuid, long companyId);
-
-	/**
-	 * Returns all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @return the matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate>
-		findByCommerceAvailabilityEstimateId(
-			long commerceAvailabilityEstimateId);
-
-	/**
-	 * Returns a range of all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @return the range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate>
-		findByCommerceAvailabilityEstimateId(
-			long commerceAvailabilityEstimateId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
-	 * @param start the lower bound of the range of cpd availability estimates
-	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cpd availability estimates
-	 */
-	public java.util.List<CPDAvailabilityEstimate>
-		findByCommerceAvailabilityEstimateId(
-			long commerceAvailabilityEstimateId, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator
-				<CPDAvailabilityEstimate> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
@@ -365,14 +234,6 @@ public interface CPDAvailabilityEstimatePersistence
 		throws NoSuchCPDAvailabilityEstimateException;
 
 	/**
-	 * Returns the cpd availability estimate where CProductId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CProductId the c product ID
-	 * @return the matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
-	 */
-	public CPDAvailabilityEstimate fetchByCProductId(long CProductId);
-
-	/**
 	 * Returns the cpd availability estimate where CProductId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CProductId the c product ID
@@ -440,5 +301,186 @@ public interface CPDAvailabilityEstimatePersistence
 	public CPDAvailabilityEstimate fetchByPrimaryKey(
 		long CPDAvailabilityEstimateId);
 
+	/**
+	 * Returns the cpd availability estimate where CProductId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param CProductId the c product ID
+	 * @return the matching cpd availability estimate, or <code>null</code> if a matching cpd availability estimate could not be found
+	 */
+	public default CPDAvailabilityEstimate fetchByCProductId(long CProductId) {
+		return fetchByCProductId(CProductId, true);
+	}
+
+	/**
+	 * Returns all the cpd availability estimates where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid(
+		String uuid) {
+
+		return findByUuid(
+			uuid, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cpd availability estimates where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @return the range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid(
+		String uuid, int start, int end) {
+
+		return findByUuid(uuid, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPDAvailabilityEstimate> orderByComparator) {
+
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @return the range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return findByUuid_C(uuid, companyId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cpd availability estimates where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CPDAvailabilityEstimate> orderByComparator) {
+
+		return findByUuid_C(
+			uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
+	 *
+	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
+	 * @return the matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate>
+		findByCommerceAvailabilityEstimateId(
+			long commerceAvailabilityEstimateId) {
+
+		return findByCommerceAvailabilityEstimateId(
+			commerceAvailabilityEstimateId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @return the range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate>
+		findByCommerceAvailabilityEstimateId(
+			long commerceAvailabilityEstimateId, int start, int end) {
+
+		return findByCommerceAvailabilityEstimateId(
+			commerceAvailabilityEstimateId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the cpd availability estimates where commerceAvailabilityEstimateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CPDAvailabilityEstimateModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceAvailabilityEstimateId the commerce availability estimate ID
+	 * @param start the lower bound of the range of cpd availability estimates
+	 * @param end the upper bound of the range of cpd availability estimates (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cpd availability estimates
+	 */
+	public default java.util.List<CPDAvailabilityEstimate>
+		findByCommerceAvailabilityEstimateId(
+			long commerceAvailabilityEstimateId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<CPDAvailabilityEstimate> orderByComparator) {
+
+		return findByCommerceAvailabilityEstimateId(
+			commerceAvailabilityEstimateId, start, end, orderByComparator,
+			true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1568152129
+// LIFERAY-SERVICE-BUILDER-HASH:422322202

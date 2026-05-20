@@ -48,7 +48,7 @@ const DSRLicenseKeyForm = () => {
 		error,
 		isLoading,
 	} = useSWR(
-		accountKey ? `/ac-plan/${accountKey}` : null,
+		accountKey ? `/project-corp-project-uuid/${accountKey}` : null,
 		async () => {
 			return analyticsOAuth2.getProjectCorpProjectUuid(accountKey);
 		},
@@ -66,7 +66,6 @@ const DSRLicenseKeyForm = () => {
 		register,
 	} = useForm<DSRForm>({
 		defaultValues: {
-			acceptEulaAgreement: false,
 			acceptTermsAndConditions: false,
 			dataCenterLocation: '',
 			hostname: '',
@@ -232,42 +231,16 @@ const DSRLicenseKeyForm = () => {
 				/>
 
 				<label
-					className={classNames('mb-0 ml-2', {
+					className={classNames('mb-1 ml-2', {
 						'text-red': !!errors.acceptTermsAndConditions,
 					})}
 					htmlFor="accept-terms-and-conditions"
+					style={{fontSize: 12, fontWeight: 400}}
 				>
 					{i18n.translate(
 						'i-have-read-and-agree-to-the-terms-and-conditions-above'
 					)}
 
-					<RequiredMask />
-				</label>
-			</div>
-
-			<div className="align-items-center d-flex flex-row mt-2">
-				<Controller
-					control={control}
-					name="acceptEulaAgreement"
-					render={({field: {onChange, value}}) => (
-						<ClayCheckbox
-							checked={!!value}
-							id="accept-eula-agreement"
-							onChange={(event) => onChange(event.target.checked)}
-						/>
-					)}
-				/>
-
-				<label
-					className={classNames('mb-0 ml-2', {
-						'text-red': !!errors.acceptEulaAgreement,
-					})}
-					htmlFor="accept-eula-agreement"
-				>
-					{i18n.translate('i-have-read-and-agree-to-the')}{' '}
-					<a href={EULA_URL} rel="noreferrer" target="_blank">
-						{i18n.translate('liferay-end-user-agreement')}
-					</a>
 					<RequiredMask />
 				</label>
 			</div>

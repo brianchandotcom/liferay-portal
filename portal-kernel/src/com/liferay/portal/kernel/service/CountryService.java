@@ -47,10 +47,10 @@ public interface CountryService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.CountryServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the country remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link CountryServiceUtil} if injection and service tracking are not available.
 	 */
 	public Country addCountry(
-			String a2, String a3, boolean active, boolean billingAllowed,
-			String idd, String name, String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			boolean zipRequired, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -86,6 +86,11 @@ public interface CountryService extends BaseService {
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country fetchCountryByA3(String a3);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country fetchCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Country> getCompanyCountries(long companyId);
@@ -151,6 +156,11 @@ public interface CountryService extends BaseService {
 	public Country getCountryByA3(String a3) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Country getCountryByName(long companyId, String name)
 		throws PortalException;
 
@@ -183,9 +193,10 @@ public interface CountryService extends BaseService {
 		throws PortalException;
 
 	public Country updateCountry(
-			long countryId, String a2, String a3, boolean active,
-			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT)
+			String externalReferenceCode, long countryId, String a2, String a3,
+			boolean active, boolean billingAllowed, String idd, String name,
+			String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT)
 		throws PortalException;
 
 	public Country updateGroupFilterEnabled(
@@ -193,4 +204,4 @@ public interface CountryService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1132614518
+// LIFERAY-SERVICE-BUILDER-HASH:-1660110941

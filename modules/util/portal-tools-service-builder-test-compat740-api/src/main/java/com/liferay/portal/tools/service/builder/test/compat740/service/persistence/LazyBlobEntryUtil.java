@@ -125,54 +125,6 @@ public class LazyBlobEntryUtil {
 	}
 
 	/**
-	 * Returns all the lazy blob entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching lazy blob entries
-	 */
-	public static List<LazyBlobEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the lazy blob entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.LazyBlobEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of lazy blob entries
-	 * @param end the upper bound of the range of lazy blob entries (not inclusive)
-	 * @return the range of matching lazy blob entries
-	 */
-	public static List<LazyBlobEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the lazy blob entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.LazyBlobEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of lazy blob entries
-	 * @param end the upper bound of the range of lazy blob entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lazy blob entries
-	 */
-	public static List<LazyBlobEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LazyBlobEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the lazy blob entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -256,17 +208,6 @@ public class LazyBlobEntryUtil {
 			exception.NoSuchLazyBlobEntryException {
 
 		return getPersistence().findByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns the lazy blob entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
-	 */
-	public static LazyBlobEntry fetchByUUID_G(String uuid, long groupId) {
-		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -360,6 +301,65 @@ public class LazyBlobEntryUtil {
 		return getPersistence().fetchByPrimaryKey(lazyBlobEntryId);
 	}
 
+	/**
+	 * Returns the lazy blob entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching lazy blob entry, or <code>null</code> if a matching lazy blob entry could not be found
+	 */
+	public static LazyBlobEntry fetchByUUID_G(String uuid, long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the lazy blob entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching lazy blob entries
+	 */
+	public static List<LazyBlobEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the lazy blob entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.LazyBlobEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of lazy blob entries
+	 * @param end the upper bound of the range of lazy blob entries (not inclusive)
+	 * @return the range of matching lazy blob entries
+	 */
+	public static List<LazyBlobEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the lazy blob entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.compat740.model.impl.LazyBlobEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of lazy blob entries
+	 * @param end the upper bound of the range of lazy blob entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lazy blob entries
+	 */
+	public static List<LazyBlobEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<LazyBlobEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
 	public static LazyBlobEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -371,4 +371,4 @@ public class LazyBlobEntryUtil {
 	private static volatile LazyBlobEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1042079202
+// LIFERAY-SERVICE-BUILDER-HASH:140957174

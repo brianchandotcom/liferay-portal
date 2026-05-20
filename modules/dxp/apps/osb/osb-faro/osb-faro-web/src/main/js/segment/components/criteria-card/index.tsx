@@ -2,45 +2,12 @@ import CriteriaView from './CriteriaView';
 import Label from 'shared/components/Label';
 import Panel from '@clayui/panel';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {createVocabularyProperty} from 'segment/segment-editor/dynamic/utils/utils';
-import {
-	CustomFunctionOperators,
-	NotOperators
-} from 'segment/segment-editor/dynamic/utils/constants';
+import {extractRemoteCriterionEntries} from 'segment/segment-editor/dynamic/criterion-types/extract';
 import {ReferencedObjectsContext} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {SegmentTypes} from 'shared/util/constants';
 import {translateQueryToCriteria} from 'segment/segment-editor/dynamic/utils/odata';
 import {useDownloadReportContext} from 'shared/components/download-report/DownloadReportContext';
-
-const VOCABULARY_OPERATORS = new Set([
-	CustomFunctionOperators.VocabulariesFilter,
-	NotOperators.NotVocabulariesFilter
-]);
-
-function extractVocabularies(criteria: any): Array<{id: string; name: string}> {
-	if (!criteria) return [];
-
-	if (criteria.items) {
-		return criteria.items.flatMap(extractVocabularies);
-	}
-
-	if (
-		criteria.propertyName &&
-		VOCABULARY_OPERATORS.has(criteria.operatorName)
-	) {
-		const id = criteria.propertyName;
-		const items = criteria.value?.getIn?.(['criterionGroup', 'items']);
-		const nameItem = items?.find?.(
-			(item: any) => item.get?.('propertyName') === 'vocabularies/name'
-		);
-		const name = (nameItem?.get?.('value') as string) ?? id;
-
-		return [{id, name}];
-	}
-
-	return [];
-}
 
 interface ICriteriaCardProps {
 	channelId?: string;
@@ -80,15 +47,15 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 	}, []);
 
 	useEffect(() => {
-		if (!channelId || !groupId || !addProperty) return;
+		if (!channelId || !groupId || !addProperty) {
+			return;
+		}
 
-		const vocabularies = extractVocabularies(criteria);
-
-		if (!vocabularies.length) return;
-
-		vocabularies.forEach(({id, name}) => {
-			addProperty(createVocabularyProperty({id, name}));
-		});
+		extractRemoteCriterionEntries(criteria).forEach(
+			({criterionType, id, name}) => {
+				addProperty(criterionType.createProperty({id, name}));
+			}
+		);
 	}, [channelId, groupId, criteria]);
 
 	return (
@@ -116,13 +83,15 @@ const CriteriaCard: React.FC<ICriteriaCardProps> = ({
 					</Label>
 				)}
 
-				<CriteriaView
-					criteria={criteria}
-					ref={_criteriaViewRef}
-					segmentType={segmentType}
-					sequential={sequential}
-					timeZoneId={timeZoneId}
-				/>
+				{criteria && (
+					<CriteriaView
+						criteria={criteria}
+						ref={_criteriaViewRef}
+						segmentType={segmentType}
+						sequential={sequential}
+						timeZoneId={timeZoneId}
+					/>
+				)}
 			</Panel.Body>
 		</Panel>
 	);

@@ -19,20 +19,37 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.zip.ZipReader;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +62,7 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -78,24 +96,9 @@ public class DownloadObjectEntryFolderCMSServletTest
 
 	@Test
 	public void testDownloadFolder() throws Exception {
-		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(
-				null, HttpMethods.GET,
-				objectEntryFolder.getObjectEntryFolderId());
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
-
-		Assert.assertEquals(
-			ContentTypes.APPLICATION_ZIP,
-			mockHttpServletResponse.getContentType());
-		Assert.assertEquals(
-			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+		_testDownloadFolderEmpty();
+		_testDownloadFolderWithoutPermissions();
+		_testDownloadFolderWithPermissions();
 	}
 
 	private long _addFileEntry() throws Exception {
@@ -145,7 +148,7 @@ public class DownloadObjectEntryFolderCMSServletTest
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			byte[] content, String method, long objectEntryFolderId)
+			byte[] content, String method, long objectEntryFolderId, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -154,9 +157,9 @@ public class DownloadObjectEntryFolderCMSServletTest
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080/");
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
-		mockHttpServletRequest.setAttribute(
-			WebKeys.USER, TestPropsValues.getUser());
+			WebKeys.THEME_DISPLAY,
+			_getThemeDisplay(mockHttpServletRequest, user));
+		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 
 		if (content != null) {
 			mockHttpServletRequest.setContent(content);
@@ -179,13 +182,19 @@ public class DownloadObjectEntryFolderCMSServletTest
 	}
 
 	private ThemeDisplay _getThemeDisplay(
-			MockHttpServletRequest mockHttpServletRequest)
+			MockHttpServletRequest mockHttpServletRequest, User user)
 		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setPermissionChecker(permissionChecker);
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		return themeDisplay;
@@ -233,7 +242,7 @@ public class DownloadObjectEntryFolderCMSServletTest
 					"type", "DownloadBulkAction"
 				).toString(
 				).getBytes(),
-				HttpMethods.POST, 0);
+				HttpMethods.POST, 0, TestPropsValues.getUser());
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -290,7 +299,7 @@ public class DownloadObjectEntryFolderCMSServletTest
 					"type", "DownloadBulkAction"
 				).toString(
 				).getBytes(),
-				HttpMethods.POST, 0);
+				HttpMethods.POST, 0, TestPropsValues.getUser());
 
 		mockHttpServletRequest.setParameter(
 			"filter",
@@ -307,6 +316,165 @@ public class DownloadObjectEntryFolderCMSServletTest
 			mockHttpServletResponse.getContentType());
 		Assert.assertEquals(
 			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+	}
+
+	private void _testDownloadFolderEmpty() throws Exception {
+		ObjectEntryFolder objectEntryFolder = _addObjectEntryFolder(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				null, HttpMethods.GET,
+				objectEntryFolder.getObjectEntryFolderId(),
+				TestPropsValues.getUser());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_ZIP,
+			mockHttpServletResponse.getContentType());
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+	}
+
+	private void _testDownloadFolderWithoutPermissions() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
+
+		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		_addObjectEntry(
+			objectDefinition.getObjectDefinitionId(),
+			parentObjectEntryFolder.getObjectEntryFolderId(), serviceContext);
+
+		ObjectEntryFolder childObjectEntryFolder = _addObjectEntryFolder(
+			parentObjectEntryFolder.getObjectEntryFolderId());
+
+		_addObjectEntry(
+			objectDefinition.getObjectDefinitionId(),
+			childObjectEntryFolder.getObjectEntryFolderId(), serviceContext);
+
+		User user = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleLocalServiceUtil.addUserRoles(
+			user.getUserId(), new long[] {role.getRoleId()});
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), ObjectEntryFolder.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(parentObjectEntryFolder.getObjectEntryFolderId()),
+			role.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+				user)) {
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					null, HttpMethods.GET,
+					parentObjectEntryFolder.getObjectEntryFolderId(), user);
+
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
+
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.assertEquals(
+				ContentTypes.APPLICATION_ZIP,
+				mockHttpServletResponse.getContentType());
+			Assert.assertEquals(
+				HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+
+			String subfolderPrefix = StringBundler.concat(
+				parentObjectEntryFolder.getName(), StringPool.SLASH,
+				childObjectEntryFolder.getName(), StringPool.SLASH);
+
+			try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+					new ByteArrayInputStream(
+						mockHttpServletResponse.getContentAsByteArray()))) {
+
+				List<String> zipEntryNames = zipReader.getEntries();
+
+				Assert.assertFalse(
+					ListUtil.exists(
+						zipEntryNames,
+						zipEntryName -> zipEntryName.startsWith(
+							subfolderPrefix)));
+			}
+		}
+	}
+
+	private void _testDownloadFolderWithPermissions() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute(
+			"friendlyUrlMap", new HashMap<String, String>());
+
+		ObjectEntryFolder parentObjectEntryFolder = _addObjectEntryFolder(
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		_addObjectEntry(
+			objectDefinition.getObjectDefinitionId(),
+			parentObjectEntryFolder.getObjectEntryFolderId(), serviceContext);
+
+		ObjectEntryFolder childObjectEntryFolder = _addObjectEntryFolder(
+			parentObjectEntryFolder.getObjectEntryFolderId());
+
+		_addObjectEntry(
+			objectDefinition.getObjectDefinitionId(),
+			childObjectEntryFolder.getObjectEntryFolderId(), serviceContext);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				null, HttpMethods.GET,
+				parentObjectEntryFolder.getObjectEntryFolderId(),
+				TestPropsValues.getUser());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_ZIP,
+			mockHttpServletResponse.getContentType());
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+
+		String subfolderPrefix = StringBundler.concat(
+			parentObjectEntryFolder.getName(), StringPool.SLASH,
+			childObjectEntryFolder.getName(), StringPool.SLASH);
+
+		try (ZipReader zipReader = _zipReaderFactory.getZipReader(
+				new ByteArrayInputStream(
+					mockHttpServletResponse.getContentAsByteArray()))) {
+
+			List<String> zipEntryNames = zipReader.getEntries();
+
+			Assert.assertTrue(
+				ListUtil.exists(
+					zipEntryNames,
+					zipEntryName -> zipEntryName.startsWith(subfolderPrefix)));
+		}
 	}
 
 	@Inject
@@ -327,9 +495,15 @@ public class DownloadObjectEntryFolderCMSServletTest
 	@Inject
 	private Portal _portal;
 
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	@Inject(
 		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderCMSServlet"
 	)
 	private Servlet _servlet;
+
+	@Inject
+	private ZipReaderFactory _zipReaderFactory;
 
 }

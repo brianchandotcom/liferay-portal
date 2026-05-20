@@ -25,7 +25,7 @@ import {ProfileTypes} from 'segment/segment-editor/dynamic/utils/constants';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {User} from 'shared/util/records';
@@ -51,16 +51,14 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 	});
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
-		dataSourceFn: API.dataSource.search as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.dataSource.search,
 		variables: {
 			delta: 1,
 			groupId
 		}
 	});
 
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	const currentUser = useCurrentUser();
 

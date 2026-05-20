@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -84,69 +83,14 @@ public class DDMFieldAttributePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByStorageId;
-	private FinderPath _finderPathWithoutPaginationFindByStorageId;
-	private FinderPath _finderPathCountByStorageId;
 	private CollectionPersistenceFinder<DDMFieldAttribute>
 		_collectionPersistenceFinderByStorageId;
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @return the matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByStorageId(long storageId) {
-		return findByStorageId(
-			storageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByStorageId(
-		long storageId, int start, int end) {
-
-		return findByStorageId(storageId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByStorageId(
-		long storageId, int start, int end,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		return findByStorageId(storageId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -232,76 +176,14 @@ public class DDMFieldAttributePersistenceImpl
 			finderCache, new Object[] {storageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_AN;
-	private FinderPath _finderPathWithoutPaginationFindByS_AN;
-	private FinderPath _finderPathCountByS_AN;
 	private CollectionPersistenceFinder<DDMFieldAttribute>
 		_collectionPersistenceFinderByS_AN;
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @return the matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName) {
-
-		return findByS_AN(
-			storageId, attributeName, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName, int start, int end) {
-
-		return findByS_AN(storageId, attributeName, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param attributeName the attribute name
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_AN(
-		long storageId, String attributeName, int start, int end,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		return findByS_AN(
-			storageId, attributeName, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and attributeName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -394,75 +276,14 @@ public class DDMFieldAttributePersistenceImpl
 			finderCache, new Object[] {storageId, attributeName});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_L;
-	private FinderPath _finderPathWithoutPaginationFindByS_L;
-	private FinderPath _finderPathCountByS_L;
 	private CollectionPersistenceFinder<DDMFieldAttribute>
 		_collectionPersistenceFinderByS_L;
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @return the matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId) {
-
-		return findByS_L(
-			storageId, languageId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId, int start, int end) {
-
-		return findByS_L(storageId, languageId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageId the language ID
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String languageId, int start, int end,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		return findByS_L(
-			storageId, languageId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -540,72 +361,10 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 	/**
-	 * Returns all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @return the matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds) {
-
-		return findByS_L(
-			storageId, languageIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds, int start, int end) {
-
-		return findByS_L(storageId, languageIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param storageId the storage ID
-	 * @param languageIds the language IDs
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByS_L(
-		long storageId, String[] languageIds, int start, int end,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		return findByS_L(
-			storageId, languageIds, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where storageId = &#63; and languageId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param storageId the storage ID
@@ -667,78 +426,14 @@ public class DDMFieldAttributePersistenceImpl
 			new Object[] {storageId, ArrayUtil.sortedUnique(languageIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAN_SAV;
-	private FinderPath _finderPathWithoutPaginationFindByAN_SAV;
-	private FinderPath _finderPathCountByAN_SAV;
 	private CollectionPersistenceFinder<DDMFieldAttribute>
 		_collectionPersistenceFinderByAN_SAV;
 
 	/**
-	 * Returns all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @return the matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue) {
-
-		return findByAN_SAV(
-			attributeName, smallAttributeValue, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @return the range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue, int start, int end) {
-
-		return findByAN_SAV(
-			attributeName, smallAttributeValue, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
-	 * </p>
-	 *
-	 * @param attributeName the attribute name
-	 * @param smallAttributeValue the small attribute value
-	 * @param start the lower bound of the range of ddm field attributes
-	 * @param end the upper bound of the range of ddm field attributes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm field attributes
-	 */
-	@Override
-	public List<DDMFieldAttribute> findByAN_SAV(
-		String attributeName, String smallAttributeValue, int start, int end,
-		OrderByComparator<DDMFieldAttribute> orderByComparator) {
-
-		return findByAN_SAV(
-			attributeName, smallAttributeValue, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm field attributes where attributeName = &#63; and smallAttributeValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFieldAttributeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param attributeName the attribute name
@@ -833,7 +528,6 @@ public class DDMFieldAttributePersistenceImpl
 			finderCache, new Object[] {attributeName, smallAttributeValue});
 	}
 
-	private FinderPath _finderPathFetchByF_AN_L;
 	private UniquePersistenceFinder<DDMFieldAttribute>
 		_uniquePersistenceFinderByF_AN_L;
 
@@ -868,21 +562,6 @@ public class DDMFieldAttributePersistenceImpl
 		}
 
 		return ddmFieldAttribute;
-	}
-
-	/**
-	 * Returns the ddm field attribute where fieldId = &#63; and attributeName = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param fieldId the field ID
-	 * @param attributeName the attribute name
-	 * @param languageId the language ID
-	 * @return the matching ddm field attribute, or <code>null</code> if a matching ddm field attribute could not be found
-	 */
-	@Override
-	public DDMFieldAttribute fetchByF_AN_L(
-		long fieldId, String attributeName, String languageId) {
-
-		return fetchByF_AN_L(fieldId, attributeName, languageId, true);
 	}
 
 	/**
@@ -1190,29 +869,25 @@ public class DDMFieldAttributePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"storageId"}, true);
-
-		_finderPathWithoutPaginationFindByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			true);
-
-		_finderPathCountByStorageId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStorageId",
-			new String[] {Long.class.getName()}, new String[] {"storageId"},
-			false);
-
 		_collectionPersistenceFinderByStorageId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByStorageId,
-				_finderPathWithoutPaginationFindByStorageId,
-				_finderPathCountByStorageId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStorageId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByStorageId", new String[] {Long.class.getName()},
+					new String[] {"storageId"}, false),
 				_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1221,28 +896,24 @@ public class DDMFieldAttributePersistenceImpl
 					"ddmFieldAttribute.", "storageId", FinderColumn.Type.LONG,
 					"=", true, true, DDMFieldAttribute::getStorageId));
 
-		_finderPathWithPaginationFindByS_AN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_AN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"storageId", "attributeName"}, true);
-
-		_finderPathWithoutPaginationFindByS_AN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_AN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "attributeName"}, 0, 2, true, null);
-
-		_finderPathCountByS_AN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_AN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "attributeName"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByS_AN = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_AN,
-			_finderPathWithoutPaginationFindByS_AN, _finderPathCountByS_AN,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_AN",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"storageId", "attributeName"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_AN",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "attributeName"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_AN",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "attributeName"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1253,28 +924,24 @@ public class DDMFieldAttributePersistenceImpl
 				"ddmFieldAttribute.", "attributeName", FinderColumn.Type.STRING,
 				"=", true, true, DDMFieldAttribute::getAttributeName));
 
-		_finderPathWithPaginationFindByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"storageId", "languageId"}, true);
-
-		_finderPathWithoutPaginationFindByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "languageId"}, 0, 2, true, null);
-
-		_finderPathCountByS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_L",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"storageId", "languageId"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByS_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_L,
-			_finderPathWithoutPaginationFindByS_L, _finderPathCountByS_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_L",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"storageId", "languageId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_L",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "languageId"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByS_L",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"storageId", "languageId"}, 0, 2, false, null),
 			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 			_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 			DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
@@ -1285,32 +952,33 @@ public class DDMFieldAttributePersistenceImpl
 				"ddmFieldAttribute.", "languageId", FinderColumn.Type.STRING,
 				"=", false, true, true, DDMFieldAttribute::getLanguageId));
 
-		_finderPathWithPaginationFindByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAN_SAV",
-			new String[] {
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"attributeName", "smallAttributeValue"}, true);
-
-		_finderPathWithoutPaginationFindByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAN_SAV",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"attributeName", "smallAttributeValue"}, 0, 3, true,
-			null);
-
-		_finderPathCountByAN_SAV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_SAV",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"attributeName", "smallAttributeValue"}, 0, 3, false,
-			null);
-
 		_collectionPersistenceFinderByAN_SAV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAN_SAV,
-				_finderPathWithoutPaginationFindByAN_SAV,
-				_finderPathCountByAN_SAV, _SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAN_SAV",
+					new String[] {
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"attributeName", "smallAttributeValue"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAN_SAV",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"attributeName", "smallAttributeValue"}, 0, 3,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAN_SAV",
+					new String[] {
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {"attributeName", "smallAttributeValue"}, 0, 3,
+					false, null),
+				_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
 				_SQL_COUNT_DDMFIELDATTRIBUTE_WHERE,
 				DDMFieldAttributeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -1323,20 +991,19 @@ public class DDMFieldAttributePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					DDMFieldAttribute::getSmallAttributeValue));
 
-		_finderPathFetchByF_AN_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"fieldId", "attributeName", "languageId"}, 0, 6,
-			false, DDMFieldAttribute::getFieldId,
-			convertNullFunction(DDMFieldAttribute::getAttributeName),
-			convertNullFunction(DDMFieldAttribute::getLanguageId));
-
 		_uniquePersistenceFinderByF_AN_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_AN_L, _SQL_SELECT_DDMFIELDATTRIBUTE_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_AN_L",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"fieldId", "attributeName", "languageId"}, 0, 6,
+				false, DDMFieldAttribute::getFieldId,
+				convertNullFunction(DDMFieldAttribute::getAttributeName),
+				convertNullFunction(DDMFieldAttribute::getLanguageId)),
+			_SQL_SELECT_DDMFIELDATTRIBUTE_WHERE, "",
 			new FinderColumn<>(
 				"ddmFieldAttribute.", "fieldId", FinderColumn.Type.LONG, "=",
 				true, true, DDMFieldAttribute::getFieldId),
@@ -1416,4 +1083,4 @@ public class DDMFieldAttributePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-54098333
+// LIFERAY-SERVICE-BUILDER-HASH:-1742500865

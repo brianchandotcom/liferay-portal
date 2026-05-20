@@ -187,16 +187,17 @@ public class IndividualSegmentController extends BaseFaroController {
 	@Path("/{id}/memberships/changes")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	@SuppressWarnings("unchecked")
-	public FaroResultsDisplay getIndividualSegmentMembershipChanges(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("query") String query,
-			@DefaultValue(StringPool.BLANK) @QueryParam("startDate") FaroParam
-				<Date> startDateFaroParam,
-			@DefaultValue(StringPool.BLANK) @QueryParam("endDate") FaroParam
-				<Date> endDateFaroParam,
-			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
-			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
+	public FaroResultsDisplay
+			getIndividualSegmentMembershipChangesFaroResultsDisplay(
+				@PathParam("groupId") long groupId, @PathParam("id") String id,
+				@QueryParam("query") String query,
+				@DefaultValue(StringPool.BLANK) @QueryParam("startDate")
+					FaroParam<Date> startDateFaroParam,
+				@DefaultValue(StringPool.BLANK) @QueryParam("endDate") FaroParam
+					<Date> endDateFaroParam,
+				@QueryParam("cur") int cur, @QueryParam("delta") int delta,
+				@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+					FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		Results<IndividualSegmentMembershipChange> results =
@@ -218,7 +219,7 @@ public class IndividualSegmentController extends BaseFaroController {
 	@Path("/{id}/memberships")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	@SuppressWarnings("unchecked")
-	public FaroResultsDisplay getIndividualSegmentMemberships(
+	public FaroResultsDisplay getIndividualSegmentMembershipsFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @PathParam("id") String id,
 			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
@@ -237,17 +238,18 @@ public class IndividualSegmentController extends BaseFaroController {
 	@Path("/{id}/real-time-memberships")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
 	@SuppressWarnings("unchecked")
-	public FaroResultsDisplay getIndividualSegmentRealTimeMemberships(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@QueryParam("day") String day,
-			@DefaultValue(StringPool.BLANK) @QueryParam("profileTypes")
-				FaroParam<List<String>> profileTypesFaroParam,
-			@QueryParam("query") String query,
-			@DefaultValue(StringPool.BLANK) @QueryParam("types") FaroParam
-				<List<String>> typesFaroParam,
-			@QueryParam("cur") int cur, @QueryParam("delta") int delta,
-			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
+	public FaroResultsDisplay
+			getIndividualSegmentRealTimeMembershipsFaroResultsDisplay(
+				@PathParam("groupId") long groupId, @PathParam("id") String id,
+				@QueryParam("day") String day,
+				@DefaultValue(StringPool.BLANK) @QueryParam("profileTypes")
+					FaroParam<List<String>> profileTypesFaroParam,
+				@QueryParam("query") String query,
+				@DefaultValue(StringPool.BLANK) @QueryParam("types") FaroParam
+					<List<String>> typesFaroParam,
+				@QueryParam("cur") int cur, @QueryParam("delta") int delta,
+				@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")
+					FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
 		Results<IndividualSegmentRealTimeMembership> results =
@@ -274,7 +276,7 @@ public class IndividualSegmentController extends BaseFaroController {
 	@GET
 	@Path("/unassigned")
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay getUnassignedIndividualSegmentDisplay(
+	public FaroResultsDisplay getUnassignedIndividualSegmentFaroResultsDisplay(
 			@PathParam("groupId") long groupId, @QueryParam("cur") int cur,
 			@QueryParam("delta") int delta,
 			@DefaultValue(StringPool.BLANK) @QueryParam("orderByFields")

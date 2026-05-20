@@ -96,8 +96,8 @@ jobs:
                 name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.project_id}}
+                    workload_identity_provider: ${{secrets.workload_identity_provider}}
             -   if: ${{env.IS_PR == 'false' && steps.verify_version.outputs.should_publish == 'true'}}
                 name: Log in to GAR
                 run: |
@@ -179,6 +179,11 @@ on:
             working_directory:
                 required: true
                 type: string
+        secrets:
+            project_id:
+                required: true
+            workload_identity_provider:
+                required: true
 permissions:
     contents: read
     id-token: write

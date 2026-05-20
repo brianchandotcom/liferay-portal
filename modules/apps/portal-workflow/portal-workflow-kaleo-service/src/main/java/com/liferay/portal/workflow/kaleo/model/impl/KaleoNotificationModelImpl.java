@@ -128,32 +128,26 @@ public class KaleoNotificationModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXECUTIONTYPE_COLUMN_BITMASK = 2L;
+	public static final long KALEOCLASSNAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KALEOCLASSNAME_COLUMN_BITMASK = 4L;
+	public static final long KALEOCLASSPK_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KALEOCLASSPK_COLUMN_BITMASK = 8L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 16L;
+	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KALEONOTIFICATIONID_COLUMN_BITMASK = 32L;
+	public static final long KALEONOTIFICATIONID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -740,15 +734,6 @@ public class KaleoNotificationModelImpl
 		_executionType = executionType;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalExecutionType() {
-		return getColumnOriginalValue("executionType");
-	}
-
 	@Override
 	public String getTemplate() {
 		if (_template == null) {
@@ -1327,4 +1312,4 @@ public class KaleoNotificationModelImpl
 	private KaleoNotification _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:845509233
+// LIFERAY-SERVICE-BUILDER-HASH:811329908

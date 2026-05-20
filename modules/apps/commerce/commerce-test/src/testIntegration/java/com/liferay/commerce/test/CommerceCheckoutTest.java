@@ -814,7 +814,7 @@ public class CommerceCheckoutTest {
 
 		if (country == null) {
 			country = CountryLocalServiceUtil.addCountry(
-				a2, a3, true, true, RandomTestUtil.randomString(),
+				null, a2, a3, true, true, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				0D, true, true, false, _serviceContext);
 		}

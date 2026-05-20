@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -95,7 +96,12 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 
 		ThemeDisplay themeDisplay = _getThemeDisplay(LocaleUtil.US);
 
-		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
+		int portalServerPort = PortalUtil.getPortalServerPort(false);
+
+		String urlCurrent =
+			"http://localhost:" + portalServerPort + "/currentURL";
+
+		themeDisplay.setURLCurrent(urlCurrent);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -108,11 +114,8 @@ public class ViewBlogsEntryContentDashboardItemActionProviderTest {
 
 		Assert.assertTrue(
 			url.contains(StringUtil.toLowerCase(blogsEntry.getTitle())));
-
 		Assert.assertTrue(
-			url.contains(
-				"p_l_back_url=" +
-					HtmlUtil.escapeURL("http://localhost:8080/currentURL")));
+			url.contains("p_l_back_url=" + HtmlUtil.escapeURL(urlCurrent)));
 	}
 
 	@Test

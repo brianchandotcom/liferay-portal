@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -76,67 +75,14 @@ public class FaroUserPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
-	 * Returns all the faro users where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -218,70 +164,14 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLiveUserId;
-	private FinderPath _finderPathWithoutPaginationFindByLiveUserId;
-	private FinderPath _finderPathCountByLiveUserId;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByLiveUserId;
 
 	/**
-	 * Returns all the faro users where liveUserId = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByLiveUserId(long liveUserId) {
-		return findByLiveUserId(
-			liveUserId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where liveUserId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveUserId the live user ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByLiveUserId(
-		long liveUserId, int start, int end) {
-
-		return findByLiveUserId(liveUserId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where liveUserId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveUserId the live user ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByLiveUserId(
-		long liveUserId, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByLiveUserId(
-			liveUserId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where liveUserId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param liveUserId the live user ID
@@ -364,7 +254,6 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {liveUserId});
 	}
 
-	private FinderPath _finderPathFetchByKey;
 	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByKey;
 
 	/**
@@ -391,17 +280,6 @@ public class FaroUserPersistenceImpl
 		}
 
 		return faroUser;
-	}
-
-	/**
-	 * Returns the faro user where key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param key the key
-	 * @return the matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByKey(String key) {
-		return fetchByKey(key, true);
 	}
 
 	/**
@@ -442,7 +320,6 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {key});
 	}
 
-	private FinderPath _finderPathFetchByG_L;
 	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByG_L;
 
 	/**
@@ -473,18 +350,6 @@ public class FaroUserPersistenceImpl
 		}
 
 		return faroUser;
-	}
-
-	/**
-	 * Returns the faro user where groupId = &#63; and liveUserId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param liveUserId the live user ID
-	 * @return the matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByG_L(long groupId, long liveUserId) {
-		return fetchByG_L(groupId, liveUserId, true);
 	}
 
 	/**
@@ -532,72 +397,14 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, liveUserId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_R;
-	private FinderPath _finderPathWithoutPaginationFindByG_R;
-	private FinderPath _finderPathCountByG_R;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByG_R;
 
 	/**
-	 * Returns all the faro users where groupId = &#63; and roleId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_R(long groupId, long roleId) {
-		return findByG_R(
-			groupId, roleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_R(
-		long groupId, long roleId, int start, int end) {
-
-		return findByG_R(groupId, roleId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where groupId = &#63; and roleId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param roleId the role ID
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_R(
-		long groupId, long roleId, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByG_R(groupId, roleId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where groupId = &#63; and roleId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -687,7 +494,6 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, roleId});
 	}
 
-	private FinderPath _finderPathFetchByG_E;
 	private UniquePersistenceFinder<FaroUser> _uniquePersistenceFinderByG_E;
 
 	/**
@@ -718,18 +524,6 @@ public class FaroUserPersistenceImpl
 		}
 
 		return faroUser;
-	}
-
-	/**
-	 * Returns the faro user where groupId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param emailAddress the email address
-	 * @return the matching faro user, or <code>null</code> if a matching faro user could not be found
-	 */
-	@Override
-	public FaroUser fetchByG_E(long groupId, String emailAddress) {
-		return fetchByG_E(groupId, emailAddress, true);
 	}
 
 	/**
@@ -777,72 +571,14 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, emailAddress});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByG_S;
 
 	/**
-	 * Returns all the faro users where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_S(long groupId, int status) {
-		return findByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_S(
-		long groupId, int status, int start, int end) {
-
-		return findByG_S(groupId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByG_S(
-		long groupId, int status, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -932,73 +668,14 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {groupId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByL_S;
-	private FinderPath _finderPathWithoutPaginationFindByL_S;
-	private FinderPath _finderPathCountByL_S;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByL_S;
 
 	/**
-	 * Returns all the faro users where liveUserId = &#63; and status = &#63;.
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByL_S(long liveUserId, int status) {
-		return findByL_S(
-			liveUserId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where liveUserId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByL_S(
-		long liveUserId, int status, int start, int end) {
-
-		return findByL_S(liveUserId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where liveUserId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param liveUserId the live user ID
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByL_S(
-		long liveUserId, int status, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByL_S(
-			liveUserId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where liveUserId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param liveUserId the live user ID
@@ -1088,73 +765,14 @@ public class FaroUserPersistenceImpl
 			finderCache, new Object[] {liveUserId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByE_S;
-	private FinderPath _finderPathWithoutPaginationFindByE_S;
-	private FinderPath _finderPathCountByE_S;
 	private CollectionPersistenceFinder<FaroUser>
 		_collectionPersistenceFinderByE_S;
 
 	/**
-	 * Returns all the faro users where emailAddress = &#63; and status = &#63;.
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @return the matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByE_S(String emailAddress, int status) {
-		return findByE_S(
-			emailAddress, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the faro users where emailAddress = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @return the range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByE_S(
-		String emailAddress, int status, int start, int end) {
-
-		return findByE_S(emailAddress, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the faro users where emailAddress = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param emailAddress the email address
-	 * @param status the status
-	 * @param start the lower bound of the range of faro users
-	 * @param end the upper bound of the range of faro users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching faro users
-	 */
-	@Override
-	public List<FaroUser> findByE_S(
-		String emailAddress, int status, int start, int end,
-		OrderByComparator<FaroUser> orderByComparator) {
-
-		return findByE_S(
-			emailAddress, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the faro users where emailAddress = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>FaroUserModelImpl</code>.
 	 * </p>
 	 *
 	 * @param emailAddress the email address
@@ -1427,83 +1045,75 @@ public class FaroUserPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_FAROUSER_WHERE,
-				_SQL_COUNT_FAROUSER_WHERE, FaroUserModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
+				FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, FaroUser::getGroupId));
 
-		_finderPathWithPaginationFindByLiveUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLiveUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"liveUserId"}, true);
-
-		_finderPathWithoutPaginationFindByLiveUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLiveUserId",
-			new String[] {Long.class.getName()}, new String[] {"liveUserId"},
-			true);
-
-		_finderPathCountByLiveUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveUserId",
-			new String[] {Long.class.getName()}, new String[] {"liveUserId"},
-			false);
-
 		_collectionPersistenceFinderByLiveUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLiveUserId,
-				_finderPathWithoutPaginationFindByLiveUserId,
-				_finderPathCountByLiveUserId, _SQL_SELECT_FAROUSER_WHERE,
-				_SQL_COUNT_FAROUSER_WHERE, FaroUserModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLiveUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"liveUserId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLiveUserId", new String[] {Long.class.getName()},
+					new String[] {"liveUserId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLiveUserId", new String[] {Long.class.getName()},
+					new String[] {"liveUserId"}, false),
+				_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
+				FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=",
 					true, true, FaroUser::getLiveUserId));
 
-		_finderPathFetchByKey = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKey",
-			new String[] {String.class.getName()}, new String[] {"key_"}, 0, 1,
-			false, convertNullFunction(FaroUser::getKey));
-
 		_uniquePersistenceFinderByKey = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKey, _SQL_SELECT_FAROUSER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKey",
+				new String[] {String.class.getName()}, new String[] {"key_"}, 0,
+				1, false, convertNullFunction(FaroUser::getKey)),
+			_SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
 				"faroUser.", "key", FinderColumn.Type.STRING, "=", true, true,
 				FaroUser::getKey));
 
-		_finderPathFetchByG_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "liveUserId"}, 0, 0, false,
-			FaroUser::getGroupId, FaroUser::getLiveUserId);
-
 		_uniquePersistenceFinderByG_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_L, _SQL_SELECT_FAROUSER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "liveUserId"}, 0, 0, false,
+				FaroUser::getGroupId, FaroUser::getLiveUserId),
+			_SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
 				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				FaroUser::getGroupId),
@@ -1511,28 +1121,24 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "liveUserId", FinderColumn.Type.LONG, "=", true,
 				true, FaroUser::getLiveUserId));
 
-		_finderPathWithPaginationFindByG_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "roleId"}, true);
-
-		_finderPathWithoutPaginationFindByG_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "roleId"}, true);
-
-		_finderPathCountByG_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "roleId"}, false);
-
 		_collectionPersistenceFinderByG_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_R,
-			_finderPathWithoutPaginationFindByG_R, _finderPathCountByG_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_R",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "roleId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "roleId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"groupId", "roleId"}, false),
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
 			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1542,15 +1148,15 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "roleId", FinderColumn.Type.LONG, "=", true, true,
 				FaroUser::getRoleId));
 
-		_finderPathFetchByG_E = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "emailAddress"}, 0, 2, false,
-			FaroUser::getGroupId,
-			convertNullFunction(FaroUser::getEmailAddress));
-
 		_uniquePersistenceFinderByG_E = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_E, _SQL_SELECT_FAROUSER_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_E",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "emailAddress"}, 0, 2, false,
+				FaroUser::getGroupId,
+				convertNullFunction(FaroUser::getEmailAddress)),
+			_SQL_SELECT_FAROUSER_WHERE, "",
 			new FinderColumn<>(
 				"faroUser.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				FaroUser::getGroupId),
@@ -1558,28 +1164,24 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "emailAddress", FinderColumn.Type.STRING, "=",
 				true, true, FaroUser::getEmailAddress));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByG_S,
-			_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"groupId", "status"}, false),
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
 			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1589,28 +1191,24 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, FaroUser::getStatus));
 
-		_finderPathWithPaginationFindByL_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"liveUserId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByL_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"liveUserId", "status"}, true);
-
-		_finderPathCountByL_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"liveUserId", "status"}, false);
-
 		_collectionPersistenceFinderByL_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByL_S,
-			_finderPathWithoutPaginationFindByL_S, _finderPathCountByL_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"liveUserId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"liveUserId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"liveUserId", "status"}, false),
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
 			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1620,28 +1218,24 @@ public class FaroUserPersistenceImpl
 				"faroUser.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, FaroUser::getStatus));
 
-		_finderPathWithPaginationFindByE_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_S",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"emailAddress", "status"}, true);
-
-		_finderPathWithoutPaginationFindByE_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"emailAddress", "status"}, 0, 1, true, null);
-
-		_finderPathCountByE_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_S",
-			new String[] {String.class.getName(), Integer.class.getName()},
-			new String[] {"emailAddress", "status"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByE_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByE_S,
-			_finderPathWithoutPaginationFindByE_S, _finderPathCountByE_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByE_S",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"emailAddress", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByE_S",
+				new String[] {String.class.getName(), Integer.class.getName()},
+				new String[] {"emailAddress", "status"}, 0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByE_S",
+				new String[] {String.class.getName(), Integer.class.getName()},
+				new String[] {"emailAddress", "status"}, 0, 1, false, null),
 			_SQL_SELECT_FAROUSER_WHERE, _SQL_COUNT_FAROUSER_WHERE,
 			FaroUserModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1720,4 +1314,4 @@ public class FaroUserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1340964498
+// LIFERAY-SERVICE-BUILDER-HASH:1154910224

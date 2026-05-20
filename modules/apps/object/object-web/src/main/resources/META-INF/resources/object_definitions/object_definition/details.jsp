@@ -30,6 +30,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "edit-x", objectDefinition.
 		module="{EditObjectDetails} from object-web"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"allowStandaloneObjectEntry", objectDefinition.isAllowStandaloneObjectEntry()
+			).put(
 				"backURL", portletDisplay.getURLBack()
 			).put(
 				"companies", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")

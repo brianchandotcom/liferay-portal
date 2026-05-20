@@ -37,10 +37,6 @@
 	.overview-column-side {
 		display: flex;
 		flex-direction: column;
-		max-height: calc(100vh - $profileHeaderMargin);
-		position: sticky;
-		top: $profileHeaderMargin;
-		transition: max-height 0.2s;
 
 		.segment-composition-card {
 			flex-shrink: 0;

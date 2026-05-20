@@ -59,7 +59,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetStatistics{expiredCount, expiringSoonCount, inDraftCount, reviewDateOverdueCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {assetStatistics{expiredCount, expiringSoonCount, inDraftCount, reviewDateOverdueCount, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public AssetStatistics assetStatistics() throws Exception {
@@ -237,4 +237,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-652470107
+// LIFERAY-REST-BUILDER-HASH:574024614

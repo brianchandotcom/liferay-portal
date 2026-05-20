@@ -584,6 +584,116 @@ describe('SpaceConnectedSitesModal', () => {
 			).toBeInTheDocument();
 		});
 
+		it('shows an error toast if connecting a site template fails', async () => {
+			mockFetch.mockImplementation(async () => {
+				return {
+					headers: new Headers([
+						['Content-Type', 'application/json'],
+					]),
+					json: async () => ({
+						items: [mockUnconnectedSiteTemplate],
+					}),
+				} as Response;
+			});
+
+			mockConnectSiteToSpace.mockResolvedValue({
+				data: null,
+				error: errorMessage,
+			});
+
+			renderComponent();
+			await waitForComponentRendering();
+
+			await userEvent.selectOptions(
+				screen.getByLabelText('sites'),
+				'site-templates'
+			);
+
+			await userEvent.click(
+				screen.getByPlaceholderText('select-a-site-template')
+			);
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('option', {
+						name: mockUnconnectedSiteTemplate.name,
+					})
+				).toBeInTheDocument();
+			});
+
+			await userEvent.click(
+				screen.getByRole('option', {
+					name: mockUnconnectedSiteTemplate.name,
+				})
+			);
+
+			await userEvent.click(
+				screen.getByRole('button', {name: 'connect'})
+			);
+
+			await assertErrorToast();
+		});
+
+		it('disables the connect button when a site template is already connected', async () => {
+			mockGetConnectedSitesFromSpace.mockResolvedValue({
+				data: {items: [mockConnectedSiteTemplate]},
+				error: null,
+			});
+
+			const alreadyConnectedTemplate: SiteTemplate = {
+				id: mockConnectedSiteTemplate.id,
+				name: mockConnectedSiteTemplate.name,
+				siteExternalReferenceCode:
+					mockConnectedSiteTemplate.externalReferenceCode,
+			};
+
+			mockFetch.mockImplementation(async () => {
+				return {
+					headers: new Headers([
+						['Content-Type', 'application/json'],
+					]),
+					json: async () => ({
+						items: [alreadyConnectedTemplate],
+					}),
+				} as Response;
+			});
+
+			renderComponent();
+
+			expect(
+				await screen.findByText(
+					`${mockConnectedSiteTemplate.descriptiveName} (site-template)`
+				)
+			).toBeInTheDocument();
+
+			await userEvent.selectOptions(
+				screen.getByLabelText('sites'),
+				'site-templates'
+			);
+
+			await userEvent.click(
+				screen.getByPlaceholderText('select-a-site-template')
+			);
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('option', {
+						name: alreadyConnectedTemplate.name,
+					})
+				).toBeInTheDocument();
+			});
+
+			await userEvent.click(
+				screen.getByRole('option', {
+					name: alreadyConnectedTemplate.name,
+				})
+			);
+
+			expect(
+				screen.getByRole('button', {name: 'connect'})
+			).toBeDisabled();
+		});
+
 		it('allows disconnecting a site template', async () => {
 			mockGetConnectedSitesFromSpace.mockResolvedValue({
 				data: {items: [mockConnectedSiteTemplate]},

@@ -10,7 +10,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import {NewImport} from '../../../../../src/main/resources/META-INF/resources/revamp/js/pages/import/NewImport';
-import {mockPortletDataHandlerSections} from '../../mocks/mockPortletDataHandlerSections';
+import {postImportPreview} from '../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview';
+import {mockImportPreview} from '../../mocks/mockImportPreview';
+import {mockSectionsForFilterTest} from '../../mocks/mockSectionsForFilterTest';
 
 jest.mock('frontend-js-web', () => {
 	const actual = jest.requireActual('frontend-js-web');
@@ -28,19 +30,7 @@ jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/revamp/js/services/postImportPreview',
 	() => ({
 		postImportPreview: jest.fn(() =>
-			Promise.resolve({
-				data: {
-					additionCount: 0,
-					author: 'Test User',
-					deletionCount: 0,
-					exportDate: '2000-07-27T00:00:00Z',
-					fileEntryId: 1,
-					fileName: 'site.lar',
-					fileSize: 4096,
-					portletDataHandlerSections: mockPortletDataHandlerSections,
-				},
-				error: null,
-			})
+			Promise.resolve({data: mockImportPreview, error: null})
 		),
 	})
 );
@@ -197,6 +187,13 @@ describe('NewImport', () => {
 	});
 
 	it('shows the file summary and the lar contents on the Data Selection step after uploading a file and clicking Continue', async () => {
+		(postImportPreview as jest.Mock).mockImplementationOnce(() =>
+			Promise.resolve({
+				data: {...mockImportPreview, deletionCount: 0},
+				error: null,
+			})
+		);
+
 		renderComponent();
 
 		await user.type(screen.getByLabelText(/^name/i), 'My import');
@@ -219,5 +216,46 @@ describe('NewImport', () => {
 
 		expect(screen.getByText('Design')).toBeInTheDocument();
 		expect(screen.getByText('Theme Settings')).toBeInTheDocument();
+
+		expect(screen.getByLabelText('import-permissions')).toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('replicate-selected-deletions')
+		).not.toBeInTheDocument();
+	});
+
+	it('filters deletions-only sections based on the deletions toggle', async () => {
+		(postImportPreview as jest.Mock).mockImplementationOnce(() =>
+			Promise.resolve({
+				data: {
+					...mockImportPreview,
+					previewPortletDataHandlerSections:
+						mockSectionsForFilterTest,
+				},
+				error: null,
+			})
+		);
+
+		renderComponent();
+
+		await user.type(screen.getByLabelText(/^name/i), 'My import');
+
+		await uploadFile('site.lar');
+
+		await waitFor(() => {
+			expect(
+				screen.getByRole('button', {name: /continue/i})
+			).toBeEnabled();
+		});
+
+		await user.click(screen.getByRole('button', {name: /continue/i}));
+
+		expect(screen.getByText('Additions Only')).toBeInTheDocument();
+		expect(screen.queryByText('Deletions Only')).not.toBeInTheDocument();
+		expect(screen.getByText('Both')).toBeInTheDocument();
+		expect(screen.getByText('No Counts')).toBeInTheDocument();
+
+		await user.click(screen.getByLabelText('replicate-selected-deletions'));
+
+		expect(screen.getByText('Deletions Only')).toBeInTheDocument();
 	});
 });

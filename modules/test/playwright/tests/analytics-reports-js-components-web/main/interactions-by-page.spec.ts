@@ -83,9 +83,9 @@ async function expectMatchingChartData({
 		'data-qa-tooltip-formatted-date'
 	);
 
-	chartLegends.forEach((chartLegend) => {
-		expect(page.getByText(chartLegend)).toBeVisible();
-	});
+	for (const chartLegend of chartLegends) {
+		await expect(page.getByText(chartLegend)).toBeVisible();
+	}
 
 	expect(page1ChartData).toBe(expectedResult.page1);
 	expect(page2ChartData).toBe(expectedResult.page2);

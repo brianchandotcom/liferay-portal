@@ -143,19 +143,6 @@ public class PatcherTicketHintUtil {
 	}
 
 	/**
-	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @return the matching patcher ticket hint, or <code>null</code> if a matching patcher ticket hint could not be found
-	 */
-	public static PatcherTicketHint fetchByPatcherProductVersionId(
-		long patcherProductVersionId) {
-
-		return getPersistence().fetchByPatcherProductVersionId(
-			patcherProductVersionId);
-	}
-
-	/**
 	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param patcherProductVersionId the patcher product version ID
@@ -253,6 +240,19 @@ public class PatcherTicketHintUtil {
 		return getPersistence().fetchByPrimaryKey(patcherTicketHintId);
 	}
 
+	/**
+	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @return the matching patcher ticket hint, or <code>null</code> if a matching patcher ticket hint could not be found
+	 */
+	public static PatcherTicketHint fetchByPatcherProductVersionId(
+		long patcherProductVersionId) {
+
+		return getPersistence().fetchByPatcherProductVersionId(
+			patcherProductVersionId);
+	}
+
 	public static PatcherTicketHintPersistence getPersistence() {
 		return _persistence;
 	}
@@ -266,4 +266,4 @@ public class PatcherTicketHintUtil {
 	private static volatile PatcherTicketHintPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:420422194
+// LIFERAY-SERVICE-BUILDER-HASH:-1233352632

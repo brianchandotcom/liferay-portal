@@ -169,14 +169,6 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			renderable.render();
 		}
 		finally {
-			restrictPortletServletRequest.removeAttribute(WebKeys.RENDER_PATH);
-			restrictPortletServletRequest.removeAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_COUNT);
-			restrictPortletServletRequest.removeAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_ID);
-			restrictPortletServletRequest.removeAttribute(
-				WebKeys.RENDER_PORTLET_COLUMN_POS);
-
 			restrictPortletServletRequest.mergeSharedAttributes();
 		}
 	}

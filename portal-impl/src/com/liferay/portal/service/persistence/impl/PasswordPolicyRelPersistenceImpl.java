@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.log.Log;
@@ -65,72 +64,14 @@ public class PasswordPolicyRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByPasswordPolicyId;
-	private FinderPath _finderPathWithoutPaginationFindByPasswordPolicyId;
-	private FinderPath _finderPathCountByPasswordPolicyId;
 	private CollectionPersistenceFinder<PasswordPolicyRel>
 		_collectionPersistenceFinderByPasswordPolicyId;
 
 	/**
-	 * Returns all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @return the matching password policy rels
-	 */
-	@Override
-	public List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId) {
-
-		return findByPasswordPolicyId(
-			passwordPolicyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PasswordPolicyRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param start the lower bound of the range of password policy rels
-	 * @param end the upper bound of the range of password policy rels (not inclusive)
-	 * @return the range of matching password policy rels
-	 */
-	@Override
-	public List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId, int start, int end) {
-
-		return findByPasswordPolicyId(passwordPolicyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PasswordPolicyRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param start the lower bound of the range of password policy rels
-	 * @param end the upper bound of the range of password policy rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching password policy rels
-	 */
-	@Override
-	public List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId, int start, int end,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
-
-		return findByPasswordPolicyId(
-			passwordPolicyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PasswordPolicyRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PasswordPolicyRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param passwordPolicyId the password policy ID
@@ -218,7 +159,6 @@ public class PasswordPolicyRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {passwordPolicyId});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<PasswordPolicyRel>
 		_uniquePersistenceFinderByC_C;
 
@@ -250,18 +190,6 @@ public class PasswordPolicyRelPersistenceImpl
 		}
 
 		return passwordPolicyRel;
-	}
-
-	/**
-	 * Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 */
-	@Override
-	public PasswordPolicyRel fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
 	}
 
 	/**
@@ -489,29 +417,28 @@ public class PasswordPolicyRelPersistenceImpl
 	 * Initializes the password policy rel persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByPasswordPolicyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPasswordPolicyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"passwordPolicyId"}, true);
-
-		_finderPathWithoutPaginationFindByPasswordPolicyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPasswordPolicyId",
-			new String[] {Long.class.getName()},
-			new String[] {"passwordPolicyId"}, true);
-
-		_finderPathCountByPasswordPolicyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByPasswordPolicyId", new String[] {Long.class.getName()},
-			new String[] {"passwordPolicyId"}, false);
-
 		_collectionPersistenceFinderByPasswordPolicyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPasswordPolicyId,
-				_finderPathWithoutPaginationFindByPasswordPolicyId,
-				_finderPathCountByPasswordPolicyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPasswordPolicyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"passwordPolicyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPasswordPolicyId",
+					new String[] {Long.class.getName()},
+					new String[] {"passwordPolicyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByPasswordPolicyId",
+					new String[] {Long.class.getName()},
+					new String[] {"passwordPolicyId"}, false),
 				_SQL_SELECT_PASSWORDPOLICYREL_WHERE,
 				_SQL_COUNT_PASSWORDPOLICYREL_WHERE,
 				PasswordPolicyRelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -521,15 +448,15 @@ public class PasswordPolicyRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					PasswordPolicyRel::getPasswordPolicyId));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			PasswordPolicyRel::getClassNameId, PasswordPolicyRel::getClassPK);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_PASSWORDPOLICYREL_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				PasswordPolicyRel::getClassNameId,
+				PasswordPolicyRel::getClassPK),
+			_SQL_SELECT_PASSWORDPOLICYREL_WHERE, "",
 			new FinderColumn<>(
 				"passwordPolicyRel.", "classNameId", FinderColumn.Type.LONG,
 				"=", true, true, PasswordPolicyRel::getClassNameId),
@@ -570,4 +497,4 @@ public class PasswordPolicyRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1870090225
+// LIFERAY-SERVICE-BUILDER-HASH:-347803962

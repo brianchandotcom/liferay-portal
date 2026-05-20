@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.ReleaseManager;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeSQLRecorder;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.EnvPropertiesUtil;
@@ -629,11 +630,25 @@ public class UpgradeReport {
 					return null;
 				}
 
+				Map<String, Long> lastKnownTotalCounts =
+					UpgradeLogProgressTracker.getLastKnownTotalCounts();
+
 				return TransformUtil.transform(
 					lastKnownProgresses.entrySet(),
-					entry -> StringBundler.concat(
-						entry.getKey(), " processed approximately ",
-						entry.getValue(), " rows"));
+					entry -> {
+						long totalCount = GetterUtil.getLong(
+							lastKnownTotalCounts.get(entry.getKey()));
+
+						if (totalCount > 0) {
+							return StringBundler.concat(
+								entry.getKey(), " processed approximately ",
+								entry.getValue(), " of ", totalCount, " rows");
+						}
+
+						return StringBundler.concat(
+							entry.getKey(), " processed approximately ",
+							entry.getValue(), " rows");
+					});
 			}
 		).put(
 			"longest.upgrade.processes",
@@ -738,7 +753,7 @@ public class UpgradeReport {
 		}
 
 		if (reportsDir == null) {
-			if (DBUpgrader.isUpgradeClient()) {
+			if (UpgradeProcessUtil.isUpgradeClient()) {
 				reportsDir = new File(".", "reports");
 			}
 			else {

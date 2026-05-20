@@ -85,62 +85,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63;.
@@ -232,69 +178,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where uuid = &#63; and companyId = &#63;.
@@ -391,7 +276,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathFetchByC_C_T;
 	private UniquePersistenceFinder<CommerceMLForecastAlertEntry>
 		_uniquePersistenceFinderByC_C_T;
 
@@ -426,21 +310,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 		}
 
 		return commerceMLForecastAlertEntry;
-	}
-
-	/**
-	 * Returns the commerce ml forecast alert entry where companyId = &#63; and commerceAccountId = &#63; and timestamp = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param timestamp the timestamp
-	 * @return the matching commerce ml forecast alert entry, or <code>null</code> if a matching commerce ml forecast alert entry could not be found
-	 */
-	@Override
-	public CommerceMLForecastAlertEntry fetchByC_C_T(
-		long companyId, long commerceAccountId, Date timestamp) {
-
-		return fetchByC_C_T(companyId, commerceAccountId, timestamp, true);
 	}
 
 	/**
@@ -498,76 +367,8 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			new Object[] {companyId, commerceAccountId, timestamp});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_C_S;
-	private FinderPath _finderPathCountByC_C_S;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByC_C_S;
-
-	/**
-	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status, int start,
-		int end) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountId the commerce account ID
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long commerceAccountId, int status, int start, int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByC_C_S(
-			companyId, commerceAccountId, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;.
@@ -660,76 +461,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @return the matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @return the range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status, int start,
-		int end) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceMLForecastAlertEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param commerceAccountIds the commerce account IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of commerce ml forecast alert entries
-	 * @param end the upper bound of the range of commerce ml forecast alert entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce ml forecast alert entries
-	 */
-	@Override
-	public List<CommerceMLForecastAlertEntry> findByC_C_S(
-		long companyId, long[] commerceAccountIds, int status, int start,
-		int end,
-		OrderByComparator<CommerceMLForecastAlertEntry> orderByComparator) {
-
-		return findByC_C_S(
-			companyId, commerceAccountIds, status, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce ml forecast alert entries where companyId = &#63; and commerceAccountId = &#63; and status = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -812,8 +543,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_GtRc_S;
-	private FinderPath _finderPathWithPaginationCountByC_C_GtRc_S;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByC_C_GtRc_S;
 
@@ -1167,8 +896,6 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C_LtRc_S;
-	private FinderPath _finderPathWithPaginationCountByC_C_LtRc_S;
 	private CollectionPersistenceFinder<CommerceMLForecastAlertEntry>
 		_collectionPersistenceFinderByC_C_LtRc_S;
 
@@ -1766,27 +1493,23 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
@@ -1796,30 +1519,25 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				CommerceMLForecastAlertEntry::getUuid));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
@@ -1833,18 +1551,19 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CommerceMLForecastAlertEntry::getCompanyId));
 
-		_finderPathFetchByC_C_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "timestamp"}, 0, 0,
-			false, CommerceMLForecastAlertEntry::getCompanyId,
-			CommerceMLForecastAlertEntry::getCommerceAccountId,
-			convertDateFunction(CommerceMLForecastAlertEntry::getTimestamp));
-
 		_uniquePersistenceFinderByC_C_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Date.class.getName()
+				},
+				new String[] {"companyId", "commerceAccountId", "timestamp"}, 0,
+				0, false, CommerceMLForecastAlertEntry::getCompanyId,
+				CommerceMLForecastAlertEntry::getCommerceAccountId,
+				convertDateFunction(
+					CommerceMLForecastAlertEntry::getTimestamp)),
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceMLForecastAlertEntry.", "companyId",
@@ -1859,34 +1578,33 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				FinderColumn.Type.DATE, "=", true, true,
 				CommerceMLForecastAlertEntry::getTimestamp));
 
-		_finderPathWithPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "status"}, true);
-
-		_finderPathCountByC_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "commerceAccountId", "status"}, false);
-
 		_collectionPersistenceFinderByC_C_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C_S,
-			_finderPathWithoutPaginationFindByC_C_S, _finderPathCountByC_C_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "commerceAccountId", "status"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "commerceAccountId", "status"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"companyId", "commerceAccountId", "status"},
+				false),
 			_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 			CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
@@ -1904,34 +1622,34 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				CommerceMLForecastAlertEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_C_GtRc_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_GtRc_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Double.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "commerceAccountId", "relativeChange", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByC_C_GtRc_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_GtRc_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Double.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "commerceAccountId", "relativeChange", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_C_GtRc_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_GtRc_S, null,
-				_finderPathWithPaginationCountByC_C_GtRc_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_GtRc_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Double.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "commerceAccountId", "relativeChange",
+						"status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_GtRc_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Double.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "commerceAccountId", "relativeChange",
+						"status"
+					},
+					false),
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
@@ -1953,34 +1671,34 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					CommerceMLForecastAlertEntry::getStatus));
 
-		_finderPathWithPaginationFindByC_C_LtRc_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtRc_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Double.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "commerceAccountId", "relativeChange", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByC_C_LtRc_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_LtRc_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Double.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"companyId", "commerceAccountId", "relativeChange", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_C_LtRc_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_C_LtRc_S, null,
-				_finderPathWithPaginationCountByC_C_LtRc_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C_LtRc_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Double.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "commerceAccountId", "relativeChange",
+						"status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_C_LtRc_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Double.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"companyId", "commerceAccountId", "relativeChange",
+						"status"
+					},
+					false),
 				_SQL_SELECT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				_SQL_COUNT_COMMERCEMLFORECASTALERTENTRY_WHERE,
 				CommerceMLForecastAlertEntryModelImpl.ORDER_BY_JPQL,
@@ -2080,4 +1798,4 @@ public class CommerceMLForecastAlertEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1474488144
+// LIFERAY-SERVICE-BUILDER-HASH:1638818213

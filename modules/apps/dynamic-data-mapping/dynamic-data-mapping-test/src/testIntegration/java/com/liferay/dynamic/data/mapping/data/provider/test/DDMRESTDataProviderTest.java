@@ -709,10 +709,12 @@ public class DDMRESTDataProviderTest {
 	}
 
 	private static final String _GET_COUNTRIES_URL =
-		"http://localhost:8080/api/jsonws/country/get-countries";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/api/jsonws/country/get-countries";
 
 	private static final String _GET_COUNTRY_BY_NAME_URL =
-		"http://localhost:8080/api/jsonws/country/get-country-by-name";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/api/jsonws/country/get-country-by-name";
 
 	private static ServiceRegistration<Application> _serviceRegistration;
 

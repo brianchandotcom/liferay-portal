@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -77,68 +76,14 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUserId;
-	private FinderPath _finderPathWithoutPaginationFindByUserId;
-	private FinderPath _finderPathCountByUserId;
 	private CollectionPersistenceFinder<SharepointOAuth2TokenEntry>
 		_collectionPersistenceFinderByUserId;
 
 	/**
-	 * Returns all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching sharepoint o auth2 token entries
-	 */
-	@Override
-	public List<SharepointOAuth2TokenEntry> findByUserId(long userId) {
-		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of sharepoint o auth2 token entries
-	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	 * @return the range of matching sharepoint o auth2 token entries
-	 */
-	@Override
-	public List<SharepointOAuth2TokenEntry> findByUserId(
-		long userId, int start, int end) {
-
-		return findByUserId(userId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of sharepoint o auth2 token entries
-	 * @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching sharepoint o auth2 token entries
-	 */
-	@Override
-	public List<SharepointOAuth2TokenEntry> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<SharepointOAuth2TokenEntry> orderByComparator) {
-
-		return findByUserId(userId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the sharepoint o auth2 token entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SharepointOAuth2TokenEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -224,7 +169,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private FinderPath _finderPathFetchByU_C;
 	private UniquePersistenceFinder<SharepointOAuth2TokenEntry>
 		_uniquePersistenceFinderByU_C;
 
@@ -258,20 +202,6 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 		}
 
 		return sharepointOAuth2TokenEntry;
-	}
-
-	/**
-	 * Returns the sharepoint o auth2 token entry where userId = &#63; and configurationPid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param configurationPid the configuration pid
-	 * @return the matching sharepoint o auth2 token entry, or <code>null</code> if a matching sharepoint o auth2 token entry could not be found
-	 */
-	@Override
-	public SharepointOAuth2TokenEntry fetchByU_C(
-		long userId, String configurationPid) {
-
-		return fetchByU_C(userId, configurationPid, true);
 	}
 
 	/**
@@ -530,28 +460,25 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"userId"}, true);
-
-		_finderPathWithoutPaginationFindByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, true);
-
-		_finderPathCountByUserId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"},
-			false);
-
 		_collectionPersistenceFinderByUserId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUserId,
-				_finderPathWithoutPaginationFindByUserId,
-				_finderPathCountByUserId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
+					new String[] {Long.class.getName()},
+					new String[] {"userId"}, false),
 				_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				_SQL_COUNT_SHAREPOINTOAUTH2TOKENENTRY_WHERE,
 				SharepointOAuth2TokenEntryModelImpl.ORDER_BY_JPQL,
@@ -561,16 +488,15 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					SharepointOAuth2TokenEntry::getUserId));
 
-		_finderPathFetchByU_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"userId", "configurationPid"}, 0, 2, false,
-			SharepointOAuth2TokenEntry::getUserId,
-			convertNullFunction(
-				SharepointOAuth2TokenEntry::getConfigurationPid));
-
 		_uniquePersistenceFinderByU_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByU_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByU_C",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"userId", "configurationPid"}, 0, 2, false,
+				SharepointOAuth2TokenEntry::getUserId,
+				convertNullFunction(
+					SharepointOAuth2TokenEntry::getConfigurationPid)),
 			_SQL_SELECT_SHAREPOINTOAUTH2TOKENENTRY_WHERE, "",
 			new FinderColumn<>(
 				"sharepointOAuth2TokenEntry.", "userId", FinderColumn.Type.LONG,
@@ -646,4 +572,4 @@ public class SharepointOAuth2TokenEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-495525729
+// LIFERAY-SERVICE-BUILDER-HASH:1503530655

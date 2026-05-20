@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -73,72 +72,14 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLocalizedEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByLocalizedEntryId;
-	private FinderPath _finderPathCountByLocalizedEntryId;
 	private CollectionPersistenceFinder<LocalizedEntryLocalization>
 		_collectionPersistenceFinderByLocalizedEntryId;
 
 	/**
-	 * Returns all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @return the matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId) {
-
-		return findByLocalizedEntryId(
-			localizedEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param start the lower bound of the range of localized entry localizations
-	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
-	 * @return the range of matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId, int start, int end) {
-
-		return findByLocalizedEntryId(localizedEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param start the lower bound of the range of localized entry localizations
-	 * @param end the upper bound of the range of localized entry localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching localized entry localizations
-	 */
-	@Override
-	public List<LocalizedEntryLocalization> findByLocalizedEntryId(
-		long localizedEntryId, int start, int end,
-		OrderByComparator<LocalizedEntryLocalization> orderByComparator) {
-
-		return findByLocalizedEntryId(
-			localizedEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the localized entry localizations where localizedEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LocalizedEntryLocalizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param localizedEntryId the localized entry ID
@@ -225,7 +166,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 			finderCache, new Object[] {localizedEntryId});
 	}
 
-	private FinderPath _finderPathFetchByLocalizedEntryId_LanguageId;
 	private UniquePersistenceFinder<LocalizedEntryLocalization>
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId;
 
@@ -260,21 +200,6 @@ public class LocalizedEntryLocalizationPersistenceImpl
 		}
 
 		return localizedEntryLocalization;
-	}
-
-	/**
-	 * Returns the localized entry localization where localizedEntryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param localizedEntryId the localized entry ID
-	 * @param languageId the language ID
-	 * @return the matching localized entry localization, or <code>null</code> if a matching localized entry localization could not be found
-	 */
-	@Override
-	public LocalizedEntryLocalization fetchByLocalizedEntryId_LanguageId(
-		long localizedEntryId, String languageId) {
-
-		return fetchByLocalizedEntryId_LanguageId(
-			localizedEntryId, languageId, true);
 	}
 
 	/**
@@ -517,29 +442,28 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLocalizedEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"localizedEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByLocalizedEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"localizedEntryId"}, true);
-
-		_finderPathCountByLocalizedEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLocalizedEntryId", new String[] {Long.class.getName()},
-			new String[] {"localizedEntryId"}, false);
-
 		_collectionPersistenceFinderByLocalizedEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLocalizedEntryId,
-				_finderPathWithoutPaginationFindByLocalizedEntryId,
-				_finderPathCountByLocalizedEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLocalizedEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"localizedEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLocalizedEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"localizedEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLocalizedEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"localizedEntryId"}, false),
 				_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_LOCALIZEDENTRYLOCALIZATION_WHERE,
 				LocalizedEntryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -549,16 +473,17 @@ public class LocalizedEntryLocalizationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LocalizedEntryLocalization::getLocalizedEntryId));
 
-		_finderPathFetchByLocalizedEntryId_LanguageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByLocalizedEntryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"localizedEntryId", "languageId"}, 0, 2, false,
-			LocalizedEntryLocalization::getLocalizedEntryId,
-			convertNullFunction(LocalizedEntryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByLocalizedEntryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByLocalizedEntryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY,
+					"fetchByLocalizedEntryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"localizedEntryId", "languageId"}, 0, 2,
+					false, LocalizedEntryLocalization::getLocalizedEntryId,
+					convertNullFunction(
+						LocalizedEntryLocalization::getLanguageId)),
 				_SQL_SELECT_LOCALIZEDENTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"localizedEntryLocalization.", "localizedEntryId",
@@ -635,4 +560,4 @@ public class LocalizedEntryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:792574592
+// LIFERAY-SERVICE-BUILDER-HASH:412304633

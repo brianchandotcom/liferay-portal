@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -254,13 +255,14 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 						connection,
 						StringBundler.concat(
 							"insert into Country (mvccVersion, uuid_, ",
-							"defaultLanguageId, countryId, companyId, userId, ",
-							"userName, createDate, modifiedDate, a2, a3, ",
-							"active_, billingAllowed, groupFilterEnabled, ",
-							"idd_, name, number_, position, shippingAllowed, ",
-							"subjectToVAT, zipRequired, lastPublishDate) ",
-							"values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
-							"?, ?, ?, ?, ? , ?, ?, ?)"));
+							"externalReferenceCode, defaultLanguageId, ",
+							"countryId, companyId, userId, userName, ",
+							"createDate, modifiedDate, a2, a3, active_, ",
+							"billingAllowed, groupFilterEnabled, idd_, name, ",
+							"number_, position, shippingAllowed, ",
+							"subjectToVAT, zipRequired, lastPublishDate, ",
+							"status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+							"?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
 				PreparedStatement preparedStatement2 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
@@ -273,11 +275,12 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 						connection,
 						StringBundler.concat(
 							"insert into Region (mvccVersion, uuid_, ",
-							"defaultLanguageId, regionId, companyId, userId, ",
-							"userName, createDate, modifiedDate, countryId, ",
-							"active_, name, position, regionCode, ",
-							"lastPublishDate) values (?, ?, ?, ?, ?, ?, ?, ?, ",
-							"?, ?, ?, ?, ?, ?, ?)"));
+							"externalReferenceCode, defaultLanguageId, ",
+							"regionId, companyId, userId, userName, ",
+							"createDate, modifiedDate, countryId, active_, ",
+							"name, position, regionCode, lastPublishDate, ",
+							"status) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ",
+							"?, ?, ?, ?, ?, ?)"));
 				PreparedStatement preparedStatement4 =
 					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 						connection,
@@ -315,35 +318,37 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 			_preparedStatement1.setLong(1, 0L);
 			_preparedStatement1.setString(2, PortalUUIDUtil.generate());
+			_preparedStatement1.setString(3, countryJSONObject.getString("a2"));
 			_preparedStatement1.setString(
-				3,
+				4,
 				UpgradeProcessUtil.getDefaultLanguageId(
 					_company.getCompanyId()));
-			_preparedStatement1.setLong(4, countryId);
-			_preparedStatement1.setLong(5, _company.getCompanyId());
-			_preparedStatement1.setLong(6, _guestUser.getUserId());
-			_preparedStatement1.setString(7, _guestUser.getFullName());
-			_preparedStatement1.setDate(8, _createDate);
+			_preparedStatement1.setLong(5, countryId);
+			_preparedStatement1.setLong(6, _company.getCompanyId());
+			_preparedStatement1.setLong(7, _guestUser.getUserId());
+			_preparedStatement1.setString(8, _guestUser.getFullName());
 			_preparedStatement1.setDate(9, _createDate);
+			_preparedStatement1.setDate(10, _createDate);
 			_preparedStatement1.setString(
-				10, countryJSONObject.getString("a2"));
+				11, countryJSONObject.getString("a2"));
 			_preparedStatement1.setString(
-				11, countryJSONObject.getString("a3"));
-			_preparedStatement1.setBoolean(12, true);
+				12, countryJSONObject.getString("a3"));
 			_preparedStatement1.setBoolean(13, true);
-			_preparedStatement1.setBoolean(14, false);
+			_preparedStatement1.setBoolean(14, true);
+			_preparedStatement1.setBoolean(15, false);
 			_preparedStatement1.setString(
-				15, countryJSONObject.getString("idd"));
+				16, countryJSONObject.getString("idd"));
 			_preparedStatement1.setString(
-				16, countryJSONObject.getString("name"));
+				17, countryJSONObject.getString("name"));
 			_preparedStatement1.setString(
-				17, countryJSONObject.getString("number"));
-			_preparedStatement1.setDouble(18, 0.0);
-			_preparedStatement1.setBoolean(19, true);
-			_preparedStatement1.setBoolean(20, false);
+				18, countryJSONObject.getString("number"));
+			_preparedStatement1.setDouble(19, 0.0);
+			_preparedStatement1.setBoolean(20, true);
+			_preparedStatement1.setBoolean(21, false);
 			_preparedStatement1.setBoolean(
-				21, countryJSONObject.getBoolean("zipRequired"));
-			_preparedStatement1.setDate(22, _createDate);
+				22, countryJSONObject.getBoolean("zipRequired"));
+			_preparedStatement1.setDate(23, _createDate);
+			_preparedStatement1.setInt(24, WorkflowConstants.STATUS_APPROVED);
 
 			_preparedStatement1.addBatch();
 
@@ -365,32 +370,34 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			_processRegions(countryJSONObject.getString("a2"), countryId);
 		}
 
-		private void _addRegion(long countryId, JSONObject regionJSONObject)
+		private void _addRegion(
+				String a2, long countryId, JSONObject regionJSONObject)
 			throws Exception {
 
 			long regionId = _regionCounter.incrementAndGet();
+			String regionCode = regionJSONObject.getString("regionCode");
 			String regionName = regionJSONObject.getString("name");
 
 			_preparedStatement3.setLong(1, 0L);
 			_preparedStatement3.setString(2, PortalUUIDUtil.generate());
+			_preparedStatement3.setString(3, a2 + "_" + regionCode);
 			_preparedStatement3.setString(
-				3,
+				4,
 				UpgradeProcessUtil.getDefaultLanguageId(
 					_company.getCompanyId()));
-			_preparedStatement3.setLong(4, regionId);
-			_preparedStatement3.setLong(5, _company.getCompanyId());
-			_preparedStatement3.setLong(6, _guestUser.getUserId());
-			_preparedStatement3.setString(7, _guestUser.getFullName());
-			_preparedStatement3.setDate(8, _createDate);
+			_preparedStatement3.setLong(5, regionId);
+			_preparedStatement3.setLong(6, _company.getCompanyId());
+			_preparedStatement3.setLong(7, _guestUser.getUserId());
+			_preparedStatement3.setString(8, _guestUser.getFullName());
 			_preparedStatement3.setDate(9, _createDate);
-			_preparedStatement3.setLong(10, countryId);
-			_preparedStatement3.setBoolean(11, true);
-			_preparedStatement3.setString(
-				12, regionJSONObject.getString("name"));
-			_preparedStatement3.setDouble(13, 0.0);
-			_preparedStatement3.setString(
-				14, regionJSONObject.getString("regionCode"));
-			_preparedStatement3.setDate(15, _createDate);
+			_preparedStatement3.setDate(10, _createDate);
+			_preparedStatement3.setLong(11, countryId);
+			_preparedStatement3.setBoolean(12, true);
+			_preparedStatement3.setString(13, regionName);
+			_preparedStatement3.setDouble(14, 0.0);
+			_preparedStatement3.setString(15, regionCode);
+			_preparedStatement3.setDate(16, _createDate);
+			_preparedStatement3.setInt(17, WorkflowConstants.STATUS_APPROVED);
 
 			_preparedStatement3.addBatch();
 
@@ -483,7 +490,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			for (int i = 0; i < regionsJSONArray.length(); i++) {
 				JSONObject regionJSONObject = regionsJSONArray.getJSONObject(i);
 
-				_addRegion(countryId, regionJSONObject);
+				_addRegion(a2, countryId, regionJSONObject);
 			}
 		}
 

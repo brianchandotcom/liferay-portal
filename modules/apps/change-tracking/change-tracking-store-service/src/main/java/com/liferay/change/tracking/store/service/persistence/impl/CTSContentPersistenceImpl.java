@@ -82,67 +82,8 @@ public class CTSContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByR_P;
-	private FinderPath _finderPathWithoutPaginationFindByR_P;
-	private FinderPath _finderPathCountByR_P;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByR_P;
-
-	/**
-	 * Returns all the cts contents where repositoryId = &#63; and path = &#63;.
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @return the matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByR_P(long repositoryId, String path) {
-		return findByR_P(
-			repositoryId, path, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cts contents where repositoryId = &#63; and path = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @return the range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByR_P(
-		long repositoryId, String path, int start, int end) {
-
-		return findByR_P(repositoryId, path, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cts contents where repositoryId = &#63; and path = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByR_P(
-		long repositoryId, String path, int start, int end,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		return findByR_P(
-			repositoryId, path, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cts contents where repositoryId = &#63; and path = &#63;.
@@ -239,76 +180,8 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {repositoryId, path});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_R_S;
-	private FinderPath _finderPathCountByC_R_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_S;
-
-	/**
-	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @return the matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_S(
-		long companyId, long repositoryId, String storeType) {
-
-		return findByC_R_S(
-			companyId, repositoryId, storeType, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @return the range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_S(
-		long companyId, long repositoryId, String storeType, int start,
-		int end) {
-
-		return findByC_R_S(
-			companyId, repositoryId, storeType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param storeType the store type
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_S(
-		long companyId, long repositoryId, String storeType, int start, int end,
-		OrderByComparator<CTSContent> orderByComparator) {
-
-		return findByC_R_S(
-			companyId, repositoryId, storeType, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cts contents where companyId = &#63; and repositoryId = &#63; and storeType = &#63;.
@@ -416,79 +289,8 @@ public class CTSContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, storeType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_R_P_S;
-	private FinderPath _finderPathCountByC_R_P_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_P_S;
-
-	/**
-	 * Returns all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @return the matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_P_S(
-		long companyId, long repositoryId, String path, String storeType) {
-
-		return findByC_R_P_S(
-			companyId, repositoryId, path, storeType, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @return the range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_P_S(
-		long companyId, long repositoryId, String path, String storeType,
-		int start, int end) {
-
-		return findByC_R_P_S(
-			companyId, repositoryId, path, storeType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTSContentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param storeType the store type
-	 * @param start the lower bound of the range of cts contents
-	 * @param end the upper bound of the range of cts contents (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cts contents
-	 */
-	@Override
-	public List<CTSContent> findByC_R_P_S(
-		long companyId, long repositoryId, String path, String storeType,
-		int start, int end, OrderByComparator<CTSContent> orderByComparator) {
-
-		return findByC_R_P_S(
-			companyId, repositoryId, path, storeType, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the cts contents where companyId = &#63; and repositoryId = &#63; and path = &#63; and storeType = &#63;.
@@ -605,8 +407,6 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_R_LikeP_S;
-	private FinderPath _finderPathWithPaginationCountByC_R_LikeP_S;
 	private CollectionPersistenceFinder<CTSContent>
 		_collectionPersistenceFinderByC_R_LikeP_S;
 
@@ -793,7 +593,6 @@ public class CTSContentPersistenceImpl
 			new Object[] {companyId, repositoryId, path, storeType});
 	}
 
-	private FinderPath _finderPathFetchByC_R_P_V_S;
 	private UniquePersistenceFinder<CTSContent>
 		_uniquePersistenceFinderByC_R_P_V_S;
 
@@ -833,25 +632,6 @@ public class CTSContentPersistenceImpl
 		}
 
 		return ctsContent;
-	}
-
-	/**
-	 * Returns the cts content where companyId = &#63; and repositoryId = &#63; and path = &#63; and version = &#63; and storeType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param repositoryId the repository ID
-	 * @param path the path
-	 * @param version the version
-	 * @param storeType the store type
-	 * @return the matching cts content, or <code>null</code> if a matching cts content could not be found
-	 */
-	@Override
-	public CTSContent fetchByC_R_P_V_S(
-		long companyId, long repositoryId, String path, String version,
-		String storeType) {
-
-		return fetchByC_R_P_V_S(
-			companyId, repositoryId, path, version, storeType, true);
 	}
 
 	/**
@@ -1181,28 +961,24 @@ public class CTSContentPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"repositoryId", "path_"}, true);
-
-		_finderPathWithoutPaginationFindByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, 0, 2, true, null);
-
-		_finderPathCountByR_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"repositoryId", "path_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByR_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_P,
-			_finderPathWithoutPaginationFindByR_P, _finderPathCountByR_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_P",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"repositoryId", "path_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"repositoryId", "path_"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_P",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"repositoryId", "path_"}, 0, 2, false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1212,36 +988,32 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "path", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getPath));
 
-		_finderPathWithPaginationFindByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, true);
-
-		_finderPathWithoutPaginationFindByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4, true,
-			null);
-
-		_finderPathCountByC_R_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByC_R_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_R_S,
-			_finderPathWithoutPaginationFindByC_R_S, _finderPathCountByC_R_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"companyId", "repositoryId", "storeType"}, 0, 4,
+				false, null),
 			_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 			CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1254,42 +1026,43 @@ public class CTSContentPersistenceImpl
 				"ctsContent.", "storeType", FinderColumn.Type.STRING, "=", true,
 				true, CTSContent::getStoreType));
 
-		_finderPathWithPaginationFindByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			true);
-
-		_finderPathWithoutPaginationFindByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
-			12, true, null);
-
-		_finderPathCountByC_R_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"}, 0,
-			12, false, null);
-
 		_collectionPersistenceFinderByC_R_P_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R_P_S,
-				_finderPathWithoutPaginationFindByC_R_P_S,
-				_finderPathCountByC_R_P_S, _SQL_SELECT_CTSCONTENT_WHERE,
-				_SQL_COUNT_CTSCONTENT_WHERE, CTSContentModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					0, 12, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					0, 12, false, null),
+				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
+				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"ctsContent.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, CTSContent::getCompanyId),
@@ -1303,30 +1076,33 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
 
-		_finderPathWithPaginationFindByC_R_LikeP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			true);
-
-		_finderPathWithPaginationCountByC_R_LikeP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_R_LikeP_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"companyId", "repositoryId", "path_", "storeType"},
-			false);
-
 		_collectionPersistenceFinderByC_R_LikeP_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_R_LikeP_S, null,
-				_finderPathWithPaginationCountByC_R_LikeP_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_LikeP_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_R_LikeP_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"companyId", "repositoryId", "path_", "storeType"
+					},
+					false),
 				_SQL_SELECT_CTSCONTENT_WHERE, _SQL_COUNT_CTSCONTENT_WHERE,
 				CTSContentModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1342,23 +1118,24 @@ public class CTSContentPersistenceImpl
 					"ctsContent.", "storeType", FinderColumn.Type.STRING, "=",
 					true, true, CTSContent::getStoreType));
 
-		_finderPathFetchByC_R_P_V_S = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"companyId", "repositoryId", "path_", "version", "storeType"
-			},
-			0, 28, false, CTSContent::getCompanyId, CTSContent::getRepositoryId,
-			convertNullFunction(CTSContent::getPath),
-			convertNullFunction(CTSContent::getVersion),
-			convertNullFunction(CTSContent::getStoreType));
-
 		_uniquePersistenceFinderByC_R_P_V_S = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R_P_V_S, _SQL_SELECT_CTSCONTENT_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R_P_V_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {
+					"companyId", "repositoryId", "path_", "version", "storeType"
+				},
+				0, 28, false, CTSContent::getCompanyId,
+				CTSContent::getRepositoryId,
+				convertNullFunction(CTSContent::getPath),
+				convertNullFunction(CTSContent::getVersion),
+				convertNullFunction(CTSContent::getStoreType)),
+			_SQL_SELECT_CTSCONTENT_WHERE, "",
 			new FinderColumn<>(
 				"ctsContent.", "companyId", FinderColumn.Type.LONG, "=", true,
 				true, CTSContent::getCompanyId),
@@ -1447,4 +1224,4 @@ public class CTSContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:683189703
+// LIFERAY-SERVICE-BUILDER-HASH:974583559

@@ -43,13 +43,15 @@ export const getFilterCriterionIMap = (valueIMap: CustomValue, index: number) =>
 export const getIndexFromPropertyName = (
 	valueIMap: CustomValue,
 	propertyName: string
-): number =>
-	valueIMap
-		.getIn(['criterionGroup', 'items'])
-		.findIndex(
-			(entry: Map<string, any>) =>
-				entry.get('propertyName') === propertyName
-		);
+): number => {
+	const items = valueIMap.getIn(['criterionGroup', 'items']);
+
+	if (!items) return -1;
+
+	return items.findIndex(
+		(entry: Map<string, any>) => entry.get('propertyName') === propertyName
+	);
+};
 
 /**
  * Get the operator name from the criterion at the specified index in the valueIMap.

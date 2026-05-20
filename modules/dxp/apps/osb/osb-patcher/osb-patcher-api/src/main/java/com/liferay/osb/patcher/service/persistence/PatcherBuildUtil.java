@@ -126,55 +126,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds where patcherFixId = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherFixId(long patcherFixId) {
-		return getPersistence().findByPatcherFixId(patcherFixId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where patcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherFixId(
-		long patcherFixId, int start, int end) {
-
-		return getPersistence().findByPatcherFixId(patcherFixId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherFixId(
-		long patcherFixId, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByPatcherFixId(
-			patcherFixId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63;.
 	 *
 	 * <p>
@@ -229,37 +180,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByPatcherFixId(
-		long patcherFixId) {
-
-		return getPersistence().filterFindByPatcherFixId(patcherFixId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where patcherFixId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByPatcherFixId(
-		long patcherFixId, int start, int end) {
-
-		return getPersistence().filterFindByPatcherFixId(
-			patcherFixId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds that the user has permissions to view where patcherFixId = &#63;.
 	 *
 	 * <p>
@@ -307,59 +227,6 @@ public class PatcherBuildUtil {
 	 */
 	public static int filterCountByPatcherFixId(long patcherFixId) {
 		return getPersistence().filterCountByPatcherFixId(patcherFixId);
-	}
-
-	/**
-	 * Returns all the patcher builds where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherProjectVersionId(
-		long patcherProjectVersionId) {
-
-		return getPersistence().findByPatcherProjectVersionId(
-			patcherProjectVersionId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end) {
-
-		return getPersistence().findByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -416,38 +283,6 @@ public class PatcherBuildUtil {
 
 		return getPersistence().fetchByPatcherProjectVersionId_First(
 			patcherProjectVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByPatcherProjectVersionId(
-		long patcherProjectVersionId) {
-
-		return getPersistence().filterFindByPatcherProjectVersionId(
-			patcherProjectVersionId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByPatcherProjectVersionId(
-		long patcherProjectVersionId, int start, int end) {
-
-		return getPersistence().filterFindByPatcherProjectVersionId(
-			patcherProjectVersionId, start, end);
 	}
 
 	/**
@@ -510,52 +345,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds where key = &#63;.
-	 *
-	 * @param key the key
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByKey(String key) {
-		return getPersistence().findByKey(key);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByKey(String key, int start, int end) {
-		return getPersistence().findByKey(key, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByKey(
-		String key, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByKey(key, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds where key = &#63;.
 	 *
 	 * <p>
@@ -607,34 +396,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds that the user has permission to view where key = &#63;.
-	 *
-	 * @param key the key
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByKey(String key) {
-		return getPersistence().filterFindByKey(key);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByKey(
-		String key, int start, int end) {
-
-		return getPersistence().filterFindByKey(key, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds that the user has permissions to view where key = &#63;.
 	 *
 	 * <p>
@@ -682,64 +443,6 @@ public class PatcherBuildUtil {
 	 */
 	public static int filterCountByKey(String key) {
 		return getPersistence().filterCountByKey(key);
-	}
-
-	/**
-	 * Returns all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_P(
-		long patcherAccountId, long patcherProductVersionId) {
-
-		return getPersistence().findByP_P(
-			patcherAccountId, patcherProductVersionId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_P(
-		long patcherAccountId, long patcherProductVersionId, int start,
-		int end) {
-
-		return getPersistence().findByP_P(
-			patcherAccountId, patcherProductVersionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_P(
-		long patcherAccountId, long patcherProductVersionId, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByP_P(
-			patcherAccountId, patcherProductVersionId, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -799,41 +502,6 @@ public class PatcherBuildUtil {
 
 		return getPersistence().fetchByP_P_First(
 			patcherAccountId, patcherProductVersionId, orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_P(
-		long patcherAccountId, long patcherProductVersionId) {
-
-		return getPersistence().filterFindByP_P(
-			patcherAccountId, patcherProductVersionId);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherAccountId the patcher account ID
-	 * @param patcherProductVersionId the patcher product version ID
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_P(
-		long patcherAccountId, long patcherProductVersionId, int start,
-		int end) {
-
-		return getPersistence().filterFindByP_P(
-			patcherAccountId, patcherProductVersionId, start, end);
 	}
 
 	/**
@@ -900,60 +568,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_C(
-		long patcherFixId, boolean childBuild) {
-
-		return getPersistence().findByP_C(patcherFixId, childBuild);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_C(
-		long patcherFixId, boolean childBuild, int start, int end) {
-
-		return getPersistence().findByP_C(patcherFixId, childBuild, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_C(
-		long patcherFixId, boolean childBuild, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByP_C(
-			patcherFixId, childBuild, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
 	 *
 	 * <p>
@@ -1010,39 +624,6 @@ public class PatcherBuildUtil {
 
 		return getPersistence().fetchByP_C_First(
 			patcherFixId, childBuild, orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_C(
-		long patcherFixId, boolean childBuild) {
-
-		return getPersistence().filterFindByP_C(patcherFixId, childBuild);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherFixId the patcher fix ID
-	 * @param childBuild the child build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_C(
-		long patcherFixId, boolean childBuild, int start, int end) {
-
-		return getPersistence().filterFindByP_C(
-			patcherFixId, childBuild, start, end);
 	}
 
 	/**
@@ -1111,17 +692,6 @@ public class PatcherBuildUtil {
 		throws com.liferay.osb.patcher.exception.NoSuchPatcherBuildException {
 
 		return getPersistence().findByK_KV(key, keyVersion);
-	}
-
-	/**
-	 * Returns the patcher build where key = &#63; and keyVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param key the key
-	 * @param keyVersion the key version
-	 * @return the matching patcher build, or <code>null</code> if a matching patcher build could not be found
-	 */
-	public static PatcherBuild fetchByK_KV(String key, double keyVersion) {
-		return getPersistence().fetchByK_KV(key, keyVersion);
 	}
 
 	/**
@@ -1559,60 +1129,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByK_L(
-		String key, boolean latestKeyBuild) {
-
-		return getPersistence().findByK_L(key, latestKeyBuild);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByK_L(
-		String key, boolean latestKeyBuild, int start, int end) {
-
-		return getPersistence().findByK_L(key, latestKeyBuild, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByK_L(
-		String key, boolean latestKeyBuild, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByK_L(
-			key, latestKeyBuild, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
 	 *
 	 * <p>
@@ -1671,39 +1187,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByK_L(
-		String key, boolean latestKeyBuild) {
-
-		return getPersistence().filterFindByK_L(key, latestKeyBuild);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param key the key
-	 * @param latestKeyBuild the latest key build
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByK_L(
-		String key, boolean latestKeyBuild, int start, int end) {
-
-		return getPersistence().filterFindByK_L(
-			key, latestKeyBuild, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds that the user has permissions to view where key = &#63; and latestKeyBuild = &#63;.
 	 *
 	 * <p>
@@ -1755,64 +1238,6 @@ public class PatcherBuildUtil {
 	 */
 	public static int filterCountByK_L(String key, boolean latestKeyBuild) {
 		return getPersistence().filterCountByK_L(key, latestKeyBuild);
-	}
-
-	/**
-	 * Returns all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByL_S(
-		boolean latestSupportTicketBuild, String supportTicket) {
-
-		return getPersistence().findByL_S(
-			latestSupportTicketBuild, supportTicket);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByL_S(
-		boolean latestSupportTicketBuild, String supportTicket, int start,
-		int end) {
-
-		return getPersistence().findByL_S(
-			latestSupportTicketBuild, supportTicket, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByL_S(
-		boolean latestSupportTicketBuild, String supportTicket, int start,
-		int end, OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByL_S(
-			latestSupportTicketBuild, supportTicket, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -1872,41 +1297,6 @@ public class PatcherBuildUtil {
 
 		return getPersistence().fetchByL_S_First(
 			latestSupportTicketBuild, supportTicket, orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByL_S(
-		boolean latestSupportTicketBuild, String supportTicket) {
-
-		return getPersistence().filterFindByL_S(
-			latestSupportTicketBuild, supportTicket);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param latestSupportTicketBuild the latest support ticket build
-	 * @param supportTicket the support ticket
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByL_S(
-		boolean latestSupportTicketBuild, String supportTicket, int start,
-		int end) {
-
-		return getPersistence().filterFindByL_S(
-			latestSupportTicketBuild, supportTicket, start, end);
 	}
 
 	/**
@@ -3047,73 +2437,6 @@ public class PatcherBuildUtil {
 	}
 
 	/**
-	 * Returns all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @return the matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_N_L_A(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name) {
-
-		return getPersistence().findByP_N_L_A(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_N_L_A(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name, int start, int end) {
-
-		return getPersistence().findByP_N_L_A(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
-			start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher builds
-	 */
-	public static List<PatcherBuild> findByP_N_L_A(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name, int start, int end,
-		OrderByComparator<PatcherBuild> orderByComparator) {
-
-		return getPersistence().findByP_N_L_A(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
-			start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
 	 *
 	 * <p>
@@ -3181,47 +2504,6 @@ public class PatcherBuildUtil {
 		return getPersistence().fetchByP_N_L_A_First(
 			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @return the matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_N_L_A(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name) {
-
-		return getPersistence().filterFindByP_N_L_A(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name);
-	}
-
-	/**
-	 * Returns a range of all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
-	 * </p>
-	 *
-	 * @param patcherProjectVersionId the patcher project version ID
-	 * @param accountEntryCode the account entry code
-	 * @param latestKeyBuild the latest key build
-	 * @param name the name
-	 * @param start the lower bound of the range of patcher builds
-	 * @param end the upper bound of the range of patcher builds (not inclusive)
-	 * @return the range of matching patcher builds that the user has permission to view
-	 */
-	public static List<PatcherBuild> filterFindByP_N_L_A(
-		long patcherProjectVersionId, String accountEntryCode,
-		boolean latestKeyBuild, String name, int start, int end) {
-
-		return getPersistence().filterFindByP_N_L_A(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
-			start, end);
 	}
 
 	/**
@@ -3785,6 +3067,724 @@ public class PatcherBuildUtil {
 		getPersistence().setPatcherFixes(pk, patcherFixes);
 	}
 
+	/**
+	 * Returns the patcher build where key = &#63; and keyVersion = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param key the key
+	 * @param keyVersion the key version
+	 * @return the matching patcher build, or <code>null</code> if a matching patcher build could not be found
+	 */
+	public static PatcherBuild fetchByK_KV(String key, double keyVersion) {
+		return getPersistence().fetchByK_KV(key, keyVersion);
+	}
+
+	/**
+	 * Returns all the patcher builds where patcherFixId = &#63;.
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherFixId(long patcherFixId) {
+		return getPersistence().findByPatcherFixId(patcherFixId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where patcherFixId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherFixId(
+		long patcherFixId, int start, int end) {
+
+		return getPersistence().findByPatcherFixId(patcherFixId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherFixId(
+		long patcherFixId, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByPatcherFixId(
+			patcherFixId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63;.
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByPatcherFixId(
+		long patcherFixId) {
+
+		return getPersistence().filterFindByPatcherFixId(patcherFixId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where patcherFixId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByPatcherFixId(
+		long patcherFixId, int start, int end) {
+
+		return getPersistence().filterFindByPatcherFixId(
+			patcherFixId, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where patcherProjectVersionId = &#63;.
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherProjectVersionId(
+		long patcherProjectVersionId) {
+
+		return getPersistence().findByPatcherProjectVersionId(
+			patcherProjectVersionId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where patcherProjectVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherProjectVersionId(
+		long patcherProjectVersionId, int start, int end) {
+
+		return getPersistence().findByPatcherProjectVersionId(
+			patcherProjectVersionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByPatcherProjectVersionId(
+		long patcherProjectVersionId, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByPatcherProjectVersionId(
+			patcherProjectVersionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByPatcherProjectVersionId(
+		long patcherProjectVersionId) {
+
+		return getPersistence().filterFindByPatcherProjectVersionId(
+			patcherProjectVersionId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByPatcherProjectVersionId(
+		long patcherProjectVersionId, int start, int end) {
+
+		return getPersistence().filterFindByPatcherProjectVersionId(
+			patcherProjectVersionId, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where key = &#63;.
+	 *
+	 * @param key the key
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByKey(String key) {
+		return getPersistence().findByKey(key);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByKey(String key, int start, int end) {
+		return getPersistence().findByKey(key, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByKey(
+		String key, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByKey(key, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where key = &#63;.
+	 *
+	 * @param key the key
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByKey(String key) {
+		return getPersistence().filterFindByKey(key);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where key = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByKey(
+		String key, int start, int end) {
+
+		return getPersistence().filterFindByKey(key, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
+	 *
+	 * @param patcherAccountId the patcher account ID
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_P(
+		long patcherAccountId, long patcherProductVersionId) {
+
+		return getPersistence().findByP_P(
+			patcherAccountId, patcherProductVersionId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherAccountId the patcher account ID
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_P(
+		long patcherAccountId, long patcherProductVersionId, int start,
+		int end) {
+
+		return getPersistence().findByP_P(
+			patcherAccountId, patcherProductVersionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherAccountId the patcher account ID
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_P(
+		long patcherAccountId, long patcherProductVersionId, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByP_P(
+			patcherAccountId, patcherProductVersionId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
+	 *
+	 * @param patcherAccountId the patcher account ID
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_P(
+		long patcherAccountId, long patcherProductVersionId) {
+
+		return getPersistence().filterFindByP_P(
+			patcherAccountId, patcherProductVersionId);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherAccountId the patcher account ID
+	 * @param patcherProductVersionId the patcher product version ID
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_P(
+		long patcherAccountId, long patcherProductVersionId, int start,
+		int end) {
+
+		return getPersistence().filterFindByP_P(
+			patcherAccountId, patcherProductVersionId, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param childBuild the child build
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_C(
+		long patcherFixId, boolean childBuild) {
+
+		return getPersistence().findByP_C(patcherFixId, childBuild);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param childBuild the child build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_C(
+		long patcherFixId, boolean childBuild, int start, int end) {
+
+		return getPersistence().findByP_C(patcherFixId, childBuild, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param childBuild the child build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_C(
+		long patcherFixId, boolean childBuild, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByP_C(
+			patcherFixId, childBuild, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param childBuild the child build
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_C(
+		long patcherFixId, boolean childBuild) {
+
+		return getPersistence().filterFindByP_C(patcherFixId, childBuild);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where patcherFixId = &#63; and childBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherFixId the patcher fix ID
+	 * @param childBuild the child build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_C(
+		long patcherFixId, boolean childBuild, int start, int end) {
+
+		return getPersistence().filterFindByP_C(
+			patcherFixId, childBuild, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
+	 *
+	 * @param key the key
+	 * @param latestKeyBuild the latest key build
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByK_L(
+		String key, boolean latestKeyBuild) {
+
+		return getPersistence().findByK_L(key, latestKeyBuild);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param latestKeyBuild the latest key build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByK_L(
+		String key, boolean latestKeyBuild, int start, int end) {
+
+		return getPersistence().findByK_L(key, latestKeyBuild, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param latestKeyBuild the latest key build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByK_L(
+		String key, boolean latestKeyBuild, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByK_L(
+			key, latestKeyBuild, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
+	 *
+	 * @param key the key
+	 * @param latestKeyBuild the latest key build
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByK_L(
+		String key, boolean latestKeyBuild) {
+
+		return getPersistence().filterFindByK_L(key, latestKeyBuild);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where key = &#63; and latestKeyBuild = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param key the key
+	 * @param latestKeyBuild the latest key build
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByK_L(
+		String key, boolean latestKeyBuild, int start, int end) {
+
+		return getPersistence().filterFindByK_L(
+			key, latestKeyBuild, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
+	 *
+	 * @param latestSupportTicketBuild the latest support ticket build
+	 * @param supportTicket the support ticket
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByL_S(
+		boolean latestSupportTicketBuild, String supportTicket) {
+
+		return getPersistence().findByL_S(
+			latestSupportTicketBuild, supportTicket);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param latestSupportTicketBuild the latest support ticket build
+	 * @param supportTicket the support ticket
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByL_S(
+		boolean latestSupportTicketBuild, String supportTicket, int start,
+		int end) {
+
+		return getPersistence().findByL_S(
+			latestSupportTicketBuild, supportTicket, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param latestSupportTicketBuild the latest support ticket build
+	 * @param supportTicket the support ticket
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByL_S(
+		boolean latestSupportTicketBuild, String supportTicket, int start,
+		int end, OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByL_S(
+			latestSupportTicketBuild, supportTicket, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
+	 *
+	 * @param latestSupportTicketBuild the latest support ticket build
+	 * @param supportTicket the support ticket
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByL_S(
+		boolean latestSupportTicketBuild, String supportTicket) {
+
+		return getPersistence().filterFindByL_S(
+			latestSupportTicketBuild, supportTicket);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param latestSupportTicketBuild the latest support ticket build
+	 * @param supportTicket the support ticket
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByL_S(
+		boolean latestSupportTicketBuild, String supportTicket, int start,
+		int end) {
+
+		return getPersistence().filterFindByL_S(
+			latestSupportTicketBuild, supportTicket, start, end);
+	}
+
+	/**
+	 * Returns all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param accountEntryCode the account entry code
+	 * @param latestKeyBuild the latest key build
+	 * @param name the name
+	 * @return the matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_N_L_A(
+		long patcherProjectVersionId, String accountEntryCode,
+		boolean latestKeyBuild, String name) {
+
+		return getPersistence().findByP_N_L_A(
+			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param accountEntryCode the account entry code
+	 * @param latestKeyBuild the latest key build
+	 * @param name the name
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_N_L_A(
+		long patcherProjectVersionId, String accountEntryCode,
+		boolean latestKeyBuild, String name, int start, int end) {
+
+		return getPersistence().findByP_N_L_A(
+			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
+			start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param accountEntryCode the account entry code
+	 * @param latestKeyBuild the latest key build
+	 * @param name the name
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher builds
+	 */
+	public static List<PatcherBuild> findByP_N_L_A(
+		long patcherProjectVersionId, String accountEntryCode,
+		boolean latestKeyBuild, String name, int start, int end,
+		OrderByComparator<PatcherBuild> orderByComparator) {
+
+		return getPersistence().findByP_N_L_A(
+			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
+			start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param accountEntryCode the account entry code
+	 * @param latestKeyBuild the latest key build
+	 * @param name the name
+	 * @return the matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_N_L_A(
+		long patcherProjectVersionId, String accountEntryCode,
+		boolean latestKeyBuild, String name) {
+
+		return getPersistence().filterFindByP_N_L_A(
+			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name);
+	}
+
+	/**
+	 * Returns a range of all the patcher builds that the user has permission to view where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherBuildModelImpl</code>.
+	 * </p>
+	 *
+	 * @param patcherProjectVersionId the patcher project version ID
+	 * @param accountEntryCode the account entry code
+	 * @param latestKeyBuild the latest key build
+	 * @param name the name
+	 * @param start the lower bound of the range of patcher builds
+	 * @param end the upper bound of the range of patcher builds (not inclusive)
+	 * @return the range of matching patcher builds that the user has permission to view
+	 */
+	public static List<PatcherBuild> filterFindByP_N_L_A(
+		long patcherProjectVersionId, String accountEntryCode,
+		boolean latestKeyBuild, String name, int start, int end) {
+
+		return getPersistence().filterFindByP_N_L_A(
+			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
+			start, end);
+	}
+
 	public static PatcherBuildPersistence getPersistence() {
 		return _persistence;
 	}
@@ -3796,4 +3796,4 @@ public class PatcherBuildUtil {
 	private static volatile PatcherBuildPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1695595234
+// LIFERAY-SERVICE-BUILDER-HASH:-1970353502

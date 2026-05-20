@@ -14,6 +14,8 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -54,12 +56,9 @@ public class RenderFormRelationshipLayoutStructureItemStrutsAction
 			return null;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		LayoutPermissionUtil.checkLayoutUpdatePermission(
-			themeDisplay.getPermissionChecker(), layout);
+		LayoutPermissionUtil.check(
+			PermissionThreadLocal.getPermissionChecker(), layout,
+			ActionKeys.VIEW);
 
 		LayoutStructure layoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
@@ -89,6 +88,10 @@ public class RenderFormRelationshipLayoutStructureItemStrutsAction
 		if (ancestorLayoutStructureItem == null) {
 			return null;
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		themeDisplay.setIsolated(true);
 

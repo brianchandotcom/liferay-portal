@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "^3.161.0",
-		"@clayui/icon": "^3.161.0",
-		"@clayui/label": "^3.161.0",
-		"@clayui/list": "^3.161.0",
+		"@clayui/button": "^3.163.0",
+		"@clayui/icon": "^3.163.0",
+		"@clayui/label": "^3.163.0",
+		"@clayui/list": "^3.163.0",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"react-router": "7.13.0"

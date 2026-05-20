@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -468,10 +469,14 @@ public class EditFileEntryMVCActionCommandTest {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setRequest(mockMultipartHttpServletRequest);
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+
+		long groupId = _group.getGroupId();
+
+		themeDisplay.setScopeGroupId(groupId);
+
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
-		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
+		themeDisplay.setSiteGroupId(groupId);
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;

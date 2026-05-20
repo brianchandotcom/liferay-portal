@@ -132,32 +132,26 @@ public class KaleoActionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXECUTIONTYPE_COLUMN_BITMASK = 2L;
+	public static final long KALEOCLASSNAME_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KALEOCLASSNAME_COLUMN_BITMASK = 4L;
+	public static final long KALEOCLASSPK_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long KALEOCLASSPK_COLUMN_BITMASK = 8L;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
-	 */
-	@Deprecated
-	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 16L;
+	public static final long KALEODEFINITIONVERSIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 32L;
+	public static final long PRIORITY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -730,15 +724,6 @@ public class KaleoActionModelImpl
 		}
 
 		_executionType = executionType;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public String getOriginalExecutionType() {
-		return getColumnOriginalValue("executionType");
 	}
 
 	@Override
@@ -1404,4 +1389,4 @@ public class KaleoActionModelImpl
 	private KaleoAction _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:933526454
+// LIFERAY-SERVICE-BUILDER-HASH:-1814045499

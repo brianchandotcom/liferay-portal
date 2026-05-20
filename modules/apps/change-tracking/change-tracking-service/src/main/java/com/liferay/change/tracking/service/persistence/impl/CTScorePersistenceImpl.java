@@ -16,7 +16,6 @@ import com.liferay.change.tracking.service.persistence.impl.constants.CTPersiste
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -69,7 +68,6 @@ public class CTScorePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByCtCollectionId;
 	private UniquePersistenceFinder<CTScore>
 		_uniquePersistenceFinderByCtCollectionId;
 
@@ -99,17 +97,6 @@ public class CTScorePersistenceImpl
 		}
 
 		return ctScore;
-	}
-
-	/**
-	 * Returns the ct score where ctCollectionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct score, or <code>null</code> if a matching ct score could not be found
-	 */
-	@Override
-	public CTScore fetchByCtCollectionId(long ctCollectionId) {
-		return fetchByCtCollectionId(ctCollectionId, true);
 	}
 
 	/**
@@ -325,15 +312,14 @@ public class CTScorePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByCtCollectionId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, 0, 0, false,
-			CTScore::getCtCollectionId);
-
 		_uniquePersistenceFinderByCtCollectionId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCtCollectionId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, 0, 0, false,
+					CTScore::getCtCollectionId),
 				_SQL_SELECT_CTSCORE_WHERE, "",
 				new FinderColumn<>(
 					"ctScore.", "ctCollectionId", FinderColumn.Type.LONG, "=",
@@ -399,4 +385,4 @@ public class CTScorePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1513670258
+// LIFERAY-SERVICE-BUILDER-HASH:459906940

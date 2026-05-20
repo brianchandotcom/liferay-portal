@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.recorder.UpgradeLogProgressTracker;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -50,6 +51,7 @@ import com.liferay.portal.transaction.TransactionsUtil;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.upgrade.log.UpgradeLogContext;
+import com.liferay.portal.upgrade.monitor.UpgradeQueryMonitor;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.verify.PreupgradeVerifyProcessSuite;
@@ -139,12 +141,8 @@ public class DBUpgrader {
 		return _stopWatch.getTime();
 	}
 
-	public static boolean isUpgradeClient() {
-		return _upgradeClient;
-	}
-
 	public static boolean isUpgradeDatabaseAutoRunEnabled() {
-		if (_upgradeClient) {
+		if (UpgradeProcessUtil.isUpgradeClient()) {
 			return true;
 		}
 
@@ -173,7 +171,7 @@ public class DBUpgrader {
 	public static void main(String[] args) {
 		String result = "Completed";
 
-		_upgradeClient = true;
+		UpgradeProcessUtil.setUpgradeClient(true);
 
 		try {
 			PortalClassPathUtil.initializeClassPaths(null);
@@ -251,9 +249,13 @@ public class DBUpgrader {
 		serviceLatch.openOn(
 			() -> {
 			});
+
+		UpgradeQueryMonitor.start();
 	}
 
 	public static void stopUpgradeLogAppender() {
+		UpgradeQueryMonitor.stop();
+
 		UpgradeLogProgressTracker.stop();
 
 		if ((_appender != null) && _appender.isStarted()) {
@@ -336,14 +338,16 @@ public class DBUpgrader {
 		_registerModuleServiceLifecycle(
 			moduleServiceLifecyclePortalInitialized);
 
-		if (_upgradeClient) {
+		if (UpgradeProcessUtil.isUpgradeClient()) {
 			DependencyManagerSyncUtil.sync();
 		}
 
 		PortalCacheHelperUtil.clearPortalCaches(
 			PortalCacheManagerNames.MULTI_VM);
 
-		if (_upgradeClient || StartupHelperUtil.isNewRelease()) {
+		if (UpgradeProcessUtil.isUpgradeClient() ||
+			StartupHelperUtil.isNewRelease()) {
+
 			IndexUpdaterUtil.updateAllIndexes();
 		}
 
@@ -651,7 +655,6 @@ public class DBUpgrader {
 	private static volatile Appender _appender;
 	private static volatile ServiceRegistration<?> _serviceRegistration;
 	private static volatile StopWatch _stopWatch;
-	private static volatile boolean _upgradeClient;
 	private static Boolean _upgradeDatabaseAutoRun;
 
 }

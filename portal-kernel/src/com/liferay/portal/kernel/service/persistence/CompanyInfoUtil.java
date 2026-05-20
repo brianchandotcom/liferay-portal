@@ -138,16 +138,6 @@ public class CompanyInfoUtil {
 	}
 
 	/**
-	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching company info, or <code>null</code> if a matching company info could not be found
-	 */
-	public static CompanyInfo fetchByCompanyId(long companyId) {
-		return getPersistence().fetchByCompanyId(companyId);
-	}
-
-	/**
 	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -232,6 +222,16 @@ public class CompanyInfoUtil {
 		return getPersistence().fetchByPrimaryKey(companyInfoId);
 	}
 
+	/**
+	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching company info could not be found
+	 */
+	public static CompanyInfo fetchByCompanyId(long companyId) {
+		return getPersistence().fetchByCompanyId(companyId);
+	}
+
 	public static CompanyInfoPersistence getPersistence() {
 		return _persistence;
 	}
@@ -243,4 +243,4 @@ public class CompanyInfoUtil {
 	private static volatile CompanyInfoPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-380394123
+// LIFERAY-SERVICE-BUILDER-HASH:-855650401

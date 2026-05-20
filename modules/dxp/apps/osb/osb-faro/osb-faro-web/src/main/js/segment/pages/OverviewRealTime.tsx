@@ -23,7 +23,7 @@ import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Segment} from 'shared/util/records';
 import {SegmentGrowthChart} from 'segment/components/Growth';
-import {SegmentTypes} from 'shared/util/constants';
+import {SegmentTypes, TimeIntervals} from 'shared/util/constants';
 import {Text} from '@clayui/core';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
@@ -161,10 +161,14 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 	const {timeZoneId} = useTimeZone();
 
 	const {data, loading} = useRequest({
-		dataSourceFn: fetchMembershipChangesAggregations as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
-		variables: {channelId, groupId, id, interval: 'day', max: 30}
+		dataSourceFn: fetchMembershipChangesAggregations,
+		variables: {
+			channelId,
+			groupId,
+			id,
+			interval: TimeIntervals.Day,
+			max: 30
+		}
 	});
 
 	const [selectedPointState, setSelectedPointState] = useState<{

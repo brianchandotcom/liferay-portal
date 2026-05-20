@@ -39,7 +39,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -489,6 +489,25 @@ public abstract class BaseJob implements Job {
 	@Override
 	public String getJobName() {
 		return _jobName;
+	}
+
+	@Override
+	public Properties getJobProperties() {
+		Properties jobProperties = new Properties();
+
+		try {
+			jobProperties.putAll(JenkinsResultsParserUtil.getBuildProperties());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		for (File propertiesFile : getJobPropertiesFiles()) {
+			jobProperties.putAll(
+				JenkinsResultsParserUtil.getProperties(propertiesFile));
+		}
+
+		return jobProperties;
 	}
 
 	@Override

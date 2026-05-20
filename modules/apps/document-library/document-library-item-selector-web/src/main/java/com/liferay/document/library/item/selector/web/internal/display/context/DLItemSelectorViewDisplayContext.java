@@ -34,6 +34,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -421,9 +424,35 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		throws PortalException {
 
 		if (httpServletRequest.getParameter("folderId") != null) {
-			return ParamUtil.getLong(
+			long folderId = ParamUtil.getLong(
 				httpServletRequest, "folderId",
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				try {
+					Folder folder = DLAppServiceUtil.getFolder(folderId);
+
+					Object model = folder.getModel();
+
+					if (model instanceof TrashedModel) {
+						TrashedModel trashedModel = (TrashedModel)model;
+
+						if (trashedModel.isInTrash()) {
+							folderId =
+								DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+						}
+					}
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+
+					folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				}
+			}
+
+			return folderId;
 		}
 
 		long selectedFileEntryId = ParamUtil.getLong(
@@ -646,6 +675,9 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 		return _search;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLItemSelectorViewDisplayContext.class);
 
 	private final AssetVocabularyService _assetVocabularyService;
 	private final ClassNameLocalService _classNameLocalService;

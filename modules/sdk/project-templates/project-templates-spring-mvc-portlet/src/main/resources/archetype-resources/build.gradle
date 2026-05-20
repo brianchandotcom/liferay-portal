@@ -1,6 +1,6 @@
 #if (${jakartaCompatible.equals("true")})
-String springVersion = "6.2.8"
-String springSecurityVersion = "6.2.8"
+String springVersion = "6.2.17"
+String springSecurityVersion = "6.5.9"
 #elseif (${framework.equals("portletmvc4spring")})
 String springVersion = "5.3.27"
 String springSecurityVersion = "5.5.1"
@@ -148,13 +148,13 @@ dependencies {
 	}
 #end
 #if (${viewType.equals("thymeleaf")})
-	implementation(group: "org.thymeleaf", name: "thymeleaf", version: "3.0.15.RELEASE") {
+	implementation(group: "org.thymeleaf", name: "thymeleaf", version: "3.1.5.RELEASE") {
 		exclude group: "ognl", module: "ognl"
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #end
 #if (${viewType.equals("thymeleaf")} && ${framework.equals("portletmvc4spring")})
-	implementation(group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.0.15.RELEASE") {
+	implementation(group: "org.thymeleaf", name: "thymeleaf-spring5", version: "3.1.5.RELEASE") {
 		exclude group: "org.slf4j", module: "slf4j-api"
 	}
 #elseif (${viewType.equals("thymeleaf")} && ${framework.equals("springportletmvc")})

@@ -384,7 +384,7 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 	};
 
 	const countResponse = useRequest({
-		dataSourceFn: async (params: {[key: string]: any}) => {
+		dataSourceFn: async params => {
 			const entries = await Promise.all(
 				config.entities.map(async ({entity, fetchCount}) => {
 					if (!fetchCount) {
@@ -394,7 +394,7 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					try {
 						const count = await fetchCount({
 							groupId: params.groupId,
-							id: params.id
+							id: params.id!
 						});
 
 						return [entity, count ?? 0] as const;
@@ -446,7 +446,10 @@ const ConnectorEntityList: React.FC<IConnectorEntityListProps> = ({
 					title={Liferay.Language.get('connection-status')}
 				/>
 
-				<ClayAlert displayType={connectionStatusAlert.displayType}>
+				<ClayAlert
+					className='mt-3'
+					displayType={connectionStatusAlert.displayType}
+				>
 					{connectionStatusAlert.message}
 				</ClayAlert>
 			</div>

@@ -135,58 +135,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce channel account entry rels where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
-		long accountEntryId) {
-
-		return getPersistence().findByAccountEntryId(accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63;.
 	 *
 	 * <p>
@@ -262,58 +210,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId) {
-
-		return getPersistence().findByCommerceChannelId(commerceChannelId);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end) {
-
-		return getPersistence().findByCommerceChannelId(
-			commerceChannelId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
-		long commerceChannelId, int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByCommerceChannelId(
-			commerceChannelId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63;.
 	 *
 	 * <p>
@@ -386,60 +282,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	 */
 	public static int countByCommerceChannelId(long commerceChannelId) {
 		return getPersistence().countByCommerceChannelId(commerceChannelId);
-	}
-
-	/**
-	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param type the type
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_T(
-		long accountEntryId, int type) {
-
-		return getPersistence().findByA_T(accountEntryId, type);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_T(
-		long accountEntryId, int type, int start, int end) {
-
-		return getPersistence().findByA_T(accountEntryId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_T(
-		long accountEntryId, int type, int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByA_T(
-			accountEntryId, type, start, end, orderByComparator);
 	}
 
 	/**
@@ -524,60 +366,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C(
-		long classNameId, long classPK) {
-
-		return getPersistence().findByC_C(classNameId, classPK);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return getPersistence().findByC_C(classNameId, classPK, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, classPK, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
@@ -659,60 +447,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_T(
-		long commerceChannelId, int type) {
-
-		return getPersistence().findByC_T(commerceChannelId, type);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_T(
-		long commerceChannelId, int type, int start, int end) {
-
-		return getPersistence().findByC_T(commerceChannelId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_T(
-		long commerceChannelId, int type, int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByC_T(
-			commerceChannelId, type, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -791,68 +525,6 @@ public class CommerceChannelAccountEntryRelUtil {
 	 */
 	public static int countByC_T(long commerceChannelId, int type) {
 		return getPersistence().countByC_T(commerceChannelId, type);
-	}
-
-	/**
-	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
-		long accountEntryId, long commerceChannelId, int type) {
-
-		return getPersistence().findByA_C_T(
-			accountEntryId, commerceChannelId, type);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
-		long accountEntryId, long commerceChannelId, int type, int start,
-		int end) {
-
-		return getPersistence().findByA_C_T(
-			accountEntryId, commerceChannelId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
-		long accountEntryId, long commerceChannelId, int type, int start,
-		int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByA_C_T(
-			accountEntryId, commerceChannelId, type, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -945,71 +617,6 @@ public class CommerceChannelAccountEntryRelUtil {
 
 		return getPersistence().countByA_C_T(
 			accountEntryId, commerceChannelId, type);
-	}
-
-	/**
-	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @return the matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
-		long classNameId, long classPK, long commerceChannelId, int type) {
-
-		return getPersistence().findByC_C_C_T(
-			classNameId, classPK, commerceChannelId, type);
-	}
-
-	/**
-	 * Returns a range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @return the range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
-		long classNameId, long classPK, long commerceChannelId, int type,
-		int start, int end) {
-
-		return getPersistence().findByC_C_C_T(
-			classNameId, classPK, commerceChannelId, type, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @param start the lower bound of the range of commerce channel account entry rels
-	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce channel account entry rels
-	 */
-	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
-		long classNameId, long classPK, long commerceChannelId, int type,
-		int start, int end,
-		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
-
-		return getPersistence().findByC_C_C_T(
-			classNameId, classPK, commerceChannelId, type, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -1128,24 +735,6 @@ public class CommerceChannelAccountEntryRelUtil {
 			NoSuchChannelAccountEntryRelException {
 
 		return getPersistence().findByA_C_C_C_T(
-			accountEntryId, classNameId, classPK, commerceChannelId, type);
-	}
-
-	/**
-	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceChannelId the commerce channel ID
-	 * @param type the type
-	 * @return the matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
-	 */
-	public static CommerceChannelAccountEntryRel fetchByA_C_C_C_T(
-		long accountEntryId, long classNameId, long classPK,
-		long commerceChannelId, int type) {
-
-		return getPersistence().fetchByA_C_C_C_T(
 			accountEntryId, classNameId, classPK, commerceChannelId, type);
 	}
 
@@ -1269,6 +858,417 @@ public class CommerceChannelAccountEntryRelUtil {
 			commerceChannelAccountEntryRelId);
 	}
 
+	/**
+	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @return the matching commerce channel account entry rel, or <code>null</code> if a matching commerce channel account entry rel could not be found
+	 */
+	public static CommerceChannelAccountEntryRel fetchByA_C_C_C_T(
+		long accountEntryId, long classNameId, long classPK,
+		long commerceChannelId, int type) {
+
+		return getPersistence().fetchByA_C_C_C_T(
+			accountEntryId, classNameId, classPK, commerceChannelId, type);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().findByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63;.
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
+		long commerceChannelId) {
+
+		return getPersistence().findByCommerceChannelId(commerceChannelId);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where commerceChannelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
+		long commerceChannelId, int start, int end) {
+
+		return getPersistence().findByCommerceChannelId(
+			commerceChannelId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByCommerceChannelId(
+		long commerceChannelId, int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByCommerceChannelId(
+			commerceChannelId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param type the type
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_T(
+		long accountEntryId, int type) {
+
+		return getPersistence().findByA_T(accountEntryId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_T(
+		long accountEntryId, int type, int start, int end) {
+
+		return getPersistence().findByA_T(accountEntryId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_T(
+		long accountEntryId, int type, int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByA_T(
+			accountEntryId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C(
+		long classNameId, long classPK) {
+
+		return getPersistence().findByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByC_C(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_T(
+		long commerceChannelId, int type) {
+
+		return getPersistence().findByC_T(commerceChannelId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_T(
+		long commerceChannelId, int type, int start, int end) {
+
+		return getPersistence().findByC_T(commerceChannelId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_T(
+		long commerceChannelId, int type, int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByC_T(
+			commerceChannelId, type, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
+		long accountEntryId, long commerceChannelId, int type) {
+
+		return getPersistence().findByA_C_T(
+			accountEntryId, commerceChannelId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
+		long accountEntryId, long commerceChannelId, int type, int start,
+		int end) {
+
+		return getPersistence().findByA_C_T(
+			accountEntryId, commerceChannelId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByA_C_T(
+		long accountEntryId, long commerceChannelId, int type, int start,
+		int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByA_C_T(
+			accountEntryId, commerceChannelId, type, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @return the matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
+		long classNameId, long classPK, long commerceChannelId, int type) {
+
+		return getPersistence().findByC_C_C_T(
+			classNameId, classPK, commerceChannelId, type);
+	}
+
+	/**
+	 * Returns a range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @return the range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
+		long classNameId, long classPK, long commerceChannelId, int type,
+		int start, int end) {
+
+		return getPersistence().findByC_C_C_T(
+			classNameId, classPK, commerceChannelId, type, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.product.model.impl.CommerceChannelAccountEntryRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceChannelId the commerce channel ID
+	 * @param type the type
+	 * @param start the lower bound of the range of commerce channel account entry rels
+	 * @param end the upper bound of the range of commerce channel account entry rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce channel account entry rels
+	 */
+	public static List<CommerceChannelAccountEntryRel> findByC_C_C_T(
+		long classNameId, long classPK, long commerceChannelId, int type,
+		int start, int end,
+		OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator) {
+
+		return getPersistence().findByC_C_C_T(
+			classNameId, classPK, commerceChannelId, type, start, end,
+			orderByComparator);
+	}
+
 	public static CommerceChannelAccountEntryRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1283,4 +1283,4 @@ public class CommerceChannelAccountEntryRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:885396586
+// LIFERAY-SERVICE-BUILDER-HASH:1099679792

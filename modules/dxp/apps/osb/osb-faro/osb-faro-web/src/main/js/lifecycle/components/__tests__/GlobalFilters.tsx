@@ -21,7 +21,7 @@ describe('GlobalFilter', () => {
 		}));
 
 		const {getByText} = render(
-			<LifecycleContextProvider>
+			<LifecycleContextProvider lifecycleId='1'>
 				<GlobalFilter />
 			</LifecycleContextProvider>
 		);

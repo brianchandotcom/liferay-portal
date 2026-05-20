@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -83,7 +82,6 @@ public class DDMFormInstanceReportPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByFormInstanceId;
 	private UniquePersistenceFinder<DDMFormInstanceReport>
 		_uniquePersistenceFinderByFormInstanceId;
 
@@ -114,17 +112,6 @@ public class DDMFormInstanceReportPersistenceImpl
 		}
 
 		return ddmFormInstanceReport;
-	}
-
-	/**
-	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
-	 */
-	@Override
-	public DDMFormInstanceReport fetchByFormInstanceId(long formInstanceId) {
-		return fetchByFormInstanceId(formInstanceId, true);
 	}
 
 	/**
@@ -461,15 +448,14 @@ public class DDMFormInstanceReportPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByFormInstanceId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByFormInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, 0, 0, false,
-			DDMFormInstanceReport::getFormInstanceId);
-
 		_uniquePersistenceFinderByFormInstanceId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByFormInstanceId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByFormInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"formInstanceId"}, 0, 0, false,
+					DDMFormInstanceReport::getFormInstanceId),
 				_SQL_SELECT_DDMFORMINSTANCEREPORT_WHERE, "",
 				new FinderColumn<>(
 					"ddmFormInstanceReport.", "formInstanceId",
@@ -542,4 +528,4 @@ public class DDMFormInstanceReportPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2147453968
+// LIFERAY-SERVICE-BUILDER-HASH:-206635778

@@ -14,8 +14,11 @@ export class CommerceAdminCatalogsPage {
 	readonly catalogId: Locator;
 	readonly catalogLink: (name: string) => Locator;
 	readonly catalogSaveButton: Locator;
+	readonly deleteMenuItem: Locator;
 	readonly modalFieldName: Locator;
 	readonly modalFrameLocator: FrameLocator;
+	readonly modalLinkSupplierAutocomplete: Locator;
+	readonly modalLinkSupplierDropdownItem: (name: string) => Locator;
 	readonly modalSubmitButton: Locator;
 	readonly page: Page;
 	readonly permissionsFrame: FrameLocator;
@@ -38,9 +41,20 @@ export class CommerceAdminCatalogsPage {
 			exact: true,
 			name: 'Save',
 		});
+		this.deleteMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.modalFrameLocator = page.frameLocator('.fds-modal-body iframe');
 		this.modalFieldName =
 			this.modalFrameLocator.getByLabel('Name Required');
+		this.modalLinkSupplierAutocomplete = this.modalFrameLocator
+			.locator('#link-account-entry-autocomplete-root input[type="text"]')
+			.first();
+		this.modalLinkSupplierDropdownItem = (name: string) =>
+			this.modalFrameLocator
+				.locator('.autocomplete-dropdown-menu')
+				.getByText(name, {exact: true});
 		this.modalSubmitButton = this.modalFrameLocator.getByRole('button', {
 			exact: true,
 			name: 'Submit',

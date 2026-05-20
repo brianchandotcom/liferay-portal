@@ -45,15 +45,16 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public Country addCountry(
-			String a2, String a3, boolean active, boolean billingAllowed,
-			String idd, String name, String number, double position,
-			boolean shippingAllowed, boolean subjectToVAT, boolean zipRequired,
-			ServiceContext serviceContext)
+			String externalReferenceCode, String a2, String a3, boolean active,
+			boolean billingAllowed, String idd, String name, String number,
+			double position, boolean shippingAllowed, boolean subjectToVAT,
+			boolean zipRequired, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.addCountry(
-			a2, a3, active, billingAllowed, idd, name, number, position,
-			shippingAllowed, subjectToVAT, zipRequired, serviceContext);
+			externalReferenceCode, a2, a3, active, billingAllowed, idd, name,
+			number, position, shippingAllowed, subjectToVAT, zipRequired,
+			serviceContext);
 	}
 
 	/**
@@ -249,6 +250,14 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
+	public Country fetchCountryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _countryLocalService.fetchCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public Country fetchCountryByName(long companyId, String name) {
 		return _countryLocalService.fetchCountryByName(companyId, name);
 	}
@@ -383,6 +392,15 @@ public class CountryLocalServiceWrapper
 	}
 
 	@Override
+	public Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.getCountryByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public Country getCountryByName(long companyId, String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -445,6 +463,16 @@ public class CountryLocalServiceWrapper
 		return _countryLocalService.getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public Country getOrAddEmptyCountry(
+			String externalReferenceCode, String a2, String a3, long companyId,
+			String name, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _countryLocalService.getOrAddEmptyCountry(
+			externalReferenceCode, a2, a3, companyId, name, userId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -503,14 +531,15 @@ public class CountryLocalServiceWrapper
 
 	@Override
 	public Country updateCountry(
-			long countryId, String a2, String a3, boolean active,
-			boolean billingAllowed, String idd, String name, String number,
-			double position, boolean shippingAllowed, boolean subjectToVAT)
+			String externalReferenceCode, long countryId, String a2, String a3,
+			boolean active, boolean billingAllowed, String idd, String name,
+			String number, double position, boolean shippingAllowed,
+			boolean subjectToVAT)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _countryLocalService.updateCountry(
-			countryId, a2, a3, active, billingAllowed, idd, name, number,
-			position, shippingAllowed, subjectToVAT);
+			externalReferenceCode, countryId, a2, a3, active, billingAllowed,
+			idd, name, number, position, shippingAllowed, subjectToVAT);
 	}
 
 	@Override
@@ -579,4 +608,4 @@ public class CountryLocalServiceWrapper
 	private CountryLocalService _countryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-455478230
+// LIFERAY-SERVICE-BUILDER-HASH:-1975640055

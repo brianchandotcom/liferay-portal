@@ -14,6 +14,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.notification.constants.NotificationPortletKeys;
 import com.liferay.notification.model.NotificationTemplate;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -90,7 +91,8 @@ public class NotificationTemplateFTLElementsMVCResourceCommand
 
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, objectDefinition.getClassName());
+				InfoItemFormProvider.class,
+				ObjectDefinitionUtil.getItemClassName(objectDefinition));
 
 		InfoForm infoForm = infoItemFormProvider.getInfoForm(
 			StringPool.BLANK, _portal.getScopeGroupId(resourceRequest));

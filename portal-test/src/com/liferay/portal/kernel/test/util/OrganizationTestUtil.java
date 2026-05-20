@@ -61,9 +61,10 @@ public class OrganizationTestUtil {
 
 		if (country == null) {
 			country = CountryLocalServiceUtil.addCountry(
-				"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				true, false, false, serviceContext);
+				null, "ZZ", "ZZZ", true, true, null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomDouble(), true, false, false,
+				serviceContext);
 		}
 
 		OrganizationLocalServiceUtil.updateOrganization(

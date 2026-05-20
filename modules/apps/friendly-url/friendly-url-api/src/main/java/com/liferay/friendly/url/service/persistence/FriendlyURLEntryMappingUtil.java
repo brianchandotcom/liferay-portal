@@ -150,19 +150,6 @@ public class FriendlyURLEntryMappingUtil {
 	}
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
-	 */
-	public static FriendlyURLEntryMapping fetchByC_C(
-		long classNameId, long classPK) {
-
-		return getPersistence().fetchByC_C(classNameId, classPK);
-	}
-
-	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -262,6 +249,19 @@ public class FriendlyURLEntryMappingUtil {
 		return getPersistence().fetchByPrimaryKey(friendlyURLEntryMappingId);
 	}
 
+	/**
+	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	 */
+	public static FriendlyURLEntryMapping fetchByC_C(
+		long classNameId, long classPK) {
+
+		return getPersistence().fetchByC_C(classNameId, classPK);
+	}
+
 	public static FriendlyURLEntryMappingPersistence getPersistence() {
 		return _persistence;
 	}
@@ -275,4 +275,4 @@ public class FriendlyURLEntryMappingUtil {
 	private static volatile FriendlyURLEntryMappingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-698632544
+// LIFERAY-SERVICE-BUILDER-HASH:-528896096

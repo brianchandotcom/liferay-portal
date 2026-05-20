@@ -35,8 +35,6 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.Serializable;
 
-import java.util.Collections;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -620,12 +618,14 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, objectDefinition,
-			Collections.singletonMap(
-				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()));
+			HashMapBuilder.<String, Serializable>put(
+				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()
+			).build());
 		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, objectDefinition,
-			Collections.singletonMap(
-				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()));
+			HashMapBuilder.<String, Serializable>put(
+				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()
+			).build());
 
 		HttpInvoker.HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
@@ -658,13 +658,15 @@ public class ImportTaskResourceTest extends BaseTaskResourceTestCase {
 
 		objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, objectDefinition,
-			Collections.singletonMap(
-				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()));
+			HashMapBuilder.<String, Serializable>put(
+				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()
+			).build());
 
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			groupId, objectDefinition,
-			Collections.singletonMap(
-				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()));
+			HashMapBuilder.<String, Serializable>put(
+				OBJECT_FIELD_NAME_TEXT_1, RandomTestUtil.randomString()
+			).build());
 
 		httpResponse = importTaskResource.deleteImportTaskHttpResponse(
 			"com.liferay.object.rest.dto.v1_0.ObjectEntry", null, null, null,

@@ -313,9 +313,7 @@ const ConfigureWorkspaceWithEmailAddressDomains: React.FC<
 
 const ConfigureWorkspace: React.FC<IConfigureWorkspaceProps> = props => {
 	const {data, loading} = useRequest({
-		dataSourceFn: API.projects.fetchEmailAddressDomains as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: API.projects.fetchEmailAddressDomains,
 		variables: {
 			groupId: props.groupId
 		}

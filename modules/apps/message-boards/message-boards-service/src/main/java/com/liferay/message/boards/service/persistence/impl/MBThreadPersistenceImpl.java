@@ -98,60 +98,8 @@ public class MBThreadPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the message boards threads where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where uuid = &#63;.
@@ -239,7 +187,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<MBThread> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -269,18 +216,6 @@ public class MBThreadPersistenceImpl
 		}
 
 		return mbThread;
-	}
-
-	/**
-	 * Returns the message boards thread where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	@Override
-	public MBThread fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -328,67 +263,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where uuid = &#63; and companyId = &#63;.
@@ -484,61 +360,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByGroupId;
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByGroupId(long groupId, int start, int end) {
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63;.
@@ -604,37 +427,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -692,7 +484,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByRootMessageId;
 	private UniquePersistenceFinder<MBThread>
 		_uniquePersistenceFinderByRootMessageId;
 
@@ -722,17 +513,6 @@ public class MBThreadPersistenceImpl
 		}
 
 		return mbThread;
-	}
-
-	/**
-	 * Returns the message boards thread where rootMessageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param rootMessageId the root message ID
-	 * @return the matching message boards thread, or <code>null</code> if a matching message boards thread could not be found
-	 */
-	@Override
-	public MBThread fetchByRootMessageId(long rootMessageId) {
-		return fetchByRootMessageId(rootMessageId, true);
 	}
 
 	/**
@@ -777,67 +557,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {rootMessageId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C;
-	private FinderPath _finderPathWithoutPaginationFindByG_C;
-	private FinderPath _finderPathCountByG_C;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C;
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(long groupId, long categoryId) {
-		return findByG_C(
-			groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(
-		long groupId, long categoryId, int start, int end) {
-
-		return findByG_C(groupId, categoryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(
-		long groupId, long categoryId, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_C(
-			groupId, categoryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63;.
@@ -920,39 +641,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C(long groupId, long categoryId) {
-		return filterFindByG_C(
-			groupId, categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C(
-		long groupId, long categoryId, int start, int end) {
-
-		return filterFindByG_C(groupId, categoryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63;.
 	 *
 	 * <p>
@@ -972,41 +660,8 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C.filterFind(
-			finderCache, new Object[] {groupId, categoryId}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C(long groupId, long[] categoryIds) {
-		return filterFindByG_C(
-			groupId, categoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C(
-		long groupId, long[] categoryIds, int start, int end) {
-
-		return filterFindByG_C(groupId, categoryIds, start, end, null);
+			finderCache, new Object[] {groupId, new long[] {categoryId}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1032,66 +687,6 @@ public class MBThreadPersistenceImpl
 			finderCache,
 			new Object[] {groupId, ArrayUtil.sortedUnique(categoryIds)}, start,
 			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(long groupId, long[] categoryIds) {
-		return findByG_C(
-			groupId, categoryIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(
-		long groupId, long[] categoryIds, int start, int end) {
-
-		return findByG_C(groupId, categoryIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C(
-		long groupId, long[] categoryIds, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_C(
-			groupId, categoryIds, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1169,7 +764,8 @@ public class MBThreadPersistenceImpl
 	@Override
 	public int filterCountByG_C(long groupId, long categoryId) {
 		return _collectionPersistenceFinderByG_C.filterCount(
-			finderCache, new Object[] {groupId, categoryId}, groupId);
+			finderCache, new Object[] {groupId, new long[] {categoryId}},
+			groupId);
 	}
 
 	/**
@@ -1187,8 +783,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC;
-	private FinderPath _finderPathWithPaginationCountByG_NotC;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC;
 
@@ -1412,66 +1006,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, categoryId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_S;
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_S(long groupId, int status) {
-		return findByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_S(
-		long groupId, int status, int start, int end) {
-
-		return findByG_S(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_S(
-		long groupId, int status, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and status = &#63;.
@@ -1543,39 +1079,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_S(long groupId, int status) {
-		return filterFindByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_S(
-		long groupId, int status, int start, int end) {
-
-		return filterFindByG_S(groupId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -1637,67 +1140,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_P;
-	private FinderPath _finderPathWithoutPaginationFindByC_P;
-	private FinderPath _finderPathCountByC_P;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByC_P;
-
-	/**
-	 * Returns all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByC_P(long categoryId, double priority) {
-		return findByC_P(
-			categoryId, priority, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByC_P(
-		long categoryId, double priority, int start, int end) {
-
-		return findByC_P(categoryId, priority, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where categoryId = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByC_P(
-		long categoryId, double priority, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByC_P(
-			categoryId, priority, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where categoryId = &#63; and priority = &#63;.
@@ -1794,67 +1238,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {categoryId, priority});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByL_P;
-	private FinderPath _finderPathWithoutPaginationFindByL_P;
-	private FinderPath _finderPathCountByL_P;
 	private CollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByL_P;
-
-	/**
-	 * Returns all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByL_P(Date lastPostDate, double priority) {
-		return findByL_P(
-			lastPostDate, priority, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByL_P(
-		Date lastPostDate, double priority, int start, int end) {
-
-		return findByL_P(lastPostDate, priority, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param lastPostDate the last post date
-	 * @param priority the priority
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByL_P(
-		Date lastPostDate, double priority, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByL_P(
-			lastPostDate, priority, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where lastPostDate = &#63; and priority = &#63;.
@@ -1952,74 +1337,8 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {lastPostDate, priority});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_L;
-	private FinderPath _finderPathCountByG_C_L;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_L;
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate) {
-
-		return findByG_C_L(
-			groupId, categoryId, lastPostDate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end) {
-
-		return findByG_C_L(groupId, categoryId, lastPostDate, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_C_L(
-			groupId, categoryId, lastPostDate, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
@@ -2096,45 +1415,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_L(
-		long groupId, long categoryId, Date lastPostDate) {
-
-		return filterFindByG_C_L(
-			groupId, categoryId, lastPostDate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param lastPostDate the last post date
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_L(
-		long groupId, long categoryId, Date lastPostDate, int start, int end) {
-
-		return filterFindByG_C_L(
-			groupId, categoryId, lastPostDate, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and lastPostDate = &#63;.
 	 *
 	 * <p>
@@ -2205,73 +1485,8 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_S;
-	private FinderPath _finderPathCountByG_C_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_S;
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status) {
-
-		return findByG_C_S(
-			groupId, categoryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status, int start, int end) {
-
-		return findByG_C_S(groupId, categoryId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long categoryId, int status, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_C_S(
-			groupId, categoryId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = &#63; and status = &#63;.
@@ -2362,44 +1577,6 @@ public class MBThreadPersistenceImpl
 	}
 
 	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_S(
-		long groupId, long categoryId, int status) {
-
-		return filterFindByG_C_S(
-			groupId, categoryId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryId the category ID
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_S(
-		long groupId, long categoryId, int status, int start, int end) {
-
-		return filterFindByG_C_S(groupId, categoryId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the message boards threads that the user has permissions to view where groupId = &#63; and categoryId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -2420,47 +1597,9 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_S.filterFind(
-			finderCache, new Object[] {groupId, categoryId, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, start, end,
 			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @return the matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_S(
-		long groupId, long[] categoryIds, int status) {
-
-		return filterFindByG_C_S(
-			groupId, categoryIds, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads that the user has permission to view where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads that the user has permission to view
-	 */
-	@Override
-	public List<MBThread> filterFindByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end) {
-
-		return filterFindByG_C_S(
-			groupId, categoryIds, status, start, end, null);
 	}
 
 	/**
@@ -2487,72 +1626,6 @@ public class MBThreadPersistenceImpl
 			finderCache,
 			new Object[] {groupId, ArrayUtil.sortedUnique(categoryIds), status},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @return the matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long[] categoryIds, int status) {
-
-		return findByG_C_S(
-			groupId, categoryIds, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @return the range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end) {
-
-		return findByG_C_S(groupId, categoryIds, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the message boards threads where groupId = &#63; and categoryId = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MBThreadModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param categoryIds the category IDs
-	 * @param status the status
-	 * @param start the lower bound of the range of message boards threads
-	 * @param end the upper bound of the range of message boards threads (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching message boards threads
-	 */
-	@Override
-	public List<MBThread> findByG_C_S(
-		long groupId, long[] categoryIds, int status, int start, int end,
-		OrderByComparator<MBThread> orderByComparator) {
-
-		return findByG_C_S(
-			groupId, categoryIds, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2639,7 +1712,8 @@ public class MBThreadPersistenceImpl
 	@Override
 	public int filterCountByG_C_S(long groupId, long categoryId, int status) {
 		return _collectionPersistenceFinderByG_C_S.filterCount(
-			finderCache, new Object[] {groupId, categoryId, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, groupId);
 	}
 
 	/**
@@ -2660,8 +1734,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_C_NotS;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_C_NotS;
 
@@ -2875,7 +1947,8 @@ public class MBThreadPersistenceImpl
 		OrderByComparator<MBThread> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_C_NotS.filterFind(
-			finderCache, new Object[] {groupId, categoryId, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -3096,7 +2169,8 @@ public class MBThreadPersistenceImpl
 		long groupId, long categoryId, int status) {
 
 		return _collectionPersistenceFinderByG_C_NotS.filterCount(
-			finderCache, new Object[] {groupId, categoryId, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new long[] {categoryId}, status}, groupId);
 	}
 
 	/**
@@ -3117,8 +2191,6 @@ public class MBThreadPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC_S;
-	private FinderPath _finderPathWithPaginationCountByG_NotC_S;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC_S;
 
@@ -3365,8 +2437,6 @@ public class MBThreadPersistenceImpl
 			finderCache, new Object[] {groupId, categoryId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_NotC_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_NotC_NotS;
 	private FilterCollectionPersistenceFinder<MBThread>
 		_collectionPersistenceFinderByG_NotC_NotS;
 
@@ -3936,41 +3006,37 @@ public class MBThreadPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBThread::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(MBThread::getUuid), MBThread::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_MBTHREAD_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(MBThread::getUuid), MBThread::getGroupId),
+			_SQL_SELECT_MBTHREAD_WHERE, "",
 			new FinderColumn<>(
 				"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				MBThread::getUuid),
@@ -3978,32 +3044,27 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 				MBThread::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"mbThread.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, MBThread::getUuid),
@@ -4011,88 +3072,81 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "companyId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "mbThread.categoryId != -1",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
+				"mbThread.categoryId != -1",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbThread.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBThread::getGroupId));
 
-		_finderPathFetchByRootMessageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByRootMessageId",
-			new String[] {Long.class.getName()}, new String[] {"rootMessageId"},
-			0, 0, false, MBThread::getRootMessageId);
-
 		_uniquePersistenceFinderByRootMessageId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByRootMessageId, _SQL_SELECT_MBTHREAD_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByRootMessageId",
+				new String[] {Long.class.getName()},
+				new String[] {"rootMessageId"}, 0, 0, false,
+				MBThread::getRootMessageId),
+			_SQL_SELECT_MBTHREAD_WHERE, "",
 			new FinderColumn<>(
 				"mbThread.", "rootMessageId", FinderColumn.Type.LONG, "=", true,
 				true, MBThread::getRootMessageId));
 
-		_finderPathWithPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathWithoutPaginationFindByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathCountByG_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, false);
-
 		_collectionPersistenceFinderByG_C =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C,
-				_finderPathWithoutPaginationFindByG_C, _finderPathCountByG_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4102,33 +3156,31 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "categoryId", FinderColumn.Type.LONG, "=",
 					false, true, true, MBThread::getCategoryId));
 
-		_finderPathWithPaginationFindByG_NotC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId"}, true);
-
-		_finderPathWithPaginationCountByG_NotC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "categoryId"}, false);
-
 		_collectionPersistenceFinderByG_NotC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC, null,
-				_finderPathWithPaginationCountByG_NotC,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4138,39 +3190,39 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "categoryId", FinderColumn.Type.LONG, "!=",
 					true, true, MBThread::getCategoryId));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbThread.categoryId != -1",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4180,28 +3232,24 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
-			new String[] {
-				Long.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"categoryId", "priority"}, true);
-
-		_finderPathWithoutPaginationFindByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"categoryId", "priority"}, true);
-
-		_finderPathCountByC_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
-			new String[] {Long.class.getName(), Double.class.getName()},
-			new String[] {"categoryId", "priority"}, false);
-
 		_collectionPersistenceFinderByC_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_P,
-			_finderPathWithoutPaginationFindByC_P, _finderPathCountByC_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_P",
+				new String[] {
+					Long.class.getName(), Double.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"categoryId", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_P",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"categoryId", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_P",
+				new String[] {Long.class.getName(), Double.class.getName()},
+				new String[] {"categoryId", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -4211,28 +3259,24 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "priority", FinderColumn.Type.DOUBLE, "=", true,
 				true, MBThread::getPriority));
 
-		_finderPathWithPaginationFindByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P",
-			new String[] {
-				Date.class.getName(), Double.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"lastPostDate", "priority"}, true);
-
-		_finderPathWithoutPaginationFindByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
-			new String[] {Date.class.getName(), Double.class.getName()},
-			new String[] {"lastPostDate", "priority"}, true);
-
-		_finderPathCountByL_P = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
-			new String[] {Date.class.getName(), Double.class.getName()},
-			new String[] {"lastPostDate", "priority"}, false);
-
 		_collectionPersistenceFinderByL_P = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByL_P,
-			_finderPathWithoutPaginationFindByL_P, _finderPathCountByL_P,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByL_P",
+				new String[] {
+					Date.class.getName(), Double.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"lastPostDate", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByL_P",
+				new String[] {Date.class.getName(), Double.class.getName()},
+				new String[] {"lastPostDate", "priority"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByL_P",
+				new String[] {Date.class.getName(), Double.class.getName()},
+				new String[] {"lastPostDate", "priority"}, false),
 			_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 			MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 			"mbThread.categoryId != -1",
@@ -4243,43 +3287,44 @@ public class MBThreadPersistenceImpl
 				"mbThread.", "priority", FinderColumn.Type.DOUBLE, "=", true,
 				true, MBThread::getPriority));
 
-		_finderPathWithPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, true);
-
-		_finderPathCountByG_C_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Date.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "lastPostDate"}, false);
-
 		_collectionPersistenceFinderByG_C_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_L,
-				_finderPathWithoutPaginationFindByG_C_L,
-				_finderPathCountByG_C_L, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Date.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "lastPostDate"},
+					false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4292,45 +3337,41 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "lastPostDate", FinderColumn.Type.DATE, "=",
 					true, true, MBThread::getLastPostDate));
 
-		_finderPathWithPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathCountByG_C_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_S,
-				_finderPathWithoutPaginationFindByG_C_S,
-				_finderPathCountByG_C_S, _SQL_SELECT_MBTHREAD_WHERE,
-				_SQL_COUNT_MBTHREAD_WHERE, MBThreadModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
+				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
+				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4343,36 +3384,35 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_C_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_C_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_NotS, null,
-				_finderPathWithPaginationCountByG_C_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4385,36 +3425,35 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_NotC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_NotC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_NotC_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC_S, null,
-				_finderPathWithPaginationCountByG_NotC_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4427,36 +3466,36 @@ public class MBThreadPersistenceImpl
 					"mbThread.", "status", FinderColumn.Type.INTEGER, "=", true,
 					true, MBThread::getStatus));
 
-		_finderPathWithPaginationFindByG_NotC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, true);
-
-		_finderPathWithPaginationCountByG_NotC_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_NotC_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "categoryId", "status"}, false);
-
 		_collectionPersistenceFinderByG_NotC_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_NotC_NotS, null,
-				_finderPathWithPaginationCountByG_NotC_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_NotC_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_NotC_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBTHREAD_WHERE, _SQL_COUNT_MBTHREAD_WHERE,
 				MBThreadModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBThreadImpl.class, MBThread.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_MBTHREAD_WHERE,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_MBTHREAD_WHERE,
+					MBThreadImpl.class, MBThread.class, "mbThread", "MBThread",
+					"mbThread.threadId",
+					"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ",
+					"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ",
+					") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId",
+					"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ",
 					MBThreadModelImpl.ORDER_BY_SQL,
 					MBThreadModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -4526,27 +3565,6 @@ public class MBThreadPersistenceImpl
 	private static final String _SQL_COUNT_MBTHREAD_WHERE =
 		"SELECT COUNT(mbThread) FROM MBThread mbThread WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"mbThread.threadId";
-
-	private static final String _FILTER_SQL_SELECT_MBTHREAD_WHERE =
-		"SELECT DISTINCT {mbThread.*} FROM MBThread mbThread WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {MBThread.*} FROM (SELECT DISTINCT mbThread.threadId FROM MBThread mbThread WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_MBTHREAD_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN MBThread ON TEMP_TABLE.threadId = MBThread.threadId";
-
-	private static final String _FILTER_SQL_COUNT_MBTHREAD_WHERE =
-		"SELECT COUNT(DISTINCT mbThread.threadId) AS COUNT_VALUE FROM MBThread mbThread WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "mbThread";
-
-	private static final String _FILTER_ENTITY_TABLE = "MBThread";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No MBThread exists with the key {";
 
@@ -4562,4 +3580,4 @@ public class MBThreadPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1044718063
+// LIFERAY-SERVICE-BUILDER-HASH:-377551434

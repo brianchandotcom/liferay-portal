@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchCountryLocalizationException;
 import com.liferay.portal.kernel.log.Log;
@@ -73,69 +72,14 @@ public class CountryLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCountryId;
-	private FinderPath _finderPathWithoutPaginationFindByCountryId;
-	private FinderPath _finderPathCountByCountryId;
 	private CollectionPersistenceFinder<CountryLocalization>
 		_collectionPersistenceFinderByCountryId;
 
 	/**
-	 * Returns all the country localizations where countryId = &#63;.
-	 *
-	 * @param countryId the country ID
-	 * @return the matching country localizations
-	 */
-	@Override
-	public List<CountryLocalization> findByCountryId(long countryId) {
-		return findByCountryId(
-			countryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the country localizations where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of country localizations
-	 * @param end the upper bound of the range of country localizations (not inclusive)
-	 * @return the range of matching country localizations
-	 */
-	@Override
-	public List<CountryLocalization> findByCountryId(
-		long countryId, int start, int end) {
-
-		return findByCountryId(countryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the country localizations where countryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryLocalizationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param countryId the country ID
-	 * @param start the lower bound of the range of country localizations
-	 * @param end the upper bound of the range of country localizations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching country localizations
-	 */
-	@Override
-	public List<CountryLocalization> findByCountryId(
-		long countryId, int start, int end,
-		OrderByComparator<CountryLocalization> orderByComparator) {
-
-		return findByCountryId(countryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the country localizations where countryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryLocalizationModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryLocalizationModelImpl</code>.
 	 * </p>
 	 *
 	 * @param countryId the country ID
@@ -222,7 +166,6 @@ public class CountryLocalizationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {countryId});
 	}
 
-	private FinderPath _finderPathFetchByCountryId_LanguageId;
 	private UniquePersistenceFinder<CountryLocalization>
 		_uniquePersistenceFinderByCountryId_LanguageId;
 
@@ -257,20 +200,6 @@ public class CountryLocalizationPersistenceImpl
 		}
 
 		return countryLocalization;
-	}
-
-	/**
-	 * Returns the country localization where countryId = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param countryId the country ID
-	 * @param languageId the language ID
-	 * @return the matching country localization, or <code>null</code> if a matching country localization could not be found
-	 */
-	@Override
-	public CountryLocalization fetchByCountryId_LanguageId(
-		long countryId, String languageId) {
-
-		return fetchByCountryId_LanguageId(countryId, languageId, true);
 	}
 
 	/**
@@ -570,29 +499,25 @@ public class CountryLocalizationPersistenceImpl
 	 * Initializes the country localization persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"countryId"}, true);
-
-		_finderPathWithoutPaginationFindByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			true);
-
-		_finderPathCountByCountryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCountryId",
-			new String[] {Long.class.getName()}, new String[] {"countryId"},
-			false);
-
 		_collectionPersistenceFinderByCountryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCountryId,
-				_finderPathWithoutPaginationFindByCountryId,
-				_finderPathCountByCountryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCountryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCountryId", new String[] {Long.class.getName()},
+					new String[] {"countryId"}, false),
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE,
 				_SQL_COUNT_COUNTRYLOCALIZATION_WHERE,
 				CountryLocalizationModelImpl.ORDER_BY_JPQL,
@@ -601,16 +526,15 @@ public class CountryLocalizationPersistenceImpl
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
 					"=", true, true, CountryLocalization::getCountryId));
 
-		_finderPathFetchByCountryId_LanguageId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCountryId_LanguageId",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"countryId", "languageId"}, 0, 2, false,
-			CountryLocalization::getCountryId,
-			convertNullFunction(CountryLocalization::getLanguageId));
-
 		_uniquePersistenceFinderByCountryId_LanguageId =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchByCountryId_LanguageId,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchByCountryId_LanguageId",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"countryId", "languageId"}, 0, 2, false,
+					CountryLocalization::getCountryId,
+					convertNullFunction(CountryLocalization::getLanguageId)),
 				_SQL_SELECT_COUNTRYLOCALIZATION_WHERE, "",
 				new FinderColumn<>(
 					"countryLocalization.", "countryId", FinderColumn.Type.LONG,
@@ -653,4 +577,4 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-565484216
+// LIFERAY-SERVICE-BUILDER-HASH:652376247

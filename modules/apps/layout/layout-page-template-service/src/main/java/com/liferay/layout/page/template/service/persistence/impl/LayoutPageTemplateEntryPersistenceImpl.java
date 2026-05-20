@@ -101,62 +101,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the layout page template entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63;.
@@ -248,7 +194,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutPageTemplateEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -280,18 +225,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -340,69 +273,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the layout page template entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where uuid = &#63; and companyId = &#63;.
@@ -499,63 +371,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByGroupId;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63;.
@@ -625,37 +442,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -713,66 +499,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLayoutPrototypeId;
-	private FinderPath _finderPathWithoutPaginationFindByLayoutPrototypeId;
-	private FinderPath _finderPathCountByLayoutPrototypeId;
 	private CollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByLayoutPrototypeId;
-
-	/**
-	 * Returns all the layout page template entries where layoutPrototypeId = &#63;.
-	 *
-	 * @param layoutPrototypeId the layout prototype ID
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
-		long layoutPrototypeId) {
-
-		return findByLayoutPrototypeId(
-			layoutPrototypeId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where layoutPrototypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutPrototypeId the layout prototype ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
-		long layoutPrototypeId, int start, int end) {
-
-		return findByLayoutPrototypeId(layoutPrototypeId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where layoutPrototypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param layoutPrototypeId the layout prototype ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByLayoutPrototypeId(
-		long layoutPrototypeId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByLayoutPrototypeId(
-			layoutPrototypeId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where layoutPrototypeId = &#63;.
@@ -867,7 +595,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {layoutPrototypeId});
 	}
 
-	private FinderPath _finderPathFetchByPlid;
 	private UniquePersistenceFinder<LayoutPageTemplateEntry>
 		_uniquePersistenceFinderByPlid;
 
@@ -897,17 +624,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry fetchByPlid(long plid) {
-		return fetchByPlid(plid, true);
 	}
 
 	/**
@@ -952,72 +668,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_L;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L(
-		long groupId, long layoutPageTemplateCollectionId) {
-
-		return findByG_L(
-			groupId, layoutPageTemplateCollectionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L(
-		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
-
-		return findByG_L(
-			groupId, layoutPageTemplateCollectionId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L(
-		long groupId, long layoutPageTemplateCollectionId, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_L(
-			groupId, layoutPageTemplateCollectionId, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
@@ -1092,43 +744,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L(
-		long groupId, long layoutPageTemplateCollectionId) {
-
-		return filterFindByG_L(
-			groupId, layoutPageTemplateCollectionId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L(
-		long groupId, long layoutPageTemplateCollectionId, int start, int end) {
-
-		return filterFindByG_L(
-			groupId, layoutPageTemplateCollectionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63;.
 	 *
 	 * <p>
@@ -1195,7 +810,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_LPTEK;
 	private UniquePersistenceFinder<LayoutPageTemplateEntry>
 		_uniquePersistenceFinderByG_LPTEK;
 
@@ -1229,20 +843,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateEntryKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateEntryKey the layout page template entry key
-	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry fetchByG_LPTEK(
-		long groupId, String layoutPageTemplateEntryKey) {
-
-		return fetchByG_LPTEK(groupId, layoutPageTemplateEntryKey, true);
 	}
 
 	/**
@@ -1294,66 +894,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, layoutPageTemplateEntryKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N;
-	private FinderPath _finderPathWithoutPaginationFindByG_N;
-	private FinderPath _finderPathCountByG_N;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_N;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N(long groupId, String name) {
-		return findByG_N(
-			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N(
-		long groupId, String name, int start, int end) {
-
-		return findByG_N(groupId, name, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N(
-		long groupId, String name, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_N(groupId, name, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63;.
@@ -1426,41 +968,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_N(
-		long groupId, String name) {
-
-		return filterFindByG_N(
-			groupId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_N(
-		long groupId, String name, int start, int end) {
-
-		return filterFindByG_N(groupId, name, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and name = &#63;.
 	 *
 	 * <p>
@@ -1522,66 +1029,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_T;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(long groupId, int type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(
-		long groupId, int type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(
-		long groupId, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63;.
@@ -1665,41 +1114,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T(
-		long groupId, int type) {
-
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T(
-		long groupId, int type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1719,43 +1133,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T.filterFind(
-			finderCache, new Object[] {groupId, type}, start, end,
+			finderCache, new Object[] {groupId, new int[] {type}}, start, end,
 			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T(
-		long groupId, int[] types) {
-
-		return filterFindByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T(
-		long groupId, int[] types, int start, int end) {
-
-		return filterFindByG_T(groupId, types, start, end, null);
 	}
 
 	/**
@@ -1780,65 +1159,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		return _collectionPersistenceFinderByG_T.filterFind(
 			finderCache, new Object[] {groupId, ArrayUtil.sortedUnique(types)},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(long groupId, int[] types) {
-		return findByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(
-		long groupId, int[] types, int start, int end) {
-
-		return findByG_T(groupId, types, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T(
-		long groupId, int[] types, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_T(groupId, types, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1915,7 +1235,7 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T(long groupId, int type) {
 		return _collectionPersistenceFinderByG_T.filterCount(
-			finderCache, new Object[] {groupId, type}, groupId);
+			finderCache, new Object[] {groupId, new int[] {type}}, groupId);
 	}
 
 	/**
@@ -1932,66 +1252,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_S(long groupId, int status) {
-		return findByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_S(
-		long groupId, int status, int start, int end) {
-
-		return findByG_S(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_S(
-		long groupId, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and status = &#63;.
@@ -2064,41 +1326,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_S(
-		long groupId, int status) {
-
-		return filterFindByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_S(
-		long groupId, int status, int start, int end) {
-
-		return filterFindByG_S(groupId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -2160,8 +1387,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_LikeN;
-	private FinderPath _finderPathWithPaginationCountByG_L_LikeN;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_L_LikeN;
 
@@ -2429,76 +1654,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_L_T;
-	private FinderPath _finderPathCountByG_L_T;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_L_T;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_T(
-		long groupId, long layoutPageTemplateCollectionId, int type) {
-
-		return findByG_L_T(
-			groupId, layoutPageTemplateCollectionId, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_T(
-		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end) {
-
-		return findByG_L_T(
-			groupId, layoutPageTemplateCollectionId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_T(
-		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_L_T(
-			groupId, layoutPageTemplateCollectionId, type, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
@@ -2578,46 +1735,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L_T(
-		long groupId, long layoutPageTemplateCollectionId, int type) {
-
-		return filterFindByG_L_T(
-			groupId, layoutPageTemplateCollectionId, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L_T(
-		long groupId, long layoutPageTemplateCollectionId, int type, int start,
-		int end) {
-
-		return filterFindByG_L_T(
-			groupId, layoutPageTemplateCollectionId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -2694,77 +1811,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_L_S;
-	private FinderPath _finderPathCountByG_L_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_L_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_S(
-		long groupId, long layoutPageTemplateCollectionId, int status) {
-
-		return findByG_L_S(
-			groupId, layoutPageTemplateCollectionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_S(
-		long groupId, long layoutPageTemplateCollectionId, int status,
-		int start, int end) {
-
-		return findByG_L_S(
-			groupId, layoutPageTemplateCollectionId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_L_S(
-		long groupId, long layoutPageTemplateCollectionId, int status,
-		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_L_S(
-			groupId, layoutPageTemplateCollectionId, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
@@ -2847,46 +1895,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L_S(
-		long groupId, long layoutPageTemplateCollectionId, int status) {
-
-		return filterFindByG_L_S(
-			groupId, layoutPageTemplateCollectionId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_L_S(
-		long groupId, long layoutPageTemplateCollectionId, int status,
-		int start, int end) {
-
-		return filterFindByG_L_S(
-			groupId, layoutPageTemplateCollectionId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -2964,72 +1972,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_N_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_N_T;
-	private FinderPath _finderPathCountByG_N_T;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_N_T;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N_T(
-		long groupId, String name, int type) {
-
-		return findByG_N_T(
-			groupId, name, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N_T(
-		long groupId, String name, int type, int start, int end) {
-
-		return findByG_N_T(groupId, name, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_N_T(
-		long groupId, String name, int type, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_N_T(
-			groupId, name, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and name = &#63; and type = &#63;.
@@ -3105,43 +2049,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_N_T(
-		long groupId, String name, int type) {
-
-		return filterFindByG_N_T(
-			groupId, name, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and name = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_N_T(
-		long groupId, String name, int type, int start, int end) {
-
-		return filterFindByG_N_T(groupId, name, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and name = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -3207,8 +2114,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, type}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_LikeN;
-	private FinderPath _finderPathWithPaginationCountByG_T_LikeN;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_T_LikeN;
 
@@ -3418,8 +2323,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_LikeN.filterFind(
-			finderCache, new Object[] {groupId, name, type}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3631,7 +2536,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T_LikeN(long groupId, String name, int type) {
 		return _collectionPersistenceFinderByG_T_LikeN.filterCount(
-			finderCache, new Object[] {groupId, name, type}, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}},
+			groupId);
 	}
 
 	/**
@@ -3650,72 +2556,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_S;
-	private FinderPath _finderPathCountByG_T_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_T_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int type, int status) {
-
-		return findByG_T_S(
-			groupId, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int type, int status, int start, int end) {
-
-		return findByG_T_S(groupId, type, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int type, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_T_S(
-			groupId, type, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and status = &#63;.
@@ -3805,43 +2647,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_S(
-		long groupId, int type, int status) {
-
-		return filterFindByG_T_S(
-			groupId, type, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_S(
-		long groupId, int type, int status, int start, int end) {
-
-		return filterFindByG_T_S(groupId, type, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -3862,45 +2667,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_S.filterFind(
-			finderCache, new Object[] {groupId, type, status}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = any &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_S(
-		long groupId, int[] types, int status) {
-
-		return filterFindByG_T_S(
-			groupId, types, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_S(
-		long groupId, int[] types, int status, int start, int end) {
-
-		return filterFindByG_T_S(groupId, types, status, start, end, null);
+			finderCache, new Object[] {groupId, new int[] {type}, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -3927,71 +2695,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache,
 			new Object[] {groupId, ArrayUtil.sortedUnique(types), status},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and type = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int[] types, int status) {
-
-		return findByG_T_S(
-			groupId, types, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and type = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int[] types, int status, int start, int end) {
-
-		return findByG_T_S(groupId, types, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_S(
-		long groupId, int[] types, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_T_S(
-			groupId, types, status, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -4075,7 +2778,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T_S(long groupId, int type, int status) {
 		return _collectionPersistenceFinderByG_T_S.filterCount(
-			finderCache, new Object[] {groupId, type, status}, groupId);
+			finderCache, new Object[] {groupId, new int[] {type}, status},
+			groupId);
 	}
 
 	/**
@@ -4094,7 +2798,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_L_N_T;
 	private UniquePersistenceFinder<LayoutPageTemplateEntry>
 		_uniquePersistenceFinderByG_L_N_T;
 
@@ -4133,24 +2836,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry where groupId = &#63; and layoutPageTemplateCollectionId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param layoutPageTemplateCollectionId the layout page template collection ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry fetchByG_L_N_T(
-		long groupId, long layoutPageTemplateCollectionId, String name,
-		int type) {
-
-		return fetchByG_L_N_T(
-			groupId, layoutPageTemplateCollectionId, name, type, true);
 	}
 
 	/**
@@ -4214,8 +2899,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			new Object[] {groupId, layoutPageTemplateCollectionId, name, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_LikeN_S;
-	private FinderPath _finderPathWithPaginationCountByG_L_LikeN_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_L_LikeN_S;
 
@@ -4518,80 +3201,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T;
-	private FinderPath _finderPathCountByG_C_C_T;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_T;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T(
-		long groupId, long classNameId, String classTypeKey, int type) {
-
-		return findByG_C_C_T(
-			groupId, classNameId, classTypeKey, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int start, int end) {
-
-		return findByG_C_C_T(
-			groupId, classNameId, classTypeKey, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_C_C_T(
-			groupId, classNameId, classTypeKey, type, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
@@ -4675,48 +3286,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T(
-		long groupId, long classNameId, String classTypeKey, int type) {
-
-		return filterFindByG_C_C_T(
-			groupId, classNameId, classTypeKey, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int start, int end) {
-
-		return filterFindByG_C_C_T(
-			groupId, classNameId, classTypeKey, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -4797,82 +3366,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			new Object[] {groupId, classNameId, classTypeKey, type}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_D;
-	private FinderPath _finderPathCountByG_C_C_D;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_D;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate) {
-
-		return findByG_C_C_D(
-			groupId, classNameId, classTypeKey, defaultTemplate,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int start, int end) {
-
-		return findByG_C_C_D(
-			groupId, classNameId, classTypeKey, defaultTemplate, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_C_C_D(
-			groupId, classNameId, classTypeKey, defaultTemplate, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
@@ -4961,50 +3456,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate) {
-
-		return filterFindByG_C_C_D(
-			groupId, classNameId, classTypeKey, defaultTemplate,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int start, int end) {
-
-		return filterFindByG_C_C_D(
-			groupId, classNameId, classTypeKey, defaultTemplate, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63;.
 	 *
 	 * <p>
@@ -5089,80 +3540,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_T_D;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_T_D;
-	private FinderPath _finderPathCountByG_C_T_D;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_T_D;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_T_D(
-		long groupId, long classNameId, int type, boolean defaultTemplate) {
-
-		return findByG_C_T_D(
-			groupId, classNameId, type, defaultTemplate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_T_D(
-		long groupId, long classNameId, int type, boolean defaultTemplate,
-		int start, int end) {
-
-		return findByG_C_T_D(
-			groupId, classNameId, type, defaultTemplate, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_T_D(
-		long groupId, long classNameId, int type, boolean defaultTemplate,
-		int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_C_T_D(
-			groupId, classNameId, type, defaultTemplate, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
@@ -5243,48 +3622,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			finderCache,
 			new Object[] {groupId, classNameId, type, defaultTemplate},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_T_D(
-		long groupId, long classNameId, int type, boolean defaultTemplate) {
-
-		return filterFindByG_C_T_D(
-			groupId, classNameId, type, defaultTemplate, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and type = &#63; and defaultTemplate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_T_D(
-		long groupId, long classNameId, int type, boolean defaultTemplate,
-		int start, int end) {
-
-		return filterFindByG_C_T_D(
-			groupId, classNameId, type, defaultTemplate, start, end, null);
 	}
 
 	/**
@@ -5369,8 +3706,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_LikeN_S;
-	private FinderPath _finderPathWithPaginationCountByG_T_LikeN_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_T_LikeN_S;
 
@@ -5596,8 +3931,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T_LikeN_S.filterFind(
-			finderCache, new Object[] {groupId, name, type, status}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -5838,7 +4173,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		long groupId, String name, int type, int status) {
 
 		return _collectionPersistenceFinderByG_T_LikeN_S.filterCount(
-			finderCache, new Object[] {groupId, name, type, status}, groupId);
+			finderCache, new Object[] {groupId, name, new int[] {type}, status},
+			groupId);
 	}
 
 	/**
@@ -5860,79 +4196,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T_D_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_T_D_S;
-	private FinderPath _finderPathCountByG_T_D_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_T_D_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_D_S(
-		long groupId, int type, boolean defaultTemplate, int status) {
-
-		return findByG_T_D_S(
-			groupId, type, defaultTemplate, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_D_S(
-		long groupId, int type, boolean defaultTemplate, int status, int start,
-		int end) {
-
-		return findByG_T_D_S(
-			groupId, type, defaultTemplate, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_T_D_S(
-		long groupId, int type, boolean defaultTemplate, int status, int start,
-		int end, OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_T_D_S(
-			groupId, type, defaultTemplate, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -6013,48 +4278,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_D_S(
-		long groupId, int type, boolean defaultTemplate, int status) {
-
-		return filterFindByG_T_D_S(
-			groupId, type, defaultTemplate, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_T_D_S(
-		long groupId, int type, boolean defaultTemplate, int status, int start,
-		int end) {
-
-		return filterFindByG_T_D_S(
-			groupId, type, defaultTemplate, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and type = &#63; and defaultTemplate = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -6131,8 +4354,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_LikeN_T;
-	private FinderPath _finderPathWithPaginationCountByG_C_C_LikeN_T;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_LikeN_T;
 
@@ -6431,84 +4652,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_T_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_T_S;
-	private FinderPath _finderPathCountByG_C_C_T_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_T_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status) {
-
-		return findByG_C_C_T_S(
-			groupId, classNameId, classTypeKey, type, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status, int start, int end) {
-
-		return findByG_C_C_T_S(
-			groupId, classNameId, classTypeKey, type, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_T_S(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_C_C_T_S(
-			groupId, classNameId, classTypeKey, type, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
@@ -6601,51 +4746,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status) {
-
-		return filterFindByG_C_C_T_S(
-			groupId, classNameId, classTypeKey, type, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param type the type
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_T_S(
-		long groupId, long classNameId, String classTypeKey, int type,
-		int status, int start, int end) {
-
-		return filterFindByG_C_C_T_S(
-			groupId, classNameId, classTypeKey, type, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout page template entries that the user has permissions to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and type = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -6734,85 +4834,8 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_D_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_C_C_D_S;
-	private FinderPath _finderPathCountByG_C_C_D_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_D_S;
-
-	/**
-	 * Returns all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @return the matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status) {
-
-		return findByG_C_C_D_S(
-			groupId, classNameId, classTypeKey, defaultTemplate, status,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status, int start, int end) {
-
-		return findByG_C_C_D_S(
-			groupId, classNameId, classTypeKey, defaultTemplate, status, start,
-			end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout page template entries
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> findByG_C_C_D_S(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status, int start, int end,
-		OrderByComparator<LayoutPageTemplateEntry> orderByComparator) {
-
-		return findByG_C_C_D_S(
-			groupId, classNameId, classTypeKey, defaultTemplate, status, start,
-			end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout page template entries where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
@@ -6906,52 +4929,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				groupId, classNameId, classTypeKey, defaultTemplate, status
 			},
 			orderByComparator);
-	}
-
-	/**
-	 * Returns all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @return the matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status) {
-
-		return filterFindByG_C_C_D_S(
-			groupId, classNameId, classTypeKey, defaultTemplate, status,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout page template entries that the user has permission to view where groupId = &#63; and classNameId = &#63; and classTypeKey = &#63; and defaultTemplate = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutPageTemplateEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param classNameId the class name ID
-	 * @param classTypeKey the class type key
-	 * @param defaultTemplate the default template
-	 * @param status the status
-	 * @param start the lower bound of the range of layout page template entries
-	 * @param end the upper bound of the range of layout page template entries (not inclusive)
-	 * @return the range of matching layout page template entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutPageTemplateEntry> filterFindByG_C_C_D_S(
-		long groupId, long classNameId, String classTypeKey,
-		boolean defaultTemplate, int status, int start, int end) {
-
-		return filterFindByG_C_C_D_S(
-			groupId, classNameId, classTypeKey, defaultTemplate, status, start,
-			end, null);
 	}
 
 	/**
@@ -7051,8 +5028,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_C_C_LikeN_T_S;
-	private FinderPath _finderPathWithPaginationCountByG_C_C_LikeN_T_S;
 	private FilterCollectionPersistenceFinder<LayoutPageTemplateEntry>
 		_collectionPersistenceFinderByG_C_C_LikeN_T_S;
 
@@ -7379,7 +5354,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<LayoutPageTemplateEntry>
 		_uniquePersistenceFinderByERC_G;
 
@@ -7413,20 +5387,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 		}
 
 		return layoutPageTemplateEntry;
-	}
-
-	/**
-	 * Returns the layout page template entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout page template entry, or <code>null</code> if a matching layout page template entry could not be found
-	 */
-	@Override
-	public LayoutPageTemplateEntry fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -7887,27 +5847,23 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 			_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 			LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
@@ -7916,15 +5872,14 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"layoutPageTemplateEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutPageTemplateEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutPageTemplateEntry::getUuid),
-			LayoutPageTemplateEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutPageTemplateEntry::getUuid),
+				LayoutPageTemplateEntry::getGroupId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "uuid", FinderColumn.Type.STRING,
@@ -7933,30 +5888,25 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"layoutPageTemplateEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutPageTemplateEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
@@ -7970,41 +5920,38 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8013,29 +5960,28 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getGroupId));
 
-		_finderPathWithPaginationFindByLayoutPrototypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLayoutPrototypeId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"layoutPrototypeId"}, true);
-
-		_finderPathWithoutPaginationFindByLayoutPrototypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByLayoutPrototypeId", new String[] {Long.class.getName()},
-			new String[] {"layoutPrototypeId"}, true);
-
-		_finderPathCountByLayoutPrototypeId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByLayoutPrototypeId", new String[] {Long.class.getName()},
-			new String[] {"layoutPrototypeId"}, false);
-
 		_collectionPersistenceFinderByLayoutPrototypeId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLayoutPrototypeId,
-				_finderPathWithoutPaginationFindByLayoutPrototypeId,
-				_finderPathCountByLayoutPrototypeId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLayoutPrototypeId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"layoutPrototypeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByLayoutPrototypeId",
+					new String[] {Long.class.getName()},
+					new String[] {"layoutPrototypeId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByLayoutPrototypeId",
+					new String[] {Long.class.getName()},
+					new String[] {"layoutPrototypeId"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
@@ -8045,53 +5991,52 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutPageTemplateEntry::getLayoutPrototypeId));
 
-		_finderPathFetchByPlid = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, 0, 0,
-			false, LayoutPageTemplateEntry::getPlid);
-
 		_uniquePersistenceFinderByPlid = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByPlid,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"}, 0,
+				0, false, LayoutPageTemplateEntry::getPlid),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutPageTemplateEntry::getPlid));
 
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateCollectionId"}, true);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateCollectionId"}, false);
-
 		_collectionPersistenceFinderByG_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L,
-				_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "layoutPageTemplateCollectionId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "layoutPageTemplateCollectionId"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"groupId", "layoutPageTemplateCollectionId"},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8106,16 +6051,15 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					LayoutPageTemplateEntry::
 						getLayoutPageTemplateCollectionId));
 
-		_finderPathFetchByG_LPTEK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_LPTEK",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "layoutPageTemplateEntryKey"}, 0, 2, false,
-			LayoutPageTemplateEntry::getGroupId,
-			convertNullFunction(
-				LayoutPageTemplateEntry::getLayoutPageTemplateEntryKey));
-
 		_uniquePersistenceFinderByG_LPTEK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_LPTEK,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_LPTEK",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "layoutPageTemplateEntryKey"}, 0, 2,
+				false, LayoutPageTemplateEntry::getGroupId,
+				convertNullFunction(
+					LayoutPageTemplateEntry::getLayoutPageTemplateEntryKey)),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "groupId", FinderColumn.Type.LONG,
@@ -8125,41 +6069,38 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				LayoutPageTemplateEntry::getLayoutPageTemplateEntryKey));
 
-		_finderPathWithPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithoutPaginationFindByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, true, null);
-
-		_finderPathCountByG_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_N,
-				_finderPathWithoutPaginationFindByG_N, _finderPathCountByG_N,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, 0, 2, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8171,42 +6112,43 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					"layoutPageTemplateEntry.", "name",
 					FinderColumn.Type.STRING, "=", true, true,
 					LayoutPageTemplateEntry::getName));
-
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "type_"}, false);
 
 		_collectionPersistenceFinderByG_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T,
-				_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "type_"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8219,41 +6161,42 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8266,41 +6209,45 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_L_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_LikeN",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId", "name"},
-			true);
-
-		_finderPathWithPaginationCountByG_L_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_LikeN",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId", "name"},
-			false);
-
 		_collectionPersistenceFinderByG_L_LikeN =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_LikeN, null,
-				_finderPathWithPaginationCountByG_L_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_LikeN",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "name"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_LikeN",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "name"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8318,51 +6265,54 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.STRING, "LIKE", true, true,
 					LayoutPageTemplateEntry::getName));
 
-		_finderPathWithPaginationFindByG_L_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId", "type_"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_L_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId", "type_"},
-			true);
-
-		_finderPathCountByG_L_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "layoutPageTemplateCollectionId", "type_"},
-			false);
-
 		_collectionPersistenceFinderByG_L_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_T,
-				_finderPathWithoutPaginationFindByG_L_T,
-				_finderPathCountByG_L_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "type_"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8380,57 +6330,54 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "status"
-			},
-			true);
-
-		_finderPathCountByG_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_L_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_S,
-				_finderPathWithoutPaginationFindByG_L_S,
-				_finderPathCountByG_L_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "status"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8448,48 +6395,47 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByG_N_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_N_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_N_T,
-				_finderPathWithoutPaginationFindByG_N_T,
-				_finderPathCountByG_N_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_N_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_N_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, 0, 2, true,
+					null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_N_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, 0, 2, false,
+					null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8506,39 +6452,39 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_T_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, true);
-
-		_finderPathWithPaginationCountByG_T_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, false);
-
 		_collectionPersistenceFinderByG_T_LikeN =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_LikeN, null,
-				_finderPathWithPaginationCountByG_T_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8555,48 +6501,45 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, true);
-
-		_finderPathCountByG_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByG_T_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_S,
-				_finderPathWithoutPaginationFindByG_T_S,
-				_finderPathCountByG_T_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "type_", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "type_", "status"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8613,22 +6556,21 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathFetchByG_L_N_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_L_N_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "name", "type_"
-			},
-			0, 4, false, LayoutPageTemplateEntry::getGroupId,
-			LayoutPageTemplateEntry::getLayoutPageTemplateCollectionId,
-			convertNullFunction(LayoutPageTemplateEntry::getName),
-			LayoutPageTemplateEntry::getType);
-
 		_uniquePersistenceFinderByG_L_N_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_L_N_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_L_N_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"groupId", "layoutPageTemplateCollectionId", "name", "type_"
+				},
+				0, 4, false, LayoutPageTemplateEntry::getGroupId,
+				LayoutPageTemplateEntry::getLayoutPageTemplateCollectionId,
+				convertNullFunction(LayoutPageTemplateEntry::getName),
+				LayoutPageTemplateEntry::getType),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "groupId", FinderColumn.Type.LONG,
@@ -8644,46 +6586,48 @@ public class LayoutPageTemplateEntryPersistenceImpl
 				"layoutPageTemplateEntry.", "type", FinderColumn.Type.INTEGER,
 				"=", true, true, LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_L_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "name", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_L_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_LikeN_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "layoutPageTemplateCollectionId", "name", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_L_LikeN_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_LikeN_S, null,
-				_finderPathWithPaginationCountByG_L_LikeN_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_LikeN_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "name",
+						"status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_L_LikeN_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "layoutPageTemplateCollectionId", "name",
+						"status"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8705,52 +6649,54 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classTypeKey", "type_"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classTypeKey", "type_"}, 0,
-			4, true, null);
-
-		_finderPathCountByG_C_C_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "classTypeKey", "type_"}, 0,
-			4, false, null);
-
 		_collectionPersistenceFinderByG_C_C_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_T,
-				_finderPathWithoutPaginationFindByG_C_C_T,
-				_finderPathCountByG_C_C_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8771,58 +6717,57 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_C_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_C_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_C_C_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_D,
-				_finderPathWithoutPaginationFindByG_C_C_D,
-				_finderPathCountByG_C_C_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8843,52 +6788,54 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					LayoutPageTemplateEntry::isDefaultTemplate));
 
-		_finderPathWithPaginationFindByG_C_T_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "type_", "defaultTemplate"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_T_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_T_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "type_", "defaultTemplate"},
-			true);
-
-		_finderPathCountByG_C_T_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_T_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Boolean.class.getName()
-			},
-			new String[] {"groupId", "classNameId", "type_", "defaultTemplate"},
-			false);
-
 		_collectionPersistenceFinderByG_C_T_D =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_T_D,
-				_finderPathWithoutPaginationFindByG_C_T_D,
-				_finderPathCountByG_C_T_D,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "type_", "defaultTemplate"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_T_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "type_", "defaultTemplate"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_T_D",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Boolean.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "type_", "defaultTemplate"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8909,40 +6856,40 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.BOOLEAN, "=", true, true,
 					LayoutPageTemplateEntry::isDefaultTemplate));
 
-		_finderPathWithPaginationFindByG_T_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_LikeN_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "type_", "status"}, true);
-
-		_finderPathWithPaginationCountByG_T_LikeN_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T_LikeN_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "name", "type_", "status"}, false);
-
 		_collectionPersistenceFinderByG_T_LikeN_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_LikeN_S, null,
-				_finderPathWithPaginationCountByG_T_LikeN_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_LikeN_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "type_", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_T_LikeN_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "name", "type_", "status"}, false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -8963,52 +6910,54 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_T_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_D_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_", "defaultTemplate", "status"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_T_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_D_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "defaultTemplate", "status"},
-			true);
-
-		_finderPathCountByG_T_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_D_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "type_", "defaultTemplate", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_T_D_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T_D_S,
-				_finderPathWithoutPaginationFindByG_T_D_S,
-				_finderPathCountByG_T_D_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T_D_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "type_", "defaultTemplate", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T_D_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "type_", "defaultTemplate", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_T_D_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "type_", "defaultTemplate", "status"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -9029,47 +6978,51 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_C_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_LikeN_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "name", "type_"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_C_C_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C_LikeN_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "name", "type_"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_C_C_LikeN_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_LikeN_T, null,
-				_finderPathWithPaginationCountByG_C_C_LikeN_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_C_C_LikeN_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "name",
+						"type_"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_C_C_LikeN_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "name",
+						"type_"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -9094,60 +7047,62 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getType));
 
-		_finderPathWithPaginationFindByG_C_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "type_", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "type_", "status"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_C_C_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "type_", "status"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_C_C_T_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_T_S,
-				_finderPathWithoutPaginationFindByG_C_C_T_S,
-				_finderPathCountByG_C_C_T_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_",
+						"status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_C_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_",
+						"status"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_C_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "type_",
+						"status"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -9172,63 +7127,62 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_C_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_D_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate",
-				"status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_C_C_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_D_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate",
-				"status"
-			},
-			0, 4, true, null);
-
-		_finderPathCountByG_C_C_D_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_D_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "defaultTemplate",
-				"status"
-			},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_C_C_D_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_D_S,
-				_finderPathWithoutPaginationFindByG_C_C_D_S,
-				_finderPathCountByG_C_C_D_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_D_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_C_C_D_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate", "status"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_C_C_D_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey",
+						"defaultTemplate", "status"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -9253,50 +7207,51 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathWithPaginationFindByG_C_C_LikeN_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_LikeN_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "name", "type_",
-				"status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_C_C_LikeN_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_C_C_LikeN_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "classNameId", "classTypeKey", "name", "type_",
-				"status"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_C_C_LikeN_T_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_C_C_LikeN_T_S, null,
-				_finderPathWithPaginationCountByG_C_C_LikeN_T_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_C_C_LikeN_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "name",
+						"type_", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_C_C_LikeN_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "classNameId", "classTypeKey", "name",
+						"type_", "status"
+					},
+					false),
 				_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
 				LayoutPageTemplateEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutPageTemplateEntryImpl.class,
-					LayoutPageTemplateEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE,
+					LayoutPageTemplateEntry.class, "layoutPageTemplateEntry",
+					"LayoutPageTemplateEntry",
+					"layoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId",
+					"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ",
 					LayoutPageTemplateEntryModelImpl.ORDER_BY_SQL,
 					LayoutPageTemplateEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -9325,16 +7280,15 @@ public class LayoutPageTemplateEntryPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					LayoutPageTemplateEntry::getStatus));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(
-				LayoutPageTemplateEntry::getExternalReferenceCode),
-			LayoutPageTemplateEntry::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					LayoutPageTemplateEntry::getExternalReferenceCode),
+				LayoutPageTemplateEntry::getGroupId),
 			_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutPageTemplateEntry.", "externalReferenceCode",
@@ -9401,31 +7355,6 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE =
 		"SELECT COUNT(layoutPageTemplateEntry) FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"layoutPageTemplateEntry.layoutPageTemplateEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_WHERE =
-			"SELECT DISTINCT {layoutPageTemplateEntry.*} FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {LayoutPageTemplateEntry.*} FROM (SELECT DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTPAGETEMPLATEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN LayoutPageTemplateEntry ON TEMP_TABLE.layoutPageTemplateEntryId = LayoutPageTemplateEntry.layoutPageTemplateEntryId";
-
-	private static final String
-		_FILTER_SQL_COUNT_LAYOUTPAGETEMPLATEENTRY_WHERE =
-			"SELECT COUNT(DISTINCT layoutPageTemplateEntry.layoutPageTemplateEntryId) AS COUNT_VALUE FROM LayoutPageTemplateEntry layoutPageTemplateEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS =
-		"layoutPageTemplateEntry";
-
-	private static final String _FILTER_ENTITY_TABLE =
-		"LayoutPageTemplateEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutPageTemplateEntry exists with the key {";
 
@@ -9441,4 +7370,4 @@ public class LayoutPageTemplateEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-495689804
+// LIFERAY-SERVICE-BUILDER-HASH:-812807616

@@ -896,6 +896,27 @@ public class CustomFDSSerializer
 		);
 	}
 
+	private Object _getListTypeEntryKey(
+		String entityFieldType, ListTypeEntry listTypeEntry) {
+
+		String key = listTypeEntry.getKey();
+
+		if (Objects.equals(entityFieldType, FDSEntityFieldTypes.INTEGER)) {
+			try {
+				return Integer.valueOf(key);
+			}
+			catch (NumberFormatException numberFormatException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Invalid list type entry key: " + key,
+						numberFormatException);
+				}
+			}
+		}
+
+		return key;
+	}
+
 	private ObjectDefinition _getObjectDefinition(
 		HttpServletRequest httpServletRequest) {
 
@@ -996,7 +1017,7 @@ public class CustomFDSSerializer
 		return GetterUtil.getString(properties.get("type"));
 	}
 
-	private boolean _isActive(ObjectEntry objectEntry) {
+	private Boolean _isActive(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
 		return (boolean)properties.get("active");
@@ -1034,7 +1055,9 @@ public class CustomFDSSerializer
 
 		String type = MapUtil.getString(properties, "type");
 
-		if (Objects.equals(type, "date") || Objects.equals(type, "date-time")) {
+		if (Objects.equals(type, "date") || Objects.equals(type, "date-time") ||
+			Objects.equals(type, "date_time")) {
+
 			return _serializeFilterDateOrDateTime(fieldName, properties, type);
 		}
 
@@ -1070,7 +1093,17 @@ public class CustomFDSSerializer
 		return JSONUtil.put(
 			"clientExtensionFilterURL", fdsFilterCET.getURL()
 		).put(
-			"entityFieldType", FDSEntityFieldTypes.STRING
+			"entityFieldType",
+			() -> {
+				String entityFieldType = String.valueOf(
+					properties.get("entityFieldType"));
+
+				if (Validator.isNotNull(entityFieldType)) {
+					return entityFieldType;
+				}
+
+				return FDSEntityFieldTypes.STRING;
+			}
 		).put(
 			"id", fieldName
 		).put(
@@ -1157,11 +1190,18 @@ public class CustomFDSSerializer
 			}
 		}
 
+		String entityFieldType = String.valueOf(
+			properties.get("entityFieldType"));
+
 		JSONObject jsonObject = JSONUtil.put(
 			"autocompleteEnabled", true
 		).put(
 			"entityFieldType",
 			() -> {
+				if (Validator.isNotNull(entityFieldType)) {
+					return entityFieldType;
+				}
+
 				if (_isCollection(
 						String.valueOf(properties.get("fieldName")),
 						sourceType)) {
@@ -1174,7 +1214,9 @@ public class CustomFDSSerializer
 		).put(
 			"id",
 			() -> {
-				if (!Objects.equals(sourceType, "OBJECT_PICKLIST")) {
+				if (!Objects.equals(sourceType, "OBJECT_PICKLIST") ||
+					Validator.isNotNull(entityFieldType)) {
+
 					return fieldName;
 				}
 
@@ -1250,7 +1292,8 @@ public class CustomFDSSerializer
 					listTypeEntry.getName(
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
-					"value", listTypeEntry.getKey()
+					"value",
+					() -> _getListTypeEntryKey(entityFieldType, listTypeEntry)
 				))
 		).put(
 			"preloadedData",
@@ -1281,7 +1324,9 @@ public class CustomFDSSerializer
 								listTypeEntry.getName(
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
-								"value", listTypeEntry.getKey()
+								"value",
+								() -> _getListTypeEntryKey(
+									entityFieldType, listTypeEntry)
 							));
 					}
 				}

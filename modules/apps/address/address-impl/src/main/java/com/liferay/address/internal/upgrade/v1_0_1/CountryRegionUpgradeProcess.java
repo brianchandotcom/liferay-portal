@@ -139,7 +139,8 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 
 		if (country != null) {
 			country = _countryLocalService.updateCountry(
-				country.getCountryId(), countryJSONObject.getString("a2"),
+				country.getExternalReferenceCode(), country.getCountryId(),
+				countryJSONObject.getString("a2"),
 				countryJSONObject.getString("a3"), country.isActive(),
 				country.isBillingAllowed(), countryJSONObject.getString("idd"),
 				countryJSONObject.getString("name"),
@@ -213,7 +214,7 @@ public class CountryRegionUpgradeProcess extends UpgradeProcess {
 			serviceContext.setUserId(country.getUserId());
 
 			region = _regionLocalService.addRegion(
-				country.getCountryId(), true,
+				null, country.getCountryId(), true,
 				regionJSONObject.getString("name"), 0,
 				regionJSONObject.getString("regionCode"), serviceContext);
 		}

@@ -99,64 +99,8 @@ public class KBArticlePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathWithoutPaginationFindByResourcePrimKey;
-	private FinderPath _finderPathCountByResourcePrimKey;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByResourcePrimKey;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByResourcePrimKey(long resourcePrimKey) {
-		return findByResourcePrimKey(
-			resourcePrimKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByResourcePrimKey(
-		long resourcePrimKey, int start, int end) {
-
-		return findByResourcePrimKey(resourcePrimKey, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByResourcePrimKey(
-		long resourcePrimKey, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByResourcePrimKey(
-			resourcePrimKey, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63;.
@@ -247,60 +191,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the kb articles where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where uuid = &#63;.
@@ -389,7 +281,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -419,18 +310,6 @@ public class KBArticlePersistenceImpl
 		}
 
 		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	@Override
-	public KBArticle fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -478,67 +357,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the kb articles where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where uuid = &#63; and companyId = &#63;.
@@ -635,68 +455,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G;
-	private FinderPath _finderPathWithoutPaginationFindByR_G;
-	private FinderPath _finderPathCountByR_G;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G(long resourcePrimKey, long groupId) {
-		return findByR_G(
-			resourcePrimKey, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G(
-		long resourcePrimKey, long groupId, int start, int end) {
-
-		return findByR_G(resourcePrimKey, groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G(
-		long resourcePrimKey, long groupId, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G(
-			resourcePrimKey, groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63;.
@@ -771,40 +531,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G(long resourcePrimKey, long groupId) {
-		return filterFindByR_G(
-			resourcePrimKey, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G(
-		long resourcePrimKey, long groupId, int start, int end) {
-
-		return filterFindByR_G(resourcePrimKey, groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63;.
 	 *
 	 * <p>
@@ -866,7 +592,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByR_V;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_V;
 
 	/**
@@ -897,18 +622,6 @@ public class KBArticlePersistenceImpl
 		}
 
 		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article where resourcePrimKey = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param version the version
-	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	@Override
-	public KBArticle fetchByR_V(long resourcePrimKey, int version) {
-		return fetchByR_V(resourcePrimKey, version, true);
 	}
 
 	/**
@@ -957,68 +670,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_L;
-	private FinderPath _finderPathWithoutPaginationFindByR_L;
-	private FinderPath _finderPathCountByR_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_L;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(long resourcePrimKey, boolean latest) {
-		return findByR_L(
-			resourcePrimKey, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(
-		long resourcePrimKey, boolean latest, int start, int end) {
-
-		return findByR_L(resourcePrimKey, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(
-		long resourcePrimKey, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_L(
-			resourcePrimKey, latest, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and latest = &#63;.
@@ -1102,67 +755,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(long[] resourcePrimKeys, boolean latest) {
-		return findByR_L(
-			resourcePrimKeys, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(
-		long[] resourcePrimKeys, boolean latest, int start, int end) {
-
-		return findByR_L(resourcePrimKeys, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_L(
-		long[] resourcePrimKeys, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_L(
-			resourcePrimKeys, latest, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and latest = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1228,67 +820,8 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), latest});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_M;
-	private FinderPath _finderPathWithoutPaginationFindByR_M;
-	private FinderPath _finderPathCountByR_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_M;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(long resourcePrimKey, boolean main) {
-		return findByR_M(
-			resourcePrimKey, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(
-		long resourcePrimKey, boolean main, int start, int end) {
-
-		return findByR_M(resourcePrimKey, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(
-		long resourcePrimKey, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_M(
-			resourcePrimKey, main, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and main = &#63;.
@@ -1372,66 +905,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(long[] resourcePrimKeys, boolean main) {
-		return findByR_M(
-			resourcePrimKeys, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(
-		long[] resourcePrimKeys, boolean main, int start, int end) {
-
-		return findByR_M(resourcePrimKeys, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_M(
-		long[] resourcePrimKeys, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_M(
-			resourcePrimKeys, main, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and main = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1497,68 +970,8 @@ public class KBArticlePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(resourcePrimKeys), main});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_S;
-	private FinderPath _finderPathCountByR_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_S;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(long resourcePrimKey, int status) {
-		return findByR_S(
-			resourcePrimKey, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(
-		long resourcePrimKey, int status, int start, int end) {
-
-		return findByR_S(resourcePrimKey, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(
-		long resourcePrimKey, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_S(
-			resourcePrimKey, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and status = &#63;.
@@ -1644,67 +1057,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param statuses the statuses
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(long[] resourcePrimKeys, int[] statuses) {
-		return findByR_S(
-			resourcePrimKeys, statuses, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int[] statuses, int start, int end) {
-
-		return findByR_S(resourcePrimKeys, statuses, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_S(
-		long[] resourcePrimKeys, int[] statuses, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_S(
-			resourcePrimKeys, statuses, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and status = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1778,71 +1130,8 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC;
-	private FinderPath _finderPathCountByG_ERC;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_ERC;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC(
-		long groupId, String externalReferenceCode) {
-
-		return findByG_ERC(
-			groupId, externalReferenceCode, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC(
-		long groupId, String externalReferenceCode, int start, int end) {
-
-		return findByG_ERC(groupId, externalReferenceCode, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC(
-		long groupId, String externalReferenceCode, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_ERC(
-			groupId, externalReferenceCode, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63;.
@@ -1917,43 +1206,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_ERC(
-		long groupId, String externalReferenceCode) {
-
-		return filterFindByG_ERC(
-			groupId, externalReferenceCode, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_ERC(
-		long groupId, String externalReferenceCode, int start, int end) {
-
-		return filterFindByG_ERC(
-			groupId, externalReferenceCode, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and externalReferenceCode = &#63;.
 	 *
 	 * <p>
@@ -2016,66 +1268,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_L;
-	private FinderPath _finderPathCountByG_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_L;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_L(long groupId, boolean latest) {
-		return findByG_L(
-			groupId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_L(
-		long groupId, boolean latest, int start, int end) {
-
-		return findByG_L(groupId, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_L(
-		long groupId, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_L(groupId, latest, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and latest = &#63;.
@@ -2148,39 +1342,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_L(long groupId, boolean latest) {
-		return filterFindByG_L(
-			groupId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_L(
-		long groupId, boolean latest, int start, int end) {
-
-		return filterFindByG_L(groupId, latest, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -2242,66 +1403,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_M;
-	private FinderPath _finderPathCountByG_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_M;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_M(long groupId, boolean main) {
-		return findByG_M(
-			groupId, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_M(
-		long groupId, boolean main, int start, int end) {
-
-		return findByG_M(groupId, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_M(
-		long groupId, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_M(groupId, main, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and main = &#63;.
@@ -2374,39 +1477,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_M(long groupId, boolean main) {
-		return filterFindByG_M(
-			groupId, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_M(
-		long groupId, boolean main, int start, int end) {
-
-		return filterFindByG_M(groupId, main, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -2468,66 +1538,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_S;
-	private FinderPath _finderPathCountByG_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_S(long groupId, int status) {
-		return findByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_S(
-		long groupId, int status, int start, int end) {
-
-		return findByG_S(groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_S(
-		long groupId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_S(groupId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and status = &#63;.
@@ -2600,39 +1612,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_S(long groupId, int status) {
-		return filterFindByG_S(
-			groupId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_S(
-		long groupId, int status, int start, int end) {
-
-		return filterFindByG_S(groupId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -2694,67 +1673,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_L;
-	private FinderPath _finderPathWithoutPaginationFindByC_L;
-	private FinderPath _finderPathCountByC_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_L;
-
-	/**
-	 * Returns all the kb articles where companyId = &#63; and latest = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_L(long companyId, boolean latest) {
-		return findByC_L(
-			companyId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where companyId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_L(
-		long companyId, boolean latest, int start, int end) {
-
-		return findByC_L(companyId, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where companyId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_L(
-		long companyId, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByC_L(
-			companyId, latest, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where companyId = &#63; and latest = &#63;.
@@ -2851,66 +1771,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_M;
-	private FinderPath _finderPathWithoutPaginationFindByC_M;
-	private FinderPath _finderPathCountByC_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_M;
-
-	/**
-	 * Returns all the kb articles where companyId = &#63; and main = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_M(long companyId, boolean main) {
-		return findByC_M(
-			companyId, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where companyId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_M(
-		long companyId, boolean main, int start, int end) {
-
-		return findByC_M(companyId, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where companyId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_M(
-		long companyId, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByC_M(companyId, main, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where companyId = &#63; and main = &#63;.
@@ -3007,67 +1869,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_S;
-	private FinderPath _finderPathCountByC_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_S;
-
-	/**
-	 * Returns all the kb articles where companyId = &#63; and status = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_S(long companyId, int status) {
-		return findByC_S(
-			companyId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_S(
-		long companyId, int status, int start, int end) {
-
-		return findByC_S(companyId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where companyId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByC_S(
-		long companyId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByC_S(
-			companyId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where companyId = &#63; and status = &#63;.
@@ -3164,70 +1967,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_L;
-	private FinderPath _finderPathWithoutPaginationFindByP_L;
-	private FinderPath _finderPathCountByP_L;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_L;
-
-	/**
-	 * Returns all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long parentResourcePrimKey, boolean latest) {
-
-		return findByP_L(
-			parentResourcePrimKey, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long parentResourcePrimKey, boolean latest, int start, int end) {
-
-		return findByP_L(parentResourcePrimKey, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long parentResourcePrimKey, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_L(
-			parentResourcePrimKey, latest, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;.
@@ -3313,70 +2054,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeys, boolean latest) {
-
-		return findByP_L(
-			parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeys, boolean latest, int start, int end) {
-
-		return findByP_L(parentResourcePrimKeys, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_L(
-		long[] parentResourcePrimKeys, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_L(
-			parentResourcePrimKeys, latest, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and latest = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -3448,68 +2125,8 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_M;
-	private FinderPath _finderPathWithoutPaginationFindByP_M;
-	private FinderPath _finderPathCountByP_M;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_M;
-
-	/**
-	 * Returns all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(long parentResourcePrimKey, boolean main) {
-		return findByP_M(
-			parentResourcePrimKey, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(
-		long parentResourcePrimKey, boolean main, int start, int end) {
-
-		return findByP_M(parentResourcePrimKey, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(
-		long parentResourcePrimKey, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_M(
-			parentResourcePrimKey, main, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and main = &#63;.
@@ -3595,69 +2212,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeys, boolean main) {
-
-		return findByP_M(
-			parentResourcePrimKeys, main, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeys, boolean main, int start, int end) {
-
-		return findByP_M(parentResourcePrimKeys, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_M(
-		long[] parentResourcePrimKeys, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_M(
-			parentResourcePrimKeys, main, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and main = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -3727,68 +2281,8 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_S;
-	private FinderPath _finderPathWithoutPaginationFindByP_S;
-	private FinderPath _finderPathCountByP_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_S;
-
-	/**
-	 * Returns all the kb articles where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(long parentResourcePrimKey, int status) {
-		return findByP_S(
-			parentResourcePrimKey, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(
-		long parentResourcePrimKey, int status, int start, int end) {
-
-		return findByP_S(parentResourcePrimKey, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(
-		long parentResourcePrimKey, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_S(
-			parentResourcePrimKey, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and status = &#63;.
@@ -3874,70 +2368,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles where parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeys, int status) {
-
-		return findByP_S(
-			parentResourcePrimKeys, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeys, int status, int start, int end) {
-
-		return findByP_S(parentResourcePrimKeys, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByP_S(
-		long[] parentResourcePrimKeys, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByP_S(
-			parentResourcePrimKeys, status, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles where parentResourcePrimKey = &#63; and status = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -4009,8 +2439,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByLtD_S;
-	private FinderPath _finderPathWithPaginationCountByLtD_S;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByLtD_S;
 
@@ -4165,7 +2593,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private FinderPath _finderPathFetchByR_G_V;
 	private UniquePersistenceFinder<KBArticle> _uniquePersistenceFinderByR_G_V;
 
 	/**
@@ -4198,21 +2625,6 @@ public class KBArticlePersistenceImpl
 		}
 
 		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article where resourcePrimKey = &#63; and groupId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param version the version
-	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	@Override
-	public KBArticle fetchByR_G_V(
-		long resourcePrimKey, long groupId, int version) {
-
-		return fetchByR_G_V(resourcePrimKey, groupId, version, true);
 	}
 
 	/**
@@ -4266,75 +2678,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, groupId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_L;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_L;
-	private FinderPath _finderPathCountByR_G_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_L;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long resourcePrimKey, long groupId, boolean latest) {
-
-		return findByR_G_L(
-			resourcePrimKey, groupId, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long resourcePrimKey, long groupId, boolean latest, int start,
-		int end) {
-
-		return findByR_G_L(resourcePrimKey, groupId, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long resourcePrimKey, long groupId, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_L(
-			resourcePrimKey, groupId, latest, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
@@ -4426,46 +2771,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_L(
-		long resourcePrimKey, long groupId, boolean latest) {
-
-		return filterFindByR_G_L(
-			resourcePrimKey, groupId, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_L(
-		long resourcePrimKey, long groupId, boolean latest, int start,
-		int end) {
-
-		return filterFindByR_G_L(
-			resourcePrimKey, groupId, latest, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -4486,48 +2791,9 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_L.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, latest}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, latest}, start,
 			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_L(
-		long[] resourcePrimKeys, long groupId, boolean latest) {
-
-		return filterFindByR_G_L(
-			resourcePrimKeys, groupId, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_L(
-		long[] resourcePrimKeys, long groupId, boolean latest, int start,
-		int end) {
-
-		return filterFindByR_G_L(
-			resourcePrimKeys, groupId, latest, start, end, null);
 	}
 
 	/**
@@ -4556,74 +2822,6 @@ public class KBArticlePersistenceImpl
 				ArrayUtil.sortedUnique(resourcePrimKeys), groupId, latest
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeys, long groupId, boolean latest) {
-
-		return findByR_G_L(
-			resourcePrimKeys, groupId, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeys, long groupId, boolean latest, int start,
-		int end) {
-
-		return findByR_G_L(resourcePrimKeys, groupId, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_L(
-		long[] resourcePrimKeys, long groupId, boolean latest, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_L(
-			resourcePrimKeys, groupId, latest, start, end, orderByComparator,
-			true);
 	}
 
 	/**
@@ -4721,7 +2919,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean latest) {
 
 		return _collectionPersistenceFinderByR_G_L.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, latest},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, latest},
 			groupId);
 	}
 
@@ -4745,74 +2944,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_M;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_M;
-	private FinderPath _finderPathCountByR_G_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_M;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long resourcePrimKey, long groupId, boolean main) {
-
-		return findByR_G_M(
-			resourcePrimKey, groupId, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long resourcePrimKey, long groupId, boolean main, int start, int end) {
-
-		return findByR_G_M(resourcePrimKey, groupId, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long resourcePrimKey, long groupId, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_M(
-			resourcePrimKey, groupId, main, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
@@ -4904,45 +3037,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_M(
-		long resourcePrimKey, long groupId, boolean main) {
-
-		return filterFindByR_G_M(
-			resourcePrimKey, groupId, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_M(
-		long resourcePrimKey, long groupId, boolean main, int start, int end) {
-
-		return filterFindByR_G_M(
-			resourcePrimKey, groupId, main, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -4963,48 +3057,9 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_M.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, main}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main}, start,
 			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_M(
-		long[] resourcePrimKeys, long groupId, boolean main) {
-
-		return filterFindByR_G_M(
-			resourcePrimKeys, groupId, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_M(
-		long[] resourcePrimKeys, long groupId, boolean main, int start,
-		int end) {
-
-		return filterFindByR_G_M(
-			resourcePrimKeys, groupId, main, start, end, null);
 	}
 
 	/**
@@ -5033,74 +3088,6 @@ public class KBArticlePersistenceImpl
 				ArrayUtil.sortedUnique(resourcePrimKeys), groupId, main
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeys, long groupId, boolean main) {
-
-		return findByR_G_M(
-			resourcePrimKeys, groupId, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeys, long groupId, boolean main, int start,
-		int end) {
-
-		return findByR_G_M(resourcePrimKeys, groupId, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_M(
-		long[] resourcePrimKeys, long groupId, boolean main, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_M(
-			resourcePrimKeys, groupId, main, start, end, orderByComparator,
-			true);
 	}
 
 	/**
@@ -5196,7 +3183,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean main) {
 
 		return _collectionPersistenceFinderByR_G_M.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, main},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main},
 			groupId);
 	}
 
@@ -5220,74 +3208,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_S;
-	private FinderPath _finderPathWithoutPaginationFindByR_G_S;
-	private FinderPath _finderPathCountByR_G_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_S;
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long resourcePrimKey, long groupId, int status) {
-
-		return findByR_G_S(
-			resourcePrimKey, groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long resourcePrimKey, long groupId, int status, int start, int end) {
-
-		return findByR_G_S(resourcePrimKey, groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long resourcePrimKey, long groupId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_S(
-			resourcePrimKey, groupId, status, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
@@ -5379,45 +3301,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_S(
-		long resourcePrimKey, long groupId, int status) {
-
-		return filterFindByR_G_S(
-			resourcePrimKey, groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKey the resource prim key
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_S(
-		long resourcePrimKey, long groupId, int status, int start, int end) {
-
-		return filterFindByR_G_S(
-			resourcePrimKey, groupId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where resourcePrimKey = &#63; and groupId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -5438,47 +3321,9 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_S.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, status}, start,
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, status}, start,
 			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_S(
-		long[] resourcePrimKeys, long groupId, int status) {
-
-		return filterFindByR_G_S(
-			resourcePrimKeys, groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByR_G_S(
-		long[] resourcePrimKeys, long groupId, int status, int start, int end) {
-
-		return filterFindByR_G_S(
-			resourcePrimKeys, groupId, status, start, end, null);
 	}
 
 	/**
@@ -5507,73 +3352,6 @@ public class KBArticlePersistenceImpl
 				ArrayUtil.sortedUnique(resourcePrimKeys), groupId, status
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeys, long groupId, int status) {
-
-		return findByR_G_S(
-			resourcePrimKeys, groupId, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeys, long groupId, int status, int start, int end) {
-
-		return findByR_G_S(resourcePrimKeys, groupId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where resourcePrimKey = any &#63; and groupId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param resourcePrimKeys the resource prim keys
-	 * @param groupId the group ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByR_G_S(
-		long[] resourcePrimKeys, long groupId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByR_G_S(
-			resourcePrimKeys, groupId, status, start, end, orderByComparator,
-			true);
 	}
 
 	/**
@@ -5665,7 +3443,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, int status) {
 
 		return _collectionPersistenceFinderByR_G_S.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, status},
 			groupId);
 	}
 
@@ -5689,8 +3468,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_NotS;
 
@@ -5943,8 +3720,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_L_NotS;
 
@@ -6252,8 +4027,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_M_NotS;
 
@@ -6555,7 +4328,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByG_ERC_V;
 	private UniquePersistenceFinder<KBArticle>
 		_uniquePersistenceFinderByG_ERC_V;
 
@@ -6590,21 +4362,6 @@ public class KBArticlePersistenceImpl
 		}
 
 		return kbArticle;
-	}
-
-	/**
-	 * Returns the kb article where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param version the version
-	 * @return the matching kb article, or <code>null</code> if a matching kb article could not be found
-	 */
-	@Override
-	public KBArticle fetchByG_ERC_V(
-		long groupId, String externalReferenceCode, int version) {
-
-		return fetchByG_ERC_V(groupId, externalReferenceCode, version, true);
 	}
 
 	/**
@@ -6662,76 +4419,8 @@ public class KBArticlePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_ERC_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_ERC_S;
-	private FinderPath _finderPathCountByG_ERC_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_ERC_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC_S(
-		long groupId, String externalReferenceCode, int status) {
-
-		return findByG_ERC_S(
-			groupId, externalReferenceCode, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC_S(
-		long groupId, String externalReferenceCode, int status, int start,
-		int end) {
-
-		return findByG_ERC_S(
-			groupId, externalReferenceCode, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_ERC_S(
-		long groupId, String externalReferenceCode, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_ERC_S(
-			groupId, externalReferenceCode, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
@@ -6809,46 +4498,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_ERC_S(
-		long groupId, String externalReferenceCode, int status) {
-
-		return filterFindByG_ERC_S(
-			groupId, externalReferenceCode, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param externalReferenceCode the external reference code
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_ERC_S(
-		long groupId, String externalReferenceCode, int status, int start,
-		int end) {
-
-		return filterFindByG_ERC_S(
-			groupId, externalReferenceCode, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and externalReferenceCode = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -6921,76 +4570,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L;
-	private FinderPath _finderPathCountByG_P_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long parentResourcePrimKey, boolean latest) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKey, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long parentResourcePrimKey, boolean latest, int start,
-		int end) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKey, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long parentResourcePrimKey, boolean latest, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKey, latest, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
@@ -7082,46 +4663,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long parentResourcePrimKey, boolean latest) {
-
-		return filterFindByG_P_L(
-			groupId, parentResourcePrimKey, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long parentResourcePrimKey, boolean latest, int start,
-		int end) {
-
-		return filterFindByG_P_L(
-			groupId, parentResourcePrimKey, latest, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -7142,48 +4683,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_L.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, latest},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, latest},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long[] parentResourcePrimKeys, boolean latest) {
-
-		return filterFindByG_P_L(
-			groupId, parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
-		int end) {
-
-		return filterFindByG_P_L(
-			groupId, parentResourcePrimKeys, latest, start, end, null);
 	}
 
 	/**
@@ -7212,75 +4714,6 @@ public class KBArticlePersistenceImpl
 				groupId, ArrayUtil.sortedUnique(parentResourcePrimKeys), latest
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeys, boolean latest) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKeys, latest, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
-		int end) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKeys, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_L(
-			groupId, parentResourcePrimKeys, latest, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -7378,7 +4811,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, boolean latest) {
 
 		return _collectionPersistenceFinderByG_P_L.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, latest},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, latest},
 			groupId);
 	}
 
@@ -7402,76 +4836,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_M;
-	private FinderPath _finderPathCountByG_P_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long parentResourcePrimKey, boolean main) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKey, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long parentResourcePrimKey, boolean main, int start,
-		int end) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKey, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long parentResourcePrimKey, boolean main, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKey, main, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
@@ -7563,46 +4929,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long parentResourcePrimKey, boolean main) {
-
-		return filterFindByG_P_M(
-			groupId, parentResourcePrimKey, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long parentResourcePrimKey, boolean main, int start,
-		int end) {
-
-		return filterFindByG_P_M(
-			groupId, parentResourcePrimKey, main, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63;.
 	 *
 	 * <p>
@@ -7623,48 +4949,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_M.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, main},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, main},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long[] parentResourcePrimKeys, boolean main) {
-
-		return filterFindByG_P_M(
-			groupId, parentResourcePrimKeys, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
-		int end) {
-
-		return filterFindByG_P_M(
-			groupId, parentResourcePrimKeys, main, start, end, null);
 	}
 
 	/**
@@ -7693,75 +4980,6 @@ public class KBArticlePersistenceImpl
 				groupId, ArrayUtil.sortedUnique(parentResourcePrimKeys), main
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeys, boolean main) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKeys, main, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
-		int end) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKeys, main, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_M(
-			groupId, parentResourcePrimKeys, main, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -7859,7 +5077,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, boolean main) {
 
 		return _collectionPersistenceFinderByG_P_M.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, main},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, main},
 			groupId);
 	}
 
@@ -7883,76 +5102,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_S;
-	private FinderPath _finderPathCountByG_P_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKey, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKey, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKey, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
@@ -8044,46 +5195,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long parentResourcePrimKey, int status) {
-
-		return filterFindByG_P_S(
-			groupId, parentResourcePrimKey, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long parentResourcePrimKey, int status, int start,
-		int end) {
-
-		return filterFindByG_P_S(
-			groupId, parentResourcePrimKey, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -8104,48 +5215,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_P_S.filterFind(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, status},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long[] parentResourcePrimKeys, int status) {
-
-		return filterFindByG_P_S(
-			groupId, parentResourcePrimKeys, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_S(
-		long groupId, long[] parentResourcePrimKeys, int status, int start,
-		int end) {
-
-		return filterFindByG_P_S(
-			groupId, parentResourcePrimKeys, status, start, end, null);
 	}
 
 	/**
@@ -8174,75 +5246,6 @@ public class KBArticlePersistenceImpl
 				groupId, ArrayUtil.sortedUnique(parentResourcePrimKeys), status
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeys, int status) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKeys, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeys, int status, int start,
-		int end) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKeys, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_S(
-		long groupId, long[] parentResourcePrimKeys, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_S(
-			groupId, parentResourcePrimKeys, status, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -8340,7 +5343,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long parentResourcePrimKey, int status) {
 
 		return _collectionPersistenceFinderByG_P_S.filterCount(
-			finderCache, new Object[] {groupId, parentResourcePrimKey, status},
+			finderCache,
+			new Object[] {groupId, new long[] {parentResourcePrimKey}, status},
 			groupId);
 	}
 
@@ -8364,73 +5368,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT;
-	private FinderPath _finderPathCountByG_KBFI_UT;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT(
-		long groupId, long kbFolderId, String urlTitle) {
-
-		return findByG_KBFI_UT(
-			groupId, kbFolderId, urlTitle, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT(
-		long groupId, long kbFolderId, String urlTitle, int start, int end) {
-
-		return findByG_KBFI_UT(groupId, kbFolderId, urlTitle, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT(
-		long groupId, long kbFolderId, String urlTitle, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_KBFI_UT(
-			groupId, kbFolderId, urlTitle, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
@@ -8508,45 +5447,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT(
-		long groupId, long kbFolderId, String urlTitle) {
-
-		return filterFindByG_KBFI_UT(
-			groupId, kbFolderId, urlTitle, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT(
-		long groupId, long kbFolderId, String urlTitle, int start, int end) {
-
-		return filterFindByG_KBFI_UT(
-			groupId, kbFolderId, urlTitle, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63;.
 	 *
 	 * <p>
@@ -8618,73 +5518,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, urlTitle}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_L;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_L;
-	private FinderPath _finderPathCountByG_KBFI_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_L;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_L(
-		long groupId, long kbFolderId, boolean latest) {
-
-		return findByG_KBFI_L(
-			groupId, kbFolderId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_L(
-		long groupId, long kbFolderId, boolean latest, int start, int end) {
-
-		return findByG_KBFI_L(groupId, kbFolderId, latest, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_L(
-		long groupId, long kbFolderId, boolean latest, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_KBFI_L(
-			groupId, kbFolderId, latest, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
@@ -8762,45 +5597,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_L(
-		long groupId, long kbFolderId, boolean latest) {
-
-		return filterFindByG_KBFI_L(
-			groupId, kbFolderId, latest, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param latest the latest
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_L(
-		long groupId, long kbFolderId, boolean latest, int start, int end) {
-
-		return filterFindByG_KBFI_L(
-			groupId, kbFolderId, latest, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and latest = &#63;.
 	 *
 	 * <p>
@@ -8870,73 +5666,8 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, latest}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_S;
-	private FinderPath _finderPathCountByG_KBFI_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_S(
-		long groupId, long kbFolderId, int status) {
-
-		return findByG_KBFI_S(
-			groupId, kbFolderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_S(
-		long groupId, long kbFolderId, int status, int start, int end) {
-
-		return findByG_KBFI_S(groupId, kbFolderId, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_S(
-		long groupId, long kbFolderId, int status, int start, int end,
-		OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_KBFI_S(
-			groupId, kbFolderId, status, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
@@ -9014,45 +5745,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_S(
-		long groupId, long kbFolderId, int status) {
-
-		return filterFindByG_KBFI_S(
-			groupId, kbFolderId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_S(
-		long groupId, long kbFolderId, int status, int start, int end) {
-
-		return filterFindByG_KBFI_S(
-			groupId, kbFolderId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -9120,8 +5812,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, kbFolderId, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_L;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_L;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_L;
 
@@ -9336,7 +6026,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_L.filterFind(
-			finderCache, new Object[] {groupId, sections, latest}, start, end,
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -9560,7 +6251,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean latest) {
 
 		return _collectionPersistenceFinderByG_LikeS_L.filterCount(
-			finderCache, new Object[] {groupId, sections, latest}, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest}, groupId);
 	}
 
 	/**
@@ -9581,8 +6273,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_M;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_M;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_M;
 
@@ -9794,8 +6484,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_M.filterFind(
-			finderCache, new Object[] {groupId, sections, main}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, new String[] {sections}, main},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -10014,7 +6704,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean main) {
 
 		return _collectionPersistenceFinderByG_LikeS_M.filterCount(
-			finderCache, new Object[] {groupId, sections, main}, groupId);
+			finderCache, new Object[] {groupId, new String[] {sections}, main},
+			groupId);
 	}
 
 	/**
@@ -10035,8 +6726,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_S;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_S;
 
@@ -10251,7 +6940,8 @@ public class KBArticlePersistenceImpl
 		OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_S.filterFind(
-			finderCache, new Object[] {groupId, sections, status}, start, end,
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, status}, start, end,
 			orderByComparator, groupId);
 	}
 
@@ -10471,7 +7161,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_S.filterCount(
-			finderCache, new Object[] {groupId, sections, status}, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, status}, groupId);
 	}
 
 	/**
@@ -10492,8 +7183,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_L_NotS;
 
@@ -10738,8 +7427,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, latest, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_M_NotS;
 
@@ -10982,8 +7669,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {groupId, main, status}, groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_L_NotS;
 
@@ -11151,8 +7836,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, latest, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByC_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByC_M_NotS;
 
@@ -11320,8 +8003,6 @@ public class KBArticlePersistenceImpl
 			finderCache, new Object[] {companyId, main, status});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByP_L_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_L_NotS;
 
@@ -11630,8 +8311,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByP_M_NotS;
 	private CollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByP_M_NotS;
 
@@ -11940,8 +8619,6 @@ public class KBArticlePersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_L_NotS;
 
@@ -12177,8 +8854,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByR_G_L_NotS.filterFind(
 			finderCache,
-			new Object[] {resourcePrimKey, groupId, latest, status}, start, end,
-			orderByComparator, groupId);
+			new Object[] {
+				new long[] {resourcePrimKey}, groupId, latest, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -12432,7 +9111,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByR_G_L_NotS.filterCount(
 			finderCache,
-			new Object[] {resourcePrimKey, groupId, latest, status}, groupId);
+			new Object[] {
+				new long[] {resourcePrimKey}, groupId, latest, status
+			},
+			groupId);
 	}
 
 	/**
@@ -12457,8 +9139,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByR_G_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByR_G_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByR_G_M_NotS;
 
@@ -12689,7 +9369,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByR_G_M_NotS.filterFind(
-			finderCache, new Object[] {resourcePrimKey, groupId, main, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -12936,7 +9617,8 @@ public class KBArticlePersistenceImpl
 		long resourcePrimKey, long groupId, boolean main, int status) {
 
 		return _collectionPersistenceFinderByR_G_M_NotS.filterCount(
-			finderCache, new Object[] {resourcePrimKey, groupId, main, status},
+			finderCache,
+			new Object[] {new long[] {resourcePrimKey}, groupId, main, status},
 			groupId);
 	}
 
@@ -12961,79 +9643,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_L_S;
-	private FinderPath _finderPathCountByG_P_L_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long parentResourcePrimKey, boolean latest, int status) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKey, latest, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long parentResourcePrimKey, boolean latest, int status,
-		int start, int end) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKey, latest, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long parentResourcePrimKey, boolean latest, int status,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKey, latest, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
@@ -13135,48 +9746,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long parentResourcePrimKey, boolean latest, int status) {
-
-		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKey, latest, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long parentResourcePrimKey, boolean latest, int status,
-		int start, int end) {
-
-		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKey, latest, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and latest = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -13199,51 +9768,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_S.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeys, boolean latest,
-		int status) {
-
-		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKeys, latest, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
-		int start, int end) {
-
-		return filterFindByG_P_L_S(
-			groupId, parentResourcePrimKeys, latest, status, start, end, null);
 	}
 
 	/**
@@ -13274,79 +9802,6 @@ public class KBArticlePersistenceImpl
 				status
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeys, boolean latest,
-		int status) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKeys, latest, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
-		int start, int end) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKeys, latest, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and latest = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param latest the latest
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_L_S(
-		long groupId, long[] parentResourcePrimKeys, boolean latest, int status,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_L_S(
-			groupId, parentResourcePrimKeys, latest, status, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -13457,7 +9912,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_S.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			groupId);
 	}
 
@@ -13484,8 +9941,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_P_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_L_NotS;
 
@@ -13721,7 +10176,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_NotS.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -13979,7 +10436,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_L_NotS.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, latest, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, latest, status
+			},
 			groupId);
 	}
 
@@ -14006,79 +10465,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_P_M_S;
-	private FinderPath _finderPathCountByG_P_M_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long parentResourcePrimKey, boolean main, int status) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKey, main, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long parentResourcePrimKey, boolean main, int status,
-		int start, int end) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKey, main, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long parentResourcePrimKey, boolean main, int status,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKey, main, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
@@ -14180,48 +10568,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M_S(
-		long groupId, long parentResourcePrimKey, boolean main, int status) {
-
-		return filterFindByG_P_M_S(
-			groupId, parentResourcePrimKey, main, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKey the parent resource prim key
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M_S(
-		long groupId, long parentResourcePrimKey, boolean main, int status,
-		int start, int end) {
-
-		return filterFindByG_P_M_S(
-			groupId, parentResourcePrimKey, main, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and parentResourcePrimKey = &#63; and main = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -14244,50 +10590,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_S.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status}, start,
-			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M_S(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int status) {
-
-		return filterFindByG_P_M_S(
-			groupId, parentResourcePrimKeys, main, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_P_M_S(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int status,
-		int start, int end) {
-
-		return filterFindByG_P_M_S(
-			groupId, parentResourcePrimKeys, main, status, start, end, null);
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -14318,78 +10624,6 @@ public class KBArticlePersistenceImpl
 				status
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int status) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKeys, main, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int status,
-		int start, int end) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKeys, main, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and parentResourcePrimKey = any &#63; and main = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param parentResourcePrimKeys the parent resource prim keys
-	 * @param main the main
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_P_M_S(
-		long groupId, long[] parentResourcePrimKeys, boolean main, int status,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_P_M_S(
-			groupId, parentResourcePrimKeys, main, status, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -14499,7 +10733,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_S.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
 			groupId);
 	}
 
@@ -14525,8 +10761,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_P_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_P_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_P_M_NotS;
 
@@ -14762,8 +10996,10 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_NotS.filterFind(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status}, start,
-			end, orderByComparator, groupId);
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -15017,7 +11253,9 @@ public class KBArticlePersistenceImpl
 
 		return _collectionPersistenceFinderByG_P_M_NotS.filterCount(
 			finderCache,
-			new Object[] {groupId, parentResourcePrimKey, main, status},
+			new Object[] {
+				groupId, new long[] {parentResourcePrimKey}, main, status
+			},
 			groupId);
 	}
 
@@ -15043,79 +11281,8 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT_S;
-	private FinderPath _finderPathWithoutPaginationFindByG_KBFI_UT_S;
-	private FinderPath _finderPathCountByG_KBFI_UT_S;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT_S;
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int status) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int status, int start,
-		int end) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, status, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int status, int start,
-		int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, status, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
@@ -15213,48 +11380,6 @@ public class KBArticlePersistenceImpl
 	}
 
 	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int status) {
-
-		return filterFindByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, status, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param status the status
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int status, int start,
-		int end) {
-
-		return filterFindByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kb articles that the user has permissions to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = &#63;.
 	 *
 	 * <p>
@@ -15276,50 +11401,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_KBFI_UT_S.filterFind(
-			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			finderCache,
+			new Object[] {groupId, kbFolderId, urlTitle, new int[] {status}},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param statuses the statuses
-	 * @return the matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int[] statuses) {
-
-		return filterFindByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles that the user has permission to view where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles that the user has permission to view
-	 */
-	@Override
-	public List<KBArticle> filterFindByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int[] statuses,
-		int start, int end) {
-
-		return filterFindByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, statuses, start, end, null);
 	}
 
 	/**
@@ -15349,78 +11433,6 @@ public class KBArticlePersistenceImpl
 				groupId, kbFolderId, urlTitle, ArrayUtil.sortedUnique(statuses)
 			},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param statuses the statuses
-	 * @return the matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int[] statuses) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, statuses, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @return the range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int[] statuses,
-		int start, int end) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, statuses, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kb articles where groupId = &#63; and kbFolderId = &#63; and urlTitle = &#63; and status = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KBArticleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param kbFolderId the kb folder ID
-	 * @param urlTitle the url title
-	 * @param statuses the statuses
-	 * @param start the lower bound of the range of kb articles
-	 * @param end the upper bound of the range of kb articles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kb articles
-	 */
-	@Override
-	public List<KBArticle> findByG_KBFI_UT_S(
-		long groupId, long kbFolderId, String urlTitle, int[] statuses,
-		int start, int end, OrderByComparator<KBArticle> orderByComparator) {
-
-		return findByG_KBFI_UT_S(
-			groupId, kbFolderId, urlTitle, statuses, start, end,
-			orderByComparator, true);
 	}
 
 	/**
@@ -15523,7 +11535,8 @@ public class KBArticlePersistenceImpl
 		long groupId, long kbFolderId, String urlTitle, int status) {
 
 		return _collectionPersistenceFinderByG_KBFI_UT_S.filterCount(
-			finderCache, new Object[] {groupId, kbFolderId, urlTitle, status},
+			finderCache,
+			new Object[] {groupId, kbFolderId, urlTitle, new int[] {status}},
 			groupId);
 	}
 
@@ -15548,8 +11561,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_UT_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_KBFI_UT_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_UT_NotS;
 
@@ -15818,8 +11829,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_KBFI_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_KBFI_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_KBFI_L_NotS;
 
@@ -16088,8 +12097,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_L_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_L_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_L_NotS;
 
@@ -16320,7 +12327,8 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_L_NotS.filterFind(
-			finderCache, new Object[] {groupId, sections, latest, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest, status},
 			start, end, orderByComparator, groupId);
 	}
 
@@ -16567,7 +12575,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean latest, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_L_NotS.filterCount(
-			finderCache, new Object[] {groupId, sections, latest, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, latest, status},
 			groupId);
 	}
 
@@ -16592,8 +12601,6 @@ public class KBArticlePersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeS_M_NotS;
-	private FinderPath _finderPathWithPaginationCountByG_LikeS_M_NotS;
 	private FilterCollectionPersistenceFinder<KBArticle>
 		_collectionPersistenceFinderByG_LikeS_M_NotS;
 
@@ -16824,8 +12831,9 @@ public class KBArticlePersistenceImpl
 		int end, OrderByComparator<KBArticle> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeS_M_NotS.filterFind(
-			finderCache, new Object[] {groupId, sections, main, status}, start,
-			end, orderByComparator, groupId);
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, main, status},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -17071,7 +13079,8 @@ public class KBArticlePersistenceImpl
 		long groupId, String sections, boolean main, int status) {
 
 		return _collectionPersistenceFinderByG_LikeS_M_NotS.filterCount(
-			finderCache, new Object[] {groupId, sections, main, status},
+			finderCache,
+			new Object[] {groupId, new String[] {sections}, main, status},
 			groupId);
 	}
 
@@ -17479,70 +13488,65 @@ public class KBArticlePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByResourcePrimKey",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathWithoutPaginationFindByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, true);
-
-		_finderPathCountByResourcePrimKey = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByResourcePrimKey",
-			new String[] {Long.class.getName()},
-			new String[] {"resourcePrimKey"}, false);
-
 		_collectionPersistenceFinderByResourcePrimKey =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByResourcePrimKey,
-				_finderPathWithoutPaginationFindByResourcePrimKey,
-				_finderPathCountByResourcePrimKey, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByResourcePrimKey",
+					new String[] {Long.class.getName()},
+					new String[] {"resourcePrimKey"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG,
 					"=", true, true, KBArticle::getResourcePrimKey));
 
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(KBArticle::getUuid), KBArticle::getGroupId),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true, true,
 				KBArticle::getUuid),
@@ -17550,32 +13554,27 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"kbArticle.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, KBArticle::getUuid),
@@ -17583,38 +13582,34 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, KBArticle::getCompanyId));
 
-		_finderPathWithPaginationFindByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId"}, true);
-
-		_finderPathWithoutPaginationFindByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"resourcePrimKey", "groupId"}, true);
-
-		_finderPathCountByR_G = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_G",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"resourcePrimKey", "groupId"}, false);
-
 		_collectionPersistenceFinderByR_G =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G,
-				_finderPathWithoutPaginationFindByR_G, _finderPathCountByR_G,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"resourcePrimKey", "groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_G",
+					new String[] {Long.class.getName(), Long.class.getName()},
+					new String[] {"resourcePrimKey", "groupId"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17624,14 +13619,14 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBArticle::getGroupId));
 
-		_finderPathFetchByR_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "version"}, 0, 0, false,
-			KBArticle::getResourcePrimKey, KBArticle::getVersion);
-
 		_uniquePersistenceFinderByR_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByR_V",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "version"}, 0, 0, false,
+				KBArticle::getResourcePrimKey, KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, true, KBArticle::getResourcePrimKey),
@@ -17639,28 +13634,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "latest"}, true);
-
-		_finderPathCountByR_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByR_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_L,
-			_finderPathWithoutPaginationFindByR_L, _finderPathCountByR_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17670,28 +13661,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "main"}, true);
-
-		_finderPathCountByR_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"resourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByR_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_M,
-			_finderPathWithoutPaginationFindByR_M, _finderPathCountByR_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"resourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17701,28 +13688,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, true);
-
-		_finderPathCountByR_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"resourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByR_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByR_S,
-			_finderPathWithoutPaginationFindByR_S, _finderPathCountByR_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"resourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -17732,41 +13715,36 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", false,
 				true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, true,
-			null);
-
-		_finderPathCountByG_ERC = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "externalReferenceCode"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByG_ERC =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC,
-				_finderPathWithoutPaginationFindByG_ERC,
-				_finderPathCountByG_ERC, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "externalReferenceCode"}, 0, 2,
+					false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17777,38 +13755,38 @@ public class KBArticlePersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					KBArticle::getExternalReferenceCode));
 
-		_finderPathWithPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "latest"}, true);
-
-		_finderPathCountByG_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "latest"}, false);
-
 		_collectionPersistenceFinderByG_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L,
-				_finderPathWithoutPaginationFindByG_L, _finderPathCountByG_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_L",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17818,38 +13796,38 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "main"}, true);
-
-		_finderPathCountByG_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"groupId", "main"}, false);
-
 		_collectionPersistenceFinderByG_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_M,
-				_finderPathWithoutPaginationFindByG_M, _finderPathCountByG_M,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_M",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName()
+					},
+					new String[] {"groupId", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17859,38 +13837,38 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, true);
-
-		_finderPathCountByG_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "status"}, false);
-
 		_collectionPersistenceFinderByG_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_S,
-				_finderPathWithoutPaginationFindByG_S, _finderPathCountByG_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_S",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -17900,28 +13878,24 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "latest"}, true);
-
-		_finderPathCountByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "latest"}, false);
-
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_L,
-			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -17930,29 +13904,25 @@ public class KBArticlePersistenceImpl
 			new FinderColumn<>(
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
-
-		_finderPathWithPaginationFindByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "main"}, true);
-
-		_finderPathCountByC_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"companyId", "main"}, false);
 
 		_collectionPersistenceFinderByC_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_M,
-			_finderPathWithoutPaginationFindByC_M, _finderPathCountByC_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"companyId", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -17962,28 +13932,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, true);
-
-		_finderPathCountByC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"companyId", "status"}, false);
-
 		_collectionPersistenceFinderByC_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_S,
-			_finderPathWithoutPaginationFindByC_S, _finderPathCountByC_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"companyId", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -17993,28 +13959,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "latest"}, true);
-
-		_finderPathCountByP_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByP_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_L,
-			_finderPathWithoutPaginationFindByP_L, _finderPathCountByP_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "latest"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "latest"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18024,28 +13986,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "main"}, true);
-
-		_finderPathCountByP_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M",
-			new String[] {Long.class.getName(), Boolean.class.getName()},
-			new String[] {"parentResourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByP_M = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_M,
-			_finderPathWithoutPaginationFindByP_M, _finderPathCountByP_M,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M",
+				new String[] {
+					Long.class.getName(), Boolean.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "main"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M",
+				new String[] {Long.class.getName(), Boolean.class.getName()},
+				new String[] {"parentResourcePrimKey", "main"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18055,28 +14013,24 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 				true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentResourcePrimKey", "status"}, true);
-
-		_finderPathCountByP_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"parentResourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByP_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_S,
-			_finderPathWithoutPaginationFindByP_S, _finderPathCountByP_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"parentResourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentResourcePrimKey", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"parentResourcePrimKey", "status"}, false),
 			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new ArrayableFinderColumn<>(
@@ -18086,25 +14040,23 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"displayDate", "status"}, true);
-
-		_finderPathWithPaginationCountByLtD_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
-			new String[] {Date.class.getName(), Integer.class.getName()},
-			new String[] {"displayDate", "status"}, false);
-
 		_collectionPersistenceFinderByLtD_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByLtD_S, null,
-			_finderPathWithPaginationCountByLtD_S, _SQL_SELECT_KBARTICLE_WHERE,
-			_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-			_ENTITY_ALIAS_PREFIX, "",
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtD_S",
+				new String[] {
+					Date.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"displayDate", "status"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtD_S",
+				new String[] {Date.class.getName(), Integer.class.getName()},
+				new String[] {"displayDate", "status"}, false),
+			_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+			KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"kbArticle.", "displayDate", FinderColumn.Type.DATE, "<", true,
 				true, KBArticle::getDisplayDate),
@@ -18112,18 +14064,18 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "status", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getStatus));
 
-		_finderPathFetchByR_G_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByR_G_V",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "version"}, 0, 0, false,
-			KBArticle::getResourcePrimKey, KBArticle::getGroupId,
-			KBArticle::getVersion);
-
 		_uniquePersistenceFinderByR_G_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByR_G_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByR_G_V",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"resourcePrimKey", "groupId", "version"}, 0, 0,
+				false, KBArticle::getResourcePrimKey, KBArticle::getGroupId,
+				KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "resourcePrimKey", FinderColumn.Type.LONG, "=",
 				true, true, KBArticle::getResourcePrimKey),
@@ -18134,45 +14086,44 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, true);
-
-		_finderPathCountByR_G_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest"}, false);
-
 		_collectionPersistenceFinderByR_G_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_L,
-				_finderPathWithoutPaginationFindByR_G_L,
-				_finderPathCountByR_G_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "latest"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18185,45 +14136,41 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, true);
-
-		_finderPathCountByR_G_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main"}, false);
-
 		_collectionPersistenceFinderByR_G_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_M,
-				_finderPathWithoutPaginationFindByR_G_M,
-				_finderPathCountByR_G_M, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "main"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18236,45 +14183,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathCountByR_G_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, false);
-
 		_collectionPersistenceFinderByR_G_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_S,
-				_finderPathWithoutPaginationFindByR_G_S,
-				_finderPathCountByR_G_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -18287,36 +14233,37 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_G_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, true);
-
-		_finderPathWithPaginationCountByR_G_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "status"}, false);
-
 		_collectionPersistenceFinderByR_G_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_NotS, null,
-				_finderPathWithPaginationCountByR_G_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "groupId", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18329,27 +14276,27 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByR_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByR_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_L_NotS, null,
-				_finderPathWithPaginationCountByR_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -18362,27 +14309,26 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByR_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByR_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "main", "status"}, false);
-
 		_collectionPersistenceFinderByR_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_M_NotS, null,
-				_finderPathWithPaginationCountByR_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"resourcePrimKey", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"resourcePrimKey", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -18395,19 +14341,19 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathFetchByG_ERC_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "version"}, 0, 2,
-			false, KBArticle::getGroupId,
-			convertNullFunction(KBArticle::getExternalReferenceCode),
-			KBArticle::getVersion);
-
 		_uniquePersistenceFinderByG_ERC_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_ERC_V, _SQL_SELECT_KBARTICLE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_ERC_V",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {"groupId", "externalReferenceCode", "version"}, 0,
+				2, false, KBArticle::getGroupId,
+				convertNullFunction(KBArticle::getExternalReferenceCode),
+				KBArticle::getVersion),
+			_SQL_SELECT_KBARTICLE_WHERE, "",
 			new FinderColumn<>(
 				"kbArticle.", "groupId", FinderColumn.Type.LONG, "=", true,
 				true, KBArticle::getGroupId),
@@ -18418,47 +14364,44 @@ public class KBArticlePersistenceImpl
 				"kbArticle.", "version", FinderColumn.Type.INTEGER, "=", true,
 				true, KBArticle::getVersion));
 
-		_finderPathWithPaginationFindByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			true, null);
-
-		_finderPathCountByG_ERC_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "externalReferenceCode", "status"}, 0, 2,
-			false, null);
-
 		_collectionPersistenceFinderByG_ERC_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_ERC_S,
-				_finderPathWithoutPaginationFindByG_ERC_S,
-				_finderPathCountByG_ERC_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_ERC_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "externalReferenceCode", "status"},
+					0, 2, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18472,45 +14415,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, true);
-
-		_finderPathCountByG_P_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "latest"}, false);
-
 		_collectionPersistenceFinderByG_P_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L,
-				_finderPathWithoutPaginationFindByG_P_L,
-				_finderPathCountByG_P_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "latest"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18524,45 +14466,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, true);
-
-		_finderPathCountByG_P_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main"}, false);
-
 		_collectionPersistenceFinderByG_P_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M,
-				_finderPathWithoutPaginationFindByG_P_M,
-				_finderPathCountByG_P_M, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "main"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18576,45 +14517,44 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, true);
-
-		_finderPathCountByG_P_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "status"}, false);
-
 		_collectionPersistenceFinderByG_P_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_S,
-				_finderPathWithoutPaginationFindByG_P_S,
-				_finderPathCountByG_P_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "parentResourcePrimKey", "status"},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18628,47 +14568,45 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4, true,
-			null);
-
-		_finderPathCountByG_KBFI_UT = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_UT",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4, false,
-			null);
-
 		_collectionPersistenceFinderByG_KBFI_UT =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT,
-				_finderPathWithoutPaginationFindByG_KBFI_UT,
-				_finderPathCountByG_KBFI_UT, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4,
+					true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_UT",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "urlTitle"}, 0, 4,
+					false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18681,45 +14619,42 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "urlTitle", FinderColumn.Type.STRING, "=",
 					true, true, KBArticle::getUrlTitle));
 
-		_finderPathWithPaginationFindByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, true);
-
-		_finderPathCountByG_KBFI_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_L,
-				_finderPathWithoutPaginationFindByG_KBFI_L,
-				_finderPathCountByG_KBFI_L, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_L",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18732,45 +14667,42 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, true);
-
-		_finderPathCountByG_KBFI_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_KBFI_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "status"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_S,
-				_finderPathWithoutPaginationFindByG_KBFI_S,
-				_finderPathCountByG_KBFI_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByG_KBFI_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "status"}, false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18783,36 +14715,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_L =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_L, null,
-				_finderPathWithPaginationCountByG_LikeS_L,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18825,36 +14756,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "latest", FinderColumn.Type.BOOLEAN, "=",
 					true, true, KBArticle::isLatest));
 
-		_finderPathWithPaginationFindByG_LikeS_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "main"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_M = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			new String[] {"groupId", "sections", "main"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_M =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_M, null,
-				_finderPathWithPaginationCountByG_LikeS_M,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "main"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName()
+					},
+					new String[] {"groupId", "sections", "main"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18867,36 +14797,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "main", FinderColumn.Type.BOOLEAN, "=", true,
 					true, KBArticle::isMain));
 
-		_finderPathWithPaginationFindByG_LikeS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_S",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_S, null,
-				_finderPathWithPaginationCountByG_LikeS_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_S",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18909,36 +14838,35 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_L_NotS, null,
-				_finderPathWithPaginationCountByG_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18950,37 +14878,36 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByG_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByG_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"groupId", "main", "status"}, false);
 
 		_collectionPersistenceFinderByG_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_M_NotS, null,
-				_finderPathWithPaginationCountByG_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"groupId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -18992,28 +14919,27 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByC_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByC_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "latest", "status"}, false);
 
 		_collectionPersistenceFinderByC_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_L_NotS, null,
-				_finderPathWithPaginationCountByC_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "latest", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "latest", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -19025,28 +14951,27 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByC_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByC_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"companyId", "main", "status"}, false);
 
 		_collectionPersistenceFinderByC_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_M_NotS, null,
-				_finderPathWithPaginationCountByC_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId", "main", "status"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"companyId", "main", "status"}, false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -19059,27 +14984,28 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByP_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByP_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByP_L_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_L_NotS, null,
-				_finderPathWithPaginationCountByP_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_L_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -19092,28 +15018,29 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByP_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByP_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M_NotS",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"parentResourcePrimKey", "main", "status"}, false);
 
 		_collectionPersistenceFinderByP_M_NotS =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_M_NotS, null,
-				_finderPathWithPaginationCountByP_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "main", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByP_M_NotS",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {"parentResourcePrimKey", "main", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new ArrayableFinderColumn<>(
@@ -19126,40 +15053,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByR_G_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest", "status"},
-			true);
-
-		_finderPathWithPaginationCountByR_G_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "latest", "status"},
-			false);
 
 		_collectionPersistenceFinderByR_G_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_L_NotS, null,
-				_finderPathWithPaginationCountByR_G_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "latest", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "latest", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -19174,40 +15103,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByR_G_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main", "status"},
-			true);
-
-		_finderPathWithPaginationCountByR_G_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"resourcePrimKey", "groupId", "main", "status"},
-			false);
 
 		_collectionPersistenceFinderByR_G_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByR_G_M_NotS, null,
-				_finderPathWithPaginationCountByR_G_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_G_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "main", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_G_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"resourcePrimKey", "groupId", "main", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -19223,55 +15154,50 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathCountByG_P_L_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_P_L_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L_S,
-				_finderPathWithoutPaginationFindByG_P_L_S,
-				_finderPathCountByG_P_L_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19287,44 +15213,42 @@ public class KBArticlePersistenceImpl
 				new FinderColumn<>(
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
-
-		_finderPathWithPaginationFindByG_P_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_P_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "parentResourcePrimKey", "latest", "status"
-			},
-			false);
 
 		_collectionPersistenceFinderByG_P_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_L_NotS, null,
-				_finderPathWithPaginationCountByG_P_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "latest", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19341,49 +15265,50 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathCountByG_P_M_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_P_M_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M_S,
-				_finderPathWithoutPaginationFindByG_P_M_S,
-				_finderPathCountByG_P_M_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					false),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19400,39 +15325,41 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_P_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			true);
-
-		_finderPathWithPaginationCountByG_P_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "parentResourcePrimKey", "main", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_P_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_P_M_NotS, null,
-				_finderPathWithPaginationCountByG_P_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_P_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_M_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "parentResourcePrimKey", "main", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19449,48 +15376,52 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, true);
-
-		_finderPathWithoutPaginationFindByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, 0, 4,
-			true, null);
-
-		_finderPathCountByG_KBFI_UT_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_UT_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, 0, 4,
-			false, null);
-
 		_collectionPersistenceFinderByG_KBFI_UT_S =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT_S,
-				_finderPathWithoutPaginationFindByG_KBFI_UT_S,
-				_finderPathCountByG_KBFI_UT_S, _SQL_SELECT_KBARTICLE_WHERE,
-				_SQL_COUNT_KBARTICLE_WHERE, KBArticleModelImpl.ORDER_BY_JPQL,
-				_ENTITY_ALIAS_PREFIX, "",
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_UT_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					0, 4, false, null),
+				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
+				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19506,38 +15437,43 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "=",
 					false, true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_UT_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_UT_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"}, true);
-
-		_finderPathWithPaginationCountByG_KBFI_UT_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_UT_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "urlTitle", "status"},
-			false);
-
 		_collectionPersistenceFinderByG_KBFI_UT_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_UT_NotS, null,
-				_finderPathWithPaginationCountByG_KBFI_UT_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_KBFI_UT_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_UT_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						String.class.getName(), Integer.class.getName()
+					},
+					new String[] {
+						"groupId", "kbFolderId", "urlTitle", "status"
+					},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19553,37 +15489,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_KBFI_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_KBFI_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_KBFI_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_KBFI_L_NotS",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "kbFolderId", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_KBFI_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_KBFI_L_NotS, null,
-				_finderPathWithPaginationCountByG_KBFI_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_KBFI_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_KBFI_L_NotS",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "kbFolderId", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19599,37 +15537,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_L_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_L_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_L_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "latest", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_L_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_L_NotS, null,
-				_finderPathWithPaginationCountByG_LikeS_L_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeS_L_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_LikeS_L_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "latest", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19645,37 +15585,39 @@ public class KBArticlePersistenceImpl
 					"kbArticle.", "status", FinderColumn.Type.INTEGER, "!=",
 					true, true, KBArticle::getStatus));
 
-		_finderPathWithPaginationFindByG_LikeS_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeS_M_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "sections", "main", "status"}, true);
-
-		_finderPathWithPaginationCountByG_LikeS_M_NotS = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeS_M_NotS",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName(), Integer.class.getName()
-			},
-			new String[] {"groupId", "sections", "main", "status"}, false);
-
 		_collectionPersistenceFinderByG_LikeS_M_NotS =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeS_M_NotS, null,
-				_finderPathWithPaginationCountByG_LikeS_M_NotS,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_LikeS_M_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "sections", "main", "status"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_LikeS_M_NotS",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Boolean.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "sections", "main", "status"},
+					false),
 				_SQL_SELECT_KBARTICLE_WHERE, _SQL_COUNT_KBARTICLE_WHERE,
 				KBArticleModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBArticleImpl.class, KBArticle.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_KBARTICLE_WHERE,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_KBARTICLE_WHERE,
+					KBArticleImpl.class, KBArticle.class, "kbArticle",
+					"KBArticle", "kbArticle.resourcePrimKey",
+					"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ",
+					"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ",
+					") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId",
+					"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ",
 					KBArticleModelImpl.ORDER_BY_SQL,
 					KBArticleModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -19748,27 +15690,6 @@ public class KBArticlePersistenceImpl
 	private static final String _SQL_COUNT_KBARTICLE_WHERE =
 		"SELECT COUNT(kbArticle) FROM KBArticle kbArticle WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"kbArticle.resourcePrimKey";
-
-	private static final String _FILTER_SQL_SELECT_KBARTICLE_WHERE =
-		"SELECT DISTINCT {kbArticle.*} FROM KBArticle kbArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {KBArticle.*} FROM (SELECT DISTINCT kbArticle.kbArticleId FROM KBArticle kbArticle WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_KBARTICLE_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN KBArticle ON TEMP_TABLE.kbArticleId = KBArticle.kbArticleId";
-
-	private static final String _FILTER_SQL_COUNT_KBARTICLE_WHERE =
-		"SELECT COUNT(DISTINCT kbArticle.kbArticleId) AS COUNT_VALUE FROM KBArticle kbArticle WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "kbArticle";
-
-	private static final String _FILTER_ENTITY_TABLE = "KBArticle";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No KBArticle exists with the key {";
 
@@ -19784,4 +15705,4 @@ public class KBArticlePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1246855266
+// LIFERAY-SERVICE-BUILDER-HASH:-507767584

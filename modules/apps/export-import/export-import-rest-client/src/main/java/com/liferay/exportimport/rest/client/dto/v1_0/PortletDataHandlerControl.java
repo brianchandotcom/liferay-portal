@@ -19,54 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public abstract class PortletDataHandlerControl
-	implements Cloneable, Serializable {
+public class PortletDataHandlerControl implements Cloneable, Serializable {
 
 	public static PortletDataHandlerControl toDTO(String json) {
 		return PortletDataHandlerControlSerDes.toDTO(json);
 	}
-
-	public Boolean getDisabled() {
-		return disabled;
-	}
-
-	public void setDisabled(Boolean disabled) {
-		this.disabled = disabled;
-	}
-
-	public void setDisabled(
-		UnsafeSupplier<Boolean, Exception> disabledUnsafeSupplier) {
-
-		try {
-			disabled = disabledUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean disabled;
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public void setLabel(
-		UnsafeSupplier<String, Exception> labelUnsafeSupplier) {
-
-		try {
-			label = labelUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String label;
 
 	public String getName() {
 		return name;
@@ -86,33 +43,6 @@ public abstract class PortletDataHandlerControl
 	}
 
 	protected String name;
-
-	public Type getType() {
-		return type;
-	}
-
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		try {
-			type = typeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Type type;
 
 	@Override
 	public PortletDataHandlerControl clone() throws CloneNotSupportedException {
@@ -146,38 +76,5 @@ public abstract class PortletDataHandlerControl
 		return PortletDataHandlerControlSerDes.toJSON(this);
 	}
 
-	public static enum Type {
-
-		BOOLEAN("Boolean"), CHOICE("Choice"), SETTING("Setting");
-
-		public static Type create(String value) {
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value) ||
-					Objects.equals(type.name(), value)) {
-
-					return type;
-				}
-			}
-
-			return null;
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 }
-// LIFERAY-REST-BUILDER-HASH:-728790544
+// LIFERAY-REST-BUILDER-HASH:-1622798339

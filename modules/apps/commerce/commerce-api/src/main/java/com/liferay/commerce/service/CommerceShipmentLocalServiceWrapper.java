@@ -117,10 +117,12 @@ public class CommerceShipmentLocalServiceWrapper
 	 *
 	 * @param commerceShipment the commerce shipment
 	 * @return the commerce shipment that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.model.CommerceShipment deleteCommerceShipment(
-		com.liferay.commerce.model.CommerceShipment commerceShipment) {
+			com.liferay.commerce.model.CommerceShipment commerceShipment)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentLocalService.deleteCommerceShipment(
 			commerceShipment);
@@ -739,4 +741,4 @@ public class CommerceShipmentLocalServiceWrapper
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1312585916
+// LIFERAY-SERVICE-BUILDER-HASH:-485336981

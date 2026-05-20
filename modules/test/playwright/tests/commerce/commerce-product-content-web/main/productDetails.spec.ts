@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
+import {accountsPagesTest} from '../../../../fixtures/accountsPagesTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
@@ -21,15 +22,21 @@ import getRandomString from '../../../../utils/getRandomString';
 import performLogin, {
 	performLoginViaApi,
 	performLogout,
+	performUserSwitchViaApi,
 	userData,
 } from '../../../../utils/performLogin';
 import {getTempDir} from '../../../../utils/temp';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
-import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
+import {
+	configureBuyerUserForSite,
+	createChannelAccountManagerUser,
+	miniumSetUp,
+} from '../../utils/commerce';
 
 export const test = mergeTests(
+	accountsPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
@@ -341,77 +348,76 @@ test(
 				catalogId: catalog.id,
 				name: {en_US: getRandomString()},
 			});
-		const productBundle =
-			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-				catalogId: catalog.id,
-				name: {en_US: 'ProductBundle'},
-				productOptions: [
-					{
-						fieldType: 'select',
-						key: 'color',
-						name: {
-							en_US: 'Color',
-						},
-						optionId: option1.id,
-						priceType: 'static',
-						priority: 1,
-						productOptionValues: [
-							{
-								deltaPrice: 10.0,
-								key: 'black',
-								name: {
-									en_US: 'Black',
-								},
-								priority: 1,
-								quantity: 1,
-								skuId: product1.skus[0].id,
-							},
-							{
-								deltaPrice: 20.0,
-								key: 'white',
-								name: {
-									en_US: 'White',
-								},
-								priority: 2,
-								quantity: 1,
-							},
-						],
-						skuContributor: true,
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'ProductBundle'},
+			productOptions: [
+				{
+					fieldType: 'select',
+					key: 'color',
+					name: {
+						en_US: 'Color',
 					},
-					{
-						fieldType: 'select',
-						key: 'size',
-						name: {
-							en_US: 'Size',
+					optionId: option1.id,
+					priceType: 'static',
+					priority: 1,
+					productOptionValues: [
+						{
+							deltaPrice: 10.0,
+							key: 'black',
+							name: {
+								en_US: 'Black',
+							},
+							priority: 1,
+							quantity: 1,
+							skuId: product1.skus[0].id,
 						},
-						optionId: option2.id,
-						priceType: 'static',
-						priority: 2,
-						productOptionValues: [
-							{
-								deltaPrice: 30.0,
-								key: 'xs',
-								name: {
-									en_US: 'XS',
-								},
-								priority: 1,
-								quantity: 1,
+						{
+							deltaPrice: 20.0,
+							key: 'white',
+							name: {
+								en_US: 'White',
 							},
-							{
-								deltaPrice: 40.0,
-								key: 'xl',
-								name: {
-									en_US: 'XL',
-								},
-								priority: 2,
-								quantity: 1,
-								skuId: product2.skus[0].id,
-							},
-						],
-						skuContributor: true,
+							priority: 2,
+							quantity: 1,
+						},
+					],
+					skuContributor: true,
+				},
+				{
+					fieldType: 'select',
+					key: 'size',
+					name: {
+						en_US: 'Size',
 					},
-				],
-			});
+					optionId: option2.id,
+					priceType: 'static',
+					priority: 2,
+					productOptionValues: [
+						{
+							deltaPrice: 30.0,
+							key: 'xs',
+							name: {
+								en_US: 'XS',
+							},
+							priority: 1,
+							quantity: 1,
+						},
+						{
+							deltaPrice: 40.0,
+							key: 'xl',
+							name: {
+								en_US: 'XL',
+							},
+							priority: 2,
+							quantity: 1,
+							skuId: product2.skus[0].id,
+						},
+					],
+					skuContributor: true,
+				},
+			],
+		});
 
 		await globalMenuPage.goToCommerce('Products');
 
@@ -426,58 +432,6 @@ test(
 			.productsTableRowLink('ProductBundle')
 			.click();
 		await commerceAdminProductPage.generateSkus();
-
-		const productBundleSkus = await apiHelpers.headlessCommerceAdminCatalog
-			.getProduct(productBundle.productId)
-			.then((product) => {
-				return product.skus;
-			});
-
-		const sku1 = productBundleSkus.find(
-			(sku) => sku.sku === 'WHITEXL' || sku.sku === 'XLWHITE'
-		);
-
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku1.id,
-			{
-				incrementalOrderQuantity: 2,
-				name: {en_US: 'Pallet'},
-				priority: 2,
-				rate: 3,
-			}
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku1.id,
-			{
-				incrementalOrderQuantity: 3,
-				name: {en_US: 'Box'},
-				primary: true,
-				priority: 1,
-				rate: 1,
-			}
-		);
-		const sku2 = productBundleSkus.find(
-			(sku) => sku.sku === 'BLACKXL' || sku.sku === 'XLBLACK'
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku2.id,
-			{
-				incrementalOrderQuantity: 3,
-				name: {en_US: 'Box'},
-				primary: true,
-				priority: 1,
-				rate: 1,
-			}
-		);
-		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
-			sku2.id,
-			{
-				incrementalOrderQuantity: 2,
-				name: {en_US: 'Package'},
-				priority: 2,
-				rate: 0.5,
-			}
-		);
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 
@@ -502,9 +456,132 @@ test(
 			.optionSelector('Size')
 			.selectOption({label: 'XL + $ 10.00'});
 
-		await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
 		await expect(
 			await productDetailsPage.priceField('$ 50.00')
+		).toBeVisible();
+	}
+);
+
+test(
+	'Unit of measure table is rendered for the resolved combination SKU on the product details page',
+	{tag: '@COMMERCE-12167'},
+	async ({
+		apiHelpers,
+		commerceAdminProductPage,
+		globalMenuPage,
+		page,
+		productDetailsPage,
+		site,
+		widgetPagePage,
+	}) => {
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			title: getRandomString(),
+		});
+
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			siteGroupId: site.id,
+		});
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'UoM combo SKU',
+			});
+
+		const option1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postOption(
+				'select',
+				'color',
+				'Color',
+				1
+			);
+
+		const productBundle =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'UoMBundle'},
+				productOptions: [
+					{
+						fieldType: 'select',
+						key: 'color',
+						name: {en_US: 'Color'},
+						optionId: option1.id,
+						priceType: 'static',
+						priority: 1,
+						productOptionValues: [
+							{
+								key: 'black',
+								name: {en_US: 'Black'},
+								priority: 1,
+								quantity: 1,
+							},
+							{
+								key: 'white',
+								name: {en_US: 'White'},
+								priority: 2,
+								quantity: 1,
+							},
+						],
+						skuContributor: true,
+					},
+				],
+			});
+
+		await globalMenuPage.goToCommerce('Products');
+
+		await commerceAdminProductPage.managementToolbarSearchInput.fill(
+			'UoMBundle'
+		);
+		await commerceAdminProductPage.managementToolbarSearchInput.press(
+			'Enter'
+		);
+
+		await commerceAdminProductPage
+			.productsTableRowLink('UoMBundle')
+			.click();
+		await commerceAdminProductPage.generateSkus();
+
+		const skus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(productBundle.productId)
+			.then((product) => product.skus);
+
+		const sku1 = skus.find((sku) => sku.sku === 'BLACK');
+
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku1.id,
+			{
+				basePrice: 150,
+				incrementalOrderQuantity: 3,
+				name: {en_US: 'Box'},
+				primary: true,
+				priority: 1,
+				rate: 1,
+			}
+		);
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku1.id,
+			{
+				basePrice: 50,
+				incrementalOrderQuantity: 2,
+				name: {en_US: 'Package'},
+				priority: 2,
+				rate: 0.5,
+			}
+		);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Product Details');
+
+		await page.goto(`/web/${site.name}/p/uombundle`);
+
+		await productDetailsPage
+			.optionSelector('Color')
+			.selectOption({label: 'Black'});
+
+		await expect(await productDetailsPage.uomTable('Unit')).toBeVisible();
+		await expect(
+			await productDetailsPage.priceField('$ 50.00 / Box')
 		).toBeVisible();
 	}
 );
@@ -1483,5 +1560,128 @@ test(
 			'Choose an Option',
 			'White',
 		]);
+	}
+);
+
+test(
+	'Sales Agent can view product details when the selected account belongs to an authorized account group',
+	{tag: ['@COMMERCE-12657', '@LPD-87650']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		commerceThemeMiniumCatalogPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+		productDetailsPage,
+	}) => {
+		const {channel, site} = await miniumSetUp(apiHelpers);
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const uJoint = (
+			await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+				new URLSearchParams({filter: `name eq 'U-Joint'`})
+			)
+		).items[0];
+		const uJointName = uJoint.name['en_US'];
+
+		let account1;
+		let account2;
+		let accountGroup;
+		let salesAgent;
+
+		await test.step('Create accounts, sales agent and account group', async () => {
+			let camResult;
+
+			[account1, account2, camResult, accountGroup] = await Promise.all([
+				apiHelpers.headlessAdminUser.postAccount({
+					name: `Account ${getRandomString()}`,
+					type: 'business',
+				}),
+				apiHelpers.headlessAdminUser.postAccount({
+					name: `Account ${getRandomString()}`,
+					type: 'business',
+				}),
+				createChannelAccountManagerUser(apiHelpers, {
+					accountEntryActionIds: [
+						'MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL',
+					],
+					companyId,
+					siteId: site.id,
+				}),
+				apiHelpers.headlessAdminUser.postAccountGroup({
+					name: `Account Group ${getRandomString()}`,
+				}),
+			]);
+
+			salesAgent = camResult.user;
+
+			apiHelpers.data.push({
+				id: accountGroup.id,
+				type: 'accountGroup',
+			});
+		});
+
+		await test.step('Restrict U-Joint to the account group', async () => {
+			await apiHelpers.headlessAdminUser.assignAccountToAccountGroup(
+				account2.externalReferenceCode,
+				accountGroup.externalReferenceCode
+			);
+
+			await apiHelpers.headlessCommerceAdminCatalog.patchProduct(
+				uJoint.productId,
+				{
+					name: uJoint.name,
+					productAccountGroupFilter: true,
+					productAccountGroups: [
+						{accountGroupId: accountGroup.id, id: 0},
+					],
+				}
+			);
+		});
+
+		await test.step('Assign the sales agent as Channel Account Manager for both accounts', async () => {
+			for (const account of [account1, account2]) {
+				await accountsPage.goto();
+				await accountsPage.accountNameLink(account.name).click();
+				await editAccountPage.channelDefaultsLink.click();
+				await editAccountChannelDefaultsPage.addChannelAccountManager({
+					channelName: channel.name,
+					userScreenName: salesAgent.alternateName,
+				});
+			}
+		});
+
+		await test.step('Switch user, select account2, and verify product details', async () => {
+			await performUserSwitchViaApi(page, salesAgent.alternateName);
+
+			await page.goto(`/web/${site.name}`);
+
+			await commerceThemeMiniumCatalogPage.openAccountSelectorDropdown();
+
+			await commerceThemeMiniumCatalogPage
+				.accountSelectorAccount(account2.name)
+				.click();
+
+			const productLink =
+				commerceThemeMiniumCatalogPage.productLink(uJointName);
+
+			await expect(productLink).toBeVisible();
+
+			await productLink.click();
+
+			await expect(
+				await productDetailsPage.nameField(uJointName)
+			).toBeVisible();
+			await expect(
+				await productDetailsPage.skuField('MIN55861')
+			).toBeVisible();
+			await expect(
+				await productDetailsPage.priceField('$ 24.00')
+			).toBeVisible();
+		});
 	}
 );

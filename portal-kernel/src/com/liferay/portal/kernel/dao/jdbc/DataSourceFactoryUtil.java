@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -352,13 +353,14 @@ public class DataSourceFactoryUtil {
 
 	private static String _rewriteJDBCURL(
 		Map<String, String> defaultParameters, char parameterDelimiter,
-		String url, char urlDelimiter) {
+		int searchFrom, boolean trimTrailingDelimiter, String url,
+		char urlDelimiter) {
 
 		Map<String, String> existingParameters = new TreeMap<>();
 
 		String baseURL = url;
 
-		int index = url.indexOf(urlDelimiter, url.indexOf("://") + 3);
+		int index = url.indexOf(urlDelimiter, searchFrom);
 
 		if (index != -1) {
 			baseURL = url.substring(0, index);
@@ -368,6 +370,10 @@ public class DataSourceFactoryUtil {
 			if (!queryString.isEmpty()) {
 				for (String parameter :
 						StringUtil.split(queryString, parameterDelimiter)) {
+
+					if (parameter.isEmpty()) {
+						continue;
+					}
 
 					String[] parts = StringUtil.split(
 						parameter, CharPool.EQUAL);
@@ -417,7 +423,9 @@ public class DataSourceFactoryUtil {
 				sb.append(parameterDelimiter);
 			}
 
-			sb.setIndex(sb.index() - 1);
+			if (trimTrailingDelimiter) {
+				sb.setIndex(sb.index() - 1);
+			}
 
 			newURL = sb.toString();
 		}
@@ -431,7 +439,31 @@ public class DataSourceFactoryUtil {
 		return newURL;
 	}
 
+	private static String _rewriteJDBCURL(
+		Map<String, String> defaultParameters, char parameterDelimiter,
+		String url, char urlDelimiter) {
+
+		return _rewriteJDBCURL(
+			defaultParameters, parameterDelimiter,
+			url.indexOf("://") + "://".length(), true, url, urlDelimiter);
+	}
+
 	private static String _rewriteJDBCURL(String url) {
+		if (url.startsWith("jdbc:db2://")) {
+			int index = url.indexOf(
+				CharPool.SLASH, url.indexOf("://") + "://".length());
+
+			if (index == -1) {
+				return url;
+			}
+
+			return _rewriteJDBCURL(
+				HashMapBuilder.put(
+					"queryTimeoutInterruptProcessingMode", "1"
+				).build(),
+				CharPool.SEMICOLON, index, false, url, CharPool.COLON);
+		}
+
 		if (url.startsWith("jdbc:mariadb://") ||
 			url.startsWith("jdbc:mysql://")) {
 
@@ -473,6 +505,10 @@ public class DataSourceFactoryUtil {
 		}
 
 		if (url.startsWith("jdbc:sqlserver://")) {
+			if (!UpgradeProcessUtil.isUpgradeClient()) {
+				return url;
+			}
+
 			try {
 				Driver driver = DriverManager.getDriver(url);
 
@@ -503,6 +539,8 @@ public class DataSourceFactoryUtil {
 
 			return _rewriteJDBCURL(
 				HashMapBuilder.put(
+					"bulkCopyForBatchInsertTableLock", "true"
+				).put(
 					"useBulkCopyForBatchInsert", "true"
 				).build(),
 				CharPool.SEMICOLON, url, CharPool.SEMICOLON);

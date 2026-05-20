@@ -127,55 +127,6 @@ public class CommerceTaxMethodUtil {
 	}
 
 	/**
-	 * Returns all the commerce tax methods where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByGroupId(long groupId) {
-		return getPersistence().findByGroupId(groupId);
-	}
-
-	/**
-	 * Returns a range of all the commerce tax methods where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce tax methods
-	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
-	 * @return the range of matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByGroupId(
-		long groupId, int start, int end) {
-
-		return getPersistence().findByGroupId(groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tax methods where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce tax methods
-	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<CommerceTaxMethod> orderByComparator) {
-
-		return getPersistence().findByGroupId(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce tax methods where groupId = &#63;.
 	 *
 	 * <p>
@@ -262,17 +213,6 @@ public class CommerceTaxMethodUtil {
 	}
 
 	/**
-	 * Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param engineKey the engine key
-	 * @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
-	 */
-	public static CommerceTaxMethod fetchByG_E(long groupId, String engineKey) {
-		return getPersistence().fetchByG_E(groupId, engineKey);
-	}
-
-	/**
 	 * Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
@@ -308,60 +248,6 @@ public class CommerceTaxMethodUtil {
 	 */
 	public static int countByG_E(long groupId, String engineKey) {
 		return getPersistence().countByG_E(groupId, engineKey);
-	}
-
-	/**
-	 * Returns all the commerce tax methods where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @return the matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByG_A(
-		long groupId, boolean active) {
-
-		return getPersistence().findByG_A(groupId, active);
-	}
-
-	/**
-	 * Returns a range of all the commerce tax methods where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce tax methods
-	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
-	 * @return the range of matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByG_A(
-		long groupId, boolean active, int start, int end) {
-
-		return getPersistence().findByG_A(groupId, active, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce tax methods where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce tax methods
-	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce tax methods
-	 */
-	public static List<CommerceTaxMethod> findByG_A(
-		long groupId, boolean active, int start, int end,
-		OrderByComparator<CommerceTaxMethod> orderByComparator) {
-
-		return getPersistence().findByG_A(
-			groupId, active, start, end, orderByComparator);
 	}
 
 	/**
@@ -497,6 +383,120 @@ public class CommerceTaxMethodUtil {
 		return getPersistence().fetchByPrimaryKey(commerceTaxMethodId);
 	}
 
+	/**
+	 * Returns the commerce tax method where groupId = &#63; and engineKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param engineKey the engine key
+	 * @return the matching commerce tax method, or <code>null</code> if a matching commerce tax method could not be found
+	 */
+	public static CommerceTaxMethod fetchByG_E(long groupId, String engineKey) {
+		return getPersistence().fetchByG_E(groupId, engineKey);
+	}
+
+	/**
+	 * Returns all the commerce tax methods where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByGroupId(long groupId) {
+		return getPersistence().findByGroupId(groupId);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax methods where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce tax methods
+	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
+	 * @return the range of matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByGroupId(
+		long groupId, int start, int end) {
+
+		return getPersistence().findByGroupId(groupId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax methods where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce tax methods
+	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByGroupId(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceTaxMethod> orderByComparator) {
+
+		return getPersistence().findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce tax methods where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @return the matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByG_A(
+		long groupId, boolean active) {
+
+		return getPersistence().findByG_A(groupId, active);
+	}
+
+	/**
+	 * Returns a range of all the commerce tax methods where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce tax methods
+	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
+	 * @return the range of matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByG_A(
+		long groupId, boolean active, int start, int end) {
+
+		return getPersistence().findByG_A(groupId, active, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce tax methods where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce tax methods
+	 * @param end the upper bound of the range of commerce tax methods (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce tax methods
+	 */
+	public static List<CommerceTaxMethod> findByG_A(
+		long groupId, boolean active, int start, int end,
+		OrderByComparator<CommerceTaxMethod> orderByComparator) {
+
+		return getPersistence().findByG_A(
+			groupId, active, start, end, orderByComparator);
+	}
+
 	public static CommerceTaxMethodPersistence getPersistence() {
 		return _persistence;
 	}
@@ -510,4 +510,4 @@ public class CommerceTaxMethodUtil {
 	private static volatile CommerceTaxMethodPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:997424499
+// LIFERAY-SERVICE-BUILDER-HASH:-1897730351

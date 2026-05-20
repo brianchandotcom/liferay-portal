@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogContext;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,6 +38,7 @@ import org.apache.logging.log4j.ThreadContext;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.StringLayout;
 import org.apache.logging.log4j.core.appender.ConsoleAppender;
 import org.apache.logging.log4j.core.appender.OutputStreamManager;
 import org.apache.logging.log4j.core.appender.RollingFileAppender;
@@ -139,16 +141,33 @@ public class PortalLog4jTest {
 
 	@Test
 	public void testLogOutput() throws Exception {
-		_testLogOutput("DEBUG");
-		_testLogOutput("ERROR");
-		_testLogOutput("FATAL");
-		_testLogOutput("INFO");
-		_testLogOutput("TRACE");
-		_testLogOutput("WARN");
+		for (String level : _LEVELS) {
+			_testLogOutput(level);
+		}
 	}
 
 	@Test
-	public void testLogOutputWithLogContext() {
+	public void testLogOutputWithCDATAClosingSequence() throws Exception {
+		String cdataClose = "]]>";
+		String escapedCdataClose = "]]>]]&gt;<![CDATA[";
+
+		try {
+			ThreadContext.push("ndc:" + cdataClose);
+
+			for (String level : _LEVELS) {
+				_testLogOutput(
+					level, "before" + cdataClose + "after", null,
+					"before" + escapedCdataClose + "after",
+					"ndc:" + escapedCdataClose, null);
+			}
+		}
+		finally {
+			ThreadContext.pop();
+		}
+	}
+
+	@Test
+	public void testLogOutputWithLogContext() throws Exception {
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -171,7 +190,9 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextAndExternalContext() {
+	public void testLogOutputWithLogContextAndExternalContext()
+		throws Exception {
+
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -204,7 +225,9 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextWithEmptyContextName() {
+	public void testLogOutputWithLogContextWithEmptyContextName()
+		throws Exception {
+
 		String key1 = "test.key.1";
 		String key2 = "test.key.2";
 		String value1 = "test.value.1";
@@ -224,11 +247,27 @@ public class PortalLog4jTest {
 	}
 
 	@Test
-	public void testLogOutputWithLogContextWithEmptyLogContext() {
+	public void testLogOutputWithLogContextWithEmptyLogContext()
+		throws Exception {
+
 		_testLogOutputWithLogContext(
 			Collections.emptyMap(),
 			StringPool.OPEN_CURLY_BRACE + StringPool.CLOSE_CURLY_BRACE,
 			"TestLogContext");
+	}
+
+	@Test
+	public void testLogOutputWithSpecialCharsForbiddenXML10() throws Exception {
+		_testLogOutputWithSpecialChars(
+			String.valueOf((char)1), StringPool.SPACE, StringPool.BLANK,
+			"ForbiddenCharsLogContext");
+	}
+
+	@Test
+	public void testLogOutputWithSpecialCharsHTML() throws Exception {
+		_testLogOutputWithSpecialChars(
+			"<>&\"", "&lt;&gt;&amp;&quot;", "<>&\"",
+			"HTMLSpecialCharsLogContext");
 	}
 
 	private static Path _initFileAppender(
@@ -268,22 +307,28 @@ public class PortalLog4jTest {
 		String expectedLevel, String expectedMessage,
 		Throwable expectedThrowable, String actualOutput) {
 
+		_assertTextLog(
+			expectedLevel, expectedMessage, expectedThrowable, null,
+			actualOutput);
+	}
+
+	private void _assertTextLog(
+		String expectedLevel, String expectedMessage,
+		Throwable expectedThrowable, String expectedLogContextMessage,
+		String actualOutput) {
+
 		String[] outputLines = StringUtil.splitLines(actualOutput);
 
-		Assert.assertTrue(
-			"The log output should have at least 1 line",
-			outputLines.length > 0);
-
-		String messageLine = outputLines[0];
+		Assert.assertTrue(outputLines.length > 0);
 
 		// Timestamp
+
+		String messageLine = outputLines[0];
 
 		Matcher dateMatcher = _datePattern.matcher(
 			messageLine.substring(0, _DATE_FORMAT.length()));
 
-		Assert.assertTrue(
-			"Output date format should be yyyy-MM-dd HH:mm:ss.SSS",
-			dateMatcher.matches());
+		Assert.assertTrue(dateMatcher.matches());
 
 		// Level
 
@@ -334,6 +379,17 @@ public class PortalLog4jTest {
 		Assert.assertEquals(
 			String.valueOf(expectedMessage), messageLine.trim());
 
+		int outputLineIndex = 1;
+
+		// Log context
+
+		if (expectedLogContextMessage != null) {
+			Assert.assertEquals(
+				expectedLogContextMessage, outputLines[outputLineIndex].trim());
+
+			outputLineIndex++;
+		}
+
 		// Throwable
 
 		if (expectedThrowable != null) {
@@ -342,13 +398,12 @@ public class PortalLog4jTest {
 			Assert.assertEquals(
 				expectedThrowableClass.getName() + ": " +
 					expectedThrowable.getMessage(),
-				outputLines[1]);
+				outputLines[outputLineIndex]);
 
-			String actualFirstPrefixStackTraceElement = outputLines[2].trim();
+			String actualFirstPrefixStackTraceElement =
+				outputLines[outputLineIndex + 1].trim();
 
 			Assert.assertTrue(
-				"A throwable should be logged and the first stack should be " +
-					PortalLog4jTest.class.getName(),
 				actualFirstPrefixStackTraceElement.startsWith(
 					"at " + PortalLog4jTest.class.getName()));
 		}
@@ -356,13 +411,13 @@ public class PortalLog4jTest {
 
 	private void _assertXmlLog(
 		String expectedLevel, String expectedMessage,
-		Throwable expectedThrowable, String actualOutput) {
+		Throwable expectedThrowable, String expectedLogContextMessage,
+		String expectedXMLMessage, String expectedXMLNDC,
+		String expectedXMLThread, String actualOutput) {
 
 		String[] outputLines = StringUtil.splitLines(actualOutput);
 
-		Assert.assertTrue(
-			"The log output should have at least 1 line",
-			outputLines.length > 0);
+		Assert.assertTrue(outputLines.length > 0);
 
 		// <log4j:event />
 
@@ -410,7 +465,10 @@ public class PortalLog4jTest {
 		Thread currentThread = Thread.currentThread();
 
 		String expectedLog4JEventThread = StringBundler.concat(
-			"thread=\"", currentThread.getName(), StringPool.QUOTE);
+			"thread=\"",
+			(expectedXMLThread != null) ? expectedXMLThread :
+				currentThread.getName(),
+			StringPool.QUOTE);
 
 		Assert.assertEquals(
 			expectedLog4JEventThread,
@@ -420,31 +478,93 @@ public class PortalLog4jTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				"<log4j:message><![CDATA[", expectedMessage,
+				"<log4j:message><![CDATA[",
+				(expectedXMLMessage != null) ? expectedXMLMessage :
+					expectedMessage,
 				"]]></log4j:message>"),
 			outputLines[1]);
+
+		// <log4j:NDC>...</log4j:NDC>
+
+		if (expectedXMLNDC != null) {
+			String expectedNdcLine = StringBundler.concat(
+				"<log4j:NDC><![CDATA[", expectedXMLNDC, "]]></log4j:NDC>");
+
+			Assert.assertTrue(ArrayUtil.contains(outputLines, expectedNdcLine));
+		}
 
 		// <log4j:throwable>...</log4j:throwable>
 
 		if (expectedThrowable != null) {
 			Class<?> expectedThrowableClass = expectedThrowable.getClass();
 
-			Assert.assertEquals(
-				"<log4j:throwable><![CDATA[" + expectedThrowableClass.getName(),
-				outputLines[2]);
+			Assert.assertTrue(
+				outputLines[2].startsWith(
+					"<log4j:throwable><![CDATA[" +
+						expectedThrowableClass.getName()));
 
 			String actualFirstPrefixStackTraceElement = outputLines[3].trim();
 
 			Assert.assertTrue(
-				"A throwable should be logged and the first stack should be " +
-					PortalLog4jTest.class.getName(),
 				actualFirstPrefixStackTraceElement.startsWith(
 					"at " + PortalLog4jTest.class.getName()));
 		}
 
+		int locationInfoLineIndex = outputLines.length - 2;
+
+		// <log4j:properties>...</log4j:properties>
+
+		if ((expectedLogContextMessage != null) &&
+			!Objects.equals(expectedLogContextMessage, "{}")) {
+
+			int propertiesCloseLineIndex = outputLines.length - 2;
+
+			Assert.assertEquals(
+				"</log4j:properties>", outputLines[propertiesCloseLineIndex]);
+
+			int propertiesOpenLineIndex = -1;
+
+			for (int i = propertiesCloseLineIndex - 1; i >= 0; i--) {
+				if (Objects.equals(outputLines[i], "<log4j:properties>")) {
+					propertiesOpenLineIndex = i;
+
+					break;
+				}
+			}
+
+			Assert.assertTrue(propertiesOpenLineIndex >= 0);
+
+			StringBundler sb = new StringBundler();
+
+			sb.append(StringPool.OPEN_CURLY_BRACE);
+
+			for (int i = propertiesOpenLineIndex + 1;
+				 i < propertiesCloseLineIndex; i++) {
+
+				Matcher nameValueMatcher = _nameValuePattern.matcher(
+					outputLines[i]);
+
+				Assert.assertTrue(nameValueMatcher.find());
+
+				if (i > (propertiesOpenLineIndex + 1)) {
+					sb.append(", ");
+				}
+
+				sb.append(nameValueMatcher.group(1));
+				sb.append(StringPool.EQUAL);
+				sb.append(nameValueMatcher.group(2));
+			}
+
+			sb.append(StringPool.CLOSE_CURLY_BRACE);
+
+			Assert.assertEquals(expectedLogContextMessage, sb.toString());
+
+			locationInfoLineIndex = propertiesOpenLineIndex - 1;
+		}
+
 		// <log4j:locationInfo />
 
-		String log4JLocationInfoLine = outputLines[outputLines.length - 2];
+		String log4JLocationInfoLine = outputLines[locationInfoLineIndex];
 
 		String log4JLocationInfo = log4JLocationInfoLine.substring(
 			log4JLocationInfoLine.indexOf(StringPool.SPACE),
@@ -561,6 +681,15 @@ public class PortalLog4jTest {
 			String level, String message, Throwable throwable)
 		throws Exception {
 
+		_testLogOutput(level, message, throwable, null, null, null);
+	}
+
+	private void _testLogOutput(
+			String level, String message, Throwable throwable,
+			String expectedXMLMessage, String expectedXMLNDC,
+			String expectedXMLThread)
+		throws Exception {
+
 		_outputLog(level, message, throwable);
 
 		try {
@@ -572,7 +701,8 @@ public class PortalLog4jTest {
 				new String(Files.readAllBytes(_textLogFilePath)));
 
 			_assertXmlLog(
-				level, message, throwable,
+				level, message, throwable, null, expectedXMLMessage,
+				expectedXMLNDC, expectedXMLThread,
 				new String(Files.readAllBytes(_xmlLogFilePath)));
 		}
 		finally {
@@ -588,8 +718,20 @@ public class PortalLog4jTest {
 	}
 
 	private void _testLogOutputWithLogContext(
-		Map<String, String> contexts, String logContextMessage,
-		String logContextName) {
+			Map<String, String> contexts, String logContextMessage,
+			String logContextName)
+		throws Exception {
+
+		_testLogOutputWithLogContext(
+			contexts, logContextMessage, logContextMessage, null, null,
+			logContextName);
+	}
+
+	private void _testLogOutputWithLogContext(
+			Map<String, String> contexts, String logContextMessage,
+			String expectedXMLLogContextMessage, String expectedXMLNDC,
+			String expectedXMLThread, String logContextName)
+		throws Exception {
 
 		Bundle bundle = FrameworkUtil.getBundle(PortalLog4jTest.class);
 
@@ -613,74 +755,154 @@ public class PortalLog4jTest {
 				},
 				new HashMapDictionary());
 
-		PatternLayout.Builder builder = PatternLayout.newBuilder();
+		PatternLayout.Builder patternLayoutBuilder = PatternLayout.newBuilder();
 
-		builder.withPattern("%level - %m%n %X");
+		patternLayoutBuilder.withPattern(
+			"%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X");
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+		UnsyncStringWriter textUnsyncStringWriter = new UnsyncStringWriter();
 
-		Appender logContextWriterAppender = WriterAppender.createAppender(
-			builder.build(), null, unsyncStringWriter,
-			"logContextWriterAppender", false, false);
+		Appender textLogContextWriterAppender = WriterAppender.createAppender(
+			patternLayoutBuilder.build(), null, textUnsyncStringWriter,
+			"textLogContextWriterAppender", false, false);
 
-		logContextWriterAppender.start();
+		textLogContextWriterAppender.start();
+
+		Logger rootLogger = (Logger)LogManager.getRootLogger();
+
+		Map<String, Appender> rootAppenders = rootLogger.getAppenders();
+
+		Appender xmlFileAppender = rootAppenders.get("XML_FILE");
+
+		Object xmlFileAppenderLayout = xmlFileAppender.getLayout();
+
+		Class<?> liferayXmlLayoutClass = xmlFileAppenderLayout.getClass();
+
+		Object liferayXmlLayoutBuilder = ReflectionTestUtil.invoke(
+			liferayXmlLayoutClass, "newBuilder", new Class<?>[0]);
+
+		ReflectionTestUtil.setFieldValue(
+			liferayXmlLayoutBuilder, "_locationInfo", true);
+		ReflectionTestUtil.setFieldValue(
+			liferayXmlLayoutBuilder, "_properties", true);
+
+		StringLayout liferayXmlLayout = ReflectionTestUtil.invoke(
+			liferayXmlLayoutBuilder, "build", new Class<?>[0]);
+
+		UnsyncStringWriter xmlUnsyncStringWriter = new UnsyncStringWriter();
+
+		Appender xmlLogContextWriterAppender = WriterAppender.createAppender(
+			liferayXmlLayout, null, xmlUnsyncStringWriter,
+			"xmlLogContextWriterAppender", false, false);
+
+		xmlLogContextWriterAppender.start();
 
 		Logger logger = (Logger)LogManager.getLogger(PortalLog4jTest.class);
 
-		logger.addAppender(logContextWriterAppender);
+		logger.addAppender(textLogContextWriterAppender);
+		logger.addAppender(xmlLogContextWriterAppender);
 
 		try {
-			_testLogOutputWithLogContext(
-				"DEBUG", logContextMessage, unsyncStringWriter);
-			_testLogOutputWithLogContext(
-				"ERROR", logContextMessage, unsyncStringWriter);
-			_testLogOutputWithLogContext(
-				"FATAL", logContextMessage, unsyncStringWriter);
-			_testLogOutputWithLogContext(
-				"INFO", logContextMessage, unsyncStringWriter);
-			_testLogOutputWithLogContext(
-				"TRACE", logContextMessage, unsyncStringWriter);
-			_testLogOutputWithLogContext(
-				"WARN", logContextMessage, unsyncStringWriter);
+			for (String level : _LEVELS) {
+				_testLogOutputWithLogContext(
+					level, logContextMessage, expectedXMLLogContextMessage,
+					expectedXMLNDC, expectedXMLThread, textUnsyncStringWriter,
+					xmlUnsyncStringWriter);
+			}
 		}
 		finally {
 			serviceRegistration.unregister();
 
-			logger.removeAppender(logContextWriterAppender);
+			logger.removeAppender(textLogContextWriterAppender);
+			logger.removeAppender(xmlLogContextWriterAppender);
+
+			_unsyncStringWriter.reset();
+
+			Files.write(
+				_textLogFilePath, new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
+			Files.write(
+				_xmlLogFilePath, new byte[0],
+				StandardOpenOption.TRUNCATE_EXISTING);
 		}
 	}
 
 	private void _testLogOutputWithLogContext(
 		String level, String logContextMessage,
-		UnsyncStringWriter unsyncStringWriter) {
+		String expectedXMLLogContextMessage, String expectedXMLNDC,
+		String expectedXMLThread, UnsyncStringWriter textUnsyncStringWriter,
+		UnsyncStringWriter xmlUnsyncStringWriter) {
 
-		_outputLog(level, level + " message", null);
+		String message = level + " message";
 
-		String[] outputLines = StringUtil.splitLines(
-			unsyncStringWriter.toString());
+		_outputLog(level, message, null);
 
-		Assert.assertTrue(
-			"The log output should have at least 1 line",
-			outputLines.length > 0);
+		_assertTextLog(
+			level, message, null, logContextMessage,
+			textUnsyncStringWriter.toString());
+		_assertXmlLog(
+			level, message, null, expectedXMLLogContextMessage, null,
+			expectedXMLNDC, expectedXMLThread,
+			xmlUnsyncStringWriter.toString());
 
-		Assert.assertEquals(
-			StringBundler.concat(level, " - ", level, " message"),
-			outputLines[0]);
+		textUnsyncStringWriter.reset();
+		xmlUnsyncStringWriter.reset();
+	}
 
-		Assert.assertEquals(logContextMessage, outputLines[1].trim());
+	private void _testLogOutputWithSpecialChars(
+			String rawChars, String expectedAttributeChars,
+			String expectedCdataChars, String logContextName)
+		throws Exception {
 
-		unsyncStringWriter.reset();
+		String key = "key:" + rawChars;
+		String value = "value:" + rawChars;
+
+		Thread currentThread = Thread.currentThread();
+
+		String originalThreadName = currentThread.getName();
+
+		try {
+			currentThread.setName("thread:" + rawChars);
+
+			ThreadContext.push("ndc:" + rawChars);
+
+			_testLogOutputWithLogContext(
+				HashMapBuilder.put(
+					key, value
+				).build(),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName,
+					StringPool.PERIOD, key, StringPool.EQUAL, value,
+					StringPool.CLOSE_CURLY_BRACE),
+				StringBundler.concat(
+					StringPool.OPEN_CURLY_BRACE, logContextName, ".key:",
+					expectedAttributeChars, "=value:", expectedAttributeChars,
+					StringPool.CLOSE_CURLY_BRACE),
+				"ndc:" + expectedCdataChars, "thread:" + expectedAttributeChars,
+				logContextName);
+		}
+		finally {
+			currentThread.setName(originalThreadName);
+
+			ThreadContext.pop();
+		}
 	}
 
 	private static final int _BUFFER_SIZE = 8192;
 
 	private static final String _DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
+	private static final String[] _LEVELS = {
+		"DEBUG", "ERROR", "FATAL", "INFO", "TRACE", "WARN"
+	};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalLog4jTest.class);
 
 	private static final Pattern _datePattern = Pattern.compile(
 		"\\d\\d\\d\\d-\\d\\d-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d");
+	private static final Pattern _nameValuePattern = Pattern.compile(
+		"name=\"([^\"]*)\" value=\"([^\"]*)\"");
 	private static Path _tempLogFileDirPath;
 	private static TestOutputStream _testOutputStream;
 	private static Path _textLogFilePath;

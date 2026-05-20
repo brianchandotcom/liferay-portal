@@ -33,9 +33,9 @@ const mockModalClose = jest.fn();
 
 const DEFAULT_PROPS = {
 	actionLink: '/edit/123',
-	itemId: 123,
 	itemName: 'My Content',
 	onModalClose: mockModalClose,
+	translationsAPIURL: '/o/cms/blogs/123/translations',
 };
 
 function renderModal() {

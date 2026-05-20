@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.log.Log;
@@ -64,69 +63,14 @@ public class PortalPreferencesPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByOwnerType;
-	private FinderPath _finderPathWithoutPaginationFindByOwnerType;
-	private FinderPath _finderPathCountByOwnerType;
 	private CollectionPersistenceFinder<PortalPreferences>
 		_collectionPersistenceFinderByOwnerType;
 
 	/**
-	 * Returns all the portal preferenceses where ownerType = &#63;.
-	 *
-	 * @param ownerType the owner type
-	 * @return the matching portal preferenceses
-	 */
-	@Override
-	public List<PortalPreferences> findByOwnerType(int ownerType) {
-		return findByOwnerType(
-			ownerType, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preferenceses where ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of portal preferenceses
-	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
-	 * @return the range of matching portal preferenceses
-	 */
-	@Override
-	public List<PortalPreferences> findByOwnerType(
-		int ownerType, int start, int end) {
-
-		return findByOwnerType(ownerType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preferenceses where ownerType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferencesModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ownerType the owner type
-	 * @param start the lower bound of the range of portal preferenceses
-	 * @param end the upper bound of the range of portal preferenceses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preferenceses
-	 */
-	@Override
-	public List<PortalPreferences> findByOwnerType(
-		int ownerType, int start, int end,
-		OrderByComparator<PortalPreferences> orderByComparator) {
-
-		return findByOwnerType(ownerType, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preferenceses where ownerType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferencesModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferencesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param ownerType the owner type
@@ -212,7 +156,6 @@ public class PortalPreferencesPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {ownerType});
 	}
 
-	private FinderPath _finderPathFetchByO_O;
 	private UniquePersistenceFinder<PortalPreferences>
 		_uniquePersistenceFinderByO_O;
 
@@ -244,18 +187,6 @@ public class PortalPreferencesPersistenceImpl
 		}
 
 		return portalPreferences;
-	}
-
-	/**
-	 * Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
-	 */
-	@Override
-	public PortalPreferences fetchByO_O(long ownerId, int ownerType) {
-		return fetchByO_O(ownerId, ownerType, true);
 	}
 
 	/**
@@ -483,29 +414,25 @@ public class PortalPreferencesPersistenceImpl
 	 * Initializes the portal preferences persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerType",
-			new String[] {
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ownerType"}, true);
-
-		_finderPathWithoutPaginationFindByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOwnerType",
-			new String[] {Integer.class.getName()}, new String[] {"ownerType"},
-			true);
-
-		_finderPathCountByOwnerType = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOwnerType",
-			new String[] {Integer.class.getName()}, new String[] {"ownerType"},
-			false);
-
 		_collectionPersistenceFinderByOwnerType =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOwnerType,
-				_finderPathWithoutPaginationFindByOwnerType,
-				_finderPathCountByOwnerType,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOwnerType",
+					new String[] {
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ownerType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOwnerType", new String[] {Integer.class.getName()},
+					new String[] {"ownerType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOwnerType", new String[] {Integer.class.getName()},
+					new String[] {"ownerType"}, false),
 				_SQL_SELECT_PORTALPREFERENCES_WHERE,
 				_SQL_COUNT_PORTALPREFERENCES_WHERE,
 				PortalPreferencesModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -515,15 +442,14 @@ public class PortalPreferencesPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", true, true,
 					PortalPreferences::getOwnerType));
 
-		_finderPathFetchByO_O = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"ownerId", "ownerType"}, 0, 0, false,
-			PortalPreferences::getOwnerId, PortalPreferences::getOwnerType);
-
 		_uniquePersistenceFinderByO_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByO_O, _SQL_SELECT_PORTALPREFERENCES_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByO_O",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"ownerId", "ownerType"}, 0, 0, false,
+				PortalPreferences::getOwnerId, PortalPreferences::getOwnerType),
+			_SQL_SELECT_PORTALPREFERENCES_WHERE, "",
 			new FinderColumn<>(
 				"portalPreferences.", "ownerId", FinderColumn.Type.LONG, "=",
 				true, true, PortalPreferences::getOwnerId),
@@ -564,4 +490,4 @@ public class PortalPreferencesPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1166031600
+// LIFERAY-SERVICE-BUILDER-HASH:-1675058243

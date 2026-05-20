@@ -94,39 +94,35 @@ public abstract class BuildTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		for (URL testrayAttachmentURL :
-				buildReport.getTestrayAttachmentURLs()) {
+		URL testrayAttachmentURL = buildReport.getTestrayAttachmentURLBySuffix(
+			key);
 
+		if (testrayAttachmentURL == null) {
+			return null;
+		}
+
+		String cloudObjectPath;
+
+		try {
+			String buildBaseArtifactURL =
+				JenkinsResultsParserUtil.getBuildProperty(
+					"build.base.artifact.url");
 			String testrayAttachmentURLString = String.valueOf(
 				testrayAttachmentURL);
 
-			if (!testrayAttachmentURLString.endsWith(key)) {
-				continue;
-			}
-
-			String cloudObjectPath = null;
-
-			try {
-				String buildBaseArtifactURL =
-					JenkinsResultsParserUtil.getBuildProperty(
-						"build.base.artifact.url");
-
-				cloudObjectPath = testrayAttachmentURLString.replace(
-					buildBaseArtifactURL + "/", "");
-			}
-			catch (IOException ioException) {
-				continue;
-			}
-
-			TestrayAttachment testrayAttachment =
-				new CloudObjectTestrayAttachment(this, name, cloudObjectPath);
-
-			_testrayAttachments.put(key, testrayAttachment);
-
-			return _testrayAttachments.get(key);
+			cloudObjectPath = testrayAttachmentURLString.replace(
+				buildBaseArtifactURL + "/", "");
+		}
+		catch (IOException ioException) {
+			return null;
 		}
 
-		return null;
+		TestrayAttachment testrayAttachment = new CloudObjectTestrayAttachment(
+			this, name, cloudObjectPath);
+
+		_testrayAttachments.put(key, testrayAttachment);
+
+		return testrayAttachment;
 	}
 
 	protected File getTestrayUploadBaseDir() {

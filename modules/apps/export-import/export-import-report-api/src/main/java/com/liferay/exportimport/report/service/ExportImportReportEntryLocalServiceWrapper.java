@@ -318,6 +318,15 @@ public class ExportImportReportEntryLocalServiceWrapper
 			getExportImportReportEntriesCount();
 	}
 
+	@Override
+	public int getExportImportReportEntriesCount(
+		long companyId, long exportImportConfigurationId) {
+
+		return _exportImportReportEntryLocalService.
+			getExportImportReportEntriesCount(
+				companyId, exportImportConfigurationId);
+	}
+
 	/**
 	 * Returns the export import report entry with the primary key.
 	 *
@@ -446,4 +455,4 @@ public class ExportImportReportEntryLocalServiceWrapper
 		_exportImportReportEntryLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:233950841
+// LIFERAY-SERVICE-BUILDER-HASH:601233165

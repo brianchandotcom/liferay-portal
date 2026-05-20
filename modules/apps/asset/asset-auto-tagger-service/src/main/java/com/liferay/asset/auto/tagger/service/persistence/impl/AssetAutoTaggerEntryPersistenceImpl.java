@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -83,70 +82,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAssetEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetEntryId;
-	private FinderPath _finderPathCountByAssetEntryId;
 	private CollectionPersistenceFinder<AssetAutoTaggerEntry>
 		_collectionPersistenceFinderByAssetEntryId;
 
 	/**
-	 * Returns all the asset auto tagger entries where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetEntryId(long assetEntryId) {
-		return findByAssetEntryId(
-			assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset auto tagger entries where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset auto tagger entries
-	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	 * @return the range of matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetEntryId(
-		long assetEntryId, int start, int end) {
-
-		return findByAssetEntryId(assetEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset auto tagger entries
-	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetEntryId(
-		long assetEntryId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
-
-		return findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset auto tagger entries where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param assetEntryId the asset entry ID
@@ -232,70 +175,14 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			finderCache, new Object[] {assetEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAssetTagId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetTagId;
-	private FinderPath _finderPathCountByAssetTagId;
 	private CollectionPersistenceFinder<AssetAutoTaggerEntry>
 		_collectionPersistenceFinderByAssetTagId;
 
 	/**
-	 * Returns all the asset auto tagger entries where assetTagId = &#63;.
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @return the matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetTagId(long assetTagId) {
-		return findByAssetTagId(
-			assetTagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset auto tagger entries where assetTagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param start the lower bound of the range of asset auto tagger entries
-	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	 * @return the range of matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetTagId(
-		long assetTagId, int start, int end) {
-
-		return findByAssetTagId(assetTagId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetTagId the asset tag ID
-	 * @param start the lower bound of the range of asset auto tagger entries
-	 * @param end the upper bound of the range of asset auto tagger entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset auto tagger entries
-	 */
-	@Override
-	public List<AssetAutoTaggerEntry> findByAssetTagId(
-		long assetTagId, int start, int end,
-		OrderByComparator<AssetAutoTaggerEntry> orderByComparator) {
-
-		return findByAssetTagId(
-			assetTagId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset auto tagger entries where assetTagId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetAutoTaggerEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param assetTagId the asset tag ID
@@ -381,7 +268,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 			finderCache, new Object[] {assetTagId});
 	}
 
-	private FinderPath _finderPathFetchByA_A;
 	private UniquePersistenceFinder<AssetAutoTaggerEntry>
 		_uniquePersistenceFinderByA_A;
 
@@ -414,18 +300,6 @@ public class AssetAutoTaggerEntryPersistenceImpl
 		}
 
 		return assetAutoTaggerEntry;
-	}
-
-	/**
-	 * Returns the asset auto tagger entry where assetEntryId = &#63; and assetTagId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param assetTagId the asset tag ID
-	 * @return the matching asset auto tagger entry, or <code>null</code> if a matching asset auto tagger entry could not be found
-	 */
-	@Override
-	public AssetAutoTaggerEntry fetchByA_A(long assetEntryId, long assetTagId) {
-		return fetchByA_A(assetEntryId, assetTagId, true);
 	}
 
 	/**
@@ -756,29 +630,26 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			true);
-
-		_finderPathCountByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			false);
-
 		_collectionPersistenceFinderByAssetEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetEntryId,
-				_finderPathWithoutPaginationFindByAssetEntryId,
-				_finderPathCountByAssetEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAssetEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, false),
 				_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
 				_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE,
 				AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL,
@@ -788,29 +659,25 @@ public class AssetAutoTaggerEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetAutoTaggerEntry::getAssetEntryId));
 
-		_finderPathWithPaginationFindByAssetTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetTagId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetTagId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetTagId",
-			new String[] {Long.class.getName()}, new String[] {"assetTagId"},
-			true);
-
-		_finderPathCountByAssetTagId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetTagId",
-			new String[] {Long.class.getName()}, new String[] {"assetTagId"},
-			false);
-
 		_collectionPersistenceFinderByAssetTagId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetTagId,
-				_finderPathWithoutPaginationFindByAssetTagId,
-				_finderPathCountByAssetTagId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetTagId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetTagId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetTagId", new String[] {Long.class.getName()},
+					new String[] {"assetTagId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetTagId", new String[] {Long.class.getName()},
+					new String[] {"assetTagId"}, false),
 				_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
 				_SQL_COUNT_ASSETAUTOTAGGERENTRY_WHERE,
 				AssetAutoTaggerEntryModelImpl.ORDER_BY_JPQL,
@@ -820,16 +687,15 @@ public class AssetAutoTaggerEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetAutoTaggerEntry::getAssetTagId));
 
-		_finderPathFetchByA_A = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetEntryId", "assetTagId"}, 0, 0, false,
-			AssetAutoTaggerEntry::getAssetEntryId,
-			AssetAutoTaggerEntry::getAssetTagId);
-
 		_uniquePersistenceFinderByA_A = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_A, _SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_A",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"assetEntryId", "assetTagId"}, 0, 0, false,
+				AssetAutoTaggerEntry::getAssetEntryId,
+				AssetAutoTaggerEntry::getAssetTagId),
+			_SQL_SELECT_ASSETAUTOTAGGERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"assetAutoTaggerEntry.", "assetEntryId", FinderColumn.Type.LONG,
 				"=", true, true, AssetAutoTaggerEntry::getAssetEntryId),
@@ -906,4 +772,4 @@ public class AssetAutoTaggerEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1288730283
+// LIFERAY-SERVICE-BUILDER-HASH:-199745540

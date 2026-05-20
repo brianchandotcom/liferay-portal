@@ -147,18 +147,6 @@ public class DDMFormInstanceReportUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
-	 */
-	public static DDMFormInstanceReport fetchByFormInstanceId(
-		long formInstanceId) {
-
-		return getPersistence().fetchByFormInstanceId(formInstanceId);
-	}
-
-	/**
 	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param formInstanceId the form instance ID
@@ -253,6 +241,18 @@ public class DDMFormInstanceReportUtil {
 		return getPersistence().fetchByPrimaryKey(formInstanceReportId);
 	}
 
+	/**
+	 * Returns the ddm form instance report where formInstanceId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance report, or <code>null</code> if a matching ddm form instance report could not be found
+	 */
+	public static DDMFormInstanceReport fetchByFormInstanceId(
+		long formInstanceId) {
+
+		return getPersistence().fetchByFormInstanceId(formInstanceId);
+	}
+
 	public static DDMFormInstanceReportPersistence getPersistence() {
 		return _persistence;
 	}
@@ -266,4 +266,4 @@ public class DDMFormInstanceReportUtil {
 	private static volatile DDMFormInstanceReportPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-213565969
+// LIFERAY-SERVICE-BUILDER-HASH:1039665051

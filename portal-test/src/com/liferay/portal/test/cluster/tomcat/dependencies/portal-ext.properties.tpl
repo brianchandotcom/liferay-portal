@@ -1,3 +1,4 @@
+browser.launcher.url=
 cluster.link.channel.name.control=${CLUSTER_NAME}-channel-control
 cluster.link.channel.name.transport.0=${CLUSTER_NAME}-channel-transport-0
 cluster.link.enabled=true

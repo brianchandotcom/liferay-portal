@@ -25,6 +25,7 @@ import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -736,21 +737,21 @@ testWithDeprecationFF(
 		});
 
 		await performLoginViaApi({
-			loginUrl: 'http://www.able.com:8080',
+			loginUrl: `http://www.able.com:${liferayConfig.environment.port}`,
 			page,
 			screenName: 'test',
 		});
 
 		const virtualInstanceApiHelpers = new DataApiHelpers(
 			page,
-			'http://www.able.com:8080'
+			`http://www.able.com:${liferayConfig.environment.port}`
 		);
 
 		for (const featureFlag of featureFlags) {
 			await virtualInstanceApiHelpers.featureFlag.updateFeatureFlag(
 				featureFlag.key,
 				featureFlag.enabled,
-				'http://www.able.com:8080'
+				`http://www.able.com:${liferayConfig.environment.port}`
 			);
 		}
 
@@ -761,7 +762,7 @@ testWithDeprecationFF(
 		);
 
 		await page.goto(
-			`http://www.able.com:8080/group${site.friendlyUrlPath}${PORTLET_URLS.import}`
+			`http://www.able.com:${liferayConfig.environment.port}/group${site.friendlyUrlPath}${PORTLET_URLS.import}`
 		);
 		await exportImportPage.importByDefault(exportFilePath);
 		await exportImportPage.importByDefault(exportFilePath);

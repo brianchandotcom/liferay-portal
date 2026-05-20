@@ -67,10 +67,6 @@ public interface RegionLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.RegionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the region local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link RegionLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public Region addRegion(
-			long countryId, boolean active, String name, double position,
-			String regionCode, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	 * Adds the region to the database. Also notifies the appropriate model listeners.
@@ -84,6 +80,12 @@ public interface RegionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Region addRegion(Region region);
+
+	public Region addRegion(
+			String externalReferenceCode, long countryId, boolean active,
+			String name, double position, String regionCode,
+			ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -215,6 +217,10 @@ public interface RegionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region fetchRegion(long countryId, String regionCode);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region fetchRegionByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
 	/**
 	 * Returns the region with the matching UUID and company.
 	 *
@@ -238,6 +244,12 @@ public interface RegionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region getOrAddEmptyRegion(
+			String externalReferenceCode, long companyId, long userId,
+			long countryId, String regionCode, String name)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -266,6 +278,11 @@ public interface RegionLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Region getRegion(long countryId, String regionCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Region getRegionByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -344,11 +361,6 @@ public interface RegionLocalService
 	public Region updateActive(long regionId, boolean active)
 		throws PortalException;
 
-	public Region updateRegion(
-			long regionId, boolean active, String name, double position,
-			String regionCode)
-		throws PortalException;
-
 	/**
 	 * Updates the region in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
@@ -361,6 +373,11 @@ public interface RegionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Region updateRegion(Region region);
+
+	public Region updateRegion(
+			String externalReferenceCode, long regionId, boolean active,
+			String name, double position, String regionCode)
+		throws PortalException;
 
 	public RegionLocalization updateRegionLocalization(
 			Region region, String languageId, String title)
@@ -385,4 +402,4 @@ public interface RegionLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1658666474
+// LIFERAY-SERVICE-BUILDER-HASH:73527107

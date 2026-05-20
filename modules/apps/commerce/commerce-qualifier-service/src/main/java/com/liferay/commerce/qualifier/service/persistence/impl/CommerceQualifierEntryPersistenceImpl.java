@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -80,77 +79,14 @@ public class CommerceQualifierEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByS_S;
-	private FinderPath _finderPathWithoutPaginationFindByS_S;
-	private FinderPath _finderPathCountByS_S;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_S;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK) {
-
-		return findByS_S(
-			sourceClassNameId, sourceClassPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK, int start, int end) {
-
-		return findByS_S(sourceClassNameId, sourceClassPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S(
-		long sourceClassNameId, long sourceClassPK, int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_S(
-			sourceClassNameId, sourceClassPK, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -243,77 +179,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {sourceClassNameId, sourceClassPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_T;
-	private FinderPath _finderPathWithoutPaginationFindByT_T;
-	private FinderPath _finderPathCountByT_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByT_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK) {
-
-		return findByT_T(
-			targetClassNameId, targetClassPK, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK, int start, int end) {
-
-		return findByT_T(targetClassNameId, targetClassPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByT_T(
-		long targetClassNameId, long targetClassPK, int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByT_T(
-			targetClassNameId, targetClassPK, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param targetClassNameId the target class name ID
@@ -406,84 +279,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {targetClassNameId, targetClassPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_S_T;
-	private FinderPath _finderPathWithoutPaginationFindByS_S_T;
-	private FinderPath _finderPathCountByS_S_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_S_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		int start, int end) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_S_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_S_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -593,84 +396,14 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByS_T_T;
-	private FinderPath _finderPathWithoutPaginationFindByS_T_T;
-	private FinderPath _finderPathCountByS_T_T;
 	private CollectionPersistenceFinder<CommerceQualifierEntry>
 		_collectionPersistenceFinderByS_T_T;
 
 	/**
-	 * Returns all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @return the range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		int start, int end) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @param start the lower bound of the range of commerce qualifier entries
-	 * @param end the upper bound of the range of commerce qualifier entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce qualifier entries
-	 */
-	@Override
-	public List<CommerceQualifierEntry> findByS_T_T(
-		long sourceClassNameId, long targetClassNameId, long targetClassPK,
-		int start, int end,
-		OrderByComparator<CommerceQualifierEntry> orderByComparator) {
-
-		return findByS_T_T(
-			sourceClassNameId, targetClassNameId, targetClassPK, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceQualifierEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param sourceClassNameId the source class name ID
@@ -780,7 +513,6 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK});
 	}
 
-	private FinderPath _finderPathFetchByS_S_T_T;
 	private UniquePersistenceFinder<CommerceQualifierEntry>
 		_uniquePersistenceFinderByS_S_T_T;
 
@@ -820,25 +552,6 @@ public class CommerceQualifierEntryPersistenceImpl
 		}
 
 		return commerceQualifierEntry;
-	}
-
-	/**
-	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param sourceClassNameId the source class name ID
-	 * @param sourceClassPK the source class pk
-	 * @param targetClassNameId the target class name ID
-	 * @param targetClassPK the target class pk
-	 * @return the matching commerce qualifier entry, or <code>null</code> if a matching commerce qualifier entry could not be found
-	 */
-	@Override
-	public CommerceQualifierEntry fetchByS_S_T_T(
-		long sourceClassNameId, long sourceClassPK, long targetClassNameId,
-		long targetClassPK) {
-
-		return fetchByS_S_T_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK,
-			true);
 	}
 
 	/**
@@ -1136,28 +849,24 @@ public class CommerceQualifierEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, true);
-
-		_finderPathWithoutPaginationFindByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, true);
-
-		_finderPathCountByS_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"sourceClassNameId", "sourceClassPK"}, false);
-
 		_collectionPersistenceFinderByS_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_S,
-			_finderPathWithoutPaginationFindByS_S, _finderPathCountByS_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"sourceClassNameId", "sourceClassPK"}, false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1171,28 +880,24 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getSourceClassPK));
 
-		_finderPathWithPaginationFindByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"targetClassNameId", "targetClassPK"}, true);
-
-		_finderPathWithoutPaginationFindByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"targetClassNameId", "targetClassPK"}, true);
-
-		_finderPathCountByT_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"targetClassNameId", "targetClassPK"}, false);
-
 		_collectionPersistenceFinderByT_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_T,
-			_finderPathWithoutPaginationFindByT_T, _finderPathCountByT_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"targetClassNameId", "targetClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"targetClassNameId", "targetClassPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_T",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"targetClassNameId", "targetClassPK"}, false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1206,41 +911,39 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassPK));
 
-		_finderPathWithPaginationFindByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			true);
-
-		_finderPathCountByS_S_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_S_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_S_T,
-			_finderPathWithoutPaginationFindByS_S_T, _finderPathCountByS_S_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId"
+				},
+				false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1258,41 +961,39 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassNameId));
 
-		_finderPathWithPaginationFindByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			true);
-
-		_finderPathCountByS_T_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "targetClassNameId", "targetClassPK"
-			},
-			false);
-
 		_collectionPersistenceFinderByS_T_T = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByS_T_T,
-			_finderPathWithoutPaginationFindByS_T_T, _finderPathCountByS_T_T,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "targetClassNameId", "targetClassPK"
+				},
+				false),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE,
 			_SQL_COUNT_COMMERCEQUALIFIERENTRY_WHERE,
 			CommerceQualifierEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1310,23 +1011,22 @@ public class CommerceQualifierEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				CommerceQualifierEntry::getTargetClassPK));
 
-		_finderPathFetchByS_S_T_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByS_S_T_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"sourceClassNameId", "sourceClassPK", "targetClassNameId",
-				"targetClassPK"
-			},
-			0, 0, false, CommerceQualifierEntry::getSourceClassNameId,
-			CommerceQualifierEntry::getSourceClassPK,
-			CommerceQualifierEntry::getTargetClassNameId,
-			CommerceQualifierEntry::getTargetClassPK);
-
 		_uniquePersistenceFinderByS_S_T_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByS_S_T_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByS_S_T_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName(), Long.class.getName()
+				},
+				new String[] {
+					"sourceClassNameId", "sourceClassPK", "targetClassNameId",
+					"targetClassPK"
+				},
+				0, 0, false, CommerceQualifierEntry::getSourceClassNameId,
+				CommerceQualifierEntry::getSourceClassPK,
+				CommerceQualifierEntry::getTargetClassNameId,
+				CommerceQualifierEntry::getTargetClassPK),
 			_SQL_SELECT_COMMERCEQUALIFIERENTRY_WHERE, "",
 			new FinderColumn<>(
 				"commerceQualifierEntry.", "sourceClassNameId",
@@ -1417,4 +1117,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:202480348
+// LIFERAY-SERVICE-BUILDER-HASH:1253922160

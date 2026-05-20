@@ -71,4 +71,4 @@ public interface LocalizedEntryPersistence
 	public LocalizedEntry fetchByPrimaryKey(long localizedEntryId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:963720502
+// LIFERAY-SERVICE-BUILDER-HASH:-1577643594

@@ -129,54 +129,6 @@ public class ObjectFieldSettingUtil {
 	}
 
 	/**
-	 * Returns all the object field settings where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the object field settings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @return the range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object field settings where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object field settings where uuid = &#63;.
 	 *
 	 * <p>
@@ -245,60 +197,6 @@ public class ObjectFieldSettingUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the object field settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the object field settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @return the range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object field settings where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -378,57 +276,6 @@ public class ObjectFieldSettingUtil {
 	 */
 	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns all the object field settings where objectFieldId = &#63;.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @return the matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByObjectFieldId(
-		long objectFieldId) {
-
-		return getPersistence().findByObjectFieldId(objectFieldId);
-	}
-
-	/**
-	 * Returns a range of all the object field settings where objectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @return the range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByObjectFieldId(
-		long objectFieldId, int start, int end) {
-
-		return getPersistence().findByObjectFieldId(objectFieldId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object field settings where objectFieldId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param start the lower bound of the range of object field settings
-	 * @param end the upper bound of the range of object field settings (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object field settings
-	 */
-	public static List<ObjectFieldSetting> findByObjectFieldId(
-		long objectFieldId, int start, int end,
-		OrderByComparator<ObjectFieldSetting> orderByComparator) {
-
-		return getPersistence().findByObjectFieldId(
-			objectFieldId, start, end, orderByComparator);
 	}
 
 	/**
@@ -518,19 +365,6 @@ public class ObjectFieldSettingUtil {
 		throws com.liferay.object.exception.NoSuchObjectFieldSettingException {
 
 		return getPersistence().findByOFI_N(objectFieldId, name);
-	}
-
-	/**
-	 * Returns the object field setting where objectFieldId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param objectFieldId the object field ID
-	 * @param name the name
-	 * @return the matching object field setting, or <code>null</code> if a matching object field setting could not be found
-	 */
-	public static ObjectFieldSetting fetchByOFI_N(
-		long objectFieldId, String name) {
-
-		return getPersistence().fetchByOFI_N(objectFieldId, name);
 	}
 
 	/**
@@ -627,6 +461,172 @@ public class ObjectFieldSettingUtil {
 		return getPersistence().fetchByPrimaryKey(objectFieldSettingId);
 	}
 
+	/**
+	 * Returns the object field setting where objectFieldId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param name the name
+	 * @return the matching object field setting, or <code>null</code> if a matching object field setting could not be found
+	 */
+	public static ObjectFieldSetting fetchByOFI_N(
+		long objectFieldId, String name) {
+
+		return getPersistence().fetchByOFI_N(objectFieldId, name);
+	}
+
+	/**
+	 * Returns all the object field settings where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the object field settings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @return the range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object field settings where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectFieldSetting> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object field settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the object field settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @return the range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object field settings where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectFieldSetting> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object field settings where objectFieldId = &#63;.
+	 *
+	 * @param objectFieldId the object field ID
+	 * @return the matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByObjectFieldId(
+		long objectFieldId) {
+
+		return getPersistence().findByObjectFieldId(objectFieldId);
+	}
+
+	/**
+	 * Returns a range of all the object field settings where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @return the range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByObjectFieldId(
+		long objectFieldId, int start, int end) {
+
+		return getPersistence().findByObjectFieldId(objectFieldId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object field settings where objectFieldId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectFieldSettingModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectFieldId the object field ID
+	 * @param start the lower bound of the range of object field settings
+	 * @param end the upper bound of the range of object field settings (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object field settings
+	 */
+	public static List<ObjectFieldSetting> findByObjectFieldId(
+		long objectFieldId, int start, int end,
+		OrderByComparator<ObjectFieldSetting> orderByComparator) {
+
+		return getPersistence().findByObjectFieldId(
+			objectFieldId, start, end, orderByComparator);
+	}
+
 	public static ObjectFieldSettingPersistence getPersistence() {
 		return _persistence;
 	}
@@ -640,4 +640,4 @@ public class ObjectFieldSettingUtil {
 	private static volatile ObjectFieldSettingPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1550958563
+// LIFERAY-SERVICE-BUILDER-HASH:859102311

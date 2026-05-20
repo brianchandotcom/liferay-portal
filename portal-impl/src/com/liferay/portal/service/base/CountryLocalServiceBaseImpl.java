@@ -256,6 +256,22 @@ public abstract class CountryLocalServiceBaseImpl
 		return countryPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
+	@Override
+	public Country fetchCountryByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return countryPersistence.fetchByERC_C(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
+	public Country getCountryByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return countryPersistence.findByERC_C(externalReferenceCode, companyId);
+	}
+
 	/**
 	 * Returns the country with the primary key.
 	 *
@@ -780,4 +796,4 @@ public abstract class CountryLocalServiceBaseImpl
 		CountryLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-306451874
+// LIFERAY-SERVICE-BUILDER-HASH:-617478071

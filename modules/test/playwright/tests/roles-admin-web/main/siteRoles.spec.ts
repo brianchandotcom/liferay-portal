@@ -24,11 +24,9 @@ test('LPD-35066 Site role search should not persist after selecting an option', 
 	page,
 	usersAndOrganizationsPage,
 }) => {
-	const site1 = await apiHelpers.headlessSite.createSite({
+	const site1 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site1.externalReferenceCode, type: 'site'});
 
 	const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -41,11 +39,9 @@ test('LPD-35066 Site role search should not persist after selecting an option', 
 		user.id
 	);
 
-	const site2 = await apiHelpers.headlessSite.createSite({
+	const site2 = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 	await apiHelpers.headlessAdminUser.assignUserToSite(
 		role.id,

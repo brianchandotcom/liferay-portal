@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -86,79 +85,15 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCPSpecificationOptionId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCPSpecificationOptionId;
-	private FinderPath _finderPathCountByCPSpecificationOptionId;
 	private CollectionPersistenceFinder
 		<CPSpecificationOptionListTypeDefinitionRel>
 			_collectionPersistenceFinderByCPSpecificationOptionId;
 
 	/**
-	 * Returns all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @return the matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(long CPSpecificationOptionId) {
-
-		return findByCPSpecificationOptionId(
-			CPSpecificationOptionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @return the range of matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(
-			long CPSpecificationOptionId, int start, int end) {
-
-		return findByCPSpecificationOptionId(
-			CPSpecificationOptionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByCPSpecificationOptionId(
-			long CPSpecificationOptionId, int start, int end,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return findByCPSpecificationOptionId(
-			CPSpecificationOptionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp specification option list type definition rels where CPSpecificationOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param CPSpecificationOptionId the cp specification option ID
@@ -255,77 +190,15 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			finderCache, new Object[] {CPSpecificationOptionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathWithoutPaginationFindByListTypeDefinitionId;
-	private FinderPath _finderPathCountByListTypeDefinitionId;
 	private CollectionPersistenceFinder
 		<CPSpecificationOptionListTypeDefinitionRel>
 			_collectionPersistenceFinderByListTypeDefinitionId;
 
 	/**
-	 * Returns all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(long listTypeDefinitionId) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @return the range of matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(
-			long listTypeDefinitionId, int start, int end) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of cp specification option list type definition rels
-	 * @param end the upper bound of the range of cp specification option list type definition rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp specification option list type definition rels
-	 */
-	@Override
-	public List<CPSpecificationOptionListTypeDefinitionRel>
-		findByListTypeDefinitionId(
-			long listTypeDefinitionId, int start, int end,
-			OrderByComparator<CPSpecificationOptionListTypeDefinitionRel>
-				orderByComparator) {
-
-		return findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp specification option list type definition rels where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPSpecificationOptionListTypeDefinitionRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -422,7 +295,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 			finderCache, new Object[] {listTypeDefinitionId});
 	}
 
-	private FinderPath _finderPathFetchByC_L;
 	private UniquePersistenceFinder<CPSpecificationOptionListTypeDefinitionRel>
 		_uniquePersistenceFinderByC_L;
 
@@ -460,20 +332,6 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 		}
 
 		return cpSpecificationOptionListTypeDefinitionRel;
-	}
-
-	/**
-	 * Returns the cp specification option list type definition rel where CPSpecificationOptionId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param CPSpecificationOptionId the cp specification option ID
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching cp specification option list type definition rel, or <code>null</code> if a matching cp specification option list type definition rel could not be found
-	 */
-	@Override
-	public CPSpecificationOptionListTypeDefinitionRel fetchByC_L(
-		long CPSpecificationOptionId, long listTypeDefinitionId) {
-
-		return fetchByC_L(CPSpecificationOptionId, listTypeDefinitionId, true);
 	}
 
 	/**
@@ -822,33 +680,28 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCPSpecificationOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCPSpecificationOptionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"CPSpecificationOptionId"}, true);
-
-		_finderPathWithoutPaginationFindByCPSpecificationOptionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCPSpecificationOptionId",
-				new String[] {Long.class.getName()},
-				new String[] {"CPSpecificationOptionId"}, true);
-
-		_finderPathCountByCPSpecificationOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCPSpecificationOptionId",
-			new String[] {Long.class.getName()},
-			new String[] {"CPSpecificationOptionId"}, false);
-
 		_collectionPersistenceFinderByCPSpecificationOptionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCPSpecificationOptionId,
-				_finderPathWithoutPaginationFindByCPSpecificationOptionId,
-				_finderPathCountByCPSpecificationOptionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCPSpecificationOptionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"CPSpecificationOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCPSpecificationOptionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPSpecificationOptionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCPSpecificationOptionId",
+					new String[] {Long.class.getName()},
+					new String[] {"CPSpecificationOptionId"}, false),
 				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
@@ -861,30 +714,28 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 					CPSpecificationOptionListTypeDefinitionRel::
 						getCPSpecificationOptionId));
 
-		_finderPathWithPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByListTypeDefinitionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathWithoutPaginationFindByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, true);
-
-		_finderPathCountByListTypeDefinitionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByListTypeDefinitionId", new String[] {Long.class.getName()},
-			new String[] {"listTypeDefinitionId"}, false);
-
 		_collectionPersistenceFinderByListTypeDefinitionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByListTypeDefinitionId,
-				_finderPathWithoutPaginationFindByListTypeDefinitionId,
-				_finderPathCountByListTypeDefinitionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByListTypeDefinitionId",
+					new String[] {Long.class.getName()},
+					new String[] {"listTypeDefinitionId"}, false),
 				_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				_SQL_COUNT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE,
 				CPSpecificationOptionListTypeDefinitionRelModelImpl.
@@ -897,18 +748,19 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 					CPSpecificationOptionListTypeDefinitionRel::
 						getListTypeDefinitionId));
 
-		_finderPathFetchByC_L = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"CPSpecificationOptionId", "listTypeDefinitionId"}, 0,
-			0, false,
-			CPSpecificationOptionListTypeDefinitionRel::
-				getCPSpecificationOptionId,
-			CPSpecificationOptionListTypeDefinitionRel::
-				getListTypeDefinitionId);
-
 		_uniquePersistenceFinderByC_L = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_L,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {
+					"CPSpecificationOptionId", "listTypeDefinitionId"
+				},
+				0, 0, false,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getCPSpecificationOptionId,
+				CPSpecificationOptionListTypeDefinitionRel::
+					getListTypeDefinitionId),
 			_SQL_SELECT_CPSPECIFICATIONOPTIONLISTTYPEDEFINITIONREL_WHERE, "",
 			new FinderColumn<>(
 				"cpSpecificationOptionListTypeDefinitionRel.",
@@ -998,4 +850,4 @@ public class CPSpecificationOptionListTypeDefinitionRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1471040321
+// LIFERAY-SERVICE-BUILDER-HASH:-804816327

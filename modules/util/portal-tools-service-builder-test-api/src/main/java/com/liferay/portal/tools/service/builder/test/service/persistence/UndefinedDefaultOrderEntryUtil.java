@@ -149,16 +149,6 @@ public class UndefinedDefaultOrderEntryUtil {
 	}
 
 	/**
-	 * Returns the undefined default order entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching undefined default order entry, or <code>null</code> if a matching undefined default order entry could not be found
-	 */
-	public static UndefinedDefaultOrderEntry fetchByName(String name) {
-		return getPersistence().fetchByName(name);
-	}
-
-	/**
 	 * Returns the undefined default order entry where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -192,57 +182,6 @@ public class UndefinedDefaultOrderEntryUtil {
 	 */
 	public static int countByName(String name) {
 		return getPersistence().countByName(name);
-	}
-
-	/**
-	 * Returns all the undefined default order entries where name = &#63;.
-	 *
-	 * @param name the name
-	 * @return the matching undefined default order entries
-	 */
-	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
-		String name) {
-
-		return getPersistence().findByName_Collection(name);
-	}
-
-	/**
-	 * Returns a range of all the undefined default order entries where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.UndefinedDefaultOrderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of undefined default order entries
-	 * @param end the upper bound of the range of undefined default order entries (not inclusive)
-	 * @return the range of matching undefined default order entries
-	 */
-	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
-		String name, int start, int end) {
-
-		return getPersistence().findByName_Collection(name, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the undefined default order entries where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.UndefinedDefaultOrderEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of undefined default order entries
-	 * @param end the upper bound of the range of undefined default order entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching undefined default order entries
-	 */
-	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
-		String name, int start, int end,
-		OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator) {
-
-		return getPersistence().findByName_Collection(
-			name, start, end, orderByComparator);
 	}
 
 	/**
@@ -380,6 +319,67 @@ public class UndefinedDefaultOrderEntryUtil {
 		return getPersistence().fetchByPrimaryKey(undefinedDefaultOrderEntryId);
 	}
 
+	/**
+	 * Returns the undefined default order entry where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching undefined default order entry, or <code>null</code> if a matching undefined default order entry could not be found
+	 */
+	public static UndefinedDefaultOrderEntry fetchByName(String name) {
+		return getPersistence().fetchByName(name);
+	}
+
+	/**
+	 * Returns all the undefined default order entries where name = &#63;.
+	 *
+	 * @param name the name
+	 * @return the matching undefined default order entries
+	 */
+	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
+		String name) {
+
+		return getPersistence().findByName_Collection(name);
+	}
+
+	/**
+	 * Returns a range of all the undefined default order entries where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.UndefinedDefaultOrderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of undefined default order entries
+	 * @param end the upper bound of the range of undefined default order entries (not inclusive)
+	 * @return the range of matching undefined default order entries
+	 */
+	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
+		String name, int start, int end) {
+
+		return getPersistence().findByName_Collection(name, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the undefined default order entries where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.tools.service.builder.test.model.impl.UndefinedDefaultOrderEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param name the name
+	 * @param start the lower bound of the range of undefined default order entries
+	 * @param end the upper bound of the range of undefined default order entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching undefined default order entries
+	 */
+	public static List<UndefinedDefaultOrderEntry> findByName_Collection(
+		String name, int start, int end,
+		OrderByComparator<UndefinedDefaultOrderEntry> orderByComparator) {
+
+		return getPersistence().findByName_Collection(
+			name, start, end, orderByComparator);
+	}
+
 	public static UndefinedDefaultOrderEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -393,4 +393,4 @@ public class UndefinedDefaultOrderEntryUtil {
 	private static volatile UndefinedDefaultOrderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1566778410
+// LIFERAY-SERVICE-BUILDER-HASH:-463066552

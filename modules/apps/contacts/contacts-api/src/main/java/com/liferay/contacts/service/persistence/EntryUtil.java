@@ -121,53 +121,6 @@ public class EntryUtil {
 	}
 
 	/**
-	 * Returns all the entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching entries
-	 */
-	public static List<Entry> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	 * Returns a range of all the entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.contacts.model.impl.EntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @return the range of matching entries
-	 */
-	public static List<Entry> findByUserId(long userId, int start, int end) {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.contacts.model.impl.EntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of entries
-	 * @param end the upper bound of the range of entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching entries
-	 */
-	public static List<Entry> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<Entry> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the entries where userId = &#63;.
 	 *
 	 * <p>
@@ -248,17 +201,6 @@ public class EntryUtil {
 		throws com.liferay.contacts.exception.NoSuchEntryException {
 
 		return getPersistence().findByU_EA(userId, emailAddress);
-	}
-
-	/**
-	 * Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param emailAddress the email address
-	 * @return the matching entry, or <code>null</code> if a matching entry could not be found
-	 */
-	public static Entry fetchByU_EA(long userId, String emailAddress) {
-		return getPersistence().fetchByU_EA(userId, emailAddress);
 	}
 
 	/**
@@ -350,6 +292,64 @@ public class EntryUtil {
 		return getPersistence().fetchByPrimaryKey(entryId);
 	}
 
+	/**
+	 * Returns the entry where userId = &#63; and emailAddress = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param emailAddress the email address
+	 * @return the matching entry, or <code>null</code> if a matching entry could not be found
+	 */
+	public static Entry fetchByU_EA(long userId, String emailAddress) {
+		return getPersistence().fetchByU_EA(userId, emailAddress);
+	}
+
+	/**
+	 * Returns all the entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching entries
+	 */
+	public static List<Entry> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.contacts.model.impl.EntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of entries
+	 * @param end the upper bound of the range of entries (not inclusive)
+	 * @return the range of matching entries
+	 */
+	public static List<Entry> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.contacts.model.impl.EntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of entries
+	 * @param end the upper bound of the range of entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching entries
+	 */
+	public static List<Entry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<Entry> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
 	public static EntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -361,4 +361,4 @@ public class EntryUtil {
 	private static volatile EntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:466026950
+// LIFERAY-SERVICE-BUILDER-HASH:130954440

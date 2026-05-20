@@ -362,16 +362,12 @@ const AccountAndIndividuals = ({
 	);
 
 	const accountsCountResponse = useRequest({
-		dataSourceFn: fetchAccountsCount as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: fetchAccountsCount,
 		variables: {groupId, id: dataSource.id}
 	});
 
 	const userCountResponse = useRequest({
-		dataSourceFn: fetchUserCount as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: fetchUserCount,
 		variables: {groupId, id: dataSource.id}
 	});
 

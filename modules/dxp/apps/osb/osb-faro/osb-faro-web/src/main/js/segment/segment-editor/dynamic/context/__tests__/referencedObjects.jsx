@@ -88,6 +88,80 @@ describe('referencedObjects', () => {
 				])
 			).toBeTruthy();
 		});
+
+		it('should store account property under account > context > name', () => {
+			const referencedProperties = referencedPropertiesReducer(
+				initialReferencedProperties,
+				{
+					payload: new Property({
+						name: 'organization/revenue',
+						propertyKey: 'account'
+					}),
+					type: ACTION_TYPES.addProperty
+				}
+			);
+
+			expect(
+				referencedProperties.getIn([
+					'account',
+					'organization',
+					'revenue'
+				])
+			).toBeTruthy();
+		});
+
+		it('should store organization property under organization > context > name', () => {
+			const referencedProperties = referencedPropertiesReducer(
+				initialReferencedProperties,
+				{
+					payload: new Property({
+						name: 'custom/employeeCount',
+						propertyKey: 'organization'
+					}),
+					type: ACTION_TYPES.addProperty
+				}
+			);
+
+			expect(
+				referencedProperties.getIn([
+					'organization',
+					'custom',
+					'employeeCount'
+				])
+			).toBeTruthy();
+		});
+
+		it('should store event property under event > name', () => {
+			const referencedProperties = referencedPropertiesReducer(
+				initialReferencedProperties,
+				{
+					payload: new Property({
+						name: 'myEvent',
+						propertyKey: 'event'
+					}),
+					type: ACTION_TYPES.addProperty
+				}
+			);
+
+			expect(
+				referencedProperties.getIn(['event', 'myEvent'])
+			).toBeTruthy();
+		});
+
+		it('should return unchanged state for an unrecognized property key', () => {
+			const referencedProperties = referencedPropertiesReducer(
+				initialReferencedProperties,
+				{
+					payload: new Property({
+						name: 'something',
+						propertyKey: 'unknown'
+					}),
+					type: ACTION_TYPES.addProperty
+				}
+			);
+
+			expect(referencedProperties).toBe(initialReferencedProperties);
+		});
 	});
 
 	describe('ReferencedObjectsProvider', () => {

@@ -1,4 +1,6 @@
 {
+	"description": "",
+	"fragmentCompositionDefinitionPath": "page-definition.json",
 	"friendlyURL": "/marketplace/solutions",
 	"hidden": false,
 	"name": "Solutions",
@@ -7,5 +9,5 @@
 	},
 	"private": false,
 	"system": false,
-	"type": "Content"
+	"type": "content"
 }

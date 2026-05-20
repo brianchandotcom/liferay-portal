@@ -1141,21 +1141,32 @@ public class LayoutStructureRenderer {
 							getButtonLabelJSONObject()
 					).put(
 						"renderURL",
-						HttpComponentsUtil.addParameters(
-							StringBundler.concat(
-								_themeDisplay.getPortalURL(),
-								_themeDisplay.getPathMain(), "/portal",
-								"/render_form_relationship_layout_structure_",
-								"item"),
-							"formRelationshipLayoutStructureItemId",
-							formRelationshipStyledLayoutStructureItem.
-								getItemId(),
-							"p_l_id", _themeDisplay.getPlid(),
-							"parentItemExternalReferenceCode",
-							parentItemExternalReferenceCode,
-							"segmentsExperienceId",
-							SegmentsExperienceUtil.getSegmentsExperienceId(
-								_httpServletRequest))
+						() -> {
+							long groupId = _themeDisplay.getScopeGroupId();
+
+							if (layoutDisplayPageObjectProvider != null) {
+								groupId =
+									layoutDisplayPageObjectProvider.
+										getGroupId();
+							}
+
+							return HttpComponentsUtil.addParameters(
+								StringBundler.concat(
+									_themeDisplay.getPortalURL(),
+									_themeDisplay.getPathMain(), "/portal",
+									"/render_form_relationship_layout_",
+									"structure_item"),
+								"doAsGroupId", groupId, "p_l_id",
+								_themeDisplay.getPlid(),
+								"formRelationshipLayoutStructureItemId",
+								formRelationshipStyledLayoutStructureItem.
+									getItemId(),
+								"parentItemExternalReferenceCode",
+								parentItemExternalReferenceCode,
+								"segmentsExperienceId",
+								SegmentsExperienceUtil.getSegmentsExperienceId(
+									_httpServletRequest));
+						}
 					).build());
 			}
 		}

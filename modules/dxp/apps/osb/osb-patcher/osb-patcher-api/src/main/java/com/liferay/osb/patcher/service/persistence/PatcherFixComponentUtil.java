@@ -144,16 +144,6 @@ public class PatcherFixComponentUtil {
 	}
 
 	/**
-	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching patcher fix component, or <code>null</code> if a matching patcher fix component could not be found
-	 */
-	public static PatcherFixComponent fetchByName(String name) {
-		return getPersistence().fetchByName(name);
-	}
-
-	/**
 	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param name the name
@@ -246,6 +236,16 @@ public class PatcherFixComponentUtil {
 		return getPersistence().fetchByPrimaryKey(patcherFixComponentId);
 	}
 
+	/**
+	 * Returns the patcher fix component where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching patcher fix component, or <code>null</code> if a matching patcher fix component could not be found
+	 */
+	public static PatcherFixComponent fetchByName(String name) {
+		return getPersistence().fetchByName(name);
+	}
+
 	public static PatcherFixComponentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -259,4 +259,4 @@ public class PatcherFixComponentUtil {
 	private static volatile PatcherFixComponentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:757502019
+// LIFERAY-SERVICE-BUILDER-HASH:1865007943

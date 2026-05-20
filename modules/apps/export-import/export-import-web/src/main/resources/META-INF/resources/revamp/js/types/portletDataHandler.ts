@@ -3,36 +3,55 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export interface PortletDataHandlerBoolean {
+export interface PreviewPortletDataHandlerBoolean {
+	additionCount?: number;
+	deletionCount?: number;
 	label: string;
 	name: string;
-	portletDataHandlerControls?: PortletDataHandlerControl[];
+	previewPortletDataHandlerControls?: PreviewPortletDataHandlerControl[];
 	type: 'Boolean';
 }
 
-export interface PortletDataHandlerChoice {
+export interface PreviewPortletDataHandlerChoice {
 	choices: {label: string; name: string}[];
 	label: string;
 	name: string;
 	type: 'Choice';
 }
 
-export interface PortletDataHandlerSetting {
+export interface PreviewPortletDataHandlerSetting {
 	label: string;
 	name: string;
-	portletDataHandlerControls?: PortletDataHandlerControl[];
+	previewPortletDataHandlerControls?: PreviewPortletDataHandlerControl[];
 	type: 'Setting';
 }
 
-export type PortletDataHandlerControl =
-	| PortletDataHandlerBoolean
-	| PortletDataHandlerChoice
-	| PortletDataHandlerSetting;
+export type PreviewPortletDataHandlerControl =
+	| PreviewPortletDataHandlerBoolean
+	| PreviewPortletDataHandlerChoice
+	| PreviewPortletDataHandlerSetting;
 
-export type PortletDataHandler = Omit<PortletDataHandlerBoolean, 'type'>;
+export type PreviewPortletDataHandler = Omit<
+	PreviewPortletDataHandlerBoolean,
+	'type'
+>;
 
-export interface PortletDataHandlerSection {
+export interface PreviewPortletDataHandlerSection {
+	additionCount?: number;
+	deletionCount?: number;
 	label: string;
 	name: string;
-	portletDataHandlers: PortletDataHandler[];
+	previewPortletDataHandlers: PreviewPortletDataHandler[];
+}
+
+export interface RequestPortletDataHandlerControl {
+	name: string;
+	requestPortletDataHandlerControls?: RequestPortletDataHandlerControl[];
+	value?: string;
+	values?: string[];
+}
+
+export interface RequestPortletDataHandler {
+	name: string;
+	requestPortletDataHandlerControls?: RequestPortletDataHandlerControl[];
 }

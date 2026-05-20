@@ -8,6 +8,7 @@ package com.liferay.portal.kernel.dao.jdbc;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,10 +56,14 @@ public class DataSourceFactoryTest {
 	public void setUp() throws Exception {
 		_path = Files.createTempDirectory(
 			DataSourceFactoryTest.class.getName());
+
+		UpgradeProcessUtil.setUpgradeClient(true);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		UpgradeProcessUtil.setUpgradeClient(false);
+
 		if (_path == null) {
 			return;
 		}
@@ -174,7 +179,9 @@ public class DataSourceFactoryTest {
 			_JDBC_URL_POSTGRESQL + "?" + _DEFAULT_PARAMETERS_POSTGRESQL);
 		_assertRewrittenJDBCURL(
 			_JDBC_URL_SQL_SERVER,
-			_JDBC_URL_SQL_SERVER + ";" + _DEFAULT_PARAMETERS_SQL_SERVER, 12, 4);
+			_JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME + ";" +
+				_DEFAULT_PARAMETERS_SQL_SERVER,
+			12, 4);
 	}
 
 	@Test
@@ -187,11 +194,22 @@ public class DataSourceFactoryTest {
 			_JDBC_URL_SQL_SERVER, _JDBC_URL_SQL_SERVER, 12, 3);
 
 		String jdbcURL =
-			_JDBC_URL_SQL_SERVER + ";" + _DEFAULT_PARAMETERS_SQL_SERVER;
+			_JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME + ";" +
+				_DEFAULT_PARAMETERS_SQL_SERVER;
 
 		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 12, 4);
 		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 12, 5);
 		_assertRewrittenJDBCURL(_JDBC_URL_SQL_SERVER, jdbcURL, 13, 0);
+	}
+
+	@Test
+	public void testRewriteJDBCURLForSQLServerWithRuntimeClient()
+		throws Exception {
+
+		UpgradeProcessUtil.setUpgradeClient(false);
+
+		_assertRewrittenJDBCURL(
+			_JDBC_URL_SQL_SERVER, _JDBC_URL_SQL_SERVER, 12, 4);
 	}
 
 	@Test
@@ -231,8 +249,8 @@ public class DataSourceFactoryTest {
 		_assertRewrittenJDBCURL(
 			_JDBC_URL_SQL_SERVER + ";" + parameter,
 			StringBundler.concat(
-				_JDBC_URL_SQL_SERVER, ";", _DEFAULT_PARAMETERS_SQL_SERVER, ";",
-				parameter),
+				_JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME, ";",
+				_DEFAULT_PARAMETERS_SQL_SERVER, ";", parameter),
 			12, 4);
 	}
 
@@ -252,7 +270,13 @@ public class DataSourceFactoryTest {
 
 		jdbcURL = _JDBC_URL_SQL_SERVER + ";useBulkCopyForBatchInsert=false";
 
-		_assertRewrittenJDBCURL(jdbcURL, jdbcURL, 12, 4);
+		_assertRewrittenJDBCURL(
+			jdbcURL,
+			StringBundler.concat(
+				_JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME,
+				";bulkCopyForBatchInsertTableLock=true;databaseName=lportal3;",
+				"useBulkCopyForBatchInsert=false"),
+			12, 4);
 	}
 
 	@Test
@@ -274,8 +298,8 @@ public class DataSourceFactoryTest {
 		_assertRewrittenJDBCURL(
 			_JDBC_URL_SQL_SERVER + ";" + parameter,
 			StringBundler.concat(
-				_JDBC_URL_SQL_SERVER, ";", _DEFAULT_PARAMETERS_SQL_SERVER, ";",
-				parameter),
+				_JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME, ";",
+				_DEFAULT_PARAMETERS_SQL_SERVER, ";", parameter),
 			12, 4);
 	}
 
@@ -345,7 +369,8 @@ public class DataSourceFactoryTest {
 		"reWriteBatchedInserts=true";
 
 	private static final String _DEFAULT_PARAMETERS_SQL_SERVER =
-		"useBulkCopyForBatchInsert=true";
+		"bulkCopyForBatchInsertTableLock=true;databaseName=lportal3;" +
+			"useBulkCopyForBatchInsert=true";
 
 	private static final String _JDBC_URL_MYSQL =
 		"jdbc:mysql://localhost/lportal1";
@@ -354,7 +379,11 @@ public class DataSourceFactoryTest {
 		"jdbc:postgresql://localhost/lportal2";
 
 	private static final String _JDBC_URL_SQL_SERVER =
-		"jdbc:sqlserver://localhost;databaseName=lportal3";
+		DataSourceFactoryTest._JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME +
+			";databaseName=lportal3";
+
+	private static final String _JDBC_URL_SQL_SERVER_WITHOUT_DATABASE_NAME =
+		"jdbc:sqlserver://localhost";
 
 	private Path _path;
 

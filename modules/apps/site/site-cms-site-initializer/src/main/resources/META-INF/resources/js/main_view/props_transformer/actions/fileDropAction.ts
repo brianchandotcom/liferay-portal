@@ -5,6 +5,7 @@
 
 import {navigate} from 'frontend-js-web';
 
+import {AssetLibrary} from '../../../common/types/AssetLibrary';
 import multipleFilesUploadAction, {
 	MultipleFileUploaderData,
 } from './multipleFilesUploadAction';
@@ -12,6 +13,7 @@ import multipleFilesUploadAction, {
 export default function fileDropAction(
 	additionalProps: MultipleFileUploaderData & {
 		baseFolderViewURL: string;
+		candidateAssetLibraries: AssetLibrary[];
 		loadData?: () => void;
 		redirect: string;
 	},
@@ -23,9 +25,9 @@ export default function fileDropAction(
 	}
 
 	const {
-		assetLibraries,
 		baseAssetLibraryViewURL,
 		baseFolderViewURL,
+		candidateAssetLibraries,
 		keywords,
 		loadData,
 		parentObjectEntryFolderExternalReferenceCode,
@@ -34,7 +36,7 @@ export default function fileDropAction(
 
 	multipleFilesUploadAction(
 		{
-			assetLibraries,
+			assetLibraries: candidateAssetLibraries,
 			baseAssetLibraryViewURL,
 			filesToUpload: droppedFiles.map((file: any) => ({
 				errorMessage: '',

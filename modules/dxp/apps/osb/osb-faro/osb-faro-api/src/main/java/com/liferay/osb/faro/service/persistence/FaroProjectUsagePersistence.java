@@ -44,15 +44,6 @@ public interface FaroProjectUsagePersistence
 		throws NoSuchFaroProjectUsageException;
 
 	/**
-	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param faroProjectId the faro project ID
-	 * @param usageTime the usage time
-	 * @return the matching faro project usage, or <code>null</code> if a matching faro project usage could not be found
-	 */
-	public FaroProjectUsage fetchByF_U(long faroProjectId, long usageTime);
-
-	/**
 	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param faroProjectId the faro project ID
@@ -120,5 +111,18 @@ public interface FaroProjectUsagePersistence
 	 */
 	public FaroProjectUsage fetchByPrimaryKey(long faroProjectUsageId);
 
+	/**
+	 * Returns the faro project usage where faroProjectId = &#63; and usageTime = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param faroProjectId the faro project ID
+	 * @param usageTime the usage time
+	 * @return the matching faro project usage, or <code>null</code> if a matching faro project usage could not be found
+	 */
+	public default FaroProjectUsage fetchByF_U(
+		long faroProjectId, long usageTime) {
+
+		return fetchByF_U(faroProjectId, usageTime, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-101597351
+// LIFERAY-SERVICE-BUILDER-HASH:2085247603

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -96,69 +95,14 @@ public class AssetCategoryPropertyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<AssetCategoryProperty>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
-	 * Returns all the asset category properties where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset category properties where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @return the range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset category properties where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset category properties where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -244,70 +188,14 @@ public class AssetCategoryPropertyPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCategoryId;
-	private FinderPath _finderPathWithoutPaginationFindByCategoryId;
-	private FinderPath _finderPathCountByCategoryId;
 	private CollectionPersistenceFinder<AssetCategoryProperty>
 		_collectionPersistenceFinderByCategoryId;
 
 	/**
-	 * Returns all the asset category properties where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @return the matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCategoryId(long categoryId) {
-		return findByCategoryId(
-			categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset category properties where categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @return the range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCategoryId(
-		long categoryId, int start, int end) {
-
-		return findByCategoryId(categoryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset category properties where categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByCategoryId(
-		long categoryId, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return findByCategoryId(
-			categoryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset category properties where categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param categoryId the category ID
@@ -393,72 +281,14 @@ public class AssetCategoryPropertyPersistenceImpl
 			finderCache, new Object[] {categoryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_K;
-	private FinderPath _finderPathWithoutPaginationFindByC_K;
-	private FinderPath _finderPathCountByC_K;
 	private CollectionPersistenceFinder<AssetCategoryProperty>
 		_collectionPersistenceFinderByC_K;
 
 	/**
-	 * Returns all the asset category properties where companyId = &#63; and key = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @return the matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByC_K(long companyId, String key) {
-		return findByC_K(
-			companyId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset category properties where companyId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @return the range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByC_K(
-		long companyId, String key, int start, int end) {
-
-		return findByC_K(companyId, key, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset category properties where companyId = &#63; and key = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param key the key
-	 * @param start the lower bound of the range of asset category properties
-	 * @param end the upper bound of the range of asset category properties (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset category properties
-	 */
-	@Override
-	public List<AssetCategoryProperty> findByC_K(
-		long companyId, String key, int start, int end,
-		OrderByComparator<AssetCategoryProperty> orderByComparator) {
-
-		return findByC_K(companyId, key, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset category properties where companyId = &#63; and key = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetCategoryPropertyModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -549,7 +379,6 @@ public class AssetCategoryPropertyPersistenceImpl
 			finderCache, new Object[] {companyId, key});
 	}
 
-	private FinderPath _finderPathFetchByCA_K;
 	private UniquePersistenceFinder<AssetCategoryProperty>
 		_uniquePersistenceFinderByCA_K;
 
@@ -581,18 +410,6 @@ public class AssetCategoryPropertyPersistenceImpl
 		}
 
 		return assetCategoryProperty;
-	}
-
-	/**
-	 * Returns the asset category property where categoryId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param categoryId the category ID
-	 * @param key the key
-	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByCA_K(long categoryId, String key) {
-		return fetchByCA_K(categoryId, key, true);
 	}
 
 	/**
@@ -641,7 +458,6 @@ public class AssetCategoryPropertyPersistenceImpl
 			finderCache, new Object[] {categoryId, key});
 	}
 
-	private FinderPath _finderPathFetchByERC_C;
 	private UniquePersistenceFinder<AssetCategoryProperty>
 		_uniquePersistenceFinderByERC_C;
 
@@ -675,20 +491,6 @@ public class AssetCategoryPropertyPersistenceImpl
 		}
 
 		return assetCategoryProperty;
-	}
-
-	/**
-	 * Returns the asset category property where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching asset category property, or <code>null</code> if a matching asset category property could not be found
-	 */
-	@Override
-	public AssetCategoryProperty fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return fetchByERC_C(externalReferenceCode, companyId, true);
 	}
 
 	/**
@@ -1107,29 +909,25 @@ public class AssetCategoryPropertyPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
@@ -1139,29 +937,25 @@ public class AssetCategoryPropertyPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetCategoryProperty::getCompanyId));
 
-		_finderPathWithPaginationFindByCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCategoryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"categoryId"}, true);
-
-		_finderPathWithoutPaginationFindByCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCategoryId",
-			new String[] {Long.class.getName()}, new String[] {"categoryId"},
-			true);
-
-		_finderPathCountByCategoryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCategoryId",
-			new String[] {Long.class.getName()}, new String[] {"categoryId"},
-			false);
-
 		_collectionPersistenceFinderByCategoryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCategoryId,
-				_finderPathWithoutPaginationFindByCategoryId,
-				_finderPathCountByCategoryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCategoryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCategoryId", new String[] {Long.class.getName()},
+					new String[] {"categoryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCategoryId", new String[] {Long.class.getName()},
+					new String[] {"categoryId"}, false),
 				_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 				_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 				AssetCategoryPropertyModelImpl.ORDER_BY_JPQL,
@@ -1171,28 +965,24 @@ public class AssetCategoryPropertyPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetCategoryProperty::getCategoryId));
 
-		_finderPathWithPaginationFindByC_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_K",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "key_"}, true);
-
-		_finderPathWithoutPaginationFindByC_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, 0, 2, true, null);
-
-		_finderPathCountByC_K = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "key_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByC_K = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_K,
-			_finderPathWithoutPaginationFindByC_K, _finderPathCountByC_K,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_K",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "key_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "key_"}, 0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "key_"}, 0, 2, false, null),
 			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE,
 			_SQL_COUNT_ASSETCATEGORYPROPERTY_WHERE,
 			AssetCategoryPropertyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1204,15 +994,14 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
 
-		_finderPathFetchByCA_K = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"categoryId", "key_"}, 0, 2, false,
-			AssetCategoryProperty::getCategoryId,
-			convertNullFunction(AssetCategoryProperty::getKey));
-
 		_uniquePersistenceFinderByCA_K = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByCA_K,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByCA_K",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"categoryId", "key_"}, 0, 2, false,
+				AssetCategoryProperty::getCategoryId,
+				convertNullFunction(AssetCategoryProperty::getKey)),
 			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "categoryId", FinderColumn.Type.LONG,
@@ -1221,16 +1010,16 @@ public class AssetCategoryPropertyPersistenceImpl
 				"assetCategoryProperty.", "key", FinderColumn.Type.STRING, "=",
 				true, true, AssetCategoryProperty::getKey));
 
-		_finderPathFetchByERC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "companyId"}, 0, 1, false,
-			convertNullFunction(
-				AssetCategoryProperty::getExternalReferenceCode),
-			AssetCategoryProperty::getCompanyId);
-
 		_uniquePersistenceFinderByERC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "companyId"}, 0, 1,
+				false,
+				convertNullFunction(
+					AssetCategoryProperty::getExternalReferenceCode),
+				AssetCategoryProperty::getCompanyId),
 			_SQL_SELECT_ASSETCATEGORYPROPERTY_WHERE, "",
 			new FinderColumn<>(
 				"assetCategoryProperty.", "externalReferenceCode",
@@ -1312,4 +1101,4 @@ public class AssetCategoryPropertyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1382046429
+// LIFERAY-SERVICE-BUILDER-HASH:436510295

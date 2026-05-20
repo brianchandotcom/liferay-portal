@@ -313,7 +313,7 @@ function _port_forward_argo_cd {
 
 	echo "Port-forwarding the ArgoCD service at http://localhost:8080."
 	echo ""
-	echo "Login with username and password \"${argocd_password}\" to continue monitoring setup."
+	echo "Login with username \"admin\" and password \"${argocd_password}\" to continue monitoring setup."
 	echo ""
 	echo "Use CTRL+C to exit when finished."
 

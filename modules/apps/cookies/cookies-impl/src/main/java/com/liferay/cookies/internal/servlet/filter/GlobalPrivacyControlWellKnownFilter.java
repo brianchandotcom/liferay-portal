@@ -39,7 +39,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"dispatcher=REQUEST", "servlet-context-name=",
+		"before-filter=Virtual Host Filter", "dispatcher=REQUEST",
+		"servlet-context-name=",
 		"servlet-filter-name=Global Privacy Control Well-Known Filter",
 		"url-pattern=/.well-known/gpc.json"
 	},

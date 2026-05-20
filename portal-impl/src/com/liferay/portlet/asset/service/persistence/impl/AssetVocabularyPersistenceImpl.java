@@ -92,60 +92,8 @@ public class AssetVocabularyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the asset vocabularies where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid(String uuid, int start, int end) {
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where uuid = &#63;.
@@ -236,7 +184,6 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<AssetVocabulary>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -267,18 +214,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 
 		return assetVocabulary;
-	}
-
-	/**
-	 * Returns the asset vocabulary where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -327,67 +262,8 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the asset vocabularies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
@@ -485,63 +361,8 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByGroupId;
-
-	/**
-	 * Returns all the asset vocabularies where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where groupId = &#63;.
@@ -618,37 +439,6 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset vocabularies that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -667,39 +457,9 @@ public class AssetVocabularyPersistenceImpl
 		OrderByComparator<AssetVocabulary> orderByComparator) {
 
 		return _collectionPersistenceFinderByGroupId.filterFind(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, start,
-			end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the asset vocabularies that the user has permission to view where groupId = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByGroupId(long[] groupIds) {
-		return filterFindByGroupId(
-			groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies that the user has permission to view where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return filterFindByGroupId(groupIds, start, end, null);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, start, end, orderByComparator,
+			groupId);
 	}
 
 	/**
@@ -725,62 +485,6 @@ public class AssetVocabularyPersistenceImpl
 		return _collectionPersistenceFinderByGroupId.filterFind(
 			FinderCacheUtil.getFinderCache(), new Object[] {groupIds}, start,
 			end, orderByComparator, groupIds);
-	}
-
-	/**
-	 * Returns all the asset vocabularies where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(long[] groupIds) {
-		return findByGroupId(
-			groupIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(
-		long[] groupIds, int start, int end) {
-
-		return findByGroupId(groupIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where groupId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByGroupId(
-		long[] groupIds, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByGroupId(groupIds, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -856,7 +560,8 @@ public class AssetVocabularyPersistenceImpl
 	@Override
 	public int filterCountByGroupId(long groupId) {
 		return _collectionPersistenceFinderByGroupId.filterCount(
-			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {new long[] {groupId}}, groupId);
 	}
 
 	/**
@@ -874,63 +579,8 @@ public class AssetVocabularyPersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the asset vocabularies where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where companyId = &#63;.
@@ -1022,7 +672,6 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByG_N;
 	private UniquePersistenceFinder<AssetVocabulary>
 		_uniquePersistenceFinderByG_N;
 
@@ -1053,18 +702,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 
 		return assetVocabulary;
-	}
-
-	/**
-	 * Returns the asset vocabulary where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByG_N(long groupId, String name) {
-		return fetchByG_N(groupId, name, true);
 	}
 
 	/**
@@ -1113,8 +750,6 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN;
 	private FilterCollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByG_LikeN;
 
@@ -1343,68 +978,8 @@ public class AssetVocabularyPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_V;
-	private FinderPath _finderPathWithoutPaginationFindByG_V;
-	private FinderPath _finderPathCountByG_V;
 	private FilterCollectionPersistenceFinder<AssetVocabulary>
 		_collectionPersistenceFinderByG_V;
-
-	/**
-	 * Returns all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(long groupId, int visibilityType) {
-		return findByG_V(
-			groupId, visibilityType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(
-		long groupId, int visibilityType, int start, int end) {
-
-		return findByG_V(groupId, visibilityType, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(
-		long groupId, int visibilityType, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByG_V(
-			groupId, visibilityType, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
@@ -1490,42 +1065,6 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset vocabularies that the user has permission to view where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @return the matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByG_V(
-		long groupId, int visibilityType) {
-
-		return filterFindByG_V(
-			groupId, visibilityType, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies that the user has permission to view where groupId = &#63; and visibilityType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param visibilityType the visibility type
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByG_V(
-		long groupId, int visibilityType, int start, int end) {
-
-		return filterFindByG_V(groupId, visibilityType, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset vocabularies that the user has permissions to view where groupId = &#63; and visibilityType = &#63;.
 	 *
 	 * <p>
@@ -1546,44 +1085,8 @@ public class AssetVocabularyPersistenceImpl
 
 		return _collectionPersistenceFinderByG_V.filterFind(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, visibilityType}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the asset vocabularies that the user has permission to view where groupId = any &#63; and visibilityType = any &#63;.
-	 *
-	 * @param groupIds the group IDs
-	 * @param visibilityTypes the visibility types
-	 * @return the matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByG_V(
-		long[] groupIds, int[] visibilityTypes) {
-
-		return filterFindByG_V(
-			groupIds, visibilityTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies that the user has permission to view where groupId = any &#63; and visibilityType = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param visibilityTypes the visibility types
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies that the user has permission to view
-	 */
-	@Override
-	public List<AssetVocabulary> filterFindByG_V(
-		long[] groupIds, int[] visibilityTypes, int start, int end) {
-
-		return filterFindByG_V(groupIds, visibilityTypes, start, end, null);
+			new Object[] {new long[] {groupId}, new int[] {visibilityType}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1611,69 +1114,6 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(),
 			new Object[] {groupIds, ArrayUtil.sortedUnique(visibilityTypes)},
 			start, end, orderByComparator, groupIds);
-	}
-
-	/**
-	 * Returns all the asset vocabularies where groupId = any &#63; and visibilityType = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param visibilityTypes the visibility types
-	 * @return the matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(
-		long[] groupIds, int[] visibilityTypes) {
-
-		return findByG_V(
-			groupIds, visibilityTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset vocabularies where groupId = any &#63; and visibilityType = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param visibilityTypes the visibility types
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @return the range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(
-		long[] groupIds, int[] visibilityTypes, int start, int end) {
-
-		return findByG_V(groupIds, visibilityTypes, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset vocabularies where groupId = any &#63; and visibilityType = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetVocabularyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupIds the group IDs
-	 * @param visibilityTypes the visibility types
-	 * @param start the lower bound of the range of asset vocabularies
-	 * @param end the upper bound of the range of asset vocabularies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset vocabularies
-	 */
-	@Override
-	public List<AssetVocabulary> findByG_V(
-		long[] groupIds, int[] visibilityTypes, int start, int end,
-		OrderByComparator<AssetVocabulary> orderByComparator) {
-
-		return findByG_V(
-			groupIds, visibilityTypes, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1761,7 +1201,8 @@ public class AssetVocabularyPersistenceImpl
 	public int filterCountByG_V(long groupId, int visibilityType) {
 		return _collectionPersistenceFinderByG_V.filterCount(
 			FinderCacheUtil.getFinderCache(),
-			new Object[] {groupId, visibilityType}, groupId);
+			new Object[] {new long[] {groupId}, new int[] {visibilityType}},
+			groupId);
 	}
 
 	/**
@@ -1781,7 +1222,6 @@ public class AssetVocabularyPersistenceImpl
 			groupIds);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<AssetVocabulary>
 		_uniquePersistenceFinderByERC_G;
 
@@ -1815,20 +1255,6 @@ public class AssetVocabularyPersistenceImpl
 		}
 
 		return assetVocabulary;
-	}
-
-	/**
-	 * Returns the asset vocabulary where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	 */
-	@Override
-	public AssetVocabulary fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -2252,43 +1678,38 @@ public class AssetVocabularyPersistenceImpl
 	 * Initializes the asset vocabulary persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_ASSETVOCABULARY_WHERE, _SQL_COUNT_ASSETVOCABULARY_WHERE,
 			AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"assetVocabulary.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetVocabulary::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(AssetVocabulary::getUuid),
-			AssetVocabulary::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G, _SQL_SELECT_ASSETVOCABULARY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(AssetVocabulary::getUuid),
+				AssetVocabulary::getGroupId),
+			_SQL_SELECT_ASSETVOCABULARY_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabulary.", "uuid", FinderColumn.Type.STRING, "=", true,
 				true, AssetVocabulary::getUuid),
@@ -2296,30 +1717,26 @@ public class AssetVocabularyPersistenceImpl
 				"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, AssetVocabulary::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C, _SQL_SELECT_ASSETVOCABULARY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
+				_SQL_SELECT_ASSETVOCABULARY_WHERE,
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2330,69 +1747,63 @@ public class AssetVocabularyPersistenceImpl
 					"assetVocabulary.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AssetVocabulary::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId, _SQL_SELECT_ASSETVOCABULARY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
+				_SQL_SELECT_ASSETVOCABULARY_WHERE,
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AssetVocabularyImpl.class, AssetVocabulary.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_WHERE,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ASSETVOCABULARY_WHERE,
+					"assetVocabulary", "AssetVocabulary",
+					"assetVocabulary.vocabularyId",
+					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
+					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
+					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
+					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
 					AssetVocabularyModelImpl.ORDER_BY_SQL,
 					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, AssetVocabulary::getGroupId));
 
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_ASSETVOCABULARY_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_ASSETVOCABULARY_WHERE,
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
@@ -2400,15 +1811,15 @@ public class AssetVocabularyPersistenceImpl
 					"assetVocabulary.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AssetVocabulary::getCompanyId));
 
-		_finderPathFetchByG_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, 2, 2, false,
-			AssetVocabulary::getGroupId,
-			convertCaseFunction(AssetVocabulary::getName));
-
 		_uniquePersistenceFinderByG_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N, _SQL_SELECT_ASSETVOCABULARY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"groupId", "name"}, 2, 2, false,
+				AssetVocabulary::getGroupId,
+				convertCaseFunction(AssetVocabulary::getName)),
+			_SQL_SELECT_ASSETVOCABULARY_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabulary.", "groupId", FinderColumn.Type.LONG, "=",
 				true, true, AssetVocabulary::getGroupId),
@@ -2416,36 +1827,34 @@ public class AssetVocabularyPersistenceImpl
 				"assetVocabulary.", "name", FinderColumn.Type.STRING, "=",
 				false, true, AssetVocabulary::getName));
 
-		_finderPathWithPaginationFindByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "name"}, false);
-
 		_collectionPersistenceFinderByG_LikeN =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN, null,
-				_finderPathWithPaginationCountByG_LikeN,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "name"}, false),
 				_SQL_SELECT_ASSETVOCABULARY_WHERE,
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AssetVocabularyImpl.class, AssetVocabulary.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_WHERE,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ASSETVOCABULARY_WHERE,
+					"assetVocabulary", "AssetVocabulary",
+					"assetVocabulary.vocabularyId",
+					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
+					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
+					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
+					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
 					AssetVocabularyModelImpl.ORDER_BY_SQL,
 					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
@@ -2455,41 +1864,41 @@ public class AssetVocabularyPersistenceImpl
 					"assetVocabulary.", "name", FinderColumn.Type.STRING,
 					"LIKE", false, true, AssetVocabulary::getName));
 
-		_finderPathWithPaginationFindByG_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_V",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "visibilityType"}, true);
-
-		_finderPathWithoutPaginationFindByG_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "visibilityType"}, true);
-
-		_finderPathCountByG_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"groupId", "visibilityType"}, false);
-
 		_collectionPersistenceFinderByG_V =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_V,
-				_finderPathWithoutPaginationFindByG_V, _finderPathCountByG_V,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "visibilityType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "visibilityType"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_V",
+					new String[] {
+						Long.class.getName(), Integer.class.getName()
+					},
+					new String[] {"groupId", "visibilityType"}, false),
 				_SQL_SELECT_ASSETVOCABULARY_WHERE,
 				_SQL_COUNT_ASSETVOCABULARY_WHERE,
 				AssetVocabularyModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					AssetVocabularyImpl.class, AssetVocabulary.class,
-					_FILTER_ENTITY_ALIAS, _FILTER_ENTITY_TABLE,
-					_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_WHERE,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_ASSETVOCABULARY_WHERE,
+					"assetVocabulary", "AssetVocabulary",
+					"assetVocabulary.vocabularyId",
+					"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ",
+					"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ",
+					") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId",
+					"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ",
 					AssetVocabularyModelImpl.ORDER_BY_SQL,
 					AssetVocabularyModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
@@ -2500,16 +1909,15 @@ public class AssetVocabularyPersistenceImpl
 					FinderColumn.Type.INTEGER, "=", false, true, true,
 					AssetVocabulary::getVisibilityType));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(AssetVocabulary::getExternalReferenceCode),
-			AssetVocabulary::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G, _SQL_SELECT_ASSETVOCABULARY_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(AssetVocabulary::getExternalReferenceCode),
+				AssetVocabulary::getGroupId),
+			_SQL_SELECT_ASSETVOCABULARY_WHERE, "",
 			new FinderColumn<>(
 				"assetVocabulary.", "externalReferenceCode",
 				FinderColumn.Type.STRING, "=", true, true,
@@ -2539,27 +1947,6 @@ public class AssetVocabularyPersistenceImpl
 	private static final String _SQL_COUNT_ASSETVOCABULARY_WHERE =
 		"SELECT COUNT(assetVocabulary) FROM AssetVocabulary assetVocabulary WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"assetVocabulary.vocabularyId";
-
-	private static final String _FILTER_SQL_SELECT_ASSETVOCABULARY_WHERE =
-		"SELECT DISTINCT {assetVocabulary.*} FROM AssetVocabulary assetVocabulary WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {AssetVocabulary.*} FROM (SELECT DISTINCT assetVocabulary.vocabularyId FROM AssetVocabulary assetVocabulary WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_ASSETVOCABULARY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN AssetVocabulary ON TEMP_TABLE.vocabularyId = AssetVocabulary.vocabularyId";
-
-	private static final String _FILTER_SQL_COUNT_ASSETVOCABULARY_WHERE =
-		"SELECT COUNT(DISTINCT assetVocabulary.vocabularyId) AS COUNT_VALUE FROM AssetVocabulary assetVocabulary WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "assetVocabulary";
-
-	private static final String _FILTER_ENTITY_TABLE = "AssetVocabulary";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No AssetVocabulary exists with the key {";
 
@@ -2575,4 +1962,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:73017469
+// LIFERAY-SERVICE-BUILDER-HASH:-1858964535

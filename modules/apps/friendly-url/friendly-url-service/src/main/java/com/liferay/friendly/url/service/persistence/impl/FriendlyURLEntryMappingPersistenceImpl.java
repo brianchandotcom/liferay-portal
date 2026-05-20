@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -78,7 +77,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<FriendlyURLEntryMapping>
 		_uniquePersistenceFinderByC_C;
 
@@ -111,18 +109,6 @@ public class FriendlyURLEntryMappingPersistenceImpl
 		}
 
 		return friendlyURLEntryMapping;
-	}
-
-	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
-	 */
-	@Override
-	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
 	}
 
 	/**
@@ -427,15 +413,14 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			FriendlyURLEntryMapping::getClassNameId,
-			FriendlyURLEntryMapping::getClassPK);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				FriendlyURLEntryMapping::getClassNameId,
+				FriendlyURLEntryMapping::getClassPK),
 			_SQL_SELECT_FRIENDLYURLENTRYMAPPING_WHERE, "",
 			new FinderColumn<>(
 				"friendlyURLEntryMapping.", "classNameId",
@@ -508,4 +493,4 @@ public class FriendlyURLEntryMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1005941709
+// LIFERAY-SERVICE-BUILDER-HASH:-612302441

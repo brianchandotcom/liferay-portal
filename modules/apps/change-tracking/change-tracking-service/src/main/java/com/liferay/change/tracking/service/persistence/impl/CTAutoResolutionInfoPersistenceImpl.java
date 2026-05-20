@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -77,72 +76,14 @@ public class CTAutoResolutionInfoPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCtCollectionId;
-	private FinderPath _finderPathWithoutPaginationFindByCtCollectionId;
-	private FinderPath _finderPathCountByCtCollectionId;
 	private CollectionPersistenceFinder<CTAutoResolutionInfo>
 		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
-	 * Returns all the ct auto resolution infos where ctCollectionId = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @return the matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByCtCollectionId(
-		long ctCollectionId) {
-
-		return findByCtCollectionId(
-			ctCollectionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ct auto resolution infos where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @return the range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByCtCollectionId(
-		long ctCollectionId, int start, int end) {
-
-		return findByCtCollectionId(ctCollectionId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByCtCollectionId(
-		long ctCollectionId, int start, int end,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		return findByCtCollectionId(
-			ctCollectionId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
 	 * </p>
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -228,84 +169,14 @@ public class CTAutoResolutionInfoPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_MCNI_SMCPK;
-	private FinderPath _finderPathWithoutPaginationFindByC_MCNI_SMCPK;
-	private FinderPath _finderPathCountByC_MCNI_SMCPK;
 	private CollectionPersistenceFinder<CTAutoResolutionInfo>
 		_collectionPersistenceFinderByC_MCNI_SMCPK;
 
 	/**
-	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @return the matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @return the range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-		int start, int end) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK, start, end,
-			null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPK the source model class pk
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId, long sourceModelClassPK,
-		int start, int end,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPK, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
 	 * </p>
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -399,82 +270,10 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 	/**
-	 * Returns all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPKs the source model class pks
-	 * @return the matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId,
-		long[] sourceModelClassPKs) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPKs,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPKs the source model class pks
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @return the range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId, long[] sourceModelClassPKs,
-		int start, int end) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPKs, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
-	 * </p>
-	 *
-	 * @param ctCollectionId the ct collection ID
-	 * @param modelClassNameId the model class name ID
-	 * @param sourceModelClassPKs the source model class pks
-	 * @param start the lower bound of the range of ct auto resolution infos
-	 * @param end the upper bound of the range of ct auto resolution infos (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ct auto resolution infos
-	 */
-	@Override
-	public List<CTAutoResolutionInfo> findByC_MCNI_SMCPK(
-		long ctCollectionId, long modelClassNameId, long[] sourceModelClassPKs,
-		int start, int end,
-		OrderByComparator<CTAutoResolutionInfo> orderByComparator) {
-
-		return findByC_MCNI_SMCPK(
-			ctCollectionId, modelClassNameId, sourceModelClassPKs, start, end,
-			orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CTAutoResolutionInfoModelImpl</code>.
 	 * </p>
 	 *
 	 * @param ctCollectionId the ct collection ID
@@ -759,29 +558,27 @@ public class CTAutoResolutionInfoPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCtCollectionId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathWithoutPaginationFindByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, true);
-
-		_finderPathCountByCtCollectionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCtCollectionId",
-			new String[] {Long.class.getName()},
-			new String[] {"ctCollectionId"}, false);
-
 		_collectionPersistenceFinderByCtCollectionId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCtCollectionId,
-				_finderPathWithoutPaginationFindByCtCollectionId,
-				_finderPathCountByCtCollectionId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByCtCollectionId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCtCollectionId", new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCtCollectionId",
+					new String[] {Long.class.getName()},
+					new String[] {"ctCollectionId"}, false),
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
@@ -791,43 +588,47 @@ public class CTAutoResolutionInfoPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					CTAutoResolutionInfo::getCtCollectionId));
 
-		_finderPathWithPaginationFindByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			true);
-
-		_finderPathCountByC_MCNI_SMCPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_MCNI_SMCPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"ctCollectionId", "modelClassNameId", "sourceModelClassPK"
-			},
-			false);
-
 		_collectionPersistenceFinderByC_MCNI_SMCPK =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_MCNI_SMCPK,
-				_finderPathWithoutPaginationFindByC_MCNI_SMCPK,
-				_finderPathCountByC_MCNI_SMCPK,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByC_MCNI_SMCPK",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName()
+					},
+					new String[] {
+						"ctCollectionId", "modelClassNameId",
+						"sourceModelClassPK"
+					},
+					false),
 				_SQL_SELECT_CTAUTORESOLUTIONINFO_WHERE,
 				_SQL_COUNT_CTAUTORESOLUTIONINFO_WHERE,
 				CTAutoResolutionInfoModelImpl.ORDER_BY_JPQL,
@@ -908,4 +709,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1592880633
+// LIFERAY-SERVICE-BUILDER-HASH:-1402197601

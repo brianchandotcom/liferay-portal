@@ -15,7 +15,7 @@ import {getMatchedRoute, Routes, toRoute} from 'shared/util/router';
 import {Switch, useParams} from 'react-router-dom';
 import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 
 const InterestDetails = lazy(
 	() =>
@@ -85,7 +85,7 @@ export const Dashboard: React.FC<IDashboardProps> = ({router}) => {
 		channelId: string;
 		groupId: string;
 	}>();
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const {selectedChannel} = useChannelContext();
 	const currentUser = useCurrentUser();
 

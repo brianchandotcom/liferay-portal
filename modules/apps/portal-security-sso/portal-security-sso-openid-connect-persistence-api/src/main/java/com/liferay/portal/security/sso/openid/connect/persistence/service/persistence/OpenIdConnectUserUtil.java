@@ -127,60 +127,6 @@ public class OpenIdConnectUserUtil {
 	}
 
 	/**
-	 * Returns all the open ID connect users where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching open ID connect users
-	 */
-	public static List<OpenIdConnectUser> findByC_U(
-		long companyId, long userId) {
-
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the open ID connect users where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of open ID connect users
-	 * @param end the upper bound of the range of open ID connect users (not inclusive)
-	 * @return the range of matching open ID connect users
-	 */
-	public static List<OpenIdConnectUser> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the open ID connect users where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectUserModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of open ID connect users
-	 * @param end the upper bound of the range of open ID connect users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching open ID connect users
-	 */
-	public static List<OpenIdConnectUser> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<OpenIdConnectUser> orderByComparator) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the open ID connect users where companyId = &#63; and userId = &#63;.
 	 *
 	 * <p>
@@ -275,20 +221,6 @@ public class OpenIdConnectUserUtil {
 			exception.NoSuchUserException {
 
 		return getPersistence().findByC_I_S(companyId, issuer, subject);
-	}
-
-	/**
-	 * Returns the open ID connect user where companyId = &#63; and issuer = &#63; and subject = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param issuer the issuer
-	 * @param subject the subject
-	 * @return the matching open ID connect user, or <code>null</code> if a matching open ID connect user could not be found
-	 */
-	public static OpenIdConnectUser fetchByC_I_S(
-		long companyId, String issuer, String subject) {
-
-		return getPersistence().fetchByC_I_S(companyId, issuer, subject);
 	}
 
 	/**
@@ -393,6 +325,74 @@ public class OpenIdConnectUserUtil {
 		return getPersistence().fetchByPrimaryKey(openIdConnectUserId);
 	}
 
+	/**
+	 * Returns the open ID connect user where companyId = &#63; and issuer = &#63; and subject = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @param issuer the issuer
+	 * @param subject the subject
+	 * @return the matching open ID connect user, or <code>null</code> if a matching open ID connect user could not be found
+	 */
+	public static OpenIdConnectUser fetchByC_I_S(
+		long companyId, String issuer, String subject) {
+
+		return getPersistence().fetchByC_I_S(companyId, issuer, subject);
+	}
+
+	/**
+	 * Returns all the open ID connect users where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching open ID connect users
+	 */
+	public static List<OpenIdConnectUser> findByC_U(
+		long companyId, long userId) {
+
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the open ID connect users where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of open ID connect users
+	 * @param end the upper bound of the range of open ID connect users (not inclusive)
+	 * @return the range of matching open ID connect users
+	 */
+	public static List<OpenIdConnectUser> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the open ID connect users where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.security.sso.openid.connect.persistence.model.impl.OpenIdConnectUserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of open ID connect users
+	 * @param end the upper bound of the range of open ID connect users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching open ID connect users
+	 */
+	public static List<OpenIdConnectUser> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<OpenIdConnectUser> orderByComparator) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
 	public static OpenIdConnectUserPersistence getPersistence() {
 		return _persistence;
 	}
@@ -406,4 +406,4 @@ public class OpenIdConnectUserUtil {
 	private static volatile OpenIdConnectUserPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2092709082
+// LIFERAY-SERVICE-BUILDER-HASH:-546764456

@@ -241,7 +241,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			).subAgents(
 				(Object[])internalAgents
 			).responseStrategy(
-				SupervisorResponseStrategy.SUMMARY
+				SupervisorResponseStrategy.SCORED
 			).build();
 
 		SseUtil.send(

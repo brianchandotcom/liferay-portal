@@ -2146,6 +2146,7 @@ public class ObjectActionLocalServiceTest {
 		throws Exception {
 
 		_testExecuteObjectActionMultipleTimesInTheSameThreadWithACustomObjectDefinition();
+		_testExecuteObjectActionMultipleTimesInTheSameThreadWithAStandaloneObjectAction();
 		_testExecuteObjectActionMultipleTimesInTheSameThreadWithASystemObjectDefinition();
 	}
 
@@ -3992,6 +3993,104 @@ public class ObjectActionLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(objectEntry6);
 
 		_objectActionLocalService.deleteObjectAction(objectAction3);
+	}
+
+	private void _testExecuteObjectActionMultipleTimesInTheSameThreadWithAStandaloneObjectAction()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), "firstName")));
+
+		ObjectAction objectAction = _addNotificationTemplateObjectAction(
+			ObjectActionTriggerConstants.KEY_STANDALONE, objectDefinition);
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build());
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build());
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"firstName", RandomTestUtil.randomString()
+			).build());
+
+		List<NotificationQueueEntry> notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		int initialCount = notificationQueueEntries.size();
+
+		_objectActionEngine.executeObjectAction(
+			objectAction.getName(), ObjectActionTriggerConstants.KEY_STANDALONE,
+			objectDefinition.getObjectDefinitionId(),
+			JSONUtil.put(
+				"objectEntry",
+				HashMapBuilder.putAll(
+					objectEntry1.getModelAttributes()
+				).put(
+					"values", objectEntry1.getValues()
+				).build()),
+			TestPropsValues.getUserId());
+		_objectActionEngine.executeObjectAction(
+			objectAction.getName(), ObjectActionTriggerConstants.KEY_STANDALONE,
+			objectDefinition.getObjectDefinitionId(),
+			JSONUtil.put(
+				"objectEntry",
+				HashMapBuilder.putAll(
+					objectEntry2.getModelAttributes()
+				).put(
+					"values", objectEntry2.getValues()
+				).build()),
+			TestPropsValues.getUserId());
+		_objectActionEngine.executeObjectAction(
+			objectAction.getName(), ObjectActionTriggerConstants.KEY_STANDALONE,
+			objectDefinition.getObjectDefinitionId(),
+			JSONUtil.put(
+				"objectEntry",
+				HashMapBuilder.putAll(
+					objectEntry3.getModelAttributes()
+				).put(
+					"values", objectEntry3.getValues()
+				).build()),
+			TestPropsValues.getUserId());
+
+		notificationQueueEntries =
+			_notificationQueueEntryLocalService.getNotificationEntries(
+				NotificationConstants.TYPE_EMAIL,
+				NotificationQueueEntryConstants.STATUS_SENT);
+
+		Assert.assertEquals(
+			notificationQueueEntries.toString(), initialCount + 3,
+			notificationQueueEntries.size());
+
+		for (NotificationQueueEntry notificationQueueEntry :
+				notificationQueueEntries.subList(
+					initialCount, notificationQueueEntries.size())) {
+
+			_notificationQueueEntryLocalService.deleteNotificationQueueEntry(
+				notificationQueueEntry);
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(objectEntry3);
+
+		_objectActionLocalService.deleteObjectAction(objectAction);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
 	}
 
 	private void _testExecuteObjectActionMultipleTimesInTheSameThreadWithASystemObjectDefinition()

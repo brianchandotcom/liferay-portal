@@ -125,55 +125,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account roles
-	 */
-	public static List<AccountRole> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the account roles where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles
-	 */
-	public static List<AccountRole> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account roles where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account roles
-	 */
-	public static List<AccountRole> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles where companyId = &#63;.
 	 *
 	 * <p>
@@ -227,34 +178,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles that the user has permission to view where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByCompanyId(long companyId) {
-		return getPersistence().filterFindByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().filterFindByCompanyId(companyId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles that the user has permissions to view where companyId = &#63;.
 	 *
 	 * <p>
@@ -302,56 +225,6 @@ public class AccountRoleUtil {
 	 */
 	public static int filterCountByCompanyId(long companyId) {
 		return getPersistence().filterCountByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns all the account roles where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(long accountEntryId) {
-		return getPersistence().findByAccountEntryId(accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the account roles where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account roles where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -409,37 +282,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles that the user has permission to view where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByAccountEntryId(
-		long accountEntryId) {
-
-		return getPersistence().filterFindByAccountEntryId(accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return getPersistence().filterFindByAccountEntryId(
-			accountEntryId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles that the user has permissions to view where accountEntryId = &#63;.
 	 *
 	 * <p>
@@ -461,37 +303,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles that the user has permission to view where accountEntryId = any &#63;.
-	 *
-	 * @param accountEntryIds the account entry IDs
-	 * @return the matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByAccountEntryId(
-		long[] accountEntryIds) {
-
-		return getPersistence().filterFindByAccountEntryId(accountEntryIds);
-	}
-
-	/**
-	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByAccountEntryId(
-		long[] accountEntryIds, int start, int end) {
-
-		return getPersistence().filterFindByAccountEntryId(
-			accountEntryIds, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles that the user has permission to view where accountEntryId = any &#63;.
 	 *
 	 * <p>
@@ -509,62 +320,6 @@ public class AccountRoleUtil {
 		OrderByComparator<AccountRole> orderByComparator) {
 
 		return getPersistence().filterFindByAccountEntryId(
-			accountEntryIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account roles where accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryIds the account entry IDs
-	 * @return the matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(
-		long[] accountEntryIds) {
-
-		return getPersistence().findByAccountEntryId(accountEntryIds);
-	}
-
-	/**
-	 * Returns a range of all the account roles where accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(
-		long[] accountEntryIds, int start, int end) {
-
-		return getPersistence().findByAccountEntryId(
-			accountEntryIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account roles where accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account roles
-	 */
-	public static List<AccountRole> findByAccountEntryId(
-		long[] accountEntryIds, int start, int end,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		return getPersistence().findByAccountEntryId(
 			accountEntryIds, start, end, orderByComparator);
 	}
 
@@ -654,16 +409,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns the account role where roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param roleId the role ID
-	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	public static AccountRole fetchByRoleId(long roleId) {
-		return getPersistence().fetchByRoleId(roleId);
-	}
-
-	/**
 	 * Returns the account role where roleId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param roleId the role ID
@@ -696,61 +441,6 @@ public class AccountRoleUtil {
 	 */
 	public static int countByRoleId(long roleId) {
 		return getPersistence().countByRoleId(roleId);
-	}
-
-	/**
-	 * Returns all the account roles where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long accountEntryId) {
-
-		return getPersistence().findByC_A(companyId, accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the account roles where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long accountEntryId, int start, int end) {
-
-		return getPersistence().findByC_A(
-			companyId, accountEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account roles where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long accountEntryId, int start, int end,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		return getPersistence().findByC_A(
-			companyId, accountEntryId, start, end, orderByComparator);
 	}
 
 	/**
@@ -813,39 +503,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByC_A(
-		long companyId, long accountEntryId) {
-
-		return getPersistence().filterFindByC_A(companyId, accountEntryId);
-	}
-
-	/**
-	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByC_A(
-		long companyId, long accountEntryId, int start, int end) {
-
-		return getPersistence().filterFindByC_A(
-			companyId, accountEntryId, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles that the user has permissions to view where companyId = &#63; and accountEntryId = &#63;.
 	 *
 	 * <p>
@@ -868,39 +525,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = any &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryIds the account entry IDs
-	 * @return the matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByC_A(
-		long companyId, long[] accountEntryIds) {
-
-		return getPersistence().filterFindByC_A(companyId, accountEntryIds);
-	}
-
-	/**
-	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles that the user has permission to view
-	 */
-	public static List<AccountRole> filterFindByC_A(
-		long companyId, long[] accountEntryIds, int start, int end) {
-
-		return getPersistence().filterFindByC_A(
-			companyId, accountEntryIds, start, end);
-	}
-
-	/**
 	 * Returns an ordered range of all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = any &#63;.
 	 *
 	 * <p>
@@ -919,65 +543,6 @@ public class AccountRoleUtil {
 		OrderByComparator<AccountRole> orderByComparator) {
 
 		return getPersistence().filterFindByC_A(
-			companyId, accountEntryIds, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns all the account roles where companyId = &#63; and accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryIds the account entry IDs
-	 * @return the matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long[] accountEntryIds) {
-
-		return getPersistence().findByC_A(companyId, accountEntryIds);
-	}
-
-	/**
-	 * Returns a range of all the account roles where companyId = &#63; and accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @return the range of matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long[] accountEntryIds, int start, int end) {
-
-		return getPersistence().findByC_A(
-			companyId, accountEntryIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the account roles where companyId = &#63; and accountEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param accountEntryIds the account entry IDs
-	 * @param start the lower bound of the range of account roles
-	 * @param end the upper bound of the range of account roles (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account roles
-	 */
-	public static List<AccountRole> findByC_A(
-		long companyId, long[] accountEntryIds, int start, int end,
-		OrderByComparator<AccountRole> orderByComparator) {
-
-		return getPersistence().findByC_A(
 			companyId, accountEntryIds, start, end, orderByComparator);
 	}
 
@@ -1076,19 +641,6 @@ public class AccountRoleUtil {
 	}
 
 	/**
-	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
-	 */
-	public static AccountRole fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
 	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param externalReferenceCode the external reference code
@@ -1180,6 +732,446 @@ public class AccountRoleUtil {
 		return getPersistence().fetchByPrimaryKey(accountRoleId);
 	}
 
+	/**
+	 * Returns the account role where roleId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param roleId the role ID
+	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
+	 */
+	public static AccountRole fetchByRoleId(long roleId) {
+		return getPersistence().fetchByRoleId(roleId);
+	}
+
+	/**
+	 * Returns the account role where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching account role, or <code>null</code> if a matching account role could not be found
+	 */
+	public static AccountRole fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the account roles where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching account roles
+	 */
+	public static List<AccountRole> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the account roles where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles
+	 */
+	public static List<AccountRole> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles
+	 */
+	public static List<AccountRole> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns all the account roles where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(long accountEntryId) {
+		return getPersistence().findByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account roles where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(
+		long accountEntryId, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles where accountEntryId = any &#63;.
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @return the matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(
+		long[] accountEntryIds) {
+
+		return getPersistence().findByAccountEntryId(accountEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the account roles where accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(
+		long[] accountEntryIds, int start, int end) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles where accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles
+	 */
+	public static List<AccountRole> findByAccountEntryId(
+		long[] accountEntryIds, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().findByAccountEntryId(
+			accountEntryIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long accountEntryId) {
+
+		return getPersistence().filterFindByAccountEntryId(accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long accountEntryId, int start, int end) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long[] accountEntryIds) {
+
+		return getPersistence().filterFindByAccountEntryId(accountEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByAccountEntryId(
+		long[] accountEntryIds, int start, int end) {
+
+		return getPersistence().filterFindByAccountEntryId(
+			accountEntryIds, start, end);
+	}
+
+	/**
+	 * Returns all the account roles where companyId = &#63; and accountEntryId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long accountEntryId) {
+
+		return getPersistence().findByC_A(companyId, accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account roles where companyId = &#63; and accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long accountEntryId, int start, int end) {
+
+		return getPersistence().findByC_A(
+			companyId, accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles where companyId = &#63; and accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long accountEntryId, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().findByC_A(
+			companyId, accountEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles where companyId = &#63; and accountEntryId = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryIds the account entry IDs
+	 * @return the matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long[] accountEntryIds) {
+
+		return getPersistence().findByC_A(companyId, accountEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the account roles where companyId = &#63; and accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long[] accountEntryIds, int start, int end) {
+
+		return getPersistence().findByC_A(
+			companyId, accountEntryIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the account roles where companyId = &#63; and accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account roles
+	 */
+	public static List<AccountRole> findByC_A(
+		long companyId, long[] accountEntryIds, int start, int end,
+		OrderByComparator<AccountRole> orderByComparator) {
+
+		return getPersistence().findByC_A(
+			companyId, accountEntryIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryId the account entry ID
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByC_A(
+		long companyId, long accountEntryId) {
+
+		return getPersistence().filterFindByC_A(companyId, accountEntryId);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryId the account entry ID
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByC_A(
+		long companyId, long accountEntryId, int start, int end) {
+
+		return getPersistence().filterFindByC_A(
+			companyId, accountEntryId, start, end);
+	}
+
+	/**
+	 * Returns all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = any &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryIds the account entry IDs
+	 * @return the matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByC_A(
+		long companyId, long[] accountEntryIds) {
+
+		return getPersistence().filterFindByC_A(companyId, accountEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the account roles that the user has permission to view where companyId = &#63; and accountEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountRoleModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param accountEntryIds the account entry IDs
+	 * @param start the lower bound of the range of account roles
+	 * @param end the upper bound of the range of account roles (not inclusive)
+	 * @return the range of matching account roles that the user has permission to view
+	 */
+	public static List<AccountRole> filterFindByC_A(
+		long companyId, long[] accountEntryIds, int start, int end) {
+
+		return getPersistence().filterFindByC_A(
+			companyId, accountEntryIds, start, end);
+	}
+
 	public static AccountRolePersistence getPersistence() {
 		return _persistence;
 	}
@@ -1191,4 +1183,4 @@ public class AccountRoleUtil {
 	private static volatile AccountRolePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1244313401
+// LIFERAY-SERVICE-BUILDER-HASH:-1522069173

@@ -1,11 +1,11 @@
 {
 	"dependencies": {
-		"@clayui/alert": "^3.161.0",
-		"@clayui/button": "^3.161.0",
-		"@clayui/form": "^3.161.0",
-		"@clayui/list": "^3.161.0",
-		"@clayui/modal": "^3.161.0",
-		"@clayui/sticker": "^3.161.0",
+		"@clayui/alert": "^3.163.0",
+		"@clayui/button": "^3.163.0",
+		"@clayui/form": "^3.163.0",
+		"@clayui/list": "^3.163.0",
+		"@clayui/modal": "^3.163.0",
+		"@clayui/sticker": "^3.163.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",
 		"@liferay/frontend-js-react-web": "*",

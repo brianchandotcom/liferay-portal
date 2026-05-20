@@ -128,9 +128,12 @@ export const paymentWorkflowDisplayType = {
 
 export function getOrderStatusLabel(order: PlacedOrder) {
 	if (
-		[OrderTypes.ADDONS, OrderTypes.CMP, OrderTypes.DXP].includes(
-			order.orderTypeExternalReferenceCode as OrderTypes
-		)
+		[
+			OrderTypes.ADDONS,
+			OrderTypes.CMP,
+			OrderTypes.DXP,
+			OrderTypes.DSR,
+		].includes(order.orderTypeExternalReferenceCode as OrderTypes)
 	) {
 		return (
 			{

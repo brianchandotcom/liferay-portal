@@ -12,7 +12,7 @@ jest.mock('react-router-dom', () => ({
 
 const renderFilter = (props = {}) =>
 	render(
-		<LifecycleContextProvider>
+		<LifecycleContextProvider lifecycleId='1'>
 			<FieldValueFilter
 				entityLabel='Industries'
 				fieldMappingFieldName='industry'

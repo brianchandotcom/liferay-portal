@@ -18,7 +18,7 @@ interface ISearchableModalProps {
 	children: React.ReactNode;
 	className?: string;
 	countLabel: string;
-	dataSourceFn: (params: any) => any;
+	dataSourceFn: (params: any) => Promise<{items: any[]; total: number}>;
 	fitContent?: boolean;
 	footer?: React.ReactNode;
 	initialDelta?: number;
@@ -88,7 +88,7 @@ const SearchableModal: React.FC<ISearchableModalProps> = ({
 	}, [data]);
 
 	const renderChildren = () => {
-		if (items?.length < data?.total) {
+		if ((items?.length ?? 0) < (data?.total ?? 0)) {
 			return (
 				<div>
 					{children}

@@ -21,31 +21,35 @@
 #end
 #if (${viewType.equals("thymeleaf")})
 #if (${framework.equals("springportletmvc")})
-	<bean class="${package}.spring4.ServletContextFactory" id="servletContext"/>
-#end
+	<bean class="${package}.spring4.ServletContextFactory" id="servletContext" />
 	<bean class="org.thymeleaf.templateresolver.ServletContextTemplateResolver" id="templateResolver">
-#if (${framework.equals("springportletmvc")})
-		<constructor-arg ref="servletContext"/>
-#end
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".html"/>
-		<property name="templateMode" value="HTML"/>
+		<constructor-arg ref="servletContext" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML" />
 	</bean>
+#elseif (${framework.equals("portletmvc4spring")})
+	<bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver" id="templateResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".html" />
+		<property name="templateMode" value="HTML" />
+	</bean>
+#end
 #if (${framework.equals("portletmvc4spring")})
 	<bean class="org.thymeleaf.spring5.SpringTemplateEngine" id="templateEngine">
 #elseif (${framework.equals("springportletmvc")})
 	<bean class="org.thymeleaf.spring4.SpringTemplateEngine" id="templateEngine">
 #end
-		<property name="templateResolver" ref="templateResolver"/>
-		<property name="enableSpringELCompiler" value="true"/>
+		<property name="templateResolver" ref="templateResolver" />
+		<property name="enableSpringELCompiler" value="true" />
 	</bean>
 #if (${framework.equals("portletmvc4spring")})
 	<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver" id="viewResolver">
 #elseif (${framework.equals("springportletmvc")})
 	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver" id="viewResolver">
 #end
-		<property name="templateEngine" ref="templateEngine"/>
-		<property name="order" value="1"/>
+		<property name="templateEngine" ref="templateEngine" />
+		<property name="order" value="1" />
 	</bean>
 #end
 	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

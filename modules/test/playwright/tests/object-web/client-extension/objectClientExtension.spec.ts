@@ -342,3 +342,45 @@ test('Can trigger object validation as a client extension', async ({
 		page.locator('.cell-name').getByText('Valid Name')
 	).toBeVisible();
 });
+
+test(
+	'Can trigger action with unmodifiable system object definition using client extension',
+	{tag: '@LPD-78504'},
+	async ({apiHelpers}) => {
+		const objectAction = await apiHelpers.objectAction.postRandomAction(
+			'L_USER',
+			{
+				objectActionExecutorKey:
+					'function#liferay-sample-etc-spring-boot-object-action-2',
+				objectActionTriggerKey: 'onAfterAdd',
+				parameters: {},
+			}
+		);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const givenName = `userfn${getRandomInt()}`;
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName: `usersn${getRandomInt()}`,
+			emailAddress: `userea${getRandomInt()}@liferay.com`,
+			familyName: 'userln',
+			givenName,
+		});
+
+		apiHelpers.data.push({id: user.id, type: 'userAccount'});
+
+		// The client-extension action runs asynchronously after the user is
+		// created, so poll until the action's effect (alternateName patched
+		// to givenName) is visible.
+
+		await expect(async () => {
+			const updatedUser =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					user.emailAddress!
+				);
+
+			expect(updatedUser.alternateName).toBe(givenName);
+		}).toPass();
+	}
+);

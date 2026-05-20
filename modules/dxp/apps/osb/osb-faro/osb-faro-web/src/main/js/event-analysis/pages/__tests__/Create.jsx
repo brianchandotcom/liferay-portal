@@ -1,5 +1,6 @@
 import * as data from 'test/data';
 import client from 'shared/apollo/client';
+import DataSourcesProvider from 'shared/context/dataSources';
 import EventAnalysisCreate from '../Create';
 import mockStore from 'test/mock-store';
 import React from 'react';
@@ -63,9 +64,11 @@ const WrappedComponent = () => (
 					]}
 				>
 					<Route path={Routes.EVENT_ANALYSIS_CREATE}>
-						<DndProvider backend={HTML5Backend}>
-							<EventAnalysisCreate />
-						</DndProvider>
+						<DataSourcesProvider groupId='123'>
+							<DndProvider backend={HTML5Backend}>
+								<EventAnalysisCreate />
+							</DndProvider>
+						</DataSourcesProvider>
 					</Route>
 				</MemoryRouter>
 			</MockedProvider>

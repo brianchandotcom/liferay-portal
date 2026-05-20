@@ -116,27 +116,49 @@ public class SystemObjectEntryItemSelectorViewTest {
 								return null;
 							}));
 
-		itemSelectorView.renderHTML(
-			_mockHttpServletRequest(), new MockHttpServletResponse(),
-			new InfoItemItemSelectorCriterion(), new MockLiferayPortletURL(),
-			RandomTestUtil.randomString(), true);
+		ObjectDefinitionLocalService objectDefinitionLocalService =
+			(ObjectDefinitionLocalService)
+				ReflectionTestUtil.getAndSetFieldValue(
+					itemSelectorView, "_objectDefinitionLocalService",
+					ProxyUtil.newProxyInstance(
+						ObjectDefinitionLocalService.class.getClassLoader(),
+						new Class<?>[] {ObjectDefinitionLocalService.class},
+						(proxy, method, arguments) -> {
+							if (StringUtil.equals(
+									method.getName(),
+									"fetchObjectDefinition") &&
+								(arguments.length == 1)) {
 
-		ItemSelectorViewDescriptor<BaseModel<?>> itemSelectorViewDescriptor =
-			(ItemSelectorViewDescriptor<BaseModel<?>>)queue.poll();
+								return null;
+							}
 
-		User user = UserTestUtil.addUser();
-
-		ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor =
-			itemSelectorViewDescriptor.getItemDescriptor(user);
-
-		Assert.assertEquals(
-			user.getFirstName(),
-			itemDescriptor.getTitle(LocaleUtil.getDefault()));
+							return method.invoke(
+								_objectDefinitionLocalService, arguments);
+						}));
 
 		long originalTitleObjectFieldId =
 			objectDefinition.getTitleObjectFieldId();
 
 		try {
+			itemSelectorView.renderHTML(
+				_mockHttpServletRequest(), new MockHttpServletResponse(),
+				new InfoItemItemSelectorCriterion(),
+				new MockLiferayPortletURL(), RandomTestUtil.randomString(),
+				true);
+
+			ItemSelectorViewDescriptor<BaseModel<?>>
+				itemSelectorViewDescriptor =
+					(ItemSelectorViewDescriptor<BaseModel<?>>)queue.poll();
+
+			User user = UserTestUtil.addUser();
+
+			ItemSelectorViewDescriptor.ItemDescriptor itemDescriptor =
+				itemSelectorViewDescriptor.getItemDescriptor(user);
+
+			Assert.assertEquals(
+				user.getFirstName(),
+				itemDescriptor.getTitle(LocaleUtil.getDefault()));
+
 			ObjectField objectField = _objectFieldLocalService.getObjectField(
 				objectDefinition.getObjectDefinitionId(), "emailAddress");
 
@@ -156,6 +178,9 @@ public class SystemObjectEntryItemSelectorViewTest {
 			ReflectionTestUtil.setFieldValue(
 				itemSelectorView, "_itemSelectorViewDescriptorRenderer",
 				itemSelectorViewDescriptorRenderer);
+			ReflectionTestUtil.setFieldValue(
+				itemSelectorView, "_objectDefinitionLocalService",
+				objectDefinitionLocalService);
 		}
 	}
 

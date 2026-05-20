@@ -899,11 +899,9 @@ test(
 	{tag: '@LPD-62301'},
 	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
 		const name = '<img src=x onerror=alert(origin)>';
-		const site = await apiHelpers.headlessSite.createSite({
+		const site = await apiHelpers.headlessAdminSite.postSite({
 			name,
 		});
-
-		apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 

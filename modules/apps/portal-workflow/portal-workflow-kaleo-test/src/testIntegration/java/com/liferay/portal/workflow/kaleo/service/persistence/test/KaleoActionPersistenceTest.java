@@ -259,25 +259,6 @@ public class KaleoActionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByKCN_KCPK_ET() throws Exception {
-		_persistence.countByKCN_KCPK_ET("", RandomTestUtil.nextLong(), "");
-
-		_persistence.countByKCN_KCPK_ET("null", 0L, "null");
-
-		_persistence.countByKCN_KCPK_ET((String)null, 0L, (String)null);
-	}
-
-	@Test
-	public void testCountByC_KCN_KCPK_ET() throws Exception {
-		_persistence.countByC_KCN_KCPK_ET(
-			RandomTestUtil.nextLong(), "", RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_KCN_KCPK_ET(0L, "null", 0L, "null");
-
-		_persistence.countByC_KCN_KCPK_ET(0L, (String)null, 0L, (String)null);
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		KaleoAction newKaleoAction = addKaleoAction();
 
@@ -580,4 +561,4 @@ public class KaleoActionPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1435758988
+// LIFERAY-SERVICE-BUILDER-HASH:-1865184119

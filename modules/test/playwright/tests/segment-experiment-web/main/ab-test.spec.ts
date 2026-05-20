@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
@@ -15,13 +16,10 @@ import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
 } from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {faroConfig} from '../../osb-faro-web/main/faro.config';
 import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
-import {
-	createSitePage,
-	navigateToDXPandDeleteSite,
-	navigateToSitePage,
-} from '../../osb-faro-web/main/utils/portal';
 import {openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
@@ -30,6 +28,7 @@ const test = mergeTests(
 		'LPD-78863': {enabled: true, system: true},
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedSiteTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
@@ -46,8 +45,8 @@ test(
 
 		await openABTesSidebar(page);
 
-		expect(
-			await page.getByText('Sync to Liferay Analytics Cloud')
+		await expect(
+			page.getByText('Sync to Liferay Analytics Cloud')
 		).toBeVisible();
 
 		const tagA = await page.locator(
@@ -58,7 +57,7 @@ test(
 
 		await page.goto(
 			href.replace(
-				'http://localhost:8080',
+				liferayConfig.environment.baseUrl,
 				faroConfig.environment.baseUrl
 			)
 		);
@@ -74,25 +73,22 @@ test(
 	{
 		tag: '@LPD-34179',
 	},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, page, site}) => {
 		const channelName = 'My Property - ' + getRandomString();
-
-		const siteName = 'My Site ' + getRandomString();
-
-		const site = await apiHelpers.headlessAdminSite.postSite({
-			name: siteName,
-		});
-
-		const pageTitle = 'My Page';
 
 		let channel;
 		let project;
 
 		try {
-			await createSitePage({
-				apiHelpers,
-				pageTitle,
-				siteName,
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-heading',
+					}),
+				]),
+				siteId: site.id,
+				title: 'My Page',
 			});
 
 			const result = await syncAnalyticsCloud({
@@ -105,11 +101,9 @@ test(
 			channel = result.channel;
 			project = result.project;
 
-			await navigateToSitePage({
-				page,
-				pageName: pageTitle,
-				siteName,
-			});
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
 
 			await page.waitForSelector('.segments-experiment-icon');
 
@@ -140,8 +134,8 @@ test(
 				.getByText('Terminate')
 				.click();
 
-			expect(
-				await page
+			await expect(
+				page
 					.locator('.alert-warning')
 					.getByText(
 						'The test has not gathered sufficient data to confidently determine a winner. However, variants can still be published.'
@@ -172,9 +166,9 @@ test(
 
 			await page.waitForTimeout(3000);
 
-			expect(await page.getByText('Test Was Terminated')).toBeVisible();
-			expect(
-				await page.getByText('There is no clear winner.')
+			await expect(page.getByText('Test Was Terminated')).toBeVisible();
+			await expect(
+				page.getByText('There is no clear winner.')
 			).toBeVisible();
 		}
 		finally {
@@ -184,12 +178,6 @@ test(
 						`[${channel.id}]`,
 						project.groupId
 					);
-				});
-			}
-
-			if (site) {
-				await test.step('delete site on DXP side', async () => {
-					await navigateToDXPandDeleteSite({apiHelpers, page, site});
 				});
 			}
 		}

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -64,7 +65,8 @@ public class SpSessionTerminationSamlPortalFilterTest {
 				TestPropsValues.getCompanyId());
 
 			URL url = new URL(
-				"http://" + company.getVirtualHostname() + ":8080");
+				"http://" + company.getVirtualHostname() + ":" +
+					PortalUtil.getPortalServerPort(false));
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();

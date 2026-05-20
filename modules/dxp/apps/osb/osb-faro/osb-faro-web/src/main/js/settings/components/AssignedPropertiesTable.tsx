@@ -60,9 +60,7 @@ const AssignedPropertiesTable = ({
 	);
 
 	const channelDatasources = useRequest({
-		dataSourceFn: fetchChannelDatasources as (params: {
-			[key: string]: any;
-		}) => Promise<any>,
+		dataSourceFn: fetchChannelDatasources,
 		variables: {delta, groupId, id: dataSource.id, orderIOMap, page, query}
 	});
 

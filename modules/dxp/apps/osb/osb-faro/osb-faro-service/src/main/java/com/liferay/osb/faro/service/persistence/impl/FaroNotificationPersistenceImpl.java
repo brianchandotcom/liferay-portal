@@ -74,8 +74,6 @@ public class FaroNotificationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLtCreateTime;
-	private FinderPath _finderPathWithPaginationCountByLtCreateTime;
 	private CollectionPersistenceFinder<FaroNotification>
 		_collectionPersistenceFinderByLtCreateTime;
 
@@ -222,8 +220,6 @@ public class FaroNotificationPersistenceImpl
 			finderCache, new Object[] {createTime});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_GtC_O_T;
-	private FinderPath _finderPathWithPaginationCountByG_GtC_O_T;
 	private CollectionPersistenceFinder<FaroNotification>
 		_collectionPersistenceFinderByG_GtC_O_T;
 
@@ -548,8 +544,6 @@ public class FaroNotificationPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_GtC_O_T_S;
-	private FinderPath _finderPathWithPaginationCountByG_GtC_O_T_S;
 	private CollectionPersistenceFinder<FaroNotification>
 		_collectionPersistenceFinderByG_GtC_O_T_S;
 
@@ -910,8 +904,6 @@ public class FaroNotificationPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_GtC_O_R_T_S;
-	private FinderPath _finderPathWithPaginationCountByG_GtC_O_R_T_S;
 	private CollectionPersistenceFinder<FaroNotification>
 		_collectionPersistenceFinderByG_GtC_O_R_T_S;
 
@@ -1460,23 +1452,23 @@ public class FaroNotificationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLtCreateTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateTime",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"createTime"}, true);
-
-		_finderPathWithPaginationCountByLtCreateTime = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateTime",
-			new String[] {Long.class.getName()}, new String[] {"createTime"},
-			false);
-
 		_collectionPersistenceFinderByLtCreateTime =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtCreateTime, null,
-				_finderPathWithPaginationCountByLtCreateTime,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtCreateTime",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"createTime"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtCreateTime", new String[] {Long.class.getName()},
+					new String[] {"createTime"}, false),
 				_SQL_SELECT_FARONOTIFICATION_WHERE,
 				_SQL_COUNT_FARONOTIFICATION_WHERE,
 				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1485,28 +1477,28 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "createTime", FinderColumn.Type.LONG,
 					"<", true, true, FaroNotification::getCreateTime));
 
-		_finderPathWithPaginationFindByG_GtC_O_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "createTime", "ownerId", "type_"}, true);
-
-		_finderPathWithPaginationCountByG_GtC_O_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_GtC_O_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName()
-			},
-			new String[] {"groupId", "createTime", "ownerId", "type_"}, false);
-
 		_collectionPersistenceFinderByG_GtC_O_T =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_GtC_O_T, null,
-				_finderPathWithPaginationCountByG_GtC_O_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "createTime", "ownerId", "type_"},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_GtC_O_T",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName()
+					},
+					new String[] {"groupId", "createTime", "ownerId", "type_"},
+					false),
 				_SQL_SELECT_FARONOTIFICATION_WHERE,
 				_SQL_COUNT_FARONOTIFICATION_WHERE,
 				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1524,35 +1516,35 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "type", FinderColumn.Type.STRING, "=",
 					true, true, FaroNotification::getType));
 
-		_finderPathWithPaginationFindByG_GtC_O_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "createTime", "ownerId", "type_", "subtype"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_GtC_O_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_GtC_O_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {
-				"groupId", "createTime", "ownerId", "type_", "subtype"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_GtC_O_T_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_GtC_O_T_S, null,
-				_finderPathWithPaginationCountByG_GtC_O_T_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "createTime", "ownerId", "type_", "subtype"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_GtC_O_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "createTime", "ownerId", "type_", "subtype"
+					},
+					false),
 				_SQL_SELECT_FARONOTIFICATION_WHERE,
 				_SQL_COUNT_FARONOTIFICATION_WHERE,
 				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1573,36 +1565,38 @@ public class FaroNotificationPersistenceImpl
 					"faroNotification.", "subtype", FinderColumn.Type.STRING,
 					"=", true, true, FaroNotification::getSubtype));
 
-		_finderPathWithPaginationFindByG_GtC_O_R_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_GtC_O_R_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"groupId", "createTime", "ownerId", "read_", "type_", "subtype"
-			},
-			true);
-
-		_finderPathWithPaginationCountByG_GtC_O_R_T_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_GtC_O_R_T_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"groupId", "createTime", "ownerId", "read_", "type_", "subtype"
-			},
-			false);
-
 		_collectionPersistenceFinderByG_GtC_O_R_T_S =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_GtC_O_R_T_S, null,
-				_finderPathWithPaginationCountByG_GtC_O_R_T_S,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByG_GtC_O_R_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "createTime", "ownerId", "read_", "type_",
+						"subtype"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByG_GtC_O_R_T_S",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"groupId", "createTime", "ownerId", "read_", "type_",
+						"subtype"
+					},
+					false),
 				_SQL_SELECT_FARONOTIFICATION_WHERE,
 				_SQL_COUNT_FARONOTIFICATION_WHERE,
 				FaroNotificationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1692,4 +1686,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2085159806
+// LIFERAY-SERVICE-BUILDER-HASH:1237888783

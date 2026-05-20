@@ -2809,44 +2809,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				<#assign normalizationBit = normalizationBit * 2 />
 			</#list>
 
-			<#if entityFinder.isCollection()>
-				_finderPathWithPaginationFindBy${entityFinder.name} =
-					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
-					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-						_createFinderPath(
-					<#else>
-						new FinderPath(
-							${entityCacheEnabled},
-							${finderCacheEnabled},
-							${entity.name}Impl.class,
-					</#if>
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"findBy${entityFinder.name}",
-					new String[] {
-						<#list entityColumns as entityColumn>
-							${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName(),
-						</#list>
-
-						Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
-					}
-					<#if serviceBuilder.isVersionGTE_7_3_0()>
-						,
-						new String[] {
-							<#list entityColumns as entityColumn>
-								"${entityColumn.DBName}"
-
-								<#if entityColumn_has_next>
-									,
-								</#if>
-							</#list>
-							},
-						true
-					</#if>
-					);
-
-				<#if !entityFinder.hasCustomComparator()>
-					_finderPathWithoutPaginationFindBy${entityFinder.name} =
+			<#if !entityFinder.collectionPersistenceFinderEnabled>
+				<#if entityFinder.isCollection()>
+					_finderPathWithPaginationFindBy${entityFinder.name} =
 						<#if serviceBuilder.isVersionGTE_7_4_0()>
 							new FinderPath(
 						<#elseif serviceBuilder.isVersionGTE_7_3_0()>
@@ -2857,8 +2822,113 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 								${finderCacheEnabled},
 								${entity.name}Impl.class,
 						</#if>
-						FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+						FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
 						"findBy${entityFinder.name}",
+						new String[] {
+							<#list entityColumns as entityColumn>
+								${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName(),
+							</#list>
+
+							Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
+						}
+						<#if serviceBuilder.isVersionGTE_7_3_0()>
+							,
+							new String[] {
+								<#list entityColumns as entityColumn>
+									"${entityColumn.DBName}"
+
+									<#if entityColumn_has_next>
+										,
+									</#if>
+								</#list>
+								},
+							true
+						</#if>
+						);
+
+					<#if !entityFinder.hasCustomComparator()>
+						_finderPathWithoutPaginationFindBy${entityFinder.name} =
+							<#if serviceBuilder.isVersionGTE_7_4_0()>
+								new FinderPath(
+							<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+								_createFinderPath(
+							<#else>
+								new FinderPath(
+									${entityCacheEnabled},
+									${finderCacheEnabled},
+									${entity.name}Impl.class,
+							</#if>
+							FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+							"findBy${entityFinder.name}",
+							new String[] {
+								<#list entityColumns as entityColumn>
+									${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+									<#if entityColumn_has_next>
+										,
+									</#if>
+								</#list>
+							}
+							<#if serviceBuilder.isVersionGTE_7_3_0()>
+								,
+								new String[] {
+									<#list entityColumns as entityColumn>
+											"${entityColumn.DBName}"
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+									},
+								<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
+									${caseInsensitiveBitmask}, ${convertNullBitmask},
+									true,
+									null
+								<#else>
+									true
+								</#if>
+							<#elseif columnBitmaskEnabled>
+								,
+
+								<#list entityColumns as entityColumn>
+									<#if serviceBuilder.isVersionGTE_7_3_0()>
+										${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}")
+									<#else>
+										${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+									</#if>
+
+									<#if entityColumn_has_next>
+										|
+									</#if>
+								</#list>
+
+								<#if entity.entityOrder??>
+									<#list entity.entityOrder.entityColumns as entityColumn>
+										<#if !entityColumns?seq_contains(entityColumn) && !entity.PKEntityColumns?seq_contains(entityColumn)>
+											| ${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
+										</#if>
+									</#list>
+								</#if>
+							</#if>
+
+							);
+					</#if>
+				</#if>
+
+				<#if (!entityFinder.isCollection() || entityFinder.isUnique()) && !entityFinder.uniquePersistenceFinderEnabled>
+					_finderPathFetchBy${entityFinder.name} =
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							createUniqueFinderPath(
+						<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+							_createFinderPath(
+						<#else>
+							new FinderPath(
+								${entityCacheEnabled},
+								${finderCacheEnabled},
+								${entity.name}Impl.class,
+						</#if>
+						FINDER_CLASS_NAME_ENTITY,
+						"fetchBy${entityFinder.name}",
 						new String[] {
 							<#list entityColumns as entityColumn>
 								${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
@@ -2872,74 +2942,83 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							,
 							new String[] {
 								<#list entityColumns as entityColumn>
-										"${entityColumn.DBName}"
+									"${entityColumn.DBName}"
 
 									<#if entityColumn_has_next>
 										,
 									</#if>
 								</#list>
-								},
-							<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
+								}
+							<#if serviceBuilder.isVersionGTE_7_4_0()>
+								,
 								${caseInsensitiveBitmask}, ${convertNullBitmask},
-								true,
-								null
+								<#if entityFinder.isPretouch()>true<#else>false</#if>
+
+								<#list entityColumns as entityColumn>
+									,
+									<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+										convertCaseFunction(${entity.name}::get${entityColumn.methodName})
+									<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+										convertNullFunction(${entity.name}::get${entityColumn.methodName})
+									<#elseif stringUtil.equals(entityColumn.type, "Date")>
+										convertDateFunction(${entity.name}::get${entityColumn.methodName})
+									<#else>
+										${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+									</#if>
+								</#list>
 							<#else>
+								,
 								true
 							</#if>
 						<#elseif columnBitmaskEnabled>
 							,
 
 							<#list entityColumns as entityColumn>
-								<#if serviceBuilder.isVersionGTE_7_3_0()>
-									${entity.name}ModelImpl.getColumnBitmask("${entityColumn.DBName}")
-								<#else>
-									${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
-								</#if>
+								${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
 
 								<#if entityColumn_has_next>
 									|
 								</#if>
 							</#list>
-
-							<#if entity.entityOrder??>
-								<#list entity.entityOrder.entityColumns as entityColumn>
-									<#if !entityColumns?seq_contains(entityColumn) && !entity.PKEntityColumns?seq_contains(entityColumn)>
-										| ${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
-									</#if>
-								</#list>
-							</#if>
 						</#if>
 
 						);
-				</#if>
-			</#if>
 
-			<#if !entityFinder.isCollection() || entityFinder.isUnique()>
-				_finderPathFetchBy${entityFinder.name} =
-					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						createUniqueFinderPath(
-					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-						_createFinderPath(
-					<#else>
-						new FinderPath(
-							${entityCacheEnabled},
-							${finderCacheEnabled},
-							${entity.name}Impl.class,
+					<#if !serviceBuilder.isVersionGTE_7_4_0() && entityFinder.isPretouch()>
+						_finderPathFetchBy${entityFinder.name}.touch();
 					</#if>
-					FINDER_CLASS_NAME_ENTITY,
-					"fetchBy${entityFinder.name}",
-					new String[] {
-						<#list entityColumns as entityColumn>
-							${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+				</#if>
 
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					}
-					<#if serviceBuilder.isVersionGTE_7_3_0()>
-						,
+				<#if !entityFinder.hasCustomComparator() && (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>
+					_finderPathCountBy${entityFinder.name} =
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							new FinderPath(
+						<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+							_createFinderPath(
+						<#else>
+							new FinderPath(
+								${entityCacheEnabled},
+								${finderCacheEnabled},
+								Long.class,
+						</#if>
+						<#if serviceBuilder.isVersionGTE_7_4_0() && entityFinder.hasArrayableOperator()>
+							FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+						<#else>
+							FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+						</#if>
+						"countBy${entityFinder.name}",
 						new String[] {
+							<#list entityColumns as entityColumn>
+								${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>
+						}
+						<#if serviceBuilder.isVersionGTE_7_3_0()>
+							,
+							new String[] {
 							<#list entityColumns as entityColumn>
 								"${entityColumn.DBName}"
 
@@ -2947,133 +3026,56 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 									,
 								</#if>
 							</#list>
-							}
-						<#if serviceBuilder.isVersionGTE_7_4_0()>
-							,
-							${caseInsensitiveBitmask}, ${convertNullBitmask},
-							<#if entityFinder.isPretouch()>true<#else>false</#if>
+							},
+							<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
+								${caseInsensitiveBitmask}, ${convertNullBitmask},
+								false,
+								null
+							<#else>
+								false
+							</#if>
+						</#if>
+						);
+				</#if>
 
+				<#if entityFinder.hasCustomComparator() || entityFinder.hasArrayableOperator()>
+					_finderPathWithPaginationCountBy${entityFinder.name} =
+						<#if serviceBuilder.isVersionGTE_7_4_0()>
+							new FinderPath(
+						<#elseif serviceBuilder.isVersionGTE_7_3_0()>
+							_createFinderPath(
+						<#else>
+							new FinderPath(
+								${entityCacheEnabled},
+								${finderCacheEnabled},
+								Long.class,
+						</#if>
+						FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+						"countBy${entityFinder.name}",
+						new String[] {
 							<#list entityColumns as entityColumn>
-								,
-								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
-									convertCaseFunction(${entity.name}::get${entityColumn.methodName})
-								<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
-									convertNullFunction(${entity.name}::get${entityColumn.methodName})
-								<#elseif stringUtil.equals(entityColumn.type, "Date")>
-									convertDateFunction(${entity.name}::get${entityColumn.methodName})
-								<#else>
-									${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+								${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+								<#if entityColumn_has_next>
+									,
 								</#if>
 							</#list>
-						<#else>
+						}
+						<#if serviceBuilder.isVersionGTE_7_3_0()>
 							,
-							true
-						</#if>
-					<#elseif columnBitmaskEnabled>
-						,
+							new String[] {
+							<#list entityColumns as entityColumn>
+								"${entityColumn.DBName}"
 
-						<#list entityColumns as entityColumn>
-							${entity.name}ModelImpl.${entityColumn.name?upper_case}_COLUMN_BITMASK
-
-							<#if entityColumn_has_next>
-								|
-							</#if>
-						</#list>
-					</#if>
-
-					);
-
-				<#if !serviceBuilder.isVersionGTE_7_4_0() && entityFinder.isPretouch()>
-					_finderPathFetchBy${entityFinder.name}.touch();
-				</#if>
-			</#if>
-
-			<#if !entityFinder.hasCustomComparator() && (entityFinder.isCollection() || serviceBuilder.isVersionLTE_7_3_0())>
-				_finderPathCountBy${entityFinder.name} =
-					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
-					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-						_createFinderPath(
-					<#else>
-						new FinderPath(
-							${entityCacheEnabled},
-							${finderCacheEnabled},
-							Long.class,
-					</#if>
-					<#if serviceBuilder.isVersionGTE_7_4_0() && entityFinder.hasArrayableOperator()>
-						FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					<#else>
-						FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-					</#if>
-					"countBy${entityFinder.name}",
-					new String[] {
-						<#list entityColumns as entityColumn>
-							${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
-
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					}
-					<#if serviceBuilder.isVersionGTE_7_3_0()>
-						,
-						new String[] {
-						<#list entityColumns as entityColumn>
-							"${entityColumn.DBName}"
-
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-						},
-						<#if serviceBuilder.isVersionGTE_7_4_0() && ((caseInsensitiveBitmask > 0) || (convertNullBitmask > 0))>
-							${caseInsensitiveBitmask}, ${convertNullBitmask},
-							false,
-							null
-						<#else>
+								<#if entityColumn_has_next>
+									,
+								</#if>
+							</#list>
+							},
 							false
 						</#if>
-					</#if>
-					);
-			</#if>
-
-			<#if entityFinder.hasCustomComparator() || (entityFinder.hasArrayableOperator() && !entityFinder.collectionPersistenceFinderEnabled)>
-				_finderPathWithPaginationCountBy${entityFinder.name} =
-					<#if serviceBuilder.isVersionGTE_7_4_0()>
-						new FinderPath(
-					<#elseif serviceBuilder.isVersionGTE_7_3_0()>
-						_createFinderPath(
-					<#else>
-						new FinderPath(
-							${entityCacheEnabled},
-							${finderCacheEnabled},
-							Long.class,
-					</#if>
-					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-					"countBy${entityFinder.name}",
-					new String[] {
-						<#list entityColumns as entityColumn>
-							${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
-
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-					}
-					<#if serviceBuilder.isVersionGTE_7_3_0()>
-						,
-						new String[] {
-						<#list entityColumns as entityColumn>
-							"${entityColumn.DBName}"
-
-							<#if entityColumn_has_next>
-								,
-							</#if>
-						</#list>
-						},
-						false
-					</#if>
-					);
+						);
+				</#if>
 			</#if>
 
 			<#if entityFinder.collectionPersistenceFinderEnabled>
@@ -3086,16 +3088,116 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 						new CollectionPersistenceFinder<>(
 					</#if>
 						this,
-						_finderPathWithPaginationFindBy${entityFinder.name},
+						new FinderPath(
+							FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+							"findBy${entityFinder.name}",
+							new String[] {
+								<#list entityColumns as entityColumn>
+									${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName(),
+								</#list>
+
+								Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
+							},
+							new String[] {
+								<#list entityColumns as entityColumn>
+									"${entityColumn.DBName}"
+
+									<#if entityColumn_has_next>
+										,
+									</#if>
+								</#list>
+								},
+							true),
 						<#if !entityFinder.hasCustomComparator()>
-							_finderPathWithoutPaginationFindBy${entityFinder.name},
+							new FinderPath(
+								FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+								"findBy${entityFinder.name}",
+								new String[] {
+									<#list entityColumns as entityColumn>
+										${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+								},
+								new String[] {
+									<#list entityColumns as entityColumn>
+										"${entityColumn.DBName}"
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+									},
+								<#if (caseInsensitiveBitmask > 0) || (convertNullBitmask > 0)>
+									${caseInsensitiveBitmask}, ${convertNullBitmask},
+									true,
+									null
+								<#else>
+									true
+								</#if>
+								),
 						<#else>
 							null,
 						</#if>
 						<#if !entityFinder.hasCustomComparator()>
-							_finderPathCountBy${entityFinder.name},
+							new FinderPath(
+								<#if entityFinder.hasArrayableOperator()>
+									FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+								<#else>
+									FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+								</#if>
+								"countBy${entityFinder.name}",
+								new String[] {
+									<#list entityColumns as entityColumn>
+										${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+								},
+								new String[] {
+									<#list entityColumns as entityColumn>
+										"${entityColumn.DBName}"
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+									},
+								<#if (caseInsensitiveBitmask > 0) || (convertNullBitmask > 0)>
+									${caseInsensitiveBitmask}, ${convertNullBitmask},
+									false,
+									null
+								<#else>
+									false
+								</#if>
+								),
 						<#else>
-							_finderPathWithPaginationCountBy${entityFinder.name},
+							new FinderPath(
+								FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+								"countBy${entityFinder.name}",
+								new String[] {
+									<#list entityColumns as entityColumn>
+										${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+								},
+								new String[] {
+									<#list entityColumns as entityColumn>
+										"${entityColumn.DBName}"
+
+										<#if entityColumn_has_next>
+											,
+										</#if>
+									</#list>
+									},
+								false),
 						</#if>
 						_SQL_SELECT_${entity.alias?upper_case}_WHERE,
 						_SQL_COUNT_${entity.alias?upper_case}_WHERE,
@@ -3106,13 +3208,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 							new FilterCollectionPersistenceFinder.FilterMetadata<>(
 								${entity.name}Impl.class,
 								${entity.name}.class,
-								_FILTER_ENTITY_ALIAS,
-								_FILTER_ENTITY_TABLE,
-								_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-								_FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE,
-								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1,
-								_FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2,
-								_FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE,
+								"${entity.alias}",
+								"${entity.table}",
+								"${entity.alias}.${entity.filterPKEntityColumn.DBName}",
+								"SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ",
+								"SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKDBName} FROM ${entity.table} ${entity.alias} WHERE ",
+								") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKDBName} = ${entity.table}.${entity.PKDBName}",
+								"SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKDBName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ",
 								${entity.name}ModelImpl.ORDER_BY_SQL,
 								${entity.name}ModelImpl.ORDER_BY_SQL_INLINE_DISTINCT
 							),
@@ -3168,7 +3270,43 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				_uniquePersistenceFinderBy${entityFinder.name} =
 					new UniquePersistenceFinder<>(
 						this,
-						_finderPathFetchBy${entityFinder.name},
+						createUniqueFinderPath(
+							FINDER_CLASS_NAME_ENTITY,
+							"fetchBy${entityFinder.name}",
+							new String[] {
+								<#list entityColumns as entityColumn>
+									${serviceBuilder.getPrimitiveObj("${entityColumn.type}")}.class.getName()
+
+									<#if entityColumn_has_next>
+										,
+									</#if>
+								</#list>
+							},
+							new String[] {
+								<#list entityColumns as entityColumn>
+									"${entityColumn.DBName}"
+
+									<#if entityColumn_has_next>
+										,
+									</#if>
+								</#list>
+								},
+							${caseInsensitiveBitmask}, ${convertNullBitmask},
+							<#if entityFinder.isPretouch()>true<#else>false</#if>
+
+							<#list entityColumns as entityColumn>
+								,
+								<#if stringUtil.equals(entityColumn.type, "String") && !entityColumn.isCaseSensitive()>
+									convertCaseFunction(${entity.name}::get${entityColumn.methodName})
+								<#elseif stringUtil.equals(entityColumn.type, "String") && entityColumn.isConvertNull()>
+									convertNullFunction(${entity.name}::get${entityColumn.methodName})
+								<#elseif stringUtil.equals(entityColumn.type, "Date")>
+									convertDateFunction(${entity.name}::get${entityColumn.methodName})
+								<#else>
+									${entity.name}::<#if stringUtil.equals(entityColumn.type, "boolean")>is<#else>get</#if>${entityColumn.methodName}
+								</#if>
+							</#list>
+							),
 						_SQL_SELECT_${entity.alias?upper_case}_WHERE,
 						"${entityFinder.where!}",
 						<#list entityColumns as entityColumn>
@@ -3394,30 +3532,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	</#if>
 
 	<#if entity.isPermissionCheckEnabled()>
-		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKEntityColumn.DBName}";
-
-		<#if entity.isPermissionedModel()>
-			<#if entity.hasEntityColumn("userId")>
-				private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = "${entity.alias}.userId";
-			<#else>
-				private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = null;
-			</#if>
-		<#else>
-			private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
-
-			private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1 = "SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKDBName} FROM ${entity.table} ${entity.alias} WHERE ";
-
-			private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2 = ") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKDBName} = ${entity.table}.${entity.PKDBName}";
-
-			private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKDBName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
-
-			private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
-
-			private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
-		</#if>
-	</#if>
-
-	<#if entity.isPermissionCheckEnabled() && !entity.isPermissionedModel()>
 		<#assign hasNonDelegatedCollectionFilterFinder = false />
 
 		<#list entity.entityFinders as orderByEntityTableEntityFinder>
@@ -3429,7 +3543,29 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#list>
 
 		<#if hasNonDelegatedCollectionFilterFinder>
-			private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";
+			private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKEntityColumn.DBName}";
+
+			<#if entity.isPermissionedModel()>
+				<#if entity.hasEntityColumn("userId")>
+					private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = "${entity.alias}.userId";
+				<#else>
+					private static final String _FILTER_ENTITY_TABLE_FILTER_USERID_COLUMN = null;
+				</#if>
+			<#else>
+				private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_WHERE = "SELECT DISTINCT {${entity.alias}.*} FROM ${entity.table} ${entity.alias} WHERE ";
+
+				private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_1 = "SELECT {${entity.table}.*} FROM (SELECT DISTINCT ${entity.alias}.${entity.PKDBName} FROM ${entity.table} ${entity.alias} WHERE ";
+
+				private static final String _FILTER_SQL_SELECT_${entity.alias?upper_case}_NO_INLINE_DISTINCT_WHERE_2 = ") TEMP_TABLE INNER JOIN ${entity.table} ON TEMP_TABLE.${entity.PKDBName} = ${entity.table}.${entity.PKDBName}";
+
+				private static final String _FILTER_SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(DISTINCT ${entity.alias}.${entity.PKDBName}) AS COUNT_VALUE FROM ${entity.table} ${entity.alias} WHERE ";
+
+				private static final String _FILTER_ENTITY_ALIAS = "${entity.alias}";
+
+				private static final String _FILTER_ENTITY_TABLE = "${entity.table}";
+
+				private static final String _ORDER_BY_ENTITY_TABLE = "${entity.table}.";
+			</#if>
 		</#if>
 	</#if>
 

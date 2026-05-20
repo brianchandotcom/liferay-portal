@@ -213,6 +213,7 @@ type TSkuUnitOfMeasure = {
 	pricingQuantity?: number;
 	primary?: boolean;
 	priority?: number;
+	promoPrice?: number;
 	rate?: number;
 };
 
@@ -385,6 +386,12 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 
 		return items.find(
 			(item: {name: {en_US: string}}) => item.name.en_US === name
+		);
+	}
+
+	async getProductGroups(searchParams = new URLSearchParams()) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/product-groups?${searchParams.toString()}`
 		);
 	}
 

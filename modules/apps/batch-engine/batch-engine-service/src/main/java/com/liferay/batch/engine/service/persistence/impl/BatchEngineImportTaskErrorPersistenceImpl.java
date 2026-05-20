@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -74,75 +73,14 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByBatchEngineImportTaskId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByBatchEngineImportTaskId;
-	private FinderPath _finderPathCountByBatchEngineImportTaskId;
 	private CollectionPersistenceFinder<BatchEngineImportTaskError>
 		_collectionPersistenceFinderByBatchEngineImportTaskId;
 
 	/**
-	 * Returns all the batch engine import task errors where batchEngineImportTaskId = &#63;.
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @return the matching batch engine import task errors
-	 */
-	@Override
-	public List<BatchEngineImportTaskError> findByBatchEngineImportTaskId(
-		long batchEngineImportTaskId) {
-
-		return findByBatchEngineImportTaskId(
-			batchEngineImportTaskId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the batch engine import task errors where batchEngineImportTaskId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskErrorModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param start the lower bound of the range of batch engine import task errors
-	 * @param end the upper bound of the range of batch engine import task errors (not inclusive)
-	 * @return the range of matching batch engine import task errors
-	 */
-	@Override
-	public List<BatchEngineImportTaskError> findByBatchEngineImportTaskId(
-		long batchEngineImportTaskId, int start, int end) {
-
-		return findByBatchEngineImportTaskId(
-			batchEngineImportTaskId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the batch engine import task errors where batchEngineImportTaskId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskErrorModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchEngineImportTaskId the batch engine import task ID
-	 * @param start the lower bound of the range of batch engine import task errors
-	 * @param end the upper bound of the range of batch engine import task errors (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch engine import task errors
-	 */
-	@Override
-	public List<BatchEngineImportTaskError> findByBatchEngineImportTaskId(
-		long batchEngineImportTaskId, int start, int end,
-		OrderByComparator<BatchEngineImportTaskError> orderByComparator) {
-
-		return findByBatchEngineImportTaskId(
-			batchEngineImportTaskId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the batch engine import task errors where batchEngineImportTaskId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskErrorModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchEngineImportTaskErrorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param batchEngineImportTaskId the batch engine import task ID
@@ -450,33 +388,28 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByBatchEngineImportTaskId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByBatchEngineImportTaskId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"batchEngineImportTaskId"}, true);
-
-		_finderPathWithoutPaginationFindByBatchEngineImportTaskId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByBatchEngineImportTaskId",
-				new String[] {Long.class.getName()},
-				new String[] {"batchEngineImportTaskId"}, true);
-
-		_finderPathCountByBatchEngineImportTaskId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByBatchEngineImportTaskId",
-			new String[] {Long.class.getName()},
-			new String[] {"batchEngineImportTaskId"}, false);
-
 		_collectionPersistenceFinderByBatchEngineImportTaskId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByBatchEngineImportTaskId,
-				_finderPathWithoutPaginationFindByBatchEngineImportTaskId,
-				_finderPathCountByBatchEngineImportTaskId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByBatchEngineImportTaskId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"batchEngineImportTaskId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByBatchEngineImportTaskId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchEngineImportTaskId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByBatchEngineImportTaskId",
+					new String[] {Long.class.getName()},
+					new String[] {"batchEngineImportTaskId"}, false),
 				_SQL_SELECT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				_SQL_COUNT_BATCHENGINEIMPORTTASKERROR_WHERE,
 				BatchEngineImportTaskErrorModelImpl.ORDER_BY_JPQL,
@@ -549,4 +482,4 @@ public class BatchEngineImportTaskErrorPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-602983463
+// LIFERAY-SERVICE-BUILDER-HASH:1503368490

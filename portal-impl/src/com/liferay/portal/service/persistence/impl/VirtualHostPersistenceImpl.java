@@ -74,63 +74,8 @@ public class VirtualHostPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<VirtualHost>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the virtual hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the virtual hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @return the range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the virtual hosts where companyId = &#63;.
@@ -221,7 +166,6 @@ public class VirtualHostPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathFetchByHostname;
 	private UniquePersistenceFinder<VirtualHost>
 		_uniquePersistenceFinderByHostname;
 
@@ -251,17 +195,6 @@ public class VirtualHostPersistenceImpl
 		}
 
 		return virtualHost;
-	}
-
-	/**
-	 * Returns the virtual host where hostname = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param hostname the hostname
-	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	@Override
-	public VirtualHost fetchByHostname(String hostname) {
-		return fetchByHostname(hostname, true);
 	}
 
 	/**
@@ -307,67 +240,8 @@ public class VirtualHostPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {hostname});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_L;
-	private FinderPath _finderPathWithoutPaginationFindByC_L;
-	private FinderPath _finderPathCountByC_L;
 	private CollectionPersistenceFinder<VirtualHost>
 		_collectionPersistenceFinderByC_L;
-
-	/**
-	 * Returns all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @return the matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(long companyId, long layoutSetId) {
-		return findByC_L(
-			companyId, layoutSetId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @return the range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(
-		long companyId, long layoutSetId, int start, int end) {
-
-		return findByC_L(companyId, layoutSetId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>VirtualHostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param start the lower bound of the range of virtual hosts
-	 * @param end the upper bound of the range of virtual hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching virtual hosts
-	 */
-	@Override
-	public List<VirtualHost> findByC_L(
-		long companyId, long layoutSetId, int start, int end,
-		OrderByComparator<VirtualHost> orderByComparator) {
-
-		return findByC_L(
-			companyId, layoutSetId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the virtual hosts where companyId = &#63; and layoutSetId = &#63;.
@@ -469,8 +343,6 @@ public class VirtualHostPersistenceImpl
 			new Object[] {companyId, layoutSetId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByNotL_H;
-	private FinderPath _finderPathWithPaginationCountByNotL_H;
 	private CollectionPersistenceFinder<VirtualHost>
 		_collectionPersistenceFinderByNotL_H;
 
@@ -981,68 +853,61 @@ public class VirtualHostPersistenceImpl
 	 * Initializes the virtual host persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId, _SQL_SELECT_VIRTUALHOST_WHERE,
-				_SQL_COUNT_VIRTUALHOST_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
+				_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
 				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"virtualHost.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, VirtualHost::getCompanyId));
 
-		_finderPathFetchByHostname = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
-			new String[] {String.class.getName()}, new String[] {"hostname"}, 0,
-			1, false, convertNullFunction(VirtualHost::getHostname));
-
 		_uniquePersistenceFinderByHostname = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByHostname, _SQL_SELECT_VIRTUALHOST_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByHostname",
+				new String[] {String.class.getName()},
+				new String[] {"hostname"}, 0, 1, false,
+				convertNullFunction(VirtualHost::getHostname)),
+			_SQL_SELECT_VIRTUALHOST_WHERE, "",
 			new FinderColumn<>(
 				"virtualHost.", "hostname", FinderColumn.Type.STRING, "=", true,
 				true, VirtualHost::getHostname));
 
-		_finderPathWithPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "layoutSetId"}, true);
-
-		_finderPathWithoutPaginationFindByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "layoutSetId"}, true);
-
-		_finderPathCountByC_L = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "layoutSetId"}, false);
-
 		_collectionPersistenceFinderByC_L = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_L,
-			_finderPathWithoutPaginationFindByC_L, _finderPathCountByC_L,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "layoutSetId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "layoutSetId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_L",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "layoutSetId"}, false),
 			_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
 			VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1052,24 +917,22 @@ public class VirtualHostPersistenceImpl
 				"virtualHost.", "layoutSetId", FinderColumn.Type.LONG, "=",
 				true, true, VirtualHost::getLayoutSetId));
 
-		_finderPathWithPaginationFindByNotL_H = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotL_H",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"layoutSetId", "hostname"}, true);
-
-		_finderPathWithPaginationCountByNotL_H = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByNotL_H",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"layoutSetId", "hostname"}, false);
-
 		_collectionPersistenceFinderByNotL_H =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByNotL_H, null,
-				_finderPathWithPaginationCountByNotL_H,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByNotL_H",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"layoutSetId", "hostname"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByNotL_H",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"layoutSetId", "hostname"}, false),
 				_SQL_SELECT_VIRTUALHOST_WHERE, _SQL_COUNT_VIRTUALHOST_WHERE,
 				VirtualHostModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
@@ -1112,4 +975,4 @@ public class VirtualHostPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:611993920
+// LIFERAY-SERVICE-BUILDER-HASH:68444542

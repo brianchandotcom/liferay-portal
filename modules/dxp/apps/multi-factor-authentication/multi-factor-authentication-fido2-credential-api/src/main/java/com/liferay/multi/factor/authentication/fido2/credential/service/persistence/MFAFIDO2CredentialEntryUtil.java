@@ -134,55 +134,6 @@ public class MFAFIDO2CredentialEntryUtil {
 	}
 
 	/**
-	 * Returns all the mfafido2 credential entries where userId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @return the matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	 * Returns a range of all the mfafido2 credential entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of mfafido2 credential entries
-	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
-	 * @return the range of matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByUserId(
-		long userId, int start, int end) {
-
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the mfafido2 credential entries where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of mfafido2 credential entries
-	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByUserId(
-		long userId, int start, int end,
-		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
-
-		return getPersistence().findByUserId(
-			userId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the mfafido2 credential entries where userId = &#63;.
 	 *
 	 * <p>
@@ -253,58 +204,6 @@ public class MFAFIDO2CredentialEntryUtil {
 	 */
 	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
-	}
-
-	/**
-	 * Returns all the mfafido2 credential entries where credentialKeyHash = &#63;.
-	 *
-	 * @param credentialKeyHash the credential key hash
-	 * @return the matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
-		long credentialKeyHash) {
-
-		return getPersistence().findByCredentialKeyHash(credentialKeyHash);
-	}
-
-	/**
-	 * Returns a range of all the mfafido2 credential entries where credentialKeyHash = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param credentialKeyHash the credential key hash
-	 * @param start the lower bound of the range of mfafido2 credential entries
-	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
-	 * @return the range of matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
-		long credentialKeyHash, int start, int end) {
-
-		return getPersistence().findByCredentialKeyHash(
-			credentialKeyHash, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the mfafido2 credential entries where credentialKeyHash = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param credentialKeyHash the credential key hash
-	 * @param start the lower bound of the range of mfafido2 credential entries
-	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching mfafido2 credential entries
-	 */
-	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
-		long credentialKeyHash, int start, int end,
-		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
-
-		return getPersistence().findByCredentialKeyHash(
-			credentialKeyHash, start, end, orderByComparator);
 	}
 
 	/**
@@ -396,19 +295,6 @@ public class MFAFIDO2CredentialEntryUtil {
 			exception.NoSuchMFAFIDO2CredentialEntryException {
 
 		return getPersistence().findByU_C(userId, credentialKeyHash);
-	}
-
-	/**
-	 * Returns the mfafido2 credential entry where userId = &#63; and credentialKeyHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @param credentialKeyHash the credential key hash
-	 * @return the matching mfafido2 credential entry, or <code>null</code> if a matching mfafido2 credential entry could not be found
-	 */
-	public static MFAFIDO2CredentialEntry fetchByU_C(
-		long userId, long credentialKeyHash) {
-
-		return getPersistence().fetchByU_C(userId, credentialKeyHash);
 	}
 
 	/**
@@ -511,6 +397,120 @@ public class MFAFIDO2CredentialEntryUtil {
 		return getPersistence().fetchByPrimaryKey(mfaFIDO2CredentialEntryId);
 	}
 
+	/**
+	 * Returns the mfafido2 credential entry where userId = &#63; and credentialKeyHash = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @param credentialKeyHash the credential key hash
+	 * @return the matching mfafido2 credential entry, or <code>null</code> if a matching mfafido2 credential entry could not be found
+	 */
+	public static MFAFIDO2CredentialEntry fetchByU_C(
+		long userId, long credentialKeyHash) {
+
+		return getPersistence().fetchByU_C(userId, credentialKeyHash);
+	}
+
+	/**
+	 * Returns all the mfafido2 credential entries where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @return the matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	 * Returns a range of all the mfafido2 credential entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of mfafido2 credential entries
+	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
+	 * @return the range of matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByUserId(
+		long userId, int start, int end) {
+
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the mfafido2 credential entries where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of mfafido2 credential entries
+	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByUserId(
+		long userId, int start, int end,
+		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
+
+		return getPersistence().findByUserId(
+			userId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the mfafido2 credential entries where credentialKeyHash = &#63;.
+	 *
+	 * @param credentialKeyHash the credential key hash
+	 * @return the matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
+		long credentialKeyHash) {
+
+		return getPersistence().findByCredentialKeyHash(credentialKeyHash);
+	}
+
+	/**
+	 * Returns a range of all the mfafido2 credential entries where credentialKeyHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param credentialKeyHash the credential key hash
+	 * @param start the lower bound of the range of mfafido2 credential entries
+	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
+	 * @return the range of matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
+		long credentialKeyHash, int start, int end) {
+
+		return getPersistence().findByCredentialKeyHash(
+			credentialKeyHash, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the mfafido2 credential entries where credentialKeyHash = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.multi.factor.authentication.fido2.credential.model.impl.MFAFIDO2CredentialEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param credentialKeyHash the credential key hash
+	 * @param start the lower bound of the range of mfafido2 credential entries
+	 * @param end the upper bound of the range of mfafido2 credential entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching mfafido2 credential entries
+	 */
+	public static List<MFAFIDO2CredentialEntry> findByCredentialKeyHash(
+		long credentialKeyHash, int start, int end,
+		OrderByComparator<MFAFIDO2CredentialEntry> orderByComparator) {
+
+		return getPersistence().findByCredentialKeyHash(
+			credentialKeyHash, start, end, orderByComparator);
+	}
+
 	public static MFAFIDO2CredentialEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -524,4 +524,4 @@ public class MFAFIDO2CredentialEntryUtil {
 	private static volatile MFAFIDO2CredentialEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1431876683
+// LIFERAY-SERVICE-BUILDER-HASH:-682548385

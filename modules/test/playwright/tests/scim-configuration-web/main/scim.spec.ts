@@ -302,10 +302,12 @@ test('LPS-190119 (TC-2 & TC-5). Admin User can Generate and Revoke SCIM Access T
 
 	const defaultBaseUrl = liferayConfig.environment.baseUrl;
 
-	liferayConfig.environment.baseUrl = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`;
+	const virtualInstanceBaseUrl = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:${liferayConfig.environment.port}`;
+
+	liferayConfig.environment.baseUrl = virtualInstanceBaseUrl;
 
 	const newPage = await browser.newPage({
-		baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+		baseURL: virtualInstanceBaseUrl,
 	});
 
 	await performLogin(

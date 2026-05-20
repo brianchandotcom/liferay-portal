@@ -135,63 +135,6 @@ public class CommerceShippingFixedOptionRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @return the matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @return the range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId, int start, int end) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingFixedOptionId(
-			long commerceShippingFixedOptionId, int start, int end,
-			OrderByComparator<CommerceShippingFixedOptionRel>
-				orderByComparator) {
-
-		return getPersistence().findByCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
 	 *
 	 * <p>
@@ -279,62 +222,6 @@ public class CommerceShippingFixedOptionRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @return the matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingMethodId(long commerceShippingMethodId) {
-
-		return getPersistence().findByCommerceShippingMethodId(
-			commerceShippingMethodId);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @return the range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingMethodId(
-			long commerceShippingMethodId, int start, int end) {
-
-		return getPersistence().findByCommerceShippingMethodId(
-			commerceShippingMethodId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel>
-		findByCommerceShippingMethodId(
-			long commerceShippingMethodId, int start, int end,
-			OrderByComparator<CommerceShippingFixedOptionRel>
-				orderByComparator) {
-
-		return getPersistence().findByCommerceShippingMethodId(
-			commerceShippingMethodId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
 	 *
 	 * <p>
@@ -419,66 +306,6 @@ public class CommerceShippingFixedOptionRelUtil {
 
 		return getPersistence().countByCommerceShippingMethodId(
 			commerceShippingMethodId);
-	}
-
-	/**
-	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @return the matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel> findByC_C(
-		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
-
-		return getPersistence().findByC_C(
-			commerceShippingFixedOptionId, commerceShippingMethodId);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @return the range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel> findByC_C(
-		long commerceShippingFixedOptionId, long commerceShippingMethodId,
-		int start, int end) {
-
-		return getPersistence().findByC_C(
-			commerceShippingFixedOptionId, commerceShippingMethodId, start,
-			end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option rels
-	 */
-	public static List<CommerceShippingFixedOptionRel> findByC_C(
-		long commerceShippingFixedOptionId, long commerceShippingMethodId,
-		int start, int end,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			commerceShippingFixedOptionId, commerceShippingMethodId, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -633,6 +460,179 @@ public class CommerceShippingFixedOptionRelUtil {
 			commerceShippingFixedOptionRelId);
 	}
 
+	/**
+	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @return the matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @return the range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId, int start, int end) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingFixedOptionId(
+			long commerceShippingFixedOptionId, int start, int end,
+			OrderByComparator<CommerceShippingFixedOptionRel>
+				orderByComparator) {
+
+		return getPersistence().findByCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingMethodId(long commerceShippingMethodId) {
+
+		return getPersistence().findByCommerceShippingMethodId(
+			commerceShippingMethodId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @return the range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingMethodId(
+			long commerceShippingMethodId, int start, int end) {
+
+		return getPersistence().findByCommerceShippingMethodId(
+			commerceShippingMethodId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel>
+		findByCommerceShippingMethodId(
+			long commerceShippingMethodId, int start, int end,
+			OrderByComparator<CommerceShippingFixedOptionRel>
+				orderByComparator) {
+
+		return getPersistence().findByCommerceShippingMethodId(
+			commerceShippingMethodId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
+
+		return getPersistence().findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @return the range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		int start, int end) {
+
+		return getPersistence().findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, start,
+			end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	public static List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, start, end,
+			orderByComparator);
+	}
+
 	public static CommerceShippingFixedOptionRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -647,4 +647,4 @@ public class CommerceShippingFixedOptionRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-353407755
+// LIFERAY-SERVICE-BUILDER-HASH:1917395107

@@ -5,6 +5,8 @@
 
 import {devices} from '@playwright/test';
 
+import {liferayConfig} from '../../../liferay.config';
+
 export const config = {
 	name: 'openid-link.main',
 	testDir: 'tests/openid-link/main',
@@ -14,7 +16,7 @@ export const config = {
 };
 
 export const openIdConfig = {
-	loginPortletLink: 'http://localhost:8080/c/portal/login',
+	loginPortletLink: `${liferayConfig.environment.baseUrl}/c/portal/login`,
 	openIdLink: 'OpenId Connect',
 	openIdProvider:
 		'https://accounts.google.com/.well-known/openid-configuration',

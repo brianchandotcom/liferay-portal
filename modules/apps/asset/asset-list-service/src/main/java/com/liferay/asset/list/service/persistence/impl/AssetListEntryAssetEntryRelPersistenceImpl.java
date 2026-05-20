@@ -91,62 +91,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the asset list entry asset entry rels where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63;.
@@ -238,7 +184,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<AssetListEntryAssetEntryRel>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -270,20 +215,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		}
 
 		return assetListEntryAssetEntryRel;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
-	 */
-	@Override
-	public AssetListEntryAssetEntryRel fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -332,69 +263,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where uuid = &#63; and companyId = &#63;.
@@ -491,66 +361,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAssetListEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetListEntryId;
-	private FinderPath _finderPathCountByAssetListEntryId;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByAssetListEntryId;
-
-	/**
-	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetListEntryId(
-		long assetListEntryId) {
-
-		return findByAssetListEntryId(
-			assetListEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetListEntryId(
-		long assetListEntryId, int start, int end) {
-
-		return findByAssetListEntryId(assetListEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetListEntryId(
-		long assetListEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByAssetListEntryId(
-			assetListEntryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63;.
@@ -643,66 +455,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache, new Object[] {assetListEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByAssetEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAssetEntryId;
-	private FinderPath _finderPathCountByAssetEntryId;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByAssetEntryId;
-
-	/**
-	 * Returns all the asset list entry asset entry rels where assetEntryId = &#63;.
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetEntryId(
-		long assetEntryId) {
-
-		return findByAssetEntryId(
-			assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetEntryId(
-		long assetEntryId, int start, int end) {
-
-		return findByAssetEntryId(assetEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetEntryId the asset entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByAssetEntryId(
-		long assetEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByAssetEntryId(
-			assetEntryId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetEntryId = &#63;.
@@ -794,71 +548,8 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			finderCache, new Object[] {assetEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByA_S;
-	private FinderPath _finderPathWithoutPaginationFindByA_S;
-	private FinderPath _finderPathCountByA_S;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByA_S;
-
-	/**
-	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long segmentsEntryId) {
-
-		return findByA_S(
-			assetListEntryId, segmentsEntryId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long segmentsEntryId, int start, int end) {
-
-		return findByA_S(assetListEntryId, segmentsEntryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long segmentsEntryId, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByA_S(
-			assetListEntryId, segmentsEntryId, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;.
@@ -945,70 +636,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @return the matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long[] segmentsEntryIds) {
-
-		return findByA_S(
-			assetListEntryId, segmentsEntryIds, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @return the range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long[] segmentsEntryIds, int start, int end) {
-
-		return findByA_S(assetListEntryId, segmentsEntryIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AssetListEntryAssetEntryRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryIds the segments entry IDs
-	 * @param start the lower bound of the range of asset list entry asset entry rels
-	 * @param end the upper bound of the range of asset list entry asset entry rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset list entry asset entry rels
-	 */
-	@Override
-	public List<AssetListEntryAssetEntryRel> findByA_S(
-		long assetListEntryId, long[] segmentsEntryIds, int start, int end,
-		OrderByComparator<AssetListEntryAssetEntryRel> orderByComparator) {
-
-		return findByA_S(
-			assetListEntryId, segmentsEntryIds, start, end, orderByComparator,
-			true);
-	}
-
-	/**
 	 * Returns an ordered range of all the asset list entry asset entry rels where assetListEntryId = &#63; and segmentsEntryId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -1080,7 +707,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			});
 	}
 
-	private FinderPath _finderPathFetchByA_S_P;
 	private UniquePersistenceFinder<AssetListEntryAssetEntryRel>
 		_uniquePersistenceFinderByA_S_P;
 
@@ -1115,21 +741,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 		}
 
 		return assetListEntryAssetEntryRel;
-	}
-
-	/**
-	 * Returns the asset list entry asset entry rel where assetListEntryId = &#63; and segmentsEntryId = &#63; and position = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param assetListEntryId the asset list entry ID
-	 * @param segmentsEntryId the segments entry ID
-	 * @param position the position
-	 * @return the matching asset list entry asset entry rel, or <code>null</code> if a matching asset list entry asset entry rel could not be found
-	 */
-	@Override
-	public AssetListEntryAssetEntryRel fetchByA_S_P(
-		long assetListEntryId, long segmentsEntryId, int position) {
-
-		return fetchByA_S_P(assetListEntryId, segmentsEntryId, position, true);
 	}
 
 	/**
@@ -1188,8 +799,6 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 			new Object[] {assetListEntryId, segmentsEntryId, position});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByA_S_GtP;
-	private FinderPath _finderPathWithPaginationCountByA_S_GtP;
 	private CollectionPersistenceFinder<AssetListEntryAssetEntryRel>
 		_collectionPersistenceFinderByA_S_GtP;
 
@@ -1697,27 +1306,23 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1727,15 +1332,14 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				AssetListEntryAssetEntryRel::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(AssetListEntryAssetEntryRel::getUuid),
-			AssetListEntryAssetEntryRel::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(AssetListEntryAssetEntryRel::getUuid),
+				AssetListEntryAssetEntryRel::getGroupId),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetListEntryAssetEntryRel.", "uuid",
@@ -1746,30 +1350,25 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				AssetListEntryAssetEntryRel::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1783,29 +1382,28 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetListEntryAssetEntryRel::getCompanyId));
 
-		_finderPathWithPaginationFindByAssetListEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetListEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetListEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetListEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetListEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"assetListEntryId"}, true);
-
-		_finderPathCountByAssetListEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByAssetListEntryId", new String[] {Long.class.getName()},
-			new String[] {"assetListEntryId"}, false);
-
 		_collectionPersistenceFinderByAssetListEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetListEntryId,
-				_finderPathWithoutPaginationFindByAssetListEntryId,
-				_finderPathCountByAssetListEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAssetListEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetListEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetListEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"assetListEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetListEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"assetListEntryId"}, false),
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1815,29 +1413,26 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetListEntryAssetEntryRel::getAssetListEntryId));
 
-		_finderPathWithPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			true);
-
-		_finderPathCountByAssetEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAssetEntryId",
-			new String[] {Long.class.getName()}, new String[] {"assetEntryId"},
-			false);
-
 		_collectionPersistenceFinderByAssetEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAssetEntryId,
-				_finderPathWithoutPaginationFindByAssetEntryId,
-				_finderPathCountByAssetEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAssetEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAssetEntryId", new String[] {Long.class.getName()},
+					new String[] {"assetEntryId"}, false),
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1847,28 +1442,24 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AssetListEntryAssetEntryRel::getAssetEntryId));
 
-		_finderPathWithPaginationFindByA_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"assetListEntryId", "segmentsEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByA_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetListEntryId", "segmentsEntryId"}, true);
-
-		_finderPathCountByA_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"assetListEntryId", "segmentsEntryId"}, false);
-
 		_collectionPersistenceFinderByA_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByA_S,
-			_finderPathWithoutPaginationFindByA_S, _finderPathCountByA_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"assetListEntryId", "segmentsEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByA_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"assetListEntryId", "segmentsEntryId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"assetListEntryId", "segmentsEntryId"}, false),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 			AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -1882,19 +1473,20 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				FinderColumn.Type.LONG, "=", false, true, true,
 				AssetListEntryAssetEntryRel::getSegmentsEntryId));
 
-		_finderPathFetchByA_S_P = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_S_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"assetListEntryId", "segmentsEntryId", "position"}, 0,
-			0, false, AssetListEntryAssetEntryRel::getAssetListEntryId,
-			AssetListEntryAssetEntryRel::getSegmentsEntryId,
-			AssetListEntryAssetEntryRel::getPosition);
-
 		_uniquePersistenceFinderByA_S_P = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_S_P,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_S_P",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName()
+				},
+				new String[] {
+					"assetListEntryId", "segmentsEntryId", "position"
+				},
+				0, 0, false, AssetListEntryAssetEntryRel::getAssetListEntryId,
+				AssetListEntryAssetEntryRel::getSegmentsEntryId,
+				AssetListEntryAssetEntryRel::getPosition),
 			_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE, "",
 			new FinderColumn<>(
 				"assetListEntryAssetEntryRel.", "assetListEntryId",
@@ -1909,29 +1501,32 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 				FinderColumn.Type.INTEGER, "=", true, true,
 				AssetListEntryAssetEntryRel::getPosition));
 
-		_finderPathWithPaginationFindByA_S_GtP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S_GtP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"assetListEntryId", "segmentsEntryId", "position"},
-			true);
-
-		_finderPathWithPaginationCountByA_S_GtP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S_GtP",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName()
-			},
-			new String[] {"assetListEntryId", "segmentsEntryId", "position"},
-			false);
-
 		_collectionPersistenceFinderByA_S_GtP =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByA_S_GtP, null,
-				_finderPathWithPaginationCountByA_S_GtP,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByA_S_GtP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"assetListEntryId", "segmentsEntryId", "position"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByA_S_GtP",
+					new String[] {
+						Long.class.getName(), Long.class.getName(),
+						Integer.class.getName()
+					},
+					new String[] {
+						"assetListEntryId", "segmentsEntryId", "position"
+					},
+					false),
 				_SQL_SELECT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				_SQL_COUNT_ASSETLISTENTRYASSETENTRYREL_WHERE,
 				AssetListEntryAssetEntryRelModelImpl.ORDER_BY_JPQL,
@@ -2022,4 +1617,4 @@ public class AssetListEntryAssetEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1220723709
+// LIFERAY-SERVICE-BUILDER-HASH:971084134

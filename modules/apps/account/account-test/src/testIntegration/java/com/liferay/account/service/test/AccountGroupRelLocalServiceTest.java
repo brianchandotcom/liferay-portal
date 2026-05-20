@@ -30,6 +30,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -203,6 +204,46 @@ public class AccountGroupRelLocalServiceTest {
 			_accountGroupRelLocalService.
 				getAccountGroupRelsCountByAccountGroupId(
 					_accountGroup.getAccountGroupId()));
+	}
+
+	@Test
+	public void testGetAccountGroupRels() throws Exception {
+		String randomString = RandomTestUtil.randomString();
+
+		AccountGroup accountGroup1 = AccountGroupTestUtil.addAccountGroup(
+			_accountGroupLocalService, RandomTestUtil.randomString(),
+			"AG1-" + randomString);
+
+		List<AccountGroup> accountGroups = Arrays.asList(
+			accountGroup1,
+			AccountGroupTestUtil.addAccountGroup(
+				_accountGroupLocalService, RandomTestUtil.randomString(),
+				"AG2-" + randomString),
+			AccountGroupTestUtil.addAccountGroup(
+				_accountGroupLocalService, RandomTestUtil.randomString(),
+				"AG3-" + randomString));
+
+		for (AccountGroup accountGroup : accountGroups) {
+			_accountGroupRelLocalService.addAccountGroupRel(
+				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
+				_accountEntry.getAccountEntryId());
+		}
+
+		List<AccountGroupRel> accountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
+				ListUtil.toLongArray(
+					accountGroups, AccountGroup.ACCOUNT_GROUP_ID_ACCESSOR),
+				AccountEntry.class.getName(), _accountEntry.getAccountEntryId(),
+				accountGroup1.getName(), 0, 10);
+
+		Assert.assertEquals(
+			accountGroupRels.toString(), 1, accountGroupRels.size());
+
+		AccountGroupRel accountGroupRel = accountGroupRels.get(0);
+
+		Assert.assertEquals(
+			accountGroup1.getAccountGroupId(),
+			accountGroupRel.getAccountGroupId());
 	}
 
 	private AccountEntry _accountEntry;

@@ -76,18 +76,33 @@ describe('AllQuickFilters', () => {
 		};
 	});
 
-	it('renders the four chips with localized labels and zero counts before the fetch resolves', () => {
+	it('renders nothing before the fetch resolves', () => {
 		mockFetch.mockReturnValueOnce(new Promise(() => {}));
 
-		render(<AllQuickFilters />);
+		const {container} = render(<AllQuickFilters />);
 
-		expect(screen.getByText('in-draft')).toBeInTheDocument();
-		expect(screen.getByText('expiring-soon')).toBeInTheDocument();
-		expect(screen.getByText('expired')).toBeInTheDocument();
-		expect(screen.getByText('review-date-overdue')).toBeInTheDocument();
+		expect(container).toBeEmptyDOMElement();
+	});
 
-		const counts = screen.getAllByText('0');
-		expect(counts).toHaveLength(4);
+	it('renders nothing when totalCount is zero', async () => {
+		mockFetch.mockResolvedValueOnce({
+			json: async () => ({
+				expiredCount: 0,
+				expiringSoonCount: 0,
+				inDraftCount: 0,
+				reviewDateOverdueCount: 0,
+				totalCount: 0,
+			}),
+			ok: true,
+		} as Response);
+
+		const {container} = render(<AllQuickFilters />);
+
+		await waitFor(() => {
+			expect(mockFetch).toHaveBeenCalled();
+		});
+
+		expect(container).toBeEmptyDOMElement();
 	});
 
 	it('fetches the asset statistics from the headless endpoint and renders each count', async () => {
@@ -97,6 +112,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 3,
 				inDraftCount: 7,
 				reviewDateOverdueCount: 2,
+				totalCount: 17,
 			}),
 			ok: true,
 		} as Response);
@@ -120,7 +136,7 @@ describe('AllQuickFilters', () => {
 		expect(screen.getByText('2')).toBeInTheDocument();
 	});
 
-	it('falls back to zero counts when the fetch fails', async () => {
+	it('renders nothing and logs an error when the fetch fails', async () => {
 		const consoleError = jest
 			.spyOn(console, 'error')
 			.mockImplementation(() => {});
@@ -130,13 +146,13 @@ describe('AllQuickFilters', () => {
 			status: 500,
 		} as Response);
 
-		render(<AllQuickFilters />);
+		const {container} = render(<AllQuickFilters />);
 
 		await waitFor(() => {
 			expect(consoleError).toHaveBeenCalled();
 		});
 
-		expect(screen.getAllByText('0')).toHaveLength(4);
+		expect(container).toBeEmptyDOMElement();
 
 		consoleError.mockRestore();
 	});
@@ -148,6 +164,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 0,
 				inDraftCount: 1,
 				reviewDateOverdueCount: 0,
+				totalCount: 1,
 			}),
 			ok: true,
 		} as Response);
@@ -180,6 +197,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 1,
 				inDraftCount: 0,
 				reviewDateOverdueCount: 0,
+				totalCount: 1,
 			}),
 			ok: true,
 		} as Response);
@@ -235,6 +253,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 0,
 				inDraftCount: 0,
 				reviewDateOverdueCount: 0,
+				totalCount: 1,
 			}),
 			ok: true,
 		} as Response);
@@ -267,6 +286,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 0,
 				inDraftCount: 0,
 				reviewDateOverdueCount: 0,
+				totalCount: 1,
 			}),
 			ok: true,
 		} as Response);
@@ -283,15 +303,44 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 0,
 				inDraftCount: 0,
 				reviewDateOverdueCount: 0,
+				totalCount: 4,
 			}),
 			ok: true,
 		} as Response);
 
-		(global as any).Liferay.fire('fds-display-updated');
+		(global as any).Liferay.fire('fds-display-updated', {
+			id: 'com.liferay.site.cms.site.initializer-allSection',
+		});
 
 		await screen.findByText('4');
 
 		expect(mockFetch).toHaveBeenCalledTimes(2);
+	});
+
+	it('does not refetch the asset statistics when a different FDS fires the display-updated event', async () => {
+		mockFetch.mockResolvedValueOnce({
+			json: async () => ({
+				expiredCount: 1,
+				expiringSoonCount: 0,
+				inDraftCount: 0,
+				reviewDateOverdueCount: 0,
+				totalCount: 1,
+			}),
+			ok: true,
+		} as Response);
+
+		render(<AllQuickFilters />);
+
+		await screen.findByText('1');
+
+		expect(mockFetch).toHaveBeenCalledTimes(1);
+
+		(global as any).Liferay.fire('fds-display-updated', {
+			id: 'com.liferay.site.cms.site.initializer-filesSection',
+		});
+		(global as any).Liferay.fire('fds-display-updated');
+
+		expect(mockFetch).toHaveBeenCalledTimes(1);
 	});
 
 	it('applies the review date upper bound when the Review Date Overdue chip is clicked', async () => {
@@ -301,6 +350,7 @@ describe('AllQuickFilters', () => {
 				expiringSoonCount: 0,
 				inDraftCount: 0,
 				reviewDateOverdueCount: 1,
+				totalCount: 1,
 			}),
 			ok: true,
 		} as Response);

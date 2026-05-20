@@ -6,7 +6,7 @@ import Loading, {Align} from '../Loading';
 import React from 'react';
 import {CSVType, useMutationObserver} from './utils';
 import {DownloadStaticCSVReport} from './DownloadStaticCSVReport';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 
 const reportType = {
 	CSV: {
@@ -47,7 +47,7 @@ const DownloadReportDropdown: React.FC<IDownloadReportDropdownProps> = ({
 	title
 }) => {
 	const {loadingCount} = useMutationObserver();
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 
 	return (
 		<>

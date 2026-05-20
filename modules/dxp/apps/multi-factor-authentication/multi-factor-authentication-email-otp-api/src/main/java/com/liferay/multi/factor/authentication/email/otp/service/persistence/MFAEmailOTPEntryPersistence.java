@@ -43,14 +43,6 @@ public interface MFAEmailOTPEntryPersistence
 		throws NoSuchEntryException;
 
 	/**
-	 * Returns the mfa email otp entry where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching mfa email otp entry, or <code>null</code> if a matching mfa email otp entry could not be found
-	 */
-	public MFAEmailOTPEntry fetchByUserId(long userId);
-
-	/**
 	 * Returns the mfa email otp entry where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -114,5 +106,15 @@ public interface MFAEmailOTPEntryPersistence
 	 */
 	public MFAEmailOTPEntry fetchByPrimaryKey(long mfaEmailOTPEntryId);
 
+	/**
+	 * Returns the mfa email otp entry where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @return the matching mfa email otp entry, or <code>null</code> if a matching mfa email otp entry could not be found
+	 */
+	public default MFAEmailOTPEntry fetchByUserId(long userId) {
+		return fetchByUserId(userId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1409748558
+// LIFERAY-SERVICE-BUILDER-HASH:-2127156522

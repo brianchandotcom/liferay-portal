@@ -61,7 +61,7 @@ public class RegionResourceDTOConverterTest {
 				GroupTestUtil.addGroup(), TestPropsValues.getUserId());
 
 		_serviceBuilderCountry = _countryLocalService.addCountry(
-			"XY", "XYZ", RandomTestUtil.randomBoolean(),
+			null, "XY", "XYZ", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
@@ -69,7 +69,7 @@ public class RegionResourceDTOConverterTest {
 			RandomTestUtil.randomBoolean(), serviceContext);
 
 		_serviceBuilderRegion = _regionLocalService.addRegion(
-			_serviceBuilderCountry.getCountryId(),
+			null, _serviceBuilderCountry.getCountryId(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
 			serviceContext);

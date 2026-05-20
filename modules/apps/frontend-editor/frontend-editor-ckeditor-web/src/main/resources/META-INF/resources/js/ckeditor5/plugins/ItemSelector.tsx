@@ -11,6 +11,45 @@ import {openSelectionModal} from 'frontend-js-components-web';
 import getIcon from '../utils/getIcon';
 import {LiferayEditorConfig} from '../utils/types';
 
+const ITEM_SELECTOR_FOLDER_ID_PARAM =
+	'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
+
+function createFolderMemory() {
+	let lastFolderId: number | string | null = null;
+
+	const isFolderIdEmpty = (folderId: number | string | null | undefined) => {
+		return folderId === null || folderId === undefined || folderId === '';
+	};
+
+	return {
+		applyTo(url: string): string {
+			if (isFolderIdEmpty(lastFolderId)) {
+				return url;
+			}
+
+			try {
+				const parsed = new URL(url, window.location.origin);
+
+				parsed.searchParams.set(
+					ITEM_SELECTOR_FOLDER_ID_PARAM,
+					String(lastFolderId)
+				);
+
+				return parsed.toString();
+			}
+			catch (error) {
+				return url;
+			}
+		},
+
+		remember(folderId: number | string | undefined) {
+			if (!isFolderIdEmpty(folderId)) {
+				lastFolderId = folderId as number | string;
+			}
+		},
+	};
+}
+
 class ItemSelector extends Plugin {
 	init() {
 		const editor = this.editor;
@@ -22,6 +61,12 @@ class ItemSelector extends Plugin {
 		const command = editor.commands.get(commandName)!;
 
 		const config: Config<LiferayEditorConfig> = editor.config;
+
+		const folderMemory = createFolderMemory();
+
+		const rememberSelectionFolder = Boolean(
+			config.get('itemSelectorRememberSelectionFolder')
+		);
 
 		const filebrowserImageBrowseUrl = config.get(
 			'filebrowserImageBrowseUrl'
@@ -41,7 +86,17 @@ class ItemSelector extends Plugin {
 
 				buttonView.on('execute', () => {
 					openSelectionModal({
-						onSelect: ({value}: {value: string}) => {
+						onSelect: ({
+							folderId,
+							value,
+						}: {
+							folderId?: number | string;
+							value: string;
+						}) => {
+							if (rememberSelectionFolder) {
+								folderMemory.remember(folderId);
+							}
+
 							let url;
 
 							try {
@@ -66,7 +121,9 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: filebrowserImageBrowseUrl,
+						url: rememberSelectionFolder
+							? folderMemory.applyTo(filebrowserImageBrowseUrl)
+							: filebrowserImageBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});
@@ -93,7 +150,17 @@ class ItemSelector extends Plugin {
 
 				buttonView.on('execute', () => {
 					openSelectionModal({
-						onSelect: ({value}: {value: any}) => {
+						onSelect: ({
+							folderId,
+							value,
+						}: {
+							folderId?: number | string;
+							value: any;
+						}) => {
+							if (rememberSelectionFolder) {
+								folderMemory.remember(folderId);
+							}
+
 							let url: string;
 
 							try {
@@ -118,7 +185,9 @@ class ItemSelector extends Plugin {
 						},
 						selectEventName: config.get('itemSelectorEventName'),
 						title: Liferay.Language.get('select-item'),
-						url: filebrowserVideoBrowseUrl,
+						url: rememberSelectionFolder
+							? folderMemory.applyTo(filebrowserVideoBrowseUrl)
+							: filebrowserVideoBrowseUrl,
 						zIndex: Liferay.zIndex.WINDOW + 10,
 					});
 				});

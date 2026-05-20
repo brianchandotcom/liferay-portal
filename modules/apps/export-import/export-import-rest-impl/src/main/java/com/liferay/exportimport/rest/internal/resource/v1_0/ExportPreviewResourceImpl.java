@@ -5,23 +5,22 @@
 
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
-import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactory;
+import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.rest.dto.v1_0.ExportPreview;
-import com.liferay.exportimport.rest.dto.v1_0.PortletDataHandler;
+import com.liferay.exportimport.rest.dto.v1_0.PreviewPortletDataHandler;
+import com.liferay.exportimport.rest.internal.util.DateRangeUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
 import com.liferay.exportimport.rest.internal.util.PortletDataHandlerSectionUtil;
 import com.liferay.exportimport.rest.resource.v1_0.ExportPreviewResource;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.staging.StagingGroupHelper;
 
-import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.NotFoundException;
 
 import java.util.Date;
@@ -89,27 +88,6 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 			endDate, group.getGroupId(), last, range, startDate);
 	}
 
-	private DateRange _getDateRange(
-		Date endDate, Integer last, String range, Date startDate) {
-
-		if (range.equals(ExportImportDateUtil.RANGE_DATE_RANGE)) {
-			return new DateRange(startDate, endDate);
-		}
-
-		if (range.equals(ExportImportDateUtil.RANGE_LAST)) {
-			if (last == null) {
-				throw new BadRequestException();
-			}
-
-			Date now = new Date();
-
-			return new DateRange(
-				new Date(now.getTime() - (last * Time.HOUR)), now);
-		}
-
-		return new DateRange(null, null);
-	}
-
 	private ExportPreview _getExportPreview(
 			Date endDate, long groupId, Integer last, String range,
 			Date startDate)
@@ -118,20 +96,20 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 		PermissionUtil.checkExportPermission(
 			contextCompany.getCompanyId(), groupId);
 
-		DateRange dateRange = _getDateRange(endDate, last, range, startDate);
+		DateRange dateRange = DateRangeUtil.toDateRange(
+			endDate, last, range, startDate);
 
 		Locale locale = contextAcceptLanguage.getPreferredLocale();
 
-		Map<String, List<PortletDataHandler>> portletDataHandlersMap =
-			new LinkedHashMap<>();
+		Map<String, List<PreviewPortletDataHandler>>
+			previewPortletDataHandlers = new LinkedHashMap<>();
 
 		for (Portlet portlet :
 				_exportImportHelper.getExportablePortlets(
 					contextCompany.getCompanyId(), false, groupId)) {
 
-			com.liferay.exportimport.kernel.lar.PortletDataHandler
-				portletDataHandler = _portletDataHandlerProvider.provide(
-					portlet);
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(portlet);
 
 			if (portletDataHandler == null) {
 				continue;
@@ -148,24 +126,23 @@ public class ExportPreviewResourceImpl extends BaseExportPreviewResourceImpl {
 				contextCompany.getCompanyId(), locale,
 				portletDataContext.getManifestSummary(), portlet,
 				portletDataHandler,
-				com.liferay.exportimport.kernel.lar.PortletDataHandler::
-					getExportPortletDataHandlerControls,
-				portletDataHandlersMap);
+				PortletDataHandler::getExportPortletDataHandlerControls,
+				previewPortletDataHandlers);
 		}
 
 		return new ExportPreview() {
 			{
 				setAdditionCount(
 					() -> PortletDataHandlerSectionUtil.getAdditionCount(
-						portletDataHandlersMap));
+						previewPortletDataHandlers));
 				setDeletionCount(
 					() -> PortletDataHandlerSectionUtil.getDeletionCount(
-						portletDataHandlersMap));
-				setPortletDataHandlerSections(
+						previewPortletDataHandlers));
+				setPreviewPortletDataHandlerSections(
 					() ->
 						PortletDataHandlerSectionUtil.
 							toPortletDataHandlerSections(
-								locale, portletDataHandlersMap));
+								locale, previewPortletDataHandlers));
 			}
 		};
 	}

@@ -10,6 +10,9 @@
 	const STR_VIDEO_HTML_RETURN_TYPE =
 		'com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType';
 
+	const ITEM_SELECTOR_FOLDER_ID_PARAM =
+		'_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_folderId';
+
 	const TPL_AUDIO_SCRIPT =
 		'boundingBox: "#" + mediaId,' + 'oggUrl: "{oggUrl}",' + 'url: "{url}"';
 
@@ -23,6 +26,44 @@
 
 	const defaultVideoHeight = 300;
 	const defaultVideoWidth = 400;
+
+	function createFolderMemory() {
+		let lastFolderId = null;
+
+		const isFolderIdEmpty = (folderId) => {
+			return (
+				folderId === null || folderId === undefined || folderId === ''
+			);
+		};
+
+		return {
+			applyTo(url) {
+				if (isFolderIdEmpty(lastFolderId)) {
+					return url;
+				}
+
+				try {
+					const parsed = new URL(url, window.location.origin);
+
+					parsed.searchParams.set(
+						ITEM_SELECTOR_FOLDER_ID_PARAM,
+						String(lastFolderId)
+					);
+
+					return parsed.toString();
+				}
+				catch (error) {
+					return url;
+				}
+			},
+
+			remember(folderId) {
+				if (!isFolderIdEmpty(folderId)) {
+					lastFolderId = folderId;
+				}
+			},
+		};
+	}
 
 	CKEDITOR.plugins.add('itemselector', {
 		_bindBrowseButton(
@@ -365,17 +406,31 @@
 		},
 
 		_openSelectionModal(editor, url, callback) {
+			const folderMemory = editor._lfrFolderMemory;
+
+			const rememberSelectionFolder = Boolean(
+				editor.config.itemSelectorRememberSelectionFolder
+			);
+
 			Liferay.Util.openSelectionModal({
-				onSelect: callback,
+				onSelect: (selectedItem) => {
+					if (rememberSelectionFolder && selectedItem) {
+						folderMemory.remember(selectedItem.folderId);
+					}
+
+					callback(selectedItem);
+				},
 				selectEventName: editor.name + 'selectItem',
 				title: Liferay.Language.get('select-item'),
-				url,
+				url: rememberSelectionFolder ? folderMemory.applyTo(url) : url,
 				zIndex: CKEDITOR.getNextZIndex(),
 			});
 		},
 
 		init(editor) {
 			const instance = this;
+
+			editor._lfrFolderMemory = createFolderMemory();
 
 			instance._audioTPL = new CKEDITOR.template(TPL_AUDIO_SCRIPT);
 			instance._videoTPL = new CKEDITOR.template(TPL_VIDEO_SCRIPT);

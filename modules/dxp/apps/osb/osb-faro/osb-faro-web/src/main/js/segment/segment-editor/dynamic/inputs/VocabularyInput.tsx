@@ -7,193 +7,137 @@ import SelectCategoryFromModal, {
 	CategoryItem
 } from './components/SelectCategoryFromModal';
 import {
-	APPLICATION_ID_ASSET_TYPE_MAP,
-	ASSET_TYPE_APPLICATION_ID_MAP,
 	ASSET_TYPE_COMPATIBLE_EVENTS_MAP,
-	EVENT_ID_EVENT_TYPE_MAP,
-	EVENT_TYPE_EVENT_ID_MAP,
-	RelationalOperators,
-	TimeSpans
+	RelationalOperators
 } from '../utils/constants';
 import {
-	createCustomValueMap,
-	getFilterCriterionIMap,
-	getIndexFromPropertyName
-} from '../utils/custom-inputs';
+	ASSET_TYPE_OPTIONS,
+	buildRemoteFilterValue,
+	DEFAULT_CONJUNCTION_CRITERION,
+	EVENT_TYPE_OPTIONS,
+	getAssetTypeFromValue,
+	getConjunctionCriterionFromValue,
+	getEventTypeFromValue,
+	isValidOccurrenceCount,
+	OCCURRENCE_OPTIONS
+} from './shared/remote-filter-input-helpers';
 import {Criterion, ISegmentEditorCustomInputBase} from '../utils/types';
 import {CustomValue} from 'shared/util/records';
+import {getIndexFromPropertyName} from '../utils/custom-inputs';
 import {Icon, Option, Picker} from '@clayui/core';
 import {isValid} from '../utils/utils';
 
-const isValidOccurrenceCount = (count: number | string) =>
-	isValid(count) && Number(count) >= 0;
+export {
+	ASSET_TYPE_OPTIONS,
+	EVENT_TYPE_OPTIONS,
+	getAssetTypeFromValue,
+	getConjunctionCriterionFromValue,
+	getEventTypeFromValue,
+	OCCURRENCE_OPTIONS
+};
 
-export const EVENT_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('all-events'), value: 'all'},
-	{label: Liferay.Language.get('view'), value: 'view'},
-	{label: Liferay.Language.get('download'), value: 'download'},
-	{label: Liferay.Language.get('impression'), value: 'impression'},
-	{label: Liferay.Language.get('submit'), value: 'submit'},
-	{label: Liferay.Language.get('comment'), value: 'comment'}
-];
+const VOCABULARY_CONFIG = {
+	idProperty: 'vocabularies/id',
+	nameProperty: 'vocabularies/name',
+	supportsCategories: true
+};
 
-export const OCCURRENCE_OPTIONS = [
-	{
-		label: Liferay.Language.get('at-least'),
-		value: RelationalOperators.GE
-	},
-	{
-		label: Liferay.Language.get('at-most'),
-		value: RelationalOperators.LE
-	}
-];
-
-export const ASSET_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('any'), value: 'any'},
-	{label: Liferay.Language.get('blogs'), value: 'blogs'},
-	{label: Liferay.Language.get('forms'), value: 'forms'},
-	{
-		label: Liferay.Language.get('documents-and-media'),
-		value: 'documents-and-media'
-	},
-	{label: Liferay.Language.get('web-content'), value: 'web-content'},
-	{
-		label: Liferay.Language.get('basic-web-content'),
-		value: 'basic-web-content'
-	},
-	{label: Liferay.Language.get('basic-document'), value: 'basic-document'},
-	{label: Liferay.Language.get('knowledge-base'), value: 'knowledge-base'}
-];
-
-const DEFAULT_CONJUNCTION_CRITERION = {
-	operatorName: RelationalOperators.GT as any,
-	propertyName: 'day',
-	touched: false,
-	valid: true,
-	value: TimeSpans.Last24Hours
-} as Criterion & {touched: boolean; valid: boolean};
-
-function buildValue(
+export function buildValue(
 	eventType: React.Key,
 	assetType: React.Key,
 	occurrenceOperator: React.Key,
 	occurrenceCount: number | string,
 	conjunctionCriterion: Criterion & {touched: boolean; valid: boolean},
 	vocabularyId: string,
+	vocabularyName: string,
 	categories: CategoryItem[]
 ): CustomValue {
-	const applicationId =
-		assetType !== 'any'
-			? ASSET_TYPE_APPLICATION_ID_MAP[assetType as string]
-			: undefined;
-
-	const eventId =
-		eventType !== 'all' && assetType !== 'any'
-			? EVENT_TYPE_EVENT_ID_MAP[eventType as string]?.[
-					assetType as string
-			  ]
-			: undefined;
-
-	const activityKeyValue = applicationId
-		? eventId
-			? `${applicationId}#${eventId}`
-			: applicationId
-		: undefined;
-
-	const criterionItems: (Criterion & {touched: boolean; valid: boolean})[] = [
+	return buildRemoteFilterValue(
 		{
-			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'vocabularies/id',
-			touched: false,
-			valid: true,
-			value: vocabularyId
-		} as Criterion & {touched: boolean; valid: boolean}
-	];
-
-	if (activityKeyValue) {
-		criterionItems.push({
-			operatorName: RelationalOperators.EQ as any,
-			propertyName: 'activityKey',
-			touched: false,
-			valid: true,
-			value: activityKeyValue
-		} as Criterion & {touched: boolean; valid: boolean});
-	}
-
-	if (categories.length > 0) {
-		criterionItems.push({
-			operatorName: RelationalOperators.In as any,
-			propertyName: 'categories/id',
-			touched: false,
-			valid: true,
-			value: categories.map(c => c.id)
-		} as Criterion & {touched: boolean; valid: boolean});
-	}
-
-	criterionItems.push(conjunctionCriterion);
-
-	return createCustomValueMap([
-		{key: 'operator', value: occurrenceOperator},
-		{key: 'value', value: occurrenceCount},
-		{key: 'criterionGroup', value: criterionItems}
-	]);
-}
-
-function getAssetTypeFromValue(value: CustomValue | undefined): React.Key {
-	if (!value) return 'any';
-
-	const activityKeyIndex = getIndexFromPropertyName(value, 'activityKey');
-
-	if (activityKeyIndex < 0) return 'any';
-
-	const activityKey = value.getIn([
-		'criterionGroup',
-		'items',
-		activityKeyIndex,
-		'value'
-	]) as string;
-
-	const [applicationId] = activityKey.split('#');
-
-	return APPLICATION_ID_ASSET_TYPE_MAP[applicationId] ?? 'any';
-}
-
-function getEventTypeFromValue(value: CustomValue | undefined): React.Key {
-	if (!value) return 'all';
-
-	const activityKeyIndex = getIndexFromPropertyName(value, 'activityKey');
-
-	if (activityKeyIndex < 0) return 'all';
-
-	const activityKey = value.getIn([
-		'criterionGroup',
-		'items',
-		activityKeyIndex,
-		'value'
-	]) as string;
-
-	const [, eventId] = activityKey.split('#');
-
-	if (!eventId) return 'all';
-
-	return EVENT_ID_EVENT_TYPE_MAP[eventId] ?? 'all';
-}
-
-function getConjunctionCriterionFromValue(
-	value: CustomValue | undefined
-): Criterion & {touched: boolean; valid: boolean} {
-	if (!value) return DEFAULT_CONJUNCTION_CRITERION;
-
-	const dayIndex = getIndexFromPropertyName(value, 'day');
-
-	if (dayIndex < 0) return DEFAULT_CONJUNCTION_CRITERION;
-
-	return (
-		(getFilterCriterionIMap(value, dayIndex)?.toJS() as Criterion & {
-			touched: boolean;
-			valid: boolean;
-		}) ?? DEFAULT_CONJUNCTION_CRITERION
+			assetType,
+			categories,
+			conjunctionCriterion,
+			entityId: vocabularyId,
+			entityName: vocabularyName,
+			eventType,
+			occurrenceCount,
+			occurrenceOperator
+		},
+		VOCABULARY_CONFIG
 	);
+}
+
+export function getCategoriesFromValue(
+	value: CustomValue | undefined
+): CategoryItem[] {
+	if (!value) return [];
+
+	const catIndex = getIndexFromPropertyName(value, 'categories');
+
+	if (catIndex >= 0) {
+		const catValue = value.getIn([
+			'criterionGroup',
+			'items',
+			catIndex,
+			'value'
+		]) as any;
+
+		return catValue
+			? ((catValue.toJS?.() ?? catValue) as CategoryItem[])
+			: [];
+	}
+
+	const items = value.getIn(['criterionGroup', 'items']) as any;
+
+	if (!items) return [];
+
+	const orGroup = items.find(
+		(item: any) => item.get?.('conjunctionName') === 'or'
+	);
+
+	if (orGroup) {
+		const categories: CategoryItem[] = [];
+
+		orGroup.get?.('items')?.forEach((andGroup: any) => {
+			const andItems = andGroup.get?.('items');
+
+			if (!andItems) return;
+
+			const idItem = andItems.find(
+				(i: any) => i.get?.('propertyName') === 'categories/id'
+			);
+			const nameItem = andItems.find(
+				(i: any) => i.get?.('propertyName') === 'categories/name'
+			);
+
+			if (idItem && nameItem) {
+				categories.push({
+					id: (idItem.get?.('value') as string) ?? '',
+					name: (nameItem.get?.('value') as string) ?? ''
+				});
+			}
+		});
+
+		return categories;
+	}
+
+	const catIdItem = items.find(
+		(i: any) => i.get?.('propertyName') === 'categories/id'
+	);
+	const catNameItem = items.find(
+		(i: any) => i.get?.('propertyName') === 'categories/name'
+	);
+
+	if (catIdItem && catNameItem) {
+		return [
+			{
+				id: (catIdItem.get?.('value') as string) ?? '',
+				name: (catNameItem.get?.('value') as string) ?? ''
+			}
+		];
+	}
+
+	return [];
 }
 
 export default function VocabularyInput({
@@ -224,10 +168,12 @@ export default function VocabularyInput({
 	const [conjunctionCriterion, setConjunctionCriterion] = useState<
 		Criterion & {touched: boolean; valid: boolean}
 	>(getConjunctionCriterionFromValue(value));
-	const [categories, setCategories] = useState<CategoryItem[]>([]);
+	const [categories, setCategories] = useState<CategoryItem[]>(
+		getCategoriesFromValue(value)
+	);
 
 	useEffect(() => {
-		if (!value?.get('criterionGroup')) {
+		if (!value || getIndexFromPropertyName(value, 'vocabularies/id') < 0) {
 			onChange({
 				touched: false,
 				valid: true,
@@ -238,6 +184,7 @@ export default function VocabularyInput({
 					occurrenceCount,
 					conjunctionCriterion,
 					property.name,
+					displayValue ?? '',
 					categories
 				)
 			});
@@ -262,6 +209,7 @@ export default function VocabularyInput({
 				occurrenceCount,
 				conjunctionCriterion,
 				property.name,
+				displayValue ?? '',
 				newCategories
 			)
 		});
@@ -284,6 +232,7 @@ export default function VocabularyInput({
 				occurrenceCount,
 				newCriterion,
 				property.name,
+				displayValue ?? '',
 				categories
 			)
 		});
@@ -299,7 +248,7 @@ export default function VocabularyInput({
 				<OperatorDropdown />
 
 				<Form.GroupItem className='entity-name' label shrink>
-					{Liferay.Language.get('triggered')}
+					{Liferay.Language.get('triggered').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
@@ -328,6 +277,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
+									displayValue ?? '',
 									categories
 								)
 							});
@@ -366,7 +316,7 @@ export default function VocabularyInput({
 
 			<Form.Group autoFit>
 				<Form.GroupItem className='entity-name' label shrink>
-					{Liferay.Language.get('for')}
+					{Liferay.Language.get('for').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
@@ -404,6 +354,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
+									displayValue ?? '',
 									categories
 								)
 							});
@@ -417,7 +368,7 @@ export default function VocabularyInput({
 				</Form.GroupItem>
 
 				<Form.GroupItem className='entity-name' label shrink>
-					{Liferay.Language.get('asset-type')}
+					{Liferay.Language.get('asset-type').toLowerCase()}
 				</Form.GroupItem>
 
 				<Form.GroupItem shrink>
@@ -442,6 +393,7 @@ export default function VocabularyInput({
 									occurrenceCount,
 									conjunctionCriterion,
 									property.name,
+									displayValue ?? '',
 									categories
 								)
 							});
@@ -481,6 +433,7 @@ export default function VocabularyInput({
 									inputVal,
 									conjunctionCriterion,
 									property.name,
+									displayValue ?? '',
 									categories
 								)
 							});
@@ -510,6 +463,7 @@ export default function VocabularyInput({
 									numberVal,
 									conjunctionCriterion,
 									property.name,
+									displayValue ?? '',
 									categories
 								)
 							});

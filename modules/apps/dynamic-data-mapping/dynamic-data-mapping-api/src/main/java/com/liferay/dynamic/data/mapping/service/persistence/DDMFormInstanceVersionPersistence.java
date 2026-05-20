@@ -35,48 +35,6 @@ public interface DDMFormInstanceVersionPersistence
 	 */
 
 	/**
-	 * Returns all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId);
-
-	/**
-	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @return the range of matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63;.
 	 *
 	 * <p>
@@ -149,16 +107,6 @@ public interface DDMFormInstanceVersionPersistence
 		throws NoSuchFormInstanceVersionException;
 
 	/**
-	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param version the version
-	 * @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
-	 */
-	public DDMFormInstanceVersion fetchByF_V(
-		long formInstanceId, String version);
-
-	/**
 	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param formInstanceId the form instance ID
@@ -188,51 +136,6 @@ public interface DDMFormInstanceVersionPersistence
 	 * @return the number of matching ddm form instance versions
 	 */
 	public int countByF_V(long formInstanceId, String version);
-
-	/**
-	 * Returns all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @return the matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status);
-
-	/**
-	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @return the range of matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance versions
-	 */
-	public java.util.List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
@@ -339,5 +242,130 @@ public interface DDMFormInstanceVersionPersistence
 	 */
 	public DDMFormInstanceVersion fetchByPrimaryKey(long formInstanceVersionId);
 
+	/**
+	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param version the version
+	 * @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
+	 */
+	public default DDMFormInstanceVersion fetchByF_V(
+		long formInstanceId, String version) {
+
+		return fetchByF_V(formInstanceId, version, true);
+	}
+
+	/**
+	 * Returns all the ddm form instance versions where formInstanceId = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
+		long formInstanceId) {
+
+		return findByFormInstanceId(
+			formInstanceId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance versions
+	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
+	 * @return the range of matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
+		long formInstanceId, int start, int end) {
+
+		return findByFormInstanceId(formInstanceId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance versions
+	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByFormInstanceId(
+		long formInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
+			orderByComparator) {
+
+		return findByFormInstanceId(
+			formInstanceId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param status the status
+	 * @return the matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByF_S(
+		long formInstanceId, int status) {
+
+		return findByF_S(
+			formInstanceId, status,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param status the status
+	 * @param start the lower bound of the range of ddm form instance versions
+	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
+	 * @return the range of matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByF_S(
+		long formInstanceId, int status, int start, int end) {
+
+		return findByF_S(formInstanceId, status, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param status the status
+	 * @param start the lower bound of the range of ddm form instance versions
+	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance versions
+	 */
+	public default java.util.List<DDMFormInstanceVersion> findByF_S(
+		long formInstanceId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMFormInstanceVersion>
+			orderByComparator) {
+
+		return findByF_S(
+			formInstanceId, status, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1258852157
+// LIFERAY-SERVICE-BUILDER-HASH:1112049371

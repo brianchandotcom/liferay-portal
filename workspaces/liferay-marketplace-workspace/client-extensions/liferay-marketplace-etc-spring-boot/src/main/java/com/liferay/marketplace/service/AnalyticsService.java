@@ -65,48 +65,60 @@ public class AnalyticsService extends BaseService {
 	}
 
 	public String provision(JSONObject jsonObject) throws Exception {
-		String response = WebClient.builder(
-		).baseUrl(
-			_analyticsAuthUrl
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, getAuthorization()
-		).build(
-		).post(
-		).uri(
-			"/o/faro/main/project/unprovisioned"
-		).contentType(
-			MediaType.APPLICATION_FORM_URLENCODED
-		).body(
-			BodyInserters.fromFormData(
-				"corpProjectName", jsonObject.optString("corpProjectName")
-			).with(
-				"corpProjectUuid", jsonObject.optString("corpProjectUuid")
-			).with(
-				"incidentReportEmailAddresses",
-				jsonObject.getJSONArray(
-					"incidentReportEmailAddresses"
-				).toString()
-			).with(
-				"name", jsonObject.getString("name")
-			).with(
-				"serverLocation", jsonObject.getString("serverLocation")
-			).with(
-				"sharedCluster", "false"
-			).with(
-				"trial", "true"
-			).with(
-				"ownerEmailAddress", jsonObject.getString("ownerEmailAddress")
-			)
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
+		try {
+			String response = WebClient.builder(
+			).baseUrl(
+				_analyticsAuthUrl
+			).defaultHeader(
+				HttpHeaders.AUTHORIZATION, getAuthorization()
+			).build(
+			).post(
+			).uri(
+				"/o/faro/main/project/provisioned"
+			).contentType(
+				MediaType.APPLICATION_FORM_URLENCODED
+			).body(
+				BodyInserters.fromFormData(
+					"corpProjectName", jsonObject.optString("corpProjectName")
+				).with(
+					"corpProjectUuid", jsonObject.optString("corpProjectUuid")
+				).with(
+					"incidentReportEmailAddresses",
+					jsonObject.getJSONArray(
+						"incidentReportEmailAddresses"
+					).toString()
+				).with(
+					"name", jsonObject.getString("name")
+				).with(
+					"serverLocation", jsonObject.getString("serverLocation")
+				).with(
+					"sharedCluster", "false"
+				).with(
+					"trial", "false"
+				).with(
+					"ownerEmailAddress",
+					jsonObject.getString("ownerEmailAddress")
+				)
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block();
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Analytics project created " + response);
+			if (_log.isInfoEnabled()) {
+				_log.info("Analytics project created " + response);
+			}
+
+			return response;
 		}
+		catch (WebClientResponseException webClientResponseException) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to provision Analytics Cloud project: ", jsonObject,
+					"\n",
+					webClientResponseException.getResponseBodyAsString()));
 
-		return response;
+			throw webClientResponseException;
+		}
 	}
 
 	private static final Log _log = LogFactory.getLog(AnalyticsService.class);

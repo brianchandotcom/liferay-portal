@@ -6,6 +6,7 @@
 package com.liferay.saml.web.internal.struts;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.saml.runtime.configuration.SamlProviderConfigurationHelper;
 
@@ -57,7 +58,10 @@ public class AssertionConsumerServiceActionTest {
 			"/common/referer_js.jsp",
 			assertionConsumerServiceAction.execute(
 				new MockHttpServletRequest(
-					"GET", "http://localhost:8080/c/portal/saml/acs"),
+					"GET",
+					"http://localhost:" +
+						PortalUtil.getPortalServerPort(false) +
+							"/c/portal/saml/acs"),
 				new MockHttpServletResponse()));
 
 		Mockito.verify(

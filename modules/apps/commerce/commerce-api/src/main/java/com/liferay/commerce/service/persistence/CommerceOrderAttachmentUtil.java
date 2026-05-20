@@ -134,54 +134,6 @@ public class CommerceOrderAttachmentUtil {
 	}
 
 	/**
-	 * Returns all the commerce order attachments where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
 	 *
 	 * <p>
@@ -269,19 +221,6 @@ public class CommerceOrderAttachmentUtil {
 	}
 
 	/**
-	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
-	 */
-	public static CommerceOrderAttachment fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -318,60 +257,6 @@ public class CommerceOrderAttachmentUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the commerce order attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -454,58 +339,6 @@ public class CommerceOrderAttachmentUtil {
 	}
 
 	/**
-	 * Returns all the commerce order attachments where commerceOrderId = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @return the matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByCommerceOrderId(
-		long commerceOrderId) {
-
-		return getPersistence().findByCommerceOrderId(commerceOrderId);
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByCommerceOrderId(
-		long commerceOrderId, int start, int end) {
-
-		return getPersistence().findByCommerceOrderId(
-			commerceOrderId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByCommerceOrderId(
-		long commerceOrderId, int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return getPersistence().findByCommerceOrderId(
-			commerceOrderId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
 	 *
 	 * <p>
@@ -577,61 +410,6 @@ public class CommerceOrderAttachmentUtil {
 	 */
 	public static int countByCommerceOrderId(long commerceOrderId) {
 		return getPersistence().countByCommerceOrderId(commerceOrderId);
-	}
-
-	/**
-	 * Returns all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @return the matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByC_R(
-		long commerceOrderId, boolean restricted) {
-
-		return getPersistence().findByC_R(commerceOrderId, restricted);
-	}
-
-	/**
-	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @return the range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByC_R(
-		long commerceOrderId, boolean restricted, int start, int end) {
-
-		return getPersistence().findByC_R(
-			commerceOrderId, restricted, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceOrderId the commerce order ID
-	 * @param restricted the restricted
-	 * @param start the lower bound of the range of commerce order attachments
-	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce order attachments
-	 */
-	public static List<CommerceOrderAttachment> findByC_R(
-		long commerceOrderId, boolean restricted, int start, int end,
-		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
-
-		return getPersistence().findByC_R(
-			commerceOrderId, restricted, start, end, orderByComparator);
 	}
 
 	/**
@@ -727,19 +505,6 @@ public class CommerceOrderAttachmentUtil {
 		throws com.liferay.commerce.exception.NoSuchOrderAttachmentException {
 
 		return getPersistence().findByERC_C(externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
-	 */
-	public static CommerceOrderAttachment fetchByERC_C(
-		String externalReferenceCode, long companyId) {
-
-		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
 	}
 
 	/**
@@ -841,6 +606,241 @@ public class CommerceOrderAttachmentUtil {
 		return getPersistence().fetchByPrimaryKey(commerceOrderAttachmentId);
 	}
 
+	/**
+	 * Returns the commerce order attachment where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	public static CommerceOrderAttachment fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns the commerce order attachment where externalReferenceCode = &#63; and companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @return the matching commerce order attachment, or <code>null</code> if a matching commerce order attachment could not be found
+	 */
+	public static CommerceOrderAttachment fetchByERC_C(
+		String externalReferenceCode, long companyId) {
+
+		return getPersistence().fetchByERC_C(externalReferenceCode, companyId);
+	}
+
+	/**
+	 * Returns all the commerce order attachments where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @return the matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId) {
+
+		return getPersistence().findByCommerceOrderId(commerceOrderId);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end) {
+
+		return getPersistence().findByCommerceOrderId(
+			commerceOrderId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByCommerceOrderId(
+		long commerceOrderId, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return getPersistence().findByCommerceOrderId(
+			commerceOrderId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @return the matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted) {
+
+		return getPersistence().findByC_R(commerceOrderId, restricted);
+	}
+
+	/**
+	 * Returns a range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @return the range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end) {
+
+		return getPersistence().findByC_R(
+			commerceOrderId, restricted, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce order attachments where commerceOrderId = &#63; and restricted = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.model.impl.CommerceOrderAttachmentModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceOrderId the commerce order ID
+	 * @param restricted the restricted
+	 * @param start the lower bound of the range of commerce order attachments
+	 * @param end the upper bound of the range of commerce order attachments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce order attachments
+	 */
+	public static List<CommerceOrderAttachment> findByC_R(
+		long commerceOrderId, boolean restricted, int start, int end,
+		OrderByComparator<CommerceOrderAttachment> orderByComparator) {
+
+		return getPersistence().findByC_R(
+			commerceOrderId, restricted, start, end, orderByComparator);
+	}
+
 	public static CommerceOrderAttachmentPersistence getPersistence() {
 		return _persistence;
 	}
@@ -854,4 +854,4 @@ public class CommerceOrderAttachmentUtil {
 	private static volatile CommerceOrderAttachmentPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:478671354
+// LIFERAY-SERVICE-BUILDER-HASH:-1414779910

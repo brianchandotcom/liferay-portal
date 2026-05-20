@@ -46,15 +46,6 @@ public interface FriendlyURLEntryMappingPersistence
 		throws NoSuchFriendlyURLEntryMappingException;
 
 	/**
-	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
-	 */
-	public FriendlyURLEntryMapping fetchByC_C(long classNameId, long classPK);
-
-	/**
 	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param classNameId the class name ID
@@ -125,5 +116,18 @@ public interface FriendlyURLEntryMappingPersistence
 	public FriendlyURLEntryMapping fetchByPrimaryKey(
 		long friendlyURLEntryMappingId);
 
+	/**
+	 * Returns the friendly url entry mapping where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching friendly url entry mapping, or <code>null</code> if a matching friendly url entry mapping could not be found
+	 */
+	public default FriendlyURLEntryMapping fetchByC_C(
+		long classNameId, long classPK) {
+
+		return fetchByC_C(classNameId, classPK, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1969617901
+// LIFERAY-SERVICE-BUILDER-HASH:751695515

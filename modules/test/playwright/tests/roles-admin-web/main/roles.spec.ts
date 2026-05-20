@@ -1672,11 +1672,9 @@ test(
 			site1
 		);
 
-		const site2 = await apiHelpers.headlessSite.createSite({
+		const site2 = await apiHelpers.headlessAdminSite.postSite({
 			name: getRandomString(),
 		});
-
-		apiHelpers.data.push({id: site2.externalReferenceCode, type: 'site'});
 
 		const bookmarkName2 = getRandomString();
 

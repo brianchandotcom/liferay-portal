@@ -3,10 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayDatePicker from '@clayui/date-picker';
 import {ClayInput} from '@clayui/form';
-import {ScreenReaderAnnouncerContext} from '@liferay/layout-js-components-web';
-import {sub} from 'frontend-js-web';
-import React, {FC, useContext, useMemo} from 'react';
+import {
+	ScreenReaderAnnouncerContext,
+	isNullOrUndefined,
+} from '@liferay/layout-js-components-web';
+import {useId} from 'frontend-js-components-web';
+import {dateUtils, sub} from 'frontend-js-web';
+import moment from 'moment';
+import React, {FC, useCallback, useContext, useRef, useState} from 'react';
 
 import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
@@ -14,16 +20,19 @@ import {
 	ObjectField,
 	ObjectFields,
 } from '../../../app/contexts/ObjectDataContext';
-import InfoItemService from '../../../app/services/InfoItemService';
+import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
 import {Condition as ConditionType, RuleError} from '../../../types/Rule';
+import RuleField from './RuleField';
 import RuleSelect from './RuleSelect';
+import OPERATORS from './operators';
 
 interface ConditionProps {
 	condition: ConditionType;
 	inputFragmentItems: {label: string; value: string}[];
+	mappingFieldItems: {label: string; type: string; value: string}[];
 	onConditionChange: (condition: ConditionType) => void;
 }
 
@@ -80,16 +89,49 @@ export const USER_CONDITION_ITEMS = [
 	},
 ];
 
-export const FORM_FRAGMENT_CONDITION_ITEMS = [
-	{
-		label: Liferay.Language.get('is-equal-to'),
-		value: 'equal',
-	},
-	{
-		label: Liferay.Language.get('is-not-equal-to'),
-		value: 'not-equal',
-	},
-] as const;
+const DEFAULT_OPERATORS = [OPERATORS.EQUAL, OPERATORS.NOT_EQUAL] as const;
+
+export function hasValueInput(
+	type: NonNullable<ConditionType['options']>['type'] | undefined
+): boolean {
+	return (
+		!isNullOrUndefined(type) &&
+		type !== 'is-empty' &&
+		type !== 'is-not-empty'
+	);
+}
+
+export function getOperators(type: string | undefined): ReadonlyArray<{
+	label: string;
+	value: NonNullable<ConditionType['options']>['type'];
+}> {
+	switch (type) {
+		case 'date':
+		case 'date-time':
+		case 'number':
+			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
+				OPERATORS.GREATER_THAN,
+				OPERATORS.GREATER_THAN_OR_EQUALS,
+				OPERATORS.LESS_THAN,
+				OPERATORS.LESS_THAN_OR_EQUALS,
+			];
+
+		case 'text':
+			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
+				OPERATORS.CONTAINS,
+				OPERATORS.DOES_NOT_CONTAIN,
+				OPERATORS.IS_EMPTY,
+				OPERATORS.IS_NOT_EMPTY,
+			];
+
+		default:
+			return DEFAULT_OPERATORS;
+	}
+}
 
 const VALUE_SELECTOR_COMPONENTS: Record<
 	(typeof CONDITION_VALUES)[keyof typeof CONDITION_VALUES],
@@ -106,6 +148,7 @@ const VALUE_SELECTOR_COMPONENTS: Record<
 export default function Condition({
 	condition,
 	inputFragmentItems,
+	mappingFieldItems,
 	onConditionChange,
 }: ConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
@@ -117,7 +160,8 @@ export default function Condition({
 	};
 
 	const conditionTypeItems =
-		config.layoutType === LAYOUT_TYPES.display
+		config.layoutType === LAYOUT_TYPES.display &&
+		config.selectedMappingTypes?.formEnabled
 			? [
 					...CONDITION_TYPE_ITEMS,
 					{
@@ -147,6 +191,7 @@ export default function Condition({
 			{condition.type === TYPE_VALUES.field ? (
 				<FieldFragmentTypeSelectors
 					condition={condition}
+					items={mappingFieldItems}
 					onConditionChange={onConditionChange}
 					onErrorChange={onErrorChange}
 					sendMessage={sendMessage}
@@ -219,7 +264,7 @@ function FormFragmentTypeSelectors({
 						Liferay.Language.get('select-x'),
 						Liferay.Language.get('type')
 					)}
-					items={FORM_FRAGMENT_CONDITION_ITEMS}
+					items={DEFAULT_OPERATORS}
 					onErrorChange={onErrorChange}
 					onSelectionChange={(type) => {
 						onConditionChange({
@@ -287,40 +332,20 @@ function FormFragmentTypeSelectors({
 
 function FieldFragmentTypeSelectors({
 	condition,
+	items,
 	onConditionChange,
 	onErrorChange,
 	sendMessage,
 }: {
 	condition: ConditionType;
+	items: {label: string; type: string; value: string}[];
 	onConditionChange: (condition: ConditionType) => void;
 	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
 }) {
-	const {subtype, type} = config.selectedMappingTypes!;
+	const selectedItem = items.find((item) => item.value === condition.field);
 
-	const mappingFields = useCache({
-		fetcher: () =>
-			InfoItemService.getAvailableStructureMappingFields({
-				classNameId: type.id,
-				classTypeId: subtype ? subtype.id : '',
-			}),
-		key: subtype
-			? [CACHE_KEYS.mappingFields, type.id, subtype.id]
-			: [CACHE_KEYS.mappingFields, type.id],
-	});
-
-	const items = useMemo(
-		() => filterAndConvertMappingFields(mappingFields),
-		[mappingFields]
-	);
-
-	if (!mappingFields) {
-		return null;
-	}
-
-	const selectedKey = items.some((item) => item.value === condition.field)
-		? condition.field
-		: undefined;
+	const selectedKey = selectedItem ? condition.field : undefined;
 
 	return (
 		<>
@@ -347,7 +372,7 @@ function FieldFragmentTypeSelectors({
 						Liferay.Language.get('select-x'),
 						Liferay.Language.get('type')
 					)}
-					items={FORM_FRAGMENT_CONDITION_ITEMS}
+					items={getOperators(selectedItem?.type)}
 					onErrorChange={onErrorChange}
 					onSelectionChange={(type) => {
 						onConditionChange({
@@ -361,7 +386,7 @@ function FieldFragmentTypeSelectors({
 				/>
 			) : null}
 
-			{condition.options?.type ? (
+			{hasValueInput(condition.options?.type) ? (
 				<RuleSelect
 					aria-label={sub(
 						Liferay.Language.get('select-x'),
@@ -379,36 +404,135 @@ function FieldFragmentTypeSelectors({
 				/>
 			) : null}
 
-			{condition.options?.type ? (
-				<ClayInput
-					aria-label={Liferay.Language.get('value')}
-					className="w-auto"
+			{hasValueInput(condition.options?.type) ? (
+				<ConditionValueInput
+					fieldType={selectedItem?.type}
 					onBlur={() => {
 						sendMessage(
 							Liferay.Language.get('condition-completed')
 						);
 					}}
-					onChange={(event) => {
+					onChange={(value) => {
 						onConditionChange({
 							...condition,
 							options: {
 								...condition.options!,
-								value: event.target.value,
+								value,
 							},
 						});
 					}}
-					onKeyDown={(event) => {
-						if (event.key === 'Enter') {
-							sendMessage(
-								Liferay.Language.get('condition-completed')
-							);
-						}
-					}}
-					sizing="sm"
+					onErrorChange={onErrorChange}
 					value={condition.options?.value}
 				/>
 			) : null}
 		</>
+	);
+}
+
+const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
+
+function ConditionValueInput({
+	fieldType,
+	onBlur,
+	onChange,
+	onErrorChange,
+	value,
+}: {
+	fieldType: string | undefined;
+	onBlur: () => void;
+	onChange: (value: string) => void;
+	onErrorChange: (error: RuleError | null) => void;
+	value: string | undefined;
+}) {
+	const isDateField = fieldType === 'date' || fieldType === 'date-time';
+	const isDateTime = fieldType === 'date-time';
+	const dateFormat = isDateTime ? DATE_TIME_FORMAT : DATE_FORMAT;
+
+	const [hasError, setHasError] = useState(false);
+	const id = useId();
+	const inputRef = useRef<HTMLInputElement | null>(null);
+
+	const errorMessage = Liferay.Language.get('please-enter-a-valid-date');
+
+	const handleError = useCallback(
+		(value: string) => {
+			if (!isDateField) {
+				return;
+			}
+
+			const isValid = !value || moment(value, dateFormat, true).isValid();
+
+			setHasError(!isValid);
+
+			if (inputRef.current) {
+				onErrorChange(
+					isValid
+						? null
+						: {element: inputRef.current, message: errorMessage}
+				);
+			}
+		},
+		[dateFormat, errorMessage, isDateField, onErrorChange]
+	);
+
+	useRuleValidation(() => handleError(value ?? ''));
+
+	if (isDateField) {
+		return (
+			<RuleField
+				className="mb-0 page-editor__rule-builder-date-picker w-100"
+				errorMessage={errorMessage}
+				fieldId={id}
+				hasError={hasError}
+			>
+				<ClayDatePicker
+					firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+					id={id}
+					months={dateUtils.getMonthsLong()}
+					onBlur={() => {
+						handleError(value ?? '');
+
+						onBlur();
+					}}
+					onChange={(nextValue) => {
+						handleError(nextValue as string);
+
+						onChange(nextValue as string);
+					}}
+					placeholder={dateFormat}
+					ref={inputRef}
+					time={isDateTime}
+					value={value ?? ''}
+					weekdaysShort={dateUtils.getWeekdaysShort() as string[]}
+					{...({sizing: 'sm'} as {sizing: 'sm'})}
+					years={{
+						end: new Date().getFullYear() + 25,
+						start: new Date().getFullYear() - 50,
+					}}
+				/>
+			</RuleField>
+		);
+	}
+
+	const isNumber = fieldType === 'number';
+
+	return (
+		<ClayInput
+			aria-label={Liferay.Language.get('value')}
+			className="w-auto"
+			onBlur={onBlur}
+			onChange={(event) => onChange(event.target.value)}
+			onKeyDown={(event) => {
+				if (event.key === 'Enter') {
+					onBlur();
+				}
+			}}
+			sizing="sm"
+			step={isNumber ? 'any' : undefined}
+			type={isNumber ? 'number' : 'text'}
+			value={value}
+		/>
 	);
 }
 
@@ -630,25 +754,20 @@ export function convertOptionsToConditionValue(
 
 export function filterAndConvertMappingFields(
 	mappingFields: ObjectFields | null
-): {label: string; value: string}[] {
-	if (!config.selectedMappingTypes?.type) {
+): {label: string; type: string; value: string}[] {
+	if (!mappingFields || !config.selectedMappingTypes?.type) {
 		return [];
 	}
 
 	return mappingFields
-		? mappingFields
-				.filter(
-					(field) =>
-						field.label === config.selectedMappingTypes?.type.label
-				)
-				.flatMap((field) =>
-					'fields' in field ? field.fields : [field]
-				)
-				.map((field) => {
-					return {
-						label: field.label,
-						value: (field as ObjectField).key,
-					};
-				})
-		: [];
+		.flatMap((field) => ('fields' in field ? field.fields : [field]))
+		.map((field) => {
+			const objectField = field as ObjectField;
+
+			return {
+				label: objectField.label,
+				type: objectField.type,
+				value: objectField.key,
+			};
+		});
 }

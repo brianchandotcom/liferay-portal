@@ -11,9 +11,9 @@ import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
+import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.search.configuration.IndexStatusManagerConfiguration;
 import com.liferay.portal.search.index.IndexStatusManager;
-import com.liferay.portal.tools.DBUpgrader;
 
 import java.util.Collections;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class IndexStatusManagerImpl implements IndexStatusManager {
 
 	@Override
 	public boolean isIndexReadOnly() {
-		if (DBUpgrader.isUpgradeClient() ||
+		if (UpgradeProcessUtil.isUpgradeClient() ||
 			IndexStatusManagerThreadLocal.isIndexReadOnly() || _indexReadOnly ||
 			StartupHelperUtil.isUpgrading()) {
 

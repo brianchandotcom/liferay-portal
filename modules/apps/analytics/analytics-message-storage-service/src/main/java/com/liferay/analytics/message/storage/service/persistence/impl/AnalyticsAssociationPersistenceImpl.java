@@ -81,63 +81,8 @@ public class AnalyticsAssociationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByCompanyId;
-	private FinderPath _finderPathWithoutPaginationFindByCompanyId;
-	private FinderPath _finderPathCountByCompanyId;
 	private CollectionPersistenceFinder<AnalyticsAssociation>
 		_collectionPersistenceFinderByCompanyId;
-
-	/**
-	 * Returns all the analytics associations where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByCompanyId(long companyId) {
-		return findByCompanyId(
-			companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the analytics associations where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @return the range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the analytics associations where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		return findByCompanyId(companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the analytics associations where companyId = &#63;.
@@ -229,8 +174,6 @@ public class AnalyticsAssociationPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_LtM;
-	private FinderPath _finderPathWithPaginationCountByC_LtM;
 	private CollectionPersistenceFinder<AnalyticsAssociation>
 		_collectionPersistenceFinderByC_LtM;
 
@@ -390,71 +333,8 @@ public class AnalyticsAssociationPersistenceImpl
 			finderCache, new Object[] {companyId, modifiedDate});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A;
-	private FinderPath _finderPathCountByC_A;
 	private CollectionPersistenceFinder<AnalyticsAssociation>
 		_collectionPersistenceFinderByC_A;
-
-	/**
-	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @return the matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A(
-		long companyId, String associationClassName) {
-
-		return findByC_A(
-			companyId, associationClassName, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the analytics associations where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @return the range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A(
-		long companyId, String associationClassName, int start, int end) {
-
-		return findByC_A(companyId, associationClassName, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the analytics associations where companyId = &#63; and associationClassName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A(
-		long companyId, String associationClassName, int start, int end,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		return findByC_A(
-			companyId, associationClassName, start, end, orderByComparator,
-			true);
-	}
 
 	/**
 	 * Returns an ordered range of all the analytics associations where companyId = &#63; and associationClassName = &#63;.
@@ -553,8 +433,6 @@ public class AnalyticsAssociationPersistenceImpl
 			finderCache, new Object[] {companyId, associationClassName});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_GtM_A;
-	private FinderPath _finderPathWithPaginationCountByC_GtM_A;
 	private CollectionPersistenceFinder<AnalyticsAssociation>
 		_collectionPersistenceFinderByC_GtM_A;
 
@@ -735,78 +613,8 @@ public class AnalyticsAssociationPersistenceImpl
 			new Object[] {companyId, modifiedDate, associationClassName});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_A_A;
-	private FinderPath _finderPathWithoutPaginationFindByC_A_A;
-	private FinderPath _finderPathCountByC_A_A;
 	private CollectionPersistenceFinder<AnalyticsAssociation>
 		_collectionPersistenceFinderByC_A_A;
-
-	/**
-	 * Returns all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @return the matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A_A(
-		long companyId, String associationClassName, long associationClassPK) {
-
-		return findByC_A_A(
-			companyId, associationClassName, associationClassPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @return the range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A_A(
-		long companyId, String associationClassName, long associationClassPK,
-		int start, int end) {
-
-		return findByC_A_A(
-			companyId, associationClassName, associationClassPK, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AnalyticsAssociationModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param associationClassName the association class name
-	 * @param associationClassPK the association class pk
-	 * @param start the lower bound of the range of analytics associations
-	 * @param end the upper bound of the range of analytics associations (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching analytics associations
-	 */
-	@Override
-	public List<AnalyticsAssociation> findByC_A_A(
-		long companyId, String associationClassName, long associationClassPK,
-		int start, int end,
-		OrderByComparator<AnalyticsAssociation> orderByComparator) {
-
-		return findByC_A_A(
-			companyId, associationClassName, associationClassPK, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the analytics associations where companyId = &#63; and associationClassName = &#63; and associationClassPK = &#63;.
@@ -1203,29 +1011,25 @@ public class AnalyticsAssociationPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId"}, true);
-
-		_finderPathWithoutPaginationFindByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			true);
-
-		_finderPathCountByCompanyId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] {Long.class.getName()}, new String[] {"companyId"},
-			false);
-
 		_collectionPersistenceFinderByCompanyId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByCompanyId,
-				_finderPathWithoutPaginationFindByCompanyId,
-				_finderPathCountByCompanyId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByCompanyId", new String[] {Long.class.getName()},
+					new String[] {"companyId"}, false),
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
@@ -1235,23 +1039,21 @@ public class AnalyticsAssociationPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AnalyticsAssociation::getCompanyId));
 
-		_finderPathWithPaginationFindByC_LtM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtM",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "modifiedDate"}, true);
-
-		_finderPathWithPaginationCountByC_LtM = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtM",
-			new String[] {Long.class.getName(), Date.class.getName()},
-			new String[] {"companyId", "modifiedDate"}, false);
-
 		_collectionPersistenceFinderByC_LtM = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_LtM, null,
-			_finderPathWithPaginationCountByC_LtM,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_LtM",
+				new String[] {
+					Long.class.getName(), Date.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "modifiedDate"}, true),
+			null,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtM",
+				new String[] {Long.class.getName(), Date.class.getName()},
+				new String[] {"companyId", "modifiedDate"}, false),
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1263,30 +1065,26 @@ public class AnalyticsAssociationPersistenceImpl
 				"analyticsAssociation.", "modifiedDate", FinderColumn.Type.DATE,
 				"<", true, true, AnalyticsAssociation::getModifiedDate));
 
-		_finderPathWithPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "associationClassName"}, true);
-
-		_finderPathWithoutPaginationFindByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "associationClassName"}, 0, 2, true,
-			null);
-
-		_finderPathCountByC_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "associationClassName"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByC_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A,
-			_finderPathWithoutPaginationFindByC_A, _finderPathCountByC_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "associationClassName"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "associationClassName"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"companyId", "associationClassName"}, 0, 2, false,
+				null),
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1299,29 +1097,32 @@ public class AnalyticsAssociationPersistenceImpl
 				FinderColumn.Type.STRING, "=", true, true,
 				AnalyticsAssociation::getAssociationClassName));
 
-		_finderPathWithPaginationFindByC_GtM_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GtM_A",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "modifiedDate", "associationClassName"},
-			true);
-
-		_finderPathWithPaginationCountByC_GtM_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtM_A",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"companyId", "modifiedDate", "associationClassName"},
-			false);
-
 		_collectionPersistenceFinderByC_GtM_A =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByC_GtM_A, null,
-				_finderPathWithPaginationCountByC_GtM_A,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GtM_A",
+					new String[] {
+						Long.class.getName(), Date.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"companyId", "modifiedDate", "associationClassName"
+					},
+					true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtM_A",
+					new String[] {
+						Long.class.getName(), Date.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"companyId", "modifiedDate", "associationClassName"
+					},
+					false),
 				_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 				_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 				AnalyticsAssociationModelImpl.ORDER_BY_JPQL,
@@ -1339,43 +1140,39 @@ public class AnalyticsAssociationPersistenceImpl
 					FinderColumn.Type.STRING, "=", true, true,
 					AnalyticsAssociation::getAssociationClassName));
 
-		_finderPathWithPaginationFindByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {
-				"companyId", "associationClassName", "associationClassPK"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "associationClassName", "associationClassPK"
-			},
-			0, 2, true, null);
-
-		_finderPathCountByC_A_A = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_A",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Long.class.getName()
-			},
-			new String[] {
-				"companyId", "associationClassName", "associationClassPK"
-			},
-			0, 2, false, null);
-
 		_collectionPersistenceFinderByC_A_A = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_A_A,
-			_finderPathWithoutPaginationFindByC_A_A, _finderPathCountByC_A_A,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_A_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {
+					"companyId", "associationClassName", "associationClassPK"
+				},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_A_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"companyId", "associationClassName", "associationClassPK"
+				},
+				0, 2, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A_A",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {
+					"companyId", "associationClassName", "associationClassPK"
+				},
+				0, 2, false, null),
 			_SQL_SELECT_ANALYTICSASSOCIATION_WHERE,
 			_SQL_COUNT_ANALYTICSASSOCIATION_WHERE,
 			AnalyticsAssociationModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1458,4 +1255,4 @@ public class AnalyticsAssociationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-853902181
+// LIFERAY-SERVICE-BUILDER-HASH:861174273

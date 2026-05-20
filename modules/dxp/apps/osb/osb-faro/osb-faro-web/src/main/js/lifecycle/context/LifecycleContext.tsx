@@ -10,6 +10,7 @@ import {
 	buildQueryString,
 	ILifecycleFilterValues
 } from '../utils/buildQueryString';
+import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 interface ILifecycleFilters extends ILifecycleFilterValues {
 	filterString: string;
@@ -17,6 +18,7 @@ interface ILifecycleFilters extends ILifecycleFilterValues {
 
 interface ILifecycleContext {
 	filters: ILifecycleFilters;
+	lifecycleId: string;
 	updateFilters: (newFilters: Partial<ILifecycleFilterValues>) => void;
 	resetFilters: () => void;
 }
@@ -25,8 +27,10 @@ const LifecycleContext = createContext<ILifecycleContext>({
 	filters: {
 		countryFilter: '',
 		filterString: '',
-		industryFilter: ''
+		industryFilter: '',
+		lifecycleStageFilter: LifecycleStages.AT_RISK
 	},
+	lifecycleId: '',
 	resetFilters: () => {},
 	updateFilters: () => {}
 });
@@ -36,10 +40,19 @@ export const useLifecycle = (): ILifecycleContext =>
 
 const initialValues: ILifecycleFilterValues = {
 	countryFilter: '',
-	industryFilter: ''
+	industryFilter: '',
+	lifecycleStageFilter: LifecycleStages.AT_RISK
 };
 
-export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
+interface ILifecycleContextProviderProps {
+	children: ReactNode;
+	lifecycleId: string;
+}
+
+export const LifecycleContextProvider = ({
+	children,
+	lifecycleId
+}: ILifecycleContextProviderProps) => {
 	const [filterValues, setFilterValues] =
 		useState<ILifecycleFilterValues>(initialValues);
 
@@ -60,8 +73,8 @@ export const LifecycleContextProvider = ({children}: {children: ReactNode}) => {
 	const resetFilters = useCallback(() => setFilterValues(initialValues), []);
 
 	const value = useMemo(
-		() => ({filters, resetFilters, updateFilters}),
-		[filters, resetFilters, updateFilters]
+		() => ({filters, lifecycleId, resetFilters, updateFilters}),
+		[filters, lifecycleId, resetFilters, updateFilters]
 	);
 
 	return (

@@ -104,6 +104,9 @@ public interface CPDefinitionGroupedEntryLocalService
 
 	public void deleteCPDefinitionGroupedEntries(long cpDefinitionId);
 
+	public void deleteCPDefinitionGroupedEntriesByEntryCProductId(
+		long entryCProductId);
+
 	/**
 	 * Deletes the cp definition grouped entry from the database. Also notifies the appropriate model listeners.
 	 *
@@ -398,4 +401,4 @@ public interface CPDefinitionGroupedEntryLocalService
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2074928756
+// LIFERAY-SERVICE-BUILDER-HASH:304905184

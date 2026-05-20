@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -86,72 +85,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByFormInstanceId;
-	private FinderPath _finderPathWithoutPaginationFindByFormInstanceId;
-	private FinderPath _finderPathCountByFormInstanceId;
 	private CollectionPersistenceFinder<DDMFormInstanceVersion>
 		_collectionPersistenceFinderByFormInstanceId;
 
 	/**
-	 * Returns all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId) {
-
-		return findByFormInstanceId(
-			formInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @return the range of matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId, int start, int end) {
-
-		return findByFormInstanceId(formInstanceId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByFormInstanceId(
-		long formInstanceId, int start, int end,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator) {
-
-		return findByFormInstanceId(
-			formInstanceId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param formInstanceId the form instance ID
@@ -237,7 +178,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceId});
 	}
 
-	private FinderPath _finderPathFetchByF_V;
 	private UniquePersistenceFinder<DDMFormInstanceVersion>
 		_uniquePersistenceFinderByF_V;
 
@@ -270,20 +210,6 @@ public class DDMFormInstanceVersionPersistenceImpl
 		}
 
 		return ddmFormInstanceVersion;
-	}
-
-	/**
-	 * Returns the ddm form instance version where formInstanceId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param version the version
-	 * @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
-	 */
-	@Override
-	public DDMFormInstanceVersion fetchByF_V(
-		long formInstanceId, String version) {
-
-		return fetchByF_V(formInstanceId, version, true);
 	}
 
 	/**
@@ -334,75 +260,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 			finderCache, new Object[] {formInstanceId, version});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByF_S;
-	private FinderPath _finderPathWithoutPaginationFindByF_S;
-	private FinderPath _finderPathCountByF_S;
 	private CollectionPersistenceFinder<DDMFormInstanceVersion>
 		_collectionPersistenceFinderByF_S;
 
 	/**
-	 * Returns all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @return the matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status) {
-
-		return findByF_S(
-			formInstanceId, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @return the range of matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status, int start, int end) {
-
-		return findByF_S(formInstanceId, status, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param status the status
-	 * @param start the lower bound of the range of ddm form instance versions
-	 * @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance versions
-	 */
-	@Override
-	public List<DDMFormInstanceVersion> findByF_S(
-		long formInstanceId, int status, int start, int end,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator) {
-
-		return findByF_S(
-			formInstanceId, status, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance versions where formInstanceId = &#63; and status = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>DDMFormInstanceVersionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param formInstanceId the form instance ID
@@ -786,29 +651,27 @@ public class DDMFormInstanceVersionPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByFormInstanceId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"formInstanceId"}, true);
-
-		_finderPathWithoutPaginationFindByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByFormInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, true);
-
-		_finderPathCountByFormInstanceId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByFormInstanceId",
-			new String[] {Long.class.getName()},
-			new String[] {"formInstanceId"}, false);
-
 		_collectionPersistenceFinderByFormInstanceId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByFormInstanceId,
-				_finderPathWithoutPaginationFindByFormInstanceId,
-				_finderPathCountByFormInstanceId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByFormInstanceId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"formInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByFormInstanceId", new String[] {Long.class.getName()},
+					new String[] {"formInstanceId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByFormInstanceId",
+					new String[] {Long.class.getName()},
+					new String[] {"formInstanceId"}, false),
 				_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 				_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 				DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL,
@@ -818,15 +681,14 @@ public class DDMFormInstanceVersionPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					DDMFormInstanceVersion::getFormInstanceId));
 
-		_finderPathFetchByF_V = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"formInstanceId", "version"}, 0, 2, false,
-			DDMFormInstanceVersion::getFormInstanceId,
-			convertNullFunction(DDMFormInstanceVersion::getVersion));
-
 		_uniquePersistenceFinderByF_V = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByF_V,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByF_V",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"formInstanceId", "version"}, 0, 2, false,
+				DDMFormInstanceVersion::getFormInstanceId,
+				convertNullFunction(DDMFormInstanceVersion::getVersion)),
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE, "",
 			new FinderColumn<>(
 				"ddmFormInstanceVersion.", "formInstanceId",
@@ -836,28 +698,24 @@ public class DDMFormInstanceVersionPersistenceImpl
 				"ddmFormInstanceVersion.", "version", FinderColumn.Type.STRING,
 				"=", true, true, DDMFormInstanceVersion::getVersion));
 
-		_finderPathWithPaginationFindByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"formInstanceId", "status"}, true);
-
-		_finderPathWithoutPaginationFindByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"formInstanceId", "status"}, true);
-
-		_finderPathCountByF_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"formInstanceId", "status"}, false);
-
 		_collectionPersistenceFinderByF_S = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByF_S,
-			_finderPathWithoutPaginationFindByF_S, _finderPathCountByF_S,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByF_S",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"formInstanceId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByF_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"formInstanceId", "status"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByF_S",
+				new String[] {Long.class.getName(), Integer.class.getName()},
+				new String[] {"formInstanceId", "status"}, false),
 			_SQL_SELECT_DDMFORMINSTANCEVERSION_WHERE,
 			_SQL_COUNT_DDMFORMINSTANCEVERSION_WHERE,
 			DDMFormInstanceVersionModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -942,4 +800,4 @@ public class DDMFormInstanceVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:763591114
+// LIFERAY-SERVICE-BUILDER-HASH:-29181706

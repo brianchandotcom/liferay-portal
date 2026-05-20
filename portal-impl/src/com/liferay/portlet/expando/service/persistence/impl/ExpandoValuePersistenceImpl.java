@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,67 +73,14 @@ public class ExpandoValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByTableId;
-	private FinderPath _finderPathWithoutPaginationFindByTableId;
-	private FinderPath _finderPathCountByTableId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByTableId;
 
 	/**
-	 * Returns all the expando values where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByTableId(long tableId) {
-		return findByTableId(
-			tableId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByTableId(long tableId, int start, int end) {
-		return findByTableId(tableId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where tableId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByTableId(
-		long tableId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByTableId(tableId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param tableId the table ID
@@ -219,69 +165,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByColumnId;
-	private FinderPath _finderPathWithoutPaginationFindByColumnId;
-	private FinderPath _finderPathCountByColumnId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByColumnId;
 
 	/**
-	 * Returns all the expando values where columnId = &#63;.
-	 *
-	 * @param columnId the column ID
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByColumnId(long columnId) {
-		return findByColumnId(
-			columnId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where columnId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param columnId the column ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByColumnId(
-		long columnId, int start, int end) {
-
-		return findByColumnId(columnId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where columnId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param columnId the column ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByColumnId(
-		long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByColumnId(columnId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where columnId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param columnId the column ID
@@ -366,66 +257,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByRowId;
-	private FinderPath _finderPathWithoutPaginationFindByRowId;
-	private FinderPath _finderPathCountByRowId;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByRowId;
 
 	/**
-	 * Returns all the expando values where rowId = &#63;.
-	 *
-	 * @param rowId the row ID
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByRowId(long rowId) {
-		return findByRowId(rowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where rowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param rowId the row ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByRowId(long rowId, int start, int end) {
-		return findByRowId(rowId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where rowId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param rowId the row ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByRowId(
-		long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByRowId(rowId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where rowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param rowId the row ID
@@ -510,73 +349,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_C;
-	private FinderPath _finderPathWithoutPaginationFindByT_C;
-	private FinderPath _finderPathCountByT_C;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_C;
 
 	/**
-	 * Returns all the expando values where tableId = &#63; and columnId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C(long tableId, long columnId) {
-		return findByT_C(
-			tableId, columnId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where tableId = &#63; and columnId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C(
-		long tableId, long columnId, int start, int end) {
-
-		return findByT_C(tableId, columnId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where tableId = &#63; and columnId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C(
-		long tableId, long columnId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByT_C(
-			tableId, columnId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where tableId = &#63; and columnId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param tableId the table ID
@@ -668,72 +448,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_R;
-	private FinderPath _finderPathWithoutPaginationFindByT_R;
-	private FinderPath _finderPathCountByT_R;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_R;
 
 	/**
-	 * Returns all the expando values where tableId = &#63; and rowId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_R(long tableId, long rowId) {
-		return findByT_R(
-			tableId, rowId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where tableId = &#63; and rowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_R(
-		long tableId, long rowId, int start, int end) {
-
-		return findByT_R(tableId, rowId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where tableId = &#63; and rowId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param rowId the row ID
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_R(
-		long tableId, long rowId, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByT_R(tableId, rowId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where tableId = &#63; and rowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param tableId the table ID
@@ -825,73 +547,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_CPK;
-	private FinderPath _finderPathWithoutPaginationFindByT_CPK;
-	private FinderPath _finderPathCountByT_CPK;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_CPK;
 
 	/**
-	 * Returns all the expando values where tableId = &#63; and classPK = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_CPK(long tableId, long classPK) {
-		return findByT_CPK(
-			tableId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where tableId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_CPK(
-		long tableId, long classPK, int start, int end) {
-
-		return findByT_CPK(tableId, classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where tableId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_CPK(
-		long tableId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByT_CPK(
-			tableId, classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where tableId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param tableId the table ID
@@ -983,7 +646,6 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByC_R;
 	private UniquePersistenceFinder<ExpandoValue> _uniquePersistenceFinderByC_R;
 
 	/**
@@ -1013,18 +675,6 @@ public class ExpandoValuePersistenceImpl
 		}
 
 		return expandoValue;
-	}
-
-	/**
-	 * Returns the expando value where columnId = &#63; and rowId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param columnId the column ID
-	 * @param rowId the row ID
-	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByC_R(long columnId, long rowId) {
-		return fetchByC_R(columnId, rowId, true);
 	}
 
 	/**
@@ -1073,73 +723,14 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId, rowId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByC_C;
-	private FinderPath _finderPathWithoutPaginationFindByC_C;
-	private FinderPath _finderPathCountByC_C;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByC_C;
 
 	/**
-	 * Returns all the expando values where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByC_C(long classNameId, long classPK) {
-		return findByC_C(
-			classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByC_C(
-		long classNameId, long classPK, int start, int end) {
-
-		return findByC_C(classNameId, classPK, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByC_C(
-			classNameId, classPK, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
@@ -1234,7 +825,6 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private FinderPath _finderPathFetchByT_C_C;
 	private UniquePersistenceFinder<ExpandoValue>
 		_uniquePersistenceFinderByT_C_C;
 
@@ -1267,21 +857,6 @@ public class ExpandoValuePersistenceImpl
 		}
 
 		return expandoValue;
-	}
-
-	/**
-	 * Returns the expando value where tableId = &#63; and columnId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param classPK the class pk
-	 * @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	 */
-	@Override
-	public ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK) {
-
-		return fetchByT_C_C(tableId, columnId, classPK, true);
 	}
 
 	/**
@@ -1334,79 +909,14 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {tableId, columnId, classPK});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByT_C_D;
-	private FinderPath _finderPathWithoutPaginationFindByT_C_D;
-	private FinderPath _finderPathCountByT_C_D;
 	private CollectionPersistenceFinder<ExpandoValue>
 		_collectionPersistenceFinderByT_C_D;
 
 	/**
-	 * Returns all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @return the matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C_D(
-		long tableId, long columnId, String data) {
-
-		return findByT_C_D(
-			tableId, columnId, data, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @return the range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C_D(
-		long tableId, long columnId, String data, int start, int end) {
-
-		return findByT_C_D(tableId, columnId, data, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param columnId the column ID
-	 * @param data the data
-	 * @param start the lower bound of the range of expando values
-	 * @param end the upper bound of the range of expando values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando values
-	 */
-	@Override
-	public List<ExpandoValue> findByT_C_D(
-		long tableId, long columnId, String data, int start, int end,
-		OrderByComparator<ExpandoValue> orderByComparator) {
-
-		return findByT_C_D(
-			tableId, columnId, data, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the expando values where tableId = &#63; and columnId = &#63; and data = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExpandoValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param tableId the table ID
@@ -1764,112 +1274,97 @@ public class ExpandoValuePersistenceImpl
 	 * Initializes the expando value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tableId"}, true);
-
-		_finderPathWithoutPaginationFindByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			true);
-
-		_finderPathCountByTableId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
-			new String[] {Long.class.getName()}, new String[] {"tableId"},
-			false);
-
 		_collectionPersistenceFinderByTableId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByTableId,
-				_finderPathWithoutPaginationFindByTableId,
-				_finderPathCountByTableId, _SQL_SELECT_EXPANDOVALUE_WHERE,
-				_SQL_COUNT_EXPANDOVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByTableId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByTableId",
+					new String[] {Long.class.getName()},
+					new String[] {"tableId"}, false),
+				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "tableId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getTableId));
 
-		_finderPathWithPaginationFindByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByColumnId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"columnId"}, true);
-
-		_finderPathWithoutPaginationFindByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByColumnId",
-			new String[] {Long.class.getName()}, new String[] {"columnId"},
-			true);
-
-		_finderPathCountByColumnId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByColumnId",
-			new String[] {Long.class.getName()}, new String[] {"columnId"},
-			false);
-
 		_collectionPersistenceFinderByColumnId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByColumnId,
-				_finderPathWithoutPaginationFindByColumnId,
-				_finderPathCountByColumnId, _SQL_SELECT_EXPANDOVALUE_WHERE,
-				_SQL_COUNT_EXPANDOVALUE_WHERE,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByColumnId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"columnId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByColumnId",
+					new String[] {Long.class.getName()},
+					new String[] {"columnId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByColumnId", new String[] {Long.class.getName()},
+					new String[] {"columnId"}, false),
+				_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 				ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"expandoValue.", "columnId", FinderColumn.Type.LONG, "=",
 					true, true, ExpandoValue::getColumnId));
 
-		_finderPathWithPaginationFindByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRowId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"rowId_"}, true);
-
-		_finderPathWithoutPaginationFindByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRowId",
-			new String[] {Long.class.getName()}, new String[] {"rowId_"}, true);
-
-		_finderPathCountByRowId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRowId",
-			new String[] {Long.class.getName()}, new String[] {"rowId_"},
-			false);
-
 		_collectionPersistenceFinderByRowId = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByRowId,
-			_finderPathWithoutPaginationFindByRowId, _finderPathCountByRowId,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByRowId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByRowId",
+				new String[] {Long.class.getName()}, new String[] {"rowId_"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByRowId",
+				new String[] {Long.class.getName()}, new String[] {"rowId_"},
+				false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "columnId"}, true);
-
-		_finderPathWithoutPaginationFindByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "columnId"}, true);
-
-		_finderPathCountByT_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "columnId"}, false);
-
 		_collectionPersistenceFinderByT_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_C,
-			_finderPathWithoutPaginationFindByT_C, _finderPathCountByT_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "columnId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "columnId"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "columnId"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1879,28 +1374,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId));
 
-		_finderPathWithPaginationFindByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_R",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "rowId_"}, true);
-
-		_finderPathWithoutPaginationFindByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "rowId_"}, true);
-
-		_finderPathCountByT_R = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "rowId_"}, false);
-
 		_collectionPersistenceFinderByT_R = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_R,
-			_finderPathWithoutPaginationFindByT_R, _finderPathCountByT_R,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_R",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "rowId_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "rowId_"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1910,28 +1401,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_CPK",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, true);
-
-		_finderPathCountByT_CPK = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_CPK",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"tableId", "classPK"}, false);
-
 		_collectionPersistenceFinderByT_CPK = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_CPK,
-			_finderPathWithoutPaginationFindByT_CPK, _finderPathCountByT_CPK,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_CPK",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_CPK",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"tableId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1941,14 +1428,14 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByC_R = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"columnId", "rowId_"}, 0, 0, false,
-			ExpandoValue::getColumnId, ExpandoValue::getRowId);
-
 		_uniquePersistenceFinderByC_R = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_R, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_R",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"columnId", "rowId_"}, 0, 0, false,
+				ExpandoValue::getColumnId, ExpandoValue::getRowId),
+			_SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "columnId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getColumnId),
@@ -1956,28 +1443,24 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "rowId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getRowId));
 
-		_finderPathWithPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathWithoutPaginationFindByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, true);
-
-		_finderPathCountByC_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, false);
-
 		_collectionPersistenceFinderByC_C = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_C,
-			_finderPathWithoutPaginationFindByC_C, _finderPathCountByC_C,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, false),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -1987,17 +1470,18 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathFetchByT_C_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByT_C_C",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName()
-			},
-			new String[] {"tableId", "columnId", "classPK"}, 0, 0, false,
-			ExpandoValue::getTableId, ExpandoValue::getColumnId,
-			ExpandoValue::getClassPK);
-
 		_uniquePersistenceFinderByT_C_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByT_C_C, _SQL_SELECT_EXPANDOVALUE_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByT_C_C",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Long.class.getName()
+				},
+				new String[] {"tableId", "columnId", "classPK"}, 0, 0, false,
+				ExpandoValue::getTableId, ExpandoValue::getColumnId,
+				ExpandoValue::getClassPK),
+			_SQL_SELECT_EXPANDOVALUE_WHERE, "",
 			new FinderColumn<>(
 				"expandoValue.", "tableId", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getTableId),
@@ -2008,34 +1492,32 @@ public class ExpandoValuePersistenceImpl
 				"expandoValue.", "classPK", FinderColumn.Type.LONG, "=", true,
 				true, ExpandoValue::getClassPK));
 
-		_finderPathWithPaginationFindByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, true);
-
-		_finderPathWithoutPaginationFindByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, 0, 4, true, null);
-
-		_finderPathCountByT_C_D = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_D",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"tableId", "columnId", "data_"}, 0, 4, false, null);
-
 		_collectionPersistenceFinderByT_C_D = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByT_C_D,
-			_finderPathWithoutPaginationFindByT_C_D, _finderPathCountByT_C_D,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, 0, 4, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_C_D",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"tableId", "columnId", "data_"}, 0, 4, false,
+				null),
 			_SQL_SELECT_EXPANDOVALUE_WHERE, _SQL_COUNT_EXPANDOVALUE_WHERE,
 			ExpandoValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 			new FinderColumn<>(
@@ -2084,4 +1566,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1665029282
+// LIFERAY-SERVICE-BUILDER-HASH:742757363

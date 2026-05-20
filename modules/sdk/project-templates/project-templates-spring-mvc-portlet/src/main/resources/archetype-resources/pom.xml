@@ -30,8 +30,8 @@
 #end
 
 #if (${jakartaCompatible.equals("true")})
-		<spring.security.version>6.2.8</spring.security.version>
-		<spring.version>6.2.8</spring.version>
+		<spring.security.version>6.5.9</spring.security.version>
+		<spring.version>6.2.17</spring.version>
 #elseif (${framework.equals("portletmvc4spring")})
 		<spring.security.version>5.5.1</spring.security.version>
 		<spring.version>5.3.27</spring.version>
@@ -229,7 +229,7 @@
 		<dependency>
 			<groupId>org.thymeleaf</groupId>
 			<artifactId>thymeleaf</artifactId>
-			<version>3.0.15.RELEASE</version>
+			<version>3.1.5.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>ognl</groupId>
@@ -245,10 +245,11 @@
 			<groupId>org.thymeleaf</groupId>
 #if (${framework.equals("portletmvc4spring")})
 			<artifactId>thymeleaf-spring5</artifactId>
+			<version>3.1.5.RELEASE</version>
 #elseif (${framework.equals("springportletmvc")})
 			<artifactId>thymeleaf-spring4</artifactId>
-#end
 			<version>3.0.15.RELEASE</version>
+#end
 			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>

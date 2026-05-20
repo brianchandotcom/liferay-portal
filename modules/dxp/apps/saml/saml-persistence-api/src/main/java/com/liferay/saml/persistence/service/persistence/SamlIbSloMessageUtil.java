@@ -140,18 +140,6 @@ public class SamlIbSloMessageUtil {
 	}
 
 	/**
-	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpSessionIndex the saml idp session index
-	 * @return the matching saml ib slo message, or <code>null</code> if a matching saml ib slo message could not be found
-	 */
-	public static SamlIbSloMessage fetchBySamlIdpSessionIndex(
-		String samlIdpSessionIndex) {
-
-		return getPersistence().fetchBySamlIdpSessionIndex(samlIdpSessionIndex);
-	}
-
-	/**
 	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param samlIdpSessionIndex the saml idp session index
@@ -244,6 +232,18 @@ public class SamlIbSloMessageUtil {
 		return getPersistence().fetchByPrimaryKey(samlIbSloMessageId);
 	}
 
+	/**
+	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param samlIdpSessionIndex the saml idp session index
+	 * @return the matching saml ib slo message, or <code>null</code> if a matching saml ib slo message could not be found
+	 */
+	public static SamlIbSloMessage fetchBySamlIdpSessionIndex(
+		String samlIdpSessionIndex) {
+
+		return getPersistence().fetchBySamlIdpSessionIndex(samlIdpSessionIndex);
+	}
+
 	public static SamlIbSloMessagePersistence getPersistence() {
 		return _persistence;
 	}
@@ -255,4 +255,4 @@ public class SamlIbSloMessageUtil {
 	private static volatile SamlIbSloMessagePersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2051680475
+// LIFERAY-SERVICE-BUILDER-HASH:-1156229787

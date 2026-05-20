@@ -120,11 +120,12 @@ public class CommerceOrderLocalServiceTest {
 			_serviceContext);
 
 		Country country = _countryLocalService.addCountry(
-			"ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(), "000",
-			RandomTestUtil.randomDouble(), true, false, false, _serviceContext);
+			null, "ZZ", "ZZZ", true, true, null, RandomTestUtil.randomString(),
+			"000", RandomTestUtil.randomDouble(), true, false, false,
+			_serviceContext);
 
 		Region region = _regionLocalService.addRegion(
-			country.getCountryId(), true, RandomTestUtil.randomString(),
+			null, country.getCountryId(), true, RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), "ZZ", _serviceContext);
 
 		CommerceAddress commerceAddress =

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export enum FilterType {
+export enum Range {
 	All = 'all',
+	DateRange = 'dateRange',
 	Last = 'last',
-	Range = 'range',
 }
 
-export enum ModifiedLastType {
+export enum LastRange {
 	H12 = '12h',
 	H24 = '24h',
 	H48 = '48h',
@@ -17,30 +17,28 @@ export enum ModifiedLastType {
 }
 
 export type DateFilterValues =
-	| {filterType: FilterType.All}
-	| {filterType: FilterType.Last; modifiedLast: ModifiedLastType}
-	| {filterType: FilterType.Range; fromDate: string; toDate: string};
+	| {range: Range.All}
+	| {last: LastRange; range: Range.Last}
+	| {endDate: string; range: Range.DateRange; startDate: string};
 
-export type FilterState = {
-	applied: DateFilterValues;
-	editing: {
-		filterType: FilterType;
-		fromDate: string;
-		modifiedLast: ModifiedLastType;
-		toDate: string;
-	};
-	touchedFields: {
-		fromDate: boolean;
-		toDate: boolean;
-	};
+export type NormalizedDateFilter = {
+	endDate?: string;
+	last?: number;
+	range?: Range;
+	startDate?: string;
 };
 
-export type FilterAction =
-	| {payload: Partial<FilterState['editing']>; type: 'UPDATE_FILTER'}
-	| {payload: Partial<FilterState['touchedFields']>; type: 'UPDATE_TOUCHED'}
-	| {type: 'SET_TOUCH_ALL'}
-	| {type: 'APPLY'}
-	| {type: 'RESET'};
+export type EditingState = {
+	endDate: string;
+	last: LastRange;
+	range: Range;
+	startDate: string;
+};
+
+export type TouchedFields = {
+	endDate: boolean;
+	startDate: boolean;
+};
 
 export const YEARS_OFFSET = 10;
 

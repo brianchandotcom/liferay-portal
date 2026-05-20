@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -74,72 +73,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByAccountEntryId;
-	private FinderPath _finderPathWithoutPaginationFindByAccountEntryId;
-	private FinderPath _finderPathCountByAccountEntryId;
 	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
 		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
-	 * Returns all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @return the matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId) {
-
-		return findByAccountEntryId(
-			accountEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @return the range of matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId, int start, int end) {
-
-		return findByAccountEntryId(accountEntryId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account entry organization rels where accountEntryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByAccountEntryId(
-		long accountEntryId, int start, int end,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		return findByAccountEntryId(
-			accountEntryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the account entry organization rels where accountEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param accountEntryId the account entry ID
@@ -225,72 +166,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByOrganizationId;
-	private FinderPath _finderPathWithoutPaginationFindByOrganizationId;
-	private FinderPath _finderPathCountByOrganizationId;
 	private CollectionPersistenceFinder<AccountEntryOrganizationRel>
 		_collectionPersistenceFinderByOrganizationId;
 
 	/**
-	 * Returns all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * @param organizationId the organization ID
-	 * @return the matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId) {
-
-		return findByOrganizationId(
-			organizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @return the range of matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId, int start, int end) {
-
-		return findByOrganizationId(organizationId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param organizationId the organization ID
-	 * @param start the lower bound of the range of account entry organization rels
-	 * @param end the upper bound of the range of account entry organization rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account entry organization rels
-	 */
-	@Override
-	public List<AccountEntryOrganizationRel> findByOrganizationId(
-		long organizationId, int start, int end,
-		OrderByComparator<AccountEntryOrganizationRel> orderByComparator) {
-
-		return findByOrganizationId(
-			organizationId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the account entry organization rels where organizationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AccountEntryOrganizationRelModelImpl</code>.
 	 * </p>
 	 *
 	 * @param organizationId the organization ID
@@ -376,7 +259,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 			finderCache, new Object[] {organizationId});
 	}
 
-	private FinderPath _finderPathFetchByA_O;
 	private UniquePersistenceFinder<AccountEntryOrganizationRel>
 		_uniquePersistenceFinderByA_O;
 
@@ -410,20 +292,6 @@ public class AccountEntryOrganizationRelPersistenceImpl
 		}
 
 		return accountEntryOrganizationRel;
-	}
-
-	/**
-	 * Returns the account entry organization rel where accountEntryId = &#63; and organizationId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountEntryId the account entry ID
-	 * @param organizationId the organization ID
-	 * @return the matching account entry organization rel, or <code>null</code> if a matching account entry organization rel could not be found
-	 */
-	@Override
-	public AccountEntryOrganizationRel fetchByA_O(
-		long accountEntryId, long organizationId) {
-
-		return fetchByA_O(accountEntryId, organizationId, true);
 	}
 
 	/**
@@ -672,29 +540,27 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAccountEntryId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathWithoutPaginationFindByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, true);
-
-		_finderPathCountByAccountEntryId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByAccountEntryId",
-			new String[] {Long.class.getName()},
-			new String[] {"accountEntryId"}, false);
-
 		_collectionPersistenceFinderByAccountEntryId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByAccountEntryId,
-				_finderPathWithoutPaginationFindByAccountEntryId,
-				_finderPathCountByAccountEntryId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByAccountEntryId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByAccountEntryId", new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByAccountEntryId",
+					new String[] {Long.class.getName()},
+					new String[] {"accountEntryId"}, false),
 				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
@@ -704,29 +570,27 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryOrganizationRel::getAccountEntryId));
 
-		_finderPathWithPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByOrganizationId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"organizationId"}, true);
-
-		_finderPathWithoutPaginationFindByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByOrganizationId",
-			new String[] {Long.class.getName()},
-			new String[] {"organizationId"}, true);
-
-		_finderPathCountByOrganizationId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByOrganizationId",
-			new String[] {Long.class.getName()},
-			new String[] {"organizationId"}, false);
-
 		_collectionPersistenceFinderByOrganizationId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByOrganizationId,
-				_finderPathWithoutPaginationFindByOrganizationId,
-				_finderPathCountByOrganizationId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByOrganizationId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"organizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByOrganizationId", new String[] {Long.class.getName()},
+					new String[] {"organizationId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByOrganizationId",
+					new String[] {Long.class.getName()},
+					new String[] {"organizationId"}, false),
 				_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				_SQL_COUNT_ACCOUNTENTRYORGANIZATIONREL_WHERE,
 				AccountEntryOrganizationRelModelImpl.ORDER_BY_JPQL,
@@ -736,15 +600,14 @@ public class AccountEntryOrganizationRelPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					AccountEntryOrganizationRel::getOrganizationId));
 
-		_finderPathFetchByA_O = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"accountEntryId", "organizationId"}, 0, 0, false,
-			AccountEntryOrganizationRel::getAccountEntryId,
-			AccountEntryOrganizationRel::getOrganizationId);
-
 		_uniquePersistenceFinderByA_O = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByA_O,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByA_O",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"accountEntryId", "organizationId"}, 0, 0, false,
+				AccountEntryOrganizationRel::getAccountEntryId,
+				AccountEntryOrganizationRel::getOrganizationId),
 			_SQL_SELECT_ACCOUNTENTRYORGANIZATIONREL_WHERE, "",
 			new FinderColumn<>(
 				"accountEntryOrganizationRel.", "accountEntryId",
@@ -822,4 +685,4 @@ public class AccountEntryOrganizationRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1420529800
+// LIFERAY-SERVICE-BUILDER-HASH:1803285181

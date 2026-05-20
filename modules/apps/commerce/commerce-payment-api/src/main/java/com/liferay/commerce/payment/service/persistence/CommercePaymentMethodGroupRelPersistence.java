@@ -33,48 +33,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	 */
 
 	/**
-	 * Returns all the commerce payment method group rels where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
-		long groupId);
-
-	/**
-	 * Returns a range of all the commerce payment method group rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @return the range of matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
-		long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63;.
 	 *
 	 * <p>
@@ -121,30 +79,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 			<CommercePaymentMethodGroupRel> orderByComparator);
 
 	/**
-	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching commerce payment method group rels that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> filterFindByGroupId(
-		long groupId);
-
-	/**
-	 * Returns a range of all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @return the range of matching commerce payment method group rels that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> filterFindByGroupId(
-		long groupId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the commerce payment method group rels that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -184,51 +118,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	 * @return the number of matching commerce payment method group rels that the user has permission to view
 	 */
 	public int filterCountByGroupId(long groupId);
-
-	/**
-	 * Returns all the commerce payment method group rels where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @return the matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByG_A(
-		long groupId, boolean active);
-
-	/**
-	 * Returns a range of all the commerce payment method group rels where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @return the range of matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByG_A(
-		long groupId, boolean active, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce payment method group rels
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> findByG_A(
-		long groupId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator
-			<CommercePaymentMethodGroupRel> orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63; and active = &#63;.
@@ -278,32 +167,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 		long groupId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator
 			<CommercePaymentMethodGroupRel> orderByComparator);
-
-	/**
-	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @return the matching commerce payment method group rels that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> filterFindByG_A(
-		long groupId, boolean active);
-
-	/**
-	 * Returns a range of all the commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param active the active
-	 * @param start the lower bound of the range of commerce payment method group rels
-	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
-	 * @return the range of matching commerce payment method group rels that the user has permission to view
-	 */
-	public java.util.List<CommercePaymentMethodGroupRel> filterFindByG_A(
-		long groupId, boolean active, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the commerce payment method group rels that the user has permissions to view where groupId = &#63; and active = &#63;.
@@ -361,16 +224,6 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public CommercePaymentMethodGroupRel findByG_P(
 			long groupId, String paymentIntegrationKey)
 		throws NoSuchPaymentMethodGroupRelException;
-
-	/**
-	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param paymentIntegrationKey the payment integration key
-	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
-	 */
-	public CommercePaymentMethodGroupRel fetchByG_P(
-		long groupId, String paymentIntegrationKey);
 
 	/**
 	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -446,5 +299,195 @@ public interface CommercePaymentMethodGroupRelPersistence
 	public CommercePaymentMethodGroupRel fetchByPrimaryKey(
 		long commercePaymentMethodGroupRelId);
 
+	/**
+	 * Returns the commerce payment method group rel where groupId = &#63; and paymentIntegrationKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param paymentIntegrationKey the payment integration key
+	 * @return the matching commerce payment method group rel, or <code>null</code> if a matching commerce payment method group rel could not be found
+	 */
+	public default CommercePaymentMethodGroupRel fetchByG_P(
+		long groupId, String paymentIntegrationKey) {
+
+		return fetchByG_P(groupId, paymentIntegrationKey, true);
+	}
+
+	/**
+	 * Returns all the commerce payment method group rels where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
+		long groupId) {
+
+		return findByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment method group rels where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @return the range of matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
+		long groupId, int start, int end) {
+
+		return findByGroupId(groupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommercePaymentMethodGroupRel> orderByComparator) {
+
+		return findByGroupId(groupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching commerce payment method group rels that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel>
+		filterFindByGroupId(long groupId) {
+
+		return filterFindByGroupId(
+			groupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment method group rels that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @return the range of matching commerce payment method group rels that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel>
+		filterFindByGroupId(long groupId, int start, int end) {
+
+		return filterFindByGroupId(groupId, start, end, null);
+	}
+
+	/**
+	 * Returns all the commerce payment method group rels where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @return the matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByG_A(
+		long groupId, boolean active) {
+
+		return findByG_A(
+			groupId, active,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment method group rels where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @return the range of matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByG_A(
+		long groupId, boolean active, int start, int end) {
+
+		return findByG_A(groupId, active, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce payment method group rels where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce payment method group rels
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel> findByG_A(
+		long groupId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator
+			<CommercePaymentMethodGroupRel> orderByComparator) {
+
+		return findByG_A(groupId, active, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @return the matching commerce payment method group rels that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel>
+		filterFindByG_A(long groupId, boolean active) {
+
+		return filterFindByG_A(
+			groupId, active,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce payment method group rels that the user has permission to view where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.payment.model.impl.CommercePaymentMethodGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce payment method group rels
+	 * @param end the upper bound of the range of commerce payment method group rels (not inclusive)
+	 * @return the range of matching commerce payment method group rels that the user has permission to view
+	 */
+	public default java.util.List<CommercePaymentMethodGroupRel>
+		filterFindByG_A(long groupId, boolean active, int start, int end) {
+
+		return filterFindByG_A(groupId, active, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1607936533
+// LIFERAY-SERVICE-BUILDER-HASH:784827420

@@ -45,6 +45,7 @@ import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
 import {LanguageApiHelper} from './LanguageApiHelper';
 import {ListTypeAdminApiHelper} from './ListTypeAdminApiHelper';
 import {NotificationApiHelper} from './NotificationApiHelper';
+import {ObjectActionApiHelper} from './ObjectActionApiHelper';
 import {ObjectAdminApiHelper} from './ObjectAdminApiHelper';
 import {ObjectEntryApiHelper} from './ObjectEntryApiHelper';
 import {ObjectEntryFolderApiHelper} from './ObjectEntryFolderApiHelper';
@@ -182,6 +183,7 @@ export class ApiHelpers {
 	readonly language: LanguageApiHelper;
 	readonly listTypeAdmin: ListTypeAdminApiHelper;
 	readonly notification: NotificationApiHelper;
+	readonly objectAction: ObjectActionApiHelper;
 	readonly objectAdmin: ObjectAdminApiHelper;
 	readonly objectEntry: ObjectEntryApiHelper;
 	readonly objectFolder: ObjectEntryFolderApiHelper;
@@ -294,6 +296,7 @@ export class ApiHelpers {
 		this.language = new LanguageApiHelper(this);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.notification = new NotificationApiHelper(this);
+		this.objectAction = new ObjectActionApiHelper(this);
 		this.objectAdmin = new ObjectAdminApiHelper(this);
 		this.objectEntry = new ObjectEntryApiHelper(this);
 		this.objectFolder = new ObjectEntryFolderApiHelper(this);

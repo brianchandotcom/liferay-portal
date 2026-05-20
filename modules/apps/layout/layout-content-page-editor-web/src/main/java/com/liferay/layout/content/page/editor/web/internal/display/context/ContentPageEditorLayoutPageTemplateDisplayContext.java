@@ -30,8 +30,10 @@ import com.liferay.layout.content.page.editor.web.internal.configuration.PageEdi
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentCollectionManager;
 import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.MappingContentUtil;
+import com.liferay.layout.content.page.editor.web.internal.util.MappingTypesUtil;
 import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.manager.LayoutLockManager;
+import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
@@ -388,6 +390,11 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		}
 
 		return HashMapBuilder.<String, Object>put(
+			"formEnabled",
+			MappingTypesUtil.hasInfoItemCapability(
+				portal.getClassName(layoutPageTemplateEntry.getClassNameId()),
+				infoItemServiceRegistry, EditPageInfoItemCapability.KEY)
+		).put(
 			"mappingDescription",
 			language.get(
 				httpServletRequest,

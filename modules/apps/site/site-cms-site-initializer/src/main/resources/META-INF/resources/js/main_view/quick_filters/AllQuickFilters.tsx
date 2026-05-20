@@ -20,11 +20,13 @@ import React, {
 } from 'react';
 
 import {
+	CMSSiteInitializerFDSNames,
 	EXPIRING_SOON_THRESHOLD_DAYS,
 	FDS_EVENT_DISPLAY_UPDATED,
 	FDS_FILTER_ID,
 	WORKFLOW_STATUS,
 } from '../../common/utils/constants';
+import toDatePart from '../../common/utils/toDatePart';
 import {allFDSAtom} from './atoms';
 import {QUICK_FILTER_TYPES, QuickFilterType} from './constants';
 
@@ -35,14 +37,7 @@ interface QuickFilterCounts {
 	expiringSoon: number;
 	inDraft: number;
 	reviewDateOverdue: number;
-}
-
-function toDatePart(date: Date) {
-	return {
-		day: date.getDate(),
-		month: date.getMonth() + 1,
-		year: date.getFullYear(),
-	};
+	total: number;
 }
 
 function clearedFilter(filter: IBaseFilterState): IBaseFilterState {
@@ -110,6 +105,7 @@ export default function AllQuickFilters() {
 		expiringSoon: 0,
 		inDraft: 0,
 		reviewDateOverdue: 0,
+		total: 0,
 	});
 
 	const fetchCounts = useCallback(() => {
@@ -131,6 +127,7 @@ export default function AllQuickFilters() {
 					expiringSoon: data.expiringSoonCount ?? 0,
 					inDraft: data.inDraftCount ?? 0,
 					reviewDateOverdue: data.reviewDateOverdueCount ?? 0,
+					total: data.totalCount ?? 0,
 				});
 			})
 			.catch((error) => {
@@ -141,10 +138,16 @@ export default function AllQuickFilters() {
 	useEffect(() => {
 		fetchCounts();
 
-		Liferay.on(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+		const handleDisplayUpdated = (event?: {id?: string}) => {
+			if (event?.id?.endsWith(CMSSiteInitializerFDSNames.ALL_SECTION)) {
+				fetchCounts();
+			}
+		};
+
+		Liferay.on(FDS_EVENT_DISPLAY_UPDATED, handleDisplayUpdated);
 
 		return () => {
-			Liferay.detach(FDS_EVENT_DISPLAY_UPDATED, fetchCounts);
+			Liferay.detach(FDS_EVENT_DISPLAY_UPDATED, handleDisplayUpdated);
 		};
 	}, [fetchCounts]);
 
@@ -249,6 +252,10 @@ export default function AllQuickFilters() {
 
 		setActiveQuickFilter(null);
 	}, [allFDSState.filters]);
+
+	if (counts.total === 0) {
+		return null;
+	}
 
 	return (
 		<div className="all-quick-filters-container">

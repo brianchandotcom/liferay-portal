@@ -43,6 +43,7 @@ export enum CustomFunctionOperators {
 	InterestsFilter = 'interests-filter',
 	OrganizationsFilter = 'organizations-filter',
 	SessionsFilter = 'sessions-filter',
+	TagsFilter = 'tags-filter',
 	VocabulariesFilter = 'vocabularies-filter'
 }
 
@@ -65,6 +66,7 @@ export enum NotOperators {
 	NotEventsFilterByCount = 'not-events-filter-by-count',
 	NotOrganizationsFilter = 'not-organizations-filter',
 	NotSessionsFilter = 'not-sessions-filter',
+	NotTagsFilter = 'not-tags-filter',
 	NotVocabulariesFilter = 'not-vocabularies-filter'
 }
 
@@ -107,6 +109,7 @@ export enum PropertyTypes {
 	SessionGeolocation = 'session-geolocation',
 	SessionNumber = 'session-number',
 	SessionText = 'session-text',
+	Tag = 'tag',
 	Text = 'text',
 	Vocabulary = 'vocabulary'
 }
@@ -125,6 +128,7 @@ export const CUSTOM_FUNCTION_OPERATOR_KEY_MAP = {
 	['interests.filter']: CustomFunctionOperators.InterestsFilter,
 	['organizations.filter']: CustomFunctionOperators.OrganizationsFilter,
 	['sessions.filter']: CustomFunctionOperators.SessionsFilter,
+	['tag.filter']: CustomFunctionOperators.TagsFilter,
 	['vocabulary.filter']: CustomFunctionOperators.VocabulariesFilter
 };
 
@@ -180,6 +184,18 @@ export const SUPPORTED_OPERATORS_MAP = {
 			key: RelationalOperators.EQ,
 			label: Liferay.Language.get('is').toLowerCase(),
 			name: RelationalOperators.EQ
+		}
+	],
+	[PropertyTypes.Tag]: [
+		{
+			key: CustomFunctionOperators.TagsFilter,
+			label: Liferay.Language.get('has').toLowerCase(),
+			name: CustomFunctionOperators.TagsFilter
+		},
+		{
+			key: NotOperators.NotTagsFilter,
+			label: Liferay.Language.get('has-not').toLowerCase(),
+			name: NotOperators.NotTagsFilter
 		}
 	],
 	[PropertyTypes.Vocabulary]: [
@@ -421,6 +437,10 @@ export const SUPPORTED_PROPERTY_TYPES_MAP = {
 		NotOperators.NotActivitiesFilterByCount
 	],
 	[PropertyTypes.Boolean]: [RelationalOperators.EQ],
+	[PropertyTypes.Tag]: [
+		CustomFunctionOperators.TagsFilter,
+		NotOperators.NotTagsFilter
+	],
 	[PropertyTypes.Vocabulary]: [
 		CustomFunctionOperators.VocabulariesFilter,
 		NotOperators.NotVocabulariesFilter
@@ -573,8 +593,6 @@ export const ACTIVITY_KEY = 'activityKey';
 export const EVENT_KEY = 'eventId';
 
 export const ASSET_TYPE_APPLICATION_ID_MAP: Record<string, string> = {
-	'basic-document': 'Document',
-	'basic-web-content': 'WebContent',
 	blogs: 'Blog',
 	'documents-and-media': 'Document',
 	forms: 'Form',
@@ -590,7 +608,7 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 		'documents-and-media': 'documentDownloaded'
 	},
 	impression: {
-		'basic-web-content': 'webContentImpressionMade',
+		blogs: 'blogImpressionMade',
 		'web-content': 'webContentImpressionMade'
 	},
 	submit: {
@@ -598,7 +616,6 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 	},
 	view: {
 		'basic-document': 'documentPreviewed',
-		'basic-web-content': 'webContentViewed',
 		blogs: 'blogViewed',
 		'documents-and-media': 'documentPreviewed',
 		forms: 'formViewed',
@@ -608,12 +625,9 @@ export const EVENT_TYPE_EVENT_ID_MAP: Record<string, Record<string, string>> = {
 
 export const ASSET_TYPE_COMPATIBLE_EVENTS_MAP: Record<string, string[]> = {
 	any: ['all', 'view', 'download', 'impression', 'submit', 'comment'],
-	'basic-document': ['all', 'view', 'download'],
-	'basic-web-content': ['all', 'view', 'impression'],
-	blogs: ['all', 'view', 'comment'],
+	blogs: ['all', 'view', 'comment', 'impression'],
 	'documents-and-media': ['all', 'view', 'download'],
 	forms: ['all', 'view', 'submit'],
-	'knowledge-base': ['all'],
 	'web-content': ['all', 'view', 'impression']
 };
 
@@ -625,6 +639,7 @@ export const APPLICATION_ID_ASSET_TYPE_MAP: Record<string, string> = {
 };
 
 export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
+	blogImpressionMade: 'impression',
 	blogViewed: 'view',
 	commentPosted: 'comment',
 	documentDownloaded: 'download',
@@ -634,6 +649,18 @@ export const EVENT_ID_EVENT_TYPE_MAP: Record<string, string> = {
 	webContentImpressionMade: 'impression',
 	webContentViewed: 'view'
 };
+
+export const ALL_APPLICATION_IDS = Array.from(
+	new Set(Object.values(ASSET_TYPE_APPLICATION_ID_MAP))
+);
+
+export const ALL_EVENT_IDS = Array.from(
+	new Set(
+		([] as string[]).concat(
+			...Object.values(EVENT_TYPE_EVENT_ID_MAP).map(m => Object.values(m))
+		)
+	)
+);
 
 export const TIME_WINDOW_OPTIONS = [
 	{

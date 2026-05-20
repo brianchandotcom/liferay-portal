@@ -13,16 +13,23 @@ import com.liferay.osb.faro.engine.client.model.FieldMapping;
 import com.liferay.osb.faro.engine.client.model.Results;
 import com.liferay.osb.faro.model.FaroProject;
 import com.liferay.osb.faro.service.FaroProjectLocalService;
+import com.liferay.osb.faro.util.FaroPropsValues;
 import com.liferay.osb.faro.web.internal.model.display.contacts.DataSourceMappingDisplay;
 import com.liferay.osb.faro.web.internal.util.ContactsCSVHelper;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -177,6 +184,34 @@ public class DataSourceControllerTest {
 		ReflectionTestUtils.setField(
 			_dataSourceController, "faroProjectLocalService",
 			_faroProjectLocalService);
+	}
+
+	@Test
+	public void testGenerateDataSourceAccessToken() throws Exception {
+		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
+
+		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		ReflectionTestUtil.setFieldValue(
+			FaroPropsValues.class, "FARO_URL", "https://faro.test");
+
+		String dataSourceAccessToken =
+			_dataSourceController.generateDataSourceAccessToken(12345L, 67890L);
+
+		Assert.assertNotNull(dataSourceAccessToken);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			new String(
+				Base64.decode(dataSourceAccessToken), StandardCharsets.UTF_8));
+
+		Assert.assertEquals(
+			"https://faro.test/o/faro/contacts/12345/data_source/connect",
+			jsonObject.getString("url"));
+
+		String token = jsonObject.getString("token");
+
+		Assert.assertNotNull(token);
+		Assert.assertFalse(token.isEmpty());
 	}
 
 	@Test

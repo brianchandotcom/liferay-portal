@@ -1,9 +1,10 @@
 create index IX_1ED300B1 on SharingEntry (classNameId, classPK);
 create index IX_CC1C3576 on SharingEntry (classNameId, companyId);
-create unique index IX_59A7D9C on SharingEntry (classNameId, toUserId, toUserGroupId, classPK, toTicketId);
+create unique index IX_D59EA21C on SharingEntry (classNameId, toUserId, toTicketId, toUserGroupId, classPK);
 create index IX_8E0359AC on SharingEntry (classNameId, userId);
 create index IX_1E35B88D on SharingEntry (expirationDate);
 create unique index IX_FA5E24AF on SharingEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$]);
+create index IX_79E43C32 on SharingEntry (toTicketId);
 create index IX_85902908 on SharingEntry (toUserGroupId);
 create index IX_C024CFB1 on SharingEntry (toUserId);
 create index IX_EA2FF796 on SharingEntry (userId);

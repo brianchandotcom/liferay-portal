@@ -5,6 +5,9 @@
 
 import {Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 import {faroConfig} from '../faro.config';
 import {ACPage, navigateToACSettingsViaURL} from './navigation';
 
@@ -12,22 +15,39 @@ export async function checkDataSourceStatus({
 	dataSourceName,
 	dataSourceStatus,
 	page,
+	syncedContactsStatus,
+	syncedSitesStatus,
 }: {
-	dataSourceName: string;
+	dataSourceName?: string;
 	dataSourceStatus: string;
 	page: Page;
+	syncedContactsStatus?: string;
+	syncedSitesStatus?: string;
 }) {
-	await expect(
-		page
-			.getByRole('heading', {exact: true, name: dataSourceName})
-			.locator('span')
-	).toBeVisible();
+	await expect(page.getByText('Synced Data', {exact: true})).toBeVisible();
+
+	if (dataSourceName) {
+		await expect(
+			page.getByText(dataSourceName, {exact: true}).first()
+		).toBeVisible();
+	}
 
 	await expect(
-		page.getByRole('button', {
-			name: `Current Status: ${dataSourceStatus}`,
-		})
+		page.getByText(`${dataSourceStatus}`, {exact: true}).first()
 	).toBeVisible();
+
+	const listItems = page
+		.locator('.panel-body')
+		.filter({hasText: 'Synced'})
+		.getByRole('listitem');
+
+	if (syncedSitesStatus) {
+		await expect(listItems.nth(1)).toContainText(`${syncedSitesStatus}`);
+	}
+
+	if (syncedContactsStatus) {
+		await expect(listItems.nth(2)).toContainText(`${syncedContactsStatus}`);
+	}
 }
 
 export async function createDataSource(page) {
@@ -60,6 +80,20 @@ export async function createDataSource(page) {
 	return {token};
 }
 
+export async function disconnectDataSourceFromAC(page: Page) {
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page
+			.getByRole('dialog')
+			.getByRole('button', {name: 'Disconnect'}),
+		trigger: page.getByRole('button', {name: 'Disconnect Data Source'}),
+	});
+
+	await waitForAlert(page, 'Success:Data source disconnected.', {
+		autoClose: false,
+	});
+}
+
 export async function findDataSource({
 	dataSourceName,
 	page,
@@ -83,11 +117,26 @@ export async function gotoLatestLiferayDXPDataSource(page, project) {
 		projectID: project.groupId,
 	});
 
-	await page
-		.locator('td')
-		.filter({exact: false, hasText: 'Liferay DXP'})
-		.first()
-		.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Date Added'}),
+		trigger: page.getByRole('button', {name: 'Order'}),
+	});
+
+	await clickAndExpectToBeHidden({
+		target: page.getByText('Order By'),
+		trigger: page.getByRole('button', {name: 'Order'}),
+	});
+
+	await clickAndExpectToBeVisible({
+		target: page.getByText('Synced Data', {exact: true}),
+		trigger: page
+			.locator('tbody tr')
+			.filter({hasText: 'Liferay Portal'})
+			.getByRole('link')
+			.filter({hasText: /^Liferay(?: \(\d+\))?$/})
+			.first(),
+	});
 }
 
 export async function renameDataSource({
@@ -124,8 +173,6 @@ export async function renameDataSource({
 	await page.getByRole('button', {name: 'Submit'}).click();
 
 	await expect(
-		page
-			.getByRole('heading', {exact: true, name: newDataSourceName})
-			.locator('span')
+		page.getByRole('heading', {exact: true, name: newDataSourceName})
 	).toBeVisible();
 }

@@ -109,6 +109,27 @@ public class AssetStatistics implements Cloneable, Serializable {
 
 	protected Long reviewDateOverdueCount;
 
+	public Long getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(Long totalCount) {
+		this.totalCount = totalCount;
+	}
+
+	public void setTotalCount(
+		UnsafeSupplier<Long, Exception> totalCountUnsafeSupplier) {
+
+		try {
+			totalCount = totalCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long totalCount;
+
 	@Override
 	public AssetStatistics clone() throws CloneNotSupportedException {
 		return (AssetStatistics)super.clone();
@@ -141,4 +162,4 @@ public class AssetStatistics implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1835938369
+// LIFERAY-REST-BUILDER-HASH:-941353405

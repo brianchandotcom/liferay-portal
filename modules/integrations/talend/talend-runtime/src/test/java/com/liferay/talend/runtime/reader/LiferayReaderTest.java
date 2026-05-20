@@ -5,6 +5,7 @@
 
 package com.liferay.talend.runtime.reader;
 
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.talend.BaseTestCase;
 import com.liferay.talend.properties.input.LiferayInputProperties;
 import com.liferay.talend.properties.resource.Operation;
@@ -143,7 +144,7 @@ public class LiferayReaderTest extends BaseTestCase {
 	}
 
 	private static final String _OAS_URL =
-		"http://localhost:8080/o/headless-commerce-admin-catalog/v1.0" +
-			"/openapi.json";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/o/headless-commerce-admin-catalog/v1.0/openapi.json";
 
 }

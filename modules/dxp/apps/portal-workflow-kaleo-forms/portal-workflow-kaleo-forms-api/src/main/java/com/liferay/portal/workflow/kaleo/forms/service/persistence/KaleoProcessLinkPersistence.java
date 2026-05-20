@@ -33,48 +33,6 @@ public interface KaleoProcessLinkPersistence
 	 */
 
 	/**
-	 * Returns all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @return the matching kaleo process links
-	 */
-	public java.util.List<KaleoProcessLink> findByKaleoProcessId(
-		long kaleoProcessId);
-
-	/**
-	 * Returns a range of all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param start the lower bound of the range of kaleo process links
-	 * @param end the upper bound of the range of kaleo process links (not inclusive)
-	 * @return the range of matching kaleo process links
-	 */
-	public java.util.List<KaleoProcessLink> findByKaleoProcessId(
-		long kaleoProcessId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param start the lower bound of the range of kaleo process links
-	 * @param end the upper bound of the range of kaleo process links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo process links
-	 */
-	public java.util.List<KaleoProcessLink> findByKaleoProcessId(
-		long kaleoProcessId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
 	 *
 	 * <p>
@@ -148,16 +106,6 @@ public interface KaleoProcessLinkPersistence
 		throws NoSuchKaleoProcessLinkException;
 
 	/**
-	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param workflowTaskName the workflow task name
-	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
-	 */
-	public KaleoProcessLink fetchByKPI_WTN(
-		long kaleoProcessId, String workflowTaskName);
-
-	/**
 	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -226,5 +174,72 @@ public interface KaleoProcessLinkPersistence
 	 */
 	public KaleoProcessLink fetchByPrimaryKey(long kaleoProcessLinkId);
 
+	/**
+	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param kaleoProcessId the kaleo process ID
+	 * @param workflowTaskName the workflow task name
+	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
+	 */
+	public default KaleoProcessLink fetchByKPI_WTN(
+		long kaleoProcessId, String workflowTaskName) {
+
+		return fetchByKPI_WTN(kaleoProcessId, workflowTaskName, true);
+	}
+
+	/**
+	 * Returns all the kaleo process links where kaleoProcessId = &#63;.
+	 *
+	 * @param kaleoProcessId the kaleo process ID
+	 * @return the matching kaleo process links
+	 */
+	public default java.util.List<KaleoProcessLink> findByKaleoProcessId(
+		long kaleoProcessId) {
+
+		return findByKaleoProcessId(
+			kaleoProcessId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the kaleo process links where kaleoProcessId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoProcessId the kaleo process ID
+	 * @param start the lower bound of the range of kaleo process links
+	 * @param end the upper bound of the range of kaleo process links (not inclusive)
+	 * @return the range of matching kaleo process links
+	 */
+	public default java.util.List<KaleoProcessLink> findByKaleoProcessId(
+		long kaleoProcessId, int start, int end) {
+
+		return findByKaleoProcessId(kaleoProcessId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param kaleoProcessId the kaleo process ID
+	 * @param start the lower bound of the range of kaleo process links
+	 * @param end the upper bound of the range of kaleo process links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo process links
+	 */
+	public default java.util.List<KaleoProcessLink> findByKaleoProcessId(
+		long kaleoProcessId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoProcessLink>
+			orderByComparator) {
+
+		return findByKaleoProcessId(
+			kaleoProcessId, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-60853411
+// LIFERAY-SERVICE-BUILDER-HASH:-1036195141

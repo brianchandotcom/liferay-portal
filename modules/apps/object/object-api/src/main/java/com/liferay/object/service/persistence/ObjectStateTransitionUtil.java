@@ -132,54 +132,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns all the object state transitions where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
 	 *
 	 * <p>
@@ -250,60 +202,6 @@ public class ObjectStateTransitionUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -387,58 +285,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @return the matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId) {
-
-		return getPersistence().findByObjectStateFlowId(objectStateFlowId);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end) {
-
-		return getPersistence().findByObjectStateFlowId(
-			objectStateFlowId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param objectStateFlowId the object state flow ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByObjectStateFlowId(
-		long objectStateFlowId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().findByObjectStateFlowId(
-			objectStateFlowId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
 	 *
 	 * <p>
@@ -514,58 +360,6 @@ public class ObjectStateTransitionUtil {
 	}
 
 	/**
-	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @return the matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId) {
-
-		return getPersistence().findBySourceObjectStateId(sourceObjectStateId);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId, int start, int end) {
-
-		return getPersistence().findBySourceObjectStateId(
-			sourceObjectStateId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param sourceObjectStateId the source object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findBySourceObjectStateId(
-		long sourceObjectStateId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().findBySourceObjectStateId(
-			sourceObjectStateId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
 	 *
 	 * <p>
@@ -638,58 +432,6 @@ public class ObjectStateTransitionUtil {
 	 */
 	public static int countBySourceObjectStateId(long sourceObjectStateId) {
 		return getPersistence().countBySourceObjectStateId(sourceObjectStateId);
-	}
-
-	/**
-	 * Returns all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @return the matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId) {
-
-		return getPersistence().findByTargetObjectStateId(targetObjectStateId);
-	}
-
-	/**
-	 * Returns a range of all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @return the range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId, int start, int end) {
-
-		return getPersistence().findByTargetObjectStateId(
-			targetObjectStateId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the object state transitions where targetObjectStateId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param targetObjectStateId the target object state ID
-	 * @param start the lower bound of the range of object state transitions
-	 * @param end the upper bound of the range of object state transitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching object state transitions
-	 */
-	public static List<ObjectStateTransition> findByTargetObjectStateId(
-		long targetObjectStateId, int start, int end,
-		OrderByComparator<ObjectStateTransition> orderByComparator) {
-
-		return getPersistence().findByTargetObjectStateId(
-			targetObjectStateId, start, end, orderByComparator);
 	}
 
 	/**
@@ -824,6 +566,264 @@ public class ObjectStateTransitionUtil {
 		return getPersistence().fetchByPrimaryKey(objectStateTransitionId);
 	}
 
+	/**
+	 * Returns all the object state transitions where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the object state transitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object state transitions where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ObjectStateTransition> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object state transitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the object state transitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object state transitions where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ObjectStateTransition> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @return the matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId) {
+
+		return getPersistence().findByObjectStateFlowId(objectStateFlowId);
+	}
+
+	/**
+	 * Returns a range of all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId, int start, int end) {
+
+		return getPersistence().findByObjectStateFlowId(
+			objectStateFlowId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object state transitions where objectStateFlowId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectStateFlowId the object state flow ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByObjectStateFlowId(
+		long objectStateFlowId, int start, int end,
+		OrderByComparator<ObjectStateTransition> orderByComparator) {
+
+		return getPersistence().findByObjectStateFlowId(
+			objectStateFlowId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object state transitions where sourceObjectStateId = &#63;.
+	 *
+	 * @param sourceObjectStateId the source object state ID
+	 * @return the matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findBySourceObjectStateId(
+		long sourceObjectStateId) {
+
+		return getPersistence().findBySourceObjectStateId(sourceObjectStateId);
+	}
+
+	/**
+	 * Returns a range of all the object state transitions where sourceObjectStateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sourceObjectStateId the source object state ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findBySourceObjectStateId(
+		long sourceObjectStateId, int start, int end) {
+
+		return getPersistence().findBySourceObjectStateId(
+			sourceObjectStateId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object state transitions where sourceObjectStateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param sourceObjectStateId the source object state ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findBySourceObjectStateId(
+		long sourceObjectStateId, int start, int end,
+		OrderByComparator<ObjectStateTransition> orderByComparator) {
+
+		return getPersistence().findBySourceObjectStateId(
+			sourceObjectStateId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the object state transitions where targetObjectStateId = &#63;.
+	 *
+	 * @param targetObjectStateId the target object state ID
+	 * @return the matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByTargetObjectStateId(
+		long targetObjectStateId) {
+
+		return getPersistence().findByTargetObjectStateId(targetObjectStateId);
+	}
+
+	/**
+	 * Returns a range of all the object state transitions where targetObjectStateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param targetObjectStateId the target object state ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @return the range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByTargetObjectStateId(
+		long targetObjectStateId, int start, int end) {
+
+		return getPersistence().findByTargetObjectStateId(
+			targetObjectStateId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the object state transitions where targetObjectStateId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.object.model.impl.ObjectStateTransitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param targetObjectStateId the target object state ID
+	 * @param start the lower bound of the range of object state transitions
+	 * @param end the upper bound of the range of object state transitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object state transitions
+	 */
+	public static List<ObjectStateTransition> findByTargetObjectStateId(
+		long targetObjectStateId, int start, int end,
+		OrderByComparator<ObjectStateTransition> orderByComparator) {
+
+		return getPersistence().findByTargetObjectStateId(
+			targetObjectStateId, start, end, orderByComparator);
+	}
+
 	public static ObjectStateTransitionPersistence getPersistence() {
 		return _persistence;
 	}
@@ -837,4 +837,4 @@ public class ObjectStateTransitionUtil {
 	private static volatile ObjectStateTransitionPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:905235613
+// LIFERAY-SERVICE-BUILDER-HASH:-783862813

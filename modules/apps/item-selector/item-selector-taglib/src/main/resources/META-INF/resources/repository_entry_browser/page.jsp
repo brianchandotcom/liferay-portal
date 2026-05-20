@@ -15,7 +15,7 @@ PortletURL editImageURL = (PortletURL)request.getAttribute("liferay-item-selecto
 String emptyResultsMessage = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:emptyResultsMessage"));
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-item-selector:repository-entry-browser:existingFileEntryReturnType");
 List<String> extensions = (List)request.getAttribute("liferay-item-selector:repository-entry-browser:extensions");
-long folderId = ParamUtil.getLong(request, "folderId", GetterUtil.getLong(request.getAttribute("liferay-item-selector:repository-entry-browser:folderId")));
+long folderId = GetterUtil.getLong(request.getAttribute("liferay-item-selector:repository-entry-browser:folderId"));
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
 ItemSelectorReturnTypeResolver<?, FileEntry> itemSelectorReturnTypeResolver = (ItemSelectorReturnTypeResolver<?, FileEntry>)request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectorReturnTypeResolver");
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-item-selector:repository-entry-browser:maxFileSize"));
@@ -126,6 +126,8 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 
 						return null;
 					}
+				).put(
+					"folderId", folderId
 				).put(
 					"itemSelectedEventName", itemSelectedEventName
 				).put(

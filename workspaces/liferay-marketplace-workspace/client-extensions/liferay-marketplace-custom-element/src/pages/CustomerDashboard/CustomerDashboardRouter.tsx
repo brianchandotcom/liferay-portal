@@ -23,7 +23,7 @@ import Connections from './pages/Connections';
 import LiferayProductsBundles from './pages/LiferayProducts/Bundles/Bundles';
 import LiferayProduct from './pages/LiferayProducts/LiferayProduct';
 import LiferayProductsOutlet from './pages/LiferayProducts/LiferayProductsOutlet';
-import DSRTokens from './pages/LiferayProducts/Tokens/DSRTokens';
+import DSRWorkspace from './pages/LiferayProducts/Workspace/DSRWorkspace';
 import LiferayProductsListView from './pages/LiferayProducts/index';
 import Solutions from './pages/Solutions';
 import Solution from './pages/Solutions/Solution';
@@ -65,7 +65,7 @@ const CustomerDashboardRouter = () => {
 						path="bundles"
 					/>
 
-					<Route element={<DSRTokens />} path="tokens" />
+					<Route element={<DSRWorkspace />} path="workspace" />
 				</Route>
 
 				<Route element={<Solutions />} path="solutions" />

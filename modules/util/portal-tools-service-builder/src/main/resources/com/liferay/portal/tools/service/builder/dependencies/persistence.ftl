@@ -101,4 +101,408 @@ public interface ${entity.name}Persistence extends BasePersistence<${entity.name
 		</#if>
 	</#list>
 
+	<#if serviceBuilder.isVersionGTE_7_4_0()>
+		<#list entity.uniqueEntityFinders as entityFinder>
+			<#assign entityColumns = entityFinder.entityColumns />
+
+			/**
+			 * Returns the ${entity.humanName} where ${entityFinder.getHumanConditions(false)} or returns <code>null</code> if it could not be found. Uses the finder cache.
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @return the matching ${entity.humanName}, or <code>null</code> if a matching ${entity.humanName} could not be found
+			 */
+			public default ${entity.name} fetchBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.type} ${entityColumn.name}
+
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
+
+			) {
+				return fetchBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
+
+				true);
+			}
+		</#list>
+
+		<#list entity.collectionEntityFinders as entityFinder>
+			<#assign entityColumns = entityFinder.entityColumns />
+
+			<#if !entityFinder.isUnique()>
+				/**
+				 * Returns all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+				 *
+				<#list entityColumns as entityColumn>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+				</#list>
+				 * @return the matching ${entity.pluralHumanName}
+				 */
+				public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.type} ${entityColumn.name}
+
+				<#if entityColumn_has_next>
+					,
+				</#if>
+			</#list>
+
+			) {
+				return findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
+
+				com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+			}
+
+			/**
+			 * Returns a range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+			 *
+			 * <p>
+			 * <#include "range_comment.ftl">
+			 * </p>
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @param start the lower bound of the range of ${entity.pluralHumanName}
+			 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+			 * @return the range of matching ${entity.pluralHumanName}
+			 */
+			public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+			<#list entityColumns as entityColumn>
+				${entityColumn.type} ${entityColumn.name},
+			</#list>
+
+			int start, int end) {
+				return findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.name},
+				</#list>
+
+				start, end, null, true);
+			}
+
+			/**
+			 * Returns an ordered range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(false)}.
+			 *
+			 * <p>
+			 * <#include "range_comment.ftl">
+			 * </p>
+			 *
+			<#list entityColumns as entityColumn>
+			 * @param ${entityColumn.name} the ${entityColumn.humanName}
+			</#list>
+			 * @param start the lower bound of the range of ${entity.pluralHumanName}
+			 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+			 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+			 * @return the ordered range of matching ${entity.pluralHumanName}
+			 */
+			public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.type} ${entityColumn.name},
+				</#list>
+
+				int start, int end, com.liferay.portal.kernel.util.OrderByComparator<${entity.name}> orderByComparator) {
+
+					return findBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						${entityColumn.name},
+					</#list>
+
+					start, end, orderByComparator, true);
+				}
+			</#if>
+
+			<#if entityFinder.hasArrayableOperator() && !entityFinder.hasArrayablePagination()>
+				<#assign entityColumns = entityFinder.entityColumns />
+
+				/**
+				 * Returns all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(true)}.
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @return the matching ${entity.pluralHumanName}
+				 */
+				public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						${entityColumn.type}[] ${entityColumn.pluralName}
+					<#else>
+						${entityColumn.type} ${entityColumn.name}
+					</#if>
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+
+				) {
+					return findBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+				}
+
+				/**
+				 * Returns a range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(true)}.
+				 *
+				 * <p>
+				 * <#include "range_comment.ftl">
+				 * </p>
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @param start the lower bound of the range of ${entity.pluralHumanName}
+				 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+				 * @return the range of matching ${entity.pluralHumanName}
+				 */
+				public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						${entityColumn.type}[] ${entityColumn.pluralName},
+					<#else>
+						${entityColumn.type} ${entityColumn.name},
+					</#if>
+				</#list>
+
+				int start, int end) {
+					return findBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					start, end, null, true);
+				}
+
+				/**
+				 * Returns an ordered range of all the ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(true)}.
+				 *
+				 * <p>
+				 * <#include "range_comment.ftl">
+				 * </p>
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @param start the lower bound of the range of ${entity.pluralHumanName}
+				 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+				 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+				 * @return the ordered range of matching ${entity.pluralHumanName}
+				 */
+				public default java.util.List<${entity.name}> findBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						${entityColumn.type}[] ${entityColumn.pluralName},
+					<#else>
+						${entityColumn.type} ${entityColumn.name},
+					</#if>
+				</#list>
+
+				int start, int end, com.liferay.portal.kernel.util.OrderByComparator<${entity.name}> orderByComparator) {
+
+					return findBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					start, end, orderByComparator, true);
+				}
+			</#if>
+
+			<#if entity.isPermissionCheckEnabled(entityFinder) && !entityFinder.isUnique()>
+				/**
+				 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
+				 *
+				<#list entityColumns as entityColumn>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+				</#list>
+				 * @return the matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				public default java.util.List<${entity.name}> filterFindBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.type} ${entityColumn.name}
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+
+				) {
+					return filterFindBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						${entityColumn.name},
+					</#list>
+
+					com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+				}
+
+				/**
+				 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(false)}.
+				 *
+				 * <p>
+				 * <#include "range_comment.ftl">
+				 * </p>
+				 *
+				<#list entityColumns as entityColumn>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+				</#list>
+				 * @param start the lower bound of the range of ${entity.pluralHumanName}
+				 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+				 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				public default java.util.List<${entity.name}> filterFindBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					${entityColumn.type} ${entityColumn.name},
+				</#list>
+
+				int start, int end) {
+					return filterFindBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						${entityColumn.name},
+					</#list>
+
+					start, end, null);
+				}
+			</#if>
+
+			<#if entity.isPermissionCheckEnabled(entityFinder) && !entityFinder.isUnique() && entityFinder.hasArrayableOperator() && !entityFinder.hasArrayablePagination()>
+				/**
+				 * Returns all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @return the matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				public default java.util.List<${entity.name}> filterFindBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						${entityColumn.type}[] ${entityColumn.pluralName}
+					<#else>
+						${entityColumn.type} ${entityColumn.name}
+					</#if>
+
+					<#if entityColumn_has_next>
+						,
+					</#if>
+				</#list>
+
+				) {
+					return filterFindBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+				}
+
+				/**
+				 * Returns a range of all the ${entity.pluralHumanName} that the user has permission to view where ${entityFinder.getHumanConditions(true)}.
+				 *
+				 * <p>
+				 * <#include "range_comment.ftl">
+				 * </p>
+				 *
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+				 * @param ${entityColumn.pluralName} the ${entityColumn.pluralHumanName}
+					<#else>
+				 * @param ${entityColumn.name} the ${entityColumn.humanName}
+					</#if>
+				</#list>
+				 * @param start the lower bound of the range of ${entity.pluralHumanName}
+				 * @param end the upper bound of the range of ${entity.pluralHumanName} (not inclusive)
+				 * @return the range of matching ${entity.pluralHumanName} that the user has permission to view
+				 */
+				public default java.util.List<${entity.name}> filterFindBy${entityFinder.name}(
+
+				<#list entityColumns as entityColumn>
+					<#if entityColumn.hasArrayableOperator()>
+						${entityColumn.type}[] ${entityColumn.pluralName},
+					<#else>
+						${entityColumn.type} ${entityColumn.name},
+					</#if>
+				</#list>
+
+				int start, int end) {
+					return filterFindBy${entityFinder.name}(
+
+					<#list entityColumns as entityColumn>
+						<#if entityColumn.hasArrayableOperator()>
+							${entityColumn.pluralName},
+						<#else>
+							${entityColumn.name},
+						</#if>
+					</#list>
+
+					start, end, null);
+				}
+			</#if>
+		</#list>
+	</#if>
+
 }

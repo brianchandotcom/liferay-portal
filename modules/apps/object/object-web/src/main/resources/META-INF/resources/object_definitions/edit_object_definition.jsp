@@ -28,6 +28,8 @@ String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigat
 					module="{ObjectManagementToolbar} from object-web"
 					props='<%=
 						HashMapBuilder.<String, Object>put(
+							"allowStandaloneObjectEntry", objectDefinition.isAllowStandaloneObjectEntry()
+						).put(
 							"backURL", ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()))
 						).put(
 							"hasPublishObjectPermission", objectDefinitionsDetailsDisplayContext.hasPublishObjectPermission()

@@ -6,13 +6,12 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedChannelTest} from '../../../fixtures/isolatedChannelTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
-import {createChannel} from './utils/channel';
 import {createIndividuals} from './utils/individuals';
 import {ACPage, navigateTo, navigateToACPageViaURL} from './utils/navigation';
 import {CardSelectors} from './utils/selectors';
@@ -21,39 +20,13 @@ import {viewNameOnTableList} from './utils/utils';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	isolatedChannelTest,
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
-
-const randomString = getRandomString();
-
-const channelName = 'My Property ' + randomString;
-
-let channel;
-let project;
-
-test.beforeEach(async ({apiHelpers}) => {
-	const result = await createChannel({
-		apiHelpers,
-		channelName,
-	});
-
-	channel = result.channel;
-	project = result.project;
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	await test.step('Delete channel and delete site on the DXP side', async () => {
-		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-			`[${channel.id}]`,
-			project.groupId
-		);
-	});
-});
 
 test(
 	'Verify that clicking the "All Search Terms" link redirects the user to the Search Terms tab with the same time filter previously set.',
@@ -62,7 +35,7 @@ test(
 		tag: '@LPD-26181',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const generateIndividual = (name) => {
 			const id = getRandomString();
 
@@ -126,7 +99,7 @@ test(
 			).toBeVisible();
 
 			await expect(
-				page.getByText(`Search Terms on ${channelName}`)
+				page.getByText(`Search Terms on ${channel.name}`)
 			).toBeVisible();
 
 			await expect(
@@ -154,7 +127,7 @@ test(
 		tag: '@LRAC-11056',
 	},
 
-	async ({apiHelpers, page}) => {
+	async ({analyticsChannel: channel, apiHelpers, page, project}) => {
 		const generateIndividual = (name) => {
 			const id = getRandomString();
 
@@ -218,7 +191,7 @@ test(
 			).toBeVisible();
 
 			await expect(
-				page.getByText(`Search Terms on ${channelName}`)
+				page.getByText(`Search Terms on ${channel.name}`)
 			).toBeVisible();
 
 			await expect(

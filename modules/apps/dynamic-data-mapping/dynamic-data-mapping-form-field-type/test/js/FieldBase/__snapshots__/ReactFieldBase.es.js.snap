@@ -5,29 +5,20 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
   <div
     class="form-group hide"
   >
-    <div
-      class="lfr-ddm-form-field-repeatable-toolbar"
-    >
-      <button
-        aria-label="add-duplicate-field"
-        class="ddm-form-field-repeatable-add-button p-0 hide btn btn-sm btn-primary"
-        title="duplicate"
-        type="button"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-plus"
-          role="presentation"
-        >
-          <use
-            href="#plus"
-          />
-        </svg>
-      </button>
-    </div>
     <label
       aria-labelledby="id_fieldDetails"
       class="ddm-empty ddm-repeatable"
     />
+    <div
+      class="align-items-center c-gap-3 d-flex"
+    >
+      <div
+        class="flex-fill"
+      />
+      <div
+        class="ddm-form-field-repeatable-delete-button-placeholder"
+      />
+    </div>
     <input
       name="undefined_edited"
       type="hidden"
@@ -42,6 +33,26 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
         class="form-feedback-item"
       />
     </div>
+    <button
+      aria-label="add-duplicate-field"
+      class="ddm-form-field-repeatable-add-button hide btn btn-outline-borderless btn-outline-secondary"
+      title="duplicate"
+      type="button"
+    >
+      <span
+        class="inline-item inline-item-before"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-plus"
+          role="presentation"
+        >
+          <use
+            href="#plus"
+          />
+        </svg>
+      </span>
+      add-option
+    </button>
     <span
       class="sr-only"
       id="id_fieldDetails"
@@ -254,30 +265,21 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
     class="form-group hide"
     role="group"
   >
-    <div
-      class="lfr-ddm-form-field-repeatable-toolbar"
-    >
-      <button
-        aria-label="add-duplicate-field"
-        class="ddm-form-field-repeatable-add-button p-0 btn btn-sm btn-primary"
-        title="duplicate"
-        type="button"
-      >
-        <svg
-          class="lexicon-icon lexicon-icon-plus"
-          role="presentation"
-        >
-          <use
-            href="#plus"
-          />
-        </svg>
-      </button>
-    </div>
     <label
       aria-labelledby="undefined_fieldDetails"
       class="ddm-empty ddm-repeatable"
       id="undefined_fieldLabel"
     />
+    <div
+      class="align-items-center c-gap-3 d-flex"
+    >
+      <div
+        class="flex-fill"
+      />
+      <div
+        class="ddm-form-field-repeatable-delete-button-placeholder"
+      />
+    </div>
     <input
       name="undefined_edited"
       type="hidden"
@@ -292,6 +294,26 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
         class="form-feedback-item"
       />
     </div>
+    <button
+      aria-label="add-duplicate-field"
+      class="ddm-form-field-repeatable-add-button btn btn-outline-borderless btn-outline-secondary"
+      title="duplicate"
+      type="button"
+    >
+      <span
+        class="inline-item inline-item-before"
+      >
+        <svg
+          class="lexicon-icon lexicon-icon-plus"
+          role="presentation"
+        >
+          <use
+            href="#plus"
+          />
+        </svg>
+      </span>
+      add-option
+    </button>
     <span
       class="sr-only"
       id="undefined_fieldDetails"

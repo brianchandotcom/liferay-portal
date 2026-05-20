@@ -107,7 +107,6 @@ export default class ProductPurchaseDSR extends ProductPurchase {
 
 	private getDSRForm() {
 		return {
-			acceptEulaAgreement: this.form?.acceptEulaAgreement ?? false,
 			acceptTermsAndConditions:
 				this.form?.acceptTermsAndConditions ?? false,
 			dataCenterLocation: this.form?.dataCenterLocation ?? '',

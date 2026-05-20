@@ -129,58 +129,6 @@ public class BatchPlannerPolicyUtil {
 	}
 
 	/**
-	 * Returns all the batch planner policies where batchPlannerPlanId = &#63;.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @return the matching batch planner policies
-	 */
-	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
-		long batchPlannerPlanId) {
-
-		return getPersistence().findByBatchPlannerPlanId(batchPlannerPlanId);
-	}
-
-	/**
-	 * Returns a range of all the batch planner policies where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerPolicyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner policies
-	 * @param end the upper bound of the range of batch planner policies (not inclusive)
-	 * @return the range of matching batch planner policies
-	 */
-	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end) {
-
-		return getPersistence().findByBatchPlannerPlanId(
-			batchPlannerPlanId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the batch planner policies where batchPlannerPlanId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerPolicyModelImpl</code>.
-	 * </p>
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param start the lower bound of the range of batch planner policies
-	 * @param end the upper bound of the range of batch planner policies (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching batch planner policies
-	 */
-	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
-		long batchPlannerPlanId, int start, int end,
-		OrderByComparator<BatchPlannerPolicy> orderByComparator) {
-
-		return getPersistence().findByBatchPlannerPlanId(
-			batchPlannerPlanId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the batch planner policies where batchPlannerPlanId = &#63;.
 	 *
 	 * <p>
@@ -267,19 +215,6 @@ public class BatchPlannerPolicyUtil {
 		throws com.liferay.batch.planner.exception.NoSuchPolicyException {
 
 		return getPersistence().findByBPPI_N(batchPlannerPlanId, name);
-	}
-
-	/**
-	 * Returns the batch planner policy where batchPlannerPlanId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param batchPlannerPlanId the batch planner plan ID
-	 * @param name the name
-	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
-	 */
-	public static BatchPlannerPolicy fetchByBPPI_N(
-		long batchPlannerPlanId, String name) {
-
-		return getPersistence().fetchByBPPI_N(batchPlannerPlanId, name);
 	}
 
 	/**
@@ -376,6 +311,71 @@ public class BatchPlannerPolicyUtil {
 		return getPersistence().fetchByPrimaryKey(batchPlannerPolicyId);
 	}
 
+	/**
+	 * Returns the batch planner policy where batchPlannerPlanId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param name the name
+	 * @return the matching batch planner policy, or <code>null</code> if a matching batch planner policy could not be found
+	 */
+	public static BatchPlannerPolicy fetchByBPPI_N(
+		long batchPlannerPlanId, String name) {
+
+		return getPersistence().fetchByBPPI_N(batchPlannerPlanId, name);
+	}
+
+	/**
+	 * Returns all the batch planner policies where batchPlannerPlanId = &#63;.
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @return the matching batch planner policies
+	 */
+	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
+		long batchPlannerPlanId) {
+
+		return getPersistence().findByBatchPlannerPlanId(batchPlannerPlanId);
+	}
+
+	/**
+	 * Returns a range of all the batch planner policies where batchPlannerPlanId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerPolicyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param start the lower bound of the range of batch planner policies
+	 * @param end the upper bound of the range of batch planner policies (not inclusive)
+	 * @return the range of matching batch planner policies
+	 */
+	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
+		long batchPlannerPlanId, int start, int end) {
+
+		return getPersistence().findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the batch planner policies where batchPlannerPlanId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.batch.planner.model.impl.BatchPlannerPolicyModelImpl</code>.
+	 * </p>
+	 *
+	 * @param batchPlannerPlanId the batch planner plan ID
+	 * @param start the lower bound of the range of batch planner policies
+	 * @param end the upper bound of the range of batch planner policies (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching batch planner policies
+	 */
+	public static List<BatchPlannerPolicy> findByBatchPlannerPlanId(
+		long batchPlannerPlanId, int start, int end,
+		OrderByComparator<BatchPlannerPolicy> orderByComparator) {
+
+		return getPersistence().findByBatchPlannerPlanId(
+			batchPlannerPlanId, start, end, orderByComparator);
+	}
+
 	public static BatchPlannerPolicyPersistence getPersistence() {
 		return _persistence;
 	}
@@ -389,4 +389,4 @@ public class BatchPlannerPolicyUtil {
 	private static volatile BatchPlannerPolicyPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:183502298
+// LIFERAY-SERVICE-BUILDER-HASH:-74371362

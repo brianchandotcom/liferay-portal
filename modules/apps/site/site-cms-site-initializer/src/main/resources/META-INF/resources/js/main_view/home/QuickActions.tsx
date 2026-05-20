@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayIcon from '@clayui/icon';
-import {navigate} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 import React, {MouseEvent} from 'react';
 
 import {AssetLibrary} from '../../common/types/AssetLibrary';
@@ -13,6 +12,9 @@ import createAssetAction, {
 } from '../props_transformer/actions/createAssetAction';
 
 import '../../../css/home/QuickActions.scss';
+
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 
 export type QuickActionAssetData = {
 	action: 'createAsset' | 'createVocabulary';
@@ -63,19 +65,23 @@ export default function QuickActions({
 						className="col d-flex pb-2"
 						key={`${quickAction.title}-${quickAction.redirect}`}
 					>
-						<button
-							className="btn flex-fill pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
+						<ClayButton
+							className="flex-fill mr-2 pb-3 pl-4 pr-4 pt-3 quick-action text-dark text-left w-100"
+							data-canonical-name={sub(
+								Liferay.Language.get('quick-action-x'),
+								quickAction.title
+							)}
+							displayType="secondary"
 							onClick={(event) =>
 								handleActionClick(event, quickAction)
 							}
 						>
-							<ClayIcon
-								className="mr-2"
-								symbol={quickAction.icon}
-							/>
+							<span className="inline-item inline-item-before">
+								<ClayIcon symbol={quickAction.icon} />
+							</span>
 
-							<span>{quickAction.title}</span>
-						</button>
+							{quickAction.title}
+						</ClayButton>
 					</div>
 				))}
 			</div>

@@ -22,6 +22,25 @@ const picklistDefaultOptionLabel = 'Default';
 const picklistBooleanOptionKey = picklistBooleanOptionLabel.toLocaleLowerCase();
 const picklistDefaultOptionKey = picklistDefaultOptionLabel.toLocaleLowerCase();
 
+const picklistIntegerOptionLabelActive = 'Active';
+const picklistIntegerOptionLabelInactive = 'Inactive';
+const picklistIntegerOptionKeyActive = '1';
+const picklistIntegerOptionKeyInactive = '0';
+
+const picklistBooleanOptionLabelTrue = 'True';
+const picklistBooleanOptionLabelFalse = 'False';
+const picklistBooleanOptionKeyTrue =
+	picklistBooleanOptionLabelTrue.toLocaleLowerCase();
+const picklistBooleanOptionKeyFalse =
+	picklistBooleanOptionLabelFalse.toLocaleLowerCase();
+
+const picklistCollectionOptionLabelAnyKey = 'AnyKey';
+const picklistCollectionOptionLabelEggs = 'Eggs';
+const picklistCollectionOptionKeyAnyKey =
+	picklistCollectionOptionLabelAnyKey.toLocaleLowerCase();
+const picklistCollectionOptioKeyEggs =
+	picklistCollectionOptionLabelEggs.toLocaleLowerCase();
+
 const apiHeadlessName = 'FieldType';
 const apiHeadlessURL = `c/${apiHeadlessName.toLocaleLowerCase()}s`;
 const dataSetERCs: string[] = [];
@@ -30,6 +49,28 @@ let dataSetLabel: string;
 let objectDefinition: any;
 let picklistBooleanOption: any;
 let picklistDefaultOption: any;
+
+let picklistIntegerOptionActive: any;
+let picklistIntegerOptionInactive: any;
+
+let picklistBooleanOptionTrue: any;
+let picklistBooleanOptionFalse: any;
+
+let integerPicklist;
+let integerPicklistERC;
+let integerPicklistName: string;
+
+let booleanPicklist;
+let booleanPicklistERC;
+let booleanPicklistName: string;
+
+let collectionPicklist;
+let collectionPicklistERC;
+let collectionPicklistName: string;
+
+let picklistCollectionOptionAnyKey: any;
+let picklistCollectionOptionEggs: any;
+
 let picklistERC: any;
 let picklistName: string;
 
@@ -50,11 +91,15 @@ test.beforeEach(
 		dataSetERC = getRandomString();
 		dataSetLabel = getRandomString();
 		picklistName = getRandomString();
+		integerPicklistName = getRandomString();
+		booleanPicklistName = getRandomString();
+		collectionPicklistName = getRandomString();
 
 		dataSetERCs.push(dataSetERC);
 
 		await dataSetManagerApiHelpers.createDataSet({
 			erc: dataSetERC,
+			keywords: ['foo', 'bar'],
 			label: dataSetLabel,
 		});
 
@@ -76,6 +121,71 @@ test.beforeEach(
 				key: picklistBooleanOptionKey,
 				value: picklistBooleanOptionLabel,
 			});
+		});
+
+		await test.step('Create and populate a picklist within integer options', async () => {
+			integerPicklist = await picklistApiHelpers.createPicklist({
+				name: integerPicklistName,
+			});
+
+			integerPicklistERC = integerPicklist.externalReferenceCode;
+
+			picklistIntegerOptionInactive =
+				await picklistApiHelpers.editPicklist({
+					externalReferenceCode: integerPicklistERC,
+					key: picklistIntegerOptionKeyInactive,
+					value: picklistIntegerOptionLabelInactive,
+				});
+
+			picklistIntegerOptionActive = await picklistApiHelpers.editPicklist(
+				{
+					externalReferenceCode: integerPicklistERC,
+					key: picklistIntegerOptionKeyActive,
+					value: picklistIntegerOptionLabelActive,
+				}
+			);
+		});
+
+		await test.step('Create and populate a picklist within boolean options', async () => {
+			booleanPicklist = await picklistApiHelpers.createPicklist({
+				name: booleanPicklistName,
+			});
+
+			booleanPicklistERC = booleanPicklist.externalReferenceCode;
+
+			picklistBooleanOptionTrue = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: booleanPicklistERC,
+				key: picklistBooleanOptionKeyTrue,
+				value: picklistBooleanOptionLabelTrue,
+			});
+
+			picklistBooleanOptionFalse = await picklistApiHelpers.editPicklist({
+				externalReferenceCode: booleanPicklistERC,
+				key: picklistBooleanOptionKeyFalse,
+				value: picklistBooleanOptionLabelFalse,
+			});
+		});
+
+		await test.step('Create and populate a picklist with collection options', async () => {
+			collectionPicklist = await picklistApiHelpers.createPicklist({
+				name: collectionPicklistName,
+			});
+
+			collectionPicklistERC = collectionPicklist.externalReferenceCode;
+
+			picklistCollectionOptionAnyKey =
+				await picklistApiHelpers.editPicklist({
+					externalReferenceCode: collectionPicklistERC,
+					key: picklistCollectionOptionKeyAnyKey,
+					value: picklistCollectionOptionLabelAnyKey,
+				});
+
+			picklistCollectionOptionEggs =
+				await picklistApiHelpers.editPicklist({
+					externalReferenceCode: collectionPicklistERC,
+					key: picklistCollectionOptioKeyEggs,
+					value: picklistCollectionOptionLabelEggs,
+				});
 		});
 
 		const objectDefinitionAPIClient =
@@ -179,14 +289,22 @@ test.afterEach(
 
 		dataSetERCs.length = 0;
 
-		await picklistApiHelpers.deletePicklist(picklistERC);
-
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
 		await objectDefinitionAPIClient.deleteObjectDefinition(
 			objectDefinition.id
 		);
+
+		const picklists = await picklistApiHelpers.getPicklists();
+		const picklistsNames = [
+			picklistName,
+			integerPicklistName,
+			booleanPicklistName,
+			collectionPicklistName,
+		];
+
+		await picklistApiHelpers.deleteBatchPicklist(picklistsNames, picklists);
 	}
 );
 
@@ -296,7 +414,7 @@ test('Selection filter of type "Object Picklist" is displayed in fragment @LPD-1
 	});
 });
 
-test('Selection filter of type "Object Picklist" can be configured to use single or multiple selection', async ({
+test('Selection filter of type "Object Picklist" can be enabled and disabled', async ({
 	dataSetFragmentPage,
 	dataSetManagerApiHelpers,
 	layout,
@@ -498,6 +616,7 @@ test(
 
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: picklistDataSetERC,
+				keywords: ['foo', 'fred'],
 				label: picklistDataSetLabel,
 				restApplication: `/${apiHeadlessURL}`,
 				restSchema: apiHeadlessName,
@@ -783,6 +902,7 @@ test(
 		await test.step('Create custom data set of Data Sets', async () => {
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: customDataSetERC,
+				keywords: ['bar', 'eggs'],
 				label: customDataSetLabel,
 				restEndpoint: '/',
 				restSchema: 'DataSet',
@@ -874,6 +994,371 @@ test(
 			await expect(
 				dataSetFragmentPage.page.getByText(
 					'Showing 1 to 1 of 1 entries.'
+				)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'x-filterable: Selection filter of type "Object Picklist" can filter integer field type',
+	{tag: '@LPD-56706'},
+	async ({
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = getRandomString();
+		let selectionFilter;
+
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'renderer',
+				label_i18n: {en_US: 'Renderer'},
+			});
+
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'sortable',
+				label_i18n: {en_US: 'Sortable'},
+				renderer: 'boolean',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'status.label',
+				label_i18n: {en_US: 'Status'},
+			});
+		});
+
+		await test.step('Create a new selection filter with preselected values and include mode', async () => {
+			const picklist =
+				await picklistApiHelpers.getPicklist(integerPicklistERC);
+
+			selectionFilter =
+				await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+					dataSetERC,
+					entityFieldType: 'integer',
+					fieldName: 'dataSetToDataSetTableSections/status',
+					include: true,
+					label_i18n: {en_US: filterLabel},
+					multiple: false,
+					preselectedValues: JSON.stringify([
+						{
+							label: getRandomString(),
+							value: picklistIntegerOptionActive.externalReferenceCode,
+						},
+					]),
+					source: picklist.externalReferenceCode,
+					sourceType: 'OBJECT_PICKLIST',
+				});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current filter is applied in the Frontend Data Set and return no results', async () => {
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistIntegerOptionLabelActive}`
+			);
+			await expect(dataSetFragmentPage.emptyStateTitle).toBeVisible();
+		});
+
+		await test.step('Update filter to apply Inactive key', async () => {
+			await dataSetManagerApiHelpers.updateDataSetSelectionFilter({
+				dataSetERC,
+				preselectedValues: JSON.stringify([
+					{
+						label: getRandomString(),
+						value: picklistIntegerOptionInactive.externalReferenceCode,
+					},
+				]),
+				selectionFilterERC: selectionFilter.externalReferenceCode,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistIntegerOptionLabelInactive}`
+			);
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.table.bodyRows.first().locator('td')
+			).toHaveText(['default', 'No', 'approved', '']);
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 3 of 3 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Can remove the current filter', async () => {
+			await dataSetFragmentPage.page
+				.getByRole('button', {exact: true, name: 'Remove Filter'})
+				.click();
+			await expect(
+				dataSetFragmentPage.filterResumeButton
+			).not.toBeVisible();
+
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 3 of 3 entries.'
+				)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'x-filterable: Selection filter of type "Object Picklist" can filter boolean field type',
+	{tag: '@LPD-56706'},
+	async ({
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = getRandomString();
+		let selectionFilter;
+
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'renderer',
+				label_i18n: {en_US: 'Renderer'},
+			});
+
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'sortable',
+				label_i18n: {en_US: 'Sortable'},
+				renderer: 'boolean',
+			});
+		});
+
+		await test.step('Create a new selection filter with preselected values and include mode', async () => {
+			const picklist =
+				await picklistApiHelpers.getPicklist(booleanPicklistERC);
+
+			selectionFilter =
+				await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+					dataSetERC,
+					entityFieldType: 'boolean',
+					fieldName: 'sortable',
+					include: true,
+					label_i18n: {en_US: filterLabel},
+					multiple: false,
+					preselectedValues: JSON.stringify([
+						{
+							label: getRandomString(),
+							value: picklistBooleanOptionTrue.externalReferenceCode,
+						},
+					]),
+					source: picklist.externalReferenceCode,
+					sourceType: 'OBJECT_PICKLIST',
+				});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current filter is applied in the Frontend Data Set and return no results', async () => {
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistBooleanOptionLabelTrue}`
+			);
+		});
+
+		await test.step('Update filter to apply false key', async () => {
+			await dataSetManagerApiHelpers.updateDataSetSelectionFilter({
+				dataSetERC,
+				preselectedValues: JSON.stringify([
+					{
+						label: getRandomString(),
+						value: picklistBooleanOptionFalse.externalReferenceCode,
+					},
+				]),
+				selectionFilterERC: selectionFilter.externalReferenceCode,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistBooleanOptionLabelFalse}`
+			);
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.table.bodyRows.first().locator('td')
+			).toHaveText(['default', 'No', '']);
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Can remove the current filter', async () => {
+			await dataSetFragmentPage.page
+				.getByRole('button', {exact: true, name: 'Remove Filter'})
+				.click();
+			await expect(
+				dataSetFragmentPage.filterResumeButton
+			).not.toBeVisible();
+
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
+				)
+			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'x-filterable: Selection filter of type "Object Picklist" can filter a collection type',
+	{tag: '@LPD-56706'},
+	async ({
+		dataSetFragmentPage,
+		dataSetManagerApiHelpers,
+		layout,
+		page,
+		picklistApiHelpers,
+	}) => {
+		const filterLabel = getRandomString();
+		let selectionFilter;
+
+		const customDataSetLabel = getRandomString();
+		const customDataSetERC = getRandomString();
+		dataSetERCs.push(customDataSetERC);
+
+		await test.step('Create custom data set of Data Sets', async () => {
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: customDataSetERC,
+				keywords: ['bar', 'eggs', 'more eggs'],
+				label: customDataSetLabel,
+				restEndpoint: '/',
+				restSchema: 'DataSet',
+			});
+		});
+
+		await test.step('Add fields, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC: customDataSetERC,
+				fieldName: 'keywords',
+				label_i18n: {en_US: 'Keywords'},
+				renderer: 'default',
+				type: 'array',
+			});
+		});
+
+		await test.step('Create a new selection filter with preselected values and include mode', async () => {
+			const picklist = await picklistApiHelpers.getPicklist(
+				collectionPicklistERC
+			);
+
+			selectionFilter =
+				await dataSetManagerApiHelpers.createDataSetSelectionFilter({
+					dataSetERC: customDataSetERC,
+					entityFieldType: 'collection-string',
+					fieldName: 'keywords',
+					include: true,
+					label_i18n: {en_US: filterLabel},
+					multiple: true,
+					preselectedValues: JSON.stringify([
+						{
+							label: getRandomString(),
+							value: picklistCollectionOptionAnyKey.externalReferenceCode,
+						},
+					]),
+					source: picklist.externalReferenceCode,
+					sourceType: 'OBJECT_PICKLIST',
+				});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel: customDataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check current filter is applied in the Frontend Data Set and return no results', async () => {
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistCollectionOptionLabelAnyKey}`
+			);
+		});
+
+		await test.step('Update filter to apply to eggs option', async () => {
+			await dataSetManagerApiHelpers.updateDataSetSelectionFilter({
+				dataSetERC: customDataSetERC,
+				preselectedValues: JSON.stringify([
+					{
+						label: getRandomString(),
+						value: picklistCollectionOptionEggs.externalReferenceCode,
+					},
+				]),
+				selectionFilterERC: selectionFilter.externalReferenceCode,
+			});
+		});
+
+		await test.step('Check current items in the Frontend Data Set', async () => {
+			await page.reload();
+			await expect(dataSetFragmentPage.filterResumeButton).toBeVisible();
+			await expect(dataSetFragmentPage.filterResumeButton).toContainText(
+				`${filterLabel}: ${picklistCollectionOptionLabelEggs}`
+			);
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.table.bodyRows.first().locator('td')
+			).toHaveText(['bar, eggs, more eggs', '']);
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 1 of 1 entries.'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Can remove the current filter', async () => {
+			await dataSetFragmentPage.page
+				.getByRole('button', {exact: true, name: 'Remove Filter'})
+				.click();
+			await expect(
+				dataSetFragmentPage.filterResumeButton
+			).not.toBeVisible();
+
+			await dataSetFragmentPage.paginationResults.scrollIntoViewIfNeeded();
+
+			await expect(
+				dataSetFragmentPage.paginationResults.getByText(
+					'Showing 1 to 2 of 2 entries.'
 				)
 			).toBeVisible();
 		});

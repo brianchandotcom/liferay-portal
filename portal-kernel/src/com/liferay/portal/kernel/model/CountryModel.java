@@ -26,8 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface CountryModel
-	extends BaseModel<Country>, CTModel<Country>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<Country>, CTModel<Country>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -99,6 +99,23 @@ public interface CountryModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this country.
+	 *
+	 * @return the external reference code of this country
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this country.
+	 *
+	 * @param externalReferenceCode the external reference code of this country
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the default language ID of this country.
@@ -455,6 +472,20 @@ public interface CountryModel
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the status of this country.
+	 *
+	 * @return the status of this country
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this country.
+	 *
+	 * @param status the status of this country
+	 */
+	public void setStatus(int status);
+
 	public String[] getAvailableLanguageIds();
 
 	public String getTitle();
@@ -475,4 +506,4 @@ public interface CountryModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1502356158
+// LIFERAY-SERVICE-BUILDER-HASH:-357280889

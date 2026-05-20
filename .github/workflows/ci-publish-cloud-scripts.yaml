@@ -13,12 +13,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   env:
                     BUCKET: liferay-cloud-native-bootstrap-nonprd
                     PROVIDER: ${{matrix.provider}}
@@ -29,18 +29,22 @@ jobs:
                     set -o nounset
                     set -o pipefail
 
-                    local url="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
+                    function main {
+                        local url="gs://${BUCKET}/bootstrap/liferay-${PROVIDER}-bootstrap/liferay-${PROVIDER}-bootstrap-*-pr-${PR_NUMBER}-*.tar.gz"
 
-                    echo "Searching for ${url}."
+                        echo "Searching for ${url}."
 
-                    if gcloud storage ls "${url}" > /dev/null 2>&1
-                    then
-                        echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
+                        if gcloud storage ls "${url}" > /dev/null 2>&1
+                        then
+                            echo "Deleting preview bootstrap scripts for PR #${PR_NUMBER}."
 
-                        gcloud storage rm "${url}"
-                    else
-                        echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
-                    fi
+                            gcloud storage rm "${url}"
+                        else
+                            echo "No preview bootstrap scripts were found for PR #${PR_NUMBER}."
+                        fi
+                    }
+
+                    main "${@}"
         strategy:
             matrix:
                 provider:
@@ -64,12 +68,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   name: Set up variables
                 run: |
                     function main {
@@ -153,12 +157,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v3
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
-                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_EXTERNAL}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${{secrets.GCP_PROJECT_ID}}
+                    project_id: ${{secrets.GCP_PROJECT_ID_EXTERNAL}}
             -   name: Set up variables
                 run: |
                     function main {

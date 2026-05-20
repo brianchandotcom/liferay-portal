@@ -8,6 +8,7 @@ package com.liferay.ai.hub.internal.web.search;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import dev.langchain4j.web.search.WebSearchRequest;
@@ -32,7 +33,8 @@ public class LiferayWebSearchEngineTest {
 
 	@Test
 	public void testSearch() {
-		_testSearch("http://127.0.0.1:8080");
+		_testSearch(
+			"http://127.0.0.1:" + PortalUtil.getPortalServerPort(false));
 		_testSearch("http://192.168.1.1");
 	}
 

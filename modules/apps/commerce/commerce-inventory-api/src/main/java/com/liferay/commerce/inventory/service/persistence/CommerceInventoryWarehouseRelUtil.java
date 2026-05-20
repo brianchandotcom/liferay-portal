@@ -135,62 +135,6 @@ public class CommerceInventoryWarehouseRelUtil {
 	}
 
 	/**
-	 * Returns all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @return the matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel>
-		findByCommerceInventoryWarehouseId(long commerceInventoryWarehouseId) {
-
-		return getPersistence().findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory warehouse rels
-	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
-	 * @return the range of matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel>
-		findByCommerceInventoryWarehouseId(
-			long commerceInventoryWarehouseId, int start, int end) {
-
-		return getPersistence().findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory warehouse rels
-	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel>
-		findByCommerceInventoryWarehouseId(
-			long commerceInventoryWarehouseId, int start, int end,
-			OrderByComparator<CommerceInventoryWarehouseRel>
-				orderByComparator) {
-
-		return getPersistence().findByCommerceInventoryWarehouseId(
-			commerceInventoryWarehouseId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
 	 *
 	 * <p>
@@ -275,64 +219,6 @@ public class CommerceInventoryWarehouseRelUtil {
 
 		return getPersistence().countByCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
-	}
-
-	/**
-	 * Returns all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @return the matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel> findByC_C(
-		long classNameId, long commerceInventoryWarehouseId) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceInventoryWarehouseId);
-	}
-
-	/**
-	 * Returns a range of all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory warehouse rels
-	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
-	 * @return the range of matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel> findByC_C(
-		long classNameId, long commerceInventoryWarehouseId, int start,
-		int end) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceInventoryWarehouseId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @param start the lower bound of the range of commerce inventory warehouse rels
-	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce inventory warehouse rels
-	 */
-	public static List<CommerceInventoryWarehouseRel> findByC_C(
-		long classNameId, long commerceInventoryWarehouseId, int start, int end,
-		OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator) {
-
-		return getPersistence().findByC_C(
-			classNameId, commerceInventoryWarehouseId, start, end,
-			orderByComparator);
 	}
 
 	/**
@@ -436,21 +322,6 @@ public class CommerceInventoryWarehouseRelUtil {
 			NoSuchInventoryWarehouseRelException {
 
 		return getPersistence().findByC_C_CIWI(
-			classNameId, classPK, commerceInventoryWarehouseId);
-	}
-
-	/**
-	 * Returns the commerce inventory warehouse rel where classNameId = &#63; and classPK = &#63; and commerceInventoryWarehouseId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
-	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
-	 */
-	public static CommerceInventoryWarehouseRel fetchByC_C_CIWI(
-		long classNameId, long classPK, long commerceInventoryWarehouseId) {
-
-		return getPersistence().fetchByC_C_CIWI(
 			classNameId, classPK, commerceInventoryWarehouseId);
 	}
 
@@ -565,6 +436,135 @@ public class CommerceInventoryWarehouseRelUtil {
 			commerceInventoryWarehouseRelId);
 	}
 
+	/**
+	 * Returns the commerce inventory warehouse rel where classNameId = &#63; and classPK = &#63; and commerceInventoryWarehouseId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @return the matching commerce inventory warehouse rel, or <code>null</code> if a matching commerce inventory warehouse rel could not be found
+	 */
+	public static CommerceInventoryWarehouseRel fetchByC_C_CIWI(
+		long classNameId, long classPK, long commerceInventoryWarehouseId) {
+
+		return getPersistence().fetchByC_C_CIWI(
+			classNameId, classPK, commerceInventoryWarehouseId);
+	}
+
+	/**
+	 * Returns all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @return the matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel>
+		findByCommerceInventoryWarehouseId(long commerceInventoryWarehouseId) {
+
+		return getPersistence().findByCommerceInventoryWarehouseId(
+			commerceInventoryWarehouseId);
+	}
+
+	/**
+	 * Returns a range of all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param start the lower bound of the range of commerce inventory warehouse rels
+	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
+	 * @return the range of matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel>
+		findByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId, int start, int end) {
+
+		return getPersistence().findByCommerceInventoryWarehouseId(
+			commerceInventoryWarehouseId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce inventory warehouse rels where commerceInventoryWarehouseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param start the lower bound of the range of commerce inventory warehouse rels
+	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel>
+		findByCommerceInventoryWarehouseId(
+			long commerceInventoryWarehouseId, int start, int end,
+			OrderByComparator<CommerceInventoryWarehouseRel>
+				orderByComparator) {
+
+		return getPersistence().findByCommerceInventoryWarehouseId(
+			commerceInventoryWarehouseId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @return the matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel> findByC_C(
+		long classNameId, long commerceInventoryWarehouseId) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceInventoryWarehouseId);
+	}
+
+	/**
+	 * Returns a range of all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param start the lower bound of the range of commerce inventory warehouse rels
+	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
+	 * @return the range of matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel> findByC_C(
+		long classNameId, long commerceInventoryWarehouseId, int start,
+		int end) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceInventoryWarehouseId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce inventory warehouse rels where classNameId = &#63; and commerceInventoryWarehouseId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.commerce.inventory.model.impl.CommerceInventoryWarehouseRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID
+	 * @param start the lower bound of the range of commerce inventory warehouse rels
+	 * @param end the upper bound of the range of commerce inventory warehouse rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce inventory warehouse rels
+	 */
+	public static List<CommerceInventoryWarehouseRel> findByC_C(
+		long classNameId, long commerceInventoryWarehouseId, int start, int end,
+		OrderByComparator<CommerceInventoryWarehouseRel> orderByComparator) {
+
+		return getPersistence().findByC_C(
+			classNameId, commerceInventoryWarehouseId, start, end,
+			orderByComparator);
+	}
+
 	public static CommerceInventoryWarehouseRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -579,4 +579,4 @@ public class CommerceInventoryWarehouseRelUtil {
 		_persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1290528398
+// LIFERAY-SERVICE-BUILDER-HASH:-179769266

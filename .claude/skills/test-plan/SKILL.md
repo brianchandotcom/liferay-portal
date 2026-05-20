@@ -22,7 +22,7 @@ ${CLAUDE_SKILL_DIR}/references/test-organization.md
 
 ## Workflow
 
-### 1. Understand the Changes
+### Understand the Changes
 
 ```bash
 git diff master...HEAD --name-only
@@ -31,7 +31,7 @@ git log master..HEAD --oneline
 
 Read the changed files to understand what the changes actually do — not merely which files were touched, but what behavior changed. This understanding drives the test selection.
 
-### 2. Identify What Could Regress
+### Identify What Could Regress
 
 Consider the blast radius of each change:
 
@@ -43,13 +43,13 @@ Consider the blast radius of each change:
 
 The objective is not to "find every test in modules that were touched" — it is to find tests that exercise the code paths that changed.
 
-### 3. Find the Tests
+### Find the Tests
 
 For each area that could regress, search for test files. Use parallel Agent and Glob calls for speed. Consult `${CLAUDE_SKILL_DIR}/references/test-organization.md` for the exact patterns and conventions.
 
 **Verify every test file exists** before including it in the plan.
 
-### 4. Prioritize Within the 20-Minute Budget
+### Prioritize Within the 20-Minute Budget
 
 Apply the following priority order:
 
@@ -75,7 +75,7 @@ Apply the following priority order:
 
 When the change affects many modules (for example, a framework change), do not attempt to test every single module. Choose a diverse sample that covers different usage patterns of the changed code.
 
-### 5. Write the Script
+### Write the Script
 
 Delete any existing `test.sh` at the repository root, then write a new one. The script must be self-contained and runnable via `bash test.sh`. Use this structure:
 

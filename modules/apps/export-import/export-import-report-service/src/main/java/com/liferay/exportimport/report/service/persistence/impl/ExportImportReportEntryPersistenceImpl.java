@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -80,78 +79,14 @@ public class ExportImportReportEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByC_E;
-	private FinderPath _finderPathWithoutPaginationFindByC_E;
-	private FinderPath _finderPathCountByC_E;
 	private CollectionPersistenceFinder<ExportImportReportEntry>
 		_collectionPersistenceFinderByC_E;
 
 	/**
-	 * Returns all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @return the matching export import report entries
-	 */
-	@Override
-	public List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId) {
-
-		return findByC_E(
-			companyId, exportImportConfigurationId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExportImportReportEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param start the lower bound of the range of export import report entries
-	 * @param end the upper bound of the range of export import report entries (not inclusive)
-	 * @return the range of matching export import report entries
-	 */
-	@Override
-	public List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId, int start, int end) {
-
-		return findByC_E(
-			companyId, exportImportConfigurationId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExportImportReportEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param start the lower bound of the range of export import report entries
-	 * @param end the upper bound of the range of export import report entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching export import report entries
-	 */
-	@Override
-	public List<ExportImportReportEntry> findByC_E(
-		long companyId, long exportImportConfigurationId, int start, int end,
-		OrderByComparator<ExportImportReportEntry> orderByComparator) {
-
-		return findByC_E(
-			companyId, exportImportConfigurationId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the export import report entries where companyId = &#63; and exportImportConfigurationId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExportImportReportEntryModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ExportImportReportEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -244,7 +179,6 @@ public class ExportImportReportEntryPersistenceImpl
 			finderCache, new Object[] {companyId, exportImportConfigurationId});
 	}
 
-	private FinderPath _finderPathFetchByG_C_C_C_E_T;
 	private UniquePersistenceFinder<ExportImportReportEntry>
 		_uniquePersistenceFinderByG_C_C_C_E_T;
 
@@ -287,27 +221,6 @@ public class ExportImportReportEntryPersistenceImpl
 		}
 
 		return exportImportReportEntry;
-	}
-
-	/**
-	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classExternalReferenceCode the class external reference code
-	 * @param classNameId the class name ID
-	 * @param exportImportConfigurationId the export import configuration ID
-	 * @param type the type
-	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
-	 */
-	@Override
-	public ExportImportReportEntry fetchByG_C_C_C_E_T(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, long exportImportConfigurationId, int type) {
-
-		return fetchByG_C_C_C_E_T(
-			groupId, companyId, classExternalReferenceCode, classNameId,
-			exportImportConfigurationId, type, true);
 	}
 
 	/**
@@ -609,28 +522,27 @@ public class ExportImportReportEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"companyId", "exportImportConfigurationId"}, true);
-
-		_finderPathWithoutPaginationFindByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "exportImportConfigurationId"}, true);
-
-		_finderPathCountByC_E = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"companyId", "exportImportConfigurationId"}, false);
-
 		_collectionPersistenceFinderByC_E = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByC_E,
-			_finderPathWithoutPaginationFindByC_E, _finderPathCountByC_E,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"companyId", "exportImportConfigurationId"},
+				false),
 			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE,
 			_SQL_COUNT_EXPORTIMPORTREPORTENTRY_WHERE,
 			ExportImportReportEntryModelImpl.ORDER_BY_JPQL,
@@ -643,27 +555,26 @@ public class ExportImportReportEntryPersistenceImpl
 				FinderColumn.Type.LONG, "=", true, true,
 				ExportImportReportEntry::getExportImportConfigurationId));
 
-		_finderPathFetchByG_C_C_C_E_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				String.class.getName(), Long.class.getName(),
-				Long.class.getName(), Integer.class.getName()
-			},
-			new String[] {
-				"groupId", "companyId", "classExternalReferenceCode",
-				"classNameId", "exportImportConfigurationId", "type_"
-			},
-			0, 4, false, ExportImportReportEntry::getGroupId,
-			ExportImportReportEntry::getCompanyId,
-			convertNullFunction(
-				ExportImportReportEntry::getClassExternalReferenceCode),
-			ExportImportReportEntry::getClassNameId,
-			ExportImportReportEntry::getExportImportConfigurationId,
-			ExportImportReportEntry::getType);
-
 		_uniquePersistenceFinderByG_C_C_C_E_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_C_C_C_E_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_C_C_C_E_T",
+				new String[] {
+					Long.class.getName(), Long.class.getName(),
+					String.class.getName(), Long.class.getName(),
+					Long.class.getName(), Integer.class.getName()
+				},
+				new String[] {
+					"groupId", "companyId", "classExternalReferenceCode",
+					"classNameId", "exportImportConfigurationId", "type_"
+				},
+				0, 4, false, ExportImportReportEntry::getGroupId,
+				ExportImportReportEntry::getCompanyId,
+				convertNullFunction(
+					ExportImportReportEntry::getClassExternalReferenceCode),
+				ExportImportReportEntry::getClassNameId,
+				ExportImportReportEntry::getExportImportConfigurationId,
+				ExportImportReportEntry::getType),
 			_SQL_SELECT_EXPORTIMPORTREPORTENTRY_WHERE, "",
 			new FinderColumn<>(
 				"exportImportReportEntry.", "groupId", FinderColumn.Type.LONG,
@@ -756,4 +667,4 @@ public class ExportImportReportEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1505057142
+// LIFERAY-SERVICE-BUILDER-HASH:-401319354

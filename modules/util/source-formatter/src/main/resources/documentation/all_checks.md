@@ -251,6 +251,7 @@ JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.md#misce
 JavaEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds missing and unnecessary empty lines. |
 JavaEntityFieldsMapOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`. |
 JavaExceptionCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java | Checks that variable names of exceptions in `catch` statements follow naming conventions. |
+JavaExpandoBridgeAttributesCallOrderCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Ensure `setExpandoBridgeAttributes` is the final setter called on a model before model persistence. |
 JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used and incorrect use of it. |
 JavaFeatureFlagsAndTestInfoAnnotationCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |
 JavaFinalVariableCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds cases of unneeded `final` modifiers for variables and parameters. |

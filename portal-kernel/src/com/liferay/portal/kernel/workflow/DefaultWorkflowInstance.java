@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * @author Michael C. Han
@@ -37,7 +38,19 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 
 	@Override
 	public List<WorkflowNode> getCurrentWorkflowNodes() {
-		return _currentWorkflowNodes;
+		List<WorkflowNode> currentWorkflowNodes = _currentWorkflowNodes;
+
+		if ((currentWorkflowNodes == null) &&
+			(_currentWorkflowNodesSupplier != null)) {
+
+			currentWorkflowNodes = _currentWorkflowNodesSupplier.get();
+
+			_currentWorkflowNodes = currentWorkflowNodes;
+
+			_currentWorkflowNodesSupplier = null;
+		}
+
+		return currentWorkflowNodes;
 	}
 
 	@Override
@@ -119,6 +132,12 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_currentWorkflowNodes = currentWorkflowNodes;
 	}
 
+	public void setCurrentWorkflowNodesSupplier(
+		Supplier<List<WorkflowNode>> currentWorkflowNodesSupplier) {
+
+		_currentWorkflowNodesSupplier = currentWorkflowNodesSupplier;
+	}
+
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
 	}
@@ -159,6 +178,8 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	private List<WorkflowInstance> _childrenWorkflowInstances =
 		new ArrayList<>();
 	private List<WorkflowNode> _currentWorkflowNodes;
+	private transient Supplier<List<WorkflowNode>>
+		_currentWorkflowNodesSupplier;
 	private Date _endDate;
 	private long _groupId;
 	private WorkflowInstance _parentWorkflowInstance;

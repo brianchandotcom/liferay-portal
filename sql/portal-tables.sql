@@ -293,6 +293,7 @@ create table Country (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	countryId LONG not null,
 	companyId LONG,
@@ -313,6 +314,7 @@ create table Country (
 	subjectToVAT BOOLEAN,
 	zipRequired BOOLEAN,
 	lastPublishDate DATE null,
+	status INTEGER,
 	primary key (countryId, ctCollectionId)
 );
 
@@ -1146,6 +1148,7 @@ create table Region (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
 	uuid_ VARCHAR(75) null,
+	externalReferenceCode VARCHAR(75) null,
 	defaultLanguageId VARCHAR(75) null,
 	regionId LONG not null,
 	companyId LONG,
@@ -1159,6 +1162,7 @@ create table Region (
 	position DOUBLE,
 	regionCode VARCHAR(75) null,
 	lastPublishDate DATE null,
+	status INTEGER,
 	primary key (regionId, ctCollectionId)
 );
 

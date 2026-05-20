@@ -294,6 +294,7 @@ export function ActionContainer({
 					<Input
 						disabled={values.system}
 						error={errors.url}
+						id="urlInput"
 						label={Liferay.Language.get('url')}
 						name="url"
 						onChange={({target: {value}}) => {
@@ -310,6 +311,7 @@ export function ActionContainer({
 
 					<Input
 						disabled={values.system}
+						id="secretInput"
 						label={Liferay.Language.get('secret')}
 						name="secret"
 						onChange={({target: {value}}) => {

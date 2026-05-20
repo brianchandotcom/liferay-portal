@@ -132,54 +132,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddm form instance records where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance records where uuid = &#63;.
 	 *
 	 * <p>
@@ -268,19 +220,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns the ddm form instance record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
-	 */
-	public static DDMFormInstanceRecord fetchByUUID_G(
-		String uuid, long groupId) {
-
-		return getPersistence().fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the ddm form instance record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
@@ -318,60 +257,6 @@ public class DDMFormInstanceRecordUtil {
 	 */
 	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
-	}
-
-	/**
-	 * Returns all the ddm form instance records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -455,55 +340,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddm form instance records where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance records where companyId = &#63;.
 	 *
 	 * <p>
@@ -579,58 +415,6 @@ public class DDMFormInstanceRecordUtil {
 	}
 
 	/**
-	 * Returns all the ddm form instance records where formInstanceId = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByFormInstanceId(
-		long formInstanceId) {
-
-		return getPersistence().findByFormInstanceId(formInstanceId);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByFormInstanceId(
-		long formInstanceId, int start, int end) {
-
-		return getPersistence().findByFormInstanceId(
-			formInstanceId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByFormInstanceId(
-		long formInstanceId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByFormInstanceId(
-			formInstanceId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63;.
 	 *
 	 * <p>
@@ -703,60 +487,6 @@ public class DDMFormInstanceRecordUtil {
 	 */
 	public static int countByFormInstanceId(long formInstanceId) {
 		return getPersistence().countByFormInstanceId(formInstanceId);
-	}
-
-	/**
-	 * Returns all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByU_F(
-		long userId, long formInstanceId) {
-
-		return getPersistence().findByU_F(userId, formInstanceId);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByU_F(
-		long userId, long formInstanceId, int start, int end) {
-
-		return getPersistence().findByU_F(userId, formInstanceId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param userId the user ID
-	 * @param formInstanceId the form instance ID
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByU_F(
-		long userId, long formInstanceId, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByU_F(
-			userId, formInstanceId, start, end, orderByComparator);
 	}
 
 	/**
@@ -838,61 +568,6 @@ public class DDMFormInstanceRecordUtil {
 	 */
 	public static int countByU_F(long userId, long formInstanceId) {
 		return getPersistence().countByU_F(userId, formInstanceId);
-	}
-
-	/**
-	 * Returns all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @return the matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByF_F(
-		long formInstanceId, String formInstanceVersion) {
-
-		return getPersistence().findByF_F(formInstanceId, formInstanceVersion);
-	}
-
-	/**
-	 * Returns a range of all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @return the range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByF_F(
-		long formInstanceId, String formInstanceVersion, int start, int end) {
-
-		return getPersistence().findByF_F(
-			formInstanceId, formInstanceVersion, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
-	 * </p>
-	 *
-	 * @param formInstanceId the form instance ID
-	 * @param formInstanceVersion the form instance version
-	 * @param start the lower bound of the range of ddm form instance records
-	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching ddm form instance records
-	 */
-	public static List<DDMFormInstanceRecord> findByF_F(
-		long formInstanceId, String formInstanceVersion, int start, int end,
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
-
-		return getPersistence().findByF_F(
-			formInstanceId, formInstanceVersion, start, end, orderByComparator);
 	}
 
 	/**
@@ -1037,6 +712,331 @@ public class DDMFormInstanceRecordUtil {
 		return getPersistence().fetchByPrimaryKey(formInstanceRecordId);
 	}
 
+	/**
+	 * Returns the ddm form instance record where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching ddm form instance record, or <code>null</code> if a matching ddm form instance record could not be found
+	 */
+	public static DDMFormInstanceRecord fetchByUUID_G(
+		String uuid, long groupId) {
+
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where formInstanceId = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByFormInstanceId(
+		long formInstanceId) {
+
+		return getPersistence().findByFormInstanceId(formInstanceId);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByFormInstanceId(
+		long formInstanceId, int start, int end) {
+
+		return getPersistence().findByFormInstanceId(
+			formInstanceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByFormInstanceId(
+		long formInstanceId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByFormInstanceId(
+			formInstanceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByU_F(
+		long userId, long formInstanceId) {
+
+		return getPersistence().findByU_F(userId, formInstanceId);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByU_F(
+		long userId, long formInstanceId, int start, int end) {
+
+		return getPersistence().findByU_F(userId, formInstanceId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where userId = &#63; and formInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param formInstanceId the form instance ID
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByU_F(
+		long userId, long formInstanceId, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByU_F(
+			userId, formInstanceId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param formInstanceVersion the form instance version
+	 * @return the matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByF_F(
+		long formInstanceId, String formInstanceVersion) {
+
+		return getPersistence().findByF_F(formInstanceId, formInstanceVersion);
+	}
+
+	/**
+	 * Returns a range of all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param formInstanceVersion the form instance version
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @return the range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByF_F(
+		long formInstanceId, String formInstanceVersion, int start, int end) {
+
+		return getPersistence().findByF_F(
+			formInstanceId, formInstanceVersion, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the ddm form instance records where formInstanceId = &#63; and formInstanceVersion = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceRecordModelImpl</code>.
+	 * </p>
+	 *
+	 * @param formInstanceId the form instance ID
+	 * @param formInstanceVersion the form instance version
+	 * @param start the lower bound of the range of ddm form instance records
+	 * @param end the upper bound of the range of ddm form instance records (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ddm form instance records
+	 */
+	public static List<DDMFormInstanceRecord> findByF_F(
+		long formInstanceId, String formInstanceVersion, int start, int end,
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator) {
+
+		return getPersistence().findByF_F(
+			formInstanceId, formInstanceVersion, start, end, orderByComparator);
+	}
+
 	public static DDMFormInstanceRecordPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1050,4 +1050,4 @@ public class DDMFormInstanceRecordUtil {
 	private static volatile DDMFormInstanceRecordPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-335017881
+// LIFERAY-SERVICE-BUILDER-HASH:-20287883

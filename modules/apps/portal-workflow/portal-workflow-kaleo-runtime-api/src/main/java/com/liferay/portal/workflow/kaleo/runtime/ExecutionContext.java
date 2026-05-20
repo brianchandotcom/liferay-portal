@@ -77,6 +77,10 @@ public class ExecutionContext implements Serializable {
 		return _workflowContext;
 	}
 
+	public void setKaleoInstanceToken(KaleoInstanceToken kaleoInstanceToken) {
+		_kaleoInstanceToken = kaleoInstanceToken;
+	}
+
 	public void setKaleoTaskInstanceToken(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
 
@@ -93,7 +97,7 @@ public class ExecutionContext implements Serializable {
 		_transitionName = transitionName;
 	}
 
-	private final KaleoInstanceToken _kaleoInstanceToken;
+	private KaleoInstanceToken _kaleoInstanceToken;
 	private KaleoTaskInstanceToken _kaleoTaskInstanceToken;
 	private KaleoTimerInstanceToken _kaleoTimerInstanceToken;
 	private final ServiceContext _serviceContext;

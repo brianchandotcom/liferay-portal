@@ -20,7 +20,7 @@ type PathRoute = {
 	children?: AppRoute[];
 	element?: ReactNode;
 	index?: never;
-	nav?: {label: string};
+	nav?: {label: string; section?: string};
 	path: string;
 };
 
@@ -59,6 +59,7 @@ export function buildNavItems(routes: AppRoute[], prefix = ''): NavItem[] {
 			children: children?.length ? children : undefined,
 			label: route.nav.label,
 			path: fullPath,
+			section: route.nav.section,
 		});
 	}
 

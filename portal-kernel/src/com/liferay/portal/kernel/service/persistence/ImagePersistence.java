@@ -170,4 +170,4 @@ public interface ImagePersistence
 	public Image fetchByPrimaryKey(long imageId);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:331658372
+// LIFERAY-SERVICE-BUILDER-HASH:896005508

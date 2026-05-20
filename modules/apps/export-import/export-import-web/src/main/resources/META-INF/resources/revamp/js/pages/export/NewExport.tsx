@@ -12,47 +12,33 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Footer from '../../components/Footer';
 import {
 	DateFilterValues,
-	FilterType,
-	HOURS_BY_MODIFIED_LAST,
+	Range,
+	normalizeDateFilter,
 } from '../../components/date_filter';
 import {FormikDebug} from '../../components/forms/formik';
 import {
 	ExportPreviewParams,
-	ExportPreviewQuery,
 	getExportPreview,
 } from '../../services/getExportPreview';
+import {postExportProcess} from '../../services/postExportProcess';
 import {ExportPreview} from '../../types/exportImportPreview';
-import {flattenContentSelection} from '../../utils/flattenContentSelection';
+import {toRequestPortletDataHandlers} from '../../utils/toRequestPortletDataHandlers';
 import DataSelection from './components/DataSelection';
+import {PageTreeModalConfiguration} from './components/PageTreeModal';
 import Setup from './components/Setup';
-
-function dateFilterToQuery(values: DateFilterValues): ExportPreviewQuery {
-	if (values.filterType === FilterType.Last) {
-		return {
-			last: HOURS_BY_MODIFIED_LAST[values.modifiedLast],
-			range: 'last',
-		};
-	}
-
-	if (values.filterType === FilterType.Range) {
-		return {
-			endDate: new Date(values.toDate).toISOString(),
-			range: 'dateRange',
-			startDate: new Date(values.fromDate).toISOString(),
-		};
-	}
-
-	return {range: 'all'};
-}
 
 export function NewExport({
 	backURL,
 	exportPreview,
 	exportPreviewAPIURL,
+	exportProcessAPIURL,
+	pageTreeModalConfiguration,
 }: {
 	backURL: string;
 	exportPreview?: ExportPreview;
 	exportPreviewAPIURL: string;
+	exportProcessAPIURL: string;
+	pageTreeModalConfiguration: PageTreeModalConfiguration;
 }) {
 	const [preview, setPreview] = useState<ExportPreview | undefined>(
 		exportPreview
@@ -96,20 +82,17 @@ export function NewExport({
 		return <ClayAlert displayType="danger">{error}</ClayAlert>;
 	}
 
-	const sections = preview?.portletDataHandlerSections ?? [];
+	const sections = preview?.previewPortletDataHandlerSections ?? [];
 
 	const handleApplyFilter = (filterValues: DateFilterValues) => {
-		if (
-			filterValues.filterType === FilterType.All &&
-			initialPreviewRef.current
-		) {
+		if (filterValues.range === Range.All && initialPreviewRef.current) {
 			setPreview(initialPreviewRef.current);
 
 			return;
 		}
 
 		getPreview({
-			query: dateFilterToQuery(filterValues),
+			query: normalizeDateFilter(filterValues),
 			url: exportPreviewAPIURL,
 		});
 	};
@@ -118,26 +101,40 @@ export function NewExport({
 		<Formik
 			initialValues={{
 				contentSelection: undefined,
-				filename: '',
+				dateFilter: {range: Range.All} as DateFilterValues,
+				deletions: false,
+				fileName: '',
 			}}
 			onSubmit={async (values) => {
-				const flatValues = flattenContentSelection({
-					contentSelection: values.contentSelection,
-					sections,
+				const result = await postExportProcess({
+					exportRequest: {
+						...normalizeDateFilter(values.dateFilter),
+						fileName: values.fileName,
+						requestPortletDataHandlers:
+							toRequestPortletDataHandlers(
+								sections,
+								values.contentSelection
+							),
+					},
+					url: exportProcessAPIURL,
 				});
 
-				// eslint-disable-next-line no-console
-				console.log({
-					contentSelection: values.contentSelection,
-					filename: values.filename,
-					flatValues,
-				});
+				if (result.error) {
+					Liferay.Util.openToast({
+						message: result.error,
+						type: 'danger',
+					});
+
+					return;
+				}
+
+				window.location.href = backURL;
 			}}
 			validate={(values: FormikValues) => {
 				const errors: {[key: string]: string} = {};
 
-				if (!values?.filename) {
-					errors.filename = Liferay.Language.get(
+				if (!values?.fileName) {
+					errors.fileName = Liferay.Language.get(
 						'this-field-is-required'
 					);
 				}
@@ -157,9 +154,11 @@ export function NewExport({
 					<Setup />
 
 					<DataSelection
+						deletionCount={preview?.deletionCount}
 						itemsCount={preview?.additionCount}
 						loading={loading}
 						onApplyFilter={handleApplyFilter}
+						pageTreeModalConfiguration={pageTreeModalConfiguration}
 						sections={sections}
 					/>
 

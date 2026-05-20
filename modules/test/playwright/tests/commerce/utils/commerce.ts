@@ -389,11 +389,9 @@ export async function completedVirtualOrderItemSetUp(
 	apiHelpers: DataApiHelpers,
 	orderItemQuantity: number
 ) {
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: getRandomString(),
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
@@ -492,13 +490,11 @@ export async function initializerSetUp(
 	catalogName = catalogName || siteName;
 	channelName = channelName || siteName;
 
-	const site = await apiHelpers.headlessSite.createSite({
+	const site = await apiHelpers.headlessAdminSite.postSite({
 		name: siteName,
 		templateKey,
 		templateType: 'site-initializer',
 	});
-
-	apiHelpers.data.push({id: site.externalReferenceCode, type: 'site'});
 
 	const channels =
 		await apiHelpers.headlessCommerceAdminChannel.getChannelsPage(
@@ -728,6 +724,77 @@ export async function createAccountWithBuyerUser(
 	};
 
 	return {account, buyerUser};
+}
+
+export async function createAccountWithSupplierUser(
+	apiHelpers: DataApiHelpers,
+	siteId: number | string,
+	options?: {
+		accountName?: string;
+		userEmailAddress?: string;
+		userFirstName?: string;
+		userLastName?: string;
+		userScreenName?: string;
+	}
+) {
+	const randomSuffix = getRandomString();
+	const accountName =
+		options?.accountName || `Supplier Account ${randomSuffix}`;
+	const userScreenName = options?.userScreenName || `supplier${randomSuffix}`;
+	const userEmailAddress =
+		options?.userEmailAddress || `${userScreenName}@liferay.com`;
+	const userFirstName = options?.userFirstName || `Supplier${randomSuffix}`;
+	const userLastName = options?.userLastName || 'User';
+
+	const account = await apiHelpers.headlessAdminUser.postAccount({
+		name: accountName,
+		type: 'supplier',
+	});
+
+	const supplierUser = await apiHelpers.headlessAdminUser.postUserAccount({
+		alternateName: userScreenName,
+		emailAddress: userEmailAddress,
+		familyName: userLastName,
+		givenName: userFirstName,
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[supplierUser.emailAddress]
+	);
+
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const supplierRole = rolesResponse?.items?.find(
+		(role: {name: string}) => role.name === 'Account Supplier'
+	);
+
+	if (supplierRole) {
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			supplierRole.id,
+			supplierUser.emailAddress
+		);
+	}
+
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		siteId,
+		supplierUser.id
+	);
+
+	userData[supplierUser.alternateName] = {
+		name: supplierUser.givenName,
+		password: 'test',
+		surname: supplierUser.familyName,
+	};
+
+	return {account, supplierUser};
 }
 
 export async function createChannelAccountManagerUser(

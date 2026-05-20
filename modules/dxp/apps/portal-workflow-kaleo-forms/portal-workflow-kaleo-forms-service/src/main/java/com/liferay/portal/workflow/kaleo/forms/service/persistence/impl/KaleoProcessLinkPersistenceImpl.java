@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -74,70 +73,14 @@ public class KaleoProcessLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByKaleoProcessId;
-	private FinderPath _finderPathWithoutPaginationFindByKaleoProcessId;
-	private FinderPath _finderPathCountByKaleoProcessId;
 	private CollectionPersistenceFinder<KaleoProcessLink>
 		_collectionPersistenceFinderByKaleoProcessId;
 
 	/**
-	 * Returns all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @return the matching kaleo process links
-	 */
-	@Override
-	public List<KaleoProcessLink> findByKaleoProcessId(long kaleoProcessId) {
-		return findByKaleoProcessId(
-			kaleoProcessId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoProcessLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param start the lower bound of the range of kaleo process links
-	 * @param end the upper bound of the range of kaleo process links (not inclusive)
-	 * @return the range of matching kaleo process links
-	 */
-	@Override
-	public List<KaleoProcessLink> findByKaleoProcessId(
-		long kaleoProcessId, int start, int end) {
-
-		return findByKaleoProcessId(kaleoProcessId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoProcessLinkModelImpl</code>.
-	 * </p>
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param start the lower bound of the range of kaleo process links
-	 * @param end the upper bound of the range of kaleo process links (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo process links
-	 */
-	@Override
-	public List<KaleoProcessLink> findByKaleoProcessId(
-		long kaleoProcessId, int start, int end,
-		OrderByComparator<KaleoProcessLink> orderByComparator) {
-
-		return findByKaleoProcessId(
-			kaleoProcessId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo process links where kaleoProcessId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoProcessLinkModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>KaleoProcessLinkModelImpl</code>.
 	 * </p>
 	 *
 	 * @param kaleoProcessId the kaleo process ID
@@ -223,7 +166,6 @@ public class KaleoProcessLinkPersistenceImpl
 			finderCache, new Object[] {kaleoProcessId});
 	}
 
-	private FinderPath _finderPathFetchByKPI_WTN;
 	private UniquePersistenceFinder<KaleoProcessLink>
 		_uniquePersistenceFinderByKPI_WTN;
 
@@ -257,20 +199,6 @@ public class KaleoProcessLinkPersistenceImpl
 		}
 
 		return kaleoProcessLink;
-	}
-
-	/**
-	 * Returns the kaleo process link where kaleoProcessId = &#63; and workflowTaskName = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param kaleoProcessId the kaleo process ID
-	 * @param workflowTaskName the workflow task name
-	 * @return the matching kaleo process link, or <code>null</code> if a matching kaleo process link could not be found
-	 */
-	@Override
-	public KaleoProcessLink fetchByKPI_WTN(
-		long kaleoProcessId, String workflowTaskName) {
-
-		return fetchByKPI_WTN(kaleoProcessId, workflowTaskName, true);
 	}
 
 	/**
@@ -498,29 +426,27 @@ public class KaleoProcessLinkPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByKaleoProcessId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"kaleoProcessId"}, true);
-
-		_finderPathWithoutPaginationFindByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByKaleoProcessId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoProcessId"}, true);
-
-		_finderPathCountByKaleoProcessId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByKaleoProcessId",
-			new String[] {Long.class.getName()},
-			new String[] {"kaleoProcessId"}, false);
-
 		_collectionPersistenceFinderByKaleoProcessId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByKaleoProcessId,
-				_finderPathWithoutPaginationFindByKaleoProcessId,
-				_finderPathCountByKaleoProcessId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByKaleoProcessId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"kaleoProcessId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByKaleoProcessId", new String[] {Long.class.getName()},
+					new String[] {"kaleoProcessId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByKaleoProcessId",
+					new String[] {Long.class.getName()},
+					new String[] {"kaleoProcessId"}, false),
 				_SQL_SELECT_KALEOPROCESSLINK_WHERE,
 				_SQL_COUNT_KALEOPROCESSLINK_WHERE,
 				KaleoProcessLinkModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -530,16 +456,15 @@ public class KaleoProcessLinkPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					KaleoProcessLink::getKaleoProcessId));
 
-		_finderPathFetchByKPI_WTN = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"kaleoProcessId", "workflowTaskName"}, 0, 2, false,
-			KaleoProcessLink::getKaleoProcessId,
-			convertNullFunction(KaleoProcessLink::getWorkflowTaskName));
-
 		_uniquePersistenceFinderByKPI_WTN = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByKPI_WTN, _SQL_SELECT_KALEOPROCESSLINK_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByKPI_WTN",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"kaleoProcessId", "workflowTaskName"}, 0, 2,
+				false, KaleoProcessLink::getKaleoProcessId,
+				convertNullFunction(KaleoProcessLink::getWorkflowTaskName)),
+			_SQL_SELECT_KALEOPROCESSLINK_WHERE, "",
 			new FinderColumn<>(
 				"kaleoProcessLink.", "kaleoProcessId", FinderColumn.Type.LONG,
 				"=", true, true, KaleoProcessLink::getKaleoProcessId),
@@ -614,4 +539,4 @@ public class KaleoProcessLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1380250058
+// LIFERAY-SERVICE-BUILDER-HASH:747361073

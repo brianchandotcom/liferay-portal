@@ -18,7 +18,7 @@ import {get} from 'lodash';
 import {Routes, toRoute} from 'shared/util/router';
 import {Sizes} from 'shared/util/constants';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
-import {useDataSource} from 'shared/hooks/useDataSource';
+import {useDataSources} from 'shared/context/dataSources';
 import {useParams} from 'react-router-dom';
 
 const connector = connect(null, {
@@ -35,7 +35,7 @@ export const IndividualsDistribution: React.FC<
 	IIndividualsDistributionProps
 > = ({knownIndividualCount, ...otherProps}) => {
 	const {groupId} = useParams();
-	const dataSourceStates = useDataSource();
+	const dataSourceStates = useDataSources();
 	const currentUser = useCurrentUser();
 	const authorized = currentUser.isAdmin();
 

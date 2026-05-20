@@ -640,6 +640,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="countryId" type="long" />
 		<field name="companyId" type="long" />
@@ -670,6 +671,7 @@
 		<field name="subjectToVAT" type="boolean" />
 		<field name="zipRequired" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.CountryLocalization">
 		<field name="mvccVersion" type="long" />
@@ -1309,6 +1311,7 @@
 		<field name="mvccVersion" type="long" />
 		<field name="ctCollectionId" type="long" />
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="defaultLanguageId" type="String" />
 		<field name="regionId" type="long" />
 		<field name="companyId" type="long" />
@@ -1328,6 +1331,7 @@
 			<validator name="required" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.RegionLocalization">
 		<field name="mvccVersion" type="long" />

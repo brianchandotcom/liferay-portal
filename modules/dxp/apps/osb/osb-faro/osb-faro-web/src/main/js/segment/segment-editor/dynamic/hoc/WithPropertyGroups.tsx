@@ -205,6 +205,14 @@ const mapResultToProps = (
 					propertySubgroups: List([
 						new PropertySubgroup({properties: List()})
 					])
+				}),
+			type === SegmentTypes.Batch &&
+				new PropertyGroup({
+					label: Liferay.Language.get('tags'),
+					propertyKey: 'tag',
+					propertySubgroups: List([
+						new PropertySubgroup({properties: List()})
+					])
 				})
 		].filter(Boolean) as PropertyGroup[]
 	);

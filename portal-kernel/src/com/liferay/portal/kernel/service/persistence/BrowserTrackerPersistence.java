@@ -42,14 +42,6 @@ public interface BrowserTrackerPersistence
 		throws NoSuchBrowserTrackerException;
 
 	/**
-	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	 */
-	public BrowserTracker fetchByUserId(long userId);
-
-	/**
 	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
@@ -113,5 +105,15 @@ public interface BrowserTrackerPersistence
 	 */
 	public BrowserTracker fetchByPrimaryKey(long browserTrackerId);
 
+	/**
+	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param userId the user ID
+	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
+	 */
+	public default BrowserTracker fetchByUserId(long userId) {
+		return fetchByUserId(userId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-325492942
+// LIFERAY-SERVICE-BUILDER-HASH:-680003162

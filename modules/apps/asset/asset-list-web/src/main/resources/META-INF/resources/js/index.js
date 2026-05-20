@@ -16,5 +16,6 @@ export {default as SelectStructureField} from './SelectStructureField';
 export {default as Source} from './Source';
 export {default as TopLinkEventHandler} from './TopLinkEventHandler';
 export {default as AssetFilterBuilder} from './components/AssetFilterBuilder/index';
+export {default as CollectionFilterBuilder} from './components/CollectionFilterBuilder/index';
 export {default as VariationsNav} from './components/VariationsNav/index';
 export {default as openDeleteAssetEntryListModal} from './openDeleteAssetEntryListModal';

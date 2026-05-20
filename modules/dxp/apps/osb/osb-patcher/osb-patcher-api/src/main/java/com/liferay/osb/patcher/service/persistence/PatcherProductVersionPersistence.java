@@ -33,48 +33,6 @@ public interface PatcherProductVersionPersistence
 	 */
 
 	/**
-	 * Returns all the patcher product versions where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @return the matching patcher product versions
-	 */
-	public java.util.List<PatcherProductVersion> findByFixDeliveryMethod(
-		int fixDeliveryMethod);
-
-	/**
-	 * Returns a range of all the patcher product versions where fixDeliveryMethod = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param start the lower bound of the range of patcher product versions
-	 * @param end the upper bound of the range of patcher product versions (not inclusive)
-	 * @return the range of matching patcher product versions
-	 */
-	public java.util.List<PatcherProductVersion> findByFixDeliveryMethod(
-		int fixDeliveryMethod, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the patcher product versions where fixDeliveryMethod = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param start the lower bound of the range of patcher product versions
-	 * @param end the upper bound of the range of patcher product versions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching patcher product versions
-	 */
-	public java.util.List<PatcherProductVersion> findByFixDeliveryMethod(
-		int fixDeliveryMethod, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<PatcherProductVersion>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the patcher product versions where fixDeliveryMethod = &#63;.
 	 *
 	 * <p>
@@ -119,30 +77,6 @@ public interface PatcherProductVersionPersistence
 		int fixDeliveryMethod,
 		com.liferay.portal.kernel.util.OrderByComparator<PatcherProductVersion>
 			orderByComparator);
-
-	/**
-	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @return the matching patcher product versions that the user has permission to view
-	 */
-	public java.util.List<PatcherProductVersion> filterFindByFixDeliveryMethod(
-		int fixDeliveryMethod);
-
-	/**
-	 * Returns a range of all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param fixDeliveryMethod the fix delivery method
-	 * @param start the lower bound of the range of patcher product versions
-	 * @param end the upper bound of the range of patcher product versions (not inclusive)
-	 * @return the range of matching patcher product versions that the user has permission to view
-	 */
-	public java.util.List<PatcherProductVersion> filterFindByFixDeliveryMethod(
-		int fixDeliveryMethod, int start, int end);
 
 	/**
 	 * Returns an ordered range of all the patcher product versions that the user has permissions to view where fixDeliveryMethod = &#63;.
@@ -194,14 +128,6 @@ public interface PatcherProductVersionPersistence
 	 */
 	public PatcherProductVersion findByName(String name)
 		throws NoSuchPatcherProductVersionException;
-
-	/**
-	 * Returns the patcher product version where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param name the name
-	 * @return the matching patcher product version, or <code>null</code> if a matching patcher product version could not be found
-	 */
-	public PatcherProductVersion fetchByName(String name);
 
 	/**
 	 * Returns the patcher product version where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -270,5 +196,107 @@ public interface PatcherProductVersionPersistence
 	public PatcherProductVersion fetchByPrimaryKey(
 		long patcherProductVersionId);
 
+	/**
+	 * Returns the patcher product version where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param name the name
+	 * @return the matching patcher product version, or <code>null</code> if a matching patcher product version could not be found
+	 */
+	public default PatcherProductVersion fetchByName(String name) {
+		return fetchByName(name, true);
+	}
+
+	/**
+	 * Returns all the patcher product versions where fixDeliveryMethod = &#63;.
+	 *
+	 * @param fixDeliveryMethod the fix delivery method
+	 * @return the matching patcher product versions
+	 */
+	public default java.util.List<PatcherProductVersion>
+		findByFixDeliveryMethod(int fixDeliveryMethod) {
+
+		return findByFixDeliveryMethod(
+			fixDeliveryMethod,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the patcher product versions where fixDeliveryMethod = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fixDeliveryMethod the fix delivery method
+	 * @param start the lower bound of the range of patcher product versions
+	 * @param end the upper bound of the range of patcher product versions (not inclusive)
+	 * @return the range of matching patcher product versions
+	 */
+	public default java.util.List<PatcherProductVersion>
+		findByFixDeliveryMethod(int fixDeliveryMethod, int start, int end) {
+
+		return findByFixDeliveryMethod(
+			fixDeliveryMethod, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the patcher product versions where fixDeliveryMethod = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fixDeliveryMethod the fix delivery method
+	 * @param start the lower bound of the range of patcher product versions
+	 * @param end the upper bound of the range of patcher product versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching patcher product versions
+	 */
+	public default java.util.List<PatcherProductVersion>
+		findByFixDeliveryMethod(
+			int fixDeliveryMethod, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<PatcherProductVersion> orderByComparator) {
+
+		return findByFixDeliveryMethod(
+			fixDeliveryMethod, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
+	 *
+	 * @param fixDeliveryMethod the fix delivery method
+	 * @return the matching patcher product versions that the user has permission to view
+	 */
+	public default java.util.List<PatcherProductVersion>
+		filterFindByFixDeliveryMethod(int fixDeliveryMethod) {
+
+		return filterFindByFixDeliveryMethod(
+			fixDeliveryMethod,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the patcher product versions that the user has permission to view where fixDeliveryMethod = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.osb.patcher.model.impl.PatcherProductVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param fixDeliveryMethod the fix delivery method
+	 * @param start the lower bound of the range of patcher product versions
+	 * @param end the upper bound of the range of patcher product versions (not inclusive)
+	 * @return the range of matching patcher product versions that the user has permission to view
+	 */
+	public default java.util.List<PatcherProductVersion>
+		filterFindByFixDeliveryMethod(
+			int fixDeliveryMethod, int start, int end) {
+
+		return filterFindByFixDeliveryMethod(
+			fixDeliveryMethod, start, end, null);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-261953518
+// LIFERAY-SERVICE-BUILDER-HASH:867280594

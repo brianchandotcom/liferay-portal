@@ -127,58 +127,6 @@ public class PasswordPolicyRelUtil {
 	}
 
 	/**
-	 * Returns all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @return the matching password policy rels
-	 */
-	public static List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId) {
-
-		return getPersistence().findByPasswordPolicyId(passwordPolicyId);
-	}
-
-	/**
-	 * Returns a range of all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param start the lower bound of the range of password policy rels
-	 * @param end the upper bound of the range of password policy rels (not inclusive)
-	 * @return the range of matching password policy rels
-	 */
-	public static List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId, int start, int end) {
-
-		return getPersistence().findByPasswordPolicyId(
-			passwordPolicyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param passwordPolicyId the password policy ID
-	 * @param start the lower bound of the range of password policy rels
-	 * @param end the upper bound of the range of password policy rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching password policy rels
-	 */
-	public static List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId, int start, int end,
-		OrderByComparator<PasswordPolicyRel> orderByComparator) {
-
-		return getPersistence().findByPasswordPolicyId(
-			passwordPolicyId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
 	 *
 	 * <p>
@@ -266,17 +214,6 @@ public class PasswordPolicyRelUtil {
 			NoSuchPasswordPolicyRelException {
 
 		return getPersistence().findByC_C(classNameId, classPK);
-	}
-
-	/**
-	 * Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 */
-	public static PasswordPolicyRel fetchByC_C(long classNameId, long classPK) {
-		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
 	/**
@@ -375,6 +312,69 @@ public class PasswordPolicyRelUtil {
 		return getPersistence().fetchByPrimaryKey(passwordPolicyRelId);
 	}
 
+	/**
+	 * Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
+	 */
+	public static PasswordPolicyRel fetchByC_C(long classNameId, long classPK) {
+		return getPersistence().fetchByC_C(classNameId, classPK);
+	}
+
+	/**
+	 * Returns all the password policy rels where passwordPolicyId = &#63;.
+	 *
+	 * @param passwordPolicyId the password policy ID
+	 * @return the matching password policy rels
+	 */
+	public static List<PasswordPolicyRel> findByPasswordPolicyId(
+		long passwordPolicyId) {
+
+		return getPersistence().findByPasswordPolicyId(passwordPolicyId);
+	}
+
+	/**
+	 * Returns a range of all the password policy rels where passwordPolicyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param passwordPolicyId the password policy ID
+	 * @param start the lower bound of the range of password policy rels
+	 * @param end the upper bound of the range of password policy rels (not inclusive)
+	 * @return the range of matching password policy rels
+	 */
+	public static List<PasswordPolicyRel> findByPasswordPolicyId(
+		long passwordPolicyId, int start, int end) {
+
+		return getPersistence().findByPasswordPolicyId(
+			passwordPolicyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the password policy rels where passwordPolicyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portal.model.impl.PasswordPolicyRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param passwordPolicyId the password policy ID
+	 * @param start the lower bound of the range of password policy rels
+	 * @param end the upper bound of the range of password policy rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching password policy rels
+	 */
+	public static List<PasswordPolicyRel> findByPasswordPolicyId(
+		long passwordPolicyId, int start, int end,
+		OrderByComparator<PasswordPolicyRel> orderByComparator) {
+
+		return getPersistence().findByPasswordPolicyId(
+			passwordPolicyId, start, end, orderByComparator);
+	}
+
 	public static PasswordPolicyRelPersistence getPersistence() {
 		return _persistence;
 	}
@@ -388,4 +388,4 @@ public class PasswordPolicyRelUtil {
 	private static volatile PasswordPolicyRelPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:643405653
+// LIFERAY-SERVICE-BUILDER-HASH:1719643841

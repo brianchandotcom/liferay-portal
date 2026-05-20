@@ -78,8 +78,6 @@ public class AkismetEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLtModifiedDate;
-	private FinderPath _finderPathWithPaginationCountByLtModifiedDate;
 	private CollectionPersistenceFinder<AkismetEntry>
 		_collectionPersistenceFinderByLtModifiedDate;
 
@@ -225,7 +223,6 @@ public class AkismetEntryPersistenceImpl
 			finderCache, new Object[] {modifiedDate});
 	}
 
-	private FinderPath _finderPathFetchByC_C;
 	private UniquePersistenceFinder<AkismetEntry> _uniquePersistenceFinderByC_C;
 
 	/**
@@ -256,18 +253,6 @@ public class AkismetEntryPersistenceImpl
 		}
 
 		return akismetEntry;
-	}
-
-	/**
-	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching akismet entry, or <code>null</code> if a matching akismet entry could not be found
-	 */
-	@Override
-	public AkismetEntry fetchByC_C(long classNameId, long classPK) {
-		return fetchByC_C(classNameId, classPK, true);
 	}
 
 	/**
@@ -514,37 +499,38 @@ public class AkismetEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLtModifiedDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtModifiedDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"modifiedDate"}, true);
-
-		_finderPathWithPaginationCountByLtModifiedDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtModifiedDate",
-			new String[] {Date.class.getName()}, new String[] {"modifiedDate"},
-			false);
-
 		_collectionPersistenceFinderByLtModifiedDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtModifiedDate, null,
-				_finderPathWithPaginationCountByLtModifiedDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtModifiedDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"modifiedDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtModifiedDate",
+					new String[] {Date.class.getName()},
+					new String[] {"modifiedDate"}, false),
 				_SQL_SELECT_AKISMETENTRY_WHERE, _SQL_COUNT_AKISMETENTRY_WHERE,
 				AkismetEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
 				new FinderColumn<>(
 					"akismetEntry.", "modifiedDate", FinderColumn.Type.DATE,
 					"<", true, true, AkismetEntry::getModifiedDate));
 
-		_finderPathFetchByC_C = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"classNameId", "classPK"}, 0, 0, false,
-			AkismetEntry::getClassNameId, AkismetEntry::getClassPK);
-
 		_uniquePersistenceFinderByC_C = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByC_C, _SQL_SELECT_AKISMETENTRY_WHERE, "",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByC_C",
+				new String[] {Long.class.getName(), Long.class.getName()},
+				new String[] {"classNameId", "classPK"}, 0, 0, false,
+				AkismetEntry::getClassNameId, AkismetEntry::getClassPK),
+			_SQL_SELECT_AKISMETENTRY_WHERE, "",
 			new FinderColumn<>(
 				"akismetEntry.", "classNameId", FinderColumn.Type.LONG, "=",
 				true, true, AkismetEntry::getClassNameId),
@@ -621,4 +607,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2095596341
+// LIFERAY-SERVICE-BUILDER-HASH:-1391246213

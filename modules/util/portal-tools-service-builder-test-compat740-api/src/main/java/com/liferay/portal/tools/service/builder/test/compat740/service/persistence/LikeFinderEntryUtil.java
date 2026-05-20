@@ -142,20 +142,6 @@ public class LikeFinderEntryUtil {
 	}
 
 	/**
-	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param ownerId the owner ID
-	 * @param ownerType the owner type
-	 * @param portletId the portlet ID
-	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
-	 */
-	public static LikeFinderEntry fetchByO_O_P(
-		long ownerId, int ownerType, String portletId) {
-
-		return getPersistence().fetchByO_O_P(ownerId, ownerType, portletId);
-	}
-
-	/**
 	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param ownerId the owner ID
@@ -416,6 +402,20 @@ public class LikeFinderEntryUtil {
 		return getPersistence().fetchByPrimaryKey(likeFinderEntryId);
 	}
 
+	/**
+	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param ownerId the owner ID
+	 * @param ownerType the owner type
+	 * @param portletId the portlet ID
+	 * @return the matching like finder entry, or <code>null</code> if a matching like finder entry could not be found
+	 */
+	public static LikeFinderEntry fetchByO_O_P(
+		long ownerId, int ownerType, String portletId) {
+
+		return getPersistence().fetchByO_O_P(ownerId, ownerType, portletId);
+	}
+
 	public static LikeFinderEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -427,4 +427,4 @@ public class LikeFinderEntryUtil {
 	private static volatile LikeFinderEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1609009256
+// LIFERAY-SERVICE-BUILDER-HASH:1540261506

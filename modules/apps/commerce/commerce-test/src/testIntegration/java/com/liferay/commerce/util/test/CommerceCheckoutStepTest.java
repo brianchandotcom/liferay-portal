@@ -101,7 +101,7 @@ public class CommerceCheckoutStepTest {
 			_commerceCurrency.getCode(), _serviceContext);
 
 		_country = _countryLocalService.addCountry(
-			"AA", "AAA", RandomTestUtil.randomBoolean(),
+			null, "AA", "AAA", RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomBoolean(),
@@ -109,7 +109,7 @@ public class CommerceCheckoutStepTest {
 			_serviceContext);
 
 		_region = _regionLocalService.addRegion(
-			_country.getCountryId(), RandomTestUtil.randomBoolean(),
+			null, _country.getCountryId(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
 			RandomTestUtil.randomString(), _serviceContext);
 	}

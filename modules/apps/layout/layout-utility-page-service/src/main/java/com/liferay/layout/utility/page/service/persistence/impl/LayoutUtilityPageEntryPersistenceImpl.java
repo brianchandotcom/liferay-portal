@@ -101,62 +101,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByUuid;
-	private FinderPath _finderPathWithoutPaginationFindByUuid;
-	private FinderPath _finderPathCountByUuid;
 	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByUuid;
-
-	/**
-	 * Returns all the layout utility page entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(String uuid) {
-		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return findByUuid(uuid, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByUuid(uuid, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
@@ -248,7 +194,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FinderPath _finderPathFetchByUUID_G;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByUUID_G;
 
@@ -280,18 +225,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
 	}
 
 	/**
@@ -340,69 +273,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByUuid_C;
-	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
-	private FinderPath _finderPathCountByUuid_C;
 	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByUuid_C;
-
-	/**
-	 * Returns all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return findByUuid_C(
-			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return findByUuid_C(uuid, companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByUuid_C(
-			uuid, companyId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
@@ -499,63 +371,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByGroupId;
-	private FinderPath _finderPathWithoutPaginationFindByGroupId;
-	private FinderPath _finderPathCountByGroupId;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByGroupId;
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(long groupId) {
-		return findByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end) {
-
-		return findByGroupId(groupId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByGroupId(groupId, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
@@ -625,37 +442,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByGroupId(long groupId) {
-		return filterFindByGroupId(
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByGroupId(
-		long groupId, int start, int end) {
-
-		return filterFindByGroupId(groupId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
@@ -713,7 +499,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FinderPath _finderPathFetchByPlid;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByPlid;
 
@@ -743,17 +528,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param plid the plid
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByPlid(long plid) {
-		return fetchByPlid(plid, true);
 	}
 
 	/**
@@ -798,66 +572,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_T;
-	private FinderPath _finderPathCountByG_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_T;
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(long groupId, String type) {
-		return findByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end) {
-
-		return findByG_T(groupId, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String type, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_T(groupId, type, start, end, orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
@@ -941,41 +657,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type) {
-
-		return filterFindByG_T(
-			groupId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String type, int start, int end) {
-
-		return filterFindByG_T(groupId, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -995,43 +676,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_T.filterFind(
-			finderCache, new Object[] {groupId, type}, start, end,
-			orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types) {
-
-		return filterFindByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return filterFindByG_T(groupId, types, start, end, null);
+			finderCache, new Object[] {groupId, new String[] {type}}, start,
+			end, orderByComparator, groupId);
 	}
 
 	/**
@@ -1056,67 +702,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		return _collectionPersistenceFinderByG_T.filterFind(
 			finderCache, new Object[] {groupId, ArrayUtil.sortedUnique(types)},
 			start, end, orderByComparator, groupId);
-	}
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types) {
-
-		return findByG_T(
-			groupId, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end) {
-
-		return findByG_T(groupId, types, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param types the types
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_T(
-		long groupId, String[] types, int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_T(groupId, types, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -1193,7 +778,7 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Override
 	public int filterCountByG_T(long groupId, String type) {
 		return _collectionPersistenceFinderByG_T.filterCount(
-			finderCache, new Object[] {groupId, type}, groupId);
+			finderCache, new Object[] {groupId, new String[] {type}}, groupId);
 	}
 
 	/**
@@ -1210,77 +795,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_D_T;
-	private FinderPath _finderPathWithoutPaginationFindByG_D_T;
-	private FinderPath _finderPathCountByG_D_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_D_T;
-
-	/**
-	 * Returns all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout utility page entries
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> findByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end,
-		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
-
-		return findByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end,
-			orderByComparator, true);
-	}
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
@@ -1361,46 +877,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @return the matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type) {
-
-		return filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the layout utility page entries that the user has permission to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutUtilityPageEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param defaultLayoutUtilityPageEntry the default layout utility page entry
-	 * @param type the type
-	 * @param start the lower bound of the range of layout utility page entries
-	 * @param end the upper bound of the range of layout utility page entries (not inclusive)
-	 * @return the range of matching layout utility page entries that the user has permission to view
-	 */
-	@Override
-	public List<LayoutUtilityPageEntry> filterFindByG_D_T(
-		long groupId, boolean defaultLayoutUtilityPageEntry, String type,
-		int start, int end) {
-
-		return filterFindByG_D_T(
-			groupId, defaultLayoutUtilityPageEntry, type, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the layout utility page entries that the user has permissions to view where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
 	 *
 	 * <p>
@@ -1478,7 +954,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByG_N_T;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByG_N_T;
 
@@ -1513,21 +988,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where groupId = &#63; and name = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param name the name
-	 * @param type the type
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByG_N_T(
-		long groupId, String name, String type) {
-
-		return fetchByG_N_T(groupId, name, type, true);
 	}
 
 	/**
@@ -1580,8 +1040,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, type});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByG_LikeN_T;
-	private FinderPath _finderPathWithPaginationCountByG_LikeN_T;
 	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
 		_collectionPersistenceFinderByG_LikeN_T;
 
@@ -1791,8 +1249,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		OrderByComparator<LayoutUtilityPageEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_LikeN_T.filterFind(
-			finderCache, new Object[] {groupId, name, type}, start, end,
-			orderByComparator, groupId);
+			finderCache, new Object[] {groupId, name, new String[] {type}},
+			start, end, orderByComparator, groupId);
 	}
 
 	/**
@@ -2004,7 +1462,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	@Override
 	public int filterCountByG_LikeN_T(long groupId, String name, String type) {
 		return _collectionPersistenceFinderByG_LikeN_T.filterCount(
-			finderCache, new Object[] {groupId, name, type}, groupId);
+			finderCache, new Object[] {groupId, name, new String[] {type}},
+			groupId);
 	}
 
 	/**
@@ -2025,7 +1484,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FinderPath _finderPathFetchByERC_G;
 	private UniquePersistenceFinder<LayoutUtilityPageEntry>
 		_uniquePersistenceFinderByERC_G;
 
@@ -2059,20 +1517,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 		}
 
 		return layoutUtilityPageEntry;
-	}
-
-	/**
-	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param groupId the group ID
-	 * @return the matching layout utility page entry, or <code>null</code> if a matching layout utility page entry could not be found
-	 */
-	@Override
-	public LayoutUtilityPageEntry fetchByERC_G(
-		String externalReferenceCode, long groupId) {
-
-		return fetchByERC_G(externalReferenceCode, groupId, true);
 	}
 
 	/**
@@ -2515,27 +1959,23 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_"}, true);
-
-		_finderPathWithoutPaginationFindByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			true, null);
-
-		_finderPathCountByUuid = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] {String.class.getName()}, new String[] {"uuid_"}, 0, 1,
-			false, null);
-
 		_collectionPersistenceFinderByUuid = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByUuid,
-			_finderPathWithoutPaginationFindByUuid, _finderPathCountByUuid,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+				new String[] {
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"uuid_"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+				new String[] {String.class.getName()}, new String[] {"uuid_"},
+				0, 1, false, null),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 			_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 			LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -2544,15 +1984,14 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getUuid));
 
-		_finderPathFetchByUUID_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "groupId"}, 0, 1, false,
-			convertNullFunction(LayoutUtilityPageEntry::getUuid),
-			LayoutUtilityPageEntry::getGroupId);
-
 		_uniquePersistenceFinderByUUID_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUUID_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"uuid_", "groupId"}, 0, 1, false,
+				convertNullFunction(LayoutUtilityPageEntry::getUuid),
+				LayoutUtilityPageEntry::getGroupId),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "uuid", FinderColumn.Type.STRING,
@@ -2561,30 +2000,25 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "groupId", FinderColumn.Type.LONG,
 				"=", true, true, LayoutUtilityPageEntry::getGroupId));
 
-		_finderPathWithPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"uuid_", "companyId"}, true);
-
-		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, true, null);
-
-		_finderPathCountByUuid_C = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"uuid_", "companyId"}, 0, 1, false, null);
-
 		_collectionPersistenceFinderByUuid_C =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByUuid_C,
-				_finderPathWithoutPaginationFindByUuid_C,
-				_finderPathCountByUuid_C,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+					new String[] {
+						String.class.getName(), Long.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"uuid_", "companyId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+					new String[] {String.class.getName(), Long.class.getName()},
+					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
@@ -2597,41 +2031,38 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getCompanyId));
 
-		_finderPathWithPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId"}, true);
-
-		_finderPathWithoutPaginationFindByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			true);
-
-		_finderPathCountByGroupId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
-			new String[] {Long.class.getName()}, new String[] {"groupId"},
-			false);
-
 		_collectionPersistenceFinderByGroupId =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByGroupId,
-				_finderPathWithoutPaginationFindByGroupId,
-				_finderPathCountByGroupId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+					new String[] {Long.class.getName()},
+					new String[] {"groupId"}, false),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2640,53 +2071,49 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					FinderColumn.Type.LONG, "=", true, true,
 					LayoutUtilityPageEntry::getGroupId));
 
-		_finderPathFetchByPlid = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
-			new String[] {Long.class.getName()}, new String[] {"plid"}, 0, 0,
-			false, LayoutUtilityPageEntry::getPlid);
-
 		_uniquePersistenceFinderByPlid = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByPlid,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByPlid",
+				new String[] {Long.class.getName()}, new String[] {"plid"}, 0,
+				0, false, LayoutUtilityPageEntry::getPlid),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "plid", FinderColumn.Type.LONG, "=",
 				true, true, LayoutUtilityPageEntry::getPlid));
 
-		_finderPathWithPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "type_"}, true);
-
-		_finderPathWithoutPaginationFindByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, true, null);
-
-		_finderPathCountByG_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"groupId", "type_"}, 0, 2, false, null);
-
 		_collectionPersistenceFinderByG_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_T,
-				_finderPathWithoutPaginationFindByG_T, _finderPathCountByG_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "type_"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_T",
+					new String[] {Long.class.getName(), String.class.getName()},
+					new String[] {"groupId", "type_"}, 0, 2, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2698,51 +2125,54 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", false, true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathWithPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			true);
-
-		_finderPathWithoutPaginationFindByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			0, 4, true, null);
-
-		_finderPathCountByG_D_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
-			new String[] {
-				Long.class.getName(), Boolean.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "defaultLayoutUtilityPageEntry", "type_"},
-			0, 4, false, null);
-
 		_collectionPersistenceFinderByG_D_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_D_T,
-				_finderPathWithoutPaginationFindByG_D_T,
-				_finderPathCountByG_D_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					0, 4, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_D_T",
+					new String[] {
+						Long.class.getName(), Boolean.class.getName(),
+						String.class.getName()
+					},
+					new String[] {
+						"groupId", "defaultLayoutUtilityPageEntry", "type_"
+					},
+					0, 4, false, null),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2758,19 +2188,18 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathFetchByG_N_T = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByG_N_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, 0, 6, false,
-			LayoutUtilityPageEntry::getGroupId,
-			convertNullFunction(LayoutUtilityPageEntry::getName),
-			convertNullFunction(LayoutUtilityPageEntry::getType));
-
 		_uniquePersistenceFinderByG_N_T = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByG_N_T,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByG_N_T",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"groupId", "name", "type_"}, 0, 6, false,
+				LayoutUtilityPageEntry::getGroupId,
+				convertNullFunction(LayoutUtilityPageEntry::getName),
+				convertNullFunction(LayoutUtilityPageEntry::getType)),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "groupId", FinderColumn.Type.LONG,
@@ -2782,39 +2211,39 @@ public class LayoutUtilityPageEntryPersistenceImpl
 				"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 				"=", true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathWithPaginationFindByG_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, true);
-
-		_finderPathWithPaginationCountByG_LikeN_T = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_T",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"groupId", "name", "type_"}, false);
-
 		_collectionPersistenceFinderByG_LikeN_T =
 			new FilterCollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByG_LikeN_T, null,
-				_finderPathWithPaginationCountByG_LikeN_T,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_LikeN_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_LikeN_T",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName()
+					},
+					new String[] {"groupId", "name", "type_"}, false),
 				_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
 				LayoutUtilityPageEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
 				new FilterCollectionPersistenceFinder.FilterMetadata<>(
 					LayoutUtilityPageEntryImpl.class,
-					LayoutUtilityPageEntry.class, _FILTER_ENTITY_ALIAS,
-					_FILTER_ENTITY_TABLE, _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1,
-					_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2,
-					_FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE,
+					LayoutUtilityPageEntry.class, "layoutUtilityPageEntry",
+					"LayoutUtilityPageEntry",
+					"layoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
+					") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId",
+					"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ",
 					LayoutUtilityPageEntryModelImpl.ORDER_BY_SQL,
 					LayoutUtilityPageEntryModelImpl.
 						ORDER_BY_SQL_INLINE_DISTINCT),
@@ -2829,16 +2258,15 @@ public class LayoutUtilityPageEntryPersistenceImpl
 					"layoutUtilityPageEntry.", "type", FinderColumn.Type.STRING,
 					"=", false, true, true, LayoutUtilityPageEntry::getType));
 
-		_finderPathFetchByERC_G = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
-			new String[] {String.class.getName(), Long.class.getName()},
-			new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
-			convertNullFunction(
-				LayoutUtilityPageEntry::getExternalReferenceCode),
-			LayoutUtilityPageEntry::getGroupId);
-
 		_uniquePersistenceFinderByERC_G = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByERC_G,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+				new String[] {String.class.getName(), Long.class.getName()},
+				new String[] {"externalReferenceCode", "groupId"}, 0, 1, false,
+				convertNullFunction(
+					LayoutUtilityPageEntry::getExternalReferenceCode),
+				LayoutUtilityPageEntry::getGroupId),
 			_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE, "",
 			new FinderColumn<>(
 				"layoutUtilityPageEntry.", "externalReferenceCode",
@@ -2905,28 +2333,6 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	private static final String _SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE =
 		"SELECT COUNT(layoutUtilityPageEntry) FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
 
-	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN =
-		"layoutUtilityPageEntry.LayoutUtilityPageEntryId";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_WHERE =
-			"SELECT DISTINCT {layoutUtilityPageEntry.*} FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_1 =
-			"SELECT {LayoutUtilityPageEntry.*} FROM (SELECT DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String
-		_FILTER_SQL_SELECT_LAYOUTUTILITYPAGEENTRY_NO_INLINE_DISTINCT_WHERE_2 =
-			") TEMP_TABLE INNER JOIN LayoutUtilityPageEntry ON TEMP_TABLE.LayoutUtilityPageEntryId = LayoutUtilityPageEntry.LayoutUtilityPageEntryId";
-
-	private static final String _FILTER_SQL_COUNT_LAYOUTUTILITYPAGEENTRY_WHERE =
-		"SELECT COUNT(DISTINCT layoutUtilityPageEntry.LayoutUtilityPageEntryId) AS COUNT_VALUE FROM LayoutUtilityPageEntry layoutUtilityPageEntry WHERE ";
-
-	private static final String _FILTER_ENTITY_ALIAS = "layoutUtilityPageEntry";
-
-	private static final String _FILTER_ENTITY_TABLE = "LayoutUtilityPageEntry";
-
 	private static final String _NO_SUCH_ENTITY_WITH_KEY =
 		"No LayoutUtilityPageEntry exists with the key {";
 
@@ -2942,4 +2348,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:590822477
+// LIFERAY-SERVICE-BUILDER-HASH:780315862

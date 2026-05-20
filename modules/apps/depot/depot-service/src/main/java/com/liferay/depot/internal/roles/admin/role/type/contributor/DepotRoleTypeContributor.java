@@ -10,8 +10,11 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -39,7 +42,9 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String getName() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
 			return "space";
 		}
 
@@ -48,12 +53,28 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String[] getSubtypes() {
-		return new String[0];
+		List<String> subtypes = new ArrayList<>(2);
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-58677")) {
+
+			subtypes.add(DepotRolesConstants.SUBTYPE_PROJECT);
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
+			subtypes.add(DepotRolesConstants.SUBTYPE_SPACE);
+		}
+
+		return subtypes.toArray(new String[0]);
 	}
 
 	@Override
 	public String getTabTitle(Locale locale) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
 			return _language.get(locale, "space-roles");
 		}
 
@@ -62,7 +83,9 @@ public class DepotRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public String getTitle(Locale locale) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
+
 			return _language.get(locale, "space-role");
 		}
 

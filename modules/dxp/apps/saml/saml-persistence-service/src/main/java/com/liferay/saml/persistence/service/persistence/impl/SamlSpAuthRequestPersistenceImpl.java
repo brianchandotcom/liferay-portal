@@ -76,8 +76,6 @@ public class SamlSpAuthRequestPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByLtCreateDate;
-	private FinderPath _finderPathWithPaginationCountByLtCreateDate;
 	private CollectionPersistenceFinder<SamlSpAuthRequest>
 		_collectionPersistenceFinderByLtCreateDate;
 
@@ -224,7 +222,6 @@ public class SamlSpAuthRequestPersistenceImpl
 			finderCache, new Object[] {createDate});
 	}
 
-	private FinderPath _finderPathFetchBySIEI_SSARK;
 	private UniquePersistenceFinder<SamlSpAuthRequest>
 		_uniquePersistenceFinderBySIEI_SSARK;
 
@@ -258,20 +255,6 @@ public class SamlSpAuthRequestPersistenceImpl
 		}
 
 		return samlSpAuthRequest;
-	}
-
-	/**
-	 * Returns the saml sp auth request where samlIdpEntityId = &#63; and samlSpAuthRequestKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpEntityId the saml idp entity ID
-	 * @param samlSpAuthRequestKey the saml sp auth request key
-	 * @return the matching saml sp auth request, or <code>null</code> if a matching saml sp auth request could not be found
-	 */
-	@Override
-	public SamlSpAuthRequest fetchBySIEI_SSARK(
-		String samlIdpEntityId, String samlSpAuthRequestKey) {
-
-		return fetchBySIEI_SSARK(samlIdpEntityId, samlSpAuthRequestKey, true);
 	}
 
 	/**
@@ -519,23 +502,23 @@ public class SamlSpAuthRequestPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathWithPaginationFindByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLtCreateDate",
-			new String[] {
-				Date.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"createDate"}, true);
-
-		_finderPathWithPaginationCountByLtCreateDate = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByLtCreateDate",
-			new String[] {Date.class.getName()}, new String[] {"createDate"},
-			false);
-
 		_collectionPersistenceFinderByLtCreateDate =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByLtCreateDate, null,
-				_finderPathWithPaginationCountByLtCreateDate,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByLtCreateDate",
+					new String[] {
+						Date.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"createDate"}, true),
+				null,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByLtCreateDate", new String[] {Date.class.getName()},
+					new String[] {"createDate"}, false),
 				_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE,
 				_SQL_COUNT_SAMLSPAUTHREQUEST_WHERE,
 				SamlSpAuthRequestModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -544,15 +527,16 @@ public class SamlSpAuthRequestPersistenceImpl
 					"samlSpAuthRequest.", "createDate", FinderColumn.Type.DATE,
 					"<", true, true, SamlSpAuthRequest::getCreateDate));
 
-		_finderPathFetchBySIEI_SSARK = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SSARK",
-			new String[] {String.class.getName(), String.class.getName()},
-			new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, 0, 3,
-			false, convertNullFunction(SamlSpAuthRequest::getSamlIdpEntityId),
-			convertNullFunction(SamlSpAuthRequest::getSamlSpAuthRequestKey));
-
 		_uniquePersistenceFinderBySIEI_SSARK = new UniquePersistenceFinder<>(
-			this, _finderPathFetchBySIEI_SSARK,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchBySIEI_SSARK",
+				new String[] {String.class.getName(), String.class.getName()},
+				new String[] {"samlIdpEntityId", "samlSpAuthRequestKey"}, 0, 3,
+				false,
+				convertNullFunction(SamlSpAuthRequest::getSamlIdpEntityId),
+				convertNullFunction(
+					SamlSpAuthRequest::getSamlSpAuthRequestKey)),
 			_SQL_SELECT_SAMLSPAUTHREQUEST_WHERE, "",
 			new FinderColumn<>(
 				"samlSpAuthRequest.", "samlIdpEntityId",
@@ -629,4 +613,4 @@ public class SamlSpAuthRequestPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1804038904
+// LIFERAY-SERVICE-BUILDER-HASH:344870367

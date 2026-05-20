@@ -8170,16 +8170,19 @@ public class ObjectEntryLocalServiceImpl
 			if (!objectField.isLocalized() &&
 				(values.get(objectField.getName()) != null)) {
 
-				values.put(
-					objectField.getName(),
-					objectFieldBusinessType.processValue(
-						objectField, values.get(objectField.getName())));
+				Serializable value = values.get(objectField.getName());
+
+				Serializable processedValue =
+					objectFieldBusinessType.processValue(objectField, value);
+
+				if (!Objects.equals(value, processedValue)) {
+					values.put(objectField.getName(), processedValue);
+				}
 
 				_validateValues(
 					dlFileEntriesMap, existingValues, groupId, guestUser,
 					objectDefinition, objectEntryId, objectField, userId,
-					validationErrors, values.get(objectField.getName()),
-					StringPool.BLANK);
+					validationErrors, processedValue, StringPool.BLANK);
 			}
 
 			Map<String, Serializable> localizedValues =
@@ -8193,14 +8196,19 @@ public class ObjectEntryLocalServiceImpl
 			for (Map.Entry<String, Serializable> entry :
 					localizedValues.entrySet()) {
 
-				entry.setValue(
-					objectFieldBusinessType.processValue(
-						objectField, entry.getValue()));
+				Serializable value = entry.getValue();
+
+				Serializable processedValue =
+					objectFieldBusinessType.processValue(objectField, value);
+
+				if (!Objects.equals(value, processedValue)) {
+					entry.setValue(processedValue);
+				}
 
 				_validateValues(
 					dlFileEntriesMap, existingValues, groupId, guestUser,
 					objectDefinition, objectEntryId, objectField, userId,
-					validationErrors, entry.getValue(), entry.getKey());
+					validationErrors, processedValue, entry.getKey());
 			}
 		}
 	}

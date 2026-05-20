@@ -26,8 +26,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RegionModel
-	extends BaseModel<Region>, CTModel<Region>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<Region>, CTModel<Region>, ExternalReferenceCodeModel,
+			MVCCModel, ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -99,6 +99,23 @@ public interface RegionModel
 	 */
 	@Override
 	public void setUuid(String uuid);
+
+	/**
+	 * Returns the external reference code of this region.
+	 *
+	 * @return the external reference code of this region
+	 */
+	@AutoEscape
+	@Override
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this region.
+	 *
+	 * @param externalReferenceCode the external reference code of this region
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode);
 
 	/**
 	 * Returns the default language ID of this region.
@@ -319,6 +336,20 @@ public interface RegionModel
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 
+	/**
+	 * Returns the status of this region.
+	 *
+	 * @return the status of this region
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this region.
+	 *
+	 * @param status the status of this region
+	 */
+	public void setStatus(int status);
+
 	public String[] getAvailableLanguageIds();
 
 	public String getTitle();
@@ -339,4 +370,4 @@ public interface RegionModel
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1148228435
+// LIFERAY-SERVICE-BUILDER-HASH:1023208928

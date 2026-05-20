@@ -261,16 +261,6 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param typePK the type pk
-	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
-	 */
-	public static DLSyncEvent fetchByTypePK(long typePK) {
-		return getPersistence().fetchByTypePK(typePK);
-	}
-
-	/**
 	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param typePK the type pk
@@ -358,6 +348,16 @@ public class DLSyncEventUtil {
 		return getPersistence().fetchByPrimaryKey(syncEventId);
 	}
 
+	/**
+	 * Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param typePK the type pk
+	 * @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
+	 */
+	public static DLSyncEvent fetchByTypePK(long typePK) {
+		return getPersistence().fetchByTypePK(typePK);
+	}
+
 	public static DLSyncEventPersistence getPersistence() {
 		return _persistence;
 	}
@@ -369,4 +369,4 @@ public class DLSyncEventUtil {
 	private static volatile DLSyncEventPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:93930392
+// LIFERAY-SERVICE-BUILDER-HASH:674944940

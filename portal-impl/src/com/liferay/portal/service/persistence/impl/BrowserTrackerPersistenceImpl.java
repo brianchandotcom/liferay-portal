@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.log.Log;
@@ -60,7 +59,6 @@ public class BrowserTrackerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByUserId;
 	private UniquePersistenceFinder<BrowserTracker>
 		_uniquePersistenceFinderByUserId;
 
@@ -90,17 +88,6 @@ public class BrowserTrackerPersistenceImpl
 		}
 
 		return browserTracker;
-	}
-
-	/**
-	 * Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	 */
-	@Override
-	public BrowserTracker fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
 	}
 
 	/**
@@ -319,14 +306,13 @@ public class BrowserTrackerPersistenceImpl
 	 * Initializes the browser tracker persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathFetchByUserId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, 0, 0,
-			false, BrowserTracker::getUserId);
-
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUserId, _SQL_SELECT_BROWSERTRACKER_WHERE,
-			"",
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
+				new String[] {Long.class.getName()}, new String[] {"userId"}, 0,
+				0, false, BrowserTracker::getUserId),
+			_SQL_SELECT_BROWSERTRACKER_WHERE, "",
 			new FinderColumn<>(
 				"browserTracker.", "userId", FinderColumn.Type.LONG, "=", true,
 				true, BrowserTracker::getUserId));
@@ -358,4 +344,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1854613741
+// LIFERAY-SERVICE-BUILDER-HASH:-109263853

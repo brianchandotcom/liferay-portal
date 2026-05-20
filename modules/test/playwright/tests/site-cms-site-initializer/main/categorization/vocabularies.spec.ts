@@ -3,17 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {createCategories} from '../../../../helpers/CreateCategories';
 import {checkAccessibility} from '../../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {categorizationPagesTest} from '../fixtures/categorizationPagesTest';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
+import {ContentsPage} from '../pages/ContentsPage';
 
 const test = mergeTests(
 	categorizationPagesTest,
@@ -24,6 +27,45 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+const createScopedVocabularyAndContent = async ({
+	apiHelpers,
+	assetLibraries,
+	assetTypes,
+	categoryName,
+	contentsPage,
+	page,
+	siteId,
+}: {
+	apiHelpers: ApiHelpers;
+	assetLibraries: AssetLibrary[];
+	assetTypes: AssetType[];
+	categoryName: string;
+	contentsPage: ContentsPage;
+	page: Page;
+	siteId: string;
+}) => {
+	await createCategories({
+		apiHelpers,
+		assetLibraries,
+		assetTypes,
+		categoryNames: [{name: categoryName}],
+		siteId,
+		vocabularyName: getRandomString(),
+	});
+
+	await contentsPage.goto();
+
+	await contentsPage.createContent('Basic Web Content');
+
+	const title = getRandomString();
+
+	await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+	await contentsPage.publishButton.click();
+
+	await page.locator('.table-list-title a', {hasText: title}).click();
+};
 
 test(
 	'Assert can delete vocabulary from dropdown actions',
@@ -459,6 +501,164 @@ test(
 		await expect(page.getByLabel('External Reference Code')).toHaveValue(
 			'x'.repeat(80)
 		);
+	}
+);
+
+test(
+	'Hide a Space-restricted vocabulary from content in another Space',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const spaceName = getRandomString();
+
+		const {id: spaceId} =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+
+		const categoryName = getRandomString();
+
+		await createScopedVocabularyAndContent({
+			apiHelpers,
+			assetLibraries: [{id: spaceId, name: spaceName}],
+			assetTypes: [{required: false, type: 'AllAssetTypes'}],
+			categoryName,
+			contentsPage,
+			page,
+			siteId,
+		});
+
+		await contentsPage.openSidePanel('Categorization');
+
+		await page.getByPlaceholder('Add category').fill(categoryName);
+
+		await page.waitForTimeout(500);
+
+		await expect(
+			page.getByRole('option', {name: categoryName})
+		).toBeHidden();
+	}
+);
+
+test(
+	'Hide an asset-type-restricted vocabulary from content of another asset type',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, contentsPage, page}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const categoryName = getRandomString();
+
+		await createScopedVocabularyAndContent({
+			apiHelpers,
+			assetLibraries: [{id: -1, name: 'All Spaces'}],
+			assetTypes: [{required: false, type: 'BlogPosting'}],
+			categoryName,
+			contentsPage,
+			page,
+			siteId,
+		});
+
+		await contentsPage.openSidePanel('Categorization');
+
+		await page.getByPlaceholder('Add category').fill(categoryName);
+
+		await page.waitForTimeout(500);
+
+		await expect(
+			page.getByRole('option', {name: categoryName})
+		).toBeHidden();
+	}
+);
+
+test(
+	'Open categories from the Categories column link',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, categoriesPage, vocabulariesPage}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const vocabularyName = getRandomString();
+
+		const vocabularyId = await apiHelpers.headlessAdminTaxonomy
+			.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: vocabularyName,
+				siteId,
+				visibilityType: 'PUBLIC',
+			})
+			.then((response) => response.id);
+
+		const categoryName1 = getRandomString();
+		const categoryName2 = getRandomString();
+
+		for (const name of [categoryName1, categoryName2]) {
+			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+				{
+					name,
+					vocabularyId,
+				}
+			);
+		}
+
+		await vocabulariesPage.goto();
+
+		await vocabulariesPage.clickCategoriesLink(vocabularyName);
+
+		await categoriesPage.assertBreadcrumbItemText(1, vocabularyName);
+
+		await expect(categoriesPage.getItem(categoryName1)).toBeVisible();
+		await expect(categoriesPage.getItem(categoryName2)).toBeVisible();
+	}
+);
+
+test(
+	'Search vocabularies by name',
+	{tag: '@LPD-89497'},
+	async ({apiHelpers, vocabulariesPage}) => {
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const name1 = getRandomString();
+		const name2 = getRandomString();
+
+		for (const name of [name1, name2]) {
+			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name,
+				siteId,
+				visibilityType: 'PUBLIC',
+			});
+		}
+
+		await vocabulariesPage.goto();
+
+		await vocabulariesPage.search(name1);
+
+		await expect(vocabulariesPage.getItem(name1)).toBeVisible();
+		await expect(vocabulariesPage.getItem(name2)).toBeHidden();
 	}
 );
 

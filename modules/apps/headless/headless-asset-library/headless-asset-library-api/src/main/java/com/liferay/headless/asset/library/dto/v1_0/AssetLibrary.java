@@ -499,6 +499,49 @@ public class AssetLibrary implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The asset library's friendly URL."
+	)
+	public String getFriendlyURL() {
+		if (_friendlyURLSupplier != null) {
+			friendlyURL = _friendlyURLSupplier.get();
+
+			_friendlyURLSupplier = null;
+		}
+
+		return friendlyURL;
+	}
+
+	public void setFriendlyURL(String friendlyURL) {
+		this.friendlyURL = friendlyURL;
+
+		_friendlyURLSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setFriendlyURL(
+		UnsafeSupplier<String, Exception> friendlyURLUnsafeSupplier) {
+
+		_friendlyURLSupplier = () -> {
+			try {
+				return friendlyURLUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's friendly URL.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String friendlyURL;
+
+	@JsonIgnore
+	private Supplier<String> _friendlyURLSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The asset library's ID."
 	)
 	public Long getId() {
@@ -1215,6 +1258,22 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"");
 		}
 
+		String friendlyURL = getFriendlyURL();
+
+		if (friendlyURL != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"friendlyURL\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(friendlyURL));
+
+			sb.append("\"");
+		}
+
 		Long id = getId();
 
 		if (id != null) {
@@ -1536,4 +1595,4 @@ public class AssetLibrary implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1463000191
+// LIFERAY-REST-BUILDER-HASH:-1402354211

@@ -161,4 +161,4 @@ public interface LocalizedEntryPersistence
 	public int countAll();
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:200743386
+// LIFERAY-SERVICE-BUILDER-HASH:1928074230

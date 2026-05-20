@@ -35,25 +35,18 @@ function Item({
 			<DropZone index={index} move={onInputSetItemMove} />
 
 			<ClayForm.Group
-				className="c-mb-0 c-pl-2 c-pr-2 input-sets-item-form-group list-group-item rounded"
+				className="input-sets-item list-group-item rounded"
 				ref={dragPreview}
+				style={{opacity: isDragging ? 0.5 : 1}}
 			>
 				<ClayInput.Group>
-					<ClayInput.GroupItem
-						className="c-m-md-auto"
-						ref={drag}
-						shrink
-						style={{
-							cursor: 'move',
-							opacity: isDragging ? 0.5 : 1,
-						}}
-					>
+					<ClayInput.GroupItem ref={drag} shrink>
 						<ClayButton
 							aria-label={Liferay.Language.get('move')}
 							borderless
+							className="input-sets-handle"
 							displayType="secondary"
 							monospaced
-							small
 						>
 							<ClayIcon symbol="drag" />
 						</ClayButton>
@@ -61,11 +54,11 @@ function Item({
 
 					{children}
 
-					<ClayInput.GroupItem className="c-m-md-auto" shrink>
+					<ClayInput.GroupItem shrink>
 						<ClayButton
 							aria-label={Liferay.Language.get('delete')}
 							borderless
-							className="c-ml-2"
+							className="input-sets-remove"
 							disabled={!onInputSetItemDelete}
 							displayType="secondary"
 							monospaced
@@ -74,7 +67,6 @@ function Item({
 									? onInputSetItemDelete(index)
 									: undefined
 							}
-							small
 						>
 							<ClayIcon symbol="trash" />
 						</ClayButton>

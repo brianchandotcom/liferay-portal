@@ -39,8 +39,6 @@ definition {
 
 		Upgrade.restoreOriginalBundleAndUpgrade();
 
-		TestUtils.hardRefresh();
-
 		ContentPages.viewFragmentImage(
 			fragmentName = "image",
 			id = "image-square",

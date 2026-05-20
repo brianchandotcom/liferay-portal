@@ -43,14 +43,6 @@ public interface DLStorageQuotaPersistence
 		throws NoSuchStorageQuotaException;
 
 	/**
-	 * Returns the dl storage quota where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching dl storage quota, or <code>null</code> if a matching dl storage quota could not be found
-	 */
-	public DLStorageQuota fetchByCompanyId(long companyId);
-
-	/**
 	 * Returns the dl storage quota where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -115,5 +107,15 @@ public interface DLStorageQuotaPersistence
 	 */
 	public DLStorageQuota fetchByPrimaryKey(long dlStorageQuotaId);
 
+	/**
+	 * Returns the dl storage quota where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching dl storage quota, or <code>null</code> if a matching dl storage quota could not be found
+	 */
+	public default DLStorageQuota fetchByCompanyId(long companyId) {
+		return fetchByCompanyId(companyId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:195149432
+// LIFERAY-SERVICE-BUILDER-HASH:-23439307

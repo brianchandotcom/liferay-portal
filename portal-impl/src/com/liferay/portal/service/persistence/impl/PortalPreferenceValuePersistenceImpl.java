@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.NoSuchPreferenceValueException;
 import com.liferay.portal.kernel.log.Log;
@@ -69,72 +68,14 @@ public class PortalPreferenceValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathWithPaginationFindByPortalPreferencesId;
-	private FinderPath _finderPathWithoutPaginationFindByPortalPreferencesId;
-	private FinderPath _finderPathCountByPortalPreferencesId;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByPortalPreferencesId;
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @return the matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId) {
-
-		return findByPortalPreferencesId(
-			portalPreferencesId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId, int start, int end) {
-
-		return findByPortalPreferencesId(portalPreferencesId, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long portalPreferencesId, int start, int end,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		return findByPortalPreferencesId(
-			portalPreferencesId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -207,70 +148,10 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @return the matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds) {
-
-		return findByPortalPreferencesId(
-			portalPreferencesIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds, int start, int end) {
-
-		return findByPortalPreferencesId(
-			portalPreferencesIds, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesIds the portal preferences IDs
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByPortalPreferencesId(
-		long[] portalPreferencesIds, int start, int end,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		return findByPortalPreferencesId(
-			portalPreferencesIds, start, end, orderByComparator, true);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portalPreferencesIds the portal preferences IDs
@@ -328,77 +209,14 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(portalPreferencesIds)});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_N;
-	private FinderPath _finderPathWithoutPaginationFindByP_N;
-	private FinderPath _finderPathCountByP_N;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_N;
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @return the matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace) {
-
-		return findByP_N(
-			portalPreferencesId, namespace, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace, int start, int end) {
-
-		return findByP_N(portalPreferencesId, namespace, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_N(
-		long portalPreferencesId, String namespace, int start, int end,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		return findByP_N(
-			portalPreferencesId, namespace, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -491,82 +309,14 @@ public class PortalPreferenceValuePersistenceImpl
 			dummyFinderCache, new Object[] {portalPreferencesId, namespace});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_K_N;
-	private FinderPath _finderPathWithoutPaginationFindByP_K_N;
-	private FinderPath _finderPathCountByP_K_N;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_K_N;
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @return the matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace) {
-
-		return findByP_K_N(
-			portalPreferencesId, key, namespace, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace, int start,
-		int end) {
-
-		return findByP_K_N(
-			portalPreferencesId, key, namespace, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N(
-		long portalPreferencesId, String key, String namespace, int start,
-		int end, OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		return findByP_K_N(
-			portalPreferencesId, key, namespace, start, end, orderByComparator,
-			true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -672,7 +422,6 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {portalPreferencesId, key, namespace});
 	}
 
-	private FinderPath _finderPathFetchByP_I_K_N;
 	private UniquePersistenceFinder<PortalPreferenceValue>
 		_uniquePersistenceFinderByP_I_K_N;
 
@@ -708,22 +457,6 @@ public class PortalPreferenceValuePersistenceImpl
 		}
 
 		return portalPreferenceValue;
-	}
-
-	/**
-	 * Returns the portal preference value where portalPreferencesId = &#63; and index = &#63; and key = &#63; and namespace = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param index the index
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @return the matching portal preference value, or <code>null</code> if a matching portal preference value could not be found
-	 */
-	@Override
-	public PortalPreferenceValue fetchByP_I_K_N(
-		long portalPreferencesId, int index, String key, String namespace) {
-
-		return fetchByP_I_K_N(portalPreferencesId, index, key, namespace, true);
 	}
 
 	/**
@@ -785,87 +518,14 @@ public class PortalPreferenceValuePersistenceImpl
 			new Object[] {portalPreferencesId, index, key, namespace});
 	}
 
-	private FinderPath _finderPathWithPaginationFindByP_K_N_SV;
-	private FinderPath _finderPathWithoutPaginationFindByP_K_N_SV;
-	private FinderPath _finderPathCountByP_K_N_SV;
 	private CollectionPersistenceFinder<PortalPreferenceValue>
 		_collectionPersistenceFinderByP_K_N_SV;
 
 	/**
-	 * Returns all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @return the matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue) {
-
-		return findByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @return the range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue, int start, int end) {
-
-		return findByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue, start, end, null);
-	}
-
-	/**
 	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
-	 * </p>
-	 *
-	 * @param portalPreferencesId the portal preferences ID
-	 * @param key the key
-	 * @param namespace the namespace
-	 * @param smallValue the small value
-	 * @param start the lower bound of the range of portal preference values
-	 * @param end the upper bound of the range of portal preference values (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching portal preference values
-	 */
-	@Override
-	public List<PortalPreferenceValue> findByP_K_N_SV(
-		long portalPreferencesId, String key, String namespace,
-		String smallValue, int start, int end,
-		OrderByComparator<PortalPreferenceValue> orderByComparator) {
-
-		return findByP_K_N_SV(
-			portalPreferencesId, key, namespace, smallValue, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the portal preference values where portalPreferencesId = &#63; and key = &#63; and namespace = &#63; and smallValue = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>PortalPreferenceValueModelImpl</code>.
 	 * </p>
 	 *
 	 * @param portalPreferencesId the portal preferences ID
@@ -1180,29 +840,28 @@ public class PortalPreferenceValuePersistenceImpl
 	 * Initializes the portal preference value persistence.
 	 */
 	public void afterPropertiesSet() {
-		_finderPathWithPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortalPreferencesId",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId"}, true);
-
-		_finderPathWithoutPaginationFindByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByPortalPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portalPreferencesId"}, true);
-
-		_finderPathCountByPortalPreferencesId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"countByPortalPreferencesId", new String[] {Long.class.getName()},
-			new String[] {"portalPreferencesId"}, false);
-
 		_collectionPersistenceFinderByPortalPreferencesId =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByPortalPreferencesId,
-				_finderPathWithoutPaginationFindByPortalPreferencesId,
-				_finderPathCountByPortalPreferencesId,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"findByPortalPreferencesId",
+					new String[] {
+						Long.class.getName(), Integer.class.getName(),
+						Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {"portalPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"findByPortalPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portalPreferencesId"}, true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+					"countByPortalPreferencesId",
+					new String[] {Long.class.getName()},
+					new String[] {"portalPreferencesId"}, false),
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1212,30 +871,26 @@ public class PortalPreferenceValuePersistenceImpl
 					FinderColumn.Type.LONG, "=", false, true, true,
 					PortalPreferenceValue::getPortalPreferencesId));
 
-		_finderPathWithPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId", "namespace"}, true);
-
-		_finderPathWithoutPaginationFindByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portalPreferencesId", "namespace"}, 0, 2, true,
-			null);
-
-		_finderPathCountByP_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"portalPreferencesId", "namespace"}, 0, 2, false,
-			null);
-
 		_collectionPersistenceFinderByP_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_N,
-			_finderPathWithoutPaginationFindByP_N, _finderPathCountByP_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					Integer.class.getName(), Integer.class.getName(),
+					OrderByComparator.class.getName()
+				},
+				new String[] {"portalPreferencesId", "namespace"}, true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portalPreferencesId", "namespace"}, 0, 2, true,
+				null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_N",
+				new String[] {Long.class.getName(), String.class.getName()},
+				new String[] {"portalPreferencesId", "namespace"}, 0, 2, false,
+				null),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1248,36 +903,33 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathWithPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, true);
-
-		_finderPathWithoutPaginationFindByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
-			true, null);
-
-		_finderPathCountByP_K_N = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
-			false, null);
-
 		_collectionPersistenceFinderByP_K_N = new CollectionPersistenceFinder<>(
-			this, _finderPathWithPaginationFindByP_K_N,
-			_finderPathWithoutPaginationFindByP_K_N, _finderPathCountByP_K_N,
+			this,
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"},
+				true),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
+				true, null),
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N",
+				new String[] {
+					Long.class.getName(), String.class.getName(),
+					String.class.getName()
+				},
+				new String[] {"portalPreferencesId", "key_", "namespace"}, 0, 6,
+				false, null),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 			_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 			PortalPreferenceValueModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
@@ -1293,20 +945,21 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathFetchByP_I_K_N = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {"portalPreferencesId", "index_", "key_", "namespace"},
-			0, 12, false, PortalPreferenceValue::getPortalPreferencesId,
-			PortalPreferenceValue::getIndex,
-			convertNullFunction(PortalPreferenceValue::getKey),
-			convertNullFunction(PortalPreferenceValue::getNamespace));
-
 		_uniquePersistenceFinderByP_I_K_N = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByP_I_K_N,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByP_I_K_N",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					String.class.getName(), String.class.getName()
+				},
+				new String[] {
+					"portalPreferencesId", "index_", "key_", "namespace"
+				},
+				0, 12, false, PortalPreferenceValue::getPortalPreferencesId,
+				PortalPreferenceValue::getIndex,
+				convertNullFunction(PortalPreferenceValue::getKey),
+				convertNullFunction(PortalPreferenceValue::getNamespace)),
 			_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE, "",
 			new FinderColumn<>(
 				"portalPreferenceValue.", "portalPreferencesId",
@@ -1322,46 +975,42 @@ public class PortalPreferenceValuePersistenceImpl
 				"portalPreferenceValue.", "namespace", FinderColumn.Type.STRING,
 				"=", true, true, PortalPreferenceValue::getNamespace));
 
-		_finderPathWithPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			true);
-
-		_finderPathWithoutPaginationFindByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			0, 14, true, null);
-
-		_finderPathCountByP_K_N_SV = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByP_K_N_SV",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(), String.class.getName()
-			},
-			new String[] {
-				"portalPreferencesId", "key_", "namespace", "smallValue"
-			},
-			0, 14, false, null);
-
 		_collectionPersistenceFinderByP_K_N_SV =
 			new CollectionPersistenceFinder<>(
-				this, _finderPathWithPaginationFindByP_K_N_SV,
-				_finderPathWithoutPaginationFindByP_K_N_SV,
-				_finderPathCountByP_K_N_SV,
+				this,
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName(),
+						Integer.class.getName(), Integer.class.getName(),
+						OrderByComparator.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					true),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					0, 14, true, null),
+				new FinderPath(
+					FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+					"countByP_K_N_SV",
+					new String[] {
+						Long.class.getName(), String.class.getName(),
+						String.class.getName(), String.class.getName()
+					},
+					new String[] {
+						"portalPreferencesId", "key_", "namespace", "smallValue"
+					},
+					0, 14, false, null),
 				_SQL_SELECT_PORTALPREFERENCEVALUE_WHERE,
 				_SQL_COUNT_PORTALPREFERENCEVALUE_WHERE,
 				PortalPreferenceValueModelImpl.ORDER_BY_JPQL,
@@ -1418,4 +1067,4 @@ public class PortalPreferenceValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1771898488
+// LIFERAY-SERVICE-BUILDER-HASH:1130231732

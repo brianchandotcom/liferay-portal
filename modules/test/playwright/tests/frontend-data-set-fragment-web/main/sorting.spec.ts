@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
+import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataSetManagerApiHelpersTest} from '../../../fixtures/dataSetManagerApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
@@ -15,6 +16,7 @@ import {dataSetFragmentPageTest} from './fixtures/dataSetFragmentPageTest';
 
 export const test = mergeTests(
 	accountSettingsPagesTest,
+	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -37,8 +39,10 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	});
 });
 
-test.afterEach(async ({dataSetManagerApiHelpers}) => {
+test.afterEach(async ({apiHelpers, dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+
+	await apiHelpers.headlessAdminUser.patchMyUserAccountLanguage('en_US');
 });
 
 test(
@@ -258,93 +262,73 @@ test('When the current page language is changed, the current translation is used
 	layout,
 	page,
 }) => {
-	let germanLanguage = false;
-
-	try {
-		await test.step('Create sorting', async () => {
-			await dataSetManagerApiHelpers.createDataSetSort({
-				dataSetERC,
-				defaultValue: true,
-				fieldName: 'id',
-				label_i18n: {en_US: 'ID'},
-				orderType: 'asc',
-			});
-
-			await dataSetManagerApiHelpers.createDataSetSort({
-				dataSetERC,
-				defaultValue: false,
-				fieldName: 'fieldName',
-				label_i18n: {de_DE: 'Feldname', en_US: 'Field name'},
-			});
+	await test.step('Create sorting', async () => {
+		await dataSetManagerApiHelpers.createDataSetSort({
+			dataSetERC,
+			defaultValue: true,
+			fieldName: 'id',
+			label_i18n: {en_US: 'ID'},
+			orderType: 'asc',
 		});
 
-		await test.step('Add fields, so data is displayed', async () => {
-			await dataSetManagerApiHelpers.createDataSetTableSection({
-				dataSetERC,
-				fieldName: 'id',
-				label_i18n: {
-					en_US: 'ID',
-				},
-				sortable: true,
-				type: 'string',
-			});
+		await dataSetManagerApiHelpers.createDataSetSort({
+			dataSetERC,
+			defaultValue: false,
+			fieldName: 'fieldName',
+			label_i18n: {de_DE: 'Feldname', en_US: 'Field name'},
+		});
+	});
 
-			await dataSetManagerApiHelpers.createDataSetTableSection({
-				dataSetERC,
-				fieldName: 'fieldName',
-				label_i18n: {en_US: 'Field Name'},
-				sortable: true,
-				type: 'string',
-			});
+	await test.step('Add fields, so data is displayed', async () => {
+		await dataSetManagerApiHelpers.createDataSetTableSection({
+			dataSetERC,
+			fieldName: 'id',
+			label_i18n: {
+				en_US: 'ID',
+			},
+			sortable: true,
+			type: 'string',
 		});
 
-		await test.step('Configure Data Set fragment', async () => {
-			await dataSetFragmentPage.configureDataSetFragment({
-				dataSetLabel,
-				layout,
-			});
+		await dataSetManagerApiHelpers.createDataSetTableSection({
+			dataSetERC,
+			fieldName: 'fieldName',
+			label_i18n: {en_US: 'Field Name'},
+			sortable: true,
+			type: 'string',
+		});
+	});
+
+	await test.step('Configure Data Set fragment', async () => {
+		await dataSetFragmentPage.configureDataSetFragment({
+			dataSetLabel,
+			layout,
+		});
+	});
+
+	await test.step('Change user account default language to German', async () => {
+		await accountSettingsPage.selectAccountLanguage({
+			languageId: 'de_DE',
+			navigate: true,
 		});
 
-		await test.step('Change user account default language to German', async () => {
-			await accountSettingsPage.selectAccountLanguage({
-				languageId: 'de_DE',
-				navigate: true,
-			});
+		await expect(page.locator('.alert-success')).toBeVisible();
+	});
 
-			await expect(page.locator('.alert-success')).toBeVisible();
+	await test.step('Go to Data Set fragment page', async () => {
+		await dataSetFragmentPage.goToPage({layout});
 
-			germanLanguage = true;
-		});
+		await page
+			.locator('.data-set-content-wrapper')
+			.waitFor({state: 'visible'});
+	});
 
-		await test.step('Go to Data Set fragment page', async () => {
-			await dataSetFragmentPage.goToPage({layout});
+	await test.step('Check that the correct translations are displayed in the dropdown', async () => {
+		await page.getByRole('button', {name: 'Sortierung'}).click();
 
-			await page
-				.locator('.data-set-content-wrapper')
-				.waitFor({state: 'visible'});
-		});
-
-		await test.step('Check that the correct translations are displayed in the dropdown', async () => {
-			await page.getByRole('button', {name: 'Auftrag'}).click();
-
-			await expect(
-				page.getByRole('menuitem', {name: 'ID'})
-			).toBeVisible();
-			await expect(
-				page.getByRole('menuitem', {name: 'Feldname'})
-			).toBeVisible();
-		});
-	}
-	finally {
-		if (germanLanguage) {
-			await test.step('Change user account default language back to English', async () => {
-				await accountSettingsPage.selectAccountLanguage({
-					languageId: 'en_US',
-					navigate: true,
-				});
-
-				await expect(page.locator('.alert-success')).toBeVisible();
-			});
-		}
-	}
+		await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
+		await expect(
+			page.getByRole('menuitem', {name: 'Feldname'})
+		).toBeVisible();
+	});
 });

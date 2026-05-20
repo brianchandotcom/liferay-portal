@@ -41,21 +41,6 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                 />
               </div>
             </div>
-            <div
-              class="timeline-panel-body-content"
-            >
-              <div
-                class="timeline-panel-body-content-text"
-              >
-                <div
-                  class="attributes-title"
-                >
-                  <span
-                    class="label-root"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </li>
@@ -72,7 +57,7 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
               class="timeline-line"
             />
             <div
-              class="timeline-increment"
+              class="timeline-increment timeline-increment-dxp"
             >
               <div
                 class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
@@ -108,13 +93,25 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                     Opened Email
                   </span>
                 </span>
-                <span
-                  class="text-truncate subtitle"
-                  data-tooltip="false"
-                  title=""
+                <a
+                  class="d-inline-block subtitle"
+                  href="3 Document Downloads, 2 Form Submissions, 24 Page Visits"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  3 Document Downloads, 2 Form Submissions, 24 Page Visits
-                </span>
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    3 Document Downloads, 2 Form Submissions, 24 Page Visits
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    (Opens a new window)
+                  </span>
+                </a>
               </div>
               <div
                 class="timeline-panel-body-content-details"
@@ -122,21 +119,13 @@ exports[`VerticalTimeline should render with a header and initialExpanded 1`] = 
                 <div
                   class="icon-group"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-ac_event_icon event-icon icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#ac_event_icon"
-                    />
-                  </svg>
                   <span
                     class="item-count"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Unknown Device
@@ -167,99 +156,17 @@ Firefox"
             <div
               class="timeline-panel-body-content"
             >
-              <div
-                class="timeline-panel-body-content-text"
+              <code
+                class="attributes-payload"
               >
-                <div
-                  class="attributes-title"
-                >
-                  <span
-                    class="label-root"
-                  >
-                    Session Attributes
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    contentLanguageID
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    ""
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenHeight
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1229
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenWidth
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1541
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    timezoneOffset
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    -07:00
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    userAgent
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
-                  </span>
-                </div>
-              </div>
+                {
+  "header": "Session Attributes",
+  "screenHeight": "1229",
+  "screenWidth": "1541",
+  "timezoneOffset": "-07:00",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
+}
+              </code>
             </div>
           </div>
           <div
@@ -311,13 +218,25 @@ Firefox"
                             Visited Liferay: Testing
                           </span>
                         </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          www.liferay.com/testing
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"
@@ -372,13 +291,25 @@ Firefox"
                             Visited Liferay: Testing 2
                           </span>
                         </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing 2"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          www.liferay.com/testing 2
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing 2
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"
@@ -429,21 +360,6 @@ Firefox"
                 />
               </div>
             </div>
-            <div
-              class="timeline-panel-body-content"
-            >
-              <div
-                class="timeline-panel-body-content-text"
-              >
-                <div
-                  class="attributes-title"
-                >
-                  <span
-                    class="label-root"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </li>
@@ -460,7 +376,7 @@ Firefox"
               class="timeline-line"
             />
             <div
-              class="timeline-increment"
+              class="timeline-increment timeline-increment-dxp"
             >
               <div
                 class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
@@ -496,13 +412,25 @@ Firefox"
                     Opened Email
                   </span>
                 </span>
-                <span
-                  class="text-truncate subtitle"
-                  data-tooltip="false"
-                  title=""
+                <a
+                  class="d-inline-block subtitle"
+                  href="3 Document Downloads, 2 Form Submissions, 24 Page Visits"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  3 Document Downloads, 2 Form Submissions, 24 Page Visits
-                </span>
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    3 Document Downloads, 2 Form Submissions, 24 Page Visits
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    (Opens a new window)
+                  </span>
+                </a>
               </div>
               <div
                 class="timeline-panel-body-content-details"
@@ -510,21 +438,13 @@ Firefox"
                 <div
                   class="icon-group"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-ac_event_icon event-icon icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#ac_event_icon"
-                    />
-                  </svg>
                   <span
                     class="item-count"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Mobile
@@ -553,83 +473,17 @@ Firefox"
             <div
               class="timeline-panel-body-content"
             >
-              <div
-                class="timeline-panel-body-content-text"
+              <code
+                class="attributes-payload"
               >
-                <div
-                  class="attributes-title"
-                >
-                  <span
-                    class="label-root"
-                  >
-                    Session Attributes
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenHeight
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1229
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenWidth
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1541
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    timezoneOffset
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    -07:00
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    userAgent
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
-                  </span>
-                </div>
-              </div>
+                {
+  "header": "Session Attributes",
+  "screenHeight": "1229",
+  "screenWidth": "1541",
+  "timezoneOffset": "-07:00",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
+}
+              </code>
             </div>
           </div>
           <div
@@ -681,13 +535,25 @@ Firefox"
                             Visited Liferay: Testing
                           </span>
                         </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          www.liferay.com/testing
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"
@@ -742,13 +608,25 @@ Firefox"
                             Visited Liferay: Testing 2
                           </span>
                         </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing 2"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          www.liferay.com/testing 2
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing 2
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"
@@ -779,7 +657,7 @@ Firefox"
               class="timeline-line"
             />
             <div
-              class="timeline-increment"
+              class="timeline-increment timeline-increment-dxp"
             >
               <div
                 class="sticker sticker-root sticker-static sticker-circle sticker-point sticker-lg"
@@ -820,13 +698,25 @@ Firefox"
                     </span>
                   </a>
                 </span>
-                <span
-                  class="text-truncate subtitle"
-                  data-tooltip="false"
-                  title=""
+                <a
+                  class="d-inline-block subtitle"
+                  href="3 Document Downloads, 2 Form Submissions, 24 Page Visits"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
-                  3 Document Downloads, 2 Form Submissions, 24 Page Visits
-                </span>
+                  <span
+                    class="text-truncate"
+                    data-tooltip="false"
+                    title=""
+                  >
+                    3 Document Downloads, 2 Form Submissions, 24 Page Visits
+                  </span>
+                  <span
+                    class="sr-only"
+                  >
+                    (Opens a new window)
+                  </span>
+                </a>
               </div>
               <div
                 class="timeline-panel-body-content-details"
@@ -834,21 +724,13 @@ Firefox"
                 <div
                   class="icon-group"
                 >
-                  <svg
-                    class="lexicon-icon lexicon-icon-ac_event_icon event-icon icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#ac_event_icon"
-                    />
-                  </svg>
                   <span
                     class="item-count"
                   >
                     2
                   </span>
                   <span
-                    class="device-icon"
+                    class="device-icon mr-2"
                     data-tooltip="true"
                     data-tooltip-align="bottom"
                     title="Desktop
@@ -877,83 +759,17 @@ Firefox"
             <div
               class="timeline-panel-body-content"
             >
-              <div
-                class="timeline-panel-body-content-text"
+              <code
+                class="attributes-payload"
               >
-                <div
-                  class="attributes-title"
-                >
-                  <span
-                    class="label-root"
-                  >
-                    Session Attributes
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenHeight
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1229
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    screenWidth
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    1541
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    timezoneOffset
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    -07:00
-                  </span>
-                </div>
-                <div
-                  class="attributes-item"
-                >
-                  <span
-                    class="attribute-key"
-                  >
-                    userAgent
-                  </span>
-                  <span
-                    class="text-truncate attribute-value"
-                    data-tooltip="false"
-                    title=""
-                  >
-                    Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36
-                  </span>
-                </div>
-              </div>
+                {
+  "header": "Session Attributes",
+  "screenHeight": "1229",
+  "screenWidth": "1541",
+  "timezoneOffset": "-07:00",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36"
+}
+              </code>
             </div>
           </div>
           <div
@@ -1005,18 +821,25 @@ Firefox"
                             Visited Liferay: Testing
                           </span>
                         </span>
-                        <span
-                          class="description"
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          Liferay: Digital experience software tailored to your needs
-                        </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
-                        >
-                          www.liferay.com/testing
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"
@@ -1073,13 +896,25 @@ Firefox"
                             Visited Liferay: Testing 2
                           </span>
                         </span>
-                        <span
-                          class="text-truncate subtitle"
-                          data-tooltip="false"
-                          title=""
+                        <a
+                          class="d-inline-block subtitle"
+                          href="www.liferay.com/testing 2"
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
-                          www.liferay.com/testing 2
-                        </span>
+                          <span
+                            class="text-truncate"
+                            data-tooltip="false"
+                            title=""
+                          >
+                            www.liferay.com/testing 2
+                          </span>
+                          <span
+                            class="sr-only"
+                          >
+                            (Opens a new window)
+                          </span>
+                        </a>
                       </div>
                       <svg
                         class="lexicon-icon lexicon-icon-caret-bottom icon-root"

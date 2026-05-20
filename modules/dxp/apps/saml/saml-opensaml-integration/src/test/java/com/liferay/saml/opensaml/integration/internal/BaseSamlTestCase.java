@@ -280,35 +280,43 @@ public abstract class BaseSamlTestCase {
 	}
 
 	protected static final String ACS_URL =
-		"http://localhost:8080/c/portal/saml/acs";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/saml/acs";
 
 	protected static final long COMPANY_ID = 1;
 
 	protected static final String IDP_ENTITY_ID = "testidp";
 
 	protected static final String LOGIN_URL =
-		"http://localhost:8080/c/portal/login";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/login";
 
 	protected static final String LOGOUT_URL =
-		"http://localhost:8080/c/portal/logout";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/logout";
 
 	protected static final String METADATA_URL =
-		"http://localhost:8080/c/portal/saml/metadata";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/saml/metadata";
 
-	protected static final String PORTAL_URL = "http://localhost:8080";
+	protected static final String PORTAL_URL =
+		"http://localhost:" + PortalUtil.getPortalServerPort(false);
 
 	protected static final String RELAY_STATE =
-		"http://localhost:8080/relaystate";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/relaystate";
 
 	protected static final long SESSION_ID = 2;
 
 	protected static final String SLO_LOGOUT_URL =
-		"http://localhost:8080/c/portal/saml/slo_logout";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/saml/slo_logout";
 
 	protected static final String SP_ENTITY_ID = "testsp";
 
 	protected static final String SSO_URL =
-		"http://localhost:8080/c/portal/saml/sso";
+		"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+			"/c/portal/saml/sso";
 
 	protected static final String UNKNOWN_ENTITY_ID = "testunknown";
 

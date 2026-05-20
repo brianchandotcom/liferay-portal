@@ -33,48 +33,6 @@ public interface AccountGroupRelPersistence
 	 */
 
 	/**
-	 * Returns all the account group rels where accountGroupId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @return the matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByAccountGroupId(
-		long accountGroupId);
-
-	/**
-	 * Returns a range of all the account group rels where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @return the range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByAccountGroupId(
-		long accountGroupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the account group rels where accountGroupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByAccountGroupId(
-		long accountGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the account group rels where accountGroupId = &#63;.
 	 *
 	 * <p>
@@ -134,51 +92,6 @@ public interface AccountGroupRelPersistence
 	 * @return the number of matching account group rels
 	 */
 	public int countByAccountGroupId(long accountGroupId);
-
-	/**
-	 * Returns all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @return the matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByA_C(
-		long accountGroupId, long classNameId);
-
-	/**
-	 * Returns a range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @return the range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByA_C(
-		long accountGroupId, long classNameId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByA_C(
-		long accountGroupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
@@ -245,51 +158,6 @@ public interface AccountGroupRelPersistence
 	 * @return the number of matching account group rels
 	 */
 	public int countByA_C(long accountGroupId, long classNameId);
-
-	/**
-	 * Returns all the account group rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByC_C(
-		long classNameId, long classPK);
-
-	/**
-	 * Returns a range of all the account group rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @return the range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByC_C(
-		long classNameId, long classPK, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the account group rels where classNameId = &#63; and classPK = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param start the lower bound of the range of account group rels
-	 * @param end the upper bound of the range of account group rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching account group rels
-	 */
-	public java.util.List<AccountGroupRel> findByC_C(
-		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
-			orderByComparator);
 
 	/**
 	 * Returns an ordered range of all the account group rels where classNameId = &#63; and classPK = &#63;.
@@ -371,17 +239,6 @@ public interface AccountGroupRelPersistence
 		throws NoSuchGroupRelException;
 
 	/**
-	 * Returns the account group rel where accountGroupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param accountGroupId the account group ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @return the matching account group rel, or <code>null</code> if a matching account group rel could not be found
-	 */
-	public AccountGroupRel fetchByA_C_C(
-		long accountGroupId, long classNameId, long classPK);
-
-	/**
 	 * Returns the account group rel where accountGroupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param accountGroupId the account group ID
@@ -455,5 +312,189 @@ public interface AccountGroupRelPersistence
 	 */
 	public AccountGroupRel fetchByPrimaryKey(long accountGroupRelId);
 
+	/**
+	 * Returns the account group rel where accountGroupId = &#63; and classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching account group rel, or <code>null</code> if a matching account group rel could not be found
+	 */
+	public default AccountGroupRel fetchByA_C_C(
+		long accountGroupId, long classNameId, long classPK) {
+
+		return fetchByA_C_C(accountGroupId, classNameId, classPK, true);
+	}
+
+	/**
+	 * Returns all the account group rels where accountGroupId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @return the matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByAccountGroupId(
+		long accountGroupId) {
+
+		return findByAccountGroupId(
+			accountGroupId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the account group rels where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @return the range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByAccountGroupId(
+		long accountGroupId, int start, int end) {
+
+		return findByAccountGroupId(accountGroupId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account group rels where accountGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByAccountGroupId(
+		long accountGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
+			orderByComparator) {
+
+		return findByAccountGroupId(
+			accountGroupId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @return the matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId) {
+
+		return findByA_C(
+			accountGroupId, classNameId,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @return the range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId, int start, int end) {
+
+		return findByA_C(accountGroupId, classNameId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account group rels where accountGroupId = &#63; and classNameId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param accountGroupId the account group ID
+	 * @param classNameId the class name ID
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByA_C(
+		long accountGroupId, long classNameId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
+			orderByComparator) {
+
+		return findByA_C(
+			accountGroupId, classNameId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the account group rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByC_C(
+		long classNameId, long classPK) {
+
+		return findByC_C(
+			classNameId, classPK,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the account group rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @return the range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByC_C(
+		long classNameId, long classPK, int start, int end) {
+
+		return findByC_C(classNameId, classPK, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the account group rels where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.account.model.impl.AccountGroupRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of account group rels
+	 * @param end the upper bound of the range of account group rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching account group rels
+	 */
+	public default java.util.List<AccountGroupRel> findByC_C(
+		long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AccountGroupRel>
+			orderByComparator) {
+
+		return findByC_C(
+			classNameId, classPK, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:550330328
+// LIFERAY-SERVICE-BUILDER-HASH:-655539458

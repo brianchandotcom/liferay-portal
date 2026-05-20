@@ -8,6 +8,7 @@ import {useObservedMaxWidth} from '@clayui/shared';
 import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
+import {sessionStorage} from 'frontend-js-web';
 import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 
 import {
@@ -16,7 +17,9 @@ import {
 } from './ContentEditorToolbar';
 import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
+import {PREVIEW_VISIBLE_SESSION_KEY} from './preview/sessionKeys';
 import useIsContentEdited from './useIsContentEdited';
+import useLocalizationLanguageId from './useLocalizationLanguageId';
 
 import '../../../css/content_editor/ContentEditorPreview.scss';
 
@@ -26,14 +29,22 @@ const PREVIEW_WIDTH_MIN = 500;
 const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
 export default function ContentEditorPreview({
+	defaultLanguageId,
 	getPreviewDataURL,
 	title,
 }: {
+	defaultLanguageId: Liferay.Language.Locale;
 	getPreviewDataURL: string;
 	title: string;
 }) {
 	const isContentEdited = useIsContentEdited(FORM_SELECTOR);
-	const [isVisible, setIsVisible] = useState<boolean>(false);
+	const [isVisible, setIsVisible] = useState<boolean>(
+		() =>
+			sessionStorage.getItem(
+				PREVIEW_VISIBLE_SESSION_KEY,
+				sessionStorage.TYPES.NECESSARY
+			) === 'true'
+	);
 	const [resizeWidth, setResizeWidth] = useSessionState(
 		PREVIEW_WIDTH_SESSION_KEY,
 		window.innerWidth / 2
@@ -43,6 +54,8 @@ export default function ContentEditorPreview({
 	const contentRef = useRef<HTMLElement | null>(null);
 	const previewRef = useRef<HTMLDivElement>(null);
 	const sidePanelBarRef = useRef<HTMLElement | null>(null);
+
+	const localizationLanguageId = useLocalizationLanguageId(defaultLanguageId);
 
 	const previewWidthMax = useObservedMaxWidth(previewRef);
 	const previewWidth = Math.min(previewWidthMax, resizeWidth!);
@@ -129,6 +142,7 @@ export default function ContentEditorPreview({
 					<PreviewBody
 						getPreviewDataURL={getPreviewDataURL}
 						isContentEdited={isContentEdited}
+						languageId={localizationLanguageId}
 					/>
 				</>
 			) : null}

@@ -524,3 +524,70 @@ test('Validate tag inputs', {tag: ['@LPD-69687']}, async ({page, tagsPage}) => {
 
 	await expect(tagsPage.saveButton).toBeDisabled();
 });
+
+test(
+	'Tags with the same name can be created',
+	{tag: '@LPD-69204'},
+	async ({apiHelpers, assetsPage, infoPanelPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const contentTitle = `title ${getRandomString()}`;
+		let objectEntry: ObjectEntry;
+		const tagNameBase = getRandomString().substring(0, 7);
+		const tagName1 = `A${tagNameBase}`;
+		const tagName2 = `a${tagNameBase}`;
+
+		try {
+			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: contentTitle,
+				},
+				applicationName,
+				'Default'
+			);
+
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Show Details',
+				filter: contentTitle,
+			});
+
+			await expect(
+				page.getByRole('heading', {name: contentTitle})
+			).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await page.getByPlaceholder('Add tag').fill(tagName1);
+
+			const newTagOption = page.getByRole('option', {
+				name: 'Create New Tag:',
+			});
+
+			await newTagOption.waitFor();
+			await newTagOption.click();
+
+			await expect(page.getByText(tagName1, {exact: true})).toBeVisible();
+
+			await expect(async () => {
+				await page.getByPlaceholder('Add tag').fill(tagName2);
+
+				await newTagOption.waitFor();
+				await newTagOption.click();
+
+				await expect(
+					page.getByText(tagName2, {exact: true})
+				).toBeVisible();
+			}).toPass({timeout: 5000});
+		}
+		finally {
+			if (objectEntry) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					applicationName,
+					String(objectEntry.id)
+				);
+			}
+		}
+	}
+);

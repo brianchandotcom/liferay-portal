@@ -3,10 +3,11 @@ import Button from '@clayui/button';
 import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayLink from '@clayui/link';
+import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
-import {SectionHeader} from 'shared/components/SectionHeader';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
+import {useParams} from 'react-router-dom';
 
 export interface IAccount {
 	accountName?: string;
@@ -18,18 +19,18 @@ export interface IAccount {
 		name: string;
 		value?: string;
 	}>;
-	id?: string;
 	industry?: string;
 	numberOfEmployees?: number;
+	website?: string;
 }
 
 interface IAccountInfoProps {
 	account?: IAccount;
 	className?: string;
+	loading?: boolean;
 }
 
 const infoDataLabels = {
-	accountName: Liferay.Language.get('account-name'),
 	accountType: Liferay.Language.get('account-type'),
 	annualRevenue: Liferay.Language.get('annual-revenue'),
 	industry: Liferay.Language.get('industry'),
@@ -57,8 +58,23 @@ const infoItem = (label: string, value?: string, link?: boolean) => (
 	</div>
 );
 
-const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
+const AccountInfo: React.FC<IAccountInfoProps> = ({
+	account,
+	className,
+	loading
+}) => {
 	const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+	const {id: accountId} = useParams<{id: string}>();
+
+	if (loading) {
+		return (
+			<Card className={classNames(className, 'p-3')}>
+				<Card.Body>
+					<Loading />
+				</Card.Body>
+			</Card>
+		);
+	}
 
 	const getValue = (key: keyof typeof infoDataLabels): string | undefined => {
 		if (!account) {
@@ -74,19 +90,11 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 				? toThousands(account.numberOfEmployees)
 				: undefined;
 		}
-		if (key === 'website') {
-			return account.fields?.find(field => field.name === 'website')
-				?.value;
-		}
 		return account[key];
 	};
 
 	return (
 		<>
-			<SectionHeader
-				icon='plus-squares'
-				title={Liferay.Language.get('account-details')}
-			/>
 			<Card className={classNames(className, 'p-3')}>
 				<Card.Title>
 					<Text size={4} weight='semi-bold'>
@@ -97,7 +105,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 						</span>
 					</Text>
 				</Card.Title>
-				<Card.Body className='px-0 pb-0'>
+				<Card.Body className='justify-content-end p-0'>
 					{(
 						Object.keys(infoDataLabels) as Array<
 							keyof typeof infoDataLabels
@@ -122,10 +130,10 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({account, className}) => {
 				</Card.Body>
 			</Card>
 
-			{isDetailsModalOpen && account?.id && (
+			{isDetailsModalOpen && accountId && (
 				<AccountDetailsModal
-					accountId={account.id}
-					accountName={account.accountName}
+					accountId={accountId}
+					accountName={account?.accountName}
 					onClose={() => setIsDetailsModalOpen(false)}
 				/>
 			)}

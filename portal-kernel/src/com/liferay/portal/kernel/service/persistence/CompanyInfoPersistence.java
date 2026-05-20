@@ -41,14 +41,6 @@ public interface CompanyInfoPersistence extends BasePersistence<CompanyInfo> {
 		throws NoSuchCompanyInfoException;
 
 	/**
-	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching company info, or <code>null</code> if a matching company info could not be found
-	 */
-	public CompanyInfo fetchByCompanyId(long companyId);
-
-	/**
 	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
@@ -112,5 +104,15 @@ public interface CompanyInfoPersistence extends BasePersistence<CompanyInfo> {
 	 */
 	public CompanyInfo fetchByPrimaryKey(long companyInfoId);
 
+	/**
+	 * Returns the company info where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching company info, or <code>null</code> if a matching company info could not be found
+	 */
+	public default CompanyInfo fetchByCompanyId(long companyId) {
+		return fetchByCompanyId(companyId, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2001903859
+// LIFERAY-SERVICE-BUILDER-HASH:1202447419

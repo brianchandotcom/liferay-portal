@@ -13,6 +13,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
+import {liferayConfig} from '../../../liferay.config';
 import getRandomString from '../../../utils/getRandomString';
 import {openProductMenu} from '../../../utils/productMenu';
 import {pageViewModePagesTest} from './../../../fixtures/pageViewModePagesTest';
@@ -377,7 +378,7 @@ test('View public page via virtual host URL', async ({
 	// Access the site's page using the Virtual Host
 
 	await page.goto(
-		`http://${VIRTUAL_HOST_NAME}:8080/web${site.friendlyUrlPath}${layout.friendlyURL}`
+		`http://${VIRTUAL_HOST_NAME}:${liferayConfig.environment.port}/web${site.friendlyUrlPath}${layout.friendlyURL}`
 	);
 
 	await expect(

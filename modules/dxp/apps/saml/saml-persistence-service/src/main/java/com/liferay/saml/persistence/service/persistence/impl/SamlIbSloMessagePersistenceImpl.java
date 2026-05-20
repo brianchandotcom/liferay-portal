@@ -8,7 +8,6 @@ package com.liferay.saml.persistence.service.persistence.impl;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +71,6 @@ public class SamlIbSloMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchBySamlIdpSessionIndex;
 	private UniquePersistenceFinder<SamlIbSloMessage>
 		_uniquePersistenceFinderBySamlIdpSessionIndex;
 
@@ -106,19 +104,6 @@ public class SamlIbSloMessagePersistenceImpl
 		}
 
 		return samlIbSloMessage;
-	}
-
-	/**
-	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param samlIdpSessionIndex the saml idp session index
-	 * @return the matching saml ib slo message, or <code>null</code> if a matching saml ib slo message could not be found
-	 */
-	@Override
-	public SamlIbSloMessage fetchBySamlIdpSessionIndex(
-		String samlIdpSessionIndex) {
-
-		return fetchBySamlIdpSessionIndex(samlIdpSessionIndex, true);
 	}
 
 	/**
@@ -357,15 +342,15 @@ public class SamlIbSloMessagePersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchBySamlIdpSessionIndex = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSessionIndex",
-			new String[] {String.class.getName()},
-			new String[] {"samlIdpSessionIndex"}, 0, 1, false,
-			convertNullFunction(SamlIbSloMessage::getSamlIdpSessionIndex));
-
 		_uniquePersistenceFinderBySamlIdpSessionIndex =
 			new UniquePersistenceFinder<>(
-				this, _finderPathFetchBySamlIdpSessionIndex,
+				this,
+				createUniqueFinderPath(
+					FINDER_CLASS_NAME_ENTITY, "fetchBySamlIdpSessionIndex",
+					new String[] {String.class.getName()},
+					new String[] {"samlIdpSessionIndex"}, 0, 1, false,
+					convertNullFunction(
+						SamlIbSloMessage::getSamlIdpSessionIndex)),
 				_SQL_SELECT_SAMLIBSLOMESSAGE_WHERE, "",
 				new FinderColumn<>(
 					"samlIbSloMessage.", "samlIdpSessionIndex",
@@ -432,4 +417,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-578035614
+// LIFERAY-SERVICE-BUILDER-HASH:164097953

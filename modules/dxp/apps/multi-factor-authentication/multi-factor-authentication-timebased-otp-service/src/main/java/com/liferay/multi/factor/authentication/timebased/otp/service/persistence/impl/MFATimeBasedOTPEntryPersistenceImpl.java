@@ -16,7 +16,6 @@ import com.liferay.multi.factor.authentication.timebased.otp.service.persistence
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
-import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -72,7 +71,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FinderPath _finderPathFetchByUserId;
 	private UniquePersistenceFinder<MFATimeBasedOTPEntry>
 		_uniquePersistenceFinderByUserId;
 
@@ -102,17 +100,6 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 		}
 
 		return mfaTimeBasedOTPEntry;
-	}
-
-	/**
-	 * Returns the mfa time based otp entry where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param userId the user ID
-	 * @return the matching mfa time based otp entry, or <code>null</code> if a matching mfa time based otp entry could not be found
-	 */
-	@Override
-	public MFATimeBasedOTPEntry fetchByUserId(long userId) {
-		return fetchByUserId(userId, true);
 	}
 
 	/**
@@ -364,13 +351,12 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	 */
 	@Activate
 	public void activate() {
-		_finderPathFetchByUserId = createUniqueFinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
-			new String[] {Long.class.getName()}, new String[] {"userId"}, 0, 0,
-			false, MFATimeBasedOTPEntry::getUserId);
-
 		_uniquePersistenceFinderByUserId = new UniquePersistenceFinder<>(
-			this, _finderPathFetchByUserId,
+			this,
+			createUniqueFinderPath(
+				FINDER_CLASS_NAME_ENTITY, "fetchByUserId",
+				new String[] {Long.class.getName()}, new String[] {"userId"}, 0,
+				0, false, MFATimeBasedOTPEntry::getUserId),
 			_SQL_SELECT_MFATIMEBASEDOTPENTRY_WHERE, "",
 			new FinderColumn<>(
 				"mfaTimeBasedOTPEntry.", "userId", FinderColumn.Type.LONG, "=",
@@ -436,4 +422,4 @@ public class MFATimeBasedOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:839760382
+// LIFERAY-SERVICE-BUILDER-HASH:-957206044

@@ -34,47 +34,6 @@ public interface ExpandoColumnPersistence
 	 */
 
 	/**
-	 * Returns all the expando columns where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByTableId(long tableId);
-
-	/**
-	 * Returns a range of all the expando columns where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @return the range of matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByTableId(
-		long tableId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the expando columns where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByTableId(
-		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the expando columns where tableId = &#63;.
 	 *
 	 * <p>
@@ -121,29 +80,6 @@ public interface ExpandoColumnPersistence
 			orderByComparator);
 
 	/**
-	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * @param tableId the table ID
-	 * @return the matching expando columns that the user has permission to view
-	 */
-	public java.util.List<ExpandoColumn> filterFindByTableId(long tableId);
-
-	/**
-	 * Returns a range of all the expando columns that the user has permission to view where tableId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @return the range of matching expando columns that the user has permission to view
-	 */
-	public java.util.List<ExpandoColumn> filterFindByTableId(
-		long tableId, int start, int end);
-
-	/**
 	 * Returns an ordered range of all the expando columns that the user has permissions to view where tableId = &#63;.
 	 *
 	 * <p>
@@ -185,55 +121,6 @@ public interface ExpandoColumnPersistence
 	public int filterCountByTableId(long tableId);
 
 	/**
-	 * Returns all the expando columns where tableId = &#63; and name = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param names the names
-	 * @return the matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByT_N(
-		long tableId, String[] names);
-
-	/**
-	 * Returns a range of all the expando columns where tableId = &#63; and name = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param names the names
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @return the range of matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByT_N(
-		long tableId, String[] names, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
-	 * </p>
-	 *
-	 * @param tableId the table ID
-	 * @param names the names
-	 * @param start the lower bound of the range of expando columns
-	 * @param end the upper bound of the range of expando columns (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching expando columns
-	 */
-	public java.util.List<ExpandoColumn> findByT_N(
-		long tableId, String[] names, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
-			orderByComparator);
-
-	/**
 	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -264,15 +151,6 @@ public interface ExpandoColumnPersistence
 	 */
 	public ExpandoColumn findByT_N(long tableId, String name)
 		throws NoSuchColumnException;
-
-	/**
-	 * Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param tableId the table ID
-	 * @param name the name
-	 * @return the matching expando column, or <code>null</code> if a matching expando column could not be found
-	 */
-	public ExpandoColumn fetchByT_N(long tableId, String name);
 
 	/**
 	 * Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -368,5 +246,155 @@ public interface ExpandoColumnPersistence
 	 */
 	public ExpandoColumn fetchByPrimaryKey(long columnId);
 
+	/**
+	 * Returns the expando column where tableId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param tableId the table ID
+	 * @param name the name
+	 * @return the matching expando column, or <code>null</code> if a matching expando column could not be found
+	 */
+	public default ExpandoColumn fetchByT_N(long tableId, String name) {
+		return fetchByT_N(tableId, name, true);
+	}
+
+	/**
+	 * Returns all the expando columns where tableId = &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @return the matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByTableId(long tableId) {
+		return findByTableId(
+			tableId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the expando columns where tableId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @return the range of matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByTableId(
+		long tableId, int start, int end) {
+
+		return findByTableId(tableId, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando columns where tableId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByTableId(
+		long tableId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
+			orderByComparator) {
+
+		return findByTableId(tableId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns all the expando columns that the user has permission to view where tableId = &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @return the matching expando columns that the user has permission to view
+	 */
+	public default java.util.List<ExpandoColumn> filterFindByTableId(
+		long tableId) {
+
+		return filterFindByTableId(
+			tableId, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the expando columns that the user has permission to view where tableId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @return the range of matching expando columns that the user has permission to view
+	 */
+	public default java.util.List<ExpandoColumn> filterFindByTableId(
+		long tableId, int start, int end) {
+
+		return filterFindByTableId(tableId, start, end, null);
+	}
+
+	/**
+	 * Returns all the expando columns where tableId = &#63; and name = any &#63;.
+	 *
+	 * @param tableId the table ID
+	 * @param names the names
+	 * @return the matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByT_N(
+		long tableId, String[] names) {
+
+		return findByT_N(
+			tableId, names, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
+			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
+	}
+
+	/**
+	 * Returns a range of all the expando columns where tableId = &#63; and name = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param names the names
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @return the range of matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByT_N(
+		long tableId, String[] names, int start, int end) {
+
+		return findByT_N(tableId, names, start, end, null, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the expando columns where tableId = &#63; and name = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.portlet.expando.model.impl.ExpandoColumnModelImpl</code>.
+	 * </p>
+	 *
+	 * @param tableId the table ID
+	 * @param names the names
+	 * @param start the lower bound of the range of expando columns
+	 * @param end the upper bound of the range of expando columns (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching expando columns
+	 */
+	public default java.util.List<ExpandoColumn> findByT_N(
+		long tableId, String[] names, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ExpandoColumn>
+			orderByComparator) {
+
+		return findByT_N(tableId, names, start, end, orderByComparator, true);
+	}
+
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-457243515
+// LIFERAY-SERVICE-BUILDER-HASH:-1001965983

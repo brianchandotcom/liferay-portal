@@ -7,6 +7,7 @@ package com.liferay.portal.search.similar.results.web.internal.contributor.docum
 
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.similar.results.web.internal.builder.DestinationBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.builder.RouteBuilderImpl;
 import com.liferay.portal.search.similar.results.web.internal.contributor.BaseSimilarResultsContributorTestCase;
@@ -35,9 +36,10 @@ public class DocumentLibrarySimilarResultsContributorTest
 	@Test
 	public void testAssetNotFromDocumentLibrary() {
 		String urlString = StringBundler.concat(
-			"http://localhost:8080/web/guest/document-and-media/-",
-			"/document_library/oagkfEivnD1J/view_file/39730",
-			"?_com_liferay_document_library_web_portlet_DLPortlet_INSTANCE");
+			"http://localhost:", PortalUtil.getPortalServerPort(false), "/web",
+			"/guest/document-and-media/-/document_library/oagkfEivnD1J/view_",
+			"file/39730?_com_liferay_document_library_web_portlet_DLPortlet_",
+			"INSTANCE");
 
 		DocumentLibrarySimilarResultsContributor
 			documentLibrarySimilarResultsContributor =

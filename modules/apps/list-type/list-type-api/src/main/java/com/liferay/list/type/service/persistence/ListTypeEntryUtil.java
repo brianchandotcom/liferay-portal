@@ -125,54 +125,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns all the list type entries where uuid = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid(String uuid) {
-		return getPersistence().findByUuid(uuid);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid(
-		String uuid, int start, int end) {
-
-		return getPersistence().findByUuid(uuid, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid(
-		String uuid, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the list type entries where uuid = &#63;.
 	 *
 	 * <p>
@@ -240,60 +192,6 @@ public class ListTypeEntryUtil {
 	 */
 	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
-	}
-
-	/**
-	 * Returns all the list type entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid_C(
-		String uuid, long companyId) {
-
-		return getPersistence().findByUuid_C(uuid, companyId);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end) {
-
-		return getPersistence().findByUuid_C(uuid, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where uuid = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param uuid the uuid
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByUuid_C(
-		String uuid, long companyId, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByUuid_C(
-			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -376,58 +274,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns all the list type entries where listTypeEntryId = &#63;.
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long listTypeEntryId) {
-
-		return getPersistence().findByListTypeEntryId(listTypeEntryId);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where listTypeEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long listTypeEntryId, int start, int end) {
-
-		return getPersistence().findByListTypeEntryId(
-			listTypeEntryId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryId the list type entry ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long listTypeEntryId, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByListTypeEntryId(
-			listTypeEntryId, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
 	 *
 	 * <p>
@@ -483,62 +329,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns all the list type entries where listTypeEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryIds the list type entry IDs
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long[] listTypeEntryIds) {
-
-		return getPersistence().findByListTypeEntryId(listTypeEntryIds);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where listTypeEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryIds the list type entry IDs
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long[] listTypeEntryIds, int start, int end) {
-
-		return getPersistence().findByListTypeEntryId(
-			listTypeEntryIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeEntryId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeEntryIds the list type entry IDs
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeEntryId(
-		long[] listTypeEntryIds, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByListTypeEntryId(
-			listTypeEntryIds, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -588,59 +378,6 @@ public class ListTypeEntryUtil {
 	 */
 	public static int countByListTypeEntryId(long[] listTypeEntryIds) {
 		return getPersistence().countByListTypeEntryId(listTypeEntryIds);
-	}
-
-	/**
-	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long listTypeDefinitionId) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long listTypeDefinitionId, int start, int end) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeDefinitionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long listTypeDefinitionId, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionId, start, end, orderByComparator);
 	}
 
 	/**
@@ -700,63 +437,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns all the list type entries where listTypeDefinitionId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionIds the list type definition IDs
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long[] listTypeDefinitionIds) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionIds);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where listTypeDefinitionId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionIds the list type definition IDs
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long[] listTypeDefinitionIds, int start, int end) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionIds, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where listTypeDefinitionId = any &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param listTypeDefinitionIds the list type definition IDs
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByListTypeDefinitionId(
-		long[] listTypeDefinitionIds, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByListTypeDefinitionId(
-			listTypeDefinitionIds, start, end, orderByComparator);
-	}
-
-	/**
 	 * Returns an ordered range of all the list type entries where listTypeDefinitionId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
@@ -811,58 +491,6 @@ public class ListTypeEntryUtil {
 
 		return getPersistence().countByListTypeDefinitionId(
 			listTypeDefinitionIds);
-	}
-
-	/**
-	 * Returns all the list type entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @return the matching list type entries
-	 */
-	public static List<ListTypeEntry> findByC_U(long companyId, long userId) {
-		return getPersistence().findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns a range of all the list type entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @return the range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByC_U(
-		long companyId, long userId, int start, int end) {
-
-		return getPersistence().findByC_U(companyId, userId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the list type entries where companyId = &#63; and userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param userId the user ID
-	 * @param start the lower bound of the range of list type entries
-	 * @param end the upper bound of the range of list type entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching list type entries
-	 */
-	public static List<ListTypeEntry> findByC_U(
-		long companyId, long userId, int start, int end,
-		OrderByComparator<ListTypeEntry> orderByComparator) {
-
-		return getPersistence().findByC_U(
-			companyId, userId, start, end, orderByComparator);
 	}
 
 	/**
@@ -960,19 +588,6 @@ public class ListTypeEntryUtil {
 	}
 
 	/**
-	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @param key the key
-	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByLTDI_K(
-		long listTypeDefinitionId, String key) {
-
-		return getPersistence().fetchByLTDI_K(listTypeDefinitionId, key);
-	}
-
-	/**
 	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param listTypeDefinitionId the list type definition ID
@@ -1027,22 +642,6 @@ public class ListTypeEntryUtil {
 		throws com.liferay.list.type.exception.NoSuchListTypeEntryException {
 
 		return getPersistence().findByERC_C_LTDI(
-			externalReferenceCode, companyId, listTypeDefinitionId);
-	}
-
-	/**
-	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param externalReferenceCode the external reference code
-	 * @param companyId the company ID
-	 * @param listTypeDefinitionId the list type definition ID
-	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
-	 */
-	public static ListTypeEntry fetchByERC_C_LTDI(
-		String externalReferenceCode, long companyId,
-		long listTypeDefinitionId) {
-
-		return getPersistence().fetchByERC_C_LTDI(
 			externalReferenceCode, companyId, listTypeDefinitionId);
 	}
 
@@ -1147,6 +746,399 @@ public class ListTypeEntryUtil {
 		return getPersistence().fetchByPrimaryKey(listTypeEntryId);
 	}
 
+	/**
+	 * Returns the list type entry where listTypeDefinitionId = &#63; and key = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param key the key
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByLTDI_K(
+		long listTypeDefinitionId, String key) {
+
+		return getPersistence().fetchByLTDI_K(listTypeDefinitionId, key);
+	}
+
+	/**
+	 * Returns the list type entry where externalReferenceCode = &#63; and companyId = &#63; and listTypeDefinitionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param companyId the company ID
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entry, or <code>null</code> if a matching list type entry could not be found
+	 */
+	public static ListTypeEntry fetchByERC_C_LTDI(
+		String externalReferenceCode, long companyId,
+		long listTypeDefinitionId) {
+
+		return getPersistence().fetchByERC_C_LTDI(
+			externalReferenceCode, companyId, listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns all the list type entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid(String uuid) {
+		return getPersistence().findByUuid(uuid);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid(
+		String uuid, int start, int end) {
+
+		return getPersistence().findByUuid(uuid, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid_C(
+		String uuid, long companyId) {
+
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId) {
+
+		return getPersistence().findByListTypeEntryId(listTypeEntryId);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryId the list type entry ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long listTypeEntryId, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds) {
+
+		return getPersistence().findByListTypeEntryId(listTypeEntryIds);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds, int start, int end) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeEntryId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeEntryIds the list type entry IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeEntryId(
+		long[] listTypeEntryIds, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByListTypeEntryId(
+			listTypeEntryIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where listTypeDefinitionId = &#63;.
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long listTypeDefinitionId) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeDefinitionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionId the list type definition ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long listTypeDefinitionId, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where listTypeDefinitionId = any &#63;.
+	 *
+	 * @param listTypeDefinitionIds the list type definition IDs
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long[] listTypeDefinitionIds) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionIds);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where listTypeDefinitionId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionIds the list type definition IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long[] listTypeDefinitionIds, int start, int end) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where listTypeDefinitionId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param listTypeDefinitionIds the list type definition IDs
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByListTypeDefinitionId(
+		long[] listTypeDefinitionIds, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByListTypeDefinitionId(
+			listTypeDefinitionIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns all the list type entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @return the matching list type entries
+	 */
+	public static List<ListTypeEntry> findByC_U(long companyId, long userId) {
+		return getPersistence().findByC_U(companyId, userId);
+	}
+
+	/**
+	 * Returns a range of all the list type entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @return the range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByC_U(
+		long companyId, long userId, int start, int end) {
+
+		return getPersistence().findByC_U(companyId, userId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the list type entries where companyId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.list.type.model.impl.ListTypeEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of list type entries
+	 * @param end the upper bound of the range of list type entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching list type entries
+	 */
+	public static List<ListTypeEntry> findByC_U(
+		long companyId, long userId, int start, int end,
+		OrderByComparator<ListTypeEntry> orderByComparator) {
+
+		return getPersistence().findByC_U(
+			companyId, userId, start, end, orderByComparator);
+	}
+
 	public static ListTypeEntryPersistence getPersistence() {
 		return _persistence;
 	}
@@ -1158,4 +1150,4 @@ public class ListTypeEntryUtil {
 	private static volatile ListTypeEntryPersistence _persistence;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:198861881
+// LIFERAY-SERVICE-BUILDER-HASH:1022976183

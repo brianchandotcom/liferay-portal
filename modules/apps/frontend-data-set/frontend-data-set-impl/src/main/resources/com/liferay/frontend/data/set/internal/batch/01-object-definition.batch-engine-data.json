@@ -1185,6 +1185,22 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "ENTITY_FIELD_TYPE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Entity Field Type"
+					},
+					"localized": false,
+					"name": "entityFieldType",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "FIELD_NAME",
 					"indexed": true,
 					"indexedAsKeyword": false,

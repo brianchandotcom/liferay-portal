@@ -12,8 +12,10 @@ import FrontendDataSetContext from '../../../FrontendDataSetContext';
 // @ts-ignore
 
 import clientExtensionFilterImplementation from './implementation/ClientExtensionFilter';
-import dateRangeFilterImplementation from './implementation/DateRangeFilter';
-import dateTimeRangeFilterImplementation from './implementation/DateTimeRangeFilter';
+import {
+	dateRangeFilterImplementation,
+	dateTimeRangeFilterImplementation,
+} from './implementation/DateTimeRangeFilter';
 import selectionFilterImplementation from './implementation/SelectionFilter';
 import {EEntityFieldType} from './utils/types';
 

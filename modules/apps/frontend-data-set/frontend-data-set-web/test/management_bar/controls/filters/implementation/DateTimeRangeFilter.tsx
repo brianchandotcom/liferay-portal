@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DateTimeRangeFilter from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
+import {dateTimeRangeFilterImplementation} from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
 
-const {getOdataString, getSelectedItemsLabel} = DateTimeRangeFilter;
+const {getOdataString, getSelectedItemsLabel} =
+	dateTimeRangeFilterImplementation;
 
 const fromDateTime = {day: 11, hour: 15, minute: 30, month: 5, year: 2026};
 const toDateTime = {day: 11, hour: 17, minute: 45, month: 5, year: 2026};

@@ -6,6 +6,7 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
 import {Property, PropertyGroup, PropertySubgroup} from 'shared/util/records';
+import {SegmentTypes} from 'shared/util/constants';
 
 const mockLiferayLanguage = key => {
 	const messages = {
@@ -58,12 +59,34 @@ describe('CriteriaSidebar', () => {
 		})
 	]);
 
+	const realTimePropertyGroupList = new List([
+		new PropertyGroup({
+			label: 'Events',
+			name: 'Events',
+			propertyKey: 'web',
+			propertySubgroups: new List([
+				new PropertySubgroup({
+					label: 'Default Event Properties',
+					properties: new List([
+						data.getImmutableMock(Property, data.mockProperty, 0, {
+							label: 'Asset View',
+							name: 'Asset View'
+						})
+					])
+				})
+			])
+		})
+	]);
+
 	afterEach(cleanup);
 
 	it('should render the sidebar structure with property groups', () => {
 		render(
 			<DndProvider backend={HTML5Backend}>
-				<CriteriaSidebar propertyGroupsIList={fullPropertyGroupList} />
+				<CriteriaSidebar
+					propertyGroupsIList={fullPropertyGroupList}
+					type={SegmentTypes.Batch}
+				/>
 			</DndProvider>
 		);
 
@@ -75,10 +98,31 @@ describe('CriteriaSidebar', () => {
 	});
 
 	it('should render w/ "No results were found." when propertyGroupsIList is empty', () => {
-		render(<CriteriaSidebar propertyGroupsIList={new List()} />);
+		render(
+			<CriteriaSidebar
+				propertyGroupsIList={new List()}
+				type={SegmentTypes.Batch}
+			/>
+		);
 
 		expect(
 			screen.queryByText('No results were found.')
 		).not.toBeInTheDocument();
+	});
+
+	it('should not render the property-group picker in Real-Time mode', () => {
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaSidebar
+					propertyGroupsIList={realTimePropertyGroupList}
+					type={SegmentTypes.RealTime}
+				/>
+			</DndProvider>
+		);
+
+		expect(screen.queryByRole('combobox')).not.toBeInTheDocument();
+		expect(
+			screen.getByText('Default Event Properties')
+		).toBeInTheDocument();
 	});
 });

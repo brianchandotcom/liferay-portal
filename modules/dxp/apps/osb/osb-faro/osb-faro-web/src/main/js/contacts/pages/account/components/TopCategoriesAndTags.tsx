@@ -3,11 +3,12 @@ import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
-import Loading from 'shared/components/Loading';
 import React, {useState} from 'react';
+import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import {Text} from '@clayui/core';
 import {toThousands} from 'shared/util/numbers';
 import {useParams} from 'react-router-dom';
@@ -59,7 +60,6 @@ type TaxonomyItem = ITopCategory | ITopTag;
 interface ITabContentProps {
 	groupBy: GroupByMetric;
 	items: TaxonomyItem[];
-	loading: boolean;
 	selectedMetric: TaxonomyMetric;
 	setGroupBy: (metric: GroupByMetric) => void;
 }
@@ -67,7 +67,6 @@ interface ITabContentProps {
 const TabContent: React.FC<ITabContentProps> = ({
 	groupBy,
 	items,
-	loading,
 	selectedMetric,
 	setGroupBy
 }) => {
@@ -126,42 +125,30 @@ const TabContent: React.FC<ITabContentProps> = ({
 				</ClayDropDown.ItemList>
 			</ClayDropDown>
 
-			{loading ? (
-				<div className='p-4'>
-					<Loading />
-				</div>
-			) : items.length === 0 ? (
-				<div className='p-4 text-center'>
-					<Text color='secondary'>
-						{Liferay.Language.get('no-data-available')}
-					</Text>
-				</div>
-			) : (
-				<ClayTable className='mt-3'>
-					<ClayTable.Head>
-						<ClayTable.Row>
-							<ClayTable.Cell headingCell>
-								{Liferay.Language.get('name')}
+			<ClayTable className='mt-3'>
+				<ClayTable.Head>
+					<ClayTable.Row>
+						<ClayTable.Cell headingCell>
+							{Liferay.Language.get('name')}
+						</ClayTable.Cell>
+						<ClayTable.Cell headingCell>
+							{groupByLabel}
+						</ClayTable.Cell>
+					</ClayTable.Row>
+				</ClayTable.Head>
+				<ClayTable.Body>
+					{items.map(item => (
+						<ClayTable.Row key={item.id}>
+							<ClayTable.Cell expanded>
+								<Text weight='semi-bold'>{item.name}</Text>
 							</ClayTable.Cell>
-							<ClayTable.Cell headingCell>
-								{groupByLabel}
+							<ClayTable.Cell>
+								{toThousands(item[selectedMetric].value)}
 							</ClayTable.Cell>
 						</ClayTable.Row>
-					</ClayTable.Head>
-					<ClayTable.Body>
-						{items.map(item => (
-							<ClayTable.Row key={item.id}>
-								<ClayTable.Cell expanded>
-									<Text weight='semi-bold'>{item.name}</Text>
-								</ClayTable.Cell>
-								<ClayTable.Cell>
-									{toThousands(item[selectedMetric].value)}
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						))}
-					</ClayTable.Body>
-				</ClayTable>
-			)}
+					))}
+				</ClayTable.Body>
+			</ClayTable>
 		</>
 	);
 };
@@ -204,19 +191,19 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 	});
 
 	const items = data?.items ?? [];
+	const isEmpty = !loading && items.length === 0;
 
 	const tabContent = (
 		<TabContent
 			groupBy={groupBy}
 			items={items}
-			loading={loading}
 			selectedMetric={selectedMetric}
 			setGroupBy={setGroupBy}
 		/>
 	);
 
 	return (
-		<Card className={classNames(className)}>
+		<Card className={classNames(className)} minHeight={260}>
 			<Card.Title className='p-3'>
 				<Text weight='semi-bold'>
 					{Liferay.Language.get(
@@ -224,22 +211,63 @@ const TopCategoriesAndTags: React.FC<ITopCategoriesAndTagsProps> = ({
 					).toUpperCase()}
 				</Text>
 			</Card.Title>
-			<Card.Body className='p-0'>
-				<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
-					<ClayTabs.Item>
-						{Liferay.Language.get('category')}
-					</ClayTabs.Item>
-					<ClayTabs.Item>{Liferay.Language.get('tag')}</ClayTabs.Item>
-				</ClayTabs>
+			<Card.Body
+				alignCenter={loading || isEmpty}
+				className={classNames({'p-0': !loading && !isEmpty})}
+			>
+				<StatesRenderer empty={isEmpty} loading={loading}>
+					<StatesRenderer.Loading />
+					<StatesRenderer.Empty>
+						<ClayEmptyState
+							className='mt-n5'
+							description={Liferay.Language.get(
+								'vocabularies-categories-and-tags-will-appear-here-once-they-are-available'
+							)}
+							small
+							title={Liferay.Language.get(
+								'no-categorization-available'
+							)}
+						/>
+					</StatesRenderer.Empty>
+					<StatesRenderer.Success>
+						<ClayTabs
+							active={activeTab}
+							onActiveChange={setActiveTab}
+						>
+							<ClayTabs.Item
+								innerProps={{
+									'aria-controls':
+										'tabpanel-top-categories-and-tags-category'
+								}}
+							>
+								{Liferay.Language.get('category')}
+							</ClayTabs.Item>
+							<ClayTabs.Item
+								innerProps={{
+									'aria-controls':
+										'tabpanel-top-categories-and-tags-tag'
+								}}
+							>
+								{Liferay.Language.get('tag')}
+							</ClayTabs.Item>
+						</ClayTabs>
 
-				<ClayTabs.Content activeIndex={activeTab} fade>
-					<ClayTabs.TabPane className='pb-0'>
-						{tabContent}
-					</ClayTabs.TabPane>
-					<ClayTabs.TabPane className='pb-0'>
-						{tabContent}
-					</ClayTabs.TabPane>
-				</ClayTabs.Content>
+						<ClayTabs.Content activeIndex={activeTab} fade>
+							<ClayTabs.TabPane
+								aria-labelledby='tab-top-categories-and-tags-category'
+								className='pb-0'
+							>
+								{tabContent}
+							</ClayTabs.TabPane>
+							<ClayTabs.TabPane
+								aria-labelledby='tab-top-categories-and-tags-tag'
+								className='pb-0'
+							>
+								{tabContent}
+							</ClayTabs.TabPane>
+						</ClayTabs.Content>
+					</StatesRenderer.Success>
+				</StatesRenderer>
 			</Card.Body>
 		</Card>
 	);

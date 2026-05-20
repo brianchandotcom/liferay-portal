@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -232,7 +233,8 @@ public class LoginActionTest {
 
 			URL url = new URL(
 				StringBundler.concat(
-					"http://", _company.getVirtualHostname(), ":8080/web",
+					"http://", _company.getVirtualHostname(), ":",
+					PortalUtil.getPortalServerPort(false), "/web",
 					_group.getFriendlyURL(), layout.getFriendlyURL()));
 
 			HttpURLConnection httpURLConnection =
@@ -266,8 +268,9 @@ public class LoginActionTest {
 
 		URL url = new URL(
 			StringBundler.concat(
-				"http://", _company.getVirtualHostname(),
-				":8080/c/portal/login?p_l_id=", TestPropsValues.getPlid(),
+				"http://", _company.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false),
+				"/c/portal/login?p_l_id=", TestPropsValues.getPlid(),
 				"&windowState=exclusive"));
 
 		HttpURLConnection httpURLConnection =

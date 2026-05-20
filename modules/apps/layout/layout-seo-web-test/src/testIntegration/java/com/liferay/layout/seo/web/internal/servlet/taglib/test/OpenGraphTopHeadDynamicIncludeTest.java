@@ -1326,11 +1326,14 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			mockHttpServletResponse.getContentAsString());
 
 		_assertMetaTag(
-			document, "property", "og:image", "http://localhost:8080/imageURL");
+			document, "property", "og:image",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/imageURL");
 		_assertMetaTag(document, "property", "og:image:alt", "mappedImageAlt");
 		_assertMetaTag(
 			document, "property", "og:image:url",
-			"http://localhost:8080/imageURL");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/imageURL");
 	}
 
 	@Test
@@ -1364,11 +1367,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_assertMetaTag(
 			document, "property", "og:image",
-			"http://localhost:8080/imageFileURL");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/imageFileURL");
 		_assertMetaTag(document, "property", "og:image:alt", "mappedImageAlt");
 		_assertMetaTag(
 			document, "property", "og:image:url",
-			"http://localhost:8080/imageFileURL");
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/imageFileURL");
 	}
 
 	@Test
@@ -2063,7 +2068,7 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSecure(true);
 		themeDisplay.setServerName("localhost");
-		themeDisplay.setServerPort(8080);
+		themeDisplay.setServerPort(PortalUtil.getPortalServerPort(false));
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
 		return themeDisplay;

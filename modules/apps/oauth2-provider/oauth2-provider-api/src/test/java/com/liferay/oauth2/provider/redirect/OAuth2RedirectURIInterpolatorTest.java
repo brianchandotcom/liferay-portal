@@ -6,6 +6,7 @@
 package com.liferay.oauth2.provider.redirect;
 
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -57,7 +58,8 @@ public class OAuth2RedirectURIInterpolatorTest {
 
 		_testInterpolateRedirectURIsList(
 			8080, "http://localhost/foo", "http://localhost/foo",
-			"http://localhost:8080/foo",
+			"http://localhost:" + PortalUtil.getPortalServerPort(false) +
+				"/foo",
 			Arrays.asList(
 				"http://localhost/foo", "@protocol@://localhost/foo",
 				"http://localhost@port-with-colon@/foo"),

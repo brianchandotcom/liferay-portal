@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -71,8 +72,9 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			TestPropsValues.getCompanyId());
 
 		String urlString = StringBundler.concat(
-			Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
-			":8080/o/.well-known/oauth-authorization-server/");
+			Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
+			PortalUtil.getPortalServerPort(false),
+			"/o/.well-known/oauth-authorization-server/");
 
 		options.setLocation(urlString);
 

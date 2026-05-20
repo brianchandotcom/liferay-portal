@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -362,7 +363,8 @@ public class LayoutSEOLinkManagerCanonicalLayoutSEOLinkTest {
 			_companyLocalService.getCompany(_group.getCompanyId()), _group,
 			layout);
 
-		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setPortalURL(
+			"http://localhost:" + PortalUtil.getPortalServerPort(false));
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

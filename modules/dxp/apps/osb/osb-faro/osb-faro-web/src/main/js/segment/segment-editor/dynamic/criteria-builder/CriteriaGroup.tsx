@@ -1,3 +1,4 @@
+import Alert from '@clayui/alert';
 import autobind from 'autobind-decorator';
 import ClayIcon from '@clayui/icon';
 import Conjunction from './Conjunction';
@@ -6,7 +7,11 @@ import DropZone from './DropZone';
 import EmptyDropZone from './EmptyDropZone';
 import getCN from 'classnames';
 import React, {Fragment} from 'react';
-import {Conjunctions, SUPPORTED_CONJUNCTION_OPTIONS} from '../utils/constants';
+import {
+	Conjunctions,
+	SEQUENTIAL_LIMIT_ALERT,
+	SUPPORTED_CONJUNCTION_OPTIONS
+} from '../utils/constants';
 import {
 	ConnectDragPreview,
 	ConnectDragSource,
@@ -18,6 +23,7 @@ import {
 	generateGroupId,
 	generateRowId,
 	getChildGroupIds,
+	getSequentialLimitState,
 	getSupportedOperatorsFromType,
 	isCriterionGroup,
 	isValid
@@ -217,7 +223,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		return criteria ? !criteria.items.length : true;
 	}
 
-	renderConjunction(index: number) {
+	renderConjunction(index: number, atLimit: boolean) {
 		const {criteria, criteriaGroupId, id, onMove} = this.props;
 
 		return (
@@ -225,6 +231,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 				<DropZone
 					before
 					criteriaGroupId={criteriaGroupId}
+					disabled={atLimit}
 					dropIndex={index}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -238,6 +245,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 
 				<DropZone
 					criteriaGroupId={criteriaGroupId}
+					disabled={atLimit}
 					dropIndex={index}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -247,7 +255,11 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		);
 	}
 
-	renderCriterion(criterion: Criterion | CriterionGroup, index: number) {
+	renderCriterion(
+		criterion: Criterion | CriterionGroup,
+		index: number,
+		atLimit: boolean
+	) {
 		const {channelId, criteriaGroupId, groupId, id, onMove, segmentType} =
 			this.props;
 
@@ -291,6 +303,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 
 				<DropZone
 					criteriaGroupId={criteriaGroupId}
+					disabled={atLimit}
 					dropIndex={index + 1}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -312,6 +325,15 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			root,
 			sequential
 		} = this.props;
+
+		const sequentialLimitState = getSequentialLimitState(
+			criteria,
+			sequential
+		);
+		const alertConfig = sequentialLimitState
+			? SEQUENTIAL_LIMIT_ALERT[sequentialLimitState]
+			: null;
+		const atLimit = !!alertConfig;
 
 		const classes = getCN(
 			'sheet',
@@ -341,6 +363,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 				<>
 					<DropZone
 						criteriaGroupId={criteriaGroupId}
+						disabled={atLimit}
 						dropIndex={0}
 						id={id}
 						onCriterionAdd={this.handleCriterionAdd}
@@ -364,11 +387,26 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 										: criterion.rowId
 								}`}
 							>
-								{index !== 0 && this.renderConjunction(index)}
+								{index !== 0 &&
+									this.renderConjunction(index, atLimit)}
 
-								{this.renderCriterion(criterion, index)}
+								{this.renderCriterion(
+									criterion,
+									index,
+									atLimit
+								)}
 							</Fragment>
 						))}
+
+					{alertConfig && (
+						<Alert
+							className='text-center my-3'
+							displayType={alertConfig.color}
+							variant='feedback'
+						>
+							{alertConfig.text}
+						</Alert>
+					)}
 				</>
 			</div>
 		);

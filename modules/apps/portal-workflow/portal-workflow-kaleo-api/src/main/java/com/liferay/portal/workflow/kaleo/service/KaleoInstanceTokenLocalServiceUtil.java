@@ -421,11 +421,12 @@ public class KaleoInstanceTokenLocalServiceUtil {
 	}
 
 	public static KaleoInstanceToken updateKaleoInstanceToken(
-			long kaleoInstanceTokenId, long currentKaleoNodeId)
+			long kaleoInstanceTokenId, long currentKaleoNodeId,
+			String currentKaleoNodeName)
 		throws PortalException {
 
 		return getService().updateKaleoInstanceToken(
-			kaleoInstanceTokenId, currentKaleoNodeId);
+			kaleoInstanceTokenId, currentKaleoNodeId, currentKaleoNodeName);
 	}
 
 	public static KaleoInstanceTokenLocalService getService() {
@@ -438,4 +439,4 @@ public class KaleoInstanceTokenLocalServiceUtil {
 			KaleoInstanceTokenLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-355444649
+// LIFERAY-SERVICE-BUILDER-HASH:-1763721122

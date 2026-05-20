@@ -406,7 +406,9 @@ public class Mutation {
 			specificationResourceComponentServiceObjects;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the attachment identified by its internal CPAttachmentFileEntry id. Calls CPAttachmentFileEntryService.fetchCPAttachmentFileEntry + deleteCPAttachmentFileEntry. Validation -- NoSuchCPAttachmentFileEntryException -> 404 when id not found. Side effects -- Removes the underlying DL file entry association; cascades through CPAttachmentFileEntry delete listeners."
+	)
 	public boolean deleteAttachment(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -431,7 +433,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the attachment identified by its external reference code. Calls CPAttachmentFileEntryService.fetchCPAttachmentFileEntryByExternalReferenceCode + deleteCPAttachmentFileEntry. Validation -- NoSuchCPAttachmentFileEntryException -> 404 when ERC not found. Side effects -- Removes the underlying DL file entry association via the attachment delete cascade."
+	)
 	public boolean deleteAttachmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -446,7 +450,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the attachment identified by its external reference code. Calls CPAttachmentFileEntryService.fetchCPAttachmentFileEntryByExternalReferenceCode + AttachmentUtil.updateCPAttachmentFileEntry (TYPE_OTHER). Validation -- NoSuchCPAttachmentFileEntryException -> 404 when ERC not found. Side effects -- Updates DL file entry metadata and asset tags as side effects of CPAttachmentFileEntry update."
+	)
 	public Attachment patchAttachmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)
@@ -460,7 +466,9 @@ public class Mutation {
 					externalReferenceCode, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by external reference code, using an inline file payload. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates or updates a DL file entry under the product group; ExpandoBridge attributes and asset tags applied."
+	)
 	public Attachment createProductByExternalReferenceCodeAttachment(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)
@@ -474,7 +482,9 @@ public class Mutation {
 					externalReferenceCode, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by external reference code, supplied as a base64-encoded payload. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (base64, TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Decodes the base64 file and creates a DL file entry under the product group; asset tags and ExpandoBridge attributes applied."
+	)
 	public Attachment createProductByExternalReferenceCodeAttachmentByBase64(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -489,7 +499,9 @@ public class Mutation {
 						externalReferenceCode, attachmentBase64));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by external reference code, referenced by URL. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (url, TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Stores the URL reference; DL file entry is not necessarily downloaded."
+	)
 	public Attachment createProductByExternalReferenceCodeAttachmentByUrl(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachmentUrl") AttachmentUrl attachmentUrl)
@@ -504,7 +516,9 @@ public class Mutation {
 						externalReferenceCode, attachmentUrl));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates or updates a DL file entry under the product group; asset tags and ExpandoBridge attributes applied."
+	)
 	public Attachment createProductByExternalReferenceCodeImage(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)
@@ -518,7 +532,9 @@ public class Mutation {
 					externalReferenceCode, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by external reference code, supplied as a base64-encoded payload. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (base64, TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Decodes the base64 file and creates a DL file entry under the product group."
+	)
 	public Attachment createProductByExternalReferenceCodeImageByBase64(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -533,7 +549,9 @@ public class Mutation {
 						externalReferenceCode, attachmentBase64));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by external reference code, referenced by URL. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (url, TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Stores the URL reference."
+	)
 	public Attachment createProductByExternalReferenceCodeImageByUrl(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachmentUrl") AttachmentUrl attachmentUrl)
@@ -547,7 +565,9 @@ public class Mutation {
 					externalReferenceCode, attachmentUrl));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates or updates a DL file entry under the product group."
+	)
 	public Attachment createProductIdAttachment(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachment") Attachment attachment)
@@ -574,7 +594,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by product id, supplied as a base64-encoded payload. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (base64, TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Decodes the base64 file and creates a DL file entry under the product group."
+	)
 	public Attachment createProductIdAttachmentByBase64(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -588,7 +610,9 @@ public class Mutation {
 					id, attachmentBase64));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an attachment (TYPE_OTHER) under the product identified by product id, referenced by URL. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (url, TYPE_OTHER). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Stores the URL reference."
+	)
 	public Attachment createProductIdAttachmentByUrl(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachmentUrl") AttachmentUrl attachmentUrl)
@@ -602,7 +626,9 @@ public class Mutation {
 					id, attachmentUrl));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates or updates a DL file entry under the product group."
+	)
 	public Attachment createProductIdImage(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachment") Attachment attachment)
@@ -615,7 +641,9 @@ public class Mutation {
 				id, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by product id, supplied as a base64-encoded payload. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (base64, TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Decodes the base64 file and creates a DL file entry."
+	)
 	public Attachment createProductIdImageByBase64(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachmentBase64") AttachmentBase64 attachmentBase64)
@@ -628,7 +656,9 @@ public class Mutation {
 				id, attachmentBase64));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an image attachment (TYPE_IMAGE) under the product identified by product id, referenced by URL. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AttachmentUtil.addOrUpdateCPAttachmentFileEntry (url, TYPE_IMAGE). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Stores the URL reference."
+	)
 	public Attachment createProductIdImageByUrl(
 			@GraphQLName("id") Long id,
 			@GraphQLName("attachmentUrl") AttachmentUrl attachmentUrl)
@@ -641,7 +671,9 @@ public class Mutation {
 				id, attachmentUrl));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the attachment identified by external reference code with the supplied representation. Calls CPAttachmentFileEntryService.fetchCPAttachmentFileEntryByExternalReferenceCode + AttachmentUtil.updateCPAttachmentFileEntry (TYPE_OTHER). Validation -- NoSuchCPAttachmentFileEntryException -> 404 when ERC not found. Side effects -- Updates DL file entry metadata, asset tags, and ExpandoBridge attributes."
+	)
 	public Attachment updateAttachmentByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("attachment") Attachment attachment)
@@ -655,7 +687,9 @@ public class Mutation {
 					externalReferenceCode, attachment));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the commerce catalog identified by id. Calls CommerceCatalogService.deleteCommerceCatalog. Validation -- Throws NoSuchCatalogException -> 404 when id is missing (service-level). Side effects -- Cascades through CommerceCatalog delete listeners (group, virtual instance teardown)."
+	)
 	public Response deleteCatalog(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_catalogResourceComponentServiceObjects,
@@ -676,7 +710,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the commerce catalog identified by its external reference code. Calls CommerceCatalogService.fetchCommerceCatalogByExternalReferenceCode + deleteCommerceCatalog. Validation -- NoSuchCatalogException -> 404 when ERC not found. Side effects -- Cascades through CommerceCatalog delete listeners."
+	)
 	public Response deleteCatalogByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -689,7 +725,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the commerce catalog identified by id. Calls CommerceCatalogService.getCommerceCatalog + updateCommerceCatalog. Validation -- NoSuchCatalogException -> 404 when id not found; NoSuchCurrencyException tolerated (debug log). Side effects -- Reindexes the catalog; touches the underlying group."
+	)
 	public Response patchCatalog(
 			@GraphQLName("id") Long id, @GraphQLName("catalog") Catalog catalog)
 		throws Exception {
@@ -700,7 +738,9 @@ public class Mutation {
 			catalogResource -> catalogResource.patchCatalog(id, catalog));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the commerce catalog identified by external reference code. Calls CommerceCatalogService.fetchCommerceCatalogByExternalReferenceCode + updateCommerceCatalog. Validation -- NoSuchCatalogException -> 404 when ERC not found. Side effects -- Reindexes the catalog."
+	)
 	public Response patchCatalogByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("catalog") Catalog catalog)
@@ -714,7 +754,9 @@ public class Mutation {
 					externalReferenceCode, catalog));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new commerce catalog, or updates the existing catalog when the external reference code already matches one. Calls CommerceCatalogService.addCommerceCatalog (or updateCommerceCatalog when ERC collides). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCurrencyException tolerated during update path (debug log); add path throws NoSuchCurrencyException -> 404 when currency lookup fails. Side effects -- Provisions a new group, default catalog roles, and indexes the catalog."
+	)
 	public Catalog createCatalog(@GraphQLName("catalog") Catalog catalog)
 		throws Exception {
 
@@ -756,7 +798,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the commerce catalog identified by external reference code. Calls CommerceCatalogService.addCommerceCatalog or updateCommerceCatalog. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCurrencyException -> 404 when currency lookup fails. Side effects -- Provisions a new group on add; reindex on update."
+	)
 	public Catalog updateCatalogByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("catalog") Catalog catalog)
@@ -770,7 +814,9 @@ public class Mutation {
 					externalReferenceCode, catalog));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the asset category assignments of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + AssetCategoryService.fetchCategory + CPDefinitionService.updateCPDefinitionCategorization. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found; NoSuchCategoryException -> 404 when any supplied category id is missing. Side effects -- Replaces the product's asset category assignment set (overwrites prior categorization)."
+	)
 	public Response patchProductByExternalReferenceCodeCategory(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("categories") Category[] categories)
@@ -784,7 +830,9 @@ public class Mutation {
 					externalReferenceCode, categories));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the asset category assignments of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + AssetCategoryService.fetchCategory + CPDefinitionService.updateCPDefinitionCategorization. Validation -- NoSuchCPDefinitionException -> 404 when product id not found; NoSuchCategoryException -> 404 when any supplied category id is missing. Side effects -- Replaces the product's asset category assignment set."
+	)
 	public Response patchProductIdCategory(
 			@GraphQLName("id") Long id,
 			@GraphQLName("categories") Category[] categories)
@@ -797,7 +845,9 @@ public class Mutation {
 				id, categories));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the commerce currency identified by id. Calls CommerceCurrencyService.deleteCommerceCurrency. Validation -- Service-level NoSuchCurrencyException -> 404 when id not found. Side effects -- Cascades through commerce currency delete listeners."
+	)
 	public boolean deleteCurrency(@GraphQLName("id") Long id) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_currencyResourceComponentServiceObjects,
@@ -820,7 +870,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the commerce currency identified by external reference code. Calls CommerceCurrencyService.fetchCommerceCurrencyByExternalReferenceCode + deleteCommerceCurrency. Validation -- NoSuchCurrencyException -> 404 when ERC not found. Side effects -- Cascades through currency delete listeners."
+	)
 	public boolean deleteCurrencyByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -835,7 +887,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the commerce currency identified by id. Calls CommerceCurrencyService.getCommerceCurrency + updateCommerceCurrency. Validation -- NoSuchCurrencyException -> 404 when id not found. Side effects -- Reindexes the currency."
+	)
 	public Currency patchCurrency(
 			@GraphQLName("id") Long id,
 			@GraphQLName("currency") Currency currency)
@@ -847,7 +901,9 @@ public class Mutation {
 			currencyResource -> currencyResource.patchCurrency(id, currency));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the commerce currency identified by external reference code. Calls CommerceCurrencyService.fetchCommerceCurrencyByExternalReferenceCode + updateCommerceCurrency. Validation -- NoSuchCurrencyException -> 404 when ERC not found. Side effects -- Reindexes the currency."
+	)
 	public Currency patchCurrencyByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("currency") Currency currency)
@@ -880,7 +936,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a new commerce currency. Calls CommerceCurrencyService.addCommerceCurrency. Validation -- Service throws DuplicateCommerceCurrencyException on duplicate code -> 409. Side effects -- Indexes the new currency; localized format pattern populated from default if missing."
+	)
 	public Currency createCurrency(@GraphQLName("currency") Currency currency)
 		throws Exception {
 
@@ -903,7 +961,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the diagram setting identified by diagramId. Calls CSDiagramSettingService.getCSDiagramSetting + DiagramUtil.updateCSDiagramSetting. Validation -- NoSuchCSDiagramSettingException -> 404 when diagramId not found. Side effects -- Updates the diagram's image attachment and may replace the linked DL file entry."
+	)
 	public Diagram patchDiagram(
 			@GraphQLName("diagramId") Long diagramId,
 			@GraphQLName("diagram") Diagram diagram)
@@ -916,7 +976,9 @@ public class Mutation {
 				diagramId, diagram));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a diagram setting under the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + DiagramUtil.addCSDiagramSetting. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates the diagram setting and links an attachment as the diagram image."
+	)
 	public Diagram createProductByExternalReferenceCodeDiagram(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("diagram") Diagram diagram)
@@ -930,7 +992,9 @@ public class Mutation {
 					externalReferenceCode, diagram));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a diagram setting under the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + DiagramUtil.addCSDiagramSetting. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates the diagram setting and links an attachment as the diagram image."
+	)
 	public Diagram createProductIdDiagram(
 			@GraphQLName("id") Long id, @GraphQLName("diagram") Diagram diagram)
 		throws Exception {
@@ -955,7 +1019,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the grouped product entry identified by groupedProductId. Calls CPDefinitionGroupedEntryService.deleteCPDefinitionGroupedEntry. Validation -- Service-level NoSuchCPDefinitionGroupedEntryException -> 404. Side effects -- Removes the grouped product link from the parent CPDefinition."
+	)
 	public boolean deleteGroupedProduct(
 			@GraphQLName("groupedProductId") Long groupedProductId)
 		throws Exception {
@@ -983,7 +1049,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates priority and quantity of the grouped product entry identified by groupedProductId. Calls CPDefinitionGroupedEntryService.getCPDefinitionGroupedEntry + updateCPDefinitionGroupedEntry. Validation -- NoSuchCPDefinitionGroupedEntryException -> 404 when id not found. Side effects -- None (updates priority and quantity)."
+	)
 	public GroupedProduct patchGroupedProduct(
 			@GraphQLName("groupedProductId") Long groupedProductId,
 			@GraphQLName("groupedProduct") GroupedProduct groupedProduct)
@@ -997,7 +1065,9 @@ public class Mutation {
 					groupedProductId, groupedProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Adds a grouped product entry to the parent product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + CPDefinitionGroupedEntryService.addCPDefinitionGroupedEntry. Validation -- NoSuchCPDefinitionException -> 404 when either the parent product ERC or the entry product is missing. Side effects -- Links the entry product to the parent grouped product."
+	)
 	public GroupedProduct createProductByExternalReferenceCodeGroupedProduct(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("groupedProduct") GroupedProduct groupedProduct)
@@ -1012,7 +1082,9 @@ public class Mutation {
 						externalReferenceCode, groupedProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Adds a grouped product entry to the parent product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + CPDefinitionGroupedEntryService.addCPDefinitionGroupedEntry. Validation -- NoSuchCPDefinitionException -> 404 when parent product id or entry product is missing. Side effects -- Links the entry product to the parent grouped product."
+	)
 	public GroupedProduct createProductIdGroupedProduct(
 			@GraphQLName("id") Long id,
 			@GraphQLName("groupedProduct") GroupedProduct groupedProduct)
@@ -1040,7 +1112,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Detaches a list type definition from a specification option. Calls CPSpecificationOptionService.getCPSpecificationOption + CPSpecificationOptionListTypeDefinitionRelService.deleteCPSpecificationOptionListTypeDefinitionRel. Validation -- NoSuchCPSpecificationOptionException -> 404 when specificationId not found. Side effects -- Detaches the list type definition from the specification option."
+	)
 	public boolean deleteSpecificationListTypeDefinition(
 			@GraphQLName("specificationId") Long specificationId,
 			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
@@ -1057,7 +1131,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a list type definition and attaches it to the specification option identified by id. Calls ListTypeDefinitionService.addListTypeDefinition + CPSpecificationOptionListTypeDefinitionRelService.addCPSpecificationOptionListTypeDefinitionRel. Validation -- NoSuchCPSpecificationOptionException -> 404 when specification id not found. Side effects -- Creates a new list type definition and attaches it to the specification option."
+	)
 	public ListTypeDefinition createSpecificationIdListTypeDefinition(
 			@GraphQLName("id") Long id,
 			@GraphQLName("listTypeDefinition") ListTypeDefinition
@@ -1088,7 +1164,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Attaches an existing list type definition to the specification option. Calls CPSpecificationOptionService.getCPSpecificationOption + CPSpecificationOptionListTypeDefinitionRelService.addCPSpecificationOptionListTypeDefinitionRel. Validation -- NoSuchCPSpecificationOptionException -> 404 when specificationId not found. Side effects -- Creates the relation row between the specification option and the list type definition."
+	)
 	public boolean createSpecificationListTypeDefinition(
 			@GraphQLName("specificationId") Long specificationId,
 			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId)
@@ -1119,7 +1197,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the mapped (diagram) product identified by mappedProductId. Calls CSDiagramEntryService.getCSDiagramEntry + deleteCSDiagramEntry. Validation -- NoSuchCSDiagramEntryException -> 404 when id not found. Side effects -- Removes the diagram entry; orphaned pins may remain unless cleaned separately."
+	)
 	public boolean deleteMappedProduct(
 			@GraphQLName("mappedProductId") Long mappedProductId)
 		throws Exception {
@@ -1147,7 +1227,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the mapped (diagram) product identified by mappedProductId. Calls CSDiagramEntryService.getCSDiagramEntry + MappedProductUtil.updateCSDiagramEntry. Validation -- NoSuchCSDiagramEntryException -> 404 when id not found. Side effects -- May relink the diagram entry to a different SKU/CProduct."
+	)
 	public MappedProduct patchMappedProduct(
 			@GraphQLName("mappedProductId") Long mappedProductId,
 			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
@@ -1160,7 +1242,9 @@ public class Mutation {
 				mappedProductId, mappedProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a mapped (diagram) product under the parent product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + MappedProductUtil.addCSDiagramEntry. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates a diagram entry referencing the supplied SKU/CProduct."
+	)
 	public MappedProduct createProductByExternalReferenceCodeMappedProduct(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
@@ -1175,7 +1259,9 @@ public class Mutation {
 						externalReferenceCode, mappedProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a mapped (diagram) product under the parent product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + MappedProductUtil.addCSDiagramEntry. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates a diagram entry referencing the supplied SKU/CProduct."
+	)
 	public MappedProduct createProductIdMappedProduct(
 			@GraphQLName("id") Long id,
 			@GraphQLName("mappedProduct") MappedProduct mappedProduct)
@@ -1203,7 +1289,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option identified by id. Calls CPOptionService.getCPOption + deleteCPOption. Validation -- NoSuchCPOptionException -> 404 when id not found. Side effects -- Cascades through CPDefinitionOptionRel listeners; reindexes affected products."
+	)
 	public Response deleteOption(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_optionResourceComponentServiceObjects,
@@ -1224,7 +1312,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option identified by external reference code. Calls CPOptionService.fetchCPOptionByExternalReferenceCode + deleteCPOption. Validation -- NoSuchCPOptionException -> 404 when ERC not found. Side effects -- Cascades through CPDefinitionOptionRel listeners."
+	)
 	public Response deleteOptionByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1237,7 +1327,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option identified by id. Calls CPOptionService.getCPOption + updateCPOption. Validation -- NoSuchCPOptionException -> 404 when id not found. Side effects -- Reindexes the option."
+	)
 	public Response patchOption(
 			@GraphQLName("id") Long id, @GraphQLName("option") Option option)
 		throws Exception {
@@ -1248,7 +1340,9 @@ public class Mutation {
 			optionResource -> optionResource.patchOption(id, option));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option identified by external reference code. Calls CPOptionService.fetchCPOptionByExternalReferenceCode + updateCPOption. Validation -- NoSuchCPOptionException -> 404 when ERC not found. Side effects -- Reindexes the option."
+	)
 	public Response patchOptionByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("option") Option option)
@@ -1261,7 +1355,9 @@ public class Mutation {
 				externalReferenceCode, option));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an option (with optional nested option values) using the supplied external reference code. Calls CPOptionService.addOrUpdateCPOption + nested postOptionIdOptionValue. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- Service may throw CPOptionKeyException -> 400 when key is invalid; DuplicateCPOptionException -> 409 when ERC collides. Side effects -- Creates nested option values via OptionValueResource; reindexes the option."
+	)
 	public Option createOption(@GraphQLName("option") Option option)
 		throws Exception {
 
@@ -1303,7 +1399,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the option identified by external reference code, including optional nested option values. Calls CPOptionService.addOrUpdateCPOption + nested postOptionIdOptionValue. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- Service may throw CPOptionKeyException -> 400. Side effects -- Creates nested option values; reindexes the option."
+	)
 	public Option updateOptionByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("option") Option option)
@@ -1316,7 +1414,9 @@ public class Mutation {
 				externalReferenceCode, option));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option category identified by id. Calls CPOptionCategoryService.deleteCPOptionCategory. Validation -- Service-level NoSuchCPOptionCategoryException -> 404. Side effects -- Cascades through option category delete listeners; reindexes affected specifications."
+	)
 	public Response deleteOptionCategory(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1341,7 +1441,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option category identified by external reference code. Calls CPOptionCategoryService.getCPOptionCategoryByExternalReferenceCode + deleteCPOptionCategory. Validation -- NoSuchCPOptionCategoryException -> 404 when ERC not found. Side effects -- Cascades through option category delete listeners."
+	)
 	public boolean deleteOptionCategoryByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1357,7 +1459,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option category identified by id. Calls CPOptionCategoryService.getCPOptionCategory + updateCPOptionCategory. Validation -- NoSuchCPOptionCategoryException -> 404 when id not found. Side effects -- Reindexes the option category."
+	)
 	public Response patchOptionCategory(
 			@GraphQLName("id") Long id,
 			@GraphQLName("optionCategory") OptionCategory optionCategory)
@@ -1370,7 +1474,9 @@ public class Mutation {
 				optionCategoryResource.patchOptionCategory(id, optionCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option category identified by external reference code. Calls CPOptionCategoryService.getCPOptionCategoryByExternalReferenceCode + updateCPOptionCategory. Validation -- NoSuchCPOptionCategoryException -> 404 when ERC not found. Side effects -- Reindexes the option category."
+	)
 	public OptionCategory patchOptionCategoryByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("optionCategory") OptionCategory optionCategory)
@@ -1405,7 +1511,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an option category using the supplied external reference code. Calls CPOptionCategoryService.addOrUpdateCPOptionCategory. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- DuplicateCPOptionCategoryException -> 409 when key collides. Side effects -- Reindexes the option category."
+	)
 	public OptionCategory createOptionCategory(
 			@GraphQLName("optionCategory") OptionCategory optionCategory)
 		throws Exception {
@@ -1431,7 +1539,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the option category identified by external reference code. Calls CPOptionCategoryService.addOrUpdateCPOptionCategory. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- DuplicateCPOptionCategoryException -> 409 when key collides. Side effects -- Reindexes the option category."
+	)
 	public OptionCategory updateOptionCategoryByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("optionCategory") OptionCategory optionCategory)
@@ -1445,7 +1555,9 @@ public class Mutation {
 					externalReferenceCode, optionCategory));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option value identified by id. Calls CPOptionValueService.deleteCPOptionValue. Validation -- Service-level NoSuchCPOptionValueException -> 404. Side effects -- Cascades through CPDefinitionOptionValueRel listeners."
+	)
 	public Response deleteOptionValue(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1468,7 +1580,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the option value identified by external reference code. Calls CPOptionValueService.fetchCPOptionValueByExternalReferenceCode + deleteCPOptionValue. Validation -- NoSuchCPOptionValueException -> 404 when ERC not found. Side effects -- Cascades through CPDefinitionOptionValueRel listeners."
+	)
 	public Response deleteOptionValueByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1481,7 +1595,9 @@ public class Mutation {
 					externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option value identified by id. Calls CPOptionValueService.getCPOptionValue + updateCPOptionValue. Validation -- NoSuchCPOptionValueException -> 404 when id not found. Side effects -- Reindexes the option value."
+	)
 	public Response patchOptionValue(
 			@GraphQLName("id") Long id,
 			@GraphQLName("optionValue") OptionValue optionValue)
@@ -1494,7 +1610,9 @@ public class Mutation {
 				id, optionValue));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the option value identified by external reference code. Calls CPOptionValueService.fetchCPOptionValueByExternalReferenceCode + updateCPOptionValue. Validation -- NoSuchCPOptionValueException -> 404 when ERC not found. Side effects -- Reindexes the option value."
+	)
 	public Response patchOptionValueByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("optionValue") OptionValue optionValue)
@@ -1508,7 +1626,9 @@ public class Mutation {
 					externalReferenceCode, optionValue));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an option value under the parent option identified by external reference code. Calls CPOptionService.fetchCPOptionByExternalReferenceCode + CPOptionValueService.addOrUpdateCPOptionValue. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPOptionException -> 404 when parent option ERC not found. Side effects -- Reindexes the option value."
+	)
 	public OptionValue createOptionByExternalReferenceCodeOptionValue(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("optionValue") OptionValue optionValue)
@@ -1523,7 +1643,9 @@ public class Mutation {
 						externalReferenceCode, optionValue));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates an option value under the parent option identified by option id. Calls CPOptionService.getCPOption + CPOptionValueService.addOrUpdateCPOptionValue. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPOptionException -> 404 when parent option id not found. Side effects -- Reindexes the option value."
+	)
 	public OptionValue createOptionIdOptionValue(
 			@GraphQLName("id") Long id,
 			@GraphQLName("optionValue") OptionValue optionValue)
@@ -1550,7 +1672,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the pin identified by pinId and removes its orphan diagram entry when no other pin references it. Calls CSDiagramPinService.getCSDiagramPin + deleteCSDiagramPin (optionally also deletes the orphan CSDiagramEntry). Validation -- NoSuchCSDiagramPinException -> 404 when id not found. Side effects -- Cascades the matching CSDiagramEntry delete when no other pin shares the sequence."
+	)
 	public boolean deletePin(@GraphQLName("pinId") Long pinId)
 		throws Exception {
 
@@ -1572,7 +1696,9 @@ public class Mutation {
 			pinResource -> pinResource.deletePinBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the pin identified by pinId, optionally creating or updating its mapped product. Calls CSDiagramPinService.getCSDiagramPin + PinUtil.updateCSDiagramPin + add/update CSDiagramEntry. Validation -- NoSuchCSDiagramPinException -> 404 when id not found. Side effects -- When mappedProduct is included, may add or update the linked CSDiagramEntry (SKU/product mapping)."
+	)
 	public Pin patchPin(
 			@GraphQLName("pinId") Long pinId, @GraphQLName("pin") Pin pin)
 		throws Exception {
@@ -1582,7 +1708,9 @@ public class Mutation {
 			pinResource -> pinResource.patchPin(pinId, pin));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a diagram pin on the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + PinUtil.addCSDiagramPin + optional CSDiagramEntry add/update. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates the pin and optionally creates/updates a mapped diagram entry."
+	)
 	public Pin createProductByExternalReferenceCodePin(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("pin") Pin pin)
@@ -1594,7 +1722,9 @@ public class Mutation {
 				externalReferenceCode, pin));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a diagram pin on the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + PinUtil.addCSDiagramPin + optional CSDiagramEntry add/update. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates the pin and optionally creates/updates a mapped diagram entry."
+	)
 	public Pin createProductIdPin(
 			@GraphQLName("id") Long id, @GraphQLName("pin") Pin pin)
 		throws Exception {
@@ -1616,7 +1746,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Cascades CPDefinition delete (skus, options, attachments, categorization)."
+	)
 	public boolean deleteProduct(@GraphQLName("id") Long id) throws Exception {
 		_applyVoidComponentServiceObjects(
 			_productResourceComponentServiceObjects,
@@ -1639,7 +1771,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when ERC not found. Side effects -- Cascades CPDefinition delete."
+	)
 	public boolean deleteProductByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1654,7 +1788,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a specific historical version of the product identified by external reference code. Calls CProductLocalService.fetchCProductByExternalReferenceCode + CPDefinitionService.getCProductCPDefinition + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when ERC or version not found. Side effects -- Cascades CPDefinition delete for the targeted version only."
+	)
 	public boolean deleteProductByExternalReferenceCodeByVersion(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("version") Integer version)
@@ -1670,7 +1806,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes a specific historical version of the product identified by product id. Calls CPDefinitionService.getCProductCPDefinition + deleteCPDefinition. Validation -- NoSuchCPDefinitionException -> 404 when product id or version not found. Side effects -- Cascades CPDefinition delete for the targeted version only."
+	)
 	public boolean deleteProductByVersion(
 			@GraphQLName("id") Long id, @GraphQLName("version") Integer version)
 		throws Exception {
@@ -1684,7 +1822,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + internal _updateProduct (CPDefinitionService.updateCPDefinition and friends). Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags, and may trigger workflow draft transition."
+	)
 	public Response patchProduct(
 			@GraphQLName("id") Long id, @GraphQLName("product") Product product)
 		throws Exception {
@@ -1695,7 +1835,9 @@ public class Mutation {
 			productResource -> productResource.patchProduct(id, product));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + internal _updateProduct (honors STATUS_DRAFT workflow hint). Validation -- NoSuchCPDefinitionException -> 404 when ERC not found. Side effects -- Updates ExpandoBridge, asset categorization, asset tags; may set workflowAction=SAVE_DRAFT when productStatus=DRAFT."
+	)
 	public Response patchProductByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("product") Product product)
@@ -1709,7 +1851,9 @@ public class Mutation {
 					externalReferenceCode, product));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a product using the supplied external reference code. Calls Internal _addOrUpdateProduct (CPDefinitionService.addOrUpdate). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCatalogException -> 404 when supplied catalog cannot be resolved; workflow exceptions propagate. Side effects -- Creates the product version chain, asset entry, default SKU when productType has one; triggers workflow on add."
+	)
 	public Product createProduct(@GraphQLName("product") Product product)
 		throws Exception {
 
@@ -1732,7 +1876,9 @@ public class Mutation {
 				callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Clones the product identified by external reference code, optionally into a different catalog. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + cloneCPDefinition (optionally retargeting to a different catalog). Validation -- NoSuchCPDefinitionException -> 404 when source product ERC not found; NoSuchCatalogException -> 404 when target catalog ERC not found. Side effects -- Creates a brand new CPDefinition with cloned SKUs, options, attachments, etc.."
+	)
 	public Product createProductByExternalReferenceCodeClone(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("catalogExternalReferenceCode") String
@@ -1747,7 +1893,9 @@ public class Mutation {
 					externalReferenceCode, catalogExternalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Clones the product identified by product id, optionally into a different catalog. Calls CPDefinitionService.fetchCPDefinitionByCProductId + cloneCPDefinition (optionally retargeting to a different catalog). Validation -- NoSuchCPDefinitionException -> 404 when source product id not found. Side effects -- Creates a brand new CPDefinition with cloned SKUs, options, attachments, etc.."
+	)
 	public Product createProductClone(
 			@GraphQLName("id") Long id,
 			@GraphQLName("catalogId") Long catalogId)
@@ -1778,7 +1926,9 @@ public class Mutation {
 				callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the product identified by external reference code. Calls Internal _addOrUpdateProduct (CPDefinitionService.addOrUpdate). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCatalogException -> 404 when supplied catalog cannot be resolved. Side effects -- Creates or updates the full product version chain."
+	)
 	public Product updateProductByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("product") Product product)
@@ -1792,7 +1942,9 @@ public class Mutation {
 					externalReferenceCode, product));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the account group assignment identified by id from its product. Calls AccountGroupRelLocalService.deleteAccountGroupRel. Validation -- Service-level NoSuchAccountGroupRelException -> 404. Side effects -- Removes the account group <-> product association."
+	)
 	public boolean deleteProductAccountGroup(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1819,7 +1971,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the channel assignment identified by id from its product. Calls CommerceChannelRelService.deleteCommerceChannelRel. Validation -- Service-level NoSuchCommerceChannelRelException -> 404. Side effects -- Removes the channel <-> product association."
+	)
 	public boolean deleteProductChannel(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1846,7 +2000,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product configuration entry identified by id. Calls CPConfigurationEntryService.deleteCPConfigurationEntry. Validation -- Service-level NoSuchCPConfigurationEntryException -> 404. Side effects -- Removes the configuration override (master entries are protected by ModelResourcePermission)."
+	)
 	public boolean deleteProductConfiguration(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -1873,7 +2029,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product configuration entry identified by external reference code. Calls CPConfigurationEntryService.getCPConfigurationEntryByExternalReferenceCode + deleteProductConfiguration. Validation -- NoSuchCPConfigurationEntryException -> 404 when ERC not found. Side effects -- Removes the configuration override."
+	)
 	public boolean deleteProductConfigurationByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -1889,7 +2047,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the consolidated product configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode -> patchProductIdConfiguration. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the master CPConfigurationEntry plus CPDefinitionInventory and CPDAvailabilityEstimate."
+	)
 	public Response patchProductByExternalReferenceCodeConfiguration(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("productConfiguration") ProductConfiguration
@@ -1905,7 +2065,9 @@ public class Mutation {
 						externalReferenceCode, productConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product configuration entry identified by id. Calls CPConfigurationEntryService.getCPConfigurationEntry + updateCPConfigurationEntry. Validation -- NoSuchCPConfigurationEntryException -> 404 when id not found. Side effects -- Updates inventory, shipping, and tax fields on the entry."
+	)
 	public ProductConfiguration patchProductConfiguration(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productConfiguration") ProductConfiguration
@@ -1920,7 +2082,9 @@ public class Mutation {
 					id, productConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product configuration entry identified by external reference code. Calls CPConfigurationEntryService.getCPConfigurationEntryByExternalReferenceCode + patchProductConfiguration. Validation -- NoSuchCPConfigurationEntryException -> 404 when ERC not found. Side effects -- Updates inventory, shipping, and tax fields on the entry."
+	)
 	public ProductConfiguration
 			patchProductConfigurationByExternalReferenceCode(
 				@GraphQLName("externalReferenceCode") String
@@ -1938,7 +2102,9 @@ public class Mutation {
 						externalReferenceCode, productConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the consolidated product configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + CPConfigurationEntryService.updateCPConfigurationEntry (when master entry exists) + ProductConfigurationUtil.updateCPDefinitionInventory + updateCPDAvailabilityEstimate. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the master CPConfigurationEntry plus CPDefinitionInventory and CPDAvailabilityEstimate."
+	)
 	public Response patchProductIdConfiguration(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productConfiguration") ProductConfiguration
@@ -1953,7 +2119,9 @@ public class Mutation {
 					id, productConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a product configuration entry under the product configuration list identified by external reference code. Calls CPConfigurationListService.getCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfiguration. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchCPDefinitionException -> 404 when entityType=product and the referenced product is missing. Side effects -- Creates a CPConfigurationEntry under the configuration list, scoped to a product or to the list as a template."
+	)
 	public ProductConfiguration
 			createProductConfigurationListByExternalReferenceCodeProductConfiguration(
 				@GraphQLName("externalReferenceCode") String
@@ -1971,7 +2139,9 @@ public class Mutation {
 						externalReferenceCode, productConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates a product configuration entry under the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + CPConfigurationEntryService.addCPConfigurationEntry (resolving entityType=product or entityType=template). Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchCPDefinitionException -> 404 when entityType=product and the referenced product is missing. Side effects -- Creates a CPConfigurationEntry under the configuration list."
+	)
 	public ProductConfiguration
 			createProductConfigurationListIdProductConfiguration(
 				@GraphQLName("id") Long id,
@@ -2003,7 +2173,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product configuration list identified by id. Calls CPConfigurationListService.deleteCPConfigurationList. Validation -- Service-level NoSuchCPConfigurationListException -> 404 when id not found. Side effects -- Cascades deletion of CPConfigurationListRel rows and CPConfigurationEntry rows attached to the list."
+	)
 	public boolean deleteProductConfigurationList(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2031,7 +2203,9 @@ public class Mutation {
 					deleteProductConfigurationListBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product configuration list identified by external reference code. Calls CPConfigurationListService.getCPConfigurationListByExternalReferenceCode + deleteProductConfigurationList. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found. Side effects -- Cascades deletion of rels and entries."
+	)
 	public boolean deleteProductConfigurationListByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -2047,7 +2221,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product configuration list identified by id, applying any nested product configurations. Calls CPConfigurationListService.getCPConfigurationList + updateCPConfigurationList + nested patchProductConfiguration. Validation -- NoSuchCPConfigurationListException -> 404 when id not found. Side effects -- Reindexes; updates display/expiration date and ExpandoBridge; cascades into nested product configurations."
+	)
 	public ProductConfigurationList patchProductConfigurationList(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productConfigurationList") ProductConfigurationList
@@ -2062,7 +2238,9 @@ public class Mutation {
 					id, productConfigurationList));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product configuration list identified by external reference code. Calls CPConfigurationListService.getCPConfigurationListByExternalReferenceCode + patchProductConfigurationList. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found. Side effects -- Reindexes; updates display/expiration date and ExpandoBridge; cascades into nested product configurations."
+	)
 	public ProductConfigurationList
 			patchProductConfigurationListByExternalReferenceCode(
 				@GraphQLName("externalReferenceCode") String
@@ -2080,7 +2258,9 @@ public class Mutation {
 						externalReferenceCode, productConfigurationList));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a product configuration list under the supplied catalog, optionally with nested product configurations. Calls CommerceCatalogLocalService.fetchCommerceCatalogByExternalReferenceCode/getCommerceCatalog + CPConfigurationListService.addOrUpdateCPConfigurationList + nested postProductConfigurationListIdProductConfiguration. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCatalogException -> 404 when no catalog can be resolved. Side effects -- Reindexes; creates nested product configurations when supplied."
+	)
 	public ProductConfigurationList createProductConfigurationList(
 			@GraphQLName("productConfigurationList") ProductConfigurationList
 				productConfigurationList)
@@ -2133,7 +2313,9 @@ public class Mutation {
 						callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the account binding identified by id from its product configuration list. Calls CPConfigurationListRelService.deleteCPConfigurationListRel. Validation -- Service-level NoSuchCPConfigurationListRelException -> 404. Side effects -- Removes the account <-> configuration list association."
+	)
 	public boolean deleteProductConfigurationListAccount(
 			@GraphQLName("productConfigurationListAccountId") Long
 				productConfigurationListAccountId)
@@ -2165,7 +2347,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds an account to the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfigurationListAccount. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchAccountEntryException -> 404 when account lookup fails. Side effects -- Creates a CPConfigurationListRel binding the account to the configuration list."
+	)
 	public ProductConfigurationListAccount
 			createProductConfigurationListByExternalReferenceCodeProductConfigurationListAccount(
 				@GraphQLName("externalReferenceCode") String
@@ -2185,7 +2369,9 @@ public class Mutation {
 						productConfigurationListAccount));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds an account to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + AccountEntryService.fetchAccountEntryByExternalReferenceCode/getAccountEntry + CPConfigurationListRelService.addCPConfigurationListRel. Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchAccountEntryException -> 404 when account lookup fails. Side effects -- Creates a CPConfigurationListRel binding the account to the configuration list."
+	)
 	public ProductConfigurationListAccount
 			createProductConfigurationListIdProductConfigurationListAccount(
 				@GraphQLName("id") Long id,
@@ -2219,7 +2405,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the account group binding identified by id from its product configuration list. Calls CPConfigurationListRelService.deleteCPConfigurationListRel. Validation -- Service-level NoSuchCPConfigurationListRelException -> 404. Side effects -- Removes the account group <-> configuration list association."
+	)
 	public boolean deleteProductConfigurationListAccountGroup(
 			@GraphQLName("productConfigurationListAccountGroupId") Long
 				productConfigurationListAccountGroupId)
@@ -2251,7 +2439,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds an account group to the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfigurationListAccountGroup. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchAccountGroupException -> 404 when account group lookup fails. Side effects -- Creates a CPConfigurationListRel binding the account group to the configuration list."
+	)
 	public ProductConfigurationListAccountGroup
 			createProductConfigurationListByExternalReferenceCodeProductConfigurationListAccountGroup(
 				@GraphQLName("externalReferenceCode") String
@@ -2271,7 +2461,9 @@ public class Mutation {
 						productConfigurationListAccountGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds an account group to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + AccountGroupService.fetchAccountGroupByExternalReferenceCode/getAccountGroup + CPConfigurationListRelService.addCPConfigurationListRel. Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchAccountGroupException -> 404 when account group lookup fails. Side effects -- Creates a CPConfigurationListRel binding the account group to the configuration list."
+	)
 	public ProductConfigurationListAccountGroup
 			createProductConfigurationListIdProductConfigurationListAccountGroup(
 				@GraphQLName("id") Long id,
@@ -2305,7 +2497,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the channel binding identified by id from its product configuration list. Calls CommerceChannelRelService.deleteCommerceChannelRel. Validation -- Service-level NoSuchCommerceChannelRelException -> 404. Side effects -- Removes the channel <-> configuration list association."
+	)
 	public boolean deleteProductConfigurationListChannel(
 			@GraphQLName("productConfigurationListChannelId") Long
 				productConfigurationListChannelId)
@@ -2337,7 +2531,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a commerce channel to the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfigurationListChannel. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchCommerceChannelException -> 404 when channel lookup fails. Side effects -- Creates a CommerceChannelRel binding the channel to the configuration list."
+	)
 	public ProductConfigurationListChannel
 			createProductConfigurationListByExternalReferenceCodeProductConfigurationListChannel(
 				@GraphQLName("externalReferenceCode") String
@@ -2357,7 +2553,9 @@ public class Mutation {
 						productConfigurationListChannel));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a commerce channel to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + CommerceChannelService.fetchCommerceChannelByExternalReferenceCode/getCommerceChannel + CommerceChannelRelService.addCommerceChannelRel. Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchCommerceChannelException -> 404 when channel lookup fails. Side effects -- Creates a CommerceChannelRel binding the channel to the configuration list."
+	)
 	public ProductConfigurationListChannel
 			createProductConfigurationListIdProductConfigurationListChannel(
 				@GraphQLName("id") Long id,
@@ -2391,7 +2589,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the order type binding identified by id from its product configuration list. Calls CPConfigurationListRelService.deleteCPConfigurationListRel. Validation -- Service-level NoSuchCPConfigurationListRelException -> 404. Side effects -- Removes the order type <-> configuration list association."
+	)
 	public boolean deleteProductConfigurationListOrderType(
 			@GraphQLName("productConfigurationListOrderTypeId") Long
 				productConfigurationListOrderTypeId)
@@ -2423,7 +2623,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a commerce order type to the product configuration list identified by external reference code. Calls CPConfigurationListService.fetchCPConfigurationListByExternalReferenceCode -> postProductConfigurationListIdProductConfigurationListOrderType. Validation -- NoSuchCPConfigurationListException -> 404 when ERC not found; NoSuchCommerceOrderTypeException -> 404 when order type lookup fails. Side effects -- Creates a CPConfigurationListRel binding the order type to the configuration list."
+	)
 	public ProductConfigurationListOrderType
 			createProductConfigurationListByExternalReferenceCodeProductConfigurationListOrderType(
 				@GraphQLName("externalReferenceCode") String
@@ -2443,7 +2645,9 @@ public class Mutation {
 						productConfigurationListOrderType));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a commerce order type to the product configuration list identified by id. Calls CPConfigurationListService.getCPConfigurationList + CommerceOrderTypeService.fetchCommerceOrderTypeByExternalReferenceCode/getCommerceOrderType + CPConfigurationListRelService.addCPConfigurationListRel. Validation -- NoSuchCPConfigurationListException -> 404 when id not found; NoSuchCommerceOrderTypeException -> 404 when order type lookup fails. Side effects -- Creates a CPConfigurationListRel binding the order type to the configuration list."
+	)
 	public ProductConfigurationListOrderType
 			createProductConfigurationListIdProductConfigurationListOrderType(
 				@GraphQLName("id") Long id,
@@ -2477,7 +2681,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product group identified by id. Calls CommercePricingClassService.deleteCommercePricingClass. Validation -- Service-level NoSuchPricingClassException -> 404. Side effects -- Cascades deletion of CommercePricingClassCPDefinitionRel rows and associated pricing rules."
+	)
 	public boolean deleteProductGroup(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2504,7 +2710,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product group identified by external reference code. Calls CommercePricingClassService.fetchCommercePricingClassByExternalReferenceCode + deleteCommercePricingClass. Validation -- NoSuchPricingClassException -> 404 when ERC not found. Side effects -- Cascades deletion of rels and rules."
+	)
 	public boolean deleteProductGroupByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -2519,7 +2727,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product group identified by id, optionally appending new product bindings. Calls CommercePricingClassService.getCommercePricingClass + updateCommercePricingClass + ExpandoUtil.updateExpando + nested addCommercePricingClassCPDefinitionRel. Validation -- NoSuchPricingClassException -> 404 when id not found; NoSuchCProductException -> 404 when nested products fail to resolve. Side effects -- Reindexes; updates ExpandoBridge; appends new product bindings without removing existing ones."
+	)
 	public Response patchProductGroup(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productGroup") ProductGroup productGroup)
@@ -2532,7 +2742,9 @@ public class Mutation {
 				id, productGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product group identified by external reference code. Calls CommercePricingClassService.fetchCommercePricingClassByExternalReferenceCode + updateCommercePricingClass + nested updates. Validation -- NoSuchPricingClassException -> 404 when ERC not found; NoSuchCProductException -> 404 when nested products fail to resolve. Side effects -- Reindexes; updates ExpandoBridge; appends new product bindings."
+	)
 	public Response patchProductGroupByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("productGroup") ProductGroup productGroup)
@@ -2546,7 +2758,9 @@ public class Mutation {
 					externalReferenceCode, productGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a product group, optionally including product bindings. Calls CommercePricingClassService.addOrUpdateCommercePricingClass + nested addCommercePricingClassCPDefinitionRel. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCProductException -> 404 when nested products fail to resolve. Side effects -- Reindexes; creates the rel rows for any supplied products."
+	)
 	public ProductGroup createProductGroup(
 			@GraphQLName("productGroup") ProductGroup productGroup)
 		throws Exception {
@@ -2592,7 +2806,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the product group identified by external reference code. Calls CommercePricingClassService.addOrUpdateCommercePricingClass + nested updates. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCProductException -> 404 when nested products fail to resolve. Side effects -- Reindexes; appends new product bindings."
+	)
 	public ProductGroup updateProductGroupByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("productGroup") ProductGroup productGroup)
@@ -2606,7 +2822,9 @@ public class Mutation {
 					externalReferenceCode, productGroup));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the product binding identified by id from its product group. Calls CommercePricingClassCPDefinitionRelService.deleteCommercePricingClassCPDefinitionRel. Validation -- Service-level NoSuchCommercePricingClassCPDefinitionRelException -> 404. Side effects -- Removes the product <-> product group association."
+	)
 	public boolean deleteProductGroupProduct(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2633,7 +2851,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a product to the product group identified by external reference code. Calls CommercePricingClassService.fetchCommercePricingClassByExternalReferenceCode + ProductGroupProductUtil.addCommercePricingClassCPDefinitionRel. Validation -- NoSuchPricingClassException -> 404 when product group ERC not found; NoSuchCProductException -> 404 when product lookup fails. Side effects -- Creates a CommercePricingClassCPDefinitionRel binding the product to the group."
+	)
 	public ProductGroupProduct
 			createProductGroupByExternalReferenceCodeProductGroupProduct(
 				@GraphQLName("externalReferenceCode") String
@@ -2651,7 +2871,9 @@ public class Mutation {
 						externalReferenceCode, productGroupProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Binds a product to the product group identified by id. Calls CommercePricingClassService.getCommercePricingClass + ProductGroupProductUtil.addCommercePricingClassCPDefinitionRel. Validation -- NoSuchPricingClassException -> 404 when product group id not found; NoSuchCProductException -> 404 when product lookup fails. Side effects -- Creates a CommercePricingClassCPDefinitionRel binding the product to the group."
+	)
 	public ProductGroupProduct createProductGroupIdProductGroupProduct(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productGroupProduct") ProductGroupProduct
@@ -2682,7 +2904,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the product option relation identified by id from its product. Calls CPDefinitionOptionRelService.getCPDefinitionOptionRel + deleteCPDefinitionOptionRel. Validation -- NoSuchCPDefinitionOptionRelException -> 404 when id not found. Side effects -- Cascades deletion of associated CPDefinitionOptionValueRel rows."
+	)
 	public Response deleteProductOption(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2707,7 +2931,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product option relation identified by id, including any nested product option values. Calls CPDefinitionOptionRelService.getCPDefinitionOptionRel + updateCPDefinitionOptionRel + nested addOrUpdateCPDefinitionOptionValueRel. Validation -- NoSuchCPDefinitionOptionRelException -> 404 when id not found. Side effects -- Reindexes the parent product; cascades into nested product option values."
+	)
 	public Response patchProductOption(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productOption") ProductOption productOption)
@@ -2720,7 +2946,9 @@ public class Mutation {
 				id, productOption));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a batch of product option relations on the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductOptionUtil.addOrUpdateCPDefinitionOptionRel (batch). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Adds or updates each product option and cascades into nested product option values."
+	)
 	public java.util.Collection<ProductOption>
 			createProductByExternalReferenceCodeProductOptionsPage(
 				@GraphQLName("externalReferenceCode") String
@@ -2741,7 +2969,9 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a batch of product option relations on the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductOptionUtil.addOrUpdateCPDefinitionOptionRel (batch). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Adds or updates each product option and cascades into nested product option values."
+	)
 	public java.util.Collection<ProductOption>
 			createProductIdProductOptionsPage(
 				@GraphQLName("id") Long id,
@@ -2760,7 +2990,9 @@ public class Mutation {
 			});
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the product option value relation identified by id. Calls CPDefinitionOptionValueRelService.deleteCPDefinitionOptionValueRel. Validation -- Service-level NoSuchCPDefinitionOptionValueRelException -> 404. Side effects -- Cascades through CPInstance option value listeners; reindexes affected SKUs."
+	)
 	public boolean deleteProductOptionValue(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2787,7 +3019,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product option value relation identified by id. Calls CPDefinitionOptionValueRelService.getCPDefinitionOptionValueRel + updateCPDefinitionOptionValueRel. Validation -- NoSuchCPDefinitionOptionValueRelException -> 404 when id not found. Side effects -- May link the value to a specific CPInstance (SKU); reindexes affected SKUs."
+	)
 	public ProductOptionValue patchProductOptionValue(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productOptionValue") ProductOptionValue
@@ -2802,7 +3036,9 @@ public class Mutation {
 					id, productOptionValue));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a product option value relation under the product option identified by id. Calls CPDefinitionOptionRelService.getCPDefinitionOptionRel + ProductOptionValueUtil.addOrUpdateCPDefinitionOptionValueRel. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionOptionRelException -> 404 when parent option relation id not found. Side effects -- May link the value to a specific CPInstance (SKU); reindexes affected SKUs."
+	)
 	public ProductOptionValue createProductOptionIdProductOptionValue(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productOptionValue") ProductOptionValue
@@ -2833,7 +3069,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the shipping configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductShippingConfigurationUtil.updateCPDefinitionShippingInfo. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the CPDefinition shipping fields (weight, width, height, depth, etc.)."
+	)
 	public Response patchProductByExternalReferenceCodeShippingConfiguration(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("productShippingConfiguration")
@@ -2849,7 +3087,9 @@ public class Mutation {
 						externalReferenceCode, productShippingConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the shipping configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductShippingConfigurationUtil.updateCPDefinitionShippingInfo. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the CPDefinition shipping fields."
+	)
 	public Response patchProductIdShippingConfiguration(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productShippingConfiguration")
@@ -2865,7 +3105,9 @@ public class Mutation {
 						id, productShippingConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the product specification value identified by id from its product. Calls CPDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValue + deleteCPDefinitionSpecificationOptionValue. Validation -- NoSuchCPDefinitionSpecificationOptionValueException -> 404 when id not found. Side effects -- Reindexes the parent product."
+	)
 	public boolean deleteProductSpecification(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -2892,7 +3134,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the product specification value identified by external reference code from its product. Calls CPDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValueByExternalReferenceCode + deleteProductSpecification. Validation -- NoSuchCPDefinitionSpecificationOptionValueException -> 404 when ERC not found. Side effects -- Reindexes the parent product."
+	)
 	public boolean deleteProductSpecificationByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -2908,7 +3152,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product specification value identified by id. Calls CPDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValue + ProductSpecificationUtil.updateCPDefinitionSpecificationOptionValue. Validation -- NoSuchCPDefinitionSpecificationOptionValueException -> 404 when id not found; NoSuchCPSpecificationOptionException -> 404 when nested specification cannot be resolved. Side effects -- Reindexes the parent product."
+	)
 	public ProductSpecification patchProductSpecification(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productSpecification") ProductSpecification
@@ -2923,7 +3169,9 @@ public class Mutation {
 					id, productSpecification));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product specification value identified by external reference code. Calls CPDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValueByExternalReferenceCode + patchProductSpecification. Validation -- NoSuchCPDefinitionSpecificationOptionValueException -> 404 when ERC not found. Side effects -- Reindexes the parent product."
+	)
 	public ProductSpecification
 			patchProductSpecificationByExternalReferenceCode(
 				@GraphQLName("externalReferenceCode") String
@@ -2941,7 +3189,9 @@ public class Mutation {
 						externalReferenceCode, productSpecification));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a specification value on the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode -> postProductIdProductSpecification. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found; NoSuchCPSpecificationOptionException -> 404 when specification cannot be resolved. Side effects -- Adds or updates the specification value; reindexes the parent product."
+	)
 	public ProductSpecification
 			createProductByExternalReferenceCodeProductSpecification(
 				@GraphQLName("externalReferenceCode") String
@@ -2959,7 +3209,9 @@ public class Mutation {
 						externalReferenceCode, productSpecification));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a specification value on the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductSpecificationUtil.addCPDefinitionSpecificationOptionValue (or update path when id/ERC matches). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found; NoSuchCPSpecificationOptionException -> 404 when specification cannot be resolved. Side effects -- Adds or updates the specification value; reindexes the parent product."
+	)
 	public ProductSpecification createProductIdProductSpecification(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productSpecification") ProductSpecification
@@ -2989,7 +3241,9 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the subscription configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductSubscriptionConfigurationUtil.updateCPDefinitionSubscriptionInfo. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the CPDefinition subscription fields (length, cycles, type settings)."
+	)
 	public Response
 			patchProductByExternalReferenceCodeSubscriptionConfiguration(
 				@GraphQLName("externalReferenceCode") String
@@ -3009,7 +3263,9 @@ public class Mutation {
 						productSubscriptionConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the subscription configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductSubscriptionConfigurationUtil.updateCPDefinitionSubscriptionInfo. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the CPDefinition subscription fields."
+	)
 	public Response patchProductIdSubscriptionConfiguration(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productSubscriptionConfiguration")
@@ -3026,7 +3282,9 @@ public class Mutation {
 						id, productSubscriptionConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the tax configuration of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + ProductTaxConfigurationUtil.updateCPDefinitionTaxCategoryInfo. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Updates the CPDefinition tax category and taxExempt flag."
+	)
 	public Response patchProductByExternalReferenceCodeTaxConfiguration(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("productTaxConfiguration") ProductTaxConfiguration
@@ -3042,7 +3300,9 @@ public class Mutation {
 						externalReferenceCode, productTaxConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the tax configuration of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + ProductTaxConfigurationUtil.updateCPDefinitionTaxCategoryInfo. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Updates the CPDefinition tax category and taxExempt flag."
+	)
 	public Response patchProductIdTaxConfiguration(
 			@GraphQLName("id") Long id,
 			@GraphQLName("productTaxConfiguration") ProductTaxConfiguration
@@ -3057,7 +3317,9 @@ public class Mutation {
 					id, productTaxConfiguration));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the product virtual settings file entry identified by id. Calls CPDVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry. Validation -- Service-level NoSuchCPDVirtualSettingFileEntryException -> 404. Side effects -- Removes the linked DL file entry reference (file is not deleted)."
+	)
 	public boolean deleteProductVirtualSettingsFileEntry(
 			@GraphQLName("id") Long id)
 		throws Exception {
@@ -3087,9 +3349,11 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the product virtual settings file entry identified by id, optionally replacing the underlying file. Calls CPDVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry + CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + updateCPDefinitionVirtualSetting. Validation -- NoSuchCPDVirtualSettingFileEntryException -> 404 when id not found. Side effects -- May create a new DL file entry under the product group when a binary file or attachment is supplied."
+	)
 	@GraphQLName(
-		description = "null",
+		description = "Partially updates the product virtual settings file entry identified by id, optionally replacing the underlying file. Calls CPDVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry + CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + updateCPDefinitionVirtualSetting. Validation -- NoSuchCPDVirtualSettingFileEntryException -> 404 when id not found. Side effects -- May create a new DL file entry under the product group when a binary file or attachment is supplied.",
 		value = "patchProductVirtualSettingsFileEntryIdMultipartBody"
 	)
 	public ProductVirtualSettingsFileEntry patchProductVirtualSettingsFileEntry(
@@ -3105,9 +3369,11 @@ public class Mutation {
 					patchProductVirtualSettingsFileEntry(id, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Adds a file entry under the product virtual setting identified by id, accepting a binary upload or an existing attachment reference. Calls CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + CPDVirtualSettingFileEntryService.addCPDefinitionVirtualSetting. Validation -- BadRequestException -> 400 when neither binary file nor attachment is provided; NoSuchCPDefinitionVirtualSettingException -> 404 when parent id not found. Side effects -- Creates a DL file entry under the product group and records a new CPDVirtualSettingFileEntry."
+	)
 	@GraphQLName(
-		description = "null",
+		description = "Adds a file entry under the product virtual setting identified by id, accepting a binary upload or an existing attachment reference. Calls CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + CPDVirtualSettingFileEntryService.addCPDefinitionVirtualSetting. Validation -- BadRequestException -> 400 when neither binary file nor attachment is provided; NoSuchCPDefinitionVirtualSettingException -> 404 when parent id not found. Side effects -- Creates a DL file entry under the product group and records a new CPDVirtualSettingFileEntry.",
 		value = "postProductVirtualSettingIdProductVirtualSettingsFileEntryIdMultipartBody"
 	)
 	public ProductVirtualSettingsFileEntry
@@ -3125,7 +3391,9 @@ public class Mutation {
 						id, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Removes the related product link identified by id. Calls CPDefinitionLinkService.deleteCPDefinitionLink. Validation -- Service-level NoSuchCPDefinitionLinkException -> 404. Side effects -- Removes the related product link."
+	)
 	public Response deleteRelatedProduct(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -3150,7 +3418,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a related product link on the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + RelatedProductUtil.addOrUpdateCPDefinitionLink. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when parent product ERC not found or related product cannot be resolved. Side effects -- Creates or updates the related product link."
+	)
 	public RelatedProduct createProductByExternalReferenceCodeRelatedProduct(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("relatedProduct") RelatedProduct relatedProduct)
@@ -3165,7 +3435,9 @@ public class Mutation {
 						externalReferenceCode, relatedProduct));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a related product link on the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + RelatedProductUtil.addOrUpdateCPDefinitionLink. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when parent product id not found or related product cannot be resolved. Side effects -- Creates or updates the related product link."
+	)
 	public RelatedProduct createProductIdRelatedProduct(
 			@GraphQLName("id") Long id,
 			@GraphQLName("relatedProduct") RelatedProduct relatedProduct)
@@ -3193,7 +3465,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the SKU identified by id. Calls CPInstanceService.deleteCPInstance. Validation -- Service-level NoSuchCPInstanceException -> 404. Side effects -- Cascades through CPInstance delete listeners (inventory, price entries, units of measure)."
+	)
 	public Response deleteSku(@GraphQLName("id") Long id) throws Exception {
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
@@ -3211,7 +3485,9 @@ public class Mutation {
 			skuResource -> skuResource.deleteSkuBatch(callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the SKU identified by external reference code. Calls CPInstanceService.fetchCPInstanceByExternalReferenceCode + deleteCPInstance. Validation -- NoSuchCPInstanceException -> 404 when ERC not found. Side effects -- Cascades through CPInstance delete listeners."
+	)
 	public Response deleteSkuByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -3222,7 +3498,9 @@ public class Mutation {
 				externalReferenceCode));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the SKU identified by id. Calls CPInstanceService.getCPInstance + updateExternalReferenceCode + internal _updateSKU (CPInstanceService.updateCPInstance and friends). Validation -- NoSuchCPInstanceException -> 404 when id not found. Side effects -- Updates subscription, virtual settings, prices, units of measure, discontinued replacement."
+	)
 	public Sku patchSku(@GraphQLName("id") Long id, @GraphQLName("sku") Sku sku)
 		throws Exception {
 
@@ -3231,7 +3509,9 @@ public class Mutation {
 			skuResource -> skuResource.patchSku(id, sku));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the SKU identified by external reference code. Calls CPInstanceService.fetchCPInstanceByExternalReferenceCode + _updateSKU. Validation -- NoSuchCPInstanceException -> 404 when ERC not found. Side effects -- Updates subscription, virtual settings, prices, units of measure, discontinued replacement."
+	)
 	public Sku patchSkuByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("sku") Sku sku)
@@ -3243,7 +3523,9 @@ public class Mutation {
 				externalReferenceCode, sku));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a SKU under the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + internal _addOrUpdateSKU (CPInstanceService.addOrUpdateCPInstance). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found; CPDefinitionProductTypeNameException -> 400 when product type forbids SKUs. Side effects -- Creates the SKU, default price entries, units of measure, and virtual settings."
+	)
 	public Sku createProductByExternalReferenceCodeSku(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("sku") Sku sku)
@@ -3255,7 +3537,9 @@ public class Mutation {
 				externalReferenceCode, sku));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a SKU under the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + _addOrUpdateSKU. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPDefinitionException -> 404 when product id not found; CPDefinitionProductTypeNameException -> 400 when product type forbids SKUs. Side effects -- Creates the SKU, default price entries, units of measure, and virtual settings."
+	)
 	public Sku createProductIdSku(
 			@GraphQLName("id") Long id, @GraphQLName("sku") Sku sku)
 		throws Exception {
@@ -3295,7 +3579,9 @@ public class Mutation {
 				contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Replaces the SKU identified by external reference code with the supplied representation. Calls CPInstanceService.fetchCPInstanceByExternalReferenceCode + CPInstanceService.updateCPInstance (with discontinued replacement resolution). Validation -- NoSuchCPInstanceException -> 404 when ERC not found. Side effects -- Updates display/expiration/discontinued dates, subscription fields, ExpandoBridge; resolves replacement SKU when discontinued."
+	)
 	public Sku updateSkuByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("sku") Sku sku)
@@ -3307,7 +3593,9 @@ public class Mutation {
 				externalReferenceCode, sku));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the SKU unit of measure identified by id. Calls CPInstanceUnitOfMeasureService.deleteCPInstanceUnitOfMeasure. Validation -- Service-level NoSuchCPInstanceUnitOfMeasureException -> 404. Side effects -- Removes the unit of measure and its associated price entries."
+	)
 	public boolean deleteSkuUnitOfMeasure(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -3334,7 +3622,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the SKU unit of measure identified by id, including base and promo prices when supplied. Calls CPInstanceUnitOfMeasureService.getCPInstanceUnitOfMeasure + updateCPInstanceUnitOfMeasure + SkuUnitOfMeasureUtil.updateCommercePriceEntry (base/promo). Validation -- NoSuchCPInstanceUnitOfMeasureException -> 404 when id not found. Side effects -- Updates the unit of measure record and may update base/promo price entries on the parent SKU."
+	)
 	public SkuUnitOfMeasure patchSkuUnitOfMeasure(
 			@GraphQLName("id") Long id,
 			@GraphQLName("skuUnitOfMeasure") SkuUnitOfMeasure skuUnitOfMeasure)
@@ -3348,7 +3638,9 @@ public class Mutation {
 					id, skuUnitOfMeasure));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a unit of measure under the SKU identified by external reference code. Calls CPInstanceService.fetchCPInstanceByExternalReferenceCode + SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPInstanceException -> 404 when SKU ERC not found. Side effects -- Creates or updates the unit of measure, plus any supplied price entries."
+	)
 	public SkuUnitOfMeasure createSkuByExternalReferenceCodeSkuUnitOfMeasure(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("skuUnitOfMeasure") SkuUnitOfMeasure skuUnitOfMeasure)
@@ -3363,7 +3655,9 @@ public class Mutation {
 						externalReferenceCode, skuUnitOfMeasure));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a unit of measure under the SKU identified by id. Calls CPInstanceService.getCPInstance + SkuUnitOfMeasureUtil.addOrUpdateCPInstanceUnitOfMeasure. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- NoSuchCPInstanceException -> 404 when SKU id not found. Side effects -- Creates or updates the unit of measure, plus any supplied price entries."
+	)
 	public SkuUnitOfMeasure createSkuIdSkuUnitOfMeasure(
 			@GraphQLName("id") Long id,
 			@GraphQLName("skuUnitOfMeasure") SkuUnitOfMeasure skuUnitOfMeasure)
@@ -3391,7 +3685,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the SKU virtual settings file entry identified by id. Calls CPDVirtualSettingFileEntryService.deleteCPDVirtualSettingFileEntry. Validation -- Service-level NoSuchCPDVirtualSettingFileEntryException -> 404. Side effects -- Removes the linked DL file entry reference (file is not deleted)."
+	)
 	public boolean deleteSkuVirtualSettingsFileEntry(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -3420,9 +3716,11 @@ public class Mutation {
 						callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the SKU virtual settings file entry identified by id, optionally replacing the underlying file. Calls CPDVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry + FileEntryUtil.getFileEntryId + updateCPDefinitionVirtualSetting. Validation -- NoSuchCPDVirtualSettingFileEntryException -> 404 when id not found. Side effects -- May create a new DL file entry under the SKU group when a binary file or attachment is supplied."
+	)
 	@GraphQLName(
-		description = "null",
+		description = "Partially updates the SKU virtual settings file entry identified by id, optionally replacing the underlying file. Calls CPDVirtualSettingFileEntryService.getCPDVirtualSettingFileEntry + FileEntryUtil.getFileEntryId + updateCPDefinitionVirtualSetting. Validation -- NoSuchCPDVirtualSettingFileEntryException -> 404 when id not found. Side effects -- May create a new DL file entry under the SKU group when a binary file or attachment is supplied.",
 		value = "patchSkuVirtualSettingsFileEntryIdMultipartBody"
 	)
 	public SkuVirtualSettingsFileEntry patchSkuVirtualSettingsFileEntry(
@@ -3438,9 +3736,11 @@ public class Mutation {
 					patchSkuVirtualSettingsFileEntry(id, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Adds a file entry under the SKU virtual setting identified by id, accepting a binary upload or an existing attachment reference. Calls CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + CPDVirtualSettingFileEntryService.addCPDefinitionVirtualSetting. Validation -- BadRequestException -> 400 when neither binary file nor attachment is provided; NoSuchCPDefinitionVirtualSettingException -> 404 when parent id not found. Side effects -- Creates a DL file entry under the SKU group and records a new CPDVirtualSettingFileEntry."
+	)
 	@GraphQLName(
-		description = "null",
+		description = "Adds a file entry under the SKU virtual setting identified by id, accepting a binary upload or an existing attachment reference. Calls CPDefinitionVirtualSettingService.getCPDefinitionVirtualSetting + FileEntryUtil.getFileEntryId + CPDVirtualSettingFileEntryService.addCPDefinitionVirtualSetting. Validation -- BadRequestException -> 400 when neither binary file nor attachment is provided; NoSuchCPDefinitionVirtualSettingException -> 404 when parent id not found. Side effects -- Creates a DL file entry under the SKU group and records a new CPDVirtualSettingFileEntry.",
 		value = "postSkuVirtualSettingIdSkuVirtualSettingsFileEntryIdMultipartBody"
 	)
 	public SkuVirtualSettingsFileEntry
@@ -3458,7 +3758,9 @@ public class Mutation {
 						id, multipartBody));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the specification identified by id. Calls CPSpecificationOptionService.deleteCPSpecificationOption. Validation -- Service-level NoSuchCPSpecificationOptionException -> 404. Side effects -- Cascades through CPDefinitionSpecificationOptionValue listeners; reindexes affected products."
+	)
 	public boolean deleteSpecification(@GraphQLName("id") Long id)
 		throws Exception {
 
@@ -3485,7 +3787,9 @@ public class Mutation {
 					callbackURL, object));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Deletes the specification identified by external reference code. Calls CPSpecificationOptionService.fetchCPSpecificationOptionByExternalReferenceCode + deleteSpecification. Validation -- NoSuchCPSpecificationOptionException -> 404 when ERC not found. Side effects -- Cascades through specification value listeners."
+	)
 	public boolean deleteSpecificationByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
@@ -3501,7 +3805,9 @@ public class Mutation {
 		return true;
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the specification identified by id. Calls CPSpecificationOptionService.getCPSpecificationOption + updateCPSpecificationOption. Validation -- NoSuchCPSpecificationOptionException -> 404 when id not found. Side effects -- Reindexes the specification and any products that reference it."
+	)
 	public Specification patchSpecification(
 			@GraphQLName("id") Long id,
 			@GraphQLName("specification") Specification specification)
@@ -3514,7 +3820,9 @@ public class Mutation {
 				id, specification));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Partially updates the specification identified by external reference code. Calls CPSpecificationOptionService.fetchCPSpecificationOptionByExternalReferenceCode + patchSpecification. Validation -- NoSuchCPSpecificationOptionException -> 404 when ERC not found. Side effects -- Reindexes the specification and dependent products."
+	)
 	public Specification patchSpecificationByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("specification") Specification specification)
@@ -3528,7 +3836,9 @@ public class Mutation {
 					externalReferenceCode, specification));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or updates a specification by trying id, external reference code, then key for resolution. Calls Internal _addOrUpdateSpecification (CPSpecificationOptionService.addCPSpecificationOption or updateCPSpecificationOption, resolved by id/ERC/key). POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- CPSpecificationOptionKeyException -> 400 when key is invalid. Side effects -- Reindexes the specification; lookups by id/ERC/key fall through with debug logging."
+	)
 	public Specification createSpecification(
 			@GraphQLName("specification") Specification specification)
 		throws Exception {
@@ -3576,7 +3886,9 @@ public class Mutation {
 					callbackURL, contentType, fieldNames));
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Creates or replaces the specification identified by external reference code. Calls CPSpecificationOptionService.fetchCPSpecificationOptionByExternalReferenceCode + addCPSpecificationOption or updateCPSpecificationOption. POST is upsert by external reference code -- creates a new entity when the ERC is unknown, otherwise updates the existing one. Validation -- CPSpecificationOptionKeyException -> 400 when key is invalid. Side effects -- Reindexes the specification."
+	)
 	public Specification updateSpecificationByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
 			@GraphQLName("specification") Specification specification)
@@ -4517,4 +4829,4 @@ public class Mutation {
 		_vulcanBatchEngineImportTaskResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-763551690
+// LIFERAY-REST-BUILDER-HASH:-977209963

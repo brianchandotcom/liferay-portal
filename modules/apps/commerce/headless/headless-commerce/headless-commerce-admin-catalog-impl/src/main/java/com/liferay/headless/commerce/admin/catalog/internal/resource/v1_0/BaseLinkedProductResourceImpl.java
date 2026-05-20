@@ -71,6 +71,9 @@ public abstract class BaseLinkedProductResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/linked-products'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists the diagram and grouped product entries that link other products back to the product identified by product id. Calls CSDiagramEntryService.getCProductCSDiagramEntries + CPDefinitionGroupedEntryService.getEntryCProductCPDefinitionGroupedEntries. Validation -- None at this layer (callees may return empty pages)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -767,4 +770,4 @@ public abstract class BaseLinkedProductResourceImpl
 		LogFactoryUtil.getLog(BaseLinkedProductResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2133935758
+// LIFERAY-REST-BUILDER-HASH:-1537039444

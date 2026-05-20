@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("GroupedProduct")
+@GraphQLName(
+	description = "Bundle membership entry for a grouped-type product; links a parent grouped product to a child product with a quantity and a sort priority; admin catalog write view used under a parent product whose `productType` is grouped.",
+	value = "GroupedProduct"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "GroupedProduct")
 public class GroupedProduct implements Serializable {
@@ -49,7 +52,10 @@ public class GroupedProduct implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(GroupedProduct.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the child product included in the bundle; on create, used to look up the child when `entryProductId` is not supplied.",
+		example = "exampleERC"
+	)
 	public String getEntryProductExternalReferenceCode() {
 		if (_entryProductExternalReferenceCodeSupplier != null) {
 			entryProductExternalReferenceCode =
@@ -88,7 +94,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the child product included in the bundle; on create, used to look up the child when `entryProductId` is not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String entryProductExternalReferenceCode;
 
@@ -96,7 +104,10 @@ public class GroupedProduct implements Serializable {
 	private Supplier<String> _entryProductExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the child product included in the bundle; required on create when `entryProductExternalReferenceCode` does not resolve.",
+		example = "33131"
+	)
 	public Long getEntryProductId() {
 		if (_entryProductIdSupplier != null) {
 			entryProductId = _entryProductIdSupplier.get();
@@ -130,7 +141,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the child product included in the bundle; required on create when `entryProductExternalReferenceCode` does not resolve."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long entryProductId;
 
@@ -138,6 +151,7 @@ public class GroupedProduct implements Serializable {
 	private Supplier<Long> _entryProductIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized child product name as a map whose keys are locale codes and whose values are the translated strings; read-only.",
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -175,7 +189,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized child product name as a map whose keys are locale codes and whose values are the translated strings; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> entryProductName;
 
@@ -183,7 +199,10 @@ public class GroupedProduct implements Serializable {
 	private Supplier<Map<String, String>> _entryProductNameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key of the bundle membership entry; read-only.",
+		example = "33130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -215,14 +234,19 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key of the bundle membership entry; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Sort order of this entry within its parent grouped product; lower values appear first; defaults to 0.0 when omitted on create.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -256,14 +280,19 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Sort order of this entry within its parent grouped product; lower values appear first; defaults to 0.0 when omitted on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the parent grouped product; read-only and derived from the path used to scope the entry.",
+		example = "exampleERC"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -301,7 +330,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the parent grouped product; read-only and derived from the path used to scope the entry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String productExternalReferenceCode;
 
@@ -309,7 +340,10 @@ public class GroupedProduct implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the parent grouped product; read-only and derived from the path used to scope the entry.",
+		example = "33131"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -343,7 +377,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the parent grouped product; read-only and derived from the path used to scope the entry."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long productId;
 
@@ -351,6 +387,7 @@ public class GroupedProduct implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized parent product name as a map whose keys are locale codes and whose values are the translated strings; read-only.",
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -388,7 +425,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized parent product name as a map whose keys are locale codes and whose values are the translated strings; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productName;
 
@@ -396,7 +435,10 @@ public class GroupedProduct implements Serializable {
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Quantity of the child product included per parent unit; must be greater than zero or the request is rejected; required on create.",
+		example = "1"
+	)
 	public Integer getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -430,7 +472,9 @@ public class GroupedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Quantity of the child product included per parent unit; must be greater than zero or the request is rejected; required on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
@@ -682,4 +726,4 @@ public class GroupedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1982898033
+// LIFERAY-REST-BUILDER-HASH:978254871

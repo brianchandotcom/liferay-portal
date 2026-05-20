@@ -37,8 +37,14 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Catalog")
-@io.swagger.v3.oas.annotations.media.Schema(requiredProperties = {"name"})
+@GraphQLName(
+	description = "Versioned product catalog scoped to a company and tied to a Liferay site group. Create, read, update, and delete operations from the catalog admin perspective; the master catalog and any catalog whose `system` flag is true are managed by the platform and cannot be deleted through the standard delete path.",
+	value = "Catalog"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "Versioned product catalog scoped to a company and tied to a Liferay site group. Create, read, update, and delete operations from the catalog admin perspective; the master catalog and any catalog whose `system` flag is true are managed by the platform and cannot be deleted through the standard delete path.",
+	requiredProperties = {"name"}
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "Catalog")
 public class Catalog implements Serializable {
@@ -52,7 +58,10 @@ public class Catalog implements Serializable {
 	}
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the account that owns this catalog (FK identifier); defaults to no account when omitted on create. The linked account must be a supplier account with approved status; other account types or statuses are rejected.",
+		example = "30130"
+	)
 	public Long getAccountId() {
 		if (_accountIdSupplier != null) {
 			accountId = _accountIdSupplier.get();
@@ -86,14 +95,18 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the account that owns this catalog (FK identifier); defaults to no account when omitted on create. The linked account must be a supplier account with approved status; other account types or statuses are rejected."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long accountId;
 
 	@JsonIgnore
 	private Supplier<Long> _accountIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions; read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -129,14 +142,19 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name; each value carries the href template and HTTP method, computed dynamically from user permissions; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "USD")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "ISO 4217 code of the catalog's default currency; on write the catalog's default currency can be identified by `currencyCode`, `currencyExternalReferenceCode`, or `currencyId`.",
+		example = "USD"
+	)
 	public String getCurrencyCode() {
 		if (_currencyCodeSupplier != null) {
 			currencyCode = _currencyCodeSupplier.get();
@@ -170,14 +188,19 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "ISO 4217 code of the catalog's default currency; on write the catalog's default currency can be identified by `currencyCode`, `currencyExternalReferenceCode`, or `currencyId`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyCode;
 
 	@JsonIgnore
 	private Supplier<String> _currencyCodeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AAB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the catalog's default currency; alternative write-time identifier used together with `currencyCode` and `currencyId`.",
+		example = "AB-34098-789-N"
+	)
 	public String getCurrencyExternalReferenceCode() {
 		if (_currencyExternalReferenceCodeSupplier != null) {
 			currencyExternalReferenceCode =
@@ -215,7 +238,9 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the catalog's default currency; alternative write-time identifier used together with `currencyCode` and `currencyId`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String currencyExternalReferenceCode;
 
@@ -223,7 +248,10 @@ public class Catalog implements Serializable {
 	private Supplier<String> _currencyExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the catalog's default currency (FK identifier); alternative write-time identifier used when `currencyCode` and `currencyExternalReferenceCode` are not supplied.",
+		example = "30130"
+	)
 	public Long getCurrencyId() {
 		if (_currencyIdSupplier != null) {
 			currencyId = _currencyIdSupplier.get();
@@ -257,14 +285,19 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the catalog's default currency (FK identifier); alternative write-time identifier used when `currencyCode` and `currencyExternalReferenceCode` are not supplied."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long currencyId;
 
 	@JsonIgnore
 	private Supplier<Long> _currencyIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "en_US")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Liferay locale code used as the catalog's default language for localized product content.",
+		example = "en_US"
+	)
 	public String getDefaultLanguageId() {
 		if (_defaultLanguageIdSupplier != null) {
 			defaultLanguageId = _defaultLanguageIdSupplier.get();
@@ -298,14 +331,19 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Liferay locale code used as the catalog's default language for localized product content."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String defaultLanguageId;
 
 	@JsonIgnore
 	private Supplier<String> _defaultLanguageIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per catalog within the company; POST upserts when a catalog with this code already exists, and PUT by external reference code creates or replaces.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -339,7 +377,9 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per catalog within the company; POST upserts when a catalog with this code already exists, and PUT by external reference code creates or replaces."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -347,7 +387,10 @@ public class Catalog implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Auto-generated catalog identifier; read-only.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -379,14 +422,17 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Auto-generated catalog identifier; read-only.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(description = "Category Name")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display name of the catalog; required on create and used to seed the localized name map for the backing Liferay site group; matched by the search query parameter and filterable and sortable through the OData query parameter.",
+		example = "Default Catalog"
+	)
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -418,7 +464,9 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "Category Name")
+	@GraphQLField(
+		description = "Display name of the catalog; required on create and used to seed the localized name map for the backing Liferay site group; matched by the search query parameter and filterable and sortable through the OData query parameter."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String name;
@@ -426,7 +474,10 @@ public class Catalog implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "false")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Indicates that the catalog is platform-managed (the master catalog and similar); read-only; deletion of system catalogs is blocked.",
+		example = "false"
+	)
 	public Boolean getSystem() {
 		if (_systemSupplier != null) {
 			system = _systemSupplier.get();
@@ -460,7 +511,9 @@ public class Catalog implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Indicates that the catalog is platform-managed (the master catalog and similar); read-only; deletion of system catalogs is blocked."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Boolean system;
 
@@ -736,4 +789,4 @@ public class Catalog implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:655164223
+// LIFERAY-REST-BUILDER-HASH:697333643

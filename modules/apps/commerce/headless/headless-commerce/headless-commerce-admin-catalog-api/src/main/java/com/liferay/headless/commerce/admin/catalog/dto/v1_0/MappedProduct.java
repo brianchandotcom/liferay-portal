@@ -39,7 +39,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("MappedProduct")
+@GraphQLName(
+	description = "A mapping that links a product (and optionally a SKU) to a diagram pin sequence within a parent product. Created and updated by the admin catalog write surface; the pair of parent product and sequence is unique, and duplicates are rejected.",
+	value = "MappedProduct"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "MappedProduct")
 public class MappedProduct implements Serializable {
@@ -52,7 +55,9 @@ public class MappedProduct implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(MappedProduct.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
 		if (_actionsSupplier != null) {
@@ -88,14 +93,18 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Map of HATEOAS actions available to the current user, keyed by action name. Each value carries the href template and HTTP method, computed dynamically from user permissions. Read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, Map<String, String>> actions;
 
 	@JsonIgnore
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom expando attributes attached to the mapping; on read they are filtered by the accept-language locale, and on write they are applied to the mapping's expando bridge."
+	)
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -136,7 +145,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom expando attributes attached to the mapping; on read they are filtered by the accept-language locale, and on write they are applied to the mapping's expando bridge."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected com.liferay.portal.vulcan.custom.field.CustomField[] customFields;
 
@@ -145,7 +156,10 @@ public class MappedProduct implements Serializable {
 		_customFieldsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the mapped product. Assigned by the server.",
+		example = "33130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -177,14 +191,19 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the mapped product. Assigned by the server."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "exampleERC")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the referenced product. On write it is resolved to the matching product and overrides `productId`. On read it returns the code of the linked product, or blank when the linked product no longer exists.",
+		example = "exampleERC"
+	)
 	public String getProductExternalReferenceCode() {
 		if (_productExternalReferenceCodeSupplier != null) {
 			productExternalReferenceCode =
@@ -222,7 +241,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the referenced product. On write it is resolved to the matching product and overrides `productId`. On read it returns the code of the linked product, or blank when the linked product no longer exists."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String productExternalReferenceCode;
 
@@ -230,7 +251,10 @@ public class MappedProduct implements Serializable {
 	private Supplier<String> _productExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33131")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the referenced product. On write the supplied value is overridden when `productExternalReferenceCode` resolves to a different product.",
+		example = "33131"
+	)
 	public Long getProductId() {
 		if (_productIdSupplier != null) {
 			productId = _productIdSupplier.get();
@@ -264,7 +288,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the referenced product. On write the supplied value is overridden when `productExternalReferenceCode` resolves to a different product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long productId;
 
@@ -272,6 +298,7 @@ public class MappedProduct implements Serializable {
 	private Supplier<Long> _productIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Read-only; populated from the linked product.",
 		example = "{en_US=Hand Saw, hr_HR=Product Name HR, hu_HU=Product Name HU}"
 	)
 	@Valid
@@ -309,7 +336,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized text. Map keys are locale codes; values are the translated strings. Read-only; populated from the linked product."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, String> productName;
 
@@ -317,7 +346,10 @@ public class MappedProduct implements Serializable {
 	private Supplier<Map<String, String>> _productNameSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Quantity of the mapped product or SKU implied by selecting this pin.",
+		example = "1"
+	)
 	public Integer getQuantity() {
 		if (_quantitySupplier != null) {
 			quantity = _quantitySupplier.get();
@@ -351,14 +383,19 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Quantity of the mapped product or SKU implied by selecting this pin."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer quantity;
 
 	@JsonIgnore
 	private Supplier<Integer> _quantitySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Position identifier shared with the matching pin on the same parent product. Together with the parent product it forms the unique lookup key; duplicates are rejected. Matched by the `search` query parameter. Maximum length is 75 characters.",
+		example = "1"
+	)
 	public String getSequence() {
 		if (_sequenceSupplier != null) {
 			sequence = _sequenceSupplier.get();
@@ -392,14 +429,19 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Position identifier shared with the matching pin on the same parent product. Together with the parent product it forms the unique lookup key; duplicates are rejected. Matched by the `search` query parameter. Maximum length is 75 characters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sequence;
 
 	@JsonIgnore
 	private Supplier<String> _sequenceSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU01")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Free-text SKU label used to display the variant on the storefront when the mapped product is not linked to a concrete SKU (type `external`). Matched by the `search` query parameter. Maximum length is 75 characters.",
+		example = "SKU01"
+	)
 	public String getSku() {
 		if (_skuSupplier != null) {
 			sku = _skuSupplier.get();
@@ -431,14 +473,19 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Free-text SKU label used to display the variant on the storefront when the mapped product is not linked to a concrete SKU (type `external`). Matched by the `search` query parameter. Maximum length is 75 characters."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
 
 	@JsonIgnore
 	private Supplier<String> _skuSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "SKU0111")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the linked SKU. On write it is resolved to the matching SKU and overrides `skuId`. On read it returns the code of the linked SKU, or blank when no SKU is linked.",
+		example = "SKU0111"
+	)
 	public String getSkuExternalReferenceCode() {
 		if (_skuExternalReferenceCodeSupplier != null) {
 			skuExternalReferenceCode = _skuExternalReferenceCodeSupplier.get();
@@ -473,7 +520,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the linked SKU. On write it is resolved to the matching SKU and overrides `skuId`. On read it returns the code of the linked SKU, or blank when no SKU is linked."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skuExternalReferenceCode;
 
@@ -481,7 +530,10 @@ public class MappedProduct implements Serializable {
 	private Supplier<String> _skuExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "33135")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Identifier of the SKU that backs the mapping when `type` is `sku`. Zero or null when the mapping is of type `diagram` or `external`.",
+		example = "33135"
+	)
 	public Long getSkuId() {
 		if (_skuIdSupplier != null) {
 			skuId = _skuIdSupplier.get();
@@ -513,14 +565,19 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Identifier of the SKU that backs the mapping when `type` is `sku`. Zero or null when the mapping is of type `diagram` or `external`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long skuId;
 
 	@JsonIgnore
 	private Supplier<Long> _skuIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "sku")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Mapping kind. Resolved at read time as `diagram` when the mapping is flagged as a diagram mapping, `sku` when a SKU is linked, otherwise `external`. On write the mapping is flagged as a diagram mapping only when the supplied value is `diagram`.",
+		example = "sku"
+	)
 	@JsonGetter("type")
 	@Valid
 	public Type getType() {
@@ -565,7 +622,9 @@ public class MappedProduct implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Mapping kind. Resolved at read time as `diagram` when the mapping is flagged as a diagram mapping, `sku` when a SKU is linked, otherwise `external`. On write the mapping is flagged as a diagram mapping only when the supplied value is `diagram`."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
@@ -911,4 +970,4 @@ public class MappedProduct implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2030084953
+// LIFERAY-REST-BUILDER-HASH:-137235684

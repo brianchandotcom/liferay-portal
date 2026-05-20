@@ -38,8 +38,12 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductOption")
+@GraphQLName(
+	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product.",
+	value = "ProductOption"
+)
 @io.swagger.v3.oas.annotations.media.Schema(
+	description = "An option attached to a specific product, carrying per-product overrides for the global option template; the link captures localized labels, required and SKU-contributor flags, price modifier settings, and the list of selectable values for that product.",
 	requiredProperties = {"fieldType", "key", "name", "optionId"}
 )
 @JsonFilter("Liferay.Vulcan")
@@ -54,7 +58,10 @@ public class ProductOption implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductOption.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Not populated on reads and ignored on writes; the product option link has no direct catalog reference.",
+		example = "30130"
+	)
 	public Long getCatalogId() {
 		if (_catalogIdSupplier != null) {
 			catalogId = _catalogIdSupplier.get();
@@ -88,14 +95,18 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Not populated on reads and ignored on writes; the product option link has no direct catalog reference."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long catalogId;
 
 	@JsonIgnore
 	private Supplier<Long> _catalogIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom field values stored against the product option link through the expando bridge; localized when the request accepts all languages."
+	)
 	@Valid
 	public com.liferay.portal.vulcan.custom.field.CustomField[]
 		getCustomFields() {
@@ -136,7 +147,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom field values stored against the product option link through the expando bridge; localized when the request accepts all languages."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected com.liferay.portal.vulcan.custom.field.CustomField[] customFields;
 
@@ -144,7 +157,10 @@ public class ProductOption implements Serializable {
 	private Supplier<com.liferay.portal.vulcan.custom.field.CustomField[]>
 		_customFieldsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the option and its values are sourced from an external system rather than the catalog; when true the price type must be dynamic; writable through patch but currently not echoed back on reads.",
+		example = "true"
+	)
 	public Boolean getDefinedExternally() {
 		if (_definedExternallySupplier != null) {
 			definedExternally = _definedExternallySupplier.get();
@@ -178,7 +194,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the option and its values are sourced from an external system rather than the catalog; when true the price type must be dynamic; writable through patch but currently not echoed back on reads."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean definedExternally;
 
@@ -186,6 +204,7 @@ public class ProductOption implements Serializable {
 	private Supplier<Boolean> _definedExternallySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-product localized description that overrides the global option description on this product only; map keys are locale codes and values are the translated strings.",
 		example = "{en_US=Description, hr_HR=Description HR, hu_HU=Description HU}"
 	)
 	@Valid
@@ -223,14 +242,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-product localized description that overrides the global option description on this product only; map keys are locale codes and values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-product override of whether this option is exposed as a search facet for the parent product; defaults to the global option flag on first attach.",
+		example = "true"
+	)
 	public Boolean getFacetable() {
 		if (_facetableSupplier != null) {
 			facetable = _facetableSupplier.get();
@@ -264,7 +288,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-product override of whether this option is exposed as a search facet for the parent product; defaults to the global option flag on first attach."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean facetable;
 
@@ -272,6 +298,7 @@ public class ProductOption implements Serializable {
 	private Supplier<Boolean> _facetableSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-product input widget for this option; validated against the configured allow list and, when `skuContributor` is true, restricted to select, select_date, and radio; required.",
 		example = "checkbox, checkbox_multiple, date, numeric, radio, select"
 	)
 	public String getFieldType() {
@@ -307,7 +334,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-product input widget for this option; validated against the configured allow list and, when `skuContributor` is true, restricted to select, select_date, and radio; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String fieldType;
@@ -316,7 +345,10 @@ public class ProductOption implements Serializable {
 	private Supplier<String> _fieldTypeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key; read-only and assigned by the service on create.",
+		example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -348,14 +380,18 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Primary key; read-only and assigned by the service on create."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Service key identifying an external info-item provider that supplies option data from outside the catalog; used together with `definedExternally`; writable but currently not echoed back on reads."
+	)
 	public String getInfoItemServiceKey() {
 		if (_infoItemServiceKeySupplier != null) {
 			infoItemServiceKey = _infoItemServiceKeySupplier.get();
@@ -389,14 +425,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Service key identifying an external info-item provider that supplies option data from outside the catalog; used together with `definedExternally`; writable but currently not echoed back on reads."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String infoItemServiceKey;
 
 	@JsonIgnore
 	private Supplier<String> _infoItemServiceKeySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "color")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Machine identifier on the product link; copied from the linked global option's key when the link is created and must be unique within the product; required.",
+		example = "color"
+	)
 	public String getKey() {
 		if (_keySupplier != null) {
 			key = _keySupplier.get();
@@ -428,7 +469,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Machine identifier on the product link; copied from the linked global option's key when the link is created and must be unique within the product; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String key;
@@ -437,6 +480,7 @@ public class ProductOption implements Serializable {
 	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-product localized label that overrides the global option name on this product only; map keys are locale codes and values are the translated strings; required.",
 		example = "{en_US=Color, hr_HR=Color HR, hu_HU=Color HU}"
 	)
 	@Valid
@@ -473,7 +517,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-product localized label that overrides the global option name on this product only; map keys are locale codes and values are the translated strings; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Map<String, String> name;
@@ -481,7 +527,10 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _nameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option.",
+		example = "AB-34098-789-N"
+	)
 	public String getOptionExternalReferenceCode() {
 		if (_optionExternalReferenceCodeSupplier != null) {
 			optionExternalReferenceCode =
@@ -519,7 +568,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "External reference code of the linked global option; used as an alternative to `optionId` when wiring a product to an existing option."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String optionExternalReferenceCode;
 
@@ -527,7 +578,10 @@ public class ProductOption implements Serializable {
 	private Supplier<String> _optionExternalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30080")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Reference to the global option template this product link is based on; required.",
+		example = "30080"
+	)
 	public Long getOptionId() {
 		if (_optionIdSupplier != null) {
 			optionId = _optionIdSupplier.get();
@@ -561,7 +615,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Reference to the global option template this product link is based on; required."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Long optionId;
@@ -569,7 +625,10 @@ public class ProductOption implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _optionIdSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "dynamic, static")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "How a selected value affects the product price; one of static (delta added to the base price) or dynamic (delta computed by an external pricing engine); when `definedExternally` is true the value is forced to dynamic.",
+		example = "dynamic, static"
+	)
 	public String getPriceType() {
 		if (_priceTypeSupplier != null) {
 			priceType = _priceTypeSupplier.get();
@@ -603,14 +662,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "How a selected value affects the product price; one of static (delta added to the base price) or dynamic (delta computed by an external pricing engine); when `definedExternally` is true the value is forced to dynamic."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String priceType;
 
 	@JsonIgnore
 	private Supplier<String> _priceTypeSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "1.2")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Display order used when listing options inside the product; lower values appear first.",
+		example = "1.2"
+	)
 	public Double getPriority() {
 		if (_prioritySupplier != null) {
 			priority = _prioritySupplier.get();
@@ -644,14 +708,18 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Display order used when listing options inside the product; lower values appear first."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Double priority;
 
 	@JsonIgnore
 	private Supplier<Double> _prioritySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Per-product values for this option; returned only when the request asks for them, otherwise null."
+	)
 	@Valid
 	public ProductOptionValue[] getProductOptionValues() {
 		if (_productOptionValuesSupplier != null) {
@@ -689,14 +757,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Per-product values for this option; returned only when the request asks for them, otherwise null."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductOptionValue[] productOptionValues;
 
 	@JsonIgnore
 	private Supplier<ProductOptionValue[]> _productOptionValuesSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether the shopper must select a value for this option before the product can be added to the cart.",
+		example = "true"
+	)
 	public Boolean getRequired() {
 		if (_requiredSupplier != null) {
 			required = _requiredSupplier.get();
@@ -730,14 +803,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether the shopper must select a value for this option before the product can be added to the cart."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean required;
 
 	@JsonIgnore
 	private Supplier<Boolean> _requiredSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether selecting a value on this option produces a distinct SKU for the parent product; enabling it restricts `fieldType` to select, select_date, or radio.",
+		example = "true"
+	)
 	public Boolean getSkuContributor() {
 		if (_skuContributorSupplier != null) {
 			skuContributor = _skuContributorSupplier.get();
@@ -771,14 +849,19 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Whether selecting a value on this option produces a distinct SKU for the parent product; enabling it restricts `fieldType` to select, select_date, or radio."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean skuContributor;
 
 	@JsonIgnore
 	private Supplier<Boolean> _skuContributorSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "22.50")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Opaque, type-specific configuration string persisted on the product option link; format is determined by the field type implementation.",
+		example = "22.50"
+	)
 	public String getTypeSettings() {
 		if (_typeSettingsSupplier != null) {
 			typeSettings = _typeSettingsSupplier.get();
@@ -812,7 +895,9 @@ public class ProductOption implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Opaque, type-specific configuration string persisted on the product option link; format is determined by the field type implementation."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String typeSettings;
 
@@ -1208,4 +1293,4 @@ public class ProductOption implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1649500604
+// LIFERAY-REST-BUILDER-HASH:1718900134

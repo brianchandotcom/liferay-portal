@@ -36,7 +36,10 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ProductGroup")
+@GraphQLName(
+	description = "Logical grouping of products used by pricing and promotion rules; admin catalog write view; the `products` collection is managed through the product-group-product sub-resource and is reflected in `productsCount`.",
+	value = "ProductGroup"
+)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ProductGroup")
 public class ProductGroup implements Serializable {
@@ -49,7 +52,9 @@ public class ProductGroup implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(ProductGroup.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Custom field values attached to the product group; read-only."
+	)
 	@Valid
 	public Map<String, ?> getCustomFields() {
 		if (_customFieldsSupplier != null) {
@@ -84,7 +89,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Custom field values attached to the product group; read-only."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Map<String, ?> customFields;
 
@@ -92,6 +99,7 @@ public class ProductGroup implements Serializable {
 	private Supplier<Map<String, ?>> _customFieldsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized description as a map whose keys are locale codes and whose values are the translated strings.",
 		example = "{en_US=Description, hr_HR=Description HR, hu_HU=Description HU}"
 	)
 	@Valid
@@ -129,14 +137,19 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized description as a map whose keys are locale codes and whose values are the translated strings."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> description;
 
 	@JsonIgnore
 	private Supplier<Map<String, String>> _descriptionSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(example = "AB-34098-789-N")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Idempotency key for create and update; must be unique per product group within the company.",
+		example = "AB-34098-789-N"
+	)
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
 			externalReferenceCode = _externalReferenceCodeSupplier.get();
@@ -170,7 +183,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Idempotency key for create and update; must be unique per product group within the company."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
@@ -178,7 +193,9 @@ public class ProductGroup implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "30130")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Primary key of the product group.", example = "30130"
+	)
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -210,14 +227,16 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "Primary key of the product group.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long id;
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Embedded list of memberships included in this group; written through the product-group-product sub-resource."
+	)
 	@Valid
 	public ProductGroupProduct[] getProducts() {
 		if (_productsSupplier != null) {
@@ -253,7 +272,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Embedded list of memberships included in this group; written through the product-group-product sub-resource."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected ProductGroupProduct[] products;
 
@@ -261,7 +282,10 @@ public class ProductGroup implements Serializable {
 	private Supplier<ProductGroupProduct[]> _productsSupplier;
 
 	@DecimalMin("0")
-	@io.swagger.v3.oas.annotations.media.Schema(example = "20")
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Number of products currently linked to this group; computed on read.",
+		example = "20"
+	)
 	public Integer getProductsCount() {
 		if (_productsCountSupplier != null) {
 			productsCount = _productsCountSupplier.get();
@@ -295,7 +319,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Number of products currently linked to this group; computed on read."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer productsCount;
 
@@ -303,6 +329,7 @@ public class ProductGroup implements Serializable {
 	private Supplier<Integer> _productsCountSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Localized title as a map whose keys are locale codes and whose values are the translated strings; required on create; an empty or null title is rejected.",
 		example = "{en_US=Title, hr_HR=Title HR, hu_HU=Title HU}"
 	)
 	@Valid
@@ -339,7 +366,9 @@ public class ProductGroup implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "Localized title as a map whose keys are locale codes and whose values are the translated strings; required on create; an empty or null title is rejected."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Map<String, String> title;
 
@@ -572,4 +601,4 @@ public class ProductGroup implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1986004684
+// LIFERAY-REST-BUILDER-HASH:-62161979

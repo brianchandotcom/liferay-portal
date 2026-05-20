@@ -74,6 +74,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the pin identified by pinId and removes its orphan diagram entry when no other pin references it. Calls CSDiagramPinService.getCSDiagramPin + deleteCSDiagramPin (optionally also deletes the orphan CSDiagramEntry). Validation -- NoSuchCSDiagramPinException -> 404 when id not found. Side effects -- Cascades the matching CSDiagramEntry delete when no other pin shares the sequence."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -146,6 +149,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists the diagram pins of the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + CSDiagramPinService.getCSDiagramPins. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -200,6 +206,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/pins'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Lists the diagram pins of the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + CSDiagramPinService.getCSDiagramPins. Validation -- NoSuchCPDefinitionException -> 404 when product id not found."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -252,6 +261,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/pins/{pinId}' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Partially updates the pin identified by pinId, optionally creating or updating its mapped product. Calls CSDiagramPinService.getCSDiagramPin + PinUtil.updateCSDiagramPin + add/update CSDiagramEntry. Validation -- NoSuchCSDiagramPinException -> 404 when id not found. Side effects -- When mappedProduct is included, may add or update the linked CSDiagramEntry (SKU/product mapping)."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -284,6 +296,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/by-externalReferenceCode/{externalReferenceCode}/pins' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a diagram pin on the product identified by external reference code. Calls CPDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode + PinUtil.addCSDiagramPin + optional CSDiagramEntry add/update. Validation -- NoSuchCPDefinitionException -> 404 when product ERC not found. Side effects -- Creates the pin and optionally creates/updates a mapped diagram entry."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -318,6 +333,9 @@ public abstract class BasePinResourceImpl
 	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-catalog/v1.0/products/{id}/pins' -d $'{"id": ___, "mappedProduct": ___, "positionX": ___, "positionY": ___, "sequence": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Creates a diagram pin on the product identified by product id. Calls CPDefinitionService.fetchCPDefinitionByCProductId + PinUtil.addCSDiagramPin + optional CSDiagramEntry add/update. Validation -- NoSuchCPDefinitionException -> 404 when product id not found. Side effects -- Creates the pin and optionally creates/updates a mapped diagram entry."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -1114,4 +1132,4 @@ public abstract class BasePinResourceImpl
 		LogFactoryUtil.getLog(BasePinResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-157497054
+// LIFERAY-REST-BUILDER-HASH:-939153282

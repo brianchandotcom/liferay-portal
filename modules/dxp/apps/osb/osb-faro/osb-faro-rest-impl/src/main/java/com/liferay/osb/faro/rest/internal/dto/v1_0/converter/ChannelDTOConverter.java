@@ -5,6 +5,7 @@
 
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
+import com.liferay.osb.faro.model.FaroChannel;
 import com.liferay.osb.faro.rest.dto.v1_0.Channel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -18,9 +19,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.osb.faro.engine.client.model.Channel",
 	service = DTOConverter.class
 )
-public class ChannelDTOConverter
-	implements DTOConverter
-		<com.liferay.osb.faro.engine.client.model.Channel, Channel> {
+public class ChannelDTOConverter implements DTOConverter<FaroChannel, Channel> {
 
 	@Override
 	public String getContentType() {
@@ -29,8 +28,7 @@ public class ChannelDTOConverter
 
 	@Override
 	public Channel toDTO(
-		DTOConverterContext dtoConverterContext,
-		com.liferay.osb.faro.engine.client.model.Channel channel) {
+		DTOConverterContext dtoConverterContext, FaroChannel channel) {
 
 		if (channel == null) {
 			return null;
@@ -38,7 +36,7 @@ public class ChannelDTOConverter
 
 		return new Channel() {
 			{
-				setId(channel::getId);
+				setId(channel::getChannelId);
 				setName(channel::getName);
 			}
 		};

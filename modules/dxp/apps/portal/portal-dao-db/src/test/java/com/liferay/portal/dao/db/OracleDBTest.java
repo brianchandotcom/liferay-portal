@@ -351,7 +351,7 @@ public class OracleDBTest extends BaseDBTestCase {
 	}
 
 	@Test
-	public void testGetQueryInfos() throws Exception {
+	public void testGetQueryInfosSQLExceptionHandling() throws Exception {
 		OracleDB oracleDB = new OracleDB(0, 0);
 
 		Connection connection = Mockito.mock(Connection.class);

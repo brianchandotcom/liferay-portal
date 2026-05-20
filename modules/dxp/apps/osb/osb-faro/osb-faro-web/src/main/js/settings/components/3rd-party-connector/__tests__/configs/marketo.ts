@@ -37,17 +37,16 @@ describe('marketo config', () => {
 		expect(typeof events.fetchCount).toBe('function');
 	});
 
-	it('delegates fetchCount to fetchConnectorEntityCount with the slug and entity', async () => {
+	it('delegates fetchCount to fetchConnectorEntityCount with the entity', async () => {
 		await marketoConfig.entities[0].fetchCount!({
 			groupId: '23',
 			id: 'data-source-1'
 		});
 
-		expect(fetchConnectorEntityCount).toHaveBeenCalledWith(
-			'marketo',
-			Entity.Events,
-			{groupId: '23', id: 'data-source-1'}
-		);
+		expect(fetchConnectorEntityCount).toHaveBeenCalledWith(Entity.Events, {
+			groupId: '23',
+			id: 'data-source-1'
+		});
 	});
 
 	it('builds the language strings from the configured display name', () => {

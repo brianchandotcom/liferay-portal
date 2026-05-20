@@ -5,10 +5,10 @@
 
 (function () {
 	const container = fragmentElement.querySelector(
-		'.liferay-one-category-badges'
+		'.category-badges'
 	);
 	const source = fragmentElement.querySelector(
-		'.liferay-one-category-badges-source'
+		'.category-badges-source'
 	);
 
 	if (!container || !source) {
@@ -23,28 +23,19 @@
 		return;
 	}
 
-	const escape = (value) =>
-		value.replace(
-			/[&<>"']/g,
-			(character) =>
-				({
-					'"': '&quot;',
-					'&': '&amp;',
-					"'": '&#39;',
-					'<': '&lt;',
-					'>': '&gt;',
-				})[character]
-		);
-
 	const names = text
 		.split(/\s*,\s*/)
 		.map((name) => name.trim())
 		.filter(Boolean);
 
-	container.innerHTML = names
-		.map(
-			(name) =>
-				`<span class="liferay-one-category-badges-pill">${escape(name)}</span>`
-		)
-		.join('');
+	container.innerHTML = '';
+
+	names.forEach((name) => {
+		const pill = document.createElement('span');
+
+		pill.classList.add('category-badges-pill');
+		pill.textContent = name;
+
+		container.appendChild(pill);
+	});
 })();

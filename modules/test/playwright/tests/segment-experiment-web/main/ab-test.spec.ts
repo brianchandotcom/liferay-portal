@@ -49,6 +49,10 @@ test(
 			page.getByText('Sync to Liferay Analytics Cloud')
 		).toBeVisible();
 
+		await expect(
+			page.getByText('Do not show me this again')
+		).not.toBeVisible();
+
 		const tagA = await page.locator(
 			'#_com_liferay_segments_experiment_web_internal_portlet_SegmentsExperimentPortlet_-segments-experiment-root a'
 		);

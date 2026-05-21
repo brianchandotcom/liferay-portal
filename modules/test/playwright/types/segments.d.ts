@@ -5,14 +5,14 @@
 
 type Segment = {
 	criteria: {
-		user: {
+		[key: string]: {
 			conjunction: 'and' | 'or';
 			filterString: string;
-			typeValue: 'model';
+			typeValue: 'context' | 'model' | 'referred';
 		};
 	};
 	filterString: {
-		model: string;
+		[key: string]: string;
 	};
 };
 

@@ -20,10 +20,12 @@ export class JSONWebServicesSegmentsEntryApiHelper {
 		criteria,
 		groupId,
 		name,
+		source,
 	}: {
 		criteria: Segment;
 		groupId: string;
 		name: string;
+		source?: string;
 	}): Promise<SegmentsEntry> {
 		const user =
 			await this.apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
@@ -44,6 +46,10 @@ export class JSONWebServicesSegmentsEntryApiHelper {
 			'serviceContext',
 			JSON.stringify({scopeGroupId: groupId, userId: user.userId})
 		);
+
+		if (source) {
+			urlSearchParams.append('source', source);
+		}
 
 		return await this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-segments-entry`,

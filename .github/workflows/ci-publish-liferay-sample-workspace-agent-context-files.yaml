@@ -1,0 +1,18 @@
+jobs:
+    publish-liferay-sample-workspace-agent-context-files:
+        secrets: inherit
+        uses: ./.github/workflows/ci-publish-workspace.yaml
+        with:
+            workspace-artifact-extension: agent.context.files
+            workspace-includes: .claude/**,.cursor/**,.gemini/**,.windsurf/**,.workspace-rules/**
+            workspace-name: liferay-sample-workspace
+on:
+    push:
+        branches:
+            -   master
+        paths:
+            -   workspaces/liferay-sample-workspace/.claude/**
+            -   workspaces/liferay-sample-workspace/.cursor/**
+            -   workspaces/liferay-sample-workspace/.gemini/**
+            -   workspaces/liferay-sample-workspace/.windsurf/**
+            -   workspaces/liferay-sample-workspace/.workspace-rules/**

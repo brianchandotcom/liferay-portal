@@ -3,7 +3,6 @@
 html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 	&-card-item {
 		cursor: grab;
-		transition: transform ease 0.3s;
 
 		&:focus-visible,
 		&--active {
@@ -15,39 +14,13 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		&:hover:not(.disabled),
 		&:focus-visible,
 		&--active {
-			box-shadow: 0 4px 8px fade_out($cadmin-gray-900, 0.9);
-			outline: none;
-			transform: translateY(-4px);
-
-			.card {
-				border-radius: 4px;
-				box-shadow: none;
-
-				&::after {
-					border-radius: 4px;
-					box-shadow: inset 0 0 0 2px $cadmin-primary-l1;
-					content: '';
-					height: 100%;
-					left: 0;
-					pointer-events: none;
-					position: absolute;
-					top: 0;
-					width: 100%;
-				}
-
-				.page-editor__fragments-widgets__tab__highlight-button {
-					opacity: 1;
-				}
+			.card .page-editor__fragments-widgets__tab__highlight-button {
+				opacity: 1;
 			}
-		}
-
-		.file-card .card {
-			background-color: $cadmin-light;
 		}
 
 		.card {
 			aspect-ratio: 1;
-			box-shadow: 0 0 0 1px $cadmin-gray-300;
 		}
 
 		.card-item-first {
@@ -59,11 +32,11 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 				color: $cadmin-secondary;
 			}
 
+			background-color: $cadmin-light;
 			height: 70%;
 		}
 
 		.card-body {
-			background-color: $cadmin-white;
 			height: 30%;
 
 			.card-title {
@@ -85,8 +58,6 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			}
 
 			.card {
-				box-shadow: 0 0 0 1px $cadmin-gray-300;
-
 				.lexicon-icon {
 					color: $cadmin-secondary-l1;
 				}

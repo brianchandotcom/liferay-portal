@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -87,6 +88,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testAddFriendlyURLEntryAllowsSameUrlTitleForDifferentParentClassPK()
 		throws Exception {
 
@@ -148,6 +150,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test(expected = DuplicateFriendlyURLEntryException.class)
+	@TestInfo("LPD-90910")
 	public void testAddFriendlyURLEntryRejectsDuplicateUrlTitleForSameParentClassPK()
 		throws Exception {
 
@@ -353,6 +356,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryByParentClassPKDoesNotMatchAcrossParents()
 		throws Exception {
 
@@ -377,6 +381,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryByParentClassPKReturnsEntry()
 		throws Exception {
 
@@ -403,6 +408,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryLocalizationByLanguageIdAndParentClassPKDoesNotMatchAcrossLanguages()
 		throws Exception {
 
@@ -427,6 +433,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryLocalizationByLanguageIdAndParentClassPKReturnsLocalization()
 		throws Exception {
 
@@ -454,6 +461,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryLocalizationByParentClassPKDoesNotMatchAcrossParents()
 		throws Exception {
 
@@ -478,6 +486,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testFetchFriendlyURLEntryLocalizationByParentClassPKReturnsLocalization()
 		throws Exception {
 
@@ -504,6 +513,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testGetUniqueUrlTitleMapGeneratesUniqueTitlesPerLocale()
 		throws Exception {
 
@@ -538,6 +548,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testGetUniqueUrlTitleMapGeneratesUniqueTitlesWhenDuplicated()
 		throws Exception {
 
@@ -570,6 +581,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testGetUniqueUrlTitleMapSkipsBlankTitles() throws Exception {
 		String urlTitle = _getRandomURLTitle();
 
@@ -618,6 +630,7 @@ public class FriendlyURLEntryLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-90910")
 	public void testGetUniqueUrlTitleReturnsSameTitleAcrossDifferentParentClassPK()
 		throws Exception {
 

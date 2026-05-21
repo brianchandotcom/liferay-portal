@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -159,26 +160,20 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 			String.valueOf(commerceOrder.getCommercePaymentMethodKey()),
 			variables.get("paymentMethod"));
 
-		BigDecimal shippingAmount = commerceOrder.getShippingAmount();
-
-		Assert.assertEquals(
-			0,
-			shippingAmount.compareTo(
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrder.getShippingAmount(),
 				new BigDecimal(
 					String.valueOf(variables.get("shippingAmount")))));
 
-		BigDecimal taxAmount = commerceOrder.getTaxAmount();
-
-		Assert.assertEquals(
-			0,
-			taxAmount.compareTo(
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrder.getTaxAmount(),
 				new BigDecimal(String.valueOf(variables.get("taxAmount")))));
 
-		BigDecimal total = commerceOrder.getTotal();
-
-		Assert.assertEquals(
-			0,
-			total.compareTo(
+		Assert.assertTrue(
+			BigDecimalUtil.eq(
+				commerceOrder.getTotal(),
 				new BigDecimal(String.valueOf(variables.get("total")))));
 	}
 

@@ -442,7 +442,6 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 					form.reset();
 
 					activeInput.value = isCurrentlyActive ? 'false' : 'true';
-
 					form.dataset.skipActivationWarn = 'true';
 
 					form.requestSubmit();

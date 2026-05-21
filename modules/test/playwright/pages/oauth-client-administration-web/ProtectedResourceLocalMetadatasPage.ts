@@ -53,42 +53,7 @@ export class ProtectedResourceLocalMetadatasPage {
 
 		await this.authorizationServers.fill(authorizationServers);
 
-		// eslint-disable-next-line no-console
-		console.log(
-			'[PR diag] save buttons:',
-			await this.saveButton.count(),
-			'resource value:',
-			await this.resource.inputValue()
-		);
-
-		// Track POSTs to the update endpoint so we can see if a double-submit
-		// is happening.
-
-		const postUrls: string[] = [];
-		const handler = (request: import('@playwright/test').Request) => {
-			if (
-				request.method() === 'POST' &&
-				request.url().includes('update_oauth_client_pr')
-			) {
-				postUrls.push(request.url());
-			}
-		};
-
-		this.page.on('request', handler);
-
 		await this.saveButton.click();
-
-		await this.page.waitForLoadState('networkidle');
-
-		this.page.off('request', handler);
-
-		// eslint-disable-next-line no-console
-		console.log(
-			'[PR diag] POSTs after save:',
-			postUrls.length,
-			'expected:',
-			expectedMessage ?? 'success'
-		);
 
 		if (expectedMessage !== undefined) {
 			await expect(

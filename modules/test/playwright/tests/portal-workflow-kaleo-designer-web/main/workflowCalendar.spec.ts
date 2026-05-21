@@ -282,3 +282,60 @@ test(
 		).toBeHidden();
 	}
 );
+
+test(
+	'workflow status shows Approved after approving calendar event',
+	{tag: '@LPD-68564'},
+	async ({
+		apiHelpers,
+		calendarWidgetPage,
+		page,
+		pageEditorPage,
+		site,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		await workflowPage.goto(site.friendlyUrlPath);
+
+		await workflowPage.changeWorkflow('Calendar Event', 'Single Approver');
+
+		const eventTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_calendar_web_portlet_CalendarPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await calendarWidgetPage.createAndSubmitEvent({
+			title: eventTitle,
+			withWorkflow: true,
+		});
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		await workflowTasksPage.assignToMe(eventTitle);
+
+		await workflowTasksPage.approve(eventTitle);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await calendarWidgetPage.openEventDetails(eventTitle);
+
+		await expect(calendarWidgetPage.eventDetailsWorkflowStatus).toHaveText(
+			'Approved'
+		);
+	}
+);

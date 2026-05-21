@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -22,12 +23,13 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class CollectionPersistenceFinder<T extends BaseModel<T>>
-	extends BasePersistenceFinder<T> {
+public class CollectionPersistenceFinder
+	<T extends BaseModel<T>, E extends NoSuchModelException>
+		extends BasePersistenceFinder<T, E> {
 
 	@SafeVarargs
 	public CollectionPersistenceFinder(
-		BasePersistenceImpl<T, ?> basePersistenceImpl,
+		BasePersistenceImpl<T, E> basePersistenceImpl,
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
 		String defaultOrderByJpql, String orderByEntityAlias, String where,
@@ -191,6 +193,21 @@ public class CollectionPersistenceFinder<T extends BaseModel<T>>
 
 			return list;
 		}
+	}
+
+	public T findFirst(
+			FinderCache finderCache, Object[] values,
+			OrderByComparator<T> orderByComparator)
+		throws E {
+
+		T entity = fetchFirst(finderCache, values, orderByComparator);
+
+		if (entity != null) {
+			return entity;
+		}
+
+		throw basePersistenceImpl.newNoSuchModelException(
+			buildNoSuchKeyMessage(values));
 	}
 
 	public void remove(FinderCache finderCache, Object[] values) {

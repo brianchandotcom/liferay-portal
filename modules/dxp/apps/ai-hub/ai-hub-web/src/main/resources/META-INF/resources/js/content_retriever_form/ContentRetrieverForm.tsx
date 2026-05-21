@@ -27,9 +27,11 @@ import LocalizedTextarea from './components/localized_text_area';
 export default function ContentRetrieverForm({
 	backURL,
 	externalReferenceCode,
+	readOnly,
 }: {
 	backURL: string;
 	externalReferenceCode: string;
+	readOnly: boolean;
 }) {
 	const [initialValues, setInitialValues] = useState({
 		description_i18n: {},
@@ -173,7 +175,7 @@ export default function ContentRetrieverForm({
 						aria-labelledby="saveButton"
 						data-title="Save Button"
 						data-title-set-as-html
-						disabled={formik.isSubmitting}
+						disabled={formik.isSubmitting || readOnly}
 						onClick={formik.submitForm}
 						size="sm"
 					>
@@ -184,6 +186,7 @@ export default function ContentRetrieverForm({
 			<ClayLayout.ContainerFluid className="content-retriever-container mt-5">
 				<ClayForm onSubmit={formik.handleSubmit}>
 					<InlineTextInput
+						disabled={readOnly}
 						error={
 							formik.touched.title_i18n
 								? typeof formik.errors.title_i18n === 'string'
@@ -225,6 +228,7 @@ export default function ContentRetrieverForm({
 									? 'is-invalid'
 									: ''
 							}
+							disabled={readOnly}
 							id="data-source-url"
 							name="url"
 							onBlur={formik.handleBlur}
@@ -255,6 +259,7 @@ export default function ContentRetrieverForm({
 
 					<LocalizedTextarea
 						availableLocales={availableLocales}
+						disabled={readOnly}
 						error={
 							formik.touched.description_i18n
 								? typeof formik.errors.description_i18n ===

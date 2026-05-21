@@ -14,6 +14,7 @@ import AvailableLocaleLabel from '../available_locale_label';
 
 interface LocalizedTextareaProps {
 	availableLocales: AvailableLocale[];
+	disabled?: boolean;
 	error: string | boolean;
 	fieldName: string;
 	id?: string;
@@ -30,6 +31,7 @@ interface LocalizedTextareaProps {
 
 export default function LocalizedTextarea({
 	availableLocales,
+	disabled,
 	error,
 	fieldName,
 	id,
@@ -54,6 +56,7 @@ export default function LocalizedTextarea({
 			<div className="d-flex flex-row">
 				<textarea
 					className={`ddm-field-text form-control${error ? ' is-invalid' : ''}`}
+					disabled={disabled}
 					id={id}
 					name={fieldName}
 					onBlur={onBlur}

@@ -7,8 +7,6 @@ package com.liferay.segments.web.internal.display.context;
 
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.petra.string.StringPool;
@@ -138,18 +136,6 @@ public class SegmentsDisplayContext {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					_renderResponse.createRenderURL(), "mvcRenderCommandName",
-					"/segments/edit_segments_entry");
-				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "add-new-user-segment"));
-			}
-		).build();
 	}
 
 	public String getDeleteURL(SegmentsEntry segmentsEntry) {

@@ -30,6 +30,10 @@ jest.mock('frontend-js-web', () => ({
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
 
+jest.mock('@liferay/frontend-js-react-web', () => ({
+	useBrowserTabVisibility: () => true,
+}));
+
 jest.mock(
 	'../../../components/ModelBuilder/ModelBuilderContext/objectFolderContext',
 	() => ({

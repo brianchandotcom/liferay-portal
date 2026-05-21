@@ -37,6 +37,10 @@ SemanticSearchCompanyConfigurationDisplayContext semanticSearchCompanyConfigurat
 			).put(
 				"availableTextTruncationStrategies", semanticSearchCompanyConfigurationDisplayContext.getAvailableTextTruncationStrategies()
 			).put(
+				"externalEmbeddingCapabilityAvailable", semanticSearchCompanyConfigurationDisplayContext.isExternalEmbeddingCapabilityAvailable()
+			).put(
+				"externalEmbeddingCapabilityReason", semanticSearchCompanyConfigurationDisplayContext.getExternalEmbeddingCapabilityReason()
+			).put(
 				"formName", liferayPortletResponse.getNamespace() + "fm"
 			).put(
 				"initialTextEmbeddingCacheTimeout", semanticSearchCompanyConfigurationDisplayContext.getTextEmbeddingCacheTimeout()

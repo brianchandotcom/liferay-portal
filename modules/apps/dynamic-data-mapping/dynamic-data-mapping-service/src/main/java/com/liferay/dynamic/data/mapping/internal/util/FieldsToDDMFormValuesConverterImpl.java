@@ -58,11 +58,6 @@ public class FieldsToDDMFormValuesConverterImpl
 
 		DDMFieldsCounter ddmFieldsCounter = new DDMFieldsCounter();
 
-		// Split the fields-display value once for the duration of this call.
-		// _countDDMFieldRepetitions and _getDDMFieldInstanceId would otherwise
-		// re-split the cumulative string per leaf, turning convert() into
-		// O(L^2) in the leaf count.
-
 		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
 		String[] ddmFieldsDisplayValues = null;

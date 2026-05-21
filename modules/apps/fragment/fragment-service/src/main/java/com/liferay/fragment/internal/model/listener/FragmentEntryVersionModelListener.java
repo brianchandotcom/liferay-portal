@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.internal.model.listener;
 
+import com.liferay.fragment.internal.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.model.FragmentEntryVersionTable;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
@@ -27,8 +28,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FragmentEntryVersionModelListener
 	extends BaseModelListener<FragmentEntryVersion> {
 
-	public static final int MAX_VERSIONS = 10;
-
 	@Override
 	public void onAfterCreate(FragmentEntryVersion fragmentEntryVersion)
 		throws ModelListenerException {
@@ -50,7 +49,9 @@ public class FragmentEntryVersionModelListener
 					)
 				));
 
-			if (versionCount <= MAX_VERSIONS) {
+			if (versionCount <=
+					FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT) {
+
 				return;
 			}
 
@@ -70,7 +71,8 @@ public class FragmentEntryVersionModelListener
 					).orderBy(
 						FragmentEntryVersionTable.INSTANCE.version.descending()
 					).limit(
-						MAX_VERSIONS, versionCount
+						FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+						versionCount
 					));
 
 			for (FragmentEntryVersion currentFragmentEntryVersion :

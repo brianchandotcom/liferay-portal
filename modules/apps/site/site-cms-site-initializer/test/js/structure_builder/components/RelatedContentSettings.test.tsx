@@ -157,4 +157,35 @@ describe('RelatedContentSettings', () => {
 			uuid: RELATED_CONTENT_UUID,
 		});
 	});
+
+	it('allow self-selection', async () => {
+		const objectDefinitions: ObjectDefinitions = {
+			...OBJECT_DEFINITIONS,
+			'main-erc': buildObjectDefinition({
+				children: new Map(),
+				erc: 'main-erc',
+				label: {en_US: 'MainStructure'},
+				name: 'mainStructure',
+				spaces: [],
+			}),
+		};
+
+		renderComponent({objectDefinitions});
+
+		const user = userEvent.setup();
+
+		await user.click(
+			screen.getByRole('combobox', {name: 'related-content'})
+		);
+
+		expect(
+			screen.getByRole('option', {name: 'MainStructure'})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('option', {name: 'Structure1'})
+		).toBeInTheDocument();
+		expect(
+			screen.getByRole('option', {name: 'Structure2'})
+		).toBeInTheDocument();
+	});
 });

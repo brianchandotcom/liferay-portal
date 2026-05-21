@@ -102,7 +102,7 @@ public class StateNodeExecutor extends BaseNodeExecutor {
 
 			if (kaleoTransition == null) {
 				throw new NoSuchTransitionException(
-					"No default KaleoTransition for KaleoNode id: " +
+					"No default Kaleo transition for Kaleo node " +
 						currentKaleoNode.getKaleoNodeId());
 			}
 		}

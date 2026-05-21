@@ -33,12 +33,20 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		return _availableTextTruncationStrategies;
 	}
 
+	public String getExternalEmbeddingCapabilityReason() {
+		return _externalEmbeddingCapabilityReason;
+	}
+
 	public int getTextEmbeddingCacheTimeout() {
 		return _textEmbeddingCacheTimeout;
 	}
 
 	public String[] getTextEmbeddingProviderConfigurationJSONs() {
 		return _textEmbeddingProviderConfigurationJSONs;
+	}
+
+	public boolean isExternalEmbeddingCapabilityAvailable() {
+		return _externalEmbeddingCapabilityAvailable;
 	}
 
 	public boolean isTextEmbeddingsEnabled() {
@@ -76,6 +84,19 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 		_availableTextTruncationStrategies = availableTextTruncationStrategies;
 	}
 
+	public void setExternalEmbeddingCapabilityAvailable(
+		boolean externalEmbeddingCapabilityAvailable) {
+
+		_externalEmbeddingCapabilityAvailable =
+			externalEmbeddingCapabilityAvailable;
+	}
+
+	public void setExternalEmbeddingCapabilityReason(
+		String externalEmbeddingCapabilityReason) {
+
+		_externalEmbeddingCapabilityReason = externalEmbeddingCapabilityReason;
+	}
+
 	public void setTextEmbeddingCacheTimeout(int textEmbeddingCacheTimeout) {
 		_textEmbeddingCacheTimeout = textEmbeddingCacheTimeout;
 	}
@@ -96,6 +117,8 @@ public class SemanticSearchCompanyConfigurationDisplayContext {
 	private Map<String, String> _availableModelClassNames;
 	private Map<String, String> _availableTextEmbeddingProviders;
 	private Map<String, String> _availableTextTruncationStrategies;
+	private boolean _externalEmbeddingCapabilityAvailable = true;
+	private String _externalEmbeddingCapabilityReason;
 	private int _textEmbeddingCacheTimeout;
 	private String[] _textEmbeddingProviderConfigurationJSONs;
 	private boolean _textEmbeddingsEnabled;

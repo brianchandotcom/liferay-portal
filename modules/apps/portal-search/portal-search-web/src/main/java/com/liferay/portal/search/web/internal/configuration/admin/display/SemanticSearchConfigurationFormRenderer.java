@@ -11,6 +11,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -25,6 +26,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.capabilities.ExternalEmbeddingCapabilityGate;
+import com.liferay.portal.search.capabilities.ExternalEmbeddingEligibility;
 import com.liferay.portal.search.configuration.SemanticSearchConfiguration;
 import com.liferay.portal.search.configuration.SemanticSearchConfigurationProvider;
 import com.liferay.portal.search.engine.SearchEngineInformation;
@@ -108,6 +111,25 @@ public class SemanticSearchConfigurationFormRenderer
 		semanticSearchCompanyConfigurationDisplayContext.
 			setAvailableTextTruncationStrategies(
 				_getAvailableTextTruncationStrategies(httpServletRequest));
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_portal.getCompanyId(httpServletRequest), "LPD-11319")) {
+
+			ExternalEmbeddingEligibility externalEmbeddingEligibility =
+				_externalEmbeddingCapabilityGate.check();
+
+			semanticSearchCompanyConfigurationDisplayContext.
+				setExternalEmbeddingCapabilityAvailable(
+					externalEmbeddingEligibility.isAvailable());
+
+			if (!externalEmbeddingEligibility.isAvailable()) {
+				semanticSearchCompanyConfigurationDisplayContext.
+					setExternalEmbeddingCapabilityReason(
+						_language.get(
+							httpServletRequest,
+							externalEmbeddingEligibility.getReason()));
+			}
+		}
 
 		SemanticSearchConfiguration semanticSearchConfiguration =
 			_getSemanticSearchConfiguration(httpServletRequest);
@@ -272,6 +294,9 @@ public class SemanticSearchConfigurationFormRenderer
 
 		return sortedValues;
 	}
+
+	@Reference
+	private ExternalEmbeddingCapabilityGate _externalEmbeddingCapabilityGate;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

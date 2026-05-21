@@ -76,8 +76,9 @@ public class PatcherProjectVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PatcherProjectVersion>
-		_collectionPersistenceFinderByPatcherProductVersionId;
+	private FilterCollectionPersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_collectionPersistenceFinderByPatcherProductVersionId;
 
 	/**
 	 * Returns an ordered range of all the patcher project versions where patcherProductVersionId = &#63;.
@@ -118,19 +119,9 @@ public class PatcherProjectVersionPersistenceImpl
 			OrderByComparator<PatcherProjectVersion> orderByComparator)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion =
-			fetchByPatcherProductVersionId_First(
-				patcherProductVersionId, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		throw new NoSuchPatcherProjectVersionException(
-			_collectionPersistenceFinderByPatcherProductVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {patcherProductVersionId}));
+		return _collectionPersistenceFinderByPatcherProductVersionId.findFirst(
+			finderCache, new Object[] {patcherProductVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -210,8 +201,9 @@ public class PatcherProjectVersionPersistenceImpl
 			filterCount(finderCache, new Object[] {patcherProductVersionId});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherProjectVersion>
-		_collectionPersistenceFinderByRootPatcherProjectVersionId;
+	private FilterCollectionPersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_collectionPersistenceFinderByRootPatcherProjectVersionId;
 
 	/**
 	 * Returns an ordered range of all the patcher project versions where rootPatcherProjectVersionId = &#63;.
@@ -252,19 +244,10 @@ public class PatcherProjectVersionPersistenceImpl
 			OrderByComparator<PatcherProjectVersion> orderByComparator)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion =
-			fetchByRootPatcherProjectVersionId_First(
-				rootPatcherProjectVersionId, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		throw new NoSuchPatcherProjectVersionException(
-			_collectionPersistenceFinderByRootPatcherProjectVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {rootPatcherProjectVersionId}));
+		return _collectionPersistenceFinderByRootPatcherProjectVersionId.
+			findFirst(
+				finderCache, new Object[] {rootPatcherProjectVersionId},
+				orderByComparator);
 	}
 
 	/**
@@ -351,8 +334,9 @@ public class PatcherProjectVersionPersistenceImpl
 				finderCache, new Object[] {rootPatcherProjectVersionId});
 	}
 
-	private UniquePersistenceFinder<PatcherProjectVersion>
-		_uniquePersistenceFinderByCommittish;
+	private UniquePersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_uniquePersistenceFinderByCommittish;
 
 	/**
 	 * Returns the patcher project version where committish = &#63; or throws a <code>NoSuchPatcherProjectVersionException</code> if it could not be found.
@@ -365,22 +349,8 @@ public class PatcherProjectVersionPersistenceImpl
 	public PatcherProjectVersion findByCommittish(String committish)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion = fetchByCommittish(
-			committish);
-
-		if (patcherProjectVersion == null) {
-			String message =
-				_uniquePersistenceFinderByCommittish.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {committish});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherProjectVersionException(message);
-		}
-
-		return patcherProjectVersion;
+		return _uniquePersistenceFinderByCommittish.find(
+			finderCache, new Object[] {committish});
 	}
 
 	/**
@@ -426,8 +396,9 @@ public class PatcherProjectVersionPersistenceImpl
 			finderCache, new Object[] {committish});
 	}
 
-	private UniquePersistenceFinder<PatcherProjectVersion>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the patcher project version where name = &#63; or throws a <code>NoSuchPatcherProjectVersionException</code> if it could not be found.
@@ -440,21 +411,8 @@ public class PatcherProjectVersionPersistenceImpl
 	public PatcherProjectVersion findByName(String name)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion = fetchByName(name);
-
-		if (patcherProjectVersion == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherProjectVersionException(message);
-		}
-
-		return patcherProjectVersion;
+		return _uniquePersistenceFinderByName.find(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -499,8 +457,9 @@ public class PatcherProjectVersionPersistenceImpl
 			finderCache, new Object[] {name});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherProjectVersion>
-		_collectionPersistenceFinderByP_R;
+	private FilterCollectionPersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_collectionPersistenceFinderByP_R;
 
 	/**
 	 * Returns an ordered range of all the patcher project versions where patcherProductVersionId = &#63; and rootPatcherProjectVersionId = &#63;.
@@ -545,20 +504,10 @@ public class PatcherProjectVersionPersistenceImpl
 			OrderByComparator<PatcherProjectVersion> orderByComparator)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion = fetchByP_R_First(
-			patcherProductVersionId, rootPatcherProjectVersionId,
+		return _collectionPersistenceFinderByP_R.findFirst(
+			finderCache,
+			new Object[] {patcherProductVersionId, rootPatcherProjectVersionId},
 			orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		throw new NoSuchPatcherProjectVersionException(
-			_collectionPersistenceFinderByP_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					patcherProductVersionId, rootPatcherProjectVersionId
-				}));
 	}
 
 	/**
@@ -659,8 +608,9 @@ public class PatcherProjectVersionPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherProjectVersion>
-		_collectionPersistenceFinderByP_RN;
+	private FilterCollectionPersistenceFinder
+		<PatcherProjectVersion, NoSuchPatcherProjectVersionException>
+			_collectionPersistenceFinderByP_RN;
 
 	/**
 	 * Returns an ordered range of all the patcher project versions where patcherProductVersionId = &#63; and repositoryName = &#63;.
@@ -703,17 +653,9 @@ public class PatcherProjectVersionPersistenceImpl
 			OrderByComparator<PatcherProjectVersion> orderByComparator)
 		throws NoSuchPatcherProjectVersionException {
 
-		PatcherProjectVersion patcherProjectVersion = fetchByP_RN_First(
-			patcherProductVersionId, repositoryName, orderByComparator);
-
-		if (patcherProjectVersion != null) {
-			return patcherProjectVersion;
-		}
-
-		throw new NoSuchPatcherProjectVersionException(
-			_collectionPersistenceFinderByP_RN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {patcherProductVersionId, repositoryName}));
+		return _collectionPersistenceFinderByP_RN.findFirst(
+			finderCache, new Object[] {patcherProductVersionId, repositoryName},
+			orderByComparator);
 	}
 
 	/**
@@ -1244,4 +1186,4 @@ public class PatcherProjectVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1750729424
+// LIFERAY-SERVICE-BUILDER-HASH:-104608106

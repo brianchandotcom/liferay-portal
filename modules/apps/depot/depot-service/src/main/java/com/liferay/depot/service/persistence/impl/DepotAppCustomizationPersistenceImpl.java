@@ -80,8 +80,9 @@ public class DepotAppCustomizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DepotAppCustomization>
-		_collectionPersistenceFinderByDepotEntryId;
+	private CollectionPersistenceFinder
+		<DepotAppCustomization, NoSuchAppCustomizationException>
+			_collectionPersistenceFinderByDepotEntryId;
 
 	/**
 	 * Returns an ordered range of all the depot app customizations where depotEntryId = &#63;.
@@ -122,16 +123,8 @@ public class DepotAppCustomizationPersistenceImpl
 			OrderByComparator<DepotAppCustomization> orderByComparator)
 		throws NoSuchAppCustomizationException {
 
-		DepotAppCustomization depotAppCustomization = fetchByDepotEntryId_First(
-			depotEntryId, orderByComparator);
-
-		if (depotAppCustomization != null) {
-			return depotAppCustomization;
-		}
-
-		throw new NoSuchAppCustomizationException(
-			_collectionPersistenceFinderByDepotEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {depotEntryId}));
+		return _collectionPersistenceFinderByDepotEntryId.findFirst(
+			finderCache, new Object[] {depotEntryId}, orderByComparator);
 	}
 
 	/**
@@ -173,8 +166,9 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private UniquePersistenceFinder<DepotAppCustomization>
-		_uniquePersistenceFinderByD_E;
+	private UniquePersistenceFinder
+		<DepotAppCustomization, NoSuchAppCustomizationException>
+			_uniquePersistenceFinderByD_E;
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and enabled = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -188,23 +182,8 @@ public class DepotAppCustomizationPersistenceImpl
 	public DepotAppCustomization findByD_E(long depotEntryId, boolean enabled)
 		throws NoSuchAppCustomizationException {
 
-		DepotAppCustomization depotAppCustomization = fetchByD_E(
-			depotEntryId, enabled);
-
-		if (depotAppCustomization == null) {
-			String message =
-				_uniquePersistenceFinderByD_E.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {depotEntryId, enabled});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAppCustomizationException(message);
-		}
-
-		return depotAppCustomization;
+		return _uniquePersistenceFinderByD_E.find(
+			finderCache, new Object[] {depotEntryId, enabled});
 	}
 
 	/**
@@ -253,8 +232,9 @@ public class DepotAppCustomizationPersistenceImpl
 			finderCache, new Object[] {depotEntryId, enabled});
 	}
 
-	private UniquePersistenceFinder<DepotAppCustomization>
-		_uniquePersistenceFinderByD_P;
+	private UniquePersistenceFinder
+		<DepotAppCustomization, NoSuchAppCustomizationException>
+			_uniquePersistenceFinderByD_P;
 
 	/**
 	 * Returns the depot app customization where depotEntryId = &#63; and portletId = &#63; or throws a <code>NoSuchAppCustomizationException</code> if it could not be found.
@@ -268,23 +248,8 @@ public class DepotAppCustomizationPersistenceImpl
 	public DepotAppCustomization findByD_P(long depotEntryId, String portletId)
 		throws NoSuchAppCustomizationException {
 
-		DepotAppCustomization depotAppCustomization = fetchByD_P(
-			depotEntryId, portletId);
-
-		if (depotAppCustomization == null) {
-			String message =
-				_uniquePersistenceFinderByD_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {depotEntryId, portletId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAppCustomizationException(message);
-		}
-
-		return depotAppCustomization;
+		return _uniquePersistenceFinderByD_P.find(
+			finderCache, new Object[] {depotEntryId, portletId});
 	}
 
 	/**
@@ -721,4 +686,4 @@ public class DepotAppCustomizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-391202167
+// LIFERAY-SERVICE-BUILDER-HASH:985577538

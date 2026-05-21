@@ -62,7 +62,7 @@ public class CompanyInfoPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<CompanyInfo>
+	private UniquePersistenceFinder<CompanyInfo, NoSuchCompanyInfoException>
 		_uniquePersistenceFinderByCompanyId;
 
 	/**
@@ -76,21 +76,8 @@ public class CompanyInfoPersistenceImpl
 	public CompanyInfo findByCompanyId(long companyId)
 		throws NoSuchCompanyInfoException {
 
-		CompanyInfo companyInfo = fetchByCompanyId(companyId);
-
-		if (companyInfo == null) {
-			String message =
-				_uniquePersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCompanyInfoException(message);
-		}
-
-		return companyInfo;
+		return _uniquePersistenceFinderByCompanyId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
 	/**
@@ -361,4 +348,4 @@ public class CompanyInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1489209883
+// LIFERAY-SERVICE-BUILDER-HASH:-2072369814

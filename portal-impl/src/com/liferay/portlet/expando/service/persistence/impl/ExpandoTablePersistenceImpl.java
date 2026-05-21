@@ -71,7 +71,7 @@ public class ExpandoTablePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ExpandoTable>
+	private CollectionPersistenceFinder<ExpandoTable, NoSuchTableException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -116,17 +116,9 @@ public class ExpandoTablePersistenceImpl
 			OrderByComparator<ExpandoTable> orderByComparator)
 		throws NoSuchTableException {
 
-		ExpandoTable expandoTable = fetchByC_C_First(
-			companyId, classNameId, orderByComparator);
-
-		if (expandoTable != null) {
-			return expandoTable;
-		}
-
-		throw new NoSuchTableException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -174,7 +166,7 @@ public class ExpandoTablePersistenceImpl
 			new Object[] {companyId, classNameId});
 	}
 
-	private UniquePersistenceFinder<ExpandoTable>
+	private UniquePersistenceFinder<ExpandoTable, NoSuchTableException>
 		_uniquePersistenceFinderByC_C_N;
 
 	/**
@@ -191,22 +183,9 @@ public class ExpandoTablePersistenceImpl
 			long companyId, long classNameId, String name)
 		throws NoSuchTableException {
 
-		ExpandoTable expandoTable = fetchByC_C_N(companyId, classNameId, name);
-
-		if (expandoTable == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, classNameId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTableException(message);
-		}
-
-		return expandoTable;
+		return _uniquePersistenceFinderByC_C_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, name});
 	}
 
 	/**
@@ -579,4 +558,4 @@ public class ExpandoTablePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:291434624
+// LIFERAY-SERVICE-BUILDER-HASH:-1270611793

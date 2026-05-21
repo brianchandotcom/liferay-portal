@@ -57,8 +57,9 @@ public class NullConvertibleEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<NullConvertibleEntry>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<NullConvertibleEntry, NoSuchNullConvertibleEntryException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the null convertible entry where name = &#63; or throws a <code>NoSuchNullConvertibleEntryException</code> if it could not be found.
@@ -71,21 +72,8 @@ public class NullConvertibleEntryPersistenceImpl
 	public NullConvertibleEntry findByName(String name)
 		throws NoSuchNullConvertibleEntryException {
 
-		NullConvertibleEntry nullConvertibleEntry = fetchByName(name);
-
-		if (nullConvertibleEntry == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNullConvertibleEntryException(message);
-		}
-
-		return nullConvertibleEntry;
+		return _uniquePersistenceFinderByName.find(
+			dummyFinderCache, new Object[] {name});
 	}
 
 	/**
@@ -347,4 +335,4 @@ public class NullConvertibleEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1087750050
+// LIFERAY-SERVICE-BUILDER-HASH:-154200258

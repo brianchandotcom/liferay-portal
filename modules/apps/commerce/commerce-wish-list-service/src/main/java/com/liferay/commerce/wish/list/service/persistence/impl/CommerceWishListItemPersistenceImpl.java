@@ -76,8 +76,9 @@ public class CommerceWishListItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceWishListItem>
-		_collectionPersistenceFinderByCommerceWishListId;
+	private CollectionPersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_collectionPersistenceFinderByCommerceWishListId;
 
 	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63;.
@@ -118,19 +119,8 @@ public class CommerceWishListItemPersistenceImpl
 			OrderByComparator<CommerceWishListItem> orderByComparator)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem =
-			fetchByCommerceWishListId_First(
-				commerceWishListId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		throw new NoSuchWishListItemException(
-			_collectionPersistenceFinderByCommerceWishListId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceWishListId}));
+		return _collectionPersistenceFinderByCommerceWishListId.findFirst(
+			finderCache, new Object[] {commerceWishListId}, orderByComparator);
 	}
 
 	/**
@@ -172,8 +162,9 @@ public class CommerceWishListItemPersistenceImpl
 			finderCache, new Object[] {commerceWishListId});
 	}
 
-	private CollectionPersistenceFinder<CommerceWishListItem>
-		_collectionPersistenceFinderByCPInstanceUuid;
+	private CollectionPersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_collectionPersistenceFinderByCPInstanceUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce wish list items where CPInstanceUuid = &#63;.
@@ -214,16 +205,8 @@ public class CommerceWishListItemPersistenceImpl
 			OrderByComparator<CommerceWishListItem> orderByComparator)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem = fetchByCPInstanceUuid_First(
-			CPInstanceUuid, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		throw new NoSuchWishListItemException(
-			_collectionPersistenceFinderByCPInstanceUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceUuid}));
+		return _collectionPersistenceFinderByCPInstanceUuid.findFirst(
+			finderCache, new Object[] {CPInstanceUuid}, orderByComparator);
 	}
 
 	/**
@@ -265,8 +248,9 @@ public class CommerceWishListItemPersistenceImpl
 			finderCache, new Object[] {CPInstanceUuid});
 	}
 
-	private CollectionPersistenceFinder<CommerceWishListItem>
-		_collectionPersistenceFinderByCProductId;
+	private CollectionPersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_collectionPersistenceFinderByCProductId;
 
 	/**
 	 * Returns an ordered range of all the commerce wish list items where CProductId = &#63;.
@@ -307,16 +291,8 @@ public class CommerceWishListItemPersistenceImpl
 			OrderByComparator<CommerceWishListItem> orderByComparator)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem = fetchByCProductId_First(
-			CProductId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		throw new NoSuchWishListItemException(
-			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
+		return _collectionPersistenceFinderByCProductId.findFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -358,8 +334,9 @@ public class CommerceWishListItemPersistenceImpl
 			finderCache, new Object[] {CProductId});
 	}
 
-	private CollectionPersistenceFinder<CommerceWishListItem>
-		_collectionPersistenceFinderByCW_CPI;
+	private CollectionPersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_collectionPersistenceFinderByCW_CPI;
 
 	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CPInstanceUuid = &#63;.
@@ -402,17 +379,9 @@ public class CommerceWishListItemPersistenceImpl
 			OrderByComparator<CommerceWishListItem> orderByComparator)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem = fetchByCW_CPI_First(
-			commerceWishListId, CPInstanceUuid, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		throw new NoSuchWishListItemException(
-			_collectionPersistenceFinderByCW_CPI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceWishListId, CPInstanceUuid}));
+		return _collectionPersistenceFinderByCW_CPI.findFirst(
+			finderCache, new Object[] {commerceWishListId, CPInstanceUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -458,8 +427,9 @@ public class CommerceWishListItemPersistenceImpl
 			finderCache, new Object[] {commerceWishListId, CPInstanceUuid});
 	}
 
-	private CollectionPersistenceFinder<CommerceWishListItem>
-		_collectionPersistenceFinderByCW_CP;
+	private CollectionPersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_collectionPersistenceFinderByCW_CP;
 
 	/**
 	 * Returns an ordered range of all the commerce wish list items where commerceWishListId = &#63; and CProductId = &#63;.
@@ -502,17 +472,9 @@ public class CommerceWishListItemPersistenceImpl
 			OrderByComparator<CommerceWishListItem> orderByComparator)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem = fetchByCW_CP_First(
-			commerceWishListId, CProductId, orderByComparator);
-
-		if (commerceWishListItem != null) {
-			return commerceWishListItem;
-		}
-
-		throw new NoSuchWishListItemException(
-			_collectionPersistenceFinderByCW_CP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceWishListId, CProductId}));
+		return _collectionPersistenceFinderByCW_CP.findFirst(
+			finderCache, new Object[] {commerceWishListId, CProductId},
+			orderByComparator);
 	}
 
 	/**
@@ -558,8 +520,9 @@ public class CommerceWishListItemPersistenceImpl
 			finderCache, new Object[] {commerceWishListId, CProductId});
 	}
 
-	private UniquePersistenceFinder<CommerceWishListItem>
-		_uniquePersistenceFinderByCW_CPI_CP;
+	private UniquePersistenceFinder
+		<CommerceWishListItem, NoSuchWishListItemException>
+			_uniquePersistenceFinderByCW_CPI_CP;
 
 	/**
 	 * Returns the commerce wish list item where commerceWishListId = &#63; and CPInstanceUuid = &#63; and CProductId = &#63; or throws a <code>NoSuchWishListItemException</code> if it could not be found.
@@ -575,25 +538,9 @@ public class CommerceWishListItemPersistenceImpl
 			long commerceWishListId, String CPInstanceUuid, long CProductId)
 		throws NoSuchWishListItemException {
 
-		CommerceWishListItem commerceWishListItem = fetchByCW_CPI_CP(
-			commerceWishListId, CPInstanceUuid, CProductId);
-
-		if (commerceWishListItem == null) {
-			String message =
-				_uniquePersistenceFinderByCW_CPI_CP.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						commerceWishListId, CPInstanceUuid, CProductId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchWishListItemException(message);
-		}
-
-		return commerceWishListItem;
+		return _uniquePersistenceFinderByCW_CPI_CP.find(
+			finderCache,
+			new Object[] {commerceWishListId, CPInstanceUuid, CProductId});
 	}
 
 	/**
@@ -1107,4 +1054,4 @@ public class CommerceWishListItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1916966208
+// LIFERAY-SERVICE-BUILDER-HASH:-226060403

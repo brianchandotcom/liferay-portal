@@ -94,8 +94,9 @@ public class FragmentEntryVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByFragmentEntryId;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByFragmentEntryId;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where fragmentEntryId = &#63;.
@@ -136,16 +137,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByFragmentEntryId_First(fragmentEntryId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByFragmentEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {fragmentEntryId}));
+		return _collectionPersistenceFinderByFragmentEntryId.findFirst(
+			finderCache, new Object[] {fragmentEntryId}, orderByComparator);
 	}
 
 	/**
@@ -187,8 +180,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {fragmentEntryId});
 	}
 
-	private UniquePersistenceFinder<FragmentEntryVersion>
-		_uniquePersistenceFinderByFragmentEntryId_Version;
+	private UniquePersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_uniquePersistenceFinderByFragmentEntryId_Version;
 
 	/**
 	 * Returns the fragment entry version where fragmentEntryId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -203,24 +197,8 @@ public class FragmentEntryVersionPersistenceImpl
 			long fragmentEntryId, int version)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByFragmentEntryId_Version(fragmentEntryId, version);
-
-		if (fragmentEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByFragmentEntryId_Version.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {fragmentEntryId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryVersionException(message);
-		}
-
-		return fragmentEntryVersion;
+		return _uniquePersistenceFinderByFragmentEntryId_Version.find(
+			finderCache, new Object[] {fragmentEntryId, version});
 	}
 
 	/**
@@ -273,8 +251,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {fragmentEntryId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where uuid = &#63;.
@@ -315,16 +294,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -366,8 +337,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByUuid_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByUuid_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where uuid = &#63; and version = &#63;.
@@ -410,16 +382,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUuid_Version_First(
-			uuid, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByUuid_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, version}));
+		return _collectionPersistenceFinderByUuid_Version.findFirst(
+			finderCache, new Object[] {uuid, version}, orderByComparator);
 	}
 
 	/**
@@ -464,8 +428,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByUUID_G;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByUUID_G;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where uuid = &#63; and groupId = &#63;.
@@ -508,16 +473,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUUID_G_First(
-			uuid, groupId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
+		return _collectionPersistenceFinderByUUID_G.findFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -562,8 +519,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private UniquePersistenceFinder<FragmentEntryVersion>
-		_uniquePersistenceFinderByUUID_G_Version;
+	private UniquePersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_uniquePersistenceFinderByUUID_G_Version;
 
 	/**
 	 * Returns the fragment entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -579,23 +537,8 @@ public class FragmentEntryVersionPersistenceImpl
 			String uuid, long groupId, int version)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUUID_G_Version(
-			uuid, groupId, version);
-
-		if (fragmentEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_Version.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryVersionException(message);
-		}
-
-		return fragmentEntryVersion;
+		return _uniquePersistenceFinderByUUID_G_Version.find(
+			finderCache, new Object[] {uuid, groupId, version});
 	}
 
 	/**
@@ -648,8 +591,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where uuid = &#63; and companyId = &#63;.
@@ -692,16 +636,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -746,8 +682,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByUuid_C_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByUuid_C_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -792,17 +729,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByUuid_C_Version_First(
-			uuid, companyId, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByUuid_C_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {uuid, companyId, version}));
+		return _collectionPersistenceFinderByUuid_C_Version.findFirst(
+			finderCache, new Object[] {uuid, companyId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -853,8 +782,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63;.
@@ -895,16 +825,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -946,8 +868,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByGroupId_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByGroupId_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and version = &#63;.
@@ -990,16 +913,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByGroupId_Version_First(groupId, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByGroupId_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, version}));
+		return _collectionPersistenceFinderByGroupId_Version.findFirst(
+			finderCache, new Object[] {groupId, version}, orderByComparator);
 	}
 
 	/**
@@ -1044,8 +959,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByFragmentCollectionId;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByFragmentCollectionId;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where fragmentCollectionId = &#63;.
@@ -1086,19 +1002,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByFragmentCollectionId_First(
-				fragmentCollectionId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByFragmentCollectionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fragmentCollectionId}));
+		return _collectionPersistenceFinderByFragmentCollectionId.findFirst(
+			finderCache, new Object[] {fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1141,8 +1047,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {fragmentCollectionId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByFragmentCollectionId_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByFragmentCollectionId_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where fragmentCollectionId = &#63; and version = &#63;.
@@ -1185,19 +1092,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByFragmentCollectionId_Version_First(
-				fragmentCollectionId, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByFragmentCollectionId_Version.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {fragmentCollectionId, version}));
+		return _collectionPersistenceFinderByFragmentCollectionId_Version.
+			findFirst(
+				finderCache, new Object[] {fragmentCollectionId, version},
+				orderByComparator);
 	}
 
 	/**
@@ -1248,8 +1146,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {fragmentCollectionId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByType;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByType;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where type = &#63;.
@@ -1289,16 +1188,8 @@ public class FragmentEntryVersionPersistenceImpl
 			int type, OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByType_First(
-			type, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -1339,8 +1230,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByType_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByType_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where type = &#63; and version = &#63;.
@@ -1383,16 +1275,8 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByType_Version_First(
-			type, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByType_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, version}));
+		return _collectionPersistenceFinderByType_Version.findFirst(
+			finderCache, new Object[] {type, version}, orderByComparator);
 	}
 
 	/**
@@ -1437,8 +1321,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {type, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63;.
@@ -1481,17 +1366,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_First(
-			groupId, fragmentCollectionId, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId}));
+		return _collectionPersistenceFinderByG_FCI.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -1537,8 +1414,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and version = &#63;.
@@ -1583,17 +1461,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_Version_First(
-			groupId, fragmentCollectionId, version, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, version}));
+		return _collectionPersistenceFinderByG_FCI_Version.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1646,8 +1516,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FEK;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FEK;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentEntryKey = &#63;.
@@ -1690,17 +1561,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FEK_First(
-			groupId, fragmentEntryKey, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FEK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentEntryKey}));
+		return _collectionPersistenceFinderByG_FEK.findFirst(
+			finderCache, new Object[] {groupId, fragmentEntryKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1746,8 +1609,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentEntryKey});
 	}
 
-	private UniquePersistenceFinder<FragmentEntryVersion>
-		_uniquePersistenceFinderByG_FEK_Version;
+	private UniquePersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_uniquePersistenceFinderByG_FEK_Version;
 
 	/**
 	 * Returns the fragment entry version where groupId = &#63; and fragmentEntryKey = &#63; and version = &#63; or throws a <code>NoSuchEntryVersionException</code> if it could not be found.
@@ -1763,23 +1627,8 @@ public class FragmentEntryVersionPersistenceImpl
 			long groupId, String fragmentEntryKey, int version)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FEK_Version(
-			groupId, fragmentEntryKey, version);
-
-		if (fragmentEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByG_FEK_Version.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, fragmentEntryKey, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryVersionException(message);
-		}
-
-		return fragmentEntryVersion;
+		return _uniquePersistenceFinderByG_FEK_Version.find(
+			finderCache, new Object[] {groupId, fragmentEntryKey, version});
 	}
 
 	/**
@@ -1836,8 +1685,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentEntryKey, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_LikeN;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_LikeN;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63;.
@@ -1882,17 +1732,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_LikeN_First(
-			groupId, fragmentCollectionId, name, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, name}));
+		return _collectionPersistenceFinderByG_FCI_LikeN.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1945,8 +1787,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, name});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_LikeN_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_LikeN_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and version = &#63;.
@@ -1995,22 +1838,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByG_FCI_LikeN_Version_First(
-				groupId, fragmentCollectionId, name, version,
-				orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_LikeN_Version.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentCollectionId, name, version
-					}));
+		return _collectionPersistenceFinderByG_FCI_LikeN_Version.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2069,8 +1900,9 @@ public class FragmentEntryVersionPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, name, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_T;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_T;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63;.
@@ -2115,17 +1947,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_T_First(
-			groupId, fragmentCollectionId, type, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type}));
+		return _collectionPersistenceFinderByG_FCI_T.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -2178,8 +2002,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, type});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_T_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_T_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and version = &#63;.
@@ -2228,19 +2053,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByG_FCI_T_Version_First(
-				groupId, fragmentCollectionId, type, version,
-				orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_T_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type, version}));
+		return _collectionPersistenceFinderByG_FCI_T_Version.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2299,8 +2115,9 @@ public class FragmentEntryVersionPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, type, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_S;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_S;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63;.
@@ -2345,17 +2162,9 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_S_First(
-			groupId, fragmentCollectionId, status, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, status}));
+		return _collectionPersistenceFinderByG_FCI_S.findFirst(
+			finderCache, new Object[] {groupId, fragmentCollectionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2408,8 +2217,9 @@ public class FragmentEntryVersionPersistenceImpl
 			finderCache, new Object[] {groupId, fragmentCollectionId, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_S_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_S_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and status = &#63; and version = &#63;.
@@ -2458,19 +2268,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByG_FCI_S_Version_First(
-				groupId, fragmentCollectionId, status, version,
-				orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_S_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, status, version}));
+		return _collectionPersistenceFinderByG_FCI_S_Version.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, status, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2529,8 +2330,9 @@ public class FragmentEntryVersionPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, status, version});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_LikeN_S;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_LikeN_S;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and status = &#63;.
@@ -2579,17 +2381,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_LikeN_S_First(
-			groupId, fragmentCollectionId, name, status, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_LikeN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, name, status}));
+		return _collectionPersistenceFinderByG_FCI_LikeN_S.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2648,8 +2443,9 @@ public class FragmentEntryVersionPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, name, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_LikeN_S_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_LikeN_S_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; and status = &#63; and version = &#63;.
@@ -2701,22 +2497,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByG_FCI_LikeN_S_Version_First(
-				groupId, fragmentCollectionId, name, status, version,
-				orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_LikeN_S_Version.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentCollectionId, name, status, version
-					}));
+		return _collectionPersistenceFinderByG_FCI_LikeN_S_Version.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, name, status, version},
+			orderByComparator);
 	}
 
 	/**
@@ -2785,8 +2569,9 @@ public class FragmentEntryVersionPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_T_S;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_T_S;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63;.
@@ -2835,17 +2620,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion = fetchByG_FCI_T_S_First(
-			groupId, fragmentCollectionId, type, status, orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, fragmentCollectionId, type, status}));
+		return _collectionPersistenceFinderByG_FCI_T_S.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2904,8 +2682,9 @@ public class FragmentEntryVersionPersistenceImpl
 			new Object[] {groupId, fragmentCollectionId, type, status});
 	}
 
-	private CollectionPersistenceFinder<FragmentEntryVersion>
-		_collectionPersistenceFinderByG_FCI_T_S_Version;
+	private CollectionPersistenceFinder
+		<FragmentEntryVersion, NoSuchEntryVersionException>
+			_collectionPersistenceFinderByG_FCI_T_S_Version;
 
 	/**
 	 * Returns an ordered range of all the fragment entry versions where groupId = &#63; and fragmentCollectionId = &#63; and type = &#63; and status = &#63; and version = &#63;.
@@ -2957,22 +2736,10 @@ public class FragmentEntryVersionPersistenceImpl
 			OrderByComparator<FragmentEntryVersion> orderByComparator)
 		throws NoSuchEntryVersionException {
 
-		FragmentEntryVersion fragmentEntryVersion =
-			fetchByG_FCI_T_S_Version_First(
-				groupId, fragmentCollectionId, type, status, version,
-				orderByComparator);
-
-		if (fragmentEntryVersion != null) {
-			return fragmentEntryVersion;
-		}
-
-		throw new NoSuchEntryVersionException(
-			_collectionPersistenceFinderByG_FCI_T_S_Version.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, fragmentCollectionId, type, status, version
-					}));
+		return _collectionPersistenceFinderByG_FCI_T_S_Version.findFirst(
+			finderCache,
+			new Object[] {groupId, fragmentCollectionId, type, status, version},
+			orderByComparator);
 	}
 
 	/**
@@ -4608,4 +4375,4 @@ public class FragmentEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2002138588
+// LIFERAY-SERVICE-BUILDER-HASH:-169852072

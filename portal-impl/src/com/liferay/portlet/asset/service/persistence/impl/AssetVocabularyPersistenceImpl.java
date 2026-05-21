@@ -92,8 +92,9 @@ public class AssetVocabularyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where uuid = &#63;.
@@ -133,16 +134,9 @@ public class AssetVocabularyPersistenceImpl
 			String uuid, OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		throw new NoSuchVocabularyException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -184,7 +178,7 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetVocabulary>
+	private UniquePersistenceFinder<AssetVocabulary, NoSuchVocabularyException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -199,21 +193,8 @@ public class AssetVocabularyPersistenceImpl
 	public AssetVocabulary findByUUID_G(String uuid, long groupId)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByUUID_G(uuid, groupId);
-
-		if (assetVocabulary == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVocabularyException(message);
-		}
-
-		return assetVocabulary;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -262,8 +243,9 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where uuid = &#63; and companyId = &#63;.
@@ -306,16 +288,9 @@ public class AssetVocabularyPersistenceImpl
 			OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		throw new NoSuchVocabularyException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -361,8 +336,9 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where groupId = &#63;.
@@ -579,8 +555,9 @@ public class AssetVocabularyPersistenceImpl
 			groupIds);
 	}
 
-	private CollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where companyId = &#63;.
@@ -621,16 +598,9 @@ public class AssetVocabularyPersistenceImpl
 			OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		throw new NoSuchVocabularyException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -672,7 +642,7 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<AssetVocabulary>
+	private UniquePersistenceFinder<AssetVocabulary, NoSuchVocabularyException>
 		_uniquePersistenceFinderByG_N;
 
 	/**
@@ -687,21 +657,8 @@ public class AssetVocabularyPersistenceImpl
 	public AssetVocabulary findByG_N(long groupId, String name)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByG_N(groupId, name);
-
-		if (assetVocabulary == null) {
-			String message =
-				_uniquePersistenceFinderByG_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVocabularyException(message);
-		}
-
-		return assetVocabulary;
+		return _uniquePersistenceFinderByG_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
 	/**
@@ -750,8 +707,9 @@ public class AssetVocabularyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByG_LikeN;
+	private FilterCollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByG_LikeN;
 
 	/**
 	 * Returns all the asset vocabularies where groupId = &#63; and name LIKE &#63;.
@@ -850,16 +808,9 @@ public class AssetVocabularyPersistenceImpl
 			OrderByComparator<AssetVocabulary> orderByComparator)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByG_LikeN_First(
-			groupId, name, orderByComparator);
-
-		if (assetVocabulary != null) {
-			return assetVocabulary;
-		}
-
-		throw new NoSuchVocabularyException(
-			_collectionPersistenceFinderByG_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name}));
+		return _collectionPersistenceFinderByG_LikeN.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -978,8 +929,9 @@ public class AssetVocabularyPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<AssetVocabulary>
-		_collectionPersistenceFinderByG_V;
+	private FilterCollectionPersistenceFinder
+		<AssetVocabulary, NoSuchVocabularyException>
+			_collectionPersistenceFinderByG_V;
 
 	/**
 	 * Returns an ordered range of all the asset vocabularies where groupId = &#63; and visibilityType = &#63;.
@@ -1222,7 +1174,7 @@ public class AssetVocabularyPersistenceImpl
 			groupIds);
 	}
 
-	private UniquePersistenceFinder<AssetVocabulary>
+	private UniquePersistenceFinder<AssetVocabulary, NoSuchVocabularyException>
 		_uniquePersistenceFinderByERC_G;
 
 	/**
@@ -1238,23 +1190,9 @@ public class AssetVocabularyPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchVocabularyException {
 
-		AssetVocabulary assetVocabulary = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (assetVocabulary == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchVocabularyException(message);
-		}
-
-		return assetVocabulary;
+		return _uniquePersistenceFinderByERC_G.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1932,4 +1870,4 @@ public class AssetVocabularyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1424068449
+// LIFERAY-SERVICE-BUILDER-HASH:-837633946

@@ -66,7 +66,7 @@ public class PortletItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<PortletItem>
+	private CollectionPersistenceFinder<PortletItem, NoSuchPortletItemException>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -111,16 +111,9 @@ public class PortletItemPersistenceImpl
 			OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException {
 
-		PortletItem portletItem = fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-
-		if (portletItem != null) {
-			return portletItem;
-		}
-
-		throw new NoSuchPortletItemException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -168,7 +161,7 @@ public class PortletItemPersistenceImpl
 			new Object[] {groupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<PortletItem>
+	private CollectionPersistenceFinder<PortletItem, NoSuchPortletItemException>
 		_collectionPersistenceFinderByG_P_C;
 
 	/**
@@ -215,17 +208,9 @@ public class PortletItemPersistenceImpl
 			OrderByComparator<PortletItem> orderByComparator)
 		throws NoSuchPortletItemException {
 
-		PortletItem portletItem = fetchByG_P_C_First(
-			groupId, portletId, classNameId, orderByComparator);
-
-		if (portletItem != null) {
-			return portletItem;
-		}
-
-		throw new NoSuchPortletItemException(
-			_collectionPersistenceFinderByG_P_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, portletId, classNameId}));
+		return _collectionPersistenceFinderByG_P_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, portletId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -278,7 +263,7 @@ public class PortletItemPersistenceImpl
 			new Object[] {groupId, portletId, classNameId});
 	}
 
-	private UniquePersistenceFinder<PortletItem>
+	private UniquePersistenceFinder<PortletItem, NoSuchPortletItemException>
 		_uniquePersistenceFinderByG_N_P_C;
 
 	/**
@@ -296,23 +281,9 @@ public class PortletItemPersistenceImpl
 			long groupId, String name, String portletId, long classNameId)
 		throws NoSuchPortletItemException {
 
-		PortletItem portletItem = fetchByG_N_P_C(
-			groupId, name, portletId, classNameId);
-
-		if (portletItem == null) {
-			String message =
-				_uniquePersistenceFinderByG_N_P_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, name, portletId, classNameId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPortletItemException(message);
-		}
-
-		return portletItem;
+		return _uniquePersistenceFinderByG_N_P_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, name, portletId, classNameId});
 	}
 
 	/**
@@ -696,4 +667,4 @@ public class PortletItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1576275891
+// LIFERAY-SERVICE-BUILDER-HASH:-747995455

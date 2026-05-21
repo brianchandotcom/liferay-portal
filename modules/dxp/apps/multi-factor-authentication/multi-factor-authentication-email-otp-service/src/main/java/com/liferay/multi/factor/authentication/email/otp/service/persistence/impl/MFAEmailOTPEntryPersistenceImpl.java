@@ -71,7 +71,7 @@ public class MFAEmailOTPEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<MFAEmailOTPEntry>
+	private UniquePersistenceFinder<MFAEmailOTPEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUserId;
 
 	/**
@@ -85,21 +85,8 @@ public class MFAEmailOTPEntryPersistenceImpl
 	public MFAEmailOTPEntry findByUserId(long userId)
 		throws NoSuchEntryException {
 
-		MFAEmailOTPEntry mfaEmailOTPEntry = fetchByUserId(userId);
-
-		if (mfaEmailOTPEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return mfaEmailOTPEntry;
+		return _uniquePersistenceFinderByUserId.find(
+			finderCache, new Object[] {userId});
 	}
 
 	/**
@@ -415,4 +402,4 @@ public class MFAEmailOTPEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:523919200
+// LIFERAY-SERVICE-BUILDER-HASH:546844522

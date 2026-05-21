@@ -74,8 +74,10 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<NotificationQueueEntryAttachment>
-		_collectionPersistenceFinderByNotificationQueueEntryId;
+	private CollectionPersistenceFinder
+		<NotificationQueueEntryAttachment,
+		 NoSuchNotificationQueueEntryAttachmentException>
+			_collectionPersistenceFinderByNotificationQueueEntryId;
 
 	/**
 	 * Returns an ordered range of all the notification queue entry attachments where notificationQueueEntryId = &#63;.
@@ -120,19 +122,9 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 					orderByComparator)
 		throws NoSuchNotificationQueueEntryAttachmentException {
 
-		NotificationQueueEntryAttachment notificationQueueEntryAttachment =
-			fetchByNotificationQueueEntryId_First(
-				notificationQueueEntryId, orderByComparator);
-
-		if (notificationQueueEntryAttachment != null) {
-			return notificationQueueEntryAttachment;
-		}
-
-		throw new NoSuchNotificationQueueEntryAttachmentException(
-			_collectionPersistenceFinderByNotificationQueueEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {notificationQueueEntryId}));
+		return _collectionPersistenceFinderByNotificationQueueEntryId.findFirst(
+			finderCache, new Object[] {notificationQueueEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -494,4 +486,4 @@ public class NotificationQueueEntryAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-310615528
+// LIFERAY-SERVICE-BUILDER-HASH:1407846512

@@ -90,8 +90,9 @@ public class DDMStorageLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMStorageLink>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DDMStorageLink, NoSuchStorageLinkException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where uuid = &#63;.
@@ -131,16 +132,8 @@ public class DDMStorageLinkPersistenceImpl
 			String uuid, OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 
-		DDMStorageLink ddmStorageLink = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		throw new NoSuchStorageLinkException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -181,8 +174,9 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<DDMStorageLink>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DDMStorageLink, NoSuchStorageLinkException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where uuid = &#63; and companyId = &#63;.
@@ -225,16 +219,8 @@ public class DDMStorageLinkPersistenceImpl
 			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 
-		DDMStorageLink ddmStorageLink = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		throw new NoSuchStorageLinkException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -279,7 +265,7 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<DDMStorageLink>
+	private UniquePersistenceFinder<DDMStorageLink, NoSuchStorageLinkException>
 		_uniquePersistenceFinderByClassPK;
 
 	/**
@@ -293,21 +279,8 @@ public class DDMStorageLinkPersistenceImpl
 	public DDMStorageLink findByClassPK(long classPK)
 		throws NoSuchStorageLinkException {
 
-		DDMStorageLink ddmStorageLink = fetchByClassPK(classPK);
-
-		if (ddmStorageLink == null) {
-			String message =
-				_uniquePersistenceFinderByClassPK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStorageLinkException(message);
-		}
-
-		return ddmStorageLink;
+		return _uniquePersistenceFinderByClassPK.find(
+			finderCache, new Object[] {classPK});
 	}
 
 	/**
@@ -350,8 +323,9 @@ public class DDMStorageLinkPersistenceImpl
 			finderCache, new Object[] {classPK});
 	}
 
-	private CollectionPersistenceFinder<DDMStorageLink>
-		_collectionPersistenceFinderByStructureId;
+	private CollectionPersistenceFinder
+		<DDMStorageLink, NoSuchStorageLinkException>
+			_collectionPersistenceFinderByStructureId;
 
 	/**
 	 * Returns an ordered range of all the ddm storage links where structureId = &#63;.
@@ -392,16 +366,8 @@ public class DDMStorageLinkPersistenceImpl
 			OrderByComparator<DDMStorageLink> orderByComparator)
 		throws NoSuchStorageLinkException {
 
-		DDMStorageLink ddmStorageLink = fetchByStructureId_First(
-			structureId, orderByComparator);
-
-		if (ddmStorageLink != null) {
-			return ddmStorageLink;
-		}
-
-		throw new NoSuchStorageLinkException(
-			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
+		return _collectionPersistenceFinderByStructureId.findFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -1498,4 +1464,4 @@ public class DDMStorageLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-131154213
+// LIFERAY-SERVICE-BUILDER-HASH:-1256482250

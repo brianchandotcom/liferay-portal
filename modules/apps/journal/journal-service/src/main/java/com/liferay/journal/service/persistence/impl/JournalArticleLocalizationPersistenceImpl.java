@@ -80,8 +80,9 @@ public class JournalArticleLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<JournalArticleLocalization>
-		_collectionPersistenceFinderByC_A;
+	private CollectionPersistenceFinder
+		<JournalArticleLocalization, NoSuchArticleLocalizationException>
+			_collectionPersistenceFinderByC_A;
 
 	/**
 	 * Returns an ordered range of all the journal article localizations where companyId = &#63; and articlePK = &#63;.
@@ -124,16 +125,9 @@ public class JournalArticleLocalizationPersistenceImpl
 			OrderByComparator<JournalArticleLocalization> orderByComparator)
 		throws NoSuchArticleLocalizationException {
 
-		JournalArticleLocalization journalArticleLocalization =
-			fetchByC_A_First(companyId, articlePK, orderByComparator);
-
-		if (journalArticleLocalization != null) {
-			return journalArticleLocalization;
-		}
-
-		throw new NoSuchArticleLocalizationException(
-			_collectionPersistenceFinderByC_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, articlePK}));
+		return _collectionPersistenceFinderByC_A.findFirst(
+			finderCache, new Object[] {companyId, articlePK},
+			orderByComparator);
 	}
 
 	/**
@@ -179,8 +173,9 @@ public class JournalArticleLocalizationPersistenceImpl
 			finderCache, new Object[] {companyId, articlePK});
 	}
 
-	private UniquePersistenceFinder<JournalArticleLocalization>
-		_uniquePersistenceFinderByC_A_L;
+	private UniquePersistenceFinder
+		<JournalArticleLocalization, NoSuchArticleLocalizationException>
+			_uniquePersistenceFinderByC_A_L;
 
 	/**
 	 * Returns the journal article localization where companyId = &#63; and articlePK = &#63; and languageId = &#63; or throws a <code>NoSuchArticleLocalizationException</code> if it could not be found.
@@ -196,23 +191,8 @@ public class JournalArticleLocalizationPersistenceImpl
 			long companyId, long articlePK, String languageId)
 		throws NoSuchArticleLocalizationException {
 
-		JournalArticleLocalization journalArticleLocalization = fetchByC_A_L(
-			companyId, articlePK, languageId);
-
-		if (journalArticleLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByC_A_L.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, articlePK, languageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchArticleLocalizationException(message);
-		}
-
-		return journalArticleLocalization;
+		return _uniquePersistenceFinderByC_A_L.find(
+			finderCache, new Object[] {companyId, articlePK, languageId});
 	}
 
 	/**
@@ -654,4 +634,4 @@ public class JournalArticleLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1022595887
+// LIFERAY-SERVICE-BUILDER-HASH:880295788

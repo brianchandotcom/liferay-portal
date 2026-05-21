@@ -80,8 +80,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetEntryAssetCategoryRel>
-		_collectionPersistenceFinderByAssetEntryId;
+	private CollectionPersistenceFinder
+		<AssetEntryAssetCategoryRel, NoSuchEntryAssetCategoryRelException>
+			_collectionPersistenceFinderByAssetEntryId;
 
 	/**
 	 * Returns an ordered range of all the asset entry asset category rels where assetEntryId = &#63;.
@@ -122,16 +123,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException {
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			fetchByAssetEntryId_First(assetEntryId, orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		throw new NoSuchEntryAssetCategoryRelException(
-			_collectionPersistenceFinderByAssetEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetEntryId}));
+		return _collectionPersistenceFinderByAssetEntryId.findFirst(
+			finderCache, new Object[] {assetEntryId}, orderByComparator);
 	}
 
 	/**
@@ -173,8 +166,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			finderCache, new Object[] {assetEntryId});
 	}
 
-	private CollectionPersistenceFinder<AssetEntryAssetCategoryRel>
-		_collectionPersistenceFinderByAssetCategoryId;
+	private CollectionPersistenceFinder
+		<AssetEntryAssetCategoryRel, NoSuchEntryAssetCategoryRelException>
+			_collectionPersistenceFinderByAssetCategoryId;
 
 	/**
 	 * Returns an ordered range of all the asset entry asset category rels where assetCategoryId = &#63;.
@@ -215,16 +209,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException {
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
-			fetchByAssetCategoryId_First(assetCategoryId, orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		throw new NoSuchEntryAssetCategoryRelException(
-			_collectionPersistenceFinderByAssetCategoryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {assetCategoryId}));
+		return _collectionPersistenceFinderByAssetCategoryId.findFirst(
+			finderCache, new Object[] {assetCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -266,8 +252,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			finderCache, new Object[] {assetCategoryId});
 	}
 
-	private UniquePersistenceFinder<AssetEntryAssetCategoryRel>
-		_uniquePersistenceFinderByA_A;
+	private UniquePersistenceFinder
+		<AssetEntryAssetCategoryRel, NoSuchEntryAssetCategoryRelException>
+			_uniquePersistenceFinderByA_A;
 
 	/**
 	 * Returns the asset entry asset category rel where assetEntryId = &#63; and assetCategoryId = &#63; or throws a <code>NoSuchEntryAssetCategoryRelException</code> if it could not be found.
@@ -282,23 +269,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			long assetEntryId, long assetCategoryId)
 		throws NoSuchEntryAssetCategoryRelException {
 
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByA_A(
-			assetEntryId, assetCategoryId);
-
-		if (assetEntryAssetCategoryRel == null) {
-			String message =
-				_uniquePersistenceFinderByA_A.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {assetEntryId, assetCategoryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryAssetCategoryRelException(message);
-		}
-
-		return assetEntryAssetCategoryRel;
+		return _uniquePersistenceFinderByA_A.find(
+			finderCache, new Object[] {assetEntryId, assetCategoryId});
 	}
 
 	/**
@@ -758,4 +730,4 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-528296767
+// LIFERAY-SERVICE-BUILDER-HASH:1045811471

@@ -75,7 +75,7 @@ public class SocialRelationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -116,16 +116,9 @@ public class SocialRelationPersistenceImpl
 			String uuid, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -167,7 +160,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -211,16 +204,9 @@ public class SocialRelationPersistenceImpl
 			OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -266,7 +252,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -307,16 +293,9 @@ public class SocialRelationPersistenceImpl
 			long companyId, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -358,7 +337,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByUserId1;
 
 	/**
@@ -399,16 +378,9 @@ public class SocialRelationPersistenceImpl
 			long userId1, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByUserId1_First(
-			userId1, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByUserId1.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1}));
+		return _collectionPersistenceFinderByUserId1.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1},
+			orderByComparator);
 	}
 
 	/**
@@ -450,7 +422,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByUserId2;
 
 	/**
@@ -491,16 +463,9 @@ public class SocialRelationPersistenceImpl
 			long userId2, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByUserId2_First(
-			userId2, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByUserId2.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId2}));
+		return _collectionPersistenceFinderByUserId2.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2},
+			orderByComparator);
 	}
 
 	/**
@@ -542,7 +507,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId2});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByType;
 
 	/**
@@ -583,16 +548,9 @@ public class SocialRelationPersistenceImpl
 			int type, OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByType_First(
-			type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -634,7 +592,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByC_T;
 
 	/**
@@ -678,16 +636,9 @@ public class SocialRelationPersistenceImpl
 			OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -733,7 +684,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByU1_U2;
 
 	/**
@@ -777,16 +728,9 @@ public class SocialRelationPersistenceImpl
 			OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByU1_U2_First(
-			userId1, userId2, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByU1_U2.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1, userId2}));
+		return _collectionPersistenceFinderByU1_U2.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, userId2},
+			orderByComparator);
 	}
 
 	/**
@@ -832,7 +776,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1, userId2});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByU1_T;
 
 	/**
@@ -876,16 +820,9 @@ public class SocialRelationPersistenceImpl
 			OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByU1_T_First(
-			userId1, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByU1_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId1, type}));
+		return _collectionPersistenceFinderByU1_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId1, type},
+			orderByComparator);
 	}
 
 	/**
@@ -931,7 +868,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId1, type});
 	}
 
-	private CollectionPersistenceFinder<SocialRelation>
+	private CollectionPersistenceFinder<SocialRelation, NoSuchRelationException>
 		_collectionPersistenceFinderByU2_T;
 
 	/**
@@ -975,16 +912,9 @@ public class SocialRelationPersistenceImpl
 			OrderByComparator<SocialRelation> orderByComparator)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByU2_T_First(
-			userId2, type, orderByComparator);
-
-		if (socialRelation != null) {
-			return socialRelation;
-		}
-
-		throw new NoSuchRelationException(
-			_collectionPersistenceFinderByU2_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId2, type}));
+		return _collectionPersistenceFinderByU2_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId2, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1030,7 +960,7 @@ public class SocialRelationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId2, type});
 	}
 
-	private UniquePersistenceFinder<SocialRelation>
+	private UniquePersistenceFinder<SocialRelation, NoSuchRelationException>
 		_uniquePersistenceFinderByU1_U2_T;
 
 	/**
@@ -1046,22 +976,9 @@ public class SocialRelationPersistenceImpl
 	public SocialRelation findByU1_U2_T(long userId1, long userId2, int type)
 		throws NoSuchRelationException {
 
-		SocialRelation socialRelation = fetchByU1_U2_T(userId1, userId2, type);
-
-		if (socialRelation == null) {
-			String message =
-				_uniquePersistenceFinderByU1_U2_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId1, userId2, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRelationException(message);
-		}
-
-		return socialRelation;
+		return _uniquePersistenceFinderByU1_U2_T.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId1, userId2, type});
 	}
 
 	/**
@@ -1700,4 +1617,4 @@ public class SocialRelationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:144910930
+// LIFERAY-SERVICE-BUILDER-HASH:-567659553

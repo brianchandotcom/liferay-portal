@@ -66,8 +66,9 @@ public class PasswordTrackerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<PasswordTracker>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<PasswordTracker, NoSuchPasswordTrackerException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the password trackers where userId = &#63;.
@@ -107,16 +108,9 @@ public class PasswordTrackerPersistenceImpl
 			long userId, OrderByComparator<PasswordTracker> orderByComparator)
 		throws NoSuchPasswordTrackerException {
 
-		PasswordTracker passwordTracker = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (passwordTracker != null) {
-			return passwordTracker;
-		}
-
-		throw new NoSuchPasswordTrackerException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -420,4 +414,4 @@ public class PasswordTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1617238209
+// LIFERAY-SERVICE-BUILDER-HASH:-359993194

@@ -72,8 +72,9 @@ public class SocialActivitySettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SocialActivitySetting>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<SocialActivitySetting, NoSuchActivitySettingException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the social activity settings where groupId = &#63;.
@@ -114,16 +115,9 @@ public class SocialActivitySettingPersistenceImpl
 			OrderByComparator<SocialActivitySetting> orderByComparator)
 		throws NoSuchActivitySettingException {
 
-		SocialActivitySetting socialActivitySetting = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (socialActivitySetting != null) {
-			return socialActivitySetting;
-		}
-
-		throw new NoSuchActivitySettingException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -166,8 +160,9 @@ public class SocialActivitySettingPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySetting>
-		_collectionPersistenceFinderByG_C;
+	private CollectionPersistenceFinder
+		<SocialActivitySetting, NoSuchActivitySettingException>
+			_collectionPersistenceFinderByG_C;
 
 	/**
 	 * Returns an ordered range of all the social activity settings where groupId = &#63; and classNameId = &#63;.
@@ -211,16 +206,9 @@ public class SocialActivitySettingPersistenceImpl
 			OrderByComparator<SocialActivitySetting> orderByComparator)
 		throws NoSuchActivitySettingException {
 
-		SocialActivitySetting socialActivitySetting = fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-
-		if (socialActivitySetting != null) {
-			return socialActivitySetting;
-		}
-
-		throw new NoSuchActivitySettingException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId}, orderByComparator);
 	}
 
 	/**
@@ -268,8 +256,9 @@ public class SocialActivitySettingPersistenceImpl
 			new Object[] {groupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySetting>
-		_collectionPersistenceFinderByG_A;
+	private CollectionPersistenceFinder
+		<SocialActivitySetting, NoSuchActivitySettingException>
+			_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns an ordered range of all the social activity settings where groupId = &#63; and activityType = &#63;.
@@ -313,17 +302,9 @@ public class SocialActivitySettingPersistenceImpl
 			OrderByComparator<SocialActivitySetting> orderByComparator)
 		throws NoSuchActivitySettingException {
 
-		SocialActivitySetting socialActivitySetting = fetchByG_A_First(
-			groupId, activityType, orderByComparator);
-
-		if (socialActivitySetting != null) {
-			return socialActivitySetting;
-		}
-
-		throw new NoSuchActivitySettingException(
-			_collectionPersistenceFinderByG_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, activityType}));
+		return _collectionPersistenceFinderByG_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, activityType}, orderByComparator);
 	}
 
 	/**
@@ -371,8 +352,9 @@ public class SocialActivitySettingPersistenceImpl
 			new Object[] {groupId, activityType});
 	}
 
-	private CollectionPersistenceFinder<SocialActivitySetting>
-		_collectionPersistenceFinderByG_C_A;
+	private CollectionPersistenceFinder
+		<SocialActivitySetting, NoSuchActivitySettingException>
+			_collectionPersistenceFinderByG_C_A;
 
 	/**
 	 * Returns an ordered range of all the social activity settings where groupId = &#63; and classNameId = &#63; and activityType = &#63;.
@@ -418,17 +400,10 @@ public class SocialActivitySettingPersistenceImpl
 			OrderByComparator<SocialActivitySetting> orderByComparator)
 		throws NoSuchActivitySettingException {
 
-		SocialActivitySetting socialActivitySetting = fetchByG_C_A_First(
-			groupId, classNameId, activityType, orderByComparator);
-
-		if (socialActivitySetting != null) {
-			return socialActivitySetting;
-		}
-
-		throw new NoSuchActivitySettingException(
-			_collectionPersistenceFinderByG_C_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, classNameId, activityType}));
+		return _collectionPersistenceFinderByG_C_A.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, activityType},
+			orderByComparator);
 	}
 
 	/**
@@ -482,8 +457,9 @@ public class SocialActivitySettingPersistenceImpl
 			new Object[] {groupId, classNameId, activityType});
 	}
 
-	private UniquePersistenceFinder<SocialActivitySetting>
-		_uniquePersistenceFinderByG_C_A_N;
+	private UniquePersistenceFinder
+		<SocialActivitySetting, NoSuchActivitySettingException>
+			_uniquePersistenceFinderByG_C_A_N;
 
 	/**
 	 * Returns the social activity setting where groupId = &#63; and classNameId = &#63; and activityType = &#63; and name = &#63; or throws a <code>NoSuchActivitySettingException</code> if it could not be found.
@@ -500,23 +476,9 @@ public class SocialActivitySettingPersistenceImpl
 			long groupId, long classNameId, int activityType, String name)
 		throws NoSuchActivitySettingException {
 
-		SocialActivitySetting socialActivitySetting = fetchByG_C_A_N(
-			groupId, classNameId, activityType, name);
-
-		if (socialActivitySetting == null) {
-			String message =
-				_uniquePersistenceFinderByG_C_A_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, classNameId, activityType, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchActivitySettingException(message);
-		}
-
-		return socialActivitySetting;
+		return _uniquePersistenceFinderByG_C_A_N.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, classNameId, activityType, name});
 	}
 
 	/**
@@ -1018,4 +980,4 @@ public class SocialActivitySettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-50636090
+// LIFERAY-SERVICE-BUILDER-HASH:-1219150309

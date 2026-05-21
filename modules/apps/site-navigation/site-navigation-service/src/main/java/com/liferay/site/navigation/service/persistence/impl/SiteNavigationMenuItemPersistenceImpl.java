@@ -96,8 +96,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63;.
@@ -138,16 +139,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -189,8 +182,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<SiteNavigationMenuItem>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the site navigation menu item where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -204,22 +198,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 	public SiteNavigationMenuItem findByUUID_G(String uuid, long groupId)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUUID_G(
-			uuid, groupId);
-
-		if (siteNavigationMenuItem == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMenuItemException(message);
-		}
-
-		return siteNavigationMenuItem;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -268,8 +248,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where uuid = &#63; and companyId = &#63;.
@@ -312,16 +293,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -366,8 +339,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where companyId = &#63;.
@@ -408,16 +382,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -459,8 +425,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderBySiteNavigationMenuId;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderBySiteNavigationMenuId;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63;.
@@ -501,19 +468,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			fetchBySiteNavigationMenuId_First(
-				siteNavigationMenuId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderBySiteNavigationMenuId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {siteNavigationMenuId}));
+		return _collectionPersistenceFinderBySiteNavigationMenuId.findFirst(
+			finderCache, new Object[] {siteNavigationMenuId},
+			orderByComparator);
 	}
 
 	/**
@@ -556,8 +513,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByParentSiteNavigationMenuItemId;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where parentSiteNavigationMenuItemId = &#63;.
@@ -599,19 +557,10 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			fetchByParentSiteNavigationMenuItemId_First(
-				parentSiteNavigationMenuItemId, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByParentSiteNavigationMenuItemId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {parentSiteNavigationMenuItemId}));
+		return _collectionPersistenceFinderByParentSiteNavigationMenuItemId.
+			findFirst(
+				finderCache, new Object[] {parentSiteNavigationMenuItemId},
+				orderByComparator);
 	}
 
 	/**
@@ -659,8 +608,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			count(finderCache, new Object[] {parentSiteNavigationMenuItemId});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByType;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByType;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where type = &#63;.
@@ -701,16 +651,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByType_First(
-			type, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			finderCache, new Object[] {type}, orderByComparator);
 	}
 
 	/**
@@ -752,8 +694,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {type});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByS_P;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByS_P;
 
 	/**
 	 * Returns an ordered range of all the site navigation menu items where siteNavigationMenuId = &#63; and parentSiteNavigationMenuItemId = &#63;.
@@ -798,20 +741,10 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_P_First(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId,
+		return _collectionPersistenceFinderByS_P.findFirst(
+			finderCache,
+			new Object[] {siteNavigationMenuId, parentSiteNavigationMenuItemId},
 			orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByS_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					siteNavigationMenuId, parentSiteNavigationMenuItemId
-				}));
 	}
 
 	/**
@@ -868,8 +801,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<SiteNavigationMenuItem>
-		_collectionPersistenceFinderByS_LikeN;
+	private CollectionPersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_collectionPersistenceFinderByS_LikeN;
 
 	/**
 	 * Returns all the site navigation menu items where siteNavigationMenuId = &#63; and name LIKE &#63;.
@@ -971,17 +905,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByS_LikeN_First(
-			siteNavigationMenuId, name, orderByComparator);
-
-		if (siteNavigationMenuItem != null) {
-			return siteNavigationMenuItem;
-		}
-
-		throw new NoSuchMenuItemException(
-			_collectionPersistenceFinderByS_LikeN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {siteNavigationMenuId, name}));
+		return _collectionPersistenceFinderByS_LikeN.findFirst(
+			finderCache, new Object[] {siteNavigationMenuId, name},
+			orderByComparator);
 	}
 
 	/**
@@ -1027,8 +953,9 @@ public class SiteNavigationMenuItemPersistenceImpl
 			finderCache, new Object[] {siteNavigationMenuId, name});
 	}
 
-	private UniquePersistenceFinder<SiteNavigationMenuItem>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<SiteNavigationMenuItem, NoSuchMenuItemException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the site navigation menu item where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMenuItemException</code> if it could not be found.
@@ -1043,23 +970,8 @@ public class SiteNavigationMenuItemPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchMenuItemException {
 
-		SiteNavigationMenuItem siteNavigationMenuItem = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (siteNavigationMenuItem == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMenuItemException(message);
-		}
-
-		return siteNavigationMenuItem;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -1845,4 +1757,4 @@ public class SiteNavigationMenuItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1009692403
+// LIFERAY-SERVICE-BUILDER-HASH:-2022360367

@@ -81,8 +81,9 @@ public class NotificationRecipientPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<NotificationRecipient>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<NotificationRecipient, NoSuchNotificationRecipientException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the notification recipients where uuid = &#63;.
@@ -123,16 +124,8 @@ public class NotificationRecipientPersistenceImpl
 			OrderByComparator<NotificationRecipient> orderByComparator)
 		throws NoSuchNotificationRecipientException {
 
-		NotificationRecipient notificationRecipient = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (notificationRecipient != null) {
-			return notificationRecipient;
-		}
-
-		throw new NoSuchNotificationRecipientException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class NotificationRecipientPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<NotificationRecipient>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<NotificationRecipient, NoSuchNotificationRecipientException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the notification recipients where uuid = &#63; and companyId = &#63;.
@@ -218,16 +212,8 @@ public class NotificationRecipientPersistenceImpl
 			OrderByComparator<NotificationRecipient> orderByComparator)
 		throws NoSuchNotificationRecipientException {
 
-		NotificationRecipient notificationRecipient = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (notificationRecipient != null) {
-			return notificationRecipient;
-		}
-
-		throw new NoSuchNotificationRecipientException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -272,8 +258,9 @@ public class NotificationRecipientPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<NotificationRecipient>
-		_uniquePersistenceFinderByClassPK;
+	private UniquePersistenceFinder
+		<NotificationRecipient, NoSuchNotificationRecipientException>
+			_uniquePersistenceFinderByClassPK;
 
 	/**
 	 * Returns the notification recipient where classPK = &#63; or throws a <code>NoSuchNotificationRecipientException</code> if it could not be found.
@@ -286,21 +273,8 @@ public class NotificationRecipientPersistenceImpl
 	public NotificationRecipient findByClassPK(long classPK)
 		throws NoSuchNotificationRecipientException {
 
-		NotificationRecipient notificationRecipient = fetchByClassPK(classPK);
-
-		if (notificationRecipient == null) {
-			String message =
-				_uniquePersistenceFinderByClassPK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotificationRecipientException(message);
-		}
-
-		return notificationRecipient;
+		return _uniquePersistenceFinderByClassPK.find(
+			finderCache, new Object[] {classPK});
 	}
 
 	/**
@@ -713,4 +687,4 @@ public class NotificationRecipientPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1893090692
+// LIFERAY-SERVICE-BUILDER-HASH:-1075767137

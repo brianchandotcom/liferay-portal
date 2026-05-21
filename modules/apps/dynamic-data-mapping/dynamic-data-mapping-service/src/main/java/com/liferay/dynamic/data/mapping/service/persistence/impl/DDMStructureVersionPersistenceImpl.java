@@ -85,8 +85,9 @@ public class DDMStructureVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DDMStructureVersion>
-		_collectionPersistenceFinderByStructureId;
+	private CollectionPersistenceFinder
+		<DDMStructureVersion, NoSuchStructureVersionException>
+			_collectionPersistenceFinderByStructureId;
 
 	/**
 	 * Returns an ordered range of all the ddm structure versions where structureId = &#63;.
@@ -127,16 +128,8 @@ public class DDMStructureVersionPersistenceImpl
 			OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws NoSuchStructureVersionException {
 
-		DDMStructureVersion ddmStructureVersion = fetchByStructureId_First(
-			structureId, orderByComparator);
-
-		if (ddmStructureVersion != null) {
-			return ddmStructureVersion;
-		}
-
-		throw new NoSuchStructureVersionException(
-			_collectionPersistenceFinderByStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId}));
+		return _collectionPersistenceFinderByStructureId.findFirst(
+			finderCache, new Object[] {structureId}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +171,9 @@ public class DDMStructureVersionPersistenceImpl
 			finderCache, new Object[] {structureId});
 	}
 
-	private UniquePersistenceFinder<DDMStructureVersion>
-		_uniquePersistenceFinderByS_V;
+	private UniquePersistenceFinder
+		<DDMStructureVersion, NoSuchStructureVersionException>
+			_uniquePersistenceFinderByS_V;
 
 	/**
 	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a <code>NoSuchStructureVersionException</code> if it could not be found.
@@ -193,23 +187,8 @@ public class DDMStructureVersionPersistenceImpl
 	public DDMStructureVersion findByS_V(long structureId, String version)
 		throws NoSuchStructureVersionException {
 
-		DDMStructureVersion ddmStructureVersion = fetchByS_V(
-			structureId, version);
-
-		if (ddmStructureVersion == null) {
-			String message =
-				_uniquePersistenceFinderByS_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {structureId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchStructureVersionException(message);
-		}
-
-		return ddmStructureVersion;
+		return _uniquePersistenceFinderByS_V.find(
+			finderCache, new Object[] {structureId, version});
 	}
 
 	/**
@@ -258,8 +237,9 @@ public class DDMStructureVersionPersistenceImpl
 			finderCache, new Object[] {structureId, version});
 	}
 
-	private CollectionPersistenceFinder<DDMStructureVersion>
-		_collectionPersistenceFinderByS_S;
+	private CollectionPersistenceFinder
+		<DDMStructureVersion, NoSuchStructureVersionException>
+			_collectionPersistenceFinderByS_S;
 
 	/**
 	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
@@ -302,16 +282,8 @@ public class DDMStructureVersionPersistenceImpl
 			OrderByComparator<DDMStructureVersion> orderByComparator)
 		throws NoSuchStructureVersionException {
 
-		DDMStructureVersion ddmStructureVersion = fetchByS_S_First(
-			structureId, status, orderByComparator);
-
-		if (ddmStructureVersion != null) {
-			return ddmStructureVersion;
-		}
-
-		throw new NoSuchStructureVersionException(
-			_collectionPersistenceFinderByS_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {structureId, status}));
+		return _collectionPersistenceFinderByS_S.findFirst(
+			finderCache, new Object[] {structureId, status}, orderByComparator);
 	}
 
 	/**
@@ -789,4 +761,4 @@ public class DDMStructureVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:455827934
+// LIFERAY-SERVICE-BUILDER-HASH:833513197

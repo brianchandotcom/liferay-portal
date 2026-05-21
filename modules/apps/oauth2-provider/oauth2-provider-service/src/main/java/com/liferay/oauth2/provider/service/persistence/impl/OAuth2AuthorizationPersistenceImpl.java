@@ -83,8 +83,9 @@ public class OAuth2AuthorizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<OAuth2Authorization>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63;.
@@ -125,16 +126,8 @@ public class OAuth2AuthorizationPersistenceImpl
 			OrderByComparator<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException {
 
-		OAuth2Authorization oAuth2Authorization = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		throw new NoSuchOAuth2AuthorizationException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -175,8 +168,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<OAuth2Authorization>
-		_collectionPersistenceFinderByOAuth2ApplicationId;
+	private CollectionPersistenceFinder
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
+			_collectionPersistenceFinderByOAuth2ApplicationId;
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where oAuth2ApplicationId = &#63;.
@@ -217,19 +211,8 @@ public class OAuth2AuthorizationPersistenceImpl
 			OrderByComparator<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException {
 
-		OAuth2Authorization oAuth2Authorization =
-			fetchByOAuth2ApplicationId_First(
-				oAuth2ApplicationId, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		throw new NoSuchOAuth2AuthorizationException(
-			_collectionPersistenceFinderByOAuth2ApplicationId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {oAuth2ApplicationId}));
+		return _collectionPersistenceFinderByOAuth2ApplicationId.findFirst(
+			finderCache, new Object[] {oAuth2ApplicationId}, orderByComparator);
 	}
 
 	/**
@@ -271,8 +254,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			finderCache, new Object[] {oAuth2ApplicationId});
 	}
 
-	private CollectionPersistenceFinder<OAuth2Authorization>
-		_collectionPersistenceFinderByC_ATCH;
+	private CollectionPersistenceFinder
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
+			_collectionPersistenceFinderByC_ATCH;
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where companyId = &#63; and accessTokenContentHash = &#63;.
@@ -315,17 +299,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			OrderByComparator<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException {
 
-		OAuth2Authorization oAuth2Authorization = fetchByC_ATCH_First(
-			companyId, accessTokenContentHash, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		throw new NoSuchOAuth2AuthorizationException(
-			_collectionPersistenceFinderByC_ATCH.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, accessTokenContentHash}));
+		return _collectionPersistenceFinderByC_ATCH.findFirst(
+			finderCache, new Object[] {companyId, accessTokenContentHash},
+			orderByComparator);
 	}
 
 	/**
@@ -371,8 +347,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			finderCache, new Object[] {companyId, accessTokenContentHash});
 	}
 
-	private CollectionPersistenceFinder<OAuth2Authorization>
-		_collectionPersistenceFinderByC_RTCH;
+	private CollectionPersistenceFinder
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
+			_collectionPersistenceFinderByC_RTCH;
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where companyId = &#63; and refreshTokenContentHash = &#63;.
@@ -415,17 +392,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			OrderByComparator<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException {
 
-		OAuth2Authorization oAuth2Authorization = fetchByC_RTCH_First(
-			companyId, refreshTokenContentHash, orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		throw new NoSuchOAuth2AuthorizationException(
-			_collectionPersistenceFinderByC_RTCH.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, refreshTokenContentHash}));
+		return _collectionPersistenceFinderByC_RTCH.findFirst(
+			finderCache, new Object[] {companyId, refreshTokenContentHash},
+			orderByComparator);
 	}
 
 	/**
@@ -471,8 +440,9 @@ public class OAuth2AuthorizationPersistenceImpl
 			finderCache, new Object[] {companyId, refreshTokenContentHash});
 	}
 
-	private CollectionPersistenceFinder<OAuth2Authorization>
-		_collectionPersistenceFinderByU_O_R;
+	private CollectionPersistenceFinder
+		<OAuth2Authorization, NoSuchOAuth2AuthorizationException>
+			_collectionPersistenceFinderByU_O_R;
 
 	/**
 	 * Returns an ordered range of all the o auth2 authorizations where userId = &#63; and oAuth2ApplicationId = &#63; and rememberDeviceContent = &#63;.
@@ -519,20 +489,10 @@ public class OAuth2AuthorizationPersistenceImpl
 			OrderByComparator<OAuth2Authorization> orderByComparator)
 		throws NoSuchOAuth2AuthorizationException {
 
-		OAuth2Authorization oAuth2Authorization = fetchByU_O_R_First(
-			userId, oAuth2ApplicationId, rememberDeviceContent,
+		return _collectionPersistenceFinderByU_O_R.findFirst(
+			finderCache,
+			new Object[] {userId, oAuth2ApplicationId, rememberDeviceContent},
 			orderByComparator);
-
-		if (oAuth2Authorization != null) {
-			return oAuth2Authorization;
-		}
-
-		throw new NoSuchOAuth2AuthorizationException(
-			_collectionPersistenceFinderByU_O_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					userId, oAuth2ApplicationId, rememberDeviceContent
-				}));
 	}
 
 	/**
@@ -1395,4 +1355,4 @@ public class OAuth2AuthorizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:746762615
+// LIFERAY-SERVICE-BUILDER-HASH:1724204923

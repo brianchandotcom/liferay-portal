@@ -78,8 +78,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<CommerceAvailabilityEstimate, NoSuchAvailabilityEstimateException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce availability estimates where uuid = &#63;.
@@ -120,16 +121,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
 		throws NoSuchAvailabilityEstimateException {
 
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		throw new NoSuchAvailabilityEstimateException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -205,8 +198,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<CommerceAvailabilityEstimate, NoSuchAvailabilityEstimateException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce availability estimates where uuid = &#63; and companyId = &#63;.
@@ -249,16 +243,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
 		throws NoSuchAvailabilityEstimateException {
 
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		throw new NoSuchAvailabilityEstimateException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -340,8 +326,9 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<CommerceAvailabilityEstimate>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<CommerceAvailabilityEstimate, NoSuchAvailabilityEstimateException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce availability estimates where companyId = &#63;.
@@ -382,16 +369,8 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 			OrderByComparator<CommerceAvailabilityEstimate> orderByComparator)
 		throws NoSuchAvailabilityEstimateException {
 
-		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
-			fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (commerceAvailabilityEstimate != null) {
-			return commerceAvailabilityEstimate;
-		}
-
-		throw new NoSuchAvailabilityEstimateException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -867,4 +846,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1231070257
+// LIFERAY-SERVICE-BUILDER-HASH:652947766

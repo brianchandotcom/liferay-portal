@@ -74,8 +74,9 @@ public class FaroNotificationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FaroNotification>
-		_collectionPersistenceFinderByLtCreateTime;
+	private CollectionPersistenceFinder
+		<FaroNotification, NoSuchFaroNotificationException>
+			_collectionPersistenceFinderByLtCreateTime;
 
 	/**
 	 * Returns all the faro notifications where createTime &lt; &#63;.
@@ -169,16 +170,8 @@ public class FaroNotificationPersistenceImpl
 			OrderByComparator<FaroNotification> orderByComparator)
 		throws NoSuchFaroNotificationException {
 
-		FaroNotification faroNotification = fetchByLtCreateTime_First(
-			createTime, orderByComparator);
-
-		if (faroNotification != null) {
-			return faroNotification;
-		}
-
-		throw new NoSuchFaroNotificationException(
-			_collectionPersistenceFinderByLtCreateTime.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createTime}));
+		return _collectionPersistenceFinderByLtCreateTime.findFirst(
+			finderCache, new Object[] {createTime}, orderByComparator);
 	}
 
 	/**
@@ -220,8 +213,9 @@ public class FaroNotificationPersistenceImpl
 			finderCache, new Object[] {createTime});
 	}
 
-	private CollectionPersistenceFinder<FaroNotification>
-		_collectionPersistenceFinderByG_GtC_O_T;
+	private CollectionPersistenceFinder
+		<FaroNotification, NoSuchFaroNotificationException>
+			_collectionPersistenceFinderByG_GtC_O_T;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63;.
@@ -544,8 +538,9 @@ public class FaroNotificationPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FaroNotification>
-		_collectionPersistenceFinderByG_GtC_O_T_S;
+	private CollectionPersistenceFinder
+		<FaroNotification, NoSuchFaroNotificationException>
+			_collectionPersistenceFinderByG_GtC_O_T_S;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and type = &#63; and subtype = &#63;.
@@ -904,8 +899,9 @@ public class FaroNotificationPersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<FaroNotification>
-		_collectionPersistenceFinderByG_GtC_O_R_T_S;
+	private CollectionPersistenceFinder
+		<FaroNotification, NoSuchFaroNotificationException>
+			_collectionPersistenceFinderByG_GtC_O_R_T_S;
 
 	/**
 	 * Returns all the faro notifications where groupId = &#63; and createTime &gt; &#63; and ownerId = &#63; and read = &#63; and type = &#63; and subtype = &#63;.
@@ -1686,4 +1682,4 @@ public class FaroNotificationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237888783
+// LIFERAY-SERVICE-BUILDER-HASH:-1217260303

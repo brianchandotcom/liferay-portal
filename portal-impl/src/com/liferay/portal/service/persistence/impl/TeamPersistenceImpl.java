@@ -87,7 +87,7 @@ public class TeamPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Team>
+	private CollectionPersistenceFinder<Team, NoSuchTeamException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,9 @@ public class TeamPersistenceImpl
 			String uuid, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException {
 
-		Team team = fetchByUuid_First(uuid, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		throw new NoSuchTeamException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -177,7 +171,8 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Team> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<Team, NoSuchTeamException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the team where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
@@ -191,21 +186,8 @@ public class TeamPersistenceImpl
 	public Team findByUUID_G(String uuid, long groupId)
 		throws NoSuchTeamException {
 
-		Team team = fetchByUUID_G(uuid, groupId);
-
-		if (team == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTeamException(message);
-		}
-
-		return team;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -254,7 +236,7 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<Team>
+	private CollectionPersistenceFinder<Team, NoSuchTeamException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -297,15 +279,9 @@ public class TeamPersistenceImpl
 			OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException {
 
-		Team team = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		throw new NoSuchTeamException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -351,7 +327,7 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<Team>
+	private CollectionPersistenceFinder<Team, NoSuchTeamException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -391,15 +367,9 @@ public class TeamPersistenceImpl
 			long companyId, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException {
 
-		Team team = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		throw new NoSuchTeamException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -441,7 +411,7 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<Team>
+	private FilterCollectionPersistenceFinder<Team, NoSuchTeamException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -481,15 +451,9 @@ public class TeamPersistenceImpl
 			long groupId, OrderByComparator<Team> orderByComparator)
 		throws NoSuchTeamException {
 
-		Team team = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (team != null) {
-			return team;
-		}
-
-		throw new NoSuchTeamException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -566,7 +530,8 @@ public class TeamPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId}, groupId);
 	}
 
-	private UniquePersistenceFinder<Team> _uniquePersistenceFinderByG_N;
+	private UniquePersistenceFinder<Team, NoSuchTeamException>
+		_uniquePersistenceFinderByG_N;
 
 	/**
 	 * Returns the team where groupId = &#63; and name = &#63; or throws a <code>NoSuchTeamException</code> if it could not be found.
@@ -580,21 +545,8 @@ public class TeamPersistenceImpl
 	public Team findByG_N(long groupId, String name)
 		throws NoSuchTeamException {
 
-		Team team = fetchByG_N(groupId, name);
-
-		if (team == null) {
-			String message =
-				_uniquePersistenceFinderByG_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTeamException(message);
-		}
-
-		return team;
+		return _uniquePersistenceFinderByG_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, name});
 	}
 
 	/**
@@ -1774,4 +1726,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1667755781
+// LIFERAY-SERVICE-BUILDER-HASH:1768240435

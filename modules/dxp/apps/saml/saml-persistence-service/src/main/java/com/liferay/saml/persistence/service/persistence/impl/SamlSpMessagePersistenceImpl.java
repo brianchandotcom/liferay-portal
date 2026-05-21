@@ -76,7 +76,7 @@ public class SamlSpMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SamlSpMessage>
+	private CollectionPersistenceFinder<SamlSpMessage, NoSuchSpMessageException>
 		_collectionPersistenceFinderByLtExpirationDate;
 
 	/**
@@ -171,17 +171,8 @@ public class SamlSpMessagePersistenceImpl
 			OrderByComparator<SamlSpMessage> orderByComparator)
 		throws NoSuchSpMessageException {
 
-		SamlSpMessage samlSpMessage = fetchByLtExpirationDate_First(
-			expirationDate, orderByComparator);
-
-		if (samlSpMessage != null) {
-			return samlSpMessage;
-		}
-
-		throw new NoSuchSpMessageException(
-			_collectionPersistenceFinderByLtExpirationDate.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {expirationDate}));
+		return _collectionPersistenceFinderByLtExpirationDate.findFirst(
+			finderCache, new Object[] {expirationDate}, orderByComparator);
 	}
 
 	/**
@@ -223,7 +214,7 @@ public class SamlSpMessagePersistenceImpl
 			finderCache, new Object[] {expirationDate});
 	}
 
-	private UniquePersistenceFinder<SamlSpMessage>
+	private UniquePersistenceFinder<SamlSpMessage, NoSuchSpMessageException>
 		_uniquePersistenceFinderBySIEI_SIRK;
 
 	/**
@@ -239,23 +230,8 @@ public class SamlSpMessagePersistenceImpl
 			String samlIdpEntityId, String samlIdpResponseKey)
 		throws NoSuchSpMessageException {
 
-		SamlSpMessage samlSpMessage = fetchBySIEI_SIRK(
-			samlIdpEntityId, samlIdpResponseKey);
-
-		if (samlSpMessage == null) {
-			String message =
-				_uniquePersistenceFinderBySIEI_SIRK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {samlIdpEntityId, samlIdpResponseKey});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchSpMessageException(message);
-		}
-
-		return samlSpMessage;
+		return _uniquePersistenceFinderBySIEI_SIRK.find(
+			finderCache, new Object[] {samlIdpEntityId, samlIdpResponseKey});
 	}
 
 	/**
@@ -605,4 +581,4 @@ public class SamlSpMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-797576561
+// LIFERAY-SERVICE-BUILDER-HASH:-1399731880

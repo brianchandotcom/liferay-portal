@@ -72,8 +72,9 @@ public class SamlPeerBindingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SamlPeerBinding>
-		_collectionPersistenceFinderByC_D_SNIV;
+	private CollectionPersistenceFinder
+		<SamlPeerBinding, NoSuchPeerBindingException>
+			_collectionPersistenceFinderByC_D_SNIV;
 
 	/**
 	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and deleted = &#63; and samlNameIdValue = &#63;.
@@ -118,17 +119,9 @@ public class SamlPeerBindingPersistenceImpl
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_D_SNIV_First(
-			companyId, deleted, samlNameIdValue, orderByComparator);
-
-		if (samlPeerBinding != null) {
-			return samlPeerBinding;
-		}
-
-		throw new NoSuchPeerBindingException(
-			_collectionPersistenceFinderByC_D_SNIV.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, deleted, samlNameIdValue}));
+		return _collectionPersistenceFinderByC_D_SNIV.findFirst(
+			finderCache, new Object[] {companyId, deleted, samlNameIdValue},
+			orderByComparator);
 	}
 
 	/**
@@ -181,8 +174,9 @@ public class SamlPeerBindingPersistenceImpl
 			finderCache, new Object[] {companyId, deleted, samlNameIdValue});
 	}
 
-	private CollectionPersistenceFinder<SamlPeerBinding>
-		_collectionPersistenceFinderByC_U_SPEI_D;
+	private CollectionPersistenceFinder
+		<SamlPeerBinding, NoSuchPeerBindingException>
+			_collectionPersistenceFinderByC_U_SPEI_D;
 
 	/**
 	 * Returns an ordered range of all the saml peer bindings where companyId = &#63; and userId = &#63; and samlPeerEntityId = &#63; and deleted = &#63;.
@@ -232,17 +226,10 @@ public class SamlPeerBindingPersistenceImpl
 			OrderByComparator<SamlPeerBinding> orderByComparator)
 		throws NoSuchPeerBindingException {
 
-		SamlPeerBinding samlPeerBinding = fetchByC_U_SPEI_D_First(
-			companyId, userId, samlPeerEntityId, deleted, orderByComparator);
-
-		if (samlPeerBinding != null) {
-			return samlPeerBinding;
-		}
-
-		throw new NoSuchPeerBindingException(
-			_collectionPersistenceFinderByC_U_SPEI_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, userId, samlPeerEntityId, deleted}));
+		return _collectionPersistenceFinderByC_U_SPEI_D.findFirst(
+			finderCache,
+			new Object[] {companyId, userId, samlPeerEntityId, deleted},
+			orderByComparator);
 	}
 
 	/**
@@ -656,4 +643,4 @@ public class SamlPeerBindingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:48410718
+// LIFERAY-SERVICE-BUILDER-HASH:-1810682193

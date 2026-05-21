@@ -81,7 +81,7 @@ public class KaleoNodePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<KaleoNode>
+	private CollectionPersistenceFinder<KaleoNode, NoSuchNodeException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -122,16 +122,8 @@ public class KaleoNodePersistenceImpl
 			long companyId, OrderByComparator<KaleoNode> orderByComparator)
 		throws NoSuchNodeException {
 
-		KaleoNode kaleoNode = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		throw new NoSuchNodeException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -172,7 +164,7 @@ public class KaleoNodePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<KaleoNode>
+	private CollectionPersistenceFinder<KaleoNode, NoSuchNodeException>
 		_collectionPersistenceFinderByKaleoDefinitionVersionId;
 
 	/**
@@ -214,18 +206,9 @@ public class KaleoNodePersistenceImpl
 			OrderByComparator<KaleoNode> orderByComparator)
 		throws NoSuchNodeException {
 
-		KaleoNode kaleoNode = fetchByKaleoDefinitionVersionId_First(
-			kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		throw new NoSuchNodeException(
-			_collectionPersistenceFinderByKaleoDefinitionVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByKaleoDefinitionVersionId.findFirst(
+			finderCache, new Object[] {kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -271,7 +254,7 @@ public class KaleoNodePersistenceImpl
 			finderCache, new Object[] {kaleoDefinitionVersionId});
 	}
 
-	private CollectionPersistenceFinder<KaleoNode>
+	private CollectionPersistenceFinder<KaleoNode, NoSuchNodeException>
 		_collectionPersistenceFinderByC_KDVI;
 
 	/**
@@ -315,17 +298,9 @@ public class KaleoNodePersistenceImpl
 			OrderByComparator<KaleoNode> orderByComparator)
 		throws NoSuchNodeException {
 
-		KaleoNode kaleoNode = fetchByC_KDVI_First(
-			companyId, kaleoDefinitionVersionId, orderByComparator);
-
-		if (kaleoNode != null) {
-			return kaleoNode;
-		}
-
-		throw new NoSuchNodeException(
-			_collectionPersistenceFinderByC_KDVI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, kaleoDefinitionVersionId}));
+		return _collectionPersistenceFinderByC_KDVI.findFirst(
+			finderCache, new Object[] {companyId, kaleoDefinitionVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -810,4 +785,4 @@ public class KaleoNodePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2003375862
+// LIFERAY-SERVICE-BUILDER-HASH:-421764703

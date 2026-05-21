@@ -63,8 +63,9 @@ public class CacheReplicatorEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CacheReplicatorEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CacheReplicatorEntry, NoSuchCacheReplicatorEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cache replicator entries where companyId = &#63;.
@@ -105,16 +106,8 @@ public class CacheReplicatorEntryPersistenceImpl
 			OrderByComparator<CacheReplicatorEntry> orderByComparator)
 		throws NoSuchCacheReplicatorEntryException {
 
-		CacheReplicatorEntry cacheReplicatorEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (cacheReplicatorEntry != null) {
-			return cacheReplicatorEntry;
-		}
-
-		throw new NoSuchCacheReplicatorEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -156,8 +149,9 @@ public class CacheReplicatorEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<CacheReplicatorEntry>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<CacheReplicatorEntry, NoSuchCacheReplicatorEntryException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the cache replicator entry where name = &#63; or throws a <code>NoSuchCacheReplicatorEntryException</code> if it could not be found.
@@ -170,21 +164,8 @@ public class CacheReplicatorEntryPersistenceImpl
 	public CacheReplicatorEntry findByName(String name)
 		throws NoSuchCacheReplicatorEntryException {
 
-		CacheReplicatorEntry cacheReplicatorEntry = fetchByName(name);
-
-		if (cacheReplicatorEntry == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCacheReplicatorEntryException(message);
-		}
-
-		return cacheReplicatorEntry;
+		return _uniquePersistenceFinderByName.find(
+			finderCache, new Object[] {name});
 	}
 
 	/**
@@ -488,4 +469,4 @@ public class CacheReplicatorEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:195288436
+// LIFERAY-SERVICE-BUILDER-HASH:1560869988

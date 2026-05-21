@@ -73,7 +73,7 @@ public class ExpandoValuePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByTableId;
 
 	/**
@@ -114,16 +114,9 @@ public class ExpandoValuePersistenceImpl
 			long tableId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByTableId_First(
-			tableId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
+		return _collectionPersistenceFinderByTableId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -165,7 +158,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByColumnId;
 
 	/**
@@ -206,16 +199,9 @@ public class ExpandoValuePersistenceImpl
 			long columnId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByColumnId_First(
-			columnId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByColumnId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnId}));
+		return _collectionPersistenceFinderByColumnId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId},
+			orderByComparator);
 	}
 
 	/**
@@ -257,7 +243,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByRowId;
 
 	/**
@@ -298,16 +284,9 @@ public class ExpandoValuePersistenceImpl
 			long rowId, OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByRowId_First(
-			rowId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByRowId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {rowId}));
+		return _collectionPersistenceFinderByRowId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {rowId},
+			orderByComparator);
 	}
 
 	/**
@@ -349,7 +328,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {rowId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByT_C;
 
 	/**
@@ -393,16 +372,9 @@ public class ExpandoValuePersistenceImpl
 			OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByT_C_First(
-			tableId, columnId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByT_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, columnId}));
+		return _collectionPersistenceFinderByT_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId},
+			orderByComparator);
 	}
 
 	/**
@@ -448,7 +420,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, columnId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByT_R;
 
 	/**
@@ -492,16 +464,9 @@ public class ExpandoValuePersistenceImpl
 			OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByT_R_First(
-			tableId, rowId, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByT_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, rowId}));
+		return _collectionPersistenceFinderByT_R.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId},
+			orderByComparator);
 	}
 
 	/**
@@ -547,7 +512,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, rowId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByT_CPK;
 
 	/**
@@ -591,16 +556,9 @@ public class ExpandoValuePersistenceImpl
 			OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByT_CPK_First(
-			tableId, classPK, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByT_CPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, classPK}));
+		return _collectionPersistenceFinderByT_CPK.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -646,7 +604,8 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
-	private UniquePersistenceFinder<ExpandoValue> _uniquePersistenceFinderByC_R;
+	private UniquePersistenceFinder<ExpandoValue, NoSuchValueException>
+		_uniquePersistenceFinderByC_R;
 
 	/**
 	 * Returns the expando value where columnId = &#63; and rowId = &#63; or throws a <code>NoSuchValueException</code> if it could not be found.
@@ -660,21 +619,8 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue findByC_R(long columnId, long rowId)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByC_R(columnId, rowId);
-
-		if (expandoValue == null) {
-			String message =
-				_uniquePersistenceFinderByC_R.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {columnId, rowId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchValueException(message);
-		}
-
-		return expandoValue;
+		return _uniquePersistenceFinderByC_R.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {columnId, rowId});
 	}
 
 	/**
@@ -723,7 +669,7 @@ public class ExpandoValuePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {columnId, rowId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -768,16 +714,9 @@ public class ExpandoValuePersistenceImpl
 			OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -825,7 +764,7 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {classNameId, classPK});
 	}
 
-	private UniquePersistenceFinder<ExpandoValue>
+	private UniquePersistenceFinder<ExpandoValue, NoSuchValueException>
 		_uniquePersistenceFinderByT_C_C;
 
 	/**
@@ -841,22 +780,9 @@ public class ExpandoValuePersistenceImpl
 	public ExpandoValue findByT_C_C(long tableId, long columnId, long classPK)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByT_C_C(tableId, columnId, classPK);
-
-		if (expandoValue == null) {
-			String message =
-				_uniquePersistenceFinderByT_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {tableId, columnId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchValueException(message);
-		}
-
-		return expandoValue;
+		return _uniquePersistenceFinderByT_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, classPK});
 	}
 
 	/**
@@ -909,7 +835,7 @@ public class ExpandoValuePersistenceImpl
 			new Object[] {tableId, columnId, classPK});
 	}
 
-	private CollectionPersistenceFinder<ExpandoValue>
+	private CollectionPersistenceFinder<ExpandoValue, NoSuchValueException>
 		_collectionPersistenceFinderByT_C_D;
 
 	/**
@@ -956,17 +882,9 @@ public class ExpandoValuePersistenceImpl
 			OrderByComparator<ExpandoValue> orderByComparator)
 		throws NoSuchValueException {
 
-		ExpandoValue expandoValue = fetchByT_C_D_First(
-			tableId, columnId, data, orderByComparator);
-
-		if (expandoValue != null) {
-			return expandoValue;
-		}
-
-		throw new NoSuchValueException(
-			_collectionPersistenceFinderByT_C_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {tableId, columnId, data}));
+		return _collectionPersistenceFinderByT_C_D.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {tableId, columnId, data}, orderByComparator);
 	}
 
 	/**
@@ -1566,4 +1484,4 @@ public class ExpandoValuePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:742757363
+// LIFERAY-SERVICE-BUILDER-HASH:1190780298

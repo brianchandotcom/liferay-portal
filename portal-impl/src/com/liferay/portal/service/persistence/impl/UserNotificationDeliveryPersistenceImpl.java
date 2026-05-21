@@ -64,8 +64,9 @@ public class UserNotificationDeliveryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserNotificationDelivery>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<UserNotificationDelivery, NoSuchUserNotificationDeliveryException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the user notification deliveries where userId = &#63;.
@@ -106,16 +107,9 @@ public class UserNotificationDeliveryPersistenceImpl
 			OrderByComparator<UserNotificationDelivery> orderByComparator)
 		throws NoSuchUserNotificationDeliveryException {
 
-		UserNotificationDelivery userNotificationDelivery = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (userNotificationDelivery != null) {
-			return userNotificationDelivery;
-		}
-
-		throw new NoSuchUserNotificationDeliveryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -158,8 +152,9 @@ public class UserNotificationDeliveryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private UniquePersistenceFinder<UserNotificationDelivery>
-		_uniquePersistenceFinderByU_P_C_N_D;
+	private UniquePersistenceFinder
+		<UserNotificationDelivery, NoSuchUserNotificationDeliveryException>
+			_uniquePersistenceFinderByU_P_C_N_D;
 
 	/**
 	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a <code>NoSuchUserNotificationDeliveryException</code> if it could not be found.
@@ -178,26 +173,11 @@ public class UserNotificationDeliveryPersistenceImpl
 			int notificationType, int deliveryType)
 		throws NoSuchUserNotificationDeliveryException {
 
-		UserNotificationDelivery userNotificationDelivery = fetchByU_P_C_N_D(
-			userId, portletId, classNameId, notificationType, deliveryType);
-
-		if (userNotificationDelivery == null) {
-			String message =
-				_uniquePersistenceFinderByU_P_C_N_D.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						userId, portletId, classNameId, notificationType,
-						deliveryType
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserNotificationDeliveryException(message);
-		}
-
-		return userNotificationDelivery;
+		return _uniquePersistenceFinderByU_P_C_N_D.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {
+				userId, portletId, classNameId, notificationType, deliveryType
+			});
 	}
 
 	/**
@@ -558,4 +538,4 @@ public class UserNotificationDeliveryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2094577975
+// LIFERAY-SERVICE-BUILDER-HASH:-1871796879

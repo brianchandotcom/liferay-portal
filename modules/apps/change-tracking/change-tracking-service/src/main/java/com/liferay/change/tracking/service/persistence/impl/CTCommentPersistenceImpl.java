@@ -72,7 +72,7 @@ public class CTCommentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTComment>
+	private CollectionPersistenceFinder<CTComment, NoSuchCommentException>
 		_collectionPersistenceFinderByCtCollectionId;
 
 	/**
@@ -113,16 +113,8 @@ public class CTCommentPersistenceImpl
 			long ctCollectionId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCtCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (ctComment != null) {
-			return ctComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
+		return _collectionPersistenceFinderByCtCollectionId.findFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -163,7 +155,7 @@ public class CTCommentPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private CollectionPersistenceFinder<CTComment>
+	private CollectionPersistenceFinder<CTComment, NoSuchCommentException>
 		_collectionPersistenceFinderByCtEntryId;
 
 	/**
@@ -204,16 +196,8 @@ public class CTCommentPersistenceImpl
 			long ctEntryId, OrderByComparator<CTComment> orderByComparator)
 		throws NoSuchCommentException {
 
-		CTComment ctComment = fetchByCtEntryId_First(
-			ctEntryId, orderByComparator);
-
-		if (ctComment != null) {
-			return ctComment;
-		}
-
-		throw new NoSuchCommentException(
-			_collectionPersistenceFinderByCtEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctEntryId}));
+		return _collectionPersistenceFinderByCtEntryId.findFirst(
+			finderCache, new Object[] {ctEntryId}, orderByComparator);
 	}
 
 	/**
@@ -563,4 +547,4 @@ public class CTCommentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2011937464
+// LIFERAY-SERVICE-BUILDER-HASH:-773440018

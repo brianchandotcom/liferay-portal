@@ -97,7 +97,7 @@ public class RolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -137,15 +137,9 @@ public class RolePersistenceImpl
 			String uuid, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByUuid_First(uuid, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -222,7 +216,7 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -265,15 +259,9 @@ public class RolePersistenceImpl
 			OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -357,7 +345,7 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -397,15 +385,9 @@ public class RolePersistenceImpl
 			long companyId, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -483,7 +465,7 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByName;
 
 	/**
@@ -523,15 +505,9 @@ public class RolePersistenceImpl
 			String name, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByName_First(name, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByName.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
+		return _collectionPersistenceFinderByName.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {name},
+			orderByComparator);
 	}
 
 	/**
@@ -608,7 +584,7 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {name});
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByType;
 
 	/**
@@ -648,15 +624,9 @@ public class RolePersistenceImpl
 			int type, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByType_First(type, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByType.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type}));
+		return _collectionPersistenceFinderByType.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type},
+			orderByComparator);
 	}
 
 	/**
@@ -733,7 +703,7 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type});
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderBySubtype;
 
 	/**
@@ -773,15 +743,9 @@ public class RolePersistenceImpl
 			String subtype, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchBySubtype_First(subtype, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderBySubtype.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {subtype}));
+		return _collectionPersistenceFinderBySubtype.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {subtype},
+			orderByComparator);
 	}
 
 	/**
@@ -858,7 +822,8 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {subtype});
 	}
 
-	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<Role, NoSuchRoleException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the role where companyId = &#63; and name = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
@@ -872,21 +837,8 @@ public class RolePersistenceImpl
 	public Role findByC_N(long companyId, String name)
 		throws NoSuchRoleException {
 
-		Role role = fetchByC_N(companyId, name);
-
-		if (role == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return role;
+		return _uniquePersistenceFinderByC_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
 	/**
@@ -935,7 +887,7 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByC_T;
 
 	/**
@@ -1162,7 +1114,7 @@ public class RolePersistenceImpl
 			0);
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByT_S;
 
 	/**
@@ -1204,15 +1156,9 @@ public class RolePersistenceImpl
 			int type, String subtype, OrderByComparator<Role> orderByComparator)
 		throws NoSuchRoleException {
 
-		Role role = fetchByT_S_First(type, subtype, orderByComparator);
-
-		if (role != null) {
-			return role;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {type, subtype}));
+		return _collectionPersistenceFinderByT_S.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {type, subtype},
+			orderByComparator);
 	}
 
 	/**
@@ -1294,9 +1240,10 @@ public class RolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {type, subtype});
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByC_C_C;
-	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C;
+	private UniquePersistenceFinder<Role, NoSuchRoleException>
+		_uniquePersistenceFinderByC_C_C;
 
 	/**
 	 * Returns an ordered range of all the roles where companyId = &#63; and classNameId = &#63; and classPK = &#63;, optionally using the finder cache.
@@ -1356,22 +1303,9 @@ public class RolePersistenceImpl
 	public Role findByC_C_C(long companyId, long classNameId, long classPK)
 		throws NoSuchRoleException {
 
-		Role role = fetchByC_C_C(companyId, classNameId, classPK);
-
-		if (role == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return role;
+		return _uniquePersistenceFinderByC_C_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK});
 	}
 
 	/**
@@ -1480,9 +1414,10 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<Role>
+	private FilterCollectionPersistenceFinder<Role, NoSuchRoleException>
 		_collectionPersistenceFinderByC_C_C_T;
-	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByC_C_C_T;
+	private UniquePersistenceFinder<Role, NoSuchRoleException>
+		_uniquePersistenceFinderByC_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the roles where companyId = &#63; and classNameId = &#63; and classPK = &#63; and type = &#63;, optionally using the finder cache.
@@ -1546,22 +1481,9 @@ public class RolePersistenceImpl
 			long companyId, long classNameId, long classPK, int type)
 		throws NoSuchRoleException {
 
-		Role role = fetchByC_C_C_T(companyId, classNameId, classPK, type);
-
-		if (role == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, classNameId, classPK, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return role;
+		return _uniquePersistenceFinderByC_C_C_T.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, classNameId, classPK, type});
 	}
 
 	/**
@@ -1682,7 +1604,8 @@ public class RolePersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<Role> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<Role, NoSuchRoleException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the role where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchRoleException</code> if it could not be found.
@@ -1696,22 +1619,9 @@ public class RolePersistenceImpl
 	public Role findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchRoleException {
 
-		Role role = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (role == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return role;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -3215,4 +3125,4 @@ public class RolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:680816896
+// LIFERAY-SERVICE-BUILDER-HASH:-1156088751

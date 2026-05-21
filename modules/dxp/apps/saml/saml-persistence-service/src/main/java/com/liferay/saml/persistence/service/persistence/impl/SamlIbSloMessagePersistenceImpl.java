@@ -71,8 +71,9 @@ public class SamlIbSloMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<SamlIbSloMessage>
-		_uniquePersistenceFinderBySamlIdpSessionIndex;
+	private UniquePersistenceFinder
+		<SamlIbSloMessage, NoSuchIbSloMessageException>
+			_uniquePersistenceFinderBySamlIdpSessionIndex;
 
 	/**
 	 * Returns the saml ib slo message where samlIdpSessionIndex = &#63; or throws a <code>NoSuchIbSloMessageException</code> if it could not be found.
@@ -86,24 +87,8 @@ public class SamlIbSloMessagePersistenceImpl
 			String samlIdpSessionIndex)
 		throws NoSuchIbSloMessageException {
 
-		SamlIbSloMessage samlIbSloMessage = fetchBySamlIdpSessionIndex(
-			samlIdpSessionIndex);
-
-		if (samlIbSloMessage == null) {
-			String message =
-				_uniquePersistenceFinderBySamlIdpSessionIndex.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {samlIdpSessionIndex});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchIbSloMessageException(message);
-		}
-
-		return samlIbSloMessage;
+		return _uniquePersistenceFinderBySamlIdpSessionIndex.find(
+			finderCache, new Object[] {samlIdpSessionIndex});
 	}
 
 	/**
@@ -417,4 +402,4 @@ public class SamlIbSloMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:164097953
+// LIFERAY-SERVICE-BUILDER-HASH:-311500533

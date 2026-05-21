@@ -75,8 +75,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByErcVersionedEntryId;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByErcVersionedEntryId;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where ercVersionedEntryId = &#63;.
@@ -117,19 +118,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByErcVersionedEntryId_First(
-				ercVersionedEntryId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByErcVersionedEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {ercVersionedEntryId}));
+		return _collectionPersistenceFinderByErcVersionedEntryId.findFirst(
+			finderCache, new Object[] {ercVersionedEntryId}, orderByComparator);
 	}
 
 	/**
@@ -171,8 +161,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {ercVersionedEntryId});
 	}
 
-	private UniquePersistenceFinder<ERCVersionedEntryVersion>
-		_uniquePersistenceFinderByErcVersionedEntryId_Version;
+	private UniquePersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_uniquePersistenceFinderByErcVersionedEntryId_Version;
 
 	/**
 	 * Returns the erc versioned entry version where ercVersionedEntryId = &#63; and version = &#63; or throws a <code>NoSuchERCVersionedEntryVersionException</code> if it could not be found.
@@ -187,24 +178,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			long ercVersionedEntryId, int version)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByErcVersionedEntryId_Version(ercVersionedEntryId, version);
-
-		if (ercVersionedEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByErcVersionedEntryId_Version.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {ercVersionedEntryId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchERCVersionedEntryVersionException(message);
-		}
-
-		return ercVersionedEntryVersion;
+		return _uniquePersistenceFinderByErcVersionedEntryId_Version.find(
+			finderCache, new Object[] {ercVersionedEntryId, version});
 	}
 
 	/**
@@ -257,8 +232,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {ercVersionedEntryId, version});
 	}
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where uuid = &#63;.
@@ -299,16 +275,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -350,8 +318,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByUuid_Version;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByUuid_Version;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where uuid = &#63; and version = &#63;.
@@ -394,16 +363,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByUuid_Version_First(uuid, version, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByUuid_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, version}));
+		return _collectionPersistenceFinderByUuid_Version.findFirst(
+			finderCache, new Object[] {uuid, version}, orderByComparator);
 	}
 
 	/**
@@ -448,8 +409,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, version});
 	}
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByUUID_G;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByUUID_G;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where uuid = &#63; and groupId = &#63;.
@@ -492,16 +454,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUUID_G_First(
-			uuid, groupId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId}));
+		return _collectionPersistenceFinderByUUID_G.findFirst(
+			finderCache, new Object[] {uuid, groupId}, orderByComparator);
 	}
 
 	/**
@@ -546,8 +500,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private UniquePersistenceFinder<ERCVersionedEntryVersion>
-		_uniquePersistenceFinderByUUID_G_Version;
+	private UniquePersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_uniquePersistenceFinderByUUID_G_Version;
 
 	/**
 	 * Returns the erc versioned entry version where uuid = &#63; and groupId = &#63; and version = &#63; or throws a <code>NoSuchERCVersionedEntryVersionException</code> if it could not be found.
@@ -563,23 +518,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			String uuid, long groupId, int version)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByUUID_G_Version(uuid, groupId, version);
-
-		if (ercVersionedEntryVersion == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G_Version.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {uuid, groupId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchERCVersionedEntryVersionException(message);
-		}
-
-		return ercVersionedEntryVersion;
+		return _uniquePersistenceFinderByUUID_G_Version.find(
+			finderCache, new Object[] {uuid, groupId, version});
 	}
 
 	/**
@@ -632,8 +572,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, groupId, version});
 	}
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where uuid = &#63; and companyId = &#63;.
@@ -676,16 +617,8 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -730,8 +663,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ERCVersionedEntryVersion>
-		_collectionPersistenceFinderByUuid_C_Version;
+	private CollectionPersistenceFinder
+		<ERCVersionedEntryVersion, NoSuchERCVersionedEntryVersionException>
+			_collectionPersistenceFinderByUuid_C_Version;
 
 	/**
 	 * Returns an ordered range of all the erc versioned entry versions where uuid = &#63; and companyId = &#63; and version = &#63;.
@@ -776,18 +710,9 @@ public class ERCVersionedEntryVersionPersistenceImpl
 			OrderByComparator<ERCVersionedEntryVersion> orderByComparator)
 		throws NoSuchERCVersionedEntryVersionException {
 
-		ERCVersionedEntryVersion ercVersionedEntryVersion =
-			fetchByUuid_C_Version_First(
-				uuid, companyId, version, orderByComparator);
-
-		if (ercVersionedEntryVersion != null) {
-			return ercVersionedEntryVersion;
-		}
-
-		throw new NoSuchERCVersionedEntryVersionException(
-			_collectionPersistenceFinderByUuid_C_Version.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {uuid, companyId, version}));
+		return _collectionPersistenceFinderByUuid_C_Version.findFirst(
+			finderCache, new Object[] {uuid, companyId, version},
+			orderByComparator);
 	}
 
 	/**
@@ -1379,4 +1304,4 @@ public class ERCVersionedEntryVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-799923479
+// LIFERAY-SERVICE-BUILDER-HASH:149441803

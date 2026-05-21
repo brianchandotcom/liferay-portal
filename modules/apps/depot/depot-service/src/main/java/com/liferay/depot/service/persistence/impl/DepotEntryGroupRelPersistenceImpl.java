@@ -87,8 +87,9 @@ public class DepotEntryGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where uuid = &#63;.
@@ -129,16 +130,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,8 +172,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DepotEntryGroupRel>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the depot entry group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
@@ -194,21 +188,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public DepotEntryGroupRel findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByUUID_G(uuid, groupId);
-
-		if (depotEntryGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryGroupRelException(message);
-		}
-
-		return depotEntryGroupRel;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,8 +237,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where uuid = &#63; and companyId = &#63;.
@@ -300,16 +282,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -354,8 +328,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByDepotEntryId;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByDepotEntryId;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where depotEntryId = &#63;.
@@ -396,16 +371,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByDepotEntryId_First(
-			depotEntryId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByDepotEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {depotEntryId}));
+		return _collectionPersistenceFinderByDepotEntryId.findFirst(
+			finderCache, new Object[] {depotEntryId}, orderByComparator);
 	}
 
 	/**
@@ -447,8 +414,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {depotEntryId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByToGroupId;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByToGroupId;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63;.
@@ -489,16 +457,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByToGroupId_First(
-			toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByToGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toGroupId}));
+		return _collectionPersistenceFinderByToGroupId.findFirst(
+			finderCache, new Object[] {toGroupId}, orderByComparator);
 	}
 
 	/**
@@ -540,8 +500,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {toGroupId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByDDMSA_TGI;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByDDMSA_TGI;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where ddmStructuresAvailable = &#63; and toGroupId = &#63;.
@@ -584,17 +545,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByDDMSA_TGI_First(
-			ddmStructuresAvailable, toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByDDMSA_TGI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {ddmStructuresAvailable, toGroupId}));
+		return _collectionPersistenceFinderByDDMSA_TGI.findFirst(
+			finderCache, new Object[] {ddmStructuresAvailable, toGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -644,8 +597,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {ddmStructuresAvailable, toGroupId});
 	}
 
-	private UniquePersistenceFinder<DepotEntryGroupRel>
-		_uniquePersistenceFinderByD_TGI;
+	private UniquePersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_uniquePersistenceFinderByD_TGI;
 
 	/**
 	 * Returns the depot entry group rel where depotEntryId = &#63; and toGroupId = &#63; or throws a <code>NoSuchEntryGroupRelException</code> if it could not be found.
@@ -659,23 +613,8 @@ public class DepotEntryGroupRelPersistenceImpl
 	public DepotEntryGroupRel findByD_TGI(long depotEntryId, long toGroupId)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByD_TGI(
-			depotEntryId, toGroupId);
-
-		if (depotEntryGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByD_TGI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {depotEntryId, toGroupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryGroupRelException(message);
-		}
-
-		return depotEntryGroupRel;
+		return _uniquePersistenceFinderByD_TGI.find(
+			finderCache, new Object[] {depotEntryId, toGroupId});
 	}
 
 	/**
@@ -725,8 +664,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {depotEntryId, toGroupId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByS_TGI;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByS_TGI;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where searchable = &#63; and toGroupId = &#63;.
@@ -769,17 +709,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByS_TGI_First(
-			searchable, toGroupId, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByS_TGI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {searchable, toGroupId}));
+		return _collectionPersistenceFinderByS_TGI.findFirst(
+			finderCache, new Object[] {searchable, toGroupId},
+			orderByComparator);
 	}
 
 	/**
@@ -825,8 +757,9 @@ public class DepotEntryGroupRelPersistenceImpl
 			finderCache, new Object[] {searchable, toGroupId});
 	}
 
-	private CollectionPersistenceFinder<DepotEntryGroupRel>
-		_collectionPersistenceFinderByTGI_T;
+	private CollectionPersistenceFinder
+		<DepotEntryGroupRel, NoSuchEntryGroupRelException>
+			_collectionPersistenceFinderByTGI_T;
 
 	/**
 	 * Returns an ordered range of all the depot entry group rels where toGroupId = &#63; and type = &#63;.
@@ -869,16 +802,8 @@ public class DepotEntryGroupRelPersistenceImpl
 			OrderByComparator<DepotEntryGroupRel> orderByComparator)
 		throws NoSuchEntryGroupRelException {
 
-		DepotEntryGroupRel depotEntryGroupRel = fetchByTGI_T_First(
-			toGroupId, type, orderByComparator);
-
-		if (depotEntryGroupRel != null) {
-			return depotEntryGroupRel;
-		}
-
-		throw new NoSuchEntryGroupRelException(
-			_collectionPersistenceFinderByTGI_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {toGroupId, type}));
+		return _collectionPersistenceFinderByTGI_T.findFirst(
+			finderCache, new Object[] {toGroupId, type}, orderByComparator);
 	}
 
 	/**
@@ -1541,4 +1466,4 @@ public class DepotEntryGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-222539024
+// LIFERAY-SERVICE-BUILDER-HASH:404443653

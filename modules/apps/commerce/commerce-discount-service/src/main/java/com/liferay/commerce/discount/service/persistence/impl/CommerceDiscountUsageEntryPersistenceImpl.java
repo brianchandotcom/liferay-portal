@@ -73,8 +73,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceDiscountUsageEntry>
-		_collectionPersistenceFinderByCommerceDiscountId;
+	private CollectionPersistenceFinder
+		<CommerceDiscountUsageEntry, NoSuchDiscountUsageEntryException>
+			_collectionPersistenceFinderByCommerceDiscountId;
 
 	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceDiscountId = &#63;.
@@ -115,19 +116,8 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCommerceDiscountId_First(
-				commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		throw new NoSuchDiscountUsageEntryException(
-			_collectionPersistenceFinderByCommerceDiscountId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceDiscountId}));
+		return _collectionPersistenceFinderByCommerceDiscountId.findFirst(
+			finderCache, new Object[] {commerceDiscountId}, orderByComparator);
 	}
 
 	/**
@@ -169,8 +159,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			finderCache, new Object[] {commerceDiscountId});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountUsageEntry>
-		_collectionPersistenceFinderByCAI_CDI;
+	private CollectionPersistenceFinder
+		<CommerceDiscountUsageEntry, NoSuchDiscountUsageEntryException>
+			_collectionPersistenceFinderByCAI_CDI;
 
 	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceDiscountId = &#63;.
@@ -213,18 +204,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCAI_CDI_First(
-				commerceAccountId, commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		throw new NoSuchDiscountUsageEntryException(
-			_collectionPersistenceFinderByCAI_CDI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceAccountId, commerceDiscountId}));
+		return _collectionPersistenceFinderByCAI_CDI.findFirst(
+			finderCache, new Object[] {commerceAccountId, commerceDiscountId},
+			orderByComparator);
 	}
 
 	/**
@@ -272,8 +254,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			finderCache, new Object[] {commerceAccountId, commerceDiscountId});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountUsageEntry>
-		_collectionPersistenceFinderByCOI_CDI;
+	private CollectionPersistenceFinder
+		<CommerceDiscountUsageEntry, NoSuchDiscountUsageEntryException>
+			_collectionPersistenceFinderByCOI_CDI;
 
 	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -316,18 +299,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCOI_CDI_First(
-				commerceOrderId, commerceDiscountId, orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		throw new NoSuchDiscountUsageEntryException(
-			_collectionPersistenceFinderByCOI_CDI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceOrderId, commerceDiscountId}));
+		return _collectionPersistenceFinderByCOI_CDI.findFirst(
+			finderCache, new Object[] {commerceOrderId, commerceDiscountId},
+			orderByComparator);
 	}
 
 	/**
@@ -373,8 +347,9 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			finderCache, new Object[] {commerceOrderId, commerceDiscountId});
 	}
 
-	private CollectionPersistenceFinder<CommerceDiscountUsageEntry>
-		_collectionPersistenceFinderByCAI_COI_CDI;
+	private CollectionPersistenceFinder
+		<CommerceDiscountUsageEntry, NoSuchDiscountUsageEntryException>
+			_collectionPersistenceFinderByCAI_COI_CDI;
 
 	/**
 	 * Returns an ordered range of all the commerce discount usage entries where commerceAccountId = &#63; and commerceOrderId = &#63; and commerceDiscountId = &#63;.
@@ -424,21 +399,12 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 			OrderByComparator<CommerceDiscountUsageEntry> orderByComparator)
 		throws NoSuchDiscountUsageEntryException {
 
-		CommerceDiscountUsageEntry commerceDiscountUsageEntry =
-			fetchByCAI_COI_CDI_First(
-				commerceAccountId, commerceOrderId, commerceDiscountId,
-				orderByComparator);
-
-		if (commerceDiscountUsageEntry != null) {
-			return commerceDiscountUsageEntry;
-		}
-
-		throw new NoSuchDiscountUsageEntryException(
-			_collectionPersistenceFinderByCAI_COI_CDI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					commerceAccountId, commerceOrderId, commerceDiscountId
-				}));
+		return _collectionPersistenceFinderByCAI_COI_CDI.findFirst(
+			finderCache,
+			new Object[] {
+				commerceAccountId, commerceOrderId, commerceDiscountId
+			},
+			orderByComparator);
 	}
 
 	/**
@@ -939,4 +905,4 @@ public class CommerceDiscountUsageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2129474270
+// LIFERAY-SERVICE-BUILDER-HASH:-1685558215

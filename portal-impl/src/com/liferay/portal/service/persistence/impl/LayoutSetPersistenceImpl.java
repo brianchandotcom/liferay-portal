@@ -76,7 +76,7 @@ public class LayoutSetPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutSet>
+	private CollectionPersistenceFinder<LayoutSet, NoSuchLayoutSetException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -117,15 +117,9 @@ public class LayoutSetPersistenceImpl
 			long groupId, OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
 
-		LayoutSet layoutSet = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (layoutSet != null) {
-			return layoutSet;
-		}
-
-		throw new NoSuchLayoutSetException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -167,7 +161,7 @@ public class LayoutSetPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutSet>
+	private CollectionPersistenceFinder<LayoutSet, NoSuchLayoutSetException>
 		_collectionPersistenceFinderByLayoutSetPrototypeUuid;
 
 	/**
@@ -210,18 +204,9 @@ public class LayoutSetPersistenceImpl
 			OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
 
-		LayoutSet layoutSet = fetchByLayoutSetPrototypeUuid_First(
-			layoutSetPrototypeUuid, orderByComparator);
-
-		if (layoutSet != null) {
-			return layoutSet;
-		}
-
-		throw new NoSuchLayoutSetException(
-			_collectionPersistenceFinderByLayoutSetPrototypeUuid.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {layoutSetPrototypeUuid}));
+		return _collectionPersistenceFinderByLayoutSetPrototypeUuid.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {layoutSetPrototypeUuid}, orderByComparator);
 	}
 
 	/**
@@ -266,7 +251,8 @@ public class LayoutSetPersistenceImpl
 			new Object[] {layoutSetPrototypeUuid});
 	}
 
-	private UniquePersistenceFinder<LayoutSet> _uniquePersistenceFinderByG_P;
+	private UniquePersistenceFinder<LayoutSet, NoSuchLayoutSetException>
+		_uniquePersistenceFinderByG_P;
 
 	/**
 	 * Returns the layout set where groupId = &#63; and privateLayout = &#63; or throws a <code>NoSuchLayoutSetException</code> if it could not be found.
@@ -280,22 +266,9 @@ public class LayoutSetPersistenceImpl
 	public LayoutSet findByG_P(long groupId, boolean privateLayout)
 		throws NoSuchLayoutSetException {
 
-		LayoutSet layoutSet = fetchByG_P(groupId, privateLayout);
-
-		if (layoutSet == null) {
-			String message =
-				_uniquePersistenceFinderByG_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, privateLayout});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutSetException(message);
-		}
-
-		return layoutSet;
+		return _uniquePersistenceFinderByG_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {groupId, privateLayout});
 	}
 
 	/**
@@ -345,7 +318,7 @@ public class LayoutSetPersistenceImpl
 			new Object[] {groupId, privateLayout});
 	}
 
-	private CollectionPersistenceFinder<LayoutSet>
+	private CollectionPersistenceFinder<LayoutSet, NoSuchLayoutSetException>
 		_collectionPersistenceFinderByC_L;
 
 	/**
@@ -390,17 +363,10 @@ public class LayoutSetPersistenceImpl
 			OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
 
-		LayoutSet layoutSet = fetchByC_L_First(
-			companyId, layoutSetPrototypeUuid, orderByComparator);
-
-		if (layoutSet != null) {
-			return layoutSet;
-		}
-
-		throw new NoSuchLayoutSetException(
-			_collectionPersistenceFinderByC_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, layoutSetPrototypeUuid}));
+		return _collectionPersistenceFinderByC_L.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, layoutSetPrototypeUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -449,7 +415,7 @@ public class LayoutSetPersistenceImpl
 			new Object[] {companyId, layoutSetPrototypeUuid});
 	}
 
-	private CollectionPersistenceFinder<LayoutSet>
+	private CollectionPersistenceFinder<LayoutSet, NoSuchLayoutSetException>
 		_collectionPersistenceFinderByP_L;
 
 	/**
@@ -494,17 +460,9 @@ public class LayoutSetPersistenceImpl
 			OrderByComparator<LayoutSet> orderByComparator)
 		throws NoSuchLayoutSetException {
 
-		LayoutSet layoutSet = fetchByP_L_First(
-			privateLayout, logoId, orderByComparator);
-
-		if (layoutSet != null) {
-			return layoutSet;
-		}
-
-		throw new NoSuchLayoutSetException(
-			_collectionPersistenceFinderByP_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {privateLayout, logoId}));
+		return _collectionPersistenceFinderByP_L.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {privateLayout, logoId}, orderByComparator);
 	}
 
 	/**
@@ -996,4 +954,4 @@ public class LayoutSetPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:301917400
+// LIFERAY-SERVICE-BUILDER-HASH:673366080

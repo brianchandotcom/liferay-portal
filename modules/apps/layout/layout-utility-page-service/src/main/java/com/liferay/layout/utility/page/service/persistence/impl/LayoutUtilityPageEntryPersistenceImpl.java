@@ -101,8 +101,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63;.
@@ -143,16 +144,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		throw new NoSuchLayoutUtilityPageEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -194,8 +187,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<LayoutUtilityPageEntry>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the layout utility page entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
@@ -209,22 +203,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public LayoutUtilityPageEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUUID_G(
-			uuid, groupId);
-
-		if (layoutUtilityPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutUtilityPageEntryException(message);
-		}
-
-		return layoutUtilityPageEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -273,8 +253,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where uuid = &#63; and companyId = &#63;.
@@ -317,16 +298,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		throw new NoSuchLayoutUtilityPageEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -371,8 +344,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63;.
@@ -413,16 +387,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		throw new NoSuchLayoutUtilityPageEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -499,8 +465,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutUtilityPageEntry>
-		_uniquePersistenceFinderByPlid;
+	private UniquePersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_uniquePersistenceFinderByPlid;
 
 	/**
 	 * Returns the layout utility page entry where plid = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
@@ -513,21 +480,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	public LayoutUtilityPageEntry findByPlid(long plid)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByPlid(plid);
-
-		if (layoutUtilityPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByPlid.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutUtilityPageEntryException(message);
-		}
-
-		return layoutUtilityPageEntry;
+		return _uniquePersistenceFinderByPlid.find(
+			finderCache, new Object[] {plid});
 	}
 
 	/**
@@ -572,8 +526,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {plid});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByG_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByG_T;
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and type = &#63;.
@@ -795,8 +750,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByG_D_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByG_D_T;
 
 	/**
 	 * Returns an ordered range of all the layout utility page entries where groupId = &#63; and defaultLayoutUtilityPageEntry = &#63; and type = &#63;.
@@ -843,17 +799,10 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			OrderByComparator<LayoutUtilityPageEntry> orderByComparator)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_D_T_First(
-			groupId, defaultLayoutUtilityPageEntry, type, orderByComparator);
-
-		if (layoutUtilityPageEntry != null) {
-			return layoutUtilityPageEntry;
-		}
-
-		throw new NoSuchLayoutUtilityPageEntryException(
-			_collectionPersistenceFinderByG_D_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, defaultLayoutUtilityPageEntry, type}));
+		return _collectionPersistenceFinderByG_D_T.findFirst(
+			finderCache,
+			new Object[] {groupId, defaultLayoutUtilityPageEntry, type},
+			orderByComparator);
 	}
 
 	/**
@@ -954,8 +903,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutUtilityPageEntry>
-		_uniquePersistenceFinderByG_N_T;
+	private UniquePersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_uniquePersistenceFinderByG_N_T;
 
 	/**
 	 * Returns the layout utility page entry where groupId = &#63; and name = &#63; and type = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
@@ -971,23 +921,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			long groupId, String name, String type)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByG_N_T(
-			groupId, name, type);
-
-		if (layoutUtilityPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_N_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, name, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutUtilityPageEntryException(message);
-		}
-
-		return layoutUtilityPageEntry;
+		return _uniquePersistenceFinderByG_N_T.find(
+			finderCache, new Object[] {groupId, name, type});
 	}
 
 	/**
@@ -1040,8 +975,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			finderCache, new Object[] {groupId, name, type});
 	}
 
-	private FilterCollectionPersistenceFinder<LayoutUtilityPageEntry>
-		_collectionPersistenceFinderByG_LikeN_T;
+	private FilterCollectionPersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_collectionPersistenceFinderByG_LikeN_T;
 
 	/**
 	 * Returns all the layout utility page entries where groupId = &#63; and name LIKE &#63; and type = &#63;.
@@ -1484,8 +1420,9 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<LayoutUtilityPageEntry>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<LayoutUtilityPageEntry, NoSuchLayoutUtilityPageEntryException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the layout utility page entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchLayoutUtilityPageEntryException</code> if it could not be found.
@@ -1500,23 +1437,8 @@ public class LayoutUtilityPageEntryPersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchLayoutUtilityPageEntryException {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (layoutUtilityPageEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLayoutUtilityPageEntryException(message);
-		}
-
-		return layoutUtilityPageEntry;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -2300,4 +2222,4 @@ public class LayoutUtilityPageEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1180515818
+// LIFERAY-SERVICE-BUILDER-HASH:1506140714

@@ -59,8 +59,9 @@ public class BrowserTrackerPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<BrowserTracker>
-		_uniquePersistenceFinderByUserId;
+	private UniquePersistenceFinder
+		<BrowserTracker, NoSuchBrowserTrackerException>
+			_uniquePersistenceFinderByUserId;
 
 	/**
 	 * Returns the browser tracker where userId = &#63; or throws a <code>NoSuchBrowserTrackerException</code> if it could not be found.
@@ -73,21 +74,8 @@ public class BrowserTrackerPersistenceImpl
 	public BrowserTracker findByUserId(long userId)
 		throws NoSuchBrowserTrackerException {
 
-		BrowserTracker browserTracker = fetchByUserId(userId);
-
-		if (browserTracker == null) {
-			String message =
-				_uniquePersistenceFinderByUserId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchBrowserTrackerException(message);
-		}
-
-		return browserTracker;
+		return _uniquePersistenceFinderByUserId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
 	/**
@@ -344,4 +332,4 @@ public class BrowserTrackerPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-109263853
+// LIFERAY-SERVICE-BUILDER-HASH:1451619082

@@ -69,8 +69,9 @@ public class PatcherBuildRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<PatcherBuildRel>
-		_collectionPersistenceFinderByChildPatcherBuildId;
+	private CollectionPersistenceFinder
+		<PatcherBuildRel, NoSuchPatcherBuildRelException>
+			_collectionPersistenceFinderByChildPatcherBuildId;
 
 	/**
 	 * Returns an ordered range of all the patcher build rels where childPatcherBuildId = &#63;.
@@ -111,18 +112,8 @@ public class PatcherBuildRelPersistenceImpl
 			OrderByComparator<PatcherBuildRel> orderByComparator)
 		throws NoSuchPatcherBuildRelException {
 
-		PatcherBuildRel patcherBuildRel = fetchByChildPatcherBuildId_First(
-			childPatcherBuildId, orderByComparator);
-
-		if (patcherBuildRel != null) {
-			return patcherBuildRel;
-		}
-
-		throw new NoSuchPatcherBuildRelException(
-			_collectionPersistenceFinderByChildPatcherBuildId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {childPatcherBuildId}));
+		return _collectionPersistenceFinderByChildPatcherBuildId.findFirst(
+			finderCache, new Object[] {childPatcherBuildId}, orderByComparator);
 	}
 
 	/**
@@ -164,8 +155,9 @@ public class PatcherBuildRelPersistenceImpl
 			finderCache, new Object[] {childPatcherBuildId});
 	}
 
-	private CollectionPersistenceFinder<PatcherBuildRel>
-		_collectionPersistenceFinderByParentPatcherBuildId;
+	private CollectionPersistenceFinder
+		<PatcherBuildRel, NoSuchPatcherBuildRelException>
+			_collectionPersistenceFinderByParentPatcherBuildId;
 
 	/**
 	 * Returns an ordered range of all the patcher build rels where parentPatcherBuildId = &#63;.
@@ -206,18 +198,9 @@ public class PatcherBuildRelPersistenceImpl
 			OrderByComparator<PatcherBuildRel> orderByComparator)
 		throws NoSuchPatcherBuildRelException {
 
-		PatcherBuildRel patcherBuildRel = fetchByParentPatcherBuildId_First(
-			parentPatcherBuildId, orderByComparator);
-
-		if (patcherBuildRel != null) {
-			return patcherBuildRel;
-		}
-
-		throw new NoSuchPatcherBuildRelException(
-			_collectionPersistenceFinderByParentPatcherBuildId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {parentPatcherBuildId}));
+		return _collectionPersistenceFinderByParentPatcherBuildId.findFirst(
+			finderCache, new Object[] {parentPatcherBuildId},
+			orderByComparator);
 	}
 
 	/**
@@ -562,4 +545,4 @@ public class PatcherBuildRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1809932179
+// LIFERAY-SERVICE-BUILDER-HASH:1604207125

@@ -92,6 +92,11 @@ export const USER_CONDITION_ITEMS = [
 	},
 ];
 
+const BOOLEAN_OPTIONS = [
+	{label: Liferay.Language.get('true'), value: 'true'},
+	{label: Liferay.Language.get('false'), value: 'false'},
+] as const;
+
 const DEFAULT_OPERATORS = [
 	OPERATORS.EQUAL,
 	OPERATORS.NOT_EQUAL,
@@ -114,6 +119,9 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 	value: NonNullable<ConditionType['options']>['type'];
 }> {
 	switch (type) {
+		case 'boolean':
+			return [OPERATORS.EQUAL, OPERATORS.NOT_EQUAL];
+
 		case 'date':
 		case 'date-time':
 		case 'number':
@@ -484,6 +492,22 @@ function ConditionValueInput({
 	value: string | string[] | undefined;
 }) {
 	const stringValue = typeof value === 'string' ? value : '';
+
+	if (fieldType === 'boolean') {
+		return (
+			<RuleSelect
+				aria-label={Liferay.Language.get('select-a-value')}
+				items={BOOLEAN_OPTIONS}
+				onErrorChange={onErrorChange}
+				onSelectionChange={(selectedValue) => {
+					onChange(selectedValue);
+
+					onBlur();
+				}}
+				selectedKey={stringValue || undefined}
+			/>
+		);
+	}
 
 	if (fieldType === 'multiselect' && attributes?.options) {
 		return (

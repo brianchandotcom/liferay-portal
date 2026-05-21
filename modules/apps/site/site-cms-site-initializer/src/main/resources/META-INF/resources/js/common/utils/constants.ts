@@ -11,6 +11,8 @@ export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 export const ENTERPRISE_URL =
 	'https://www.liferay.com/web/lr/cms-upgrade?utm_medium=referral&utm_source=cms-ft&utm_content=cms-ft-upgrade&utm_cid=701VO00000wwP6IYAU';
 
+export const ERC_MAX_LENGTH = 75;
+
 export const EXPIRING_SOON_THRESHOLD_DAYS = 7;
 
 export const FDS_EVENT_DISPLAY_UPDATED = 'fds-display-updated';

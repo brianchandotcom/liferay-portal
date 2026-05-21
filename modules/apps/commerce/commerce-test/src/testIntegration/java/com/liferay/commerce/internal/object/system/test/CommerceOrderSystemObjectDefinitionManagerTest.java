@@ -40,6 +40,8 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.Map;
 
@@ -156,11 +158,28 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 		Assert.assertEquals(
 			String.valueOf(commerceOrder.getCommercePaymentMethodKey()),
 			variables.get("paymentMethod"));
+
+		BigDecimal shippingAmount = commerceOrder.getShippingAmount();
+
 		Assert.assertEquals(
-			commerceOrder.getShippingAmount(), variables.get("shippingAmount"));
+			0,
+			shippingAmount.compareTo(
+				new BigDecimal(
+					String.valueOf(variables.get("shippingAmount")))));
+
+		BigDecimal taxAmount = commerceOrder.getTaxAmount();
+
 		Assert.assertEquals(
-			commerceOrder.getTaxAmount(), variables.get("taxAmount"));
-		Assert.assertEquals(commerceOrder.getTotal(), variables.get("total"));
+			0,
+			taxAmount.compareTo(
+				new BigDecimal(String.valueOf(variables.get("taxAmount")))));
+
+		BigDecimal total = commerceOrder.getTotal();
+
+		Assert.assertEquals(
+			0,
+			total.compareTo(
+				new BigDecimal(String.valueOf(variables.get("total")))));
 	}
 
 	@DeleteAfterTestRun

@@ -1,4 +1,9 @@
 {
+	"dependencies": {
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*"
+	},
+	"main": "js/index.js",
 	"name": "@liferay/oauth-client-admin-web",
 	"scripts": {
 		"build": "node-scripts build",

@@ -2,6 +2,7 @@ create table Audit_AuditEvent (
 	auditEventId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
+	accountEntryId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -14,5 +15,6 @@ create table Audit_AuditEvent (
 	serverName VARCHAR(255) null,
 	serverPort INTEGER,
 	sessionID VARCHAR(255) null,
-	additionalInfo TEXT null
+	additionalInfo TEXT null,
+	contextName VARCHAR(75) null
 );

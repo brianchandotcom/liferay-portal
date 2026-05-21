@@ -36,6 +36,7 @@ public class AuditEventWrapper
 		attributes.put("auditEventId", getAuditEventId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -49,6 +50,7 @@ public class AuditEventWrapper
 		attributes.put("serverPort", getServerPort());
 		attributes.put("sessionID", getSessionID());
 		attributes.put("additionalInfo", getAdditionalInfo());
+		attributes.put("contextName", getContextName());
 
 		return attributes;
 	}
@@ -71,6 +73,12 @@ public class AuditEventWrapper
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long accountEntryId = (Long)attributes.get("accountEntryId");
+
+		if (accountEntryId != null) {
+			setAccountEntryId(accountEntryId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -150,11 +158,27 @@ public class AuditEventWrapper
 		if (additionalInfo != null) {
 			setAdditionalInfo(additionalInfo);
 		}
+
+		String contextName = (String)attributes.get("contextName");
+
+		if (contextName != null) {
+			setContextName(contextName);
+		}
 	}
 
 	@Override
 	public AuditEvent cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	/**
+	 * Returns the account entry ID of this audit event.
+	 *
+	 * @return the account entry ID of this audit event
+	 */
+	@Override
+	public long getAccountEntryId() {
+		return model.getAccountEntryId();
 	}
 
 	/**
@@ -225,6 +249,16 @@ public class AuditEventWrapper
 	@Override
 	public long getCompanyId() {
 		return model.getCompanyId();
+	}
+
+	/**
+	 * Returns the context name of this audit event.
+	 *
+	 * @return the context name of this audit event
+	 */
+	@Override
+	public String getContextName() {
+		return model.getContextName();
 	}
 
 	/**
@@ -343,6 +377,16 @@ public class AuditEventWrapper
 	}
 
 	/**
+	 * Sets the account entry ID of this audit event.
+	 *
+	 * @param accountEntryId the account entry ID of this audit event
+	 */
+	@Override
+	public void setAccountEntryId(long accountEntryId) {
+		model.setAccountEntryId(accountEntryId);
+	}
+
+	/**
 	 * Sets the additional info of this audit event.
 	 *
 	 * @param additionalInfo the additional info of this audit event
@@ -410,6 +454,16 @@ public class AuditEventWrapper
 	@Override
 	public void setCompanyId(long companyId) {
 		model.setCompanyId(companyId);
+	}
+
+	/**
+	 * Sets the context name of this audit event.
+	 *
+	 * @param contextName the context name of this audit event
+	 */
+	@Override
+	public void setContextName(String contextName) {
+		model.setContextName(contextName);
 	}
 
 	/**
@@ -533,4 +587,4 @@ public class AuditEventWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1416724512
+// LIFERAY-SERVICE-BUILDER-HASH:1780685168

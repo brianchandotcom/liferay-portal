@@ -48,12 +48,12 @@ public class ExportImportPortletTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		mockLiferayPortletRenderRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
 		PortletDisplay portletDisplay = new PortletDisplay();
 
 		portletDisplay.setThemeDisplay(themeDisplay);
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_portlet.render(
 			mockLiferayPortletRenderRequest,

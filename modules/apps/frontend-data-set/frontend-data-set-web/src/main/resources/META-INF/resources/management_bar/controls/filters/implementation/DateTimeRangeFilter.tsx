@@ -7,6 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
+import {format as formatDate, isValid, parse as parseDate} from 'date-fns';
 import {dateUtils} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
@@ -60,127 +61,100 @@ function normalizeDateParts(
 	};
 }
 
-function isUserLocale12Hour(): boolean {
-	try {
-		const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
-		const formatter = new Intl.DateTimeFormat(locale, {hour: 'numeric'});
-
-		return formatter.resolvedOptions().hour12 === true;
-	}
-	catch {
-		return false;
-	}
+interface DateConfig {
+	clayFormat: string;
+	dateFormat: string;
+	placeholder: string;
+	use12Hours: boolean;
 }
 
-function formatDatePartsForClay(
+// Reference date used to probe the locale's date layout via
+// Intl.DateTimeFormat.formatToParts(). Values are unambiguous (day 22,
+// month 11, year 2024) so each part can be mapped to its date-fns token.
+
+const REFERENCE_DATE = new Date(2024, 10, 22);
+
+export function getDateConfig(dateTime: boolean, locale?: string): DateConfig {
+	const resolvedLocale = locale ?? Liferay.ThemeDisplay.getBCP47LanguageId();
+
+	const parts = new Intl.DateTimeFormat(resolvedLocale, {
+		day: '2-digit',
+		month: '2-digit',
+		year: 'numeric',
+	}).formatToParts(REFERENCE_DATE);
+
+	let dateFormat = '';
+
+	for (const part of parts) {
+		if (part.type === 'day') {
+			dateFormat += 'dd';
+		}
+		else if (part.type === 'month') {
+			dateFormat += 'MM';
+		}
+		else if (part.type === 'year') {
+			dateFormat += 'yyyy';
+		}
+		else if (part.type === 'literal') {
+			dateFormat += part.value;
+		}
+	}
+
+	let clayFormat = dateFormat;
+	let use12Hours = false;
+
+	if (dateTime) {
+		use12Hours =
+			new Intl.DateTimeFormat(resolvedLocale, {
+				hour: 'numeric',
+			}).resolvedOptions().hour12 === true;
+
+		clayFormat = use12Hours
+			? `${dateFormat} hh:mm aa`
+			: `${dateFormat} HH:mm`;
+	}
+
+	const placeholder = clayFormat.toLowerCase();
+
+	return {clayFormat, dateFormat, placeholder, use12Hours};
+}
+
+export function formatDatePartsForClay(
 	dateParts: DateParts,
-	use12Hours: boolean,
-	dateTime: boolean
+	clayFormat: string
 ): string {
-	const date = `${dateParts.year}-${pad2(dateParts.month)}-${pad2(dateParts.day)}`;
+	const date = new Date(
+		dateParts.year,
+		dateParts.month - 1,
+		dateParts.day,
+		dateParts.hour,
+		dateParts.minute
+	);
 
-	if (!dateTime) {
-		return date;
-	}
-
-	if (use12Hours) {
-		const period = dateParts.hour >= 12 ? 'PM' : 'AM';
-		const hour12 = dateParts.hour % 12 === 0 ? 12 : dateParts.hour % 12;
-
-		return `${date} ${pad2(hour12)}:${pad2(dateParts.minute)} ${period}`;
-	}
-
-	return `${date} ${pad2(dateParts.hour)}:${pad2(dateParts.minute)}`;
-}
-
-function buildDateParts(
-	year: number,
-	month: number,
-	day: number,
-	hour: number,
-	minute: number
-): DateParts | null {
-	const back = new Date(Date.UTC(year, month - 1, day, hour, minute));
-
-	if (
-		back.getUTCFullYear() !== year ||
-		back.getUTCMonth() !== month - 1 ||
-		back.getUTCDate() !== day ||
-		back.getUTCHours() !== hour ||
-		back.getUTCMinutes() !== minute
-	) {
-		return null;
-	}
-
-	return {day, hour, minute, month, year};
+	return formatDate(date, clayFormat);
 }
 
 export function parseClayValue(
 	value: string | undefined,
-	use12Hours: boolean,
-	dateTime: boolean
+	clayFormat: string
 ): DateParts | null {
 	if (!value) {
 		return null;
 	}
 
-	if (!dateTime) {
-		const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+	const parsed = parseDate(value, clayFormat, new Date(2000, 0, 1));
 
-		if (!match) {
-			return null;
-		}
-
-		return buildDateParts(
-			Number(match[1]),
-			Number(match[2]),
-			Number(match[3]),
-			0,
-			0
-		);
-	}
-
-	if (use12Hours) {
-		const match =
-			/^(\d{4})-(\d{2})-(\d{2}) (\d{1,2}):(\d{2}) (AM|PM)$/i.exec(value);
-
-		if (!match) {
-			return null;
-		}
-
-		let hour = Number(match[4]);
-		const period = match[6].toUpperCase();
-
-		if (period === 'PM' && hour !== 12) {
-			hour += 12;
-		}
-
-		if (period === 'AM' && hour === 12) {
-			hour = 0;
-		}
-
-		return buildDateParts(
-			Number(match[1]),
-			Number(match[2]),
-			Number(match[3]),
-			hour,
-			Number(match[5])
-		);
-	}
-
-	const match = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/.exec(value);
-
-	if (!match) {
+	if (!isValid(parsed) || formatDate(parsed, clayFormat) !== value) {
 		return null;
 	}
 
-	return buildDateParts(
-		Number(match[1]),
-		Number(match[2]),
-		Number(match[3]),
-		Number(match[4]),
-		Number(match[5])
-	);
+	return {
+		day: parsed.getDate(),
+		hour: parsed.getHours(),
+		minute: parsed.getMinutes(),
+		month: parsed.getMonth() + 1,
+		year: parsed.getFullYear(),
+	};
 }
 
 function nowInTimeZone(timeZone: string): DateParts {
@@ -389,12 +363,6 @@ function buildOdataString(
 	return '';
 }
 
-function prettifyDate(dateParts: DateParts): string {
-	const date = new Date(dateParts.year, dateParts.month - 1, dateParts.day);
-
-	return date.toLocaleDateString();
-}
-
 function buildSelectedItemsLabel(
 	{selectedData}: ISelectedItemsLabelArgs,
 	dateTime: boolean
@@ -404,15 +372,10 @@ function buildSelectedItemsLabel(
 	const from = normalizeDateParts(rawFrom);
 	const to = normalizeDateParts(rawTo);
 
-	const format = (dateParts: DateParts) => {
-		if (!dateTime) {
-			return prettifyDate(dateParts);
-		}
+	const {clayFormat} = getDateConfig(dateTime);
 
-		return `${dateParts.year}-${pad2(dateParts.month)}-${pad2(dateParts.day)} ${pad2(
-			dateParts.hour
-		)}:${pad2(dateParts.minute)}`;
-	};
+	const format = (dateParts: DateParts) =>
+		formatDatePartsForClay(dateParts, clayFormat);
 
 	if (from && to) {
 		return `${format(from)} - ${format(to)}`;
@@ -443,10 +406,7 @@ const DateTimeRangeFilter = ({
 	selectedData,
 	setFilter,
 }: DateTimeRangeFilterProps) => {
-	const use12Hours = useMemo(
-		() => (dateTime ? isUserLocale12Hour() : false),
-		[dateTime]
-	);
+	const dateConfig = useMemo(() => getDateConfig(dateTime), [dateTime]);
 
 	const months = useMemo(() => dateUtils.getMonthsLong(), []);
 
@@ -455,17 +415,20 @@ const DateTimeRangeFilter = ({
 
 	const [fromValue, setFromValue] = useState(
 		initialFromDateParts
-			? formatDatePartsForClay(initialFromDateParts, use12Hours, dateTime)
+			? formatDatePartsForClay(
+					initialFromDateParts,
+					dateConfig.clayFormat
+				)
 			: ''
 	);
 	const [toValue, setToValue] = useState(
 		initialToDateParts
-			? formatDatePartsForClay(initialToDateParts, use12Hours, dateTime)
+			? formatDatePartsForClay(initialToDateParts, dateConfig.clayFormat)
 			: ''
 	);
 
-	const fromDateParts = parseClayValue(fromValue, use12Hours, dateTime);
-	const toDateParts = parseClayValue(toValue, use12Hours, dateTime);
+	const fromDateParts = parseClayValue(fromValue, dateConfig.clayFormat);
+	const toDateParts = parseClayValue(toValue, dateConfig.clayFormat);
 
 	const hasInvalidInput =
 		(!!fromValue.length && !fromDateParts) ||
@@ -492,10 +455,10 @@ const DateTimeRangeFilter = ({
 	}
 
 	const initialFromString = initialFromDateParts
-		? formatDatePartsForClay(initialFromDateParts, use12Hours, dateTime)
+		? formatDatePartsForClay(initialFromDateParts, dateConfig.clayFormat)
 		: '';
 	const initialToString = initialToDateParts
-		? formatDatePartsForClay(initialToDateParts, use12Hours, dateTime)
+		? formatDatePartsForClay(initialToDateParts, dateConfig.clayFormat)
 		: '';
 
 	const isChanged =
@@ -511,11 +474,7 @@ const DateTimeRangeFilter = ({
 		start: new Date().getFullYear() - 50,
 	};
 
-	const fallbackPlaceholder = !dateTime
-		? 'yyyy-mm-dd'
-		: use12Hours
-			? 'yyyy-mm-dd hh:mm aa'
-			: 'yyyy-mm-dd hh:mm';
+	const fallbackPlaceholder = dateConfig.placeholder;
 
 	const wrapperClassName = dateTime
 		? 'fds-date-time-range form-group'
@@ -547,14 +506,14 @@ const DateTimeRangeFilter = ({
 						</label>
 
 						<ClayDatePicker
-							dateFormat="yyyy-MM-dd"
+							dateFormat={dateConfig.dateFormat}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
 							inputName={`from-${id}`}
 							months={months}
 							onChange={(value: string) => setFromValue(value)}
 							placeholder={placeholder || fallbackPlaceholder}
 							time={dateTime}
-							use12Hours={use12Hours}
+							use12Hours={dateConfig.use12Hours}
 							value={fromValue}
 							weekdaysShort={dateUtils.getWeekdaysShort()}
 							years={yearRange}
@@ -567,14 +526,14 @@ const DateTimeRangeFilter = ({
 						</label>
 
 						<ClayDatePicker
-							dateFormat="yyyy-MM-dd"
+							dateFormat={dateConfig.dateFormat}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
 							inputName={`to-${id}`}
 							months={months}
 							onChange={(value: string) => setToValue(value)}
 							placeholder={placeholder || fallbackPlaceholder}
 							time={dateTime}
-							use12Hours={use12Hours}
+							use12Hours={dateConfig.use12Hours}
 							value={toValue}
 							weekdaysShort={dateUtils.getWeekdaysShort()}
 							years={yearRange}

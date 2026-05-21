@@ -28,6 +28,7 @@
 		"@liferay/frontend-js-state-web": "*",
 		"@liferay/js-api": "0.6.2",
 		"classnames": "2.3.1",
+		"date-fns": "2.29.3",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"jest-fetch-mock": "3.0.3",

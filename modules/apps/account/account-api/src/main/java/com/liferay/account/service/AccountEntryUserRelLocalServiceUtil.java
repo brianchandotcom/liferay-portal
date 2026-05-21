@@ -107,6 +107,18 @@ public class AccountEntryUserRelLocalServiceUtil {
 			jobTitle, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.model.Ticket
+			addUserInvitationTicket(
+				long accountEntryId, long[] accountRoleIds, String emailAddress,
+				com.liferay.portal.kernel.model.User inviter,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addUserInvitationTicket(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new account entry user rel with the primary key. Does not add the account entry user rel to the database.
 	 *
@@ -476,4 +488,4 @@ public class AccountEntryUserRelLocalServiceUtil {
 			AccountEntryUserRelLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:282106658
+// LIFERAY-SERVICE-BUILDER-HASH:-200152985

@@ -9,14 +9,18 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.PhoneInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.PhoneNumberObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.model.ObjectDefinition;
@@ -48,12 +52,14 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Assert;
@@ -242,6 +248,87 @@ public class ObjectFieldInfoFieldConverterTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@FeatureFlag("LPD-83570")
+	@Test
+	public void testGetPhoneNumberInfoField() throws Exception {
+		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
+			new PhoneNumberObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Collections.singletonList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER
+					).build())
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		ObjectFieldInfoFieldConverter objectFieldInfoFieldConverter =
+			new ObjectFieldInfoFieldConverter(
+				_ddmExpressionFactory, null, null, null, null,
+				_objectFieldSettingLocalService, null, null, null, null, null,
+				null, null);
+
+		InfoField<PhoneInfoFieldType> infoField =
+			(InfoField<PhoneInfoFieldType>)
+				objectFieldInfoFieldConverter.getInfoField(
+					true, ObjectField.class.getSimpleName(), objectField);
+
+		Assert.assertSame(
+			PhoneInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertNull(infoField.getAttribute(PhoneInfoFieldType.PREFIX));
+		Assert.assertEquals(
+			ObjectFieldSettingConstants.VALUE_DEFINED_BY_USER,
+			infoField.getAttribute(PhoneInfoFieldType.PREFIX_TYPE));
+
+		objectField = ObjectFieldUtil.addCustomObjectField(
+			new PhoneNumberObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"a" + RandomTestUtil.randomString()
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).objectFieldSettings(
+				Arrays.asList(
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX
+					).value(
+						"+1"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_PREFIX_TYPE
+					).value(
+						ObjectFieldSettingConstants.VALUE_FIXED
+					).build())
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		infoField =
+			(InfoField<PhoneInfoFieldType>)
+				objectFieldInfoFieldConverter.getInfoField(
+					true, ObjectField.class.getSimpleName(), objectField);
+
+		Assert.assertSame(
+			PhoneInfoFieldType.INSTANCE, infoField.getInfoFieldType());
+		Assert.assertEquals(
+			"+1", infoField.getAttribute(PhoneInfoFieldType.PREFIX));
+		Assert.assertEquals(
+			ObjectFieldSettingConstants.VALUE_FIXED,
+			infoField.getAttribute(PhoneInfoFieldType.PREFIX_TYPE));
 	}
 
 	private String _getRelationshipURL(

@@ -59,6 +59,7 @@ import jakarta.portlet.RenderResponse;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -266,8 +267,8 @@ public class SegmentsDisplayContext {
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
 					_themeDisplay.getScopeGroupId(), _getKeywords(),
-					searchContainer.getStart(), searchContainer.getEnd(),
-					_getSort()));
+					new LinkedHashMap<>(), searchContainer.getStart(),
+					searchContainer.getEnd(), _getSort()));
 		}
 		else if (!FeatureFlagManagerUtil.isEnabled(
 					CompanyConstants.SYSTEM, "LPD-78863")) {
@@ -275,12 +276,16 @@ public class SegmentsDisplayContext {
 			searchContainer.setResultsAndTotal(
 				() -> _segmentsEntryService.getSegmentsEntries(
 					_themeDisplay.getScopeGroupId(),
-					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					new String[] {
+						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND
+					},
 					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_segmentsEntryService.getSegmentsEntriesCount(
 					_themeDisplay.getScopeGroupId(),
-					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND));
+					new String[] {
+						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND
+					}));
 		}
 		else {
 			searchContainer.setResultsAndTotal(

@@ -33,6 +33,7 @@ import KeyboardMovementManager from '../keyboard_movement/KeyboardMovementManage
 import KeyboardMovementPreview from '../keyboard_movement/KeyboardMovementPreview';
 
 function SegmentEdit({
+	audiences = false,
 	availableLocales,
 	contributors: initialContributors = [],
 	defaultLanguageId,
@@ -284,6 +285,7 @@ function SegmentEdit({
 
 		return propertyGroups && data.contributors ? (
 			<ContributorsBuilder
+				audiences={audiences}
 				contributors={data.contributors}
 				editing={data.editing}
 				emptyContributors={emptyContributors}
@@ -528,6 +530,7 @@ function SegmentEdit({
 }
 
 SegmentEdit.propTypes = {
+	audiences: PropTypes.bool,
 	availableLocales: PropTypes.object.isRequired,
 	contributors: PropTypes.arrayOf(initialContributorShape),
 	defaultLanguageId: PropTypes.string.isRequired,

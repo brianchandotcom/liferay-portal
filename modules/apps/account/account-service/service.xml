@@ -233,6 +233,7 @@
 		<exception>AccountEntryStatus</exception>
 		<exception>AccountEntryType</exception>
 		<exception>AccountEntryUserRelEmailAddress</exception>
+		<exception>AccountEntryValidator</exception>
 		<exception>AccountGroupName</exception>
 		<exception>DefaultAccountGroup</exception>
 		<exception>DuplicateAccountEntryId</exception>

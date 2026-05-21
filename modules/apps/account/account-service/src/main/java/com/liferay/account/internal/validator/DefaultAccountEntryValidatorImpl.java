@@ -10,6 +10,7 @@ import com.liferay.account.validator.AccountEntryValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +35,7 @@ public class DefaultAccountEntryValidatorImpl implements AccountEntryValidator {
 
 	@Override
 	public AccountEntryValidatorResult validate(
-			Locale locale, long accountEntryId)
+			Locale locale, Map<String, Object> values)
 		throws PortalException {
 
 		return new AccountEntryValidatorResult(true);

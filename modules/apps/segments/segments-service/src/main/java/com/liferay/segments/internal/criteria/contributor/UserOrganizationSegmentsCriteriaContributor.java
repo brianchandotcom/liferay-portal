@@ -14,8 +14,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.mapper.SegmentsCriteriaJSONObjectMapper;
@@ -27,6 +29,7 @@ import com.liferay.segments.odata.retriever.ODataRetriever;
 import jakarta.portlet.PortletRequest;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -138,6 +141,13 @@ public class UserOrganizationSegmentsCriteriaContributor
 		return Criteria.Type.MODEL;
 	}
 
+	@Override
+	public boolean isDisabled(PortletRequest portletRequest) {
+		return Objects.equals(
+			_portal.getPortletId(portletRequest),
+			SegmentsPortletKeys.AUDIENCES);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserOrganizationSegmentsCriteriaContributor.class);
 
@@ -156,6 +166,9 @@ public class UserOrganizationSegmentsCriteriaContributor
 		target = "(model.class.name=com.liferay.portal.kernel.model.Organization)"
 	)
 	private ODataRetriever<Organization> _oDataRetriever;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(target = "(segments.criteria.mapper.key=odata)")
 	private SegmentsCriteriaJSONObjectMapper _segmentsCriteriaJSONObjectMapper;

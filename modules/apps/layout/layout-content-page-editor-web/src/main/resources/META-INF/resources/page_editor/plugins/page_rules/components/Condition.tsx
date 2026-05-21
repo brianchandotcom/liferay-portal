@@ -123,6 +123,8 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 
 		case 'multiselect':
 			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
 				OPERATORS.CONTAINS,
 				OPERATORS.DOES_NOT_CONTAIN,
 				OPERATORS.IS_EMPTY,

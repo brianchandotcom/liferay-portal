@@ -92,7 +92,10 @@ export type Condition = ConditionBase &
 		| {
 				fieldType: 'multiselect';
 				options?: {
-					type: ContainmentOperator | EmptinessOperator;
+					type:
+						| ContainmentOperator
+						| EmptinessOperator
+						| EqualityOperator;
 					value?: string[];
 				};
 		  }

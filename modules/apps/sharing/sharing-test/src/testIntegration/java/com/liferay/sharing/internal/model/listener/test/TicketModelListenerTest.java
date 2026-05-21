@@ -93,20 +93,7 @@ public class TicketModelListenerTest {
 				_group.getGroupId()));
 	}
 
-	private Ticket _addTicket() throws Exception {
-		return _ticketLocalService.addTicket(
-			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS,
-			JSONUtil.put(
-				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
-			).toString(),
-			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
-			new ServiceContext());
-	}
-
-	private SharingEntry _addSharingEntry(long toTicketId)
-		throws Exception {
-
+	private SharingEntry _addSharingEntry(long toTicketId) throws Exception {
 		return _sharingEntryLocalService.addSharingEntry(
 			null, TestPropsValues.getUserId(), toTicketId, 0, 0,
 			_classNameLocalService.getClassNameId(Group.class.getName()),
@@ -114,6 +101,17 @@ public class TicketModelListenerTest {
 			Arrays.asList(SharingEntryAction.VIEW), null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
+	}
+
+	private Ticket _addTicket() throws Exception {
+		return _ticketLocalService.addTicket(
+			TestPropsValues.getCompanyId(), Group.class.getName(),
+			_group.getGroupId(), TicketConstants.TYPE_EMAIL_ADDRESS, null,
+			JSONUtil.put(
+				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
+			).toString(),
+			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
+			new ServiceContext());
 	}
 
 	@Inject

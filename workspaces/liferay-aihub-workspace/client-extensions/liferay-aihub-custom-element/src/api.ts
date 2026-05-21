@@ -58,7 +58,7 @@ async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 		return data as AuthorizationToken;
 	}
 	catch (error) {
-		console.warn((error as Error).message);
+		console.warn(error instanceof Error ? error.message : String(error));
 
 		return null;
 	}

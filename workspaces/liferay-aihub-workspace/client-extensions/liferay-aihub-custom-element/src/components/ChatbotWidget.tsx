@@ -65,9 +65,23 @@ export default function ChatbotWidget({
 			return;
 		}
 
+		let active = true;
+
 		createEventSource()
 			.then((eventSource) => {
+				if (!active) {
+					eventSource?.close();
+
+					return;
+				}
+
 				if (!eventSource) {
+					setMessages((prev) => [
+						...prev,
+						{sender: 'error', text: ''},
+					]);
+					setLoading(false);
+
 					return;
 				}
 
@@ -112,13 +126,19 @@ export default function ChatbotWidget({
 						...prev,
 						{sender: 'error', text: ''},
 					]);
+					setLoading(false);
 				});
 			})
 			.catch((error) => {
 				console.error('Failed to create event source:', error);
+
+				setMessages((prev) => [...prev, {sender: 'error', text: ''}]);
+				setLoading(false);
 			});
 
 		return () => {
+			active = false;
+
 			if (loadingTimeoutRef.current) {
 				clearTimeout(loadingTimeoutRef.current);
 			}

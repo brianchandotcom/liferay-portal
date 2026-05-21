@@ -109,6 +109,71 @@ components:
                 text:
                     type: string
             type: object
+        ModelArmorTemplate:
+            properties:
+                active:
+                    type: boolean
+                description:
+                    type: string
+                externalReferenceCode:
+                    type: string
+                guardrailType:
+                    enum:
+                        -   input
+                        -   output
+                    type: string
+                location:
+                    type: string
+                maliciousUriFilterEnabled:
+                    type: boolean
+                multiLanguageDetectionEnabled:
+                    type: boolean
+                piAndJailbreakConfidenceLevel:
+                    enum:
+                        -   high
+                        -   lowAndAbove
+                        -   mediumAndAbove
+                    type: string
+                piAndJailbreakFilterEnabled:
+                    type: boolean
+                raiDangerousLevel:
+                    enum:
+                        -   high
+                        -   lowAndAbove
+                        -   mediumAndAbove
+                        -   none
+                    type: string
+                raiHarassmentLevel:
+                    enum:
+                        -   high
+                        -   lowAndAbove
+                        -   mediumAndAbove
+                        -   none
+                    type: string
+                raiHateSpeechLevel:
+                    enum:
+                        -   high
+                        -   lowAndAbove
+                        -   mediumAndAbove
+                        -   none
+                    type: string
+                raiSexuallyExplicitLevel:
+                    enum:
+                        -   high
+                        -   lowAndAbove
+                        -   mediumAndAbove
+                        -   none
+                    type: string
+                sdpFilterEnabled:
+                    type: boolean
+                title:
+                    readOnly: true
+                    type: string
+                title_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
+            type: object
         ProvisioningRequest:
             properties:
                 customerName:
@@ -359,6 +424,47 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ContentRetriever"
             tags: ["ContentRetriever"]
+    "/model-armor-templates/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            operationId: deleteModelArmorTemplateByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ModelArmorTemplate"]
+        put:
+            operationId: putModelArmorTemplateByExternalReferenceCode
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ModelArmorTemplate"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ModelArmorTemplate"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ModelArmorTemplate"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ModelArmorTemplate"
+            tags: ["ModelArmorTemplate"]
     "/provisioning":
         post:
             operationId: postProvisioning

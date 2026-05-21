@@ -12,6 +12,7 @@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.site.llms.web.internal.display.context.LLMSCompanyConfigurationDisplayContext" %><%@
 page import="com.liferay.site.llms.web.internal.display.context.LLMSGroupConfigurationDisplayContext" %>
 
 <portlet:defineObjects />

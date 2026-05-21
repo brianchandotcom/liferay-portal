@@ -7,12 +7,12 @@ import React from 'react';
 
 import Loading from '../../../../components/Loading';
 import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import {OrderStatus} from '../../../../enums/Order';
+import {OrderCustomFields, OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 import i18n from '../../../../i18n';
+import {safeJSONParse} from '../../../../utils/util';
 
 import './LDPNextSteps.scss';
-import {safeJSONParse} from '../../../../utils/util';
 
 const Content = ({
 	description,
@@ -63,7 +63,7 @@ const LDPNextSteps: React.FC<{
 	});
 
 	const orderMetadata = safeJSONParse(
-		order?.customFields?.ORDER_METADATA || '{}',
+		order?.customFields?.[OrderCustomFields.ORDER_METADATA] || '{}',
 		{
 			analyticsProject: {groupId: 0},
 		}

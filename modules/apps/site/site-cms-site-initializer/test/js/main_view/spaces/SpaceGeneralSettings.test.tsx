@@ -14,6 +14,7 @@ import React from 'react';
 
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
+import {ERC_MAX_LENGTH} from '../../../../src/main/resources/META-INF/resources/js/common/utils/constants';
 import SpaceGeneralSettings from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceGeneralSettings';
 
 jest.mock(
@@ -229,6 +230,22 @@ describe('SpaceGeneralSettings', () => {
 			).toBeInTheDocument();
 
 			expect(nameInput).toHaveFocus();
+		});
+
+		it('rejects an ERC longer than the column length', async () => {
+			renderComponent();
+
+			const ercInput = screen.getByRole('textbox', {name: /erc/});
+
+			await userEvent.clear(ercInput);
+			await userEvent.type(ercInput, 'a'.repeat(ERC_MAX_LENGTH + 1));
+
+			await userEvent.click(screen.getByRole('button', {name: 'save'}));
+
+			expect(
+				screen.getByText(/please-enter-no-more-than/)
+			).toBeInTheDocument();
+			expect(SpaceService.updateSpace).not.toBeCalled();
 		});
 	});
 });

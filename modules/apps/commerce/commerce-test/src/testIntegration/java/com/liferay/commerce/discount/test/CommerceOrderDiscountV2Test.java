@@ -33,6 +33,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -630,6 +631,12 @@ public class CommerceOrderDiscountV2Test {
 
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
+		cpDefinition.setCPTaxCategoryId(
+			CommerceTaxTestUtil.addTaxCategoryId(_user.getGroupId()));
+
+		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
+			cpDefinition);
+
 		CommercePriceEntry commercePriceEntry =
 			CommercePriceEntryTestUtil.addCommercePriceEntry(
 				StringPool.BLANK, cpDefinition.getCProductId(),
@@ -708,16 +715,13 @@ public class CommerceOrderDiscountV2Test {
 			_commerceDiscountCalculation.getOrderTotalCommerceDiscountValue(
 				commerceOrder, expectedTotalValue, commerceContext);
 
-		CommerceMoney discountAmountCommerceMoney =
-			totalCommerceDiscountValue.getDiscountAmount();
+		if (totalCommerceDiscountValue != null) {
+			CommerceMoney discountAmountCommerceMoney =
+				totalCommerceDiscountValue.getDiscountAmount();
 
-		expectedTotalValue = expectedTotalValue.subtract(
-			discountAmountCommerceMoney.getPrice()
-		).round(
-			new MathContext(
-				_commerceCurrency.getMaxFractionDigits(),
-				RoundingMode.HALF_EVEN)
-		);
+			expectedTotalValue = expectedTotalValue.subtract(
+				discountAmountCommerceMoney.getPrice());
+		}
 
 		CommerceMoney totalCommerceMoney =
 			_commerceOrderPriceCalculation.getTotal(
@@ -725,12 +729,13 @@ public class CommerceOrderDiscountV2Test {
 
 		BigDecimal totalPrice = totalCommerceMoney.getPrice();
 
-		totalPrice = totalPrice.round(
-			new MathContext(
+		Assert.assertEquals(
+			expectedTotalValue.setScale(
+				_commerceCurrency.getMaxFractionDigits(),
+				RoundingMode.HALF_EVEN),
+			totalPrice.setScale(
 				_commerceCurrency.getMaxFractionDigits(),
 				RoundingMode.HALF_EVEN));
-
-		Assert.assertEquals(expectedTotalValue, totalPrice);
 	}
 
 	@Rule
@@ -760,6 +765,9 @@ public class CommerceOrderDiscountV2Test {
 
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Inject
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Inject
 	private CPInstanceUnitOfMeasureLocalService

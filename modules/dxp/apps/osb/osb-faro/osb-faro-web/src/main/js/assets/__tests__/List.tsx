@@ -14,15 +14,32 @@ jest.unmock('react-dom');
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
 	FrontendDataSet: ({
+		emptyState,
 		filters,
 		id,
 		itemsActions
 	}: {
+		emptyState?: {
+			description?: React.ReactNode;
+			image?: string;
+			title?: string;
+		};
 		filters?: any[];
 		id: string;
 		itemsActions?: Array<{onClick?: (item: any) => void}>;
 	}) => (
 		<div data-testid='fds-component' id={id}>
+			{emptyState && (
+				<div data-testid='fds-empty-state'>
+					<div data-testid='fds-empty-state-title'>
+						{emptyState.title}
+					</div>
+
+					<div data-testid='fds-empty-state-description'>
+						{emptyState.description}
+					</div>
+				</div>
+			)}
 			<div data-testid='fds-filters'>{JSON.stringify(filters)}</div>
 
 			<button
@@ -242,6 +259,41 @@ describe('List', () => {
 	});
 
 	afterEach(cleanup);
+
+	describe('empty state', () => {
+		it('should pass the correct title to the FDS empty state', () => {
+			renderList();
+
+			expect(
+				screen.getByTestId('fds-empty-state-title')
+			).toHaveTextContent('There are no assets found.');
+		});
+
+		it('should include the check-back-later text in the empty state description', () => {
+			renderList();
+
+			expect(
+				screen.getByTestId('fds-empty-state-description')
+			).toHaveTextContent(
+				'Check back later to verify if data has been received from your data sources, or you can try a different date range.'
+			);
+		});
+
+		it('should render a learn-more-about-assets link in the empty state description', () => {
+			renderList();
+
+			const link = screen.getByRole('link', {
+				exact: false,
+				name: /learn more about assets/i
+			});
+
+			expect(link).toBeInTheDocument();
+			expect(link).toHaveAttribute(
+				'href',
+				'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics'
+			);
+		});
+	});
 
 	describe('rendering', () => {
 		it('should render without crashing', () => {

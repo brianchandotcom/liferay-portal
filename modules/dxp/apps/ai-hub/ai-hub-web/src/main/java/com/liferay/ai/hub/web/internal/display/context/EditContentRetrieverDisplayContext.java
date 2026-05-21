@@ -5,6 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -50,6 +51,12 @@ public class EditContentRetrieverDisplayContext {
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
+		).put(
+			"readOnly",
+			DisplayContextUtil.isReadOnly(
+				_themeDisplay.getCompanyId(),
+				_httpServletRequest.getParameter("externalReferenceCode"),
+				"L_AI_HUB_CONTENT_RETRIEVER")
 		).build();
 	}
 

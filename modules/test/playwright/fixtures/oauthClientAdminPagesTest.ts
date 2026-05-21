@@ -7,16 +7,21 @@ import {test} from '@playwright/test';
 
 import {AuthServerLocalMetadatasPage} from '../pages/oauth-client-administration-web/AuthServerLocalMetadatasPage';
 import {OAuthClientClientsPage} from '../pages/oauth-client-administration-web/OAuthClientClientsPage';
+import {ProtectedResourceLocalMetadatasPage} from '../pages/oauth-client-administration-web/ProtectedResourceLocalMetadatasPage';
 
 const oauthClientAdminPagesTest = test.extend<{
 	authServerLocalMetadatasPage: AuthServerLocalMetadatasPage;
 	oauthClientClientsPage: OAuthClientClientsPage;
+	protectedResourceLocalMetadatasPage: ProtectedResourceLocalMetadatasPage;
 }>({
 	authServerLocalMetadatasPage: async ({page}, use) => {
 		await use(new AuthServerLocalMetadatasPage(page));
 	},
 	oauthClientClientsPage: async ({page}, use) => {
 		await use(new OAuthClientClientsPage(page));
+	},
+	protectedResourceLocalMetadatasPage: async ({page}, use) => {
+		await use(new ProtectedResourceLocalMetadatasPage(page));
 	},
 });
 

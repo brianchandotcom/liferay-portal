@@ -45,7 +45,7 @@ export function useModelArmorTemplateForm({
 
 				openToast({
 					message: Liferay.Language.get(
-						'model-armor-template-saved-successfully'
+						'guardrail-saved-successfully'
 					),
 					type: 'success',
 				});
@@ -55,9 +55,7 @@ export function useModelArmorTemplateForm({
 					message:
 						error instanceof Error && error.message
 							? error.message
-							: Liferay.Language.get(
-									'failed-to-save-model-armor-template'
-								),
+							: Liferay.Language.get('failed-to-save-guardrail'),
 					type: 'danger',
 				});
 			}
@@ -113,7 +111,7 @@ export function useModelArmorTemplateForm({
 			catch (error) {
 				openToast({
 					message: Liferay.Language.get(
-						'failed-to-load-model-armor-template-data'
+						'failed-to-load-guardrail-data'
 					),
 					type: 'danger',
 				});

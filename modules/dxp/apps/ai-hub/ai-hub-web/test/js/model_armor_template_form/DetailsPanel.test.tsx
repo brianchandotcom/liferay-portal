@@ -214,7 +214,7 @@ describe('DetailsPanel', () => {
 			renderPanel();
 
 			expect(
-				screen.getByText('model-armor-location-help')
+				screen.getByText('guardrail-location-help')
 			).toBeInTheDocument();
 		});
 

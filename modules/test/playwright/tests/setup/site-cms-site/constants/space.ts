@@ -4,3 +4,5 @@
  */
 
 export const SITE_CMS_SPACE_NAME = 'Default';
+export const SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE =
+	'Default-External-Reference-Code';

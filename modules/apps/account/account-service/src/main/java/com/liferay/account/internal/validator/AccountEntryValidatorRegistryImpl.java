@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -84,56 +85,25 @@ public class AccountEntryValidatorRegistryImpl
 	}
 
 	@Override
-	public boolean isValid(Locale locale, long accountEntryId)
+	public boolean isValid(Locale locale, Map<String, Object> values)
 		throws PortalException {
 
 		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			validate(locale, accountEntryId);
-
-		return accountEntryValidatorResults.isEmpty();
-	}
-
-	@Override
-	public boolean isValid(
-			Locale locale, long accountEntryId, long commerceOrderId)
-		throws PortalException {
-
-		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			validate(locale, accountEntryId, commerceOrderId);
+			validate(locale, values);
 
 		return accountEntryValidatorResults.isEmpty();
 	}
 
 	@Override
 	public List<AccountEntryValidatorResult> validate(
-			Locale locale, long accountEntryId)
+			Locale locale, Map<String, Object> values)
 		throws PortalException {
 
 		return TransformUtil.transform(
 			getAccountEntryValidators(),
 			accountEntryValidator -> {
 				AccountEntryValidatorResult accountEntryValidatorResult =
-					accountEntryValidator.validate(locale, accountEntryId);
-
-				if (!accountEntryValidatorResult.isValid()) {
-					return accountEntryValidatorResult;
-				}
-
-				return null;
-			});
-	}
-
-	@Override
-	public List<AccountEntryValidatorResult> validate(
-			Locale locale, long accountEntryId, long commerceOrderId)
-		throws PortalException {
-
-		return TransformUtil.transform(
-			getAccountEntryValidators(),
-			accountEntryValidator -> {
-				AccountEntryValidatorResult accountEntryValidatorResult =
-					accountEntryValidator.validate(
-						locale, accountEntryId, commerceOrderId);
+					accountEntryValidator.validate(locale, values);
 
 				if (!accountEntryValidatorResult.isValid()) {
 					return accountEntryValidatorResult;

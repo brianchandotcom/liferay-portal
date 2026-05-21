@@ -800,4 +800,69 @@ describe('IncrementalInteractions', () => {
 
 		jest.useRealTimers();
 	});
+
+	describe('keyboard arrows indicator', () => {
+		it('does not render the indicator by default', () => {
+			const {getByTestId} = render(
+				<ClayDatePicker
+					defaultMonth={new Date(2019, 3, 18)}
+					placeholder="YYYY-MM-DD"
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			fireEvent.click(getByTestId('date-button'));
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).not.toBeInTheDocument();
+		});
+
+		it('renders the floating indicator with direction "all" when enabled', () => {
+			const {getByTestId} = render(
+				<ClayDatePicker
+					defaultMonth={new Date(2019, 3, 18)}
+					displayKeyboardArrowsIndicator
+					placeholder="YYYY-MM-DD"
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			fireEvent.click(getByTestId('date-button'));
+
+			const indicator = document.body.querySelector(
+				'.clay-keyboard-arrows-indicator'
+			);
+
+			expect(indicator).toBeInTheDocument();
+			expect(indicator).toHaveClass('clay-keyboard-arrows-all');
+			expect(indicator).toHaveClass(
+				'clay-keyboard-arrows-indicator-floating'
+			);
+		});
+
+		it('uses the localized label on the indicator', () => {
+			const {getByTestId} = render(
+				<ClayDatePicker
+					defaultMonth={new Date(2019, 3, 18)}
+					displayKeyboardArrowsIndicator
+					keyboardArrowsIndicatorLabel="Use arrow keys to navigate the calendar"
+					placeholder="YYYY-MM-DD"
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			fireEvent.click(getByTestId('date-button'));
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).toHaveAttribute(
+				'aria-label',
+				'Use arrow keys to navigate the calendar'
+			);
+		});
+	});
 });

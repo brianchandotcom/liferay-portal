@@ -283,3 +283,17 @@ export function InDropdownMenu() {
 		</>
 	);
 }
+export function KeyboardArrowsIndicator() {
+	return (
+		<ClayDatePickerWithState
+			defaultExpanded
+			displayKeyboardArrowsIndicator
+			keyboardArrowsIndicatorLabel="Use arrow keys to navigate the calendar"
+			placeholder="YYYY-MM-DD"
+			years={{
+				end: new Date().getFullYear(),
+				start: 1998,
+			}}
+		/>
+	);
+}

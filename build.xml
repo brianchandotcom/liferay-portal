@@ -890,7 +890,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<mkdir dir="${project.dir}/dist" />
 
-		<property name="workspace.artifact.extension" value="" />
+		<property name="workspace.artifact.id.suffix" value="" />
 		<property name="workspace.includes" value="**/*" />
 		<property name="workspace.repository.url" value="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases" />
 
@@ -919,12 +919,12 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				<local name="artifact.id" />
 
 				<if>
-					<equals arg1="${workspace.artifact.extension}" arg2="" />
+					<equals arg1="${workspace.artifact.id.suffix}" arg2="" />
 					<then>
 						<property name="artifact.id" value="com.${processed.dir.name}" />
 					</then>
 					<else>
-						<property name="artifact.id" value="com.${processed.dir.name}.${workspace.artifact.extension}" />
+						<property name="artifact.id" value="com.${processed.dir.name}.${workspace.artifact.id.suffix}" />
 					</else>
 				</if>
 

@@ -24,9 +24,11 @@ type DateFilter = {
 export type taskStatus = 'success' | 'completedWithErrors';
 
 export class ExportImportPage {
+	readonly addFilterButton: Locator;
 	readonly allRadioButton: Locator;
 	readonly cancelButton: Locator;
 	readonly clearMenuItem: Locator;
+	readonly clearSearchButton: Locator;
 	readonly continueButton: Locator;
 	readonly copyAsNewRadioButton: Locator;
 	readonly deleteApplicationDataAlert: Locator;
@@ -35,12 +37,15 @@ export class ExportImportPage {
 	readonly deletionsLabel: Locator;
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
+	readonly excludeSwitch: Locator;
 	readonly exportPermissionsButton: Locator;
 	readonly exportReportEntriesMenuItem: Locator;
 	readonly exportReportEntriesModal: Locator;
 	readonly exportReportEntriesModalDownloadButton: Locator;
 	readonly exportReportEntriesModalProgressbar: Locator;
 	readonly fileSelector: Locator;
+	readonly filterBackButton: Locator;
+	readonly filterButton: Locator;
 	readonly importButton: Locator;
 	readonly importModalButton: Locator;
 	readonly importPermissionsCheckbox: Locator;
@@ -58,6 +63,9 @@ export class ExportImportPage {
 	readonly rangeLast: Locator;
 	readonly rangeLastRadioButton: Locator;
 	readonly refreshCountsLink: Locator;
+	readonly removeFilterButton: Locator;
+	readonly searchButton: Locator;
+	readonly searchInput: Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
 	readonly taskStatusLabel: (
@@ -72,9 +80,14 @@ export class ExportImportPage {
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
+		this.addFilterButton = page.getByRole('button', {name: 'Add Filter'});
 		this.allRadioButton = page.getByTestId('range_rangeAll');
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.clearMenuItem = page.getByRole('link', {name: 'Clear'});
+		this.clearSearchButton = page.getByRole('button', {
+			exact: true,
+			name: 'Clear',
+		});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
 		this.copyAsNewRadioButton = page.getByLabel('Copy as new');
 		this.deleteApplicationDataAlert = page.locator('[role="alert"]', {
@@ -96,6 +109,7 @@ export class ExportImportPage {
 		this.exportReportEntriesMenuItem = page.getByRole('menuitem', {
 			name: 'Export Report Entries',
 		});
+		this.excludeSwitch = page.getByRole('switch', {name: 'Exclude'});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
 		this.exportReportEntriesModal = page.getByRole('dialog', {
 			name: 'Export Report Entries',
@@ -107,6 +121,10 @@ export class ExportImportPage {
 		this.exportReportEntriesModalProgressbar =
 			this.exportReportEntriesModal.getByRole('progressbar');
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
+		this.filterBackButton = page.getByRole('button', {name: 'Back'});
+		this.filterButton = page
+			.getByTestId('managementToolbar')
+			.getByRole('button', {name: 'Filter'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importModalButton = page
 			.getByLabel('Important Info About Your Import')
@@ -174,6 +192,9 @@ export class ExportImportPage {
 		this.refreshCountsLink = page.getByRole('link', {
 			name: 'Refresh Counts',
 		});
+		this.removeFilterButton = page.getByLabel('Remove Filter');
+		this.searchButton = page.getByRole('button', {name: 'Search'});
+		this.searchInput = page.getByRole('searchbox', {name: 'Search'});
 		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName) =>
@@ -614,10 +635,81 @@ export class ExportImportPage {
 		).toBeVisible();
 	}
 
+	async clearReportSearch() {
+		await this.clearSearchButton.click();
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async excludeReportFilter() {
+		await this.filterButton.click();
+		await this.excludeSwitch.check();
+		const responsePromise = this.page.waitForResponse(
+			(response) =>
+				response.url().includes('report-entries') &&
+				response.status() === 200
+		);
+		await this.addFilterButton.click();
+		await responsePromise;
+	}
+
+	async filterReportBy(category: string, value: string) {
+		await this.filterButton.click();
+		if (await this.filterBackButton.isVisible()) {
+			await this.filterBackButton.click();
+		}
+		await this.page
+			.getByRole('menuitem', {exact: true, name: category})
+			.click();
+		await this.page.getByRole('checkbox', {name: value}).check();
+		await this.addFilterButton.click();
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async getReportColumnValues(headerName: string): Promise<string[]> {
+		const header = this.page.getByRole('columnheader', {
+			exact: true,
+			name: headerName,
+		});
+		const index = await header.evaluate((node) => {
+			return (
+				Array.from(
+					(node as HTMLElement).parentElement!.children
+				).indexOf(node as HTMLElement) + 1
+			);
+		});
+
+		return this.page
+			.locator(`tbody tr td:nth-child(${index})`)
+			.allTextContents();
+	}
+
 	async openExportReportEntriesModal(exportName) {
 		await this.clickTaskAction(exportName, 'Export Report Entries');
 
 		await this.exportReportEntriesModal.waitFor();
+	}
+
+	async removeReportFilter() {
+		await this.removeFilterButton.click();
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async searchReportEntries(searchTerm: string) {
+		await this.searchInput.fill(searchTerm);
+		await this.searchButton.click();
+		await expect(
+			this.page.getByRole('button', {name: 'Clear Search'})
+		).toBeVisible({timeout: 2000});
+
+		await this.page.waitForLoadState('networkidle');
+	}
+
+	async sortReportBy(headerName: string) {
+		await this.page
+			.getByRole('columnheader', {exact: true, name: headerName})
+			.getByRole('button')
+			.click();
+		await this.page.waitForLoadState('networkidle');
 	}
 
 	async selectImportFile({

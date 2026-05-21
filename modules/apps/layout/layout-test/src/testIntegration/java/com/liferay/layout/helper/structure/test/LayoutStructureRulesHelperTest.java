@@ -11,6 +11,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
+import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -362,6 +363,33 @@ public class LayoutStructureRulesHelperTest {
 			).put(
 				"show", ListUtil.fromCollection(displayedItemIds)
 			).build());
+	}
+
+	@Test
+	public void testWithSelectInfoFieldType() throws Exception {
+		InfoField<SelectInfoFieldType> infoField = InfoField.builder(
+			"Test"
+		).infoFieldType(
+			SelectInfoFieldType.INSTANCE
+		).name(
+			"status"
+		).labelInfoLocalizedValue(
+			InfoLocalizedValue.localize(getClass(), "status")
+		).build();
+
+		InfoItemFieldValues infoItemFieldValues = InfoItemFieldValues.builder(
+		).infoFieldValue(
+			new InfoFieldValue<>(infoField, "active")
+		).build();
+
+		String fieldName = infoField.getUniqueId();
+
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "equal", "active");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "not-equal", "archived");
+		_testWithFieldCondition(
+			infoItemFieldValues, fieldName, "is-not-empty", "");
 	}
 
 	@Test

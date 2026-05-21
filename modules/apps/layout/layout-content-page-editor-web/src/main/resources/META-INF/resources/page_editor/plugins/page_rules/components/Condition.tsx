@@ -18,6 +18,7 @@ import {LAYOUT_TYPES} from '../../../app/config/constants/layoutTypes';
 import {config} from '../../../app/config/index';
 import {
 	ObjectField,
+	ObjectFieldAttributes,
 	ObjectFields,
 } from '../../../app/contexts/ObjectDataContext';
 import {useRuleValidation} from '../../../app/contexts/RulesModalContext';
@@ -116,6 +117,14 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.GREATER_THAN_OR_EQUALS,
 				OPERATORS.LESS_THAN,
 				OPERATORS.LESS_THAN_OR_EQUALS,
+			];
+
+		case 'select':
+			return [
+				OPERATORS.EQUAL,
+				OPERATORS.NOT_EQUAL,
+				OPERATORS.IS_EMPTY,
+				OPERATORS.IS_NOT_EMPTY,
 			];
 
 		case 'text':
@@ -338,7 +347,12 @@ function FieldFragmentTypeSelectors({
 	sendMessage,
 }: {
 	condition: ConditionType;
-	items: {label: string; type: string; value: string}[];
+	items: {
+		attributes?: ObjectFieldAttributes;
+		label: string;
+		type: string;
+		value: string;
+	}[];
 	onConditionChange: (condition: ConditionType) => void;
 	onErrorChange: (error: RuleError | null) => void;
 	sendMessage: (message: string) => void;
@@ -406,6 +420,7 @@ function FieldFragmentTypeSelectors({
 
 			{hasValueInput(condition.options?.type) ? (
 				<ConditionValueInput
+					attributes={selectedItem?.attributes}
 					fieldType={selectedItem?.type}
 					onBlur={() => {
 						sendMessage(
@@ -433,12 +448,14 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 const DATE_TIME_FORMAT = 'YYYY-MM-DD HH:mm';
 
 function ConditionValueInput({
+	attributes,
 	fieldType,
 	onBlur,
 	onChange,
 	onErrorChange,
 	value,
 }: {
+	attributes?: ObjectFieldAttributes;
 	fieldType: string | undefined;
 	onBlur: () => void;
 	onChange: (value: string) => void;
@@ -477,6 +494,22 @@ function ConditionValueInput({
 	);
 
 	useRuleValidation(() => handleError(value ?? ''));
+
+	if (fieldType === 'select' && attributes?.options) {
+		return (
+			<RuleSelect
+				aria-label={Liferay.Language.get('value')}
+				items={attributes.options}
+				onErrorChange={onErrorChange}
+				onSelectionChange={(selectedValue) => {
+					onChange(selectedValue);
+
+					onBlur();
+				}}
+				selectedKey={value}
+			/>
+		);
+	}
 
 	if (isDateField) {
 		return (
@@ -754,7 +787,12 @@ export function convertOptionsToConditionValue(
 
 export function filterAndConvertMappingFields(
 	mappingFields: ObjectFields | null
-): {label: string; type: string; value: string}[] {
+): {
+	attributes?: ObjectFieldAttributes;
+	label: string;
+	type: string;
+	value: string;
+}[] {
 	if (!mappingFields || !config.selectedMappingTypes?.type) {
 		return [];
 	}
@@ -765,6 +803,7 @@ export function filterAndConvertMappingFields(
 			const objectField = field as ObjectField;
 
 			return {
+				attributes: objectField.attributes,
 				label: objectField.label,
 				type: objectField.type,
 				value: objectField.key,

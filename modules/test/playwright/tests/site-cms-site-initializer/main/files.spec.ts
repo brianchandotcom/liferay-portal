@@ -6,7 +6,6 @@
 import {expect, mergeTests} from '@playwright/test';
 import fs from 'fs/promises';
 
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../../../apps/site/site-cms-site-initializer/src/main/resources/META-INF/resources/js/common/utils/constants';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -17,7 +16,6 @@ import performLogin, {
 	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
-import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const validImageFileBase64 =
@@ -302,8 +300,9 @@ test(
 test(
 	'The Space selector dialog is not shown when creating a Basic Document inside a folder when multiple Spaces exist',
 	{tag: '@LPD-57827'},
-	async ({apiHelpers, assetsPage, page}) => {
+	async ({apiHelpers, assetsPage, folderPage, page}) => {
 		const assetLibraryName = getRandomString();
+		const folderTitle = getRandomString();
 
 		await test.step('Create a new Space', async () => {
 			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
@@ -325,22 +324,29 @@ test(
 			).toBeGreaterThan(1);
 		});
 
-		const folderData = await test.step('Create a folder', async () => {
-			return await apiHelpers.objectFolder.createObjectEntryFolder({
+		await test.step('Create a folder', async () => {
+			await apiHelpers.objectFolder.createObjectEntryFolder({
 				scopeKey: assetLibraryName,
-				title: getRandomString(),
+				title: folderTitle,
 			});
 		});
 
 		await test.step('Navigate into the folder', async () => {
-			const className =
-				await apiHelpers.jsonWebServicesClassName.fetchClassName(
-					OBJECT_ENTRY_FOLDER_CLASS_NAME
-				);
+			await assetsPage.gotoAll();
 
-			await page.goto(
-				`${PORTLET_URLS.cmsViewFolder}/${className.classNameId}/${folderData.id}`
-			);
+			await page
+				.getByRole('menuitem', {exact: true, name: assetLibraryName})
+				.click();
+
+			await page
+				.getByRole('menuitem', {exact: true, name: 'Files'})
+				.click();
+
+			await page.getByRole('heading', {name: 'Files'}).waitFor();
+
+			await assetsPage.changeVisualizationMode('Table');
+
+			await folderPage.clickOption(folderTitle, 'View Folder');
 		});
 
 		await test.step('Create a Basic Document', async () => {
@@ -353,7 +359,7 @@ test(
 
 		await test.step('Check the Space name in the Basic Document creation page', async () => {
 			await page
-				.getByRole('heading', {name: 'Edit Basic Document'})
+				.getByRole('heading', {name: 'New Basic Document'})
 				.waitFor();
 
 			const spaceSpan = page.locator(

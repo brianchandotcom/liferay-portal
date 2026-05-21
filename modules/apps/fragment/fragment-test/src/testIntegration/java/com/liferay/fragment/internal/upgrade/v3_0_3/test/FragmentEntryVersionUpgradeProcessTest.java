@@ -7,8 +7,7 @@ package com.liferay.fragment.internal.upgrade.v3_0_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
-import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.internal.upgrade.v3_0_3.FragmentEntryVersionUpgradeProcess;
+import com.liferay.fragment.internal.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
@@ -90,8 +89,9 @@ public class FragmentEntryVersionUpgradeProcessTest {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-			false, false, FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
+			false, false,
+			com.liferay.fragment.constants.FragmentConstants.TYPE_COMPONENT,
+			null, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -206,11 +206,12 @@ public class FragmentEntryVersionUpgradeProcessTest {
 
 		_runUpgrade();
 
-		int maxVersions = FragmentEntryVersionUpgradeProcess.MAX_VERSIONS;
+		List<Integer> expectedVersions = new ArrayList<>(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT);
 
-		List<Integer> expectedVersions = new ArrayList<>(maxVersions);
-
-		for (int version = _versionCounter - maxVersions;
+		for (int version =
+				_versionCounter -
+					FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT;
 			 version < _versionCounter; version++) {
 
 			expectedVersions.add(version);

@@ -173,8 +173,37 @@ describe('useModelArmorTemplateForm', () => {
 	});
 
 	describe('submit', () => {
-		it('shows a danger toast when the API response lacks an ERC', async () => {
-			mockPutModelArmorTemplate.mockResolvedValueOnce({});
+		it("surfaces the thrown error's message in a danger toast", async () => {
+			mockPutModelArmorTemplate.mockRejectedValueOnce(
+				new Error('External reference code already in use')
+			);
+
+			const {result} = renderModelArmorHook();
+
+			await act(async () => {
+				result.current.setField('title_i18n', {
+					en_US: 'My Template',
+				});
+				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
+				result.current.setField('location', 'us-central1');
+			});
+
+			await act(async () => {
+				result.current.handleSubmit();
+			});
+
+			await waitFor(() => {
+				expect(mockOpenToast).toHaveBeenCalledWith(
+					expect.objectContaining({
+						message: 'External reference code already in use',
+						type: 'danger',
+					})
+				);
+			});
+		});
+
+		it('falls back to the localized error when the thrown error has no message', async () => {
+			mockPutModelArmorTemplate.mockRejectedValueOnce(new Error());
 
 			const {result} = renderModelArmorHook();
 
@@ -194,33 +223,6 @@ describe('useModelArmorTemplateForm', () => {
 				expect(mockOpenToast).toHaveBeenCalledWith(
 					expect.objectContaining({
 						message: 'failed-to-save-model-armor-template',
-						type: 'danger',
-					})
-				);
-			});
-		});
-
-		it('shows a generic error toast when the PUT throws', async () => {
-			mockPutModelArmorTemplate.mockRejectedValueOnce(new Error('Boom'));
-
-			const {result} = renderModelArmorHook();
-
-			await act(async () => {
-				result.current.setField('title_i18n', {
-					en_US: 'My Template',
-				});
-				result.current.setField('externalReferenceCode', 'TEMPLATE_X');
-				result.current.setField('location', 'us-central1');
-			});
-
-			await act(async () => {
-				result.current.handleSubmit();
-			});
-
-			await waitFor(() => {
-				expect(mockOpenToast).toHaveBeenCalledWith(
-					expect.objectContaining({
-						message: 'an-unexpected-error-occurred',
 						type: 'danger',
 					})
 				);

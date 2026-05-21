@@ -25,10 +25,13 @@ export function useModelArmorTemplateForm({
 }: UseModelArmorTemplateFormProps) {
 	const {
 		errors,
+		handleBlur,
 		handleSubmit,
 		isSubmitting,
+		setFieldTouched,
 		setFieldValue,
 		setValues,
+		touched,
 		values,
 	} = useFormik<ModelArmorTemplate>({
 		initialValues: {
@@ -38,30 +41,23 @@ export function useModelArmorTemplateForm({
 		},
 		onSubmit: async (formValues) => {
 			try {
-				const response = await putModelArmorTemplate(formValues);
+				await putModelArmorTemplate(formValues);
 
-				if (response?.externalReferenceCode) {
-					openToast({
-						message: Liferay.Language.get(
-							'model-armor-template-saved-successfully'
-						),
-						type: 'success',
-					});
-				}
-				else {
-					openToast({
-						message: Liferay.Language.get(
-							'failed-to-save-model-armor-template'
-						),
-						type: 'danger',
-					});
-				}
+				openToast({
+					message: Liferay.Language.get(
+						'model-armor-template-saved-successfully'
+					),
+					type: 'success',
+				});
 			}
 			catch (error) {
 				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-error-occurred'
-					),
+					message:
+						error instanceof Error && error.message
+							? error.message
+							: Liferay.Language.get(
+									'failed-to-save-model-armor-template'
+								),
 					type: 'danger',
 				});
 			}
@@ -129,9 +125,12 @@ export function useModelArmorTemplateForm({
 
 	return {
 		errors,
+		handleBlur,
 		handleSubmit,
 		isSubmitting,
 		setField,
+		setFieldTouched,
+		touched,
 		values,
 	};
 }

@@ -38,13 +38,14 @@ const ResponsibleAIPanel: React.FC<IProps> = ({setField, values}) => {
 						<label htmlFor={field}>
 							{label}
 
-							<span
-								className="model-armor-template-form-help-icon"
-								data-tooltip-align="top"
-								title={helpText}
-							>
-								<Icon symbol="question-circle-full" />
-							</span>
+							<Icon
+								className="lfr-portal-tooltip ml-1 text-secondary"
+								data-title={helpText}
+								focusable="false"
+								role="dialog"
+								symbol="question-circle-full"
+								tabIndex={0}
+							/>
 						</label>
 
 						<Picker

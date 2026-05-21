@@ -34,7 +34,9 @@ const DetectionsPanel: React.FC<IProps> = ({setField, values}) => {
 						<ClayCheckbox
 							checked={values[field]}
 							label={label}
-							onChange={() => setField(field, !values[field])}
+							onChange={(event) =>
+								setField(field, event.target.checked)
+							}
 						/>
 
 						<p className="model-armor-template-form-detection-description">

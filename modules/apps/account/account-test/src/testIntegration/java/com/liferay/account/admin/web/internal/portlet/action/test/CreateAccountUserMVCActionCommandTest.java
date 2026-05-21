@@ -59,6 +59,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
  * @author Alicia García
  */
@@ -95,13 +97,17 @@ public class CreateAccountUserMVCActionCommandTest {
 			new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(48)),
 			new ServiceContext());
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		serviceContext.setRequest(new MockHttpServletRequest());
+
 		SharingEntry sharingEntry = _sharingEntryLocalService.addSharingEntry(
 			null, TestPropsValues.getUserId(), ticket.getTicketId(), 0, 0,
 			_classNameLocalService.getClassNameId(Group.class.getName()),
 			_group.getGroupId(), _group.getGroupId(), true,
-			Arrays.asList(SharingEntryAction.VIEW), null,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
+			Arrays.asList(SharingEntryAction.VIEW), null, serviceContext);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();

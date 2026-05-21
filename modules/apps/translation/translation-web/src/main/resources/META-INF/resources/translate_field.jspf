@@ -16,7 +16,7 @@
 				</label>
 
 				<div class="translation-editor-preview" dir="<%= sourceContentDir %>">
-					<%= sourceContent %>
+					<%= translateDisplayContext.getSanitizedHTML(sourceContent) %>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -35,7 +35,7 @@
 				</label>
 
 				<div class="translation-editor-preview" dir="<%= LanguageUtil.get(translateDisplayContext.getTargetLocale(), "lang.dir") %>">
-					<%= targetContent %>
+					<%= translateDisplayContext.getSanitizedHTML(targetContent) %>
 				</div>
 			</c:when>
 			<c:otherwise>

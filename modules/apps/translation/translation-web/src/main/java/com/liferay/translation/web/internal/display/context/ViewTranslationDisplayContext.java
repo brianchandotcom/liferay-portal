@@ -16,11 +16,17 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.translation.info.field.TranslationInfoFieldChecker;
 import com.liferay.translation.snapshot.TranslationSnapshot;
 
@@ -101,6 +107,17 @@ public class ViewTranslationDisplayContext {
 	public String getLanguageIdTitle(String languageId) {
 		return StringUtil.replace(
 			languageId, CharPool.UNDERLINE, CharPool.DASH);
+	}
+
+	public String getSanitizedHTML(String html) throws SanitizerException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return SanitizerUtil.sanitize(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			themeDisplay.getUserId(), StringPool.BLANK, 0,
+			ContentTypes.TEXT_HTML, html);
 	}
 
 	public String getSourceLanguageId() {

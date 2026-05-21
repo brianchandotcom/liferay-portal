@@ -40,46 +40,67 @@ public class TestrayBuildResourceImpl extends BaseTestrayBuildResourceImpl {
 
 		return new TestrayBuild() {
 			{
-				archived = GetterUtil.getBoolean(values.get("archived"));
-				caseResultBlocked = GetterUtil.getInteger(
-					values.get("caseResultBlocked"));
-				caseResultDidNotRun = GetterUtil.getInteger(
-					values.get("caseResultDidNotRun"));
-				caseResultFailed = GetterUtil.getInteger(
-					values.get("caseResultFailed"));
-				caseResultIncomplete = GetterUtil.getInteger(
-					values.get("caseResultIncomplete"));
-				caseResultInProgress = GetterUtil.getInteger(
-					values.get("caseResultInProgress"));
-				caseResultPassed = GetterUtil.getInteger(
-					values.get("caseResultPassed"));
-				caseResultTestFix = GetterUtil.getInteger(
-					values.get("caseResultTestFix"));
-				caseResultUntested = GetterUtil.getInteger(
-					values.get("caseResultUntested"));
-				cpuUseTime = GetterUtil.getString(values.get("cpuUseTime"));
-				dateArchived = String.valueOf(
-					GetterUtil.get(values.get("dateArchived"), null, null));
-				description = GetterUtil.getString(values.get("description"));
-				dueDate = String.valueOf(
-					GetterUtil.get(values.get("dueDate"), null, null));
-				dueStatus = GetterUtil.getString(values.get("dueStatus"));
-				gitHash = GetterUtil.getString(values.get("gitHash"));
-				githubCompareURLs = GetterUtil.getString(
-					values.get("githubCompareURLs"));
-				name = GetterUtil.getString(values.get("name"));
-				promoted = GetterUtil.getBoolean(values.get("promoted"));
-				r_productVersionToBuilds_c_productVersionId =
-					GetterUtil.getLong(
+				setArchived(
+					() -> GetterUtil.getBoolean(values.get("archived")));
+				setCaseResultBlocked(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultBlocked")));
+				setCaseResultDidNotRun(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultDidNotRun")));
+				setCaseResultFailed(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultFailed")));
+				setCaseResultIncomplete(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultIncomplete")));
+				setCaseResultInProgress(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultInProgress")));
+				setCaseResultPassed(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultPassed")));
+				setCaseResultTestFix(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultTestFix")));
+				setCaseResultUntested(
+					() -> GetterUtil.getInteger(
+						values.get("caseResultUntested")));
+				setCpuUseTime(
+					() -> GetterUtil.getString(values.get("cpuUseTime")));
+				setDateArchived(
+					() -> String.valueOf(
+						GetterUtil.get(
+							values.get("dateArchived"), null, null)));
+				setDescription(
+					() -> GetterUtil.getString(values.get("description")));
+				setDueDate(
+					() -> String.valueOf(
+						GetterUtil.get(values.get("dueDate"), null, null)));
+				setDueStatus(
+					() -> GetterUtil.getString(values.get("dueStatus")));
+				setGitHash(() -> GetterUtil.getString(values.get("gitHash")));
+				setGithubCompareURLs(
+					() -> GetterUtil.getString(
+						values.get("githubCompareURLs")));
+				setName(() -> GetterUtil.getString(values.get("name")));
+				setPromoted(
+					() -> GetterUtil.getBoolean(values.get("promoted")));
+				setR_productVersionToBuilds_c_productVersionId(
+					() -> GetterUtil.getLong(
 						values.get(
-							"r_productVersionToBuilds_c_productVersionId"));
-				r_projectToBuilds_c_projectId = GetterUtil.getLong(
-					values.get("r_projectToBuilds_c_projectId"));
-				r_routineToBuilds_c_routineId = GetterUtil.getLong(
-					values.get("r_routineToBuilds_c_routineId"));
-				template = GetterUtil.getBoolean(values.get("template"));
-				templateTestrayBuildId = GetterUtil.getLong(
-					values.get("templateTestrayBuildId"));
+							"r_productVersionToBuilds_c_productVersionId")));
+				setR_projectToBuilds_c_projectId(
+					() -> GetterUtil.getLong(
+						values.get("r_projectToBuilds_c_projectId")));
+				setR_routineToBuilds_c_routineId(
+					() -> GetterUtil.getLong(
+						values.get("r_routineToBuilds_c_routineId")));
+				setTemplate(
+					() -> GetterUtil.getBoolean(values.get("template")));
+				setTemplateTestrayBuildId(
+					() -> GetterUtil.getLong(
+						values.get("templateTestrayBuildId")));
 			}
 		};
 	}

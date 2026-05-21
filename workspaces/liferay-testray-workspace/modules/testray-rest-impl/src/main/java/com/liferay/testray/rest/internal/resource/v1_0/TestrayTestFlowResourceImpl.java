@@ -154,16 +154,22 @@ public class TestrayTestFlowResourceImpl
 				values,
 				value -> new TestraySubtask() {
 					{
-						error = GetterUtil.getString(value.get("errors_"));
-						id = GetterUtil.getLong(value.get("c_subtaskid_"));
-						issues = GetterUtil.getString(value.get("issues_"));
-						name = GetterUtil.getString(value.get("name_"));
-						score = GetterUtil.getLong(value.get("score_"));
-						status = GetterUtil.getString(value.get("duestatus_"));
-						testrayTaskId = GetterUtil.getLong(
-							value.get("c_taskid_"));
-						userId = GetterUtil.getLong(value.get("userid"));
-
+						setError(
+							() -> GetterUtil.getString(value.get("errors_")));
+						setId(
+							() -> GetterUtil.getLong(
+								value.get("c_subtaskid_")));
+						setIssues(
+							() -> GetterUtil.getString(value.get("issues_")));
+						setName(() -> GetterUtil.getString(value.get("name_")));
+						setScore(() -> GetterUtil.getLong(value.get("score_")));
+						setStatus(
+							() -> GetterUtil.getString(
+								value.get("duestatus_")));
+						setTestrayTaskId(
+							() -> GetterUtil.getLong(value.get("c_taskid_")));
+						setUserId(
+							() -> GetterUtil.getLong(value.get("userid")));
 						setUserName(
 							() -> {
 								FullNameGenerator fullNameGenerator =

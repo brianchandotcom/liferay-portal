@@ -132,36 +132,42 @@ public class TestrayRoutineDurationReportResourceImpl
 				values,
 				value -> new TestrayRoutineDurationReport() {
 					{
-						testrayCaseFlaky = GetterUtil.getBoolean(
-							String.valueOf(value.get("flaky_")));
-						testrayCaseId = GetterUtil.getLong(
-							value.get("c_caseid_"));
-						testrayCaseName = GetterUtil.getString(
-							value.get("name_"));
-						testrayCasePriority = GetterUtil.getInteger(
-							value.get("priority_"));
-						testrayCaseResultAvgDuration = GetterUtil.getLong(
-							value.get("avgduration"));
-						testrayCaseResultDurations = unsafeTransform(
-							StringUtil.split(
+						setTestrayCaseFlaky(
+							() -> GetterUtil.getBoolean(
+								String.valueOf(value.get("flaky_"))));
+						setTestrayCaseId(
+							() -> GetterUtil.getLong(value.get("c_caseid_")));
+						setTestrayCaseName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayCasePriority(
+							() -> GetterUtil.getInteger(
+								value.get("priority_")));
+						setTestrayCaseResultAvgDuration(
+							() -> GetterUtil.getLong(value.get("avgduration")));
+						setTestrayCaseResultDurations(
+							() -> unsafeTransform(
+								StringUtil.split(
+									StringUtil.removeChars(
+										value.get(
+											"durations"
+										).toString(),
+										'{', '}', '"')),
+								Long::valueOf, Long.class));
+						setTestrayCaseResultStatus(
+							() -> StringUtil.split(
 								StringUtil.removeChars(
 									value.get(
-										"durations"
+										"results"
 									).toString(),
-									'{', '}', '"')),
-							Long::valueOf, Long.class);
-						testrayCaseResultStatus = StringUtil.split(
-							StringUtil.removeChars(
-								value.get(
-									"results"
-								).toString(),
-								'{', '}', '"'));
-						testrayCaseTypeName = GetterUtil.getString(
-							value.get("casetypename"));
-						testrayComponentName = GetterUtil.getString(
-							value.get("componentname"));
-						testrayTeamName = GetterUtil.getString(
-							value.get("teamname"));
+									'{', '}', '"')));
+						setTestrayCaseTypeName(
+							() -> GetterUtil.getString(
+								value.get("casetypename")));
+						setTestrayComponentName(
+							() -> GetterUtil.getString(
+								value.get("componentname")));
+						setTestrayTeamName(
+							() -> GetterUtil.getString(value.get("teamname")));
 					}
 				}),
 			pagination, totalCount);

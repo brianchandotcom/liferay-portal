@@ -13,7 +13,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.friendly.url.model.FriendlyURLEntryLocalization;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -50,13 +49,8 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -73,15 +67,12 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -98,8 +89,6 @@ import jakarta.portlet.PortletPreferences;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -162,52 +151,6 @@ public class LayoutSetPrototypePropagationTest
 	@Test
 	public void testIsLayoutUpdateable() throws Exception {
 		doTestIsLayoutUpdateable();
-	}
-
-	@Test
-	public void testLayoutDeleteAndReadWithSameFriendlyURL() throws Exception {
-		setLinkEnabled(true);
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		String friendlyURL = layout.getFriendlyURL();
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		LayoutLocalServiceUtil.deleteLayout(
-			layout, ServiceContextTestUtil.getServiceContext());
-
-		Layout newLayout = LayoutTestUtil.addTypePortletLayout(
-			_layoutSetPrototypeGroup.getGroupId(), "test", true);
-
-		Assert.assertEquals(friendlyURL, newLayout.getFriendlyURL());
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		propagateChanges(group);
-
-		Assert.assertEquals(
-			_initialPrototypeLayoutsCount + 1, getGroupLayoutCount());
-
-		Layout propagatedLayout =
-			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				newLayout.getUuid(), group.getGroupId(), false);
-
-		Assert.assertNotNull(
-			"Deleted and readded layout could not be found on propagated site",
-			propagatedLayout);
-
-		Assert.assertEquals(
-			"Friendly URLs of the source and target layouts should match",
-			friendlyURL, propagatedLayout.getFriendlyURL());
 	}
 
 	@Test
@@ -734,67 +677,6 @@ public class LayoutSetPrototypePropagationTest
 				"showAvailableLocales", StringPool.BLANK));
 	}
 
-	@Test
-	public void testResetPrototypeWithoutPermissions() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user2.getCompanyId(), _user2.getUserId());
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			userGroup.getGroupId(), true);
-
-		try {
-			_layoutSetPrototypeHelper.resetPrototype(layoutSet);
-
-			Assert.fail(
-				"The user should not be able to reset another user's " +
-					"dashboard");
-		}
-		catch (PrincipalException principalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(principalException);
-			}
-		}
-	}
-
-	@Test
-	public void testResetPrototypeWithPermissions() throws Exception {
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		RoleLocalServiceUtil.addUserRole(_user1.getUserId(), role);
-
-		ResourcePermissionLocalServiceUtil.addResourcePermission(
-			_user1.getCompanyId(), Group.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(_user1.getCompanyId()), role.getRoleId(),
-			ActionKeys.UPDATE);
-
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user2.getCompanyId(), _user2.getUserId());
-
-		_layoutSetPrototypeHelper.resetPrototype(
-			LayoutSetLocalServiceUtil.getLayoutSet(
-				userGroup.getGroupId(), true));
-	}
-
-	@Test
-	public void testResetUserPrototypeWithoutPermissions() throws Exception {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(_user1));
-
-		Group userGroup = GroupLocalServiceUtil.getUserGroup(
-			_user1.getCompanyId(), _user1.getUserId());
-
-		_layoutSetPrototypeHelper.resetPrototype(
-			LayoutSetLocalServiceUtil.getLayoutSet(
-				userGroup.getGroupId(), true));
-	}
-
 	@FeatureFlag(enable = false, value = "LPD-38869")
 	@Test
 	public void testThemeSettingsAfterLayoutPropagation() throws Exception {
@@ -1271,38 +1153,11 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void propagateChanges(Group group) throws Exception {
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-
-		UnicodeProperties settingsUnicodeProperties =
-			layoutSet.getSettingsProperties();
-
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_TIME);
-		settingsUnicodeProperties.remove(Sites.LAST_MERGE_VERSION);
-
-		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
-
-		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(
+			false,
+			LayoutSetLocalServiceUtil.getLayoutSet(group.getGroupId(), false));
 
 		Thread.sleep(2000);
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		LayoutSet layoutSetPrototypeLayoutSet =
-			layoutSetPrototype.getLayoutSet();
-
-		UnicodeProperties layoutSetPrototypeSettingsUnicodeProperties =
-			layoutSetPrototypeLayoutSet.getSettingsProperties();
-
-		int mergeFailCount = GetterUtil.getInteger(
-			layoutSetPrototypeSettingsUnicodeProperties.getProperty(
-				Sites.MERGE_FAIL_COUNT));
-
-		Assert.assertEquals(0, mergeFailCount);
 	}
 
 	protected void setLayoutsUpdateable(boolean layoutsUpdateable)

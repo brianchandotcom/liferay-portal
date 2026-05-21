@@ -72,24 +72,6 @@ public class ExportProcessResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_companyObjectDefinition = _publishObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		_companyObjectEntries = _addObjectEntries(
-			_companyObjectDefinition, GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
-		_depotObjectDefinition = _publishObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_DEPOT);
-
-		_depotObjectEntries = _addObjectEntries(
-			_depotObjectDefinition, testDepotEntryGroup.getGroupId());
-
-		_siteObjectDefinition = _publishObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		_siteObjectEntries = _addObjectEntries(
-			_siteObjectDefinition, testGroup.getGroupId());
-
 		String password = RandomTestUtil.randomString();
 
 		_user = UserTestUtil.addUser(testCompany, password);
@@ -121,13 +103,6 @@ public class ExportProcessResourceTest
 			}
 		}
 
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_companyObjectDefinition);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_depotObjectDefinition);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_siteObjectDefinition);
-
 		_userLocalService.deleteUser(_user);
 	}
 
@@ -149,13 +124,24 @@ public class ExportProcessResourceTest
 				exportProcessResource.postAssetLibraryExportProcessHttpResponse(
 					testDepotEntryGroup.getExternalReferenceCode(),
 					exportRequest));
-		_testPostExportProcessWithObjectDefinition(
-			exportRequest ->
-				exportProcessResource.postAssetLibraryExportProcess(
-					testDepotEntryGroup.getExternalReferenceCode(),
-					exportRequest),
-			testDepotEntryGroup.getGroupId(), _depotObjectDefinition,
-			_depotObjectEntries);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		try {
+			_testPostExportProcessWithObjectDefinition(
+				exportRequest ->
+					exportProcessResource.postAssetLibraryExportProcess(
+						testDepotEntryGroup.getExternalReferenceCode(),
+						exportRequest),
+				testDepotEntryGroup.getGroupId(), objectDefinition,
+				_addObjectEntries(
+					objectDefinition, testDepotEntryGroup.getGroupId()));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Override
@@ -175,9 +161,21 @@ public class ExportProcessResourceTest
 
 		_testPostExportProcessWithInvalidDateRange(
 			exportProcessResource::postExportProcessHttpResponse);
-		_testPostExportProcessWithObjectDefinition(
-			exportProcessResource::postExportProcess, companyGroup.getGroupId(),
-			_companyObjectDefinition, _companyObjectEntries);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		try {
+			_testPostExportProcessWithObjectDefinition(
+				exportProcessResource::postExportProcess,
+				companyGroup.getGroupId(), objectDefinition,
+				_addObjectEntries(
+					objectDefinition, GroupConstants.DEFAULT_PARENT_GROUP_ID));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Override
@@ -197,10 +195,21 @@ public class ExportProcessResourceTest
 			exportRequest ->
 				exportProcessResource.postSiteExportProcessHttpResponse(
 					testGroup.getExternalReferenceCode(), exportRequest));
-		_testPostExportProcessWithObjectDefinition(
-			exportRequest -> exportProcessResource.postSiteExportProcess(
-				testGroup.getExternalReferenceCode(), exportRequest),
-			testGroup.getGroupId(), _siteObjectDefinition, _siteObjectEntries);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_SITE);
+
+		try {
+			_testPostExportProcessWithObjectDefinition(
+				exportRequest -> exportProcessResource.postSiteExportProcess(
+					testGroup.getExternalReferenceCode(), exportRequest),
+				testGroup.getGroupId(), objectDefinition,
+				_addObjectEntries(objectDefinition, testGroup.getGroupId()));
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Override
@@ -361,10 +370,6 @@ public class ExportProcessResourceTest
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
-	private ObjectDefinition _companyObjectDefinition;
-	private ObjectEntry[] _companyObjectEntries;
-	private ObjectDefinition _depotObjectDefinition;
-	private ObjectEntry[] _depotObjectEntries;
 	private ExportProcessResource _exportProcessResource;
 
 	@Inject
@@ -373,9 +378,6 @@ public class ExportProcessResourceTest
 	@Inject
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
-
-	private ObjectDefinition _siteObjectDefinition;
-	private ObjectEntry[] _siteObjectEntries;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

@@ -71,16 +71,26 @@ function toFieldComparison(
 	if (fieldType === 'multiselect') {
 		value = Array.isArray(value) ? value : [];
 
-		const containsExpression = `(${value
+		const containsAnyExpression = `(${value
 			.map((key) => `contains(${field}, "${key}")`)
 			.join(' OR ')})`;
 
 		if (type === 'contains') {
-			return containsExpression;
+			return containsAnyExpression;
 		}
 
 		if (type === 'does-not-contain') {
-			return `NOT(${containsExpression})`;
+			return `NOT(${containsAnyExpression})`;
+		}
+
+		const sortedJoinedValue = [...value].sort().join(',');
+
+		if (type === 'equal') {
+			return `${field} == "${sortedJoinedValue}"`;
+		}
+
+		if (type === 'not-equal') {
+			return `${field} != "${sortedJoinedValue}"`;
 		}
 	}
 

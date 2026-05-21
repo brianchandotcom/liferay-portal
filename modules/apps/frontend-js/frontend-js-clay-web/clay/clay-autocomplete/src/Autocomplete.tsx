@@ -4,6 +4,7 @@
  */
 
 import {
+	KeyboardArrowsIndicator,
 	__NOT_PUBLIC_COLLECTION,
 	__NOT_PUBLIC_LIVE_ANNOUNCER,
 } from '@clayui/core';
@@ -11,6 +12,7 @@ import DropDown from '@clayui/drop-down';
 import {ClayInput as Input} from '@clayui/form';
 import LoadingIndicator from '@clayui/loading-indicator';
 import {
+	ClayPortal,
 	InternalDispatch,
 	Keys,
 	Overlay,
@@ -116,6 +118,15 @@ export interface IProps<T>
 	direction?: 'bottom' | 'top';
 
 	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the Autocomplete
+	 * input, hinting that up and down arrow keys can be used to navigate
+	 * the suggestions list. The indicator floats to the right of the input
+	 * and flips to the left when it would overflow the viewport. It is
+	 * only rendered while the suggestions panel is open.
+	 */
+	displayKeyboardArrowsIndicator?: boolean;
+
+	/**
 	 * The estimated height of an item that is used by the virtualizer.
 	 */
 	estimateSize?: number;
@@ -130,6 +141,14 @@ export interface IProps<T>
 	 * Property to render content with dynamic data.
 	 */
 	items?: Array<T> | null;
+
+	/**
+	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
+	 * to the indicator's built-in English string when omitted. Pass a
+	 * translated value (e.g. via `Liferay.Language.get`) when the host
+	 * page needs i18n.
+	 */
+	keyboardArrowsIndicatorLabel?: string;
 
 	/**
 	 * The current state of Autocomplete current loading. Determines whether the
@@ -244,9 +263,11 @@ function AutocompleteInner<T extends Item>(
 		defaultItems,
 		defaultValue,
 		direction = 'bottom',
+		displayKeyboardArrowsIndicator = false,
 		estimateSize,
 		filterKey,
 		items: externalItems,
+		keyboardArrowsIndicatorLabel,
 		loadingState,
 		menuTrigger = 'input',
 		messages: externalMessages,
@@ -784,6 +805,16 @@ function AutocompleteInner<T extends Item>(
 						<InfiniteScrollFeedback />
 					</div>
 				</Overlay>
+			)}
+
+			{active && displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={inputElementRef}
+						direction="vertical"
+						label={keyboardArrowsIndicatorLabel}
+					/>
+				</ClayPortal>
 			)}
 
 			{isLoading && (

@@ -87,7 +87,6 @@ export function NewImport({
 
 					const result = await postImportProcess({
 						importRequest: {
-							fileEntryId: importPreview.fileEntryId,
 							requestPortletDataHandlers:
 								toRequestPortletDataHandlers(
 									importPreview.previewPortletDataHandlerSections ??

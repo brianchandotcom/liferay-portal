@@ -24,7 +24,6 @@ export interface ExportProcess {
 }
 
 export interface ImportRequest {
-	fileEntryId: number;
 	requestPortletDataHandlers?: RequestPortletDataHandler[];
 }
 

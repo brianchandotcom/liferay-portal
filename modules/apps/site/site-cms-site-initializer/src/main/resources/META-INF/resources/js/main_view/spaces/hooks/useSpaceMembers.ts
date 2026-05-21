@@ -7,7 +7,6 @@ import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import {useCallback, useEffect, useReducer} from 'react';
 
-import AdminUserService from '../../../common/services/AdminUserService';
 import SpaceService from '../../../common/services/SpaceService';
 import {Role} from '../../../common/types/Role';
 import {UserAccount, UserGroup} from '../../../common/types/UserAccount';
@@ -333,28 +332,39 @@ export function useSpaceMembers(
 		dispatch({type: ActionTypes.FetchStart});
 
 		try {
-			const [spaceUsers, spaceUserGroups, userRoles] = await Promise.all([
-				SpaceService.getSpaceUsers({
-					externalReferenceCode,
-					nestedFields: 'roles',
-					page: 1,
-					pageSize,
-				}),
-				SpaceService.getSpaceUserGroups({
-					externalReferenceCode,
-					nestedFields: 'numberOfUserAccounts,roles',
-					page: 1,
-					pageSize,
-				}),
-				AdminUserService.getUserRoles({
-					filter: "name ne 'Asset Library Connected Site Member' and type eq 5",
-				}),
-			]);
+			const [spaceUsers, spaceUserGroups, spaceRoles] = await Promise.all(
+				[
+					SpaceService.getSpaceUsers({
+						externalReferenceCode,
+						nestedFields: 'roles',
+						page: 1,
+						pageSize,
+					}),
+					SpaceService.getSpaceUserGroups({
+						externalReferenceCode,
+						nestedFields: 'numberOfUserAccounts,roles',
+						page: 1,
+						pageSize,
+					}),
+					SpaceService.getSpaceRoles({
+						externalReferenceCode,
+						fields: [
+							'externalReferenceCode',
+							'id',
+							'name',
+							'name_i18n',
+						].join(','),
+					}),
+				]
+			);
 
 			dispatch({
 				payload: {
 					groups: spaceUserGroups,
-					roles: userRoles.items,
+					roles: spaceRoles.items.filter(
+						(role) =>
+							role.name !== 'Asset Library Connected Site Member'
+					),
 					users: spaceUsers,
 				},
 				type: ActionTypes.FetchSuccess,

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
@@ -44,6 +43,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
+import com.liferay.segments.web.internal.util.AudiencesPortletUtil;
 
 import jakarta.portlet.PortletURL;
 import jakarta.portlet.RenderRequest;
@@ -55,7 +55,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -109,6 +108,10 @@ public class EditSegmentsEntryDisplayContext {
 			return backURLTitle;
 		}
 
+		if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+			return LanguageUtil.get(_httpServletRequest, "audiences");
+		}
+
 		return LanguageUtil.get(_httpServletRequest, "segments");
 	}
 
@@ -128,10 +131,20 @@ public class EditSegmentsEntryDisplayContext {
 				_log.debug(exception);
 			}
 
-			hashMapWrapper.put(
-				"error",
-				LanguageUtil.get(
-					_httpServletRequest, "the-segment-is-no-longer-available"));
+			if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+				hashMapWrapper.put(
+					"error",
+					LanguageUtil.get(
+						_httpServletRequest,
+						"the-audience-is-no-longer-available"));
+			}
+			else {
+				hashMapWrapper.put(
+					"error",
+					LanguageUtil.get(
+						_httpServletRequest,
+						"the-segment-is-no-longer-available"));
+			}
 		}
 
 		_data = hashMapWrapper.build();
@@ -202,6 +215,9 @@ public class EditSegmentsEntryDisplayContext {
 
 		if (segmentsEntry != null) {
 			_title = segmentsEntry.getName(locale);
+		}
+		else if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+			_title = LanguageUtil.get(_httpServletRequest, "new-audience");
 		}
 		else {
 			String type = ResourceActionsUtil.getModelResource(
@@ -375,10 +391,7 @@ public class EditSegmentsEntryDisplayContext {
 
 	private Map<String, Object> _getProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"audiences",
-			Objects.equals(
-				PortalUtil.getPortletId(_renderRequest),
-				SegmentsPortletKeys.AUDIENCES)
+			"audiences", AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)
 		).put(
 			"availableLocales", _getAvailableLocales()
 		).put(

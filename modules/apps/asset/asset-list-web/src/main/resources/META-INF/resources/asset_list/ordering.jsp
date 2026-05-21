@@ -26,6 +26,10 @@
 							"initialOrderByType2", editAssetListDisplayContext.getOrderByType2()
 						).put(
 							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"properties", editAssetListDisplayContext.getTypePropertiesJSONArray()
+						).put(
+							"propertiesURL", editAssetListDisplayContext.getTypePropertiesURL()
 						).build()
 					%>'
 				/>

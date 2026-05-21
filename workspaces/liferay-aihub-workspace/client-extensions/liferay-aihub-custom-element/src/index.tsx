@@ -6,6 +6,7 @@
 import React from 'react';
 import {createRoot} from 'react-dom/client';
 
+import {setAIHubURL} from './api';
 import ChatbotWidget from './components/ChatbotWidget';
 import {WidgetConfiguration} from './types';
 
@@ -23,6 +24,7 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 	}
 	else {
 		const widgetConfiguration: WidgetConfiguration = {
+			aiHubURL: scriptTag.getAttribute('ai-hub-url') || '',
 			chatbotExternalReferenceCode:
 				scriptTag.getAttribute('chatbot-external-reference-code') || '',
 		};
@@ -32,6 +34,8 @@ if (!document.getElementById(CHATBOT_WIDGET_ID)) {
 		element.id = CHATBOT_WIDGET_ID;
 
 		document.body.appendChild(element);
+
+		setAIHubURL(widgetConfiguration.aiHubURL);
 
 		createRoot(element).render(
 			<ChatbotWidget widgetConfiguration={widgetConfiguration} />

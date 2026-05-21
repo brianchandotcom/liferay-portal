@@ -85,15 +85,6 @@ public class ImportPreviewResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_companyObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
-		_depotObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_DEPOT,
-			testDepotEntryGroup.getGroupId());
-		_siteObjectDefinition = _publishObjectDefinitionWithEntries(
-			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
-
 		String password = RandomTestUtil.randomString();
 
 		_user = UserTestUtil.addUser(testCompany, password);
@@ -113,13 +104,6 @@ public class ImportPreviewResourceTest
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_companyObjectDefinition);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_depotObjectDefinition);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_siteObjectDefinition);
 
 		_userLocalService.deleteUser(_user);
 	}
@@ -144,13 +128,24 @@ public class ImportPreviewResourceTest
 					HashMapBuilder.put(
 						"file", file
 					).build()));
-		_testPostImportPreviewWithObjectEntries(
-			file -> importPreviewResource.postAssetLibraryImportPreview(
-				testDepotEntryGroup.getExternalReferenceCode(), null,
-				HashMapBuilder.put(
-					"file", file
-				).build()),
-			testDepotEntryGroup.getGroupId(), _depotObjectDefinition);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
+			ObjectDefinitionConstants.SCOPE_DEPOT,
+			testDepotEntryGroup.getGroupId());
+
+		try {
+			_testPostImportPreviewWithObjectEntries(
+				file -> importPreviewResource.postAssetLibraryImportPreview(
+					testDepotEntryGroup.getExternalReferenceCode(), null,
+					HashMapBuilder.put(
+						"file", file
+					).build()),
+				testDepotEntryGroup.getGroupId(), objectDefinition);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Override
@@ -173,13 +168,24 @@ public class ImportPreviewResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()));
-		_testPostImportPreviewWithObjectEntries(
-			file -> importPreviewResource.postImportPreview(
-				null,
-				HashMapBuilder.put(
-					"file", file
-				).build()),
-			group.getGroupId(), _companyObjectDefinition);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
+			ObjectDefinitionConstants.SCOPE_COMPANY,
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		try {
+			_testPostImportPreviewWithObjectEntries(
+				file -> importPreviewResource.postImportPreview(
+					null,
+					HashMapBuilder.put(
+						"file", file
+					).build()),
+				group.getGroupId(), objectDefinition);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	@Override
@@ -199,13 +205,23 @@ public class ImportPreviewResourceTest
 				HashMapBuilder.put(
 					"file", file
 				).build()));
-		_testPostImportPreviewWithObjectEntries(
-			file -> importPreviewResource.postSiteImportPreview(
-				testGroup.getExternalReferenceCode(), null,
-				HashMapBuilder.put(
-					"file", file
-				).build()),
-			testGroup.getGroupId(), _siteObjectDefinition);
+
+		ObjectDefinition objectDefinition = _publishObjectDefinitionWithEntries(
+			ObjectDefinitionConstants.SCOPE_SITE, testGroup.getGroupId());
+
+		try {
+			_testPostImportPreviewWithObjectEntries(
+				file -> importPreviewResource.postSiteImportPreview(
+					testGroup.getExternalReferenceCode(), null,
+					HashMapBuilder.put(
+						"file", file
+					).build()),
+				testGroup.getGroupId(), objectDefinition);
+		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				objectDefinition);
+		}
 	}
 
 	private void _addObjectEntry(
@@ -323,8 +339,6 @@ public class ImportPreviewResourceTest
 
 			assertHttpResponseStatusCode(400, unsafeFunction.apply(file));
 		}
-
-		FileUtil.delete(file);
 	}
 
 	private void _testPostImportPreviewWithObjectEntries(
@@ -332,20 +346,15 @@ public class ImportPreviewResourceTest
 			long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		File file = _exportLayoutAsFile(groupId);
-
-		ImportPreview importPreview = unsafeFunction.apply(file);
+		ImportPreview importPreview = unsafeFunction.apply(
+			_exportLayoutAsFile(groupId));
 
 		long additionCount = _getAdditionCount(
 			importPreview, objectDefinition.getPortletId());
 
 		Assert.assertTrue(additionCount > 0);
-
-		FileUtil.delete(file);
 	}
 
-	private ObjectDefinition _companyObjectDefinition;
-	private ObjectDefinition _depotObjectDefinition;
 	private ImportPreviewResource _importPreviewResource;
 
 	@Inject
@@ -357,8 +366,6 @@ public class ImportPreviewResourceTest
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	private ObjectDefinition _siteObjectDefinition;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

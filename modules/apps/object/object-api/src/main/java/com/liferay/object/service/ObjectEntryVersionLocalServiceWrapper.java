@@ -31,11 +31,11 @@ public class ObjectEntryVersionLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntryVersion addObjectEntryVersion(
-			com.liferay.object.model.ObjectEntry objectEntry)
+			long userId, com.liferay.object.model.ObjectEntry objectEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryVersionLocalService.addObjectEntryVersion(
-			objectEntry);
+			userId, objectEntry);
 	}
 
 	/**
@@ -310,6 +310,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryVersion
+		fetchLatestObjectEntryVersion(long objectEntryId) {
+
+		return _objectEntryVersionLocalService.fetchLatestObjectEntryVersion(
+			objectEntryId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId) {
 
@@ -502,11 +510,11 @@ public class ObjectEntryVersionLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectEntryVersion
 			updateLatestObjectEntryVersion(
-				com.liferay.object.model.ObjectEntry objectEntry)
+				long userId, com.liferay.object.model.ObjectEntry objectEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryVersionLocalService.updateLatestObjectEntryVersion(
-			objectEntry);
+			userId, objectEntry);
 	}
 
 	@Override
@@ -558,4 +566,4 @@ public class ObjectEntryVersionLocalServiceWrapper
 	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1136742427
+// LIFERAY-SERVICE-BUILDER-HASH:-1552720536

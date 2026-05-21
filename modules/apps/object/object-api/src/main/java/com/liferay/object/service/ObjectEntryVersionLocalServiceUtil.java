@@ -37,10 +37,10 @@ public class ObjectEntryVersionLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryVersionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectEntryVersion addObjectEntryVersion(
-			com.liferay.object.model.ObjectEntry objectEntry)
+			long userId, com.liferay.object.model.ObjectEntry objectEntry)
 		throws PortalException {
 
-		return getService().addObjectEntryVersion(objectEntry);
+		return getService().addObjectEntryVersion(userId, objectEntry);
 	}
 
 	/**
@@ -269,6 +269,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 			objectEntryId, orderByComparator);
 	}
 
+	public static ObjectEntryVersion fetchLatestObjectEntryVersion(
+		long objectEntryId) {
+
+		return getService().fetchLatestObjectEntryVersion(objectEntryId);
+	}
+
 	public static ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId) {
 
@@ -429,10 +435,10 @@ public class ObjectEntryVersionLocalServiceUtil {
 	}
 
 	public static ObjectEntryVersion updateLatestObjectEntryVersion(
-			com.liferay.object.model.ObjectEntry objectEntry)
+			long userId, com.liferay.object.model.ObjectEntry objectEntry)
 		throws PortalException {
 
-		return getService().updateLatestObjectEntryVersion(objectEntry);
+		return getService().updateLatestObjectEntryVersion(userId, objectEntry);
 	}
 
 	public static ObjectEntryVersion updateLatestObjectEntryVersionModifiedDate(
@@ -469,4 +475,4 @@ public class ObjectEntryVersionLocalServiceUtil {
 			ObjectEntryVersionLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1715928762
+// LIFERAY-SERVICE-BUILDER-HASH:-1918791706

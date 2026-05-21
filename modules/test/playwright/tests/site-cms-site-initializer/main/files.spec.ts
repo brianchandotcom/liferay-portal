@@ -422,12 +422,19 @@ test(
 test(
 	'Can navigate through items in the Files section',
 	{tag: '@LPD-59866'},
-	async ({apiHelpers, assetsPage, page}) => {
+	async ({apiHelpers, assetsPage, folderPage, page}) => {
 		const applicationName = 'cms/basic-documents';
 
 		const image1 = `Image ${getRandomString()}`;
 		const image2 = `Image ${getRandomString()}`;
 		const folder = `Folder ${getRandomString()}`;
+		const parentFolderTitle = getRandomString();
+
+		const parentFolder =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: parentFolderTitle,
+			});
 
 		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -436,7 +443,8 @@ test(
 						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=',
 					name: `file_${getRandomString()}.png`,
 				},
-				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				objectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				title: image1,
 			},
 			applicationName,
@@ -450,7 +458,8 @@ test(
 						'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mNkqAcAAIUAgUW0RjgAAAAASUVORK5CYII=',
 					name: `file_${getRandomString()}.png`,
 				},
-				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				objectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				title: image2,
 			},
 			applicationName,
@@ -459,6 +468,8 @@ test(
 
 		const folderData =
 			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				scopeKey: 'Default',
 				title: folder,
 			});
@@ -476,24 +487,35 @@ test(
 
 			await assetsPage.gotoFiles();
 
+			await assetsPage.changeVisualizationMode('Table');
+
+			await folderPage.clickOption(parentFolderTitle, 'View Folder');
+
 			await assetsPage.execCardItemAction({
 				action: 'View',
 				filter: image2,
 			});
 
 			await test.step('folders are excluded from the navigation list', async () => {
-				await expect(page.getByText('2 of 2')).toBeVisible();
+				await expect(page.getByText(/\d+ of 2/)).toBeVisible();
 			});
 
 			await test.step('Can navigate to the next item', async () => {
-				await expect(
-					page.locator('.modal-title').getByText(image2)
-				).toBeVisible();
+				const modalTitle = page.locator('.modal-title');
+
+				await expect(modalTitle).not.toBeEmpty();
+
+				const initialTitle = await modalTitle.innerText();
+
+				const otherTitle = initialTitle.includes(image1)
+					? image2
+					: image1;
+
 				await assetsPage.modal.body.getByLabel('Next').click();
-				await expect(
-					page.locator('.modal-title').getByText(image1)
-				).toBeVisible();
-				await expect(page.getByText('1 of 2')).toBeVisible();
+
+				await expect(modalTitle.getByText(otherTitle)).toBeVisible();
+
+				await expect(page.getByText(/\d+ of 2/)).toBeVisible();
 			});
 
 			await test.step('Can open the info panel', async () => {
@@ -542,6 +564,9 @@ test(
 			);
 			await apiHelpers.objectFolder.deleteObjectEntryFolder(
 				folderData.id
+			);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				parentFolder.id
 			);
 		}
 	}

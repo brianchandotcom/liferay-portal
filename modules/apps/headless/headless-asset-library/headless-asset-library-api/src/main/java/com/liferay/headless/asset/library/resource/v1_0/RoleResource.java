@@ -17,12 +17,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import jakarta.annotation.Generated;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -44,6 +46,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RoleResource {
 
+	public Page<Role> getAssetLibraryRolesPage(
+			String assetLibraryExternalReferenceCode, Pagination pagination)
+		throws Exception;
+
 	public Page<Role> getAssetLibraryUserAccountRolesPage(
 			String assetLibraryExternalReferenceCode,
 			String userAccountExternalReferenceCode)
@@ -52,6 +58,11 @@ public interface RoleResource {
 	public Page<Role> getAssetLibraryUserGroupRolesPage(
 			String assetLibraryExternalReferenceCode,
 			String userGroupExternalReferenceCode)
+		throws Exception;
+
+	public Response postAssetLibraryRolesPageExportBatch(
+			String assetLibraryExternalReferenceCode, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public Page<Role> putAssetLibraryUserAccountRolesPage(
@@ -160,4 +171,4 @@ public interface RoleResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-978730374
+// LIFERAY-REST-BUILDER-HASH:-1180630890

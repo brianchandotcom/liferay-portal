@@ -243,5 +243,5 @@
 	"portlet": true,
 	"scope": "company",
 	"system": true,
-	"titleObjectFieldName": "requestDate"
+	"titleObjectFieldName": "id"
 }

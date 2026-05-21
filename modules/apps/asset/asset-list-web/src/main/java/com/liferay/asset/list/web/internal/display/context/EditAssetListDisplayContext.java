@@ -504,7 +504,14 @@ public class EditAssetListDisplayContext {
 		}
 
 		_availableSegmentsEntries = ListUtil.filter(
-			SegmentsEntryServiceUtil.getSegmentsEntries(group.getGroupId()),
+			SegmentsEntryServiceUtil.getSegmentsEntries(
+				group.getGroupId(),
+				new String[] {
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					SegmentsEntryConstants.SOURCE_DEFAULT,
+					SegmentsEntryConstants.SOURCE_REFERRED
+				},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			segmentsEntry -> !ArrayUtil.contains(
 				getSelectedSegmentsEntryIds(),
 				segmentsEntry.getSegmentsEntryId()));
@@ -1030,6 +1037,10 @@ public class EditAssetListDisplayContext {
 		segmentsEntryItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			Collections.singletonList(
 				new SegmentsEntryItemSelectorReturnType()));
+		segmentsEntryItemSelectorCriterion.setExcludedSources(
+			new String[] {
+				StringUtil.toLowerCase(SegmentsEntryConstants.SOURCE_AUDIENCE)
+			});
 
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();

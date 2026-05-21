@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +66,14 @@ public class SegmentsEntrySearchContainerFactory {
 
 		long roleId = ParamUtil.getLong(renderRequest, "roleId");
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+		LinkedHashMap<String, Object> params =
+			LinkedHashMapBuilder.<String, Object>put(
+				"excludedSources",
+				new String[] {
+					StringUtil.toLowerCase(
+						SegmentsEntryConstants.SOURCE_AUDIENCE)
+				}
+			).build();
 
 		RowChecker rowChecker = null;
 

@@ -103,7 +103,7 @@ export default function ContributorsBuilder({
 										variant="stripe"
 									>
 										{Liferay.Language.get(
-											'values-need-to-be-added-to-properties-for-the-segment-to-be-saved'
+											'values-need-to-be-added-to-properties-to-be-saved'
 										)}
 									</ClayAlert>
 								</div>

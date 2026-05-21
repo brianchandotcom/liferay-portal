@@ -128,7 +128,7 @@ const PanelWrapper = ({
 			<ClayPanel.Body className="c-px-0">
 				<p className="c-pt-1 text-secondary">
 					{Liferay.Language.get(
-						'inherited-attributes-are-not-taken-into-account-to-include-members-in-segments'
+						'inherited-attributes-are-not-taken-into-account-to-include-members'
 					)}
 				</p>
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsResourcePermission;
+import com.liferay.segments.web.internal.util.AudiencesPortletUtil;
 
 import jakarta.portlet.RenderResponse;
 
@@ -86,22 +87,30 @@ public class SegmentsManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
+		String labelKey = "add-new-user-segment";
+
+		if (AudiencesPortletUtil.isAudiencesPortlet(liferayPortletRequest)) {
+			labelKey = "add-new-audience";
+		}
+
+		String label = LanguageUtil.get(_httpServletRequest, labelKey);
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_renderResponse.createRenderURL(), "mvcRenderCommandName",
 					"/segments/edit_segments_entry");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "add-new-user-segment"));
+				dropdownItem.setLabel(label);
 			}
 		).build();
 	}
 
 	@Override
 	public Boolean isShowCreationMenu() {
-		return FeatureFlagManagerUtil.isEnabled(
-			CompanyConstants.SYSTEM, "LPD-78863") &&
+		return (FeatureFlagManagerUtil.isEnabled(
+			CompanyConstants.SYSTEM, "LPD-78863") ||
+				AudiencesPortletUtil.isAudiencesPortlet(
+					liferayPortletRequest)) &&
 			   SegmentsResourcePermission.contains(
 				   _themeDisplay.getPermissionChecker(),
 				   _themeDisplay.getScopeGroupId(),

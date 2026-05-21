@@ -64,7 +64,7 @@ public class SharingCollaborationMailSenderImpl
 	implements SharingCollaborationMailSender {
 
 	@Override
-	public void sendInvitation(
+	public void sendEmail(
 			ServiceContext serviceContext, SharingEntry sharingEntry)
 		throws Exception {
 
@@ -94,7 +94,7 @@ public class SharingCollaborationMailSenderImpl
 						" because the service context has no HTTP request");
 		}
 
-		_sendInvitation(emailAddress, serviceContext, sharingEntry, ticket);
+		_sendEmail(emailAddress, serviceContext, sharingEntry, ticket);
 	}
 
 	private String _getAssetType(
@@ -129,7 +129,7 @@ public class SharingCollaborationMailSenderImpl
 			themeDisplay.getCompanyLogo();
 	}
 
-	private void _sendInvitation(
+	private void _sendEmail(
 			String emailAddress, ServiceContext serviceContext,
 			SharingEntry sharingEntry, Ticket ticket)
 		throws Exception {

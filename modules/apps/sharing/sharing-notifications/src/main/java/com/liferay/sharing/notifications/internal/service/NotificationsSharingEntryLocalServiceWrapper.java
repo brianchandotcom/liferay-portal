@@ -306,7 +306,7 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 		if (sharingEntry.getToTicketId() > 0) {
 			try {
-				_sharingCollaborationMailSender.sendInvitation(
+				_sharingCollaborationMailSender.sendEmail(
 					serviceContext, sharingEntry);
 			}
 			catch (Exception exception) {

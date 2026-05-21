@@ -1,6 +1,6 @@
 <#assign
 	entityColumns = entityFinder.entityColumns
-	entityFinderArrayableColsList = entityFinder.getArrayableColumns()
+	entityFinderArrayableColsList = entityFinder.getArrayableOrColumns()
 />
 
 /**
@@ -147,7 +147,7 @@ public int countBy${entityFinder.name}(
 	</#if>
 }
 
-<#if entityFinder.hasArrayableOperator() && !entityFinder.hasArrayablePagination()>
+<#if entityFinder.hasArrayableOperator() && (serviceBuilder.isVersionGTE_7_4_0() || !entityFinder.hasArrayablePagination())>
 	/**
 	 * Returns the number of ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(true)}.
 	 *
@@ -295,7 +295,7 @@ public int countBy${entityFinder.name}(
 	}
 </#if>
 
-<#if entityFinder.hasArrayableOperator() && entityFinder.hasArrayablePagination()>
+<#if !serviceBuilder.isVersionGTE_7_4_0() && entityFinder.hasArrayableOperator() && entityFinder.hasArrayablePagination()>
 	/**
 	 * Returns the number of ${entity.pluralHumanName} where ${entityFinder.getHumanConditions(true)}.
 	 *
@@ -401,7 +401,11 @@ public int countBy${entityFinder.name}(
 
 							<#list entityColumns as entityColumn>
 								<#if entityColumn.hasArrayableOperator()>
-									${entityColumn.pluralName}Page
+									<#if entityColumn.isArrayableAndOperator()>
+										${entityColumn.pluralName}
+									<#else>
+										${entityColumn.pluralName}Page
+									</#if>
 								<#else>
 									${entityColumn.name}
 								</#if>

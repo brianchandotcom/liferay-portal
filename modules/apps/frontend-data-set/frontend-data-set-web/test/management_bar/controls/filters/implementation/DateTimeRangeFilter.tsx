@@ -5,6 +5,7 @@
 
 import {
 	dateTimeRangeFilterImplementation,
+	formatDatePartsForClay,
 	getDateConfig,
 	isWithinBounds,
 	parseClayValue,
@@ -201,6 +202,76 @@ describe('DateTimeRangeFilter.getDateConfig', () => {
 
 		expect(config.clayFormat).toBe('dd.MM.yyyy');
 		expect(config.placeholder).toBe('dd.mm.yyyy');
+	});
+
+	it('returns de-DE dateTime config with 24-hour clock', () => {
+		const config = getDateConfig(true, 'de-DE');
+
+		expect(config.clayFormat).toBe('dd.MM.yyyy HH:mm');
+		expect(config.use12Hours).toBe(false);
+	});
+
+	it('falls back to Liferay.ThemeDisplay.getBCP47LanguageId() when no locale is passed', () => {
+		setLocale('es-ES');
+
+		const config = getDateConfig(true);
+
+		expect(config.clayFormat).toBe('dd/MM/yyyy HH:mm');
+		expect(config.use12Hours).toBe(false);
+	});
+});
+
+describe('DateTimeRangeFilter round-trip', () => {
+	const dateTimeParts = {
+		day: 11,
+		hour: 9,
+		minute: 30,
+		month: 5,
+		year: 2026,
+	};
+
+	const dateOnlyParts = {
+		day: 11,
+		hour: 0,
+		minute: 0,
+		month: 5,
+		year: 2026,
+	};
+
+	it('preserves DateParts through format → parse in en-US dateTime', () => {
+		const {clayFormat} = getDateConfig(true, 'en-US');
+
+		const formatted = formatDatePartsForClay(dateTimeParts, clayFormat);
+
+		expect(formatted).toBe('05/11/2026 09:30 AM');
+		expect(parseClayValue(formatted, clayFormat)).toEqual(dateTimeParts);
+	});
+
+	it('preserves DateParts through format → parse in es-ES dateTime', () => {
+		const {clayFormat} = getDateConfig(true, 'es-ES');
+
+		const formatted = formatDatePartsForClay(dateTimeParts, clayFormat);
+
+		expect(formatted).toBe('11/05/2026 09:30');
+		expect(parseClayValue(formatted, clayFormat)).toEqual(dateTimeParts);
+	});
+
+	it('preserves DateParts through format → parse in de-DE dateTime', () => {
+		const {clayFormat} = getDateConfig(true, 'de-DE');
+
+		const formatted = formatDatePartsForClay(dateTimeParts, clayFormat);
+
+		expect(formatted).toBe('11.05.2026 09:30');
+		expect(parseClayValue(formatted, clayFormat)).toEqual(dateTimeParts);
+	});
+
+	it('preserves DateParts through format → parse in en-US date-only', () => {
+		const {clayFormat} = getDateConfig(false, 'en-US');
+
+		const formatted = formatDatePartsForClay(dateOnlyParts, clayFormat);
+
+		expect(formatted).toBe('05/11/2026');
+		expect(parseClayValue(formatted, clayFormat)).toEqual(dateOnlyParts);
 	});
 });
 

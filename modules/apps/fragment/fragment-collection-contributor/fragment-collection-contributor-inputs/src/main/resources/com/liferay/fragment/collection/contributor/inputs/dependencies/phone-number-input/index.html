@@ -1,3 +1,66 @@
+[#assign FLAG_ICON_MAP = {
+	"AD": "ca-ad",
+	"AE": "ar-sa",
+	"AR": "es-ar",
+	"AT": "de-at",
+	"AU": "en-au",
+	"BE": "nl-be",
+	"BG": "bg-bg",
+	"BR": "pt-br",
+	"CA": "en-ca",
+	"CH": "de-ch",
+	"CL": "es-es",
+	"CN": "zh-cn",
+	"CO": "es-co",
+	"CZ": "cs-cz",
+	"DE": "de-de",
+	"DK": "da-dk",
+	"EE": "et-ee",
+	"ES": "es-es",
+	"FI": "fi-fi",
+	"FR": "fr-fr",
+	"GB": "en-gb",
+	"GR": "el-gr",
+	"HK": "zh-cn",
+	"HR": "hr-hr",
+	"HU": "hu-hu",
+	"ID": "in-id",
+	"IE": "en-ie",
+	"IL": "iw-il",
+	"IN": "hi-in",
+	"IR": "fa-ir",
+	"IT": "it-it",
+	"JP": "ja-jp",
+	"KH": "km-kh",
+	"KR": "ko-kr",
+	"KZ": "kk-kz",
+	"LA": "lo-la",
+	"LT": "lt-lt",
+	"MX": "es-mx",
+	"MY": "ms-my",
+	"NL": "nl-nl",
+	"NO": "no-no",
+	"NZ": "en-au",
+	"PH": "en-us",
+	"PL": "pl-pl",
+	"PT": "pt-pt",
+	"RO": "ro-ro",
+	"RS": "sr-rs",
+	"RU": "ru-ru",
+	"SA": "ar-sa",
+	"SE": "sv-se",
+	"SG": "en-us",
+	"SI": "sl-si",
+	"SK": "sk-sk",
+	"TH": "th-th",
+	"TR": "tr-tr",
+	"TW": "zh-tw",
+	"UA": "uk-ua",
+	"US": "en-us",
+	"VN": "vi-vn",
+	"ZA": "en-gb"
+} /]
+
 [#assign countries = (input.attributes.countries)![] /]
 [#assign defaultLanguageId = (input.attributes.defaultLanguageId)!"" /]
 [#assign disabled = (input.attributes.disabled)?? && input.attributes.disabled /]
@@ -64,9 +127,11 @@
 				[#if isFixed]
 					<div class="input-group-item input-group-item-shrink input-group-prepend">
 						<div class="input-group-text p-3">
-							[#if showFlag && selectedCountry.flagSymbol?? && selectedCountry.flagSymbol?has_content]
+							[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]
+
+							[#if showFlag && selectedFlagSymbol?has_content]
 								<span class="inline-item inline-item-before">
-									[@clay["icon"] className="m-0" symbol="${selectedCountry.flagSymbol}" /]
+									[@clay["icon"] className="m-0" symbol="${selectedFlagSymbol}" /]
 								</span>
 							[/#if]
 
@@ -78,9 +143,11 @@
 				[#else]
 				<div class="dropdown input-group-item input-group-item-shrink input-group-prepend phone-number-input-prefix-picker" id="${fragmentElementId}-prefix-picker">
 					<button aria-expanded="false" aria-haspopup="listbox" aria-label="${languageUtil.get(locale, "country-code")}" class="form-control form-control-select form-control-select-secondary" [#if disabled || input.readOnly]disabled[/#if] id="${fragmentElementId}-prefix-trigger" type="button">
+						[#assign selectedFlagSymbol = (FLAG_ICON_MAP[selectedCountry.a2!""])!"" /]
+
 						[#if showFlag]
 							<span class="inline-item inline-item-before phone-number-input-prefix-flag" id="${fragmentElementId}-prefix-flag">
-								[#if selectedCountry.flagSymbol?? && selectedCountry.flagSymbol?has_content][@clay["icon"] symbol="${selectedCountry.flagSymbol}" /][/#if]
+								[#if selectedFlagSymbol?has_content][@clay["icon"] symbol="${selectedFlagSymbol}" /][/#if]
 							</span>
 						[/#if]
 
@@ -104,9 +171,11 @@
 											</span>
 
 											<div class="autofit-row">
+												[#assign flagSymbol = (FLAG_ICON_MAP[country.a2])!"" /]
+
 												[#if showFlag]
 													<div class="autofit-col">
-														[#if country.flagSymbol?has_content][@clay["icon"] symbol="${country.flagSymbol}" /][/#if]
+														[#if flagSymbol?has_content][@clay["icon"] symbol="${flagSymbol}" /][/#if]
 													</div>
 												[/#if]
 

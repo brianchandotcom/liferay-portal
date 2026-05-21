@@ -15,10 +15,8 @@
 	</style>
 
 	<div id="<@portlet.namespace />carousel">
-		<#assign imageMimeTypes = propsUtil.getArray("dl.file.entry.preview.image.mime.types") />
-
 		<#list entries as entry>
-			<#if imageMimeTypes?seq_contains(entry.getMimeType())>
+			<#if dlFileEntryPreviewImageMimeTypes?seq_contains(entry.getMimeType())>
 				<div class="carousel-item image-viewer-base-image">
 					<img alt="${htmlUtil.escapeAttribute(entry.getDescription())}" src="${dlUtil.getPreviewURL(entry, entry.getFileVersion(), themeDisplay, "")}" />
 				</div>

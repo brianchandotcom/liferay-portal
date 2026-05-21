@@ -29,11 +29,19 @@ export default function ModelArmorTemplateForm({
 	backURL,
 	externalReferenceCode,
 }: IProps) {
-	const {errors, handleSubmit, isSubmitting, setField, values} =
-		useModelArmorTemplateForm({
-			accountEntryExternalReferenceCode,
-			externalReferenceCode,
-		});
+	const {
+		errors,
+		handleBlur,
+		handleSubmit,
+		isSubmitting,
+		setField,
+		setFieldTouched,
+		touched,
+		values,
+	} = useModelArmorTemplateForm({
+		accountEntryExternalReferenceCode,
+		externalReferenceCode,
+	});
 
 	return (
 		<>
@@ -77,7 +85,10 @@ export default function ModelArmorTemplateForm({
 						<ClayLayout.Col md={12}>
 							<DetailsPanel
 								errors={errors}
+								handleBlur={handleBlur}
 								setField={setField}
+								setFieldTouched={setFieldTouched}
+								touched={touched}
 								values={values}
 							/>
 

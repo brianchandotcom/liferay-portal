@@ -65,6 +65,7 @@ jest.mock('frontend-js-components-web', () => {
 				helpMessage && React.createElement('small', null, helpMessage)
 			),
 		InputLocalized: ({
+			error,
 			id,
 			label,
 			onChange,
@@ -81,7 +82,8 @@ jest.mock('frontend-js-components-web', () => {
 						onChange({en_US: event.target.value}),
 					placeholder,
 					value: translations?.en_US || '',
-				})
+				}),
+				error && React.createElement('div', null, error)
 			),
 	};
 });
@@ -113,19 +115,34 @@ const baseValues: ModelArmorTemplate = {
 };
 
 function renderPanel(
-	overrides: Partial<{errors: any; values: ModelArmorTemplate}> = {}
+	overrides: Partial<{
+		errors: any;
+		touched: any;
+		values: ModelArmorTemplate;
+	}> = {}
 ) {
+	const handleBlur = jest.fn();
 	const setField = jest.fn();
+	const setFieldTouched = jest.fn();
 
 	render(
 		<DetailsPanel
 			errors={overrides.errors || {}}
+			handleBlur={handleBlur}
 			setField={setField}
+			setFieldTouched={setFieldTouched}
+			touched={
+				overrides.touched ?? {
+					externalReferenceCode: true,
+					location: true,
+					title_i18n: true,
+				}
+			}
 			values={overrides.values || baseValues}
 		/>
 	);
 
-	return {setField};
+	return {handleBlur, setField, setFieldTouched};
 }
 
 describe('DetailsPanel', () => {

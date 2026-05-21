@@ -30,11 +30,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = RecommendationController.class)
+@Component(service = RecommendationFaroController.class)
 @Path("/recommendations")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope
-public class RecommendationController extends BaseFaroController {
+public class RecommendationFaroController extends BaseFaroController {
 
 	@GET
 	@Path("{any:.*}")

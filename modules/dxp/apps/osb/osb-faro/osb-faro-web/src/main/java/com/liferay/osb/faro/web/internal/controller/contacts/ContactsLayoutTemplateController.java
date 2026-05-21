@@ -52,11 +52,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Matthew Kong
  */
 @Component(
-	service = {ContactsLayoutTemplateController.class, FaroController.class}
+	service = {ContactsLayoutTemplateFaroController.class, FaroController.class}
 )
 @Path("/{groupId}/contacts_layout_template")
 @Produces(MediaType.APPLICATION_JSON)
-public class ContactsLayoutTemplateController extends BaseFaroController {
+public class ContactsLayoutTemplateFaroController extends BaseFaroController {
 
 	@POST
 	@RolesAllowed(StringPool.BLANK)
@@ -226,7 +226,7 @@ public class ContactsLayoutTemplateController extends BaseFaroController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ContactsLayoutTemplateController.class);
+		ContactsLayoutTemplateFaroController.class);
 
 	@Reference
 	private ContactsCardTemplateLocalService _contactsCardTemplateLocalService;

@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = DemandbaseAccountController.class)
+@Component(service = DemandbaseAccountFaroController.class)
 @Path("/demandbase_accounts")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope("Liferay.Analytics.Cloud.REST.accounts.write")
-public class DemandbaseAccountController extends BaseFaroController {
+public class DemandbaseAccountFaroController extends BaseFaroController {
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{any:.*}")
@@ -94,6 +94,6 @@ public class DemandbaseAccountController extends BaseFaroController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DemandbaseAccountController.class);
+		DemandbaseAccountFaroController.class);
 
 }

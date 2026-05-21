@@ -59,11 +59,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = GraphQLController.class)
+@Component(service = GraphQLFaroController.class)
 @Path("/graphql")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope
-public class GraphQLController extends BaseFaroController {
+public class GraphQLFaroController extends BaseFaroController {
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@POST
@@ -212,7 +212,7 @@ public class GraphQLController extends BaseFaroController {
 	private static final int _CHANNEL_ID_INDEX = 5;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		GraphQLController.class);
+		GraphQLFaroController.class);
 
 	private static final Pattern _pattern = Pattern.compile(
 		"(channelId):(( )|\\r|\\n|\\t)*(\\\"(\\d+)\\\")");

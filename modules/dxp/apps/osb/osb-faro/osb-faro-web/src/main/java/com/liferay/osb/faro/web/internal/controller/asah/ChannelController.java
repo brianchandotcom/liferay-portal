@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Geyson Silva
  */
-@Component(service = {ChannelController.class, FaroController.class})
+@Component(service = {ChannelFaroController.class, FaroController.class})
 @Path("/{lcpProjectId}/channel")
 @Produces(MediaType.APPLICATION_JSON)
-public class ChannelController extends BaseFaroController {
+public class ChannelFaroController extends BaseFaroController {
 
 	@POST
 	@TokenAuthentication

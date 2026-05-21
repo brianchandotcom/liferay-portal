@@ -50,10 +50,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(service = {FaroController.class, FieldMappingController.class})
+@Component(service = {FaroController.class, FieldMappingFaroController.class})
 @Path("/{groupId}/field_mapping")
 @Produces(MediaType.APPLICATION_JSON)
-public class FieldMappingController extends BaseFaroController {
+public class FieldMappingFaroController extends BaseFaroController {
 
 	@Path("/defaults")
 	@POST

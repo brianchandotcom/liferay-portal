@@ -22,11 +22,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component(service = MarketoWebhookController.class)
+@Component(service = MarketoWebhookFaroController.class)
 @Path("/marketo_webhooks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope(ApiApplication.OAuth2ScopeAliases.MARKETO_WRITE)
-public class MarketoWebhookController extends BaseWebhookController {
+public class MarketoWebhookFaroController extends BaseWebhookFaroController {
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{any:.*}")

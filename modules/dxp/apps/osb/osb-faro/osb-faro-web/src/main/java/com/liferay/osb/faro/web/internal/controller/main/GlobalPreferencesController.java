@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component(service = GlobalPreferencesController.class)
+@Component(service = GlobalPreferencesFaroController.class)
 @Path("/preferences")
 @Produces(MediaType.APPLICATION_JSON)
-public class GlobalPreferencesController extends BaseFaroController {
+public class GlobalPreferencesFaroController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.ADMINISTRATOR)

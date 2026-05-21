@@ -40,10 +40,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = {ContactsCardController.class, FaroController.class})
+@Component(service = {ContactsCardFaroController.class, FaroController.class})
 @Path("/{groupId}/contacts_card")
 @Produces(MediaType.APPLICATION_JSON)
-public class ContactsCardController extends BaseFaroController {
+public class ContactsCardFaroController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)

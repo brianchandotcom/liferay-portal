@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = DemandbaseController.class)
+@Component(service = DemandbaseFaroController.class)
 @Path("/{groupId}/demandbase")
 @Produces(MediaType.APPLICATION_JSON)
-public class DemandbaseController extends BaseFaroController {
+public class DemandbaseFaroController extends BaseFaroController {
 
 	@GET
 	@Path("/accounts_count")

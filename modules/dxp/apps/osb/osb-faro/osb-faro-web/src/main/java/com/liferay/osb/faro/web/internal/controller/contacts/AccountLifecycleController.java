@@ -37,10 +37,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Riccardo Ferrari
  */
-@Component(service = AccountLifecycleController.class)
+@Component(service = AccountLifecycleFaroController.class)
 @Path("/{groupId}/account-lifecycle")
 @Produces(MediaType.APPLICATION_JSON)
-public class AccountLifecycleController extends BaseFaroController {
+public class AccountLifecycleFaroController extends BaseFaroController {
 
 	@POST
 	@RolesAllowed(RoleConstants.SITE_MEMBER)

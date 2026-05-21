@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Matthew Kong
  */
-@Component(service = {FaroController.class, PagesVisitedController.class})
+@Component(service = {FaroController.class, PagesVisitedFaroController.class})
 @Path("/{groupId}/pages_visited")
 @Produces(MediaType.APPLICATION_JSON)
-public class PagesVisitedController extends BaseFaroController {
+public class PagesVisitedFaroController extends BaseFaroController {
 
 	@GET
 	@Path("/{id}")

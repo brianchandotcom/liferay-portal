@@ -67,10 +67,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André Miranda
  */
-@Component(service = {ChannelController.class, FaroController.class})
+@Component(service = {ChannelFaroController.class, FaroController.class})
 @Path("/{groupId}/channel")
 @Produces(MediaType.APPLICATION_JSON)
-public class ChannelController extends BaseFaroController {
+public class ChannelFaroController extends BaseFaroController {
 
 	@Path("/{id}/users")
 	@POST

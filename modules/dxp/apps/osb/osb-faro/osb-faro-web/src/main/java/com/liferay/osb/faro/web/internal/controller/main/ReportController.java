@@ -49,11 +49,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcos Martins
  */
-@Component(service = ReportController.class)
+@Component(service = ReportFaroController.class)
 @Path("{groupId}/reports")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope
-public class ReportController extends BaseFaroController {
+public class ReportFaroController extends BaseFaroController {
 
 	@GET
 	@Path("/export/csv/{type}")
@@ -180,7 +180,7 @@ public class ReportController extends BaseFaroController {
 		String rangeKey, String segmentId, String toDateString, String type) {
 
 		if (!_csvExportTypes.contains(type)) {
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"The \"type\" query parameter must be either \"blog\", " +
 					"\"document\", \"event\", \"form\", \"individual\", " +
 						"\"journal\", \"membership\", or \"page\".",
@@ -234,7 +234,7 @@ public class ReportController extends BaseFaroController {
 				if (Validator.isBlank(fromDateString) ||
 					Validator.isBlank(toDateString)) {
 
-					return _reportControllerResponseFactory.create(
+					return _reportFaroControllerResponseFactory.create(
 						"The \"fromDate\" and \"toDate\" query parameters " +
 							"are mandatory and must be ISO 8601 compliant " +
 								DateUtil.PATTERN_DATE,
@@ -253,14 +253,14 @@ public class ReportController extends BaseFaroController {
 				catch (Exception exception) {
 					_log.error(exception);
 
-					return _reportControllerResponseFactory.create(
+					return _reportFaroControllerResponseFactory.create(
 						"Both dates in range must be ISO 8601 compliant " +
 							DateUtil.PATTERN_DATE,
 						Response.Status.BAD_REQUEST);
 				}
 
 				if (fromLocalDateTime.isAfter(toLocalDateTime)) {
-					return _reportControllerResponseFactory.create(
+					return _reportFaroControllerResponseFactory.create(
 						"The \"fromDate\" cannot be after \"toDate\"",
 						Response.Status.BAD_REQUEST);
 				}
@@ -302,7 +302,7 @@ public class ReportController extends BaseFaroController {
 	private static final String _ESCAPED_CHARACTERS_REGEX = "[^a-zA-Z0-9\\.]+";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReportController.class);
+		ReportFaroController.class);
 
 	private static final Set<String> _csvExportTypes = SetUtil.fromArray(
 		"blog", "document", "event", "form", "individual", "journal",
@@ -312,7 +312,7 @@ public class ReportController extends BaseFaroController {
 	private static final DateTimeFormatter _dateTimeDateTimeFormatter =
 		DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE_TIME);
 	private static final ReportControllerResponseFactory
-		_reportControllerResponseFactory =
+		_reportFaroControllerResponseFactory =
 			new ReportControllerResponseFactory();
 
 }

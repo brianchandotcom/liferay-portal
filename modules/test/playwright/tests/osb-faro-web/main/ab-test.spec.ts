@@ -400,7 +400,7 @@ test(
 test(
 	'Not able to Edit Experience During Running Test',
 	{
-		tag: '@LPS-103334',
+		tag: ['@LPS-101341', '@LPS-103334'],
 	},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const pageTitle = 'MyPage-' + getRandomString();
@@ -483,6 +483,16 @@ test(
 			await pageEditorPage.openExperienceSelector();
 
 			await expect(page.getByLabel('Edit Experience')).not.toBeVisible();
+
+			await expect(page.locator('.lexicon-icon-test')).toBeVisible();
+
+			await page.locator('.lexicon-icon-lock').click();
+
+			await expect(
+				page.getByText(
+					'Edit is not allowed for this experience because there is an A/B test in progress.'
+				)
+			).toBeVisible();
 		});
 	}
 );

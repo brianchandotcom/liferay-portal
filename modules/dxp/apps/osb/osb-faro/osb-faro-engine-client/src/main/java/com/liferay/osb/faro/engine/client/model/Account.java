@@ -6,6 +6,7 @@
 package com.liferay.osb.faro.engine.client.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Matthew Kong
@@ -44,8 +45,8 @@ public class Account {
 		return new Date(_lastActivityDate.getTime());
 	}
 
-	public String getLifecycleStage() {
-		return _lifecycleStage;
+	public List<LifecycleStage> getLifecycleStages() {
+		return _lifecycleStages;
 	}
 
 	public Date getModifiedDate() {
@@ -90,8 +91,8 @@ public class Account {
 		}
 	}
 
-	public void setLifecycleStage(String lifecycleStage) {
-		_lifecycleStage = lifecycleStage;
+	public void setLifecycleStages(List<LifecycleStage> lifecycleStages) {
+		_lifecycleStages = lifecycleStages;
 	}
 
 	public void setModifiedDate(Date modifiedDate) {
@@ -104,6 +105,29 @@ public class Account {
 		_website = website;
 	}
 
+	public static class LifecycleStage {
+
+		public String getLifecycleName() {
+			return _lifecycleName;
+		}
+
+		public String getStageType() {
+			return _stageType;
+		}
+
+		public void setLifecycleName(String lifecycleName) {
+			_lifecycleName = lifecycleName;
+		}
+
+		public void setStageType(String stageType) {
+			_stageType = stageType;
+		}
+
+		private String _lifecycleName;
+		private String _stageType;
+
+	}
+
 	private String _accountName;
 	private String _accountType;
 	private Double _annualRevenue;
@@ -111,7 +135,7 @@ public class Account {
 	private String _id;
 	private String _industry;
 	private Date _lastActivityDate;
-	private String _lifecycleStage;
+	private List<LifecycleStage> _lifecycleStages;
 	private Date _modifiedDate;
 	private String _website;
 

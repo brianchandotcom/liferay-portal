@@ -65,9 +65,7 @@ import com.liferay.staging.StagingGroupHelper;
 import java.io.File;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -122,17 +120,6 @@ public class ImportProcessResourceTest
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		for (long backgroundTaskId : _backgroundTaskIds) {
-			BackgroundTask backgroundTask =
-				_backgroundTaskLocalService.fetchBackgroundTask(
-					backgroundTaskId);
-
-			if (backgroundTask != null) {
-				_backgroundTaskLocalService.deleteBackgroundTask(
-					backgroundTask);
-			}
-		}
 
 		_userLocalService.deleteUser(_user);
 	}
@@ -352,8 +339,6 @@ public class ImportProcessResourceTest
 				).build(),
 				null);
 
-		_backgroundTaskIds.add(backgroundTask.getBackgroundTaskId());
-
 		return new ImportProcess() {
 			{
 				setDateCreated(backgroundTask.getCreateDate());
@@ -477,8 +462,6 @@ public class ImportProcessResourceTest
 
 		assertValid(importProcess);
 
-		_backgroundTaskIds.add(importProcess.getId());
-
 		ExportImportTestUtil.retryAssert(
 			1, TimeUnit.SECONDS, 30, TimeUnit.SECONDS,
 			() -> {
@@ -563,8 +546,6 @@ public class ImportProcessResourceTest
 		ImportProcess importProcess = postImportProcessUnsafeFunction.apply(
 			importRequest);
 
-		_backgroundTaskIds.add(importProcess.getId());
-
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.getBackgroundTask(
 				importProcess.getId());
@@ -598,8 +579,6 @@ public class ImportProcessResourceTest
 	}
 
 	private User _adminUser;
-
-	private final List<Long> _backgroundTaskIds = new ArrayList<>();
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

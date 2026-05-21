@@ -45,7 +45,6 @@ import com.liferay.staging.StagingGroupHelper;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -91,17 +90,6 @@ public class ExportProcessResourceTest
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
-
-		for (long backgroundTaskId : _backgroundTaskIds) {
-			BackgroundTask backgroundTask =
-				_backgroundTaskLocalService.fetchBackgroundTask(
-					backgroundTaskId);
-
-			if (backgroundTask != null) {
-				_backgroundTaskLocalService.deleteBackgroundTask(
-					backgroundTask);
-			}
-		}
 
 		_userLocalService.deleteUser(_user);
 	}
@@ -323,8 +311,6 @@ public class ExportProcessResourceTest
 
 			assertValid(exportProcess);
 
-			_backgroundTaskIds.add(exportProcess.getId());
-
 			ExportProcess finalExportProcess = exportProcess;
 
 			ExportImportTestUtil.retryAssert(
@@ -364,8 +350,6 @@ public class ExportProcessResourceTest
 					larFileEntry.getContentStream(), groupId)),
 			JSONCompareMode.LENIENT);
 	}
-
-	private final List<Long> _backgroundTaskIds = new ArrayList<>();
 
 	@Inject
 	private BackgroundTaskLocalService _backgroundTaskLocalService;

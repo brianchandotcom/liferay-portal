@@ -104,7 +104,7 @@ public class SegmentsSimulationDisplayContext {
 		else {
 			_segmentsEntries = SegmentsEntryServiceUtil.getSegmentsEntries(
 				_getStagingAwareGroupId(),
-				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+				new String[] {SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 

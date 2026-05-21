@@ -32,8 +32,9 @@ public class LogoutPreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		long companyId;
-		long groupId;
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+		long groupId = 0;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -41,10 +42,6 @@ public class LogoutPreAction extends Action {
 		if (themeDisplay != null) {
 			companyId = themeDisplay.getCompanyId();
 			groupId = themeDisplay.getSiteGroupId();
-		}
-		else {
-			companyId = PortalUtil.getCompanyId(httpServletRequest);
-			groupId = 0;
 		}
 
 		ClickToChatConfiguration clickToChatConfiguration =

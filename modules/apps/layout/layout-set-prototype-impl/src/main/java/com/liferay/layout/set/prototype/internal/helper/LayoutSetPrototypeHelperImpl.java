@@ -324,16 +324,6 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 	}
 
 	/**
-	 * Checks the permissions necessary for resetting the layout set.
-	 *
-	 * @param layoutSet the site being checked for sufficient permissions
-	 */
-	@Override
-	public void resetPrototype(LayoutSet layoutSet) throws PortalException {
-		_checkResetPrototypePermissions(layoutSet.getGroup(), null);
-	}
-
-	/**
 	 * Sets the number of failed merge attempts for the layout prototype to a
 	 * new value.
 	 *

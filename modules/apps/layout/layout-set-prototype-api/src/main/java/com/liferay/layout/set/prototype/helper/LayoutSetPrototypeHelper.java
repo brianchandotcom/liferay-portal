@@ -44,8 +44,6 @@ public interface LayoutSetPrototypeHelper {
 
 	public void resetPrototype(Layout layout) throws PortalException;
 
-	public void resetPrototype(LayoutSet layoutSet) throws PortalException;
-
 	public void setMergeFailCount(
 			LayoutPrototype layoutPrototype, int newMergeFailCount)
 		throws PortalException;

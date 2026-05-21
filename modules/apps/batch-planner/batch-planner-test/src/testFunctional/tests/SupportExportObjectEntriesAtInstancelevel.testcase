@@ -129,10 +129,23 @@ definition {
 					property = "$.items..${fieldName}",
 					response = ${response});
 
-				BatchEngine.assertExportedFileContainsCorrectObject(
-					expectedValue = ${expectedValue},
-					fileName = "export.batch-engine-data.json",
-					jsonObject = "$.items..${fieldName}");
+				if ((${fieldName} == "dateCreated") || (${fieldName} == "dateModified")) {
+					var fileContent = TestCase.getTempFileContent(fileName = "export.batch-engine-data.json");
+
+					var actualValue = JSONUtil.getWithJSONPath(${fileContent}, "$.items..${fieldName}");
+
+					var actualValue = StringUtil.regexReplaceAll(${actualValue}, "\.\d{1,3}Z", "Z");
+
+					TestUtils.assertEquals(
+						actual = ${actualValue},
+						expected = ${expectedValue});
+				}
+				else {
+					BatchEngine.assertExportedFileContainsCorrectObject(
+						expectedValue = ${expectedValue},
+						fileName = "export.batch-engine-data.json",
+						jsonObject = "$.items..${fieldName}");
+				}
 			}
 
 			BatchEngine.assertExportedFileContainsCorrectObject(

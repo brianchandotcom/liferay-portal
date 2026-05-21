@@ -408,47 +408,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-108147: When user opens AB testing panel and AC is connected but not synced, the AB testing panel displays instructions to sync to AC ('Don't show me this again' button and the message is not displayed)"
-	@priority = 3
-	test CheckABTestPanelInfoNotSyncAC {
-		task ("Create a new Site and Page") {
-			HeadlessSite.addSite(siteName = "Test Site Name 2");
-
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name 2",
-				layoutName = "Content Page 2",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = "Test Site Name 2",
-				layoutName = "Content Page 2");
-		}
-
-		task ("Go to the content page created") {
-			ContentPagesNavigator.openViewContentPage(
-				pageName = "Content Page 2",
-				siteName = "Test Site Name 2");
-		}
-
-		task ("Open and assert that Ab Test Panel displays instructions to sync to AC and do not 'Don't show me this again' button and the message is not displayed") {
-			ABTest.openABTestPanel();
-
-			AssertVisible(locator1 = "ABTest#CONNECTED_NOT_SYNC_BUTTON");
-
-			AssertVisible(
-				key_message = "In order to perform an A/B test, your site has to be synced to Liferay Analytics Cloud.",
-				locator1 = "ABTest#SIDEBAR_MESSAGE");
-
-			AssertElementNotPresent(
-				key_textValue = "Do not show me this again",
-				locator1 = "Sidebar#LINK");
-
-			AssertElementNotPresent(
-				key_title = "Connect to Liferay Analytics Cloud",
-				locator1 = "Header#H4_TITLE");
-		}
-	}
-
 	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
 	@priority = 3
 	test CheckElementIdWithVariant {

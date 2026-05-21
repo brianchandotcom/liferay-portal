@@ -8,16 +8,21 @@ import DatePicker from '@clayui/date-picker';
 import React, {useState} from 'react';
 
 import {TriggerLabel} from './ConditionBuilder';
-import {VALUE_INPUT_CLASSNAME} from './ValueInput';
+import {ValueInputContainer} from './ValueInput';
 import {RELATIVE_DATE_OPTIONS, RELATIVE_DATE_VALUES} from './operators';
 
 import type {ValueInputProps} from './ValueInput';
 
-type DateMode = 'relative' | 'specific';
+const DATE_MODE = {
+	relative: 'relative',
+	specific: 'specific',
+} as const;
+
+type DateMode = keyof typeof DATE_MODE;
 
 const DATE_MODE_OPTIONS = [
-	{label: Liferay.Language.get('specific-date'), value: 'specific'},
-	{label: Liferay.Language.get('relative-date'), value: 'relative'},
+	{label: Liferay.Language.get('specific-date'), value: DATE_MODE.specific},
+	{label: Liferay.Language.get('relative-date'), value: DATE_MODE.relative},
 ];
 
 export default function DateValueInput({
@@ -27,6 +32,15 @@ export default function DateValueInput({
 	property,
 	value,
 }: ValueInputProps) {
+
+	// Remembers the user's last mode-picker selection so the UI stays on that
+	// mode after onChange('') clears the value during a switch. The derived
+	// `mode` (further down) falls back to it whenever the value is empty.
+
+	const [preferredMode, setPreferredMode] = useState<DateMode>(
+		DATE_MODE.specific
+	);
+
 	const isDateTime = property.type === 'date-time';
 
 	const datePickerProps = {
@@ -39,12 +53,6 @@ export default function DateValueInput({
 			start: new Date().getFullYear() - 50,
 		},
 	};
-
-	// Remembers the user's last mode-picker selection so the UI stays on that
-	// mode after onChange('') clears the value during a switch. The derived
-	// `mode` (further down) falls back to it whenever the value is empty.
-
-	const [preferredMode, setPreferredMode] = useState<DateMode>('specific');
 	const valueStr = (value as string) || '';
 
 	if (operator === 'between') {
@@ -52,7 +60,7 @@ export default function DateValueInput({
 
 		if (isDateTime) {
 			return (
-				<div className={`c-gap-2 ${VALUE_INPUT_CLASSNAME}`}>
+				<ValueInputContainer className="c-gap-2">
 					<DatePicker
 						{...datePickerProps}
 						inputName={`${property.name}-from-${index}`}
@@ -70,12 +78,12 @@ export default function DateValueInput({
 						}
 						value={to}
 					/>
-				</div>
+				</ValueInputContainer>
 			);
 		}
 
 		return (
-			<div className={VALUE_INPUT_CLASSNAME}>
+			<ValueInputContainer>
 				<DatePicker
 					{...datePickerProps}
 					inputName={`${property.name}-${index}`}
@@ -89,27 +97,27 @@ export default function DateValueInput({
 					range
 					value={from && to ? `${from} - ${to}` : from}
 				/>
-			</div>
+			</ValueInputContainer>
 		);
 	}
 
 	if (isDateTime) {
 		return (
-			<div className={VALUE_INPUT_CLASSNAME}>
+			<ValueInputContainer>
 				<DatePicker
 					{...datePickerProps}
 					inputName={`${property.name}-${index}`}
 					onChange={(newValue: string) => onChange(newValue)}
 					value={valueStr}
 				/>
-			</div>
+			</ValueInputContainer>
 		);
 	}
 
 	const mode = RELATIVE_DATE_VALUES.includes(valueStr)
-		? 'relative'
+		? DATE_MODE.relative
 		: valueStr
-			? 'specific'
+			? DATE_MODE.specific
 			: preferredMode;
 
 	return (
@@ -132,8 +140,8 @@ export default function DateValueInput({
 				</Picker>
 			</div>
 
-			<div className={VALUE_INPUT_CLASSNAME}>
-				{mode === 'relative' ? (
+			<ValueInputContainer>
+				{mode === DATE_MODE.relative ? (
 					<Picker
 						aria-label={Liferay.Language.get('value')}
 						as={TriggerLabel}
@@ -154,7 +162,7 @@ export default function DateValueInput({
 						value={valueStr}
 					/>
 				)}
-			</div>
+			</ValueInputContainer>
 		</>
 	);
 }

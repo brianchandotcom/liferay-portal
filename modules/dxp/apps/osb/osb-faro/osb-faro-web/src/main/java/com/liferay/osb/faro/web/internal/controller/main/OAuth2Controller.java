@@ -74,10 +74,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = {FaroController.class, OAuth2Controller.class})
+@Component(service = {FaroController.class, OAuth2FaroController.class})
 @Path("/{groupId}/oauth2")
 @Produces(MediaType.APPLICATION_JSON)
-public class OAuth2Controller extends BaseFaroController {
+public class OAuth2FaroController extends BaseFaroController {
 
 	@GET
 	@Path("/tokens")

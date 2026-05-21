@@ -25,10 +25,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Thiago Buarque
  */
-@Component(service = PageExperienceController.class)
+@Component(service = PageExperienceFaroController.class)
 @Path("/{groupId}/page-experiences")
 @Produces(MediaType.APPLICATION_JSON)
-public class PageExperienceController extends BaseFaroController {
+public class PageExperienceFaroController extends BaseFaroController {
 
 	@GET
 	@RolesAllowed(RoleConstants.SITE_MEMBER)

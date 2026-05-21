@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = {DefinitionsController.class, FaroController.class})
+@Component(service = {DefinitionsFaroController.class, FaroController.class})
 @Path("/{groupId}/definitions")
 @Produces(MediaType.APPLICATION_JSON)
-public class DefinitionsController extends BaseFaroController {
+public class DefinitionsFaroController extends BaseFaroController {
 
 	@GET
 	@Path("/individual_attributes")

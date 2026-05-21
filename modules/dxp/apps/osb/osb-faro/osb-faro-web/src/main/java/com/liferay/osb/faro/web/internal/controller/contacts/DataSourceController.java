@@ -131,10 +131,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = {DataSourceController.class, FaroController.class})
+@Component(service = {DataSourceFaroController.class, FaroController.class})
 @Path("/{groupId}/data_source")
 @Produces(MediaType.APPLICATION_JSON)
-public class DataSourceController extends BaseFaroController {
+public class DataSourceFaroController extends BaseFaroController {
 
 	@Path("/connect")
 	@POST
@@ -1837,7 +1837,7 @@ public class DataSourceController extends BaseFaroController {
 		}
 
 		for (FieldMappingMap fieldMappingMap : fieldMappingMaps) {
-			_fieldMappingController.validateCreate(fieldMappingMap.getName());
+			_fieldMappingFaroController.validateCreate(fieldMappingMap.getName());
 		}
 	}
 
@@ -1896,7 +1896,7 @@ public class DataSourceController extends BaseFaroController {
 	private static final int[] _ENTITY_TYPES = {FaroConstants.TYPE_DATA_SOURCE};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DataSourceController.class);
+		DataSourceFaroController.class);
 
 	@Reference
 	private ClamAVScanner _clamAVScanner;
@@ -1908,7 +1908,7 @@ public class DataSourceController extends BaseFaroController {
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
-	private FieldMappingController _fieldMappingController;
+	private FieldMappingFaroController _fieldMappingFaroController;
 
 	@Reference
 	private JSONFactory _jsonFactory;

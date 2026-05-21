@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Rachael Koestartyo
  */
-@Component(service = SalesforceController.class)
+@Component(service = SalesforceFaroController.class)
 @Path("/{groupId}/salesforce")
 @Produces(MediaType.APPLICATION_JSON)
-public class SalesforceController extends BaseFaroController {
+public class SalesforceFaroController extends BaseFaroController {
 
 	@GET
 	@Path("/accounts_count")

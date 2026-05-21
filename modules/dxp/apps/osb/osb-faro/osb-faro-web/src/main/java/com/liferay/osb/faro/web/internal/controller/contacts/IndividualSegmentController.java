@@ -19,7 +19,7 @@ import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.constants.FaroPreferencesConstants;
 import com.liferay.osb.faro.web.internal.controller.BaseFaroController;
 import com.liferay.osb.faro.web.internal.controller.FaroController;
-import com.liferay.osb.faro.web.internal.controller.main.PreferencesController;
+import com.liferay.osb.faro.web.internal.controller.main.PreferencesFaroController;
 import com.liferay.osb.faro.web.internal.exception.FaroException;
 import com.liferay.osb.faro.web.internal.model.display.FaroResultsDisplay;
 import com.liferay.osb.faro.web.internal.model.display.contacts.IndividualSegmentActivationDisplay;
@@ -60,10 +60,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Kong
  */
-@Component(service = {FaroController.class, IndividualSegmentController.class})
+@Component(service = {FaroController.class, IndividualSegmentFaroController.class})
 @Path("/{groupId}/individual_segment")
 @Produces(MediaType.APPLICATION_JSON)
-public class IndividualSegmentController extends BaseFaroController {
+public class IndividualSegmentFaroController extends BaseFaroController {
 
 	@Path("/{id}/channel/{channelId}")
 	@PUT
@@ -122,7 +122,7 @@ public class IndividualSegmentController extends BaseFaroController {
 			faroProjectLocalService.getFaroProjectByGroupId(groupId),
 			idsFaroParam.getValue());
 
-		_preferencesController.removeIndividualSegmentsPreferences(
+		_preferencesFaroController.removeIndividualSegmentsPreferences(
 			groupId, idsFaroParam.getValue(),
 			FaroPreferencesConstants.SCOPE_GROUP);
 	}
@@ -556,6 +556,6 @@ public class IndividualSegmentController extends BaseFaroController {
 	};
 
 	@Reference
-	private PreferencesController _preferencesController;
+	private PreferencesFaroController _preferencesFaroController;
 
 }

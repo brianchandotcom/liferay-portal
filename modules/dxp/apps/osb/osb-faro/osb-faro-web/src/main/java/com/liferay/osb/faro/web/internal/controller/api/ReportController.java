@@ -52,11 +52,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = ReportController.class)
+@Component(service = ReportFaroController.class)
 @Path("/reports")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope
-public class ReportController extends BaseFaroController {
+public class ReportFaroController extends BaseFaroController {
 
 	@GET
 	@Path("{any:(?!/export.*).*}")
@@ -79,7 +79,7 @@ public class ReportController extends BaseFaroController {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				faroEngineClientException.getMessage());
 
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				jsonObject.getString("message"), jsonObject.getInt("status"));
 		}
 	}
@@ -94,7 +94,7 @@ public class ReportController extends BaseFaroController {
 		throws Exception {
 
 		if (!_exportTypes.contains(type)) {
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"The \"type\" query parameter must be either \"event\", " +
 					"\"identity\", \"individual\", \"membership\", \"page\", " +
 						"or \"segment\".",
@@ -104,7 +104,7 @@ public class ReportController extends BaseFaroController {
 		if (Validator.isBlank(fromDateString) ||
 			Validator.isBlank(toDateString)) {
 
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"\"fromDate\" and \"toDate\" query parameters are mandatory " +
 					"and must be ISO 8601 compliant " +
 						DateUtil.PATTERN_DATE_TIME,
@@ -121,14 +121,14 @@ public class ReportController extends BaseFaroController {
 		catch (Exception exception) {
 			_log.error(exception);
 
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"Both dates in range must be ISO 8601 compliant " +
 					DateUtil.PATTERN_DATE_TIME,
 				Response.Status.BAD_REQUEST);
 		}
 
 		if (fromDate.after(toDate)) {
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"Wrong range date. \"fromDate\" cannot be after \"toDate\"",
 				Response.Status.BAD_REQUEST);
 		}
@@ -185,13 +185,13 @@ public class ReportController extends BaseFaroController {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				faroEngineClientException.getMessage());
 
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				jsonObject.getString("message"), jsonObject.getInt("status"));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				"An internal problem happened when trying to reach our " +
 					"services",
 				Response.Status.INTERNAL_SERVER_ERROR);
@@ -200,7 +200,7 @@ public class ReportController extends BaseFaroController {
 		String status = MapUtil.getString(responseMap, "status");
 
 		if (!Objects.equals(status, "COMPLETED")) {
-			return _reportControllerResponseFactory.create(
+			return _reportFaroControllerResponseFactory.create(
 				responseMap, Response.Status.OK);
 		}
 
@@ -248,7 +248,7 @@ public class ReportController extends BaseFaroController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReportController.class);
+		ReportFaroController.class);
 
 	private static final DateTimeFormatter _dateTimeFormatter =
 		DateTimeFormatter.ofPattern(DateUtil.PATTERN_DATE_TIME);
@@ -263,7 +263,7 @@ public class ReportController extends BaseFaroController {
 		}
 	};
 	private static final ReportControllerResponseFactory
-		_reportControllerResponseFactory =
+		_reportFaroControllerResponseFactory =
 			new ReportControllerResponseFactory();
 
 	@Reference

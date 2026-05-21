@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(service = {BlockedKeywordsController.class, FaroController.class})
+@Component(service = {BlockedKeywordsFaroController.class, FaroController.class})
 @Path("/{groupId}/blocked_keywords")
 @Produces(MediaType.APPLICATION_JSON)
-public class BlockedKeywordsController extends BaseFaroController {
+public class BlockedKeywordsFaroController extends BaseFaroController {
 
 	@POST
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)

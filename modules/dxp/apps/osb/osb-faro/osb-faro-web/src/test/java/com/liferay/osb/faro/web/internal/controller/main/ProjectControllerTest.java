@@ -24,7 +24,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 /**
  * @author Marcos Martins
  */
-public class ProjectControllerTest {
+public class ProjectFaroControllerTest {
 
 	@ClassRule
 	@Rule
@@ -34,14 +34,14 @@ public class ProjectControllerTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtils.setField(
-			_projectController, "_provisioningClient",
+			_projectFaroController, "_provisioningClient",
 			new ProvisioningClientImpl());
 	}
 
 	@Test
 	public void testCreateOSBAccountEntry1() throws Exception {
 		OSBAccountEntry osbAccountEntry =
-			_projectController.createOSBAccountEntry(false);
+			_projectFaroController.createOSBAccountEntry(false);
 
 		List<OSBOfferingEntry> offeringEntries =
 			osbAccountEntry.getOfferingEntries();
@@ -75,7 +75,7 @@ public class ProjectControllerTest {
 	private void _assert(String corpProjectUuid, String productEntryId)
 		throws Exception {
 
-		OSBAccountEntry osbAccountEntry = _projectController.getOSBAccountEntry(
+		OSBAccountEntry osbAccountEntry = _projectFaroController.getOSBAccountEntry(
 			corpProjectUuid);
 
 		List<OSBOfferingEntry> offeringEntries =
@@ -95,7 +95,7 @@ public class ProjectControllerTest {
 			osbOfferingEntry.getStatus());
 	}
 
-	private final ProjectController _projectController =
-		new ProjectController();
+	private final ProjectFaroController _projectFaroController =
+		new ProjectFaroController();
 
 }

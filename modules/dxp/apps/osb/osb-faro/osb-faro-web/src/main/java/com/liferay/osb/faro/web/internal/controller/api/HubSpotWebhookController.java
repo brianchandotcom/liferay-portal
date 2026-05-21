@@ -22,11 +22,11 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Nilton Vieira
  */
-@Component(service = HubSpotWebhookController.class)
+@Component(service = HubSpotWebhookFaroController.class)
 @Path("/hubspot_webhooks")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresScope(ApiApplication.OAuth2ScopeAliases.HUBSPOT_WRITE)
-public class HubSpotWebhookController extends BaseWebhookController {
+public class HubSpotWebhookFaroController extends BaseWebhookFaroController {
 
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("{any:.*}")

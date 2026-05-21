@@ -24,10 +24,10 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcos Martins
  */
-@Component(service = AssetSummaryController.class)
+@Component(service = AssetSummaryFaroController.class)
 @Path("/{groupId}/asset-summary")
 @Produces(MediaType.APPLICATION_JSON)
-public class AssetSummaryController extends BaseFaroController {
+public class AssetSummaryFaroController extends BaseFaroController {
 
 	@GET
 	public FaroFDSResultsDisplay<AssetSummary>

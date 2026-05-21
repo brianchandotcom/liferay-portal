@@ -652,6 +652,8 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 					friendlyURLEntry.getCompanyId());
 				friendlyURLEntryLocalization.setClassNameId(
 					friendlyURLEntry.getClassNameId());
+				friendlyURLEntryLocalization.setParentClassPK(
+					friendlyURLEntry.getParentClassPK());
 				friendlyURLEntryLocalization.setClassPK(
 					friendlyURLEntry.getClassPK());
 
@@ -687,6 +689,8 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 				friendlyURLEntry.getCompanyId());
 			friendlyURLEntryLocalization.setClassNameId(
 				friendlyURLEntry.getClassNameId());
+			friendlyURLEntryLocalization.setParentClassPK(
+				friendlyURLEntry.getParentClassPK());
 			friendlyURLEntryLocalization.setClassPK(
 				friendlyURLEntry.getClassPK());
 
@@ -728,6 +732,8 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 			friendlyURLEntry.getCompanyId());
 		friendlyURLEntryLocalization.setClassNameId(
 			friendlyURLEntry.getClassNameId());
+		friendlyURLEntryLocalization.setParentClassPK(
+			friendlyURLEntry.getParentClassPK());
 		friendlyURLEntryLocalization.setClassPK(friendlyURLEntry.getClassPK());
 
 		friendlyURLEntryLocalization.setUrlTitle(urlTitle);
@@ -832,4 +838,4 @@ public abstract class FriendlyURLEntryLocalServiceBaseImpl
 		FriendlyURLEntryLocalServiceBaseImpl.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1457257131
+// LIFERAY-SERVICE-BUILDER-HASH:-1423515914

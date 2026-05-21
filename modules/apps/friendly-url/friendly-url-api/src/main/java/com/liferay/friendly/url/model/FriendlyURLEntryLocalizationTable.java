@@ -48,6 +48,9 @@ public class FriendlyURLEntryLocalizationTable
 	public final Column<FriendlyURLEntryLocalizationTable, Long> classNameId =
 		createColumn(
 			"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<FriendlyURLEntryLocalizationTable, Long> parentClassPK =
+		createColumn(
+			"parentClassPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FriendlyURLEntryLocalizationTable, Long> classPK =
 		createColumn("classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<FriendlyURLEntryLocalizationTable, String> urlTitle =
@@ -61,4 +64,4 @@ public class FriendlyURLEntryLocalizationTable
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237894492
+// LIFERAY-SERVICE-BUILDER-HASH:-913653261

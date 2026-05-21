@@ -69,7 +69,7 @@ public class ViewFolderSectionDisplayContextTest
 			additionalProps.toString(),
 			additionalProps.containsKey("trashEnabled"));
 
-		// Recycle bin is enabled
+		// Recycle Bin is enabled
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
@@ -96,7 +96,7 @@ public class ViewFolderSectionDisplayContextTest
 
 		Assert.assertEquals(Boolean.TRUE, additionalProps.get("trashEnabled"));
 
-		// Recycle bin is not enabled
+		// Recycle Bin is not enabled
 
 		_setTrashEnabled(depotEntry, false);
 

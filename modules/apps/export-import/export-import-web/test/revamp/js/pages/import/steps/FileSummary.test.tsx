@@ -26,7 +26,6 @@ const baseImportPreview: ImportPreview = {
 	author: 'Jane Doe',
 	deletionCount: 0,
 	exportDate: '2026-05-01T00:00:00Z',
-	fileEntryId: 1,
 	fileName: 'site.lar',
 	fileSize: 1024,
 	previewPortletDataHandlerSections: [],

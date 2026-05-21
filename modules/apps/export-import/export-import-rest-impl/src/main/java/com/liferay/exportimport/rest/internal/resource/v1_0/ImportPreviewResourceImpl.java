@@ -154,7 +154,6 @@ public class ImportPreviewResourceImpl extends BaseImportPreviewResourceImpl {
 					() -> PortletDataHandlerSectionUtil.getDeletionCount(
 						previewPortletDataHandlers));
 				setExportDate(manifestSummary::getExportDate);
-				setFileEntryId(fileEntry::getFileEntryId);
 				setFileName(fileEntry::getFileName);
 				setFileSize(fileEntry::getSize);
 				setPreviewPortletDataHandlerSections(

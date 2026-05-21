@@ -697,11 +697,6 @@ public class AssetCategoriesDisplayContext {
 
 		long scopeGroupId = _themeDisplay.getScopeGroupId();
 
-		Group scopeGroup = _themeDisplay.getScopeGroup();
-
-		String siteName = scopeGroup.getDescriptiveName(
-			_themeDisplay.getLocale());
-
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteVocabularies");
@@ -710,7 +705,6 @@ public class AssetCategoriesDisplayContext {
 				dropdownItem.putData(
 					"deleteVocabulariesURL", deleteVocabulariesURL.toString());
 				dropdownItem.putData("redirectURL", getDefaultRedirect());
-				dropdownItem.putData("siteName", siteName);
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));

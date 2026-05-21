@@ -6,6 +6,7 @@ import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import FaroConstants from 'shared/util/constants';
 import React, {useMemo, useState} from 'react';
+import URLConstants from 'shared/util/url-constants';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {
 	EConfigInURLBehavior,
@@ -15,7 +16,6 @@ import {getMimeType} from 'assets/components/mime-type';
 import {InfoPanel} from 'assets/components/InfoPanel';
 import {pagination, useSnapshots} from 'shared/util/frontend-data-set';
 import {pickBy} from 'lodash';
-
 import {RangeSelectors} from 'shared/types';
 import {
 	removeUriQueryParam,
@@ -119,6 +119,24 @@ const columns = {
 			);
 		}
 };
+
+const assetsEmptyStateDescription = (
+	<>
+		<span className='mr-1'>
+			{Liferay.Language.get(
+				'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources,-or-you-can-try-a-different-date-range'
+			)}
+		</span>
+
+		<ClayLink
+			href={URLConstants.AssetsDefinitionDocumentation}
+			key='DOCUMENTATION'
+			target='_blank'
+		>
+			{Liferay.Language.get('learn-more-about-assets')}
+		</ClayLink>
+	</>
+);
 
 const List = () => {
 	const history = useHistory();
@@ -252,6 +270,14 @@ const List = () => {
 								groupId: groupId!,
 								rangeSelectorParams
 							})
+						}}
+						emptyState={{
+							description:
+								assetsEmptyStateDescription as unknown as string,
+							image: '/states/satellite.svg',
+							title: Liferay.Language.get(
+								'there-are-no-assets-found'
+							)
 						}}
 						filters={filters}
 						id='assetTable'

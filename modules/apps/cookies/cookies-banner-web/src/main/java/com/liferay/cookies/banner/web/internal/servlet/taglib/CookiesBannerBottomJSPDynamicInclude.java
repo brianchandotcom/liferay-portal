@@ -61,18 +61,15 @@ public class CookiesBannerBottomJSPDynamicInclude
 			return;
 		}
 
-		boolean previewMode = ParamUtil.getBoolean(
-			httpServletRequest, CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW);
+		boolean previewMode = false;
 
-		if (previewMode) {
-			PermissionChecker permissionChecker =
-				themeDisplay.getPermissionChecker();
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
 
-			if (!permissionChecker.isCompanyAdmin() &&
-				!permissionChecker.isOmniadmin()) {
-
-				previewMode = false;
-			}
+		if (permissionChecker.isCompanyAdmin()) {
+			previewMode = ParamUtil.getBoolean(
+				httpServletRequest,
+				CookiesBannerWebKeys.COOKIES_BANNER_PREVIEW);
 		}
 
 		try {

@@ -62,8 +62,6 @@ public class UpgradeAssetEntryPublishDateTest {
 
 		Date displayDate = calendar.getTime();
 
-		Date publishDate = RandomTestUtil.nextDate();
-
 		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -90,6 +88,8 @@ public class UpgradeAssetEntryPublishDateTest {
 		assetEntry = _assetEntryLocalService.getEntry(
 			DLFileEntry.class.getName(),
 			fileEntryWithoutDisplayDate.getFileEntryId());
+
+		Date publishDate = RandomTestUtil.nextDate();
 
 		assetEntry.setPublishDate(publishDate);
 

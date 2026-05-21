@@ -28,6 +28,9 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -429,6 +432,38 @@ public class AccountEntryUserRelLocalServiceTest {
 		_assertPersonTypeAccountEntryUser(
 			new long[] {accountEntryUserRel2.getAccountUserId()},
 			personTypeAccountEntry.getAccountEntryId());
+	}
+
+	@Test
+	public void testAddUserInvitationTicket() throws Exception {
+		long[] accountRoleIds = {RandomTestUtil.randomLong()};
+		String emailAddress =
+			"A" + RandomTestUtil.randomString() + "@liferay.com";
+		int initialInboxSize = MailServiceTestUtil.getInboxSize();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setRequest(new MockHttpServletRequest());
+
+		Ticket ticket =
+			_accountEntryUserRelLocalService.addUserInvitationTicket(
+				_accountEntry.getAccountEntryId(), accountRoleIds, emailAddress,
+				TestPropsValues.getUser(), serviceContext);
+
+		Assert.assertEquals(
+			AccountEntry.class.getName(), ticket.getClassName());
+		Assert.assertEquals(
+			_accountEntry.getAccountEntryId(), ticket.getClassPK());
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			ticket.getExtraInfo());
+
+		Assert.assertNotNull(jsonObject.getJSONArray("accountRoleIds"));
+		Assert.assertEquals(emailAddress, jsonObject.getString("emailAddress"));
+
+		Assert.assertEquals(
+			initialInboxSize, MailServiceTestUtil.getInboxSize());
 	}
 
 	@Test

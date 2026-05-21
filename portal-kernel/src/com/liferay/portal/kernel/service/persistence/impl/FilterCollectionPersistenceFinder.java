@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -22,12 +23,13 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class FilterCollectionPersistenceFinder<T extends BaseModel<T>>
-	extends CollectionPersistenceFinder<T> {
+public class FilterCollectionPersistenceFinder
+	<T extends BaseModel<T>, E extends NoSuchModelException>
+		extends CollectionPersistenceFinder<T, E> {
 
 	@SafeVarargs
 	public FilterCollectionPersistenceFinder(
-		BasePersistenceImpl<T, ?> basePersistenceImpl,
+		BasePersistenceImpl<T, E> basePersistenceImpl,
 		FinderPath paginatedFindPath, FinderPath unpaginatedFindPath,
 		FinderPath countFinderPath, String sqlSelectWhere, String sqlCountWhere,
 		String defaultOrderByJpql, String orderByEntityAlias, String where,

@@ -160,7 +160,7 @@ public class FileUtil {
 			if (tryLocalNetwork) {
 				try {
 					_get(
-						project, _getMirrorsUrl(project, url),
+						project, _getMirrorsURL(project, url),
 						_getProperty(project, "mirrors.username"),
 						_getProperty(project, "mirrors.password"),
 						mirrorsCacheArtifactFile, ignoreErrors);
@@ -578,7 +578,7 @@ public class FileUtil {
 		return new File(userHome, ".liferay/mirrors");
 	}
 
-	private static String _getMirrorsUrl(Project project, String url) {
+	private static String _getMirrorsURL(Project project, String url) {
 		String mirrorsHostname = _getProperty(project, "mirrors.hostname");
 
 		if (mirrorsHostname == null) {

@@ -28,16 +28,17 @@ import java.util.List;
 public class AuditMessageBuilder {
 
 	public static AuditMessage buildAuditMessage(
-		long groupId, String eventType, String className, long classPK,
-		List<Attribute> attributes) {
+		long groupId, long accountEntryId, String eventType, String className,
+		long classPK, String contextName, List<Attribute> attributes) {
 
 		return buildAuditMessage(
-			groupId, eventType, className, String.valueOf(classPK), attributes);
+			groupId, accountEntryId, eventType, className,
+			String.valueOf(classPK), contextName, attributes);
 	}
 
 	public static AuditMessage buildAuditMessage(
-		long groupId, String eventType, String className, String classPK,
-		List<Attribute> attributes) {
+		long groupId, long accountEntryId, String eventType, String className,
+		String classPK, String contextName, List<Attribute> attributes) {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -74,8 +75,18 @@ public class AuditMessageBuilder {
 		}
 
 		return new AuditMessage(
-			eventType, companyId, groupId, realUserId, realUserName, className,
-			classPK, null, null, additionalInfoJSONObject);
+			eventType, companyId, groupId, accountEntryId, realUserId,
+			realUserName, className, classPK, null, null,
+			additionalInfoJSONObject, contextName);
+	}
+
+	public static AuditMessage buildAuditMessage(
+		long accountEntryId, String eventType, String className, long classPK,
+		String contextName, List<Attribute> attributes) {
+
+		return buildAuditMessage(
+			0, accountEntryId, eventType, className, classPK, contextName,
+			attributes);
 	}
 
 	public static AuditMessage buildAuditMessage(
@@ -91,15 +102,16 @@ public class AuditMessageBuilder {
 		}
 
 		return buildAuditMessage(
-			groupId, eventType, classedModel.getModelClassName(),
-			String.valueOf(classedModel.getPrimaryKeyObj()), attributes);
+			groupId, 0, eventType, classedModel.getModelClassName(),
+			String.valueOf(classedModel.getPrimaryKeyObj()), null, attributes);
 	}
 
 	public static AuditMessage buildAuditMessage(
 		String eventType, String className, long classPK,
 		List<Attribute> attributes) {
 
-		return buildAuditMessage(0, eventType, className, classPK, attributes);
+		return buildAuditMessage(
+			0, 0, eventType, className, classPK, null, attributes);
 	}
 
 	private static JSONArray _getAttributesJSONArray(

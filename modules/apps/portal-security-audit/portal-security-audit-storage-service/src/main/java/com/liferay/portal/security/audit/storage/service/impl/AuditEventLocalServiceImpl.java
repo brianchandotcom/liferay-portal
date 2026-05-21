@@ -254,6 +254,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 
 		auditEvent.setGroupId(auditMessage.getGroupId());
 		auditEvent.setCompanyId(auditMessage.getCompanyId());
+		auditEvent.setAccountEntryId(auditMessage.getAccountEntryId());
 		auditEvent.setUserId(auditMessage.getUserId());
 		auditEvent.setUserName(auditMessage.getUserName());
 		auditEvent.setCreateDate(auditMessage.getTimestamp());
@@ -266,6 +267,7 @@ public class AuditEventLocalServiceImpl extends AuditEventLocalServiceBaseImpl {
 		auditEvent.setServerName(auditMessage.getServerName());
 		auditEvent.setServerPort(auditMessage.getServerPort());
 		auditEvent.setSessionID(auditMessage.getSessionID());
+		auditEvent.setContextName(auditMessage.getContextName());
 		auditEvent.setAdditionalInfo(
 			String.valueOf(auditMessage.getAdditionalInfo()));
 

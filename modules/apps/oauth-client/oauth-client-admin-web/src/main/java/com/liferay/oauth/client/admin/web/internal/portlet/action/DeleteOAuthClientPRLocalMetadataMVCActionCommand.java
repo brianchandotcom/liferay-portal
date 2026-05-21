@@ -13,9 +13,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+import jakarta.portlet.PortletException;
+
+import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,14 +40,31 @@ public class DeleteOAuthClientPRLocalMetadataMVCActionCommand
 
 	@Override
 	public boolean processAction(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		try {
 			long oAuthClientPRLocalMetadataId = ParamUtil.getLong(
 				actionRequest, "oAuthClientPRLocalMetadataId");
 
-			_oAuthClientPRLocalMetadataService.deleteOAuthClientPRLocalMetadata(
-				oAuthClientPRLocalMetadataId);
+			long[] oAuthClientPRLocalMetadataIds = null;
+
+			if (oAuthClientPRLocalMetadataId > 0) {
+				oAuthClientPRLocalMetadataIds = new long[] {
+					oAuthClientPRLocalMetadataId
+				};
+			}
+			else {
+				oAuthClientPRLocalMetadataIds = StringUtil.split(
+					ParamUtil.getString(
+						actionRequest, "oAuthClientPRLocalMetadataIds"),
+					0L);
+			}
+
+			for (long id : oAuthClientPRLocalMetadataIds) {
+				_oAuthClientPRLocalMetadataService.
+					deleteOAuthClientPRLocalMetadata(id);
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isInfoEnabled()) {
@@ -52,8 +74,20 @@ public class DeleteOAuthClientPRLocalMetadataMVCActionCommand
 			SessionErrors.add(actionRequest, portalException.getClass());
 		}
 
-		actionResponse.setRenderParameter(
-			"navigation", "oauth-client-pr-local-metadata");
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		try {
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
+			else {
+				actionResponse.setRenderParameter(
+					"navigation", "oauth-client-pr-local-metadata");
+			}
+		}
+		catch (IOException ioException) {
+			throw new PortletException(ioException);
+		}
 
 		return true;
 	}

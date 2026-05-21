@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import getRandomString from '../../../../utils/getRandomString';
-import {advancedClassicPageTest} from '../../fixtures/classicPageTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import getRandomString from '../../../../../utils/getRandomString';
+import {advancedClassicPageTest} from '../../../../frontend-editor-ckeditor5-sample-web/fixtures/classicPageTest';
 
 export const test = mergeTests(
 	advancedClassicPageTest,

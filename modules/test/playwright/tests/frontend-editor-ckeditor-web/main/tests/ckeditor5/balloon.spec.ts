@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import {balloonPageTest} from '../../fixtures/balloonPageTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {balloonPageTest} from '../../../../frontend-editor-ckeditor5-sample-web/fixtures/balloonPageTest';
 
 export const test = mergeTests(
 	balloonPageTest,

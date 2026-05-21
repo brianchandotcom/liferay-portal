@@ -7,22 +7,30 @@ import {Page, expect} from '@playwright/test';
 
 import POM from '../../../utils/POM';
 import {EEditorType, waitForEditor} from '../../../utils/waitFor';
-import {SubTabName} from '../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage';
 import {BalloonPage} from '../pages/BalloonPage';
 import {ClassicPage} from '../pages/ClassicPage';
 import {InputLocalizedPage} from '../pages/InputLocalizedPage';
+
+export enum TabName {
+	ADVANCED_CLASSIC = 'Advanced Classic',
+	BALLOON = 'Balloon',
+	BASIC_CLASSIC = 'Basic Classic',
+	INPUT_LOCALIZED = 'Input Localized',
+	REACT = 'React',
+	REACT_PLUS_CET = 'React + CET',
+}
 
 export class CKEditor5SamplePage extends POM {
 	constructor(page: Page, url: string) {
 		super(page, url);
 	}
 
-	async gotoTab<T>(subTabName: SubTabName): Promise<T | null> {
+	async gotoTab<T>(tabName: TabName): Promise<T | null> {
 		const navLink = this.page
 			.locator(
 				'.portlet-ckeditor5-sample .lfr-tooltip-scope:nth-child(1) .navbar'
 			)
-			.getByRole('link', {exact: true, name: subTabName});
+			.getByRole('link', {exact: true, name: tabName});
 
 		await navLink.click();
 
@@ -35,19 +43,19 @@ export class CKEditor5SamplePage extends POM {
 
 		let visitedPage = null;
 
-		switch (subTabName) {
-			case SubTabName.ADVANCED_CLASSIC:
-			case SubTabName.BASIC_CLASSIC:
-			case SubTabName.REACT:
-			case SubTabName.REACT_PLUS_CET:
+		switch (tabName) {
+			case TabName.ADVANCED_CLASSIC:
+			case TabName.BASIC_CLASSIC:
+			case TabName.REACT:
+			case TabName.REACT_PLUS_CET:
 				visitedPage = new ClassicPage(this.page);
 				break;
 
-			case SubTabName.BALLOON:
+			case TabName.BALLOON:
 				visitedPage = new BalloonPage(this.page);
 				break;
 
-			case SubTabName.INPUT_LOCALIZED:
+			case TabName.INPUT_LOCALIZED:
 				visitedPage = new InputLocalizedPage(this.page);
 				break;
 

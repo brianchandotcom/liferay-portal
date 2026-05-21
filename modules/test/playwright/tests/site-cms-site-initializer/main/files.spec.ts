@@ -76,6 +76,13 @@ test(
 	async ({apiHelpers, assetsPage, page}) => {
 		const applicationName = 'cms/basic-documents';
 		const fileName = getRandomString();
+		const parentFolderTitle = getRandomString();
+
+		const parentFolder =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: parentFolderTitle,
+			});
 
 		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -83,7 +90,8 @@ test(
 					fileBase64: validImageFileBase64,
 					name: `file_${fileName}.png`,
 				},
-				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				objectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				title: `title ${fileName}`,
 			},
 			applicationName,
@@ -97,6 +105,10 @@ test(
 			});
 
 			await assetsPage.gotoFiles();
+
+			await page
+				.getByRole('link', {name: parentFolderTitle})
+				.click();
 
 			await expect(
 				page.getByRole('combobox', {name: 'Gallery View Selected'})
@@ -126,6 +138,9 @@ test(
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
 				String(objectEntry.id)
+			);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				parentFolder.id
 			);
 		}
 	}

@@ -1035,6 +1035,23 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return productTaxConfiguration;
 	}
 
+	private boolean _isPublishedCPDefinitionVersionable(
+			CPDefinition cpDefinition)
+		throws Exception {
+
+		CProduct cProduct = cpDefinition.getCProduct();
+
+		CPDefinition publishedCPDefinition =
+			_cpDefinitionService.fetchCPDefinition(
+				cProduct.getPublishedCPDefinitionId());
+
+		if (publishedCPDefinition == null) {
+			return false;
+		}
+
+		return _cpDefinitionService.isVersionable(publishedCPDefinition);
+	}
+
 	private boolean _isTaxable(
 		ProductTaxConfiguration productTaxConfiguration) {
 
@@ -1537,23 +1554,15 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpDefinition.getGroupId());
 
-		int productStatus = GetterUtil.getInteger(product.getProductStatus());
-
-		CProduct cProduct = cpDefinition.getCProduct();
-
-		CPDefinition publishedCPDefinition =
-			_cpDefinitionService.fetchCPDefinition(
-				cProduct.getPublishedCPDefinitionId());
-
 		boolean publish = false;
+
+		int productStatus = GetterUtil.getInteger(product.getProductStatus());
 
 		if (productStatus == WorkflowConstants.STATUS_DRAFT) {
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
-		else if ((publishedCPDefinition != null) &&
-				 _cpDefinitionService.isVersionable(publishedCPDefinition)) {
-
+		else if (_isPublishedCPDefinitionVersionable(cpDefinition)) {
 			publish = true;
 
 			serviceContext.setWorkflowAction(

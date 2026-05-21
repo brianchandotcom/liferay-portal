@@ -698,6 +698,15 @@ public class BasePersistenceImpl
 		return _modelImplClass;
 	}
 
+	public String getNoSuchEntityWithKeyPrefix() {
+		if (_noSuchEntityWithKeyPrefix == null) {
+			_noSuchEntityWithKeyPrefix = StringBundler.concat(
+				"No ", _modelClass.getSimpleName(), " exists with the key {");
+		}
+
+		return _noSuchEntityWithKeyPrefix;
+	}
+
 	public String getPKColumnName() {
 		if (_pkColumnName == null) {
 			for (Column<?, ?> column : _table.getColumns()) {
@@ -1912,6 +1921,7 @@ public class BasePersistenceImpl
 	private Class<T> _modelClass;
 	private Class<? extends T> _modelImplClass;
 	private ModelPKType _modelPKType = ModelPKType.COMPOUND;
+	private String _noSuchEntityWithKeyPrefix;
 	private final MethodHandle _noSuchModelExceptionMethodHandle;
 	private Boolean _permissionsInMemoryFilterEnabled;
 	private String _pkColumnName;

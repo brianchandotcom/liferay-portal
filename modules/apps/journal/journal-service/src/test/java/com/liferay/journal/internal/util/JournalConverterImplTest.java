@@ -5,12 +5,21 @@
 
 package com.liferay.journal.internal.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.Fields;
+import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -18,6 +27,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.xml.SAXReaderImpl;
 
@@ -26,11 +37,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 /**
  * @author Jürgen Kappler
@@ -41,6 +58,123 @@ public class JournalConverterImplTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.isAvailableLanguageCode(Mockito.anyString())
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			language.isAvailableLocale(Mockito.any(Locale.class))
+		).thenReturn(
+			true
+		);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(language);
+
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
+
+		SAXReaderImpl secureSAXReaderImpl = new SAXReaderImpl();
+
+		secureSAXReaderImpl.setSecure(true);
+
+		saxReaderUtil.setSAXReader(secureSAXReaderImpl);
+
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
+
+		_mockedStatic = Mockito.mockStatic(DDMStructureLocalServiceUtil.class);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_mockedStatic.close();
+	}
+
+	@Test
+	public void testGetDDMFields() throws Exception {
+		JournalConverter journalConverter = new JournalConverterImpl();
+
+		DDMStructure ddmStructure = Mockito.mock(DDMStructure.class);
+
+		Mockito.when(
+			ddmStructure.getStructureId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			DDMStructureLocalServiceUtil.fetchDDMStructure(Mockito.anyLong())
+		).thenReturn(
+			ddmStructure
+		);
+
+		DDMForm ddmForm = new DDMForm();
+
+		Mockito.when(
+			ddmStructure.getDDMForm()
+		).thenReturn(
+			ddmForm
+		);
+
+		int leafCount = 50;
+
+		StringBundler contentSB = new StringBundler(3 + (leafCount * 7));
+
+		contentSB.append("<?xml version=\"1.0\"?><root available-locales=");
+		contentSB.append("\"en_US\" default-locale=\"en_US\">");
+
+		StringBundler expectedSB = new StringBundler((leafCount * 4) - 1);
+
+		for (int i = 0; i < leafCount; i++) {
+			String name = "text" + i;
+			String instanceId = "instance" + i;
+
+			DDMFormField ddmFormField = _createDDMFormField(
+				"string", true, name, "text");
+
+			ddmForm.addDDMFormField(ddmFormField);
+
+			Mockito.when(
+				ddmStructure.getDDMFormField(name)
+			).thenReturn(
+				ddmFormField
+			);
+
+			contentSB.append("<dynamic-element instance-id=\"");
+			contentSB.append(instanceId);
+			contentSB.append("\" name=\"");
+			contentSB.append(name);
+			contentSB.append("\" type=\"text\"><dynamic-content language-id=");
+			contentSB.append("\"en_US\"><![CDATA[v]]></dynamic-content>");
+			contentSB.append("</dynamic-element>");
+
+			if (i > 0) {
+				expectedSB.append(StringPool.COMMA);
+			}
+
+			expectedSB.append(name);
+			expectedSB.append(DDM.INSTANCE_SEPARATOR);
+			expectedSB.append(instanceId);
+		}
+
+		contentSB.append("</root>");
+
+		Assert.assertEquals(
+			expectedSB.toString(),
+			_getFieldsDisplayValue(
+				journalConverter.getDDMFields(
+					ddmStructure, contentSB.toString())));
+	}
 
 	@Test
 	public void testUpdateContentDynamicElement() {
@@ -97,6 +231,15 @@ public class JournalConverterImplTest {
 		Document document = saxReaderImpl.createDocument();
 
 		return document.addElement("root");
+	}
+
+	private String _getFieldsDisplayValue(Fields ddmFields) {
+		Field fieldsDisplayField = ddmFields.get(DDM.FIELDS_DISPLAY_NAME);
+
+		List<Serializable> values = fieldsDisplayField.getValues(
+			LocaleUtil.getSiteDefault());
+
+		return (String)values.get(0);
 	}
 
 	private void _testUpdateContentDynamicElement(
@@ -290,5 +433,7 @@ public class JournalConverterImplTest {
 			},
 			0, ddmFormField, rootElement, field);
 	}
+
+	private static MockedStatic<DDMStructureLocalServiceUtil> _mockedStatic;
 
 }

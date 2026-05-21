@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.v7_4_x.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -173,7 +174,7 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 		layoutSet = _layoutSetLocalService.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(_group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 	}
 
 	@Inject
@@ -190,6 +191,9 @@ public class LayoutLayoutSetPrototypeLayoutERCUpgradeProcessTest
 
 	@DeleteAfterTestRun
 	private LayoutSetPrototype _layoutSetPrototype;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
@@ -619,7 +620,7 @@ public class LayoutFriendlyURLTest {
 			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
 		throws Exception {
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 
 		Layout groupLayout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutSetPrototypeLayout.getUuid(), group.getGroupId(),
@@ -658,6 +659,9 @@ public class LayoutFriendlyURLTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Sites _sites;

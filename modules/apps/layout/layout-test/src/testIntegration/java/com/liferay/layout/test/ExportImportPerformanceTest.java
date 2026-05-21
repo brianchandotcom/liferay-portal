@@ -33,6 +33,7 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -287,8 +288,8 @@ public class ExportImportPerformanceTest {
 			true);
 
 		try (Closeable closeable = new PerformanceTimer(_logFilePath, 1000)) {
-			_sites.mergeLayoutSetPrototypeLayouts(
-				_group, _group.getPublicLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, _group.getPublicLayoutSet());
 		}
 	}
 
@@ -607,6 +608,9 @@ public class ExportImportPerformanceTest {
 		_layoutPageTemplateStructureLocalService;
 
 	private LayoutSetPrototype _layoutSetPrototype;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private Portal _portal;

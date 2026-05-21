@@ -20,6 +20,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:knowledge-base:knowledge-base-api")
 	testIntegrationImplementation project(":apps:knowledge-base:knowledge-base-test-util")
 	testIntegrationImplementation project(":apps:layout:layout-page-template-api")
+	testIntegrationImplementation project(":apps:layout:layout-set-prototype-api")
 	testIntegrationImplementation project(":apps:layout:layout-test-util")
 	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":apps:object:object-rest-test-util")

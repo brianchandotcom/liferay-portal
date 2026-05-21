@@ -187,3 +187,49 @@ test(
 		}
 	}
 );
+
+test(
+	'AB Test panel shows the empty state image when no tests exist',
+	{tag: '@LPS-101167'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await expect(
+				page.locator('.segments-experiments-empty-state__image')
+			).toBeVisible();
+
+			await expect(page.getByText('Create Test')).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

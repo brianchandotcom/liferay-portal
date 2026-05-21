@@ -400,22 +400,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-101167: Validate if the image for the empty state appears"
-	@priority = 3
-	test CheckEmptyStateImage {
-		task ("Click on the A/B Test icon and Assert the A/B Test panel is opened") {
-			ABTest.openABTestPanel();
-		}
-
-		task ("Assert 'empty state' image appears") {
-			AssertVisible(locator1 = "ABTest#IMAGE_EMPTY_STATE");
-		}
-
-		task ("Assert the empty state") {
-			ABTest.assertDXPABTestEmptyState();
-		}
-	}
-
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
 	@priority = 5
 	test CheckVariantAddedAndEditedInAC {

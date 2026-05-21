@@ -6,8 +6,11 @@
 package com.liferay.osb.faro.rest.internal.dto.v1_0.converter;
 
 import com.liferay.osb.faro.rest.dto.v1_0.Account;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -45,7 +48,23 @@ public class AccountDTOConverter
 				setId(account::getId);
 				setIndustry(account::getIndustry);
 				setLastActivityDate(account::getLastActivityDate);
-				setLifecycleStage(account::getLifecycleStage);
+				setLifecycleStage(
+					() -> {
+						List
+							<com.liferay.osb.faro.engine.client.model.Account.
+								LifecycleStage> lifecycleStages =
+									account.getLifecycleStages();
+
+						if (ListUtil.isEmpty(lifecycleStages)) {
+							return null;
+						}
+
+						com.liferay.osb.faro.engine.client.model.Account.
+							LifecycleStage lifecycleStage = lifecycleStages.get(
+								0);
+
+						return lifecycleStage.getStageType();
+					});
 			}
 		};
 	}

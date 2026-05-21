@@ -177,31 +177,56 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
-		List<DetailAST> exprDetailASTs = getAllChildTokens(
-			slistDetailAST, false, TokenTypes.EXPR);
+		List<DetailAST> childDetailASTs = getAllChildTokens(
+			slistDetailAST, false, ALL_TYPES);
 
-		for (DetailAST exprDetailAST : exprDetailASTs) {
-			firstChildDetailAST = exprDetailAST.getFirstChild();
+		for (DetailAST childDetailAST : childDetailASTs) {
+			if (childDetailAST.getType() == TokenTypes.RCURLY) {
+				break;
+			}
 
-			String methodName = null;
+			if (childDetailAST.getType() == TokenTypes.SEMI) {
+				continue;
+			}
+
+			if (childDetailAST.getType() != TokenTypes.EXPR) {
+				log(childDetailAST, _MSG_MOVE_STATEMENT);
+
+				continue;
+			}
+
+			firstChildDetailAST = childDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
 				String variableName = getName(firstChildDetailAST);
 
-				methodName =
+				String methodName =
 					"set" + StringUtil.upperCaseFirstLetter(variableName);
+
+				_checkSetCall(
+					absolutePath, firstChildDetailAST, methodName,
+					fullyQualifiedTypeName);
+
+				continue;
 			}
-			else {
-				methodName = getMethodName(firstChildDetailAST);
+
+			if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+				String methodName = getMethodName(firstChildDetailAST);
 
 				if (!methodName.startsWith("set")) {
+					log(childDetailAST, _MSG_MOVE_STATEMENT);
+
 					continue;
 				}
+
+				_checkSetCall(
+					absolutePath, firstChildDetailAST, methodName,
+					fullyQualifiedTypeName);
+
+				continue;
 			}
 
-			_checkSetCall(
-				absolutePath, firstChildDetailAST, methodName,
-				fullyQualifiedTypeName);
+			log(childDetailAST, _MSG_MOVE_STATEMENT);
 		}
 	}
 
@@ -293,6 +318,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		return false;
 	}
+
+	private static final String _MSG_MOVE_STATEMENT = "statement.move";
 
 	private static final String _MSG_USE_SET_METHOD_INSTEAD =
 		"set.method.use.instead";

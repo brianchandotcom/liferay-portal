@@ -91,15 +91,13 @@ public class JenkinsCohort {
 	}
 
 	public JenkinsMaster getMostAvailableJenkinsMaster(
-		int invokedBatchSize, String jobName, String labelExpression,
-		int minimumRAM, int maximumSlavesPerHost) {
+		int invokedBatchSize, String jobName) {
 
 		String mostAvailableMasterURL =
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				"http://" + getName() + ".liferay.com",
 				JenkinsResultsParserUtil.join(",", _jenkinsMastersBlacklist),
-				invokedBatchSize, jobName, labelExpression, minimumRAM,
-				maximumSlavesPerHost);
+				invokedBatchSize, jobName);
 
 		return JenkinsMaster.getInstance(
 			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));

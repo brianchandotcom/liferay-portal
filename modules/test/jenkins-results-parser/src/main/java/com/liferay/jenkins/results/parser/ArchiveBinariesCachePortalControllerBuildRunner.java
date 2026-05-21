@@ -143,7 +143,7 @@ public class ArchiveBinariesCachePortalControllerBuildRunner
 
 		String masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
 			"http://" + getInvocationCohortName() + ".liferay.com", null, 1,
-			invocationJobName, _SLAVE_LABEL, 24, 2);
+			invocationJobName);
 
 		return JenkinsResultsParserUtil.getRemoteURL(
 			JenkinsResultsParserUtil.combine(

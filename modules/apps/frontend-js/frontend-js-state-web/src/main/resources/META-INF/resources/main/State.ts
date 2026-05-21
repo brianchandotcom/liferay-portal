@@ -189,7 +189,8 @@ const State = {
 
 	_invalidateDependencies(
 		atomOrSelector: Atom<unknown> | Selector<unknown>,
-		invalidated: Array<Selector<unknown>>
+		invalidated: Array<Selector<unknown>>,
+		previousValues: Map<Selector<unknown>, unknown>
 	) {
 		const directDependencies = dependencies.get(atomOrSelector);
 
@@ -198,11 +199,19 @@ const State = {
 		}
 
 		for (const selector of directDependencies) {
+			if (values.has(selector) && !previousValues.has(selector)) {
+				previousValues.set(selector, values.get(selector));
+			}
+
 			values.delete(selector);
 
 			invalidated.push(selector);
 
-			this._invalidateDependencies(selector, invalidated);
+			this._invalidateDependencies(
+				selector,
+				invalidated,
+				previousValues
+			);
 		}
 	},
 
@@ -484,14 +493,28 @@ const State = {
 		}
 
 		const invalidatedSelectors: Array<Selector<unknown>> = [];
+		const previousSelectorValues = new Map<Selector<unknown>, unknown>();
 
-		this._invalidateDependencies(atom, invalidatedSelectors);
+		this._invalidateDependencies(
+			atom as Atom<unknown>,
+			invalidatedSelectors,
+			previousSelectorValues
+		);
 
 		for (const selector of invalidatedSelectors) {
+			const nextValue = State.readSelector(selector);
+
+			if (
+				previousSelectorValues.has(selector) &&
+				Object.is(nextValue, previousSelectorValues.get(selector))
+			) {
+				continue;
+			}
+
 			for (const callback of subscribers
 				.getCallbacks(selector)
 				.values()) {
-				State._notify(callback, State.readSelector(selector));
+				State._notify(callback, nextValue);
 			}
 		}
 	},

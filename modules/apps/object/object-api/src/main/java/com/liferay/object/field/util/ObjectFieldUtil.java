@@ -482,23 +482,42 @@ public class ObjectFieldUtil {
 
 			if (Objects.equals(
 					objectField.getBusinessType(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
 				Objects.equals(
-					JSONFactoryUtil.createJSONObject(
-						JSONFactoryUtil.looseSerialize(value)
-					).get(
-						"id"
-					),
-					existingValue.toString())) {
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-				return;
+				if (Objects.equals(existingValue, value) ||
+					((existingValue != null) && (value != null) &&
+					 Objects.equals(
+						 String.valueOf(existingValue),
+						 String.valueOf(value)))) {
+
+					return;
+				}
 			}
+			else {
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
+					Objects.equals(
+						JSONFactoryUtil.createJSONObject(
+							JSONFactoryUtil.looseSerialize(value)
+						).get(
+							"id"
+						),
+						existingValue.toString())) {
 
-			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
-			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+					return;
+				}
 
-			if (bigDecimal1.compareTo(bigDecimal2) == 0) {
-				return;
+				BigDecimal bigDecimal1 = new BigDecimal(
+					existingValue.toString());
+				BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+
+				if (bigDecimal1.compareTo(bigDecimal2) == 0) {
+					return;
+				}
 			}
 		}
 		else if (Objects.equals(

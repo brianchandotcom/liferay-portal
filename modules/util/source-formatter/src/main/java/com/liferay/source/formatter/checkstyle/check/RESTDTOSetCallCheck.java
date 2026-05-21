@@ -197,36 +197,23 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 			firstChildDetailAST = childDetailAST.getFirstChild();
 
-			if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
-				String variableName = getName(firstChildDetailAST);
-
-				String methodName =
-					"set" + StringUtil.upperCaseFirstLetter(variableName);
-
-				_checkSetCall(
-					absolutePath, firstChildDetailAST, methodName,
-					fullyQualifiedTypeName);
+			if (firstChildDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				log(childDetailAST, _MSG_MOVE_STATEMENT);
 
 				continue;
 			}
 
-			if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
-				String methodName = getMethodName(firstChildDetailAST);
+			String methodName = getMethodName(firstChildDetailAST);
 
-				if (!methodName.startsWith("set")) {
-					log(childDetailAST, _MSG_MOVE_STATEMENT);
-
-					continue;
-				}
-
-				_checkSetCall(
-					absolutePath, firstChildDetailAST, methodName,
-					fullyQualifiedTypeName);
+			if (!methodName.startsWith("set")) {
+				log(childDetailAST, _MSG_MOVE_STATEMENT);
 
 				continue;
 			}
 
-			log(childDetailAST, _MSG_MOVE_STATEMENT);
+			_checkSetCall(
+				absolutePath, firstChildDetailAST, methodName,
+				fullyQualifiedTypeName);
 		}
 	}
 

@@ -114,10 +114,28 @@ public class ViewHomeRecentAssetsFilesSectionDisplayContextTest
 			fdsActionDropdownItems.get(10));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"move-folder", "move", "Move", null,
-			fdsActionDropdownItems.get(10));
+			fdsActionDropdownItems.get(11));
+
+		FDSActionDropdownItem copyFDSActionDropdownItem =
+			fdsActionDropdownItems.get(12);
 
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"copy", "copy", "Copy To", null, fdsActionDropdownItems.get(11));
+			"copy", "copy-menu", "Copy", null, "contextual", null,
+			copyFDSActionDropdownItem);
+
+		List<FDSActionDropdownItem> copyFDSActionDropdownItems =
+			(List<FDSActionDropdownItem>)copyFDSActionDropdownItem.get("items");
+
+		Assert.assertEquals(
+			copyFDSActionDropdownItems.toString(), 2,
+			copyFDSActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy", "Copy To", null, copyFDSActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "duplicate", "Duplicate", null,
+			copyFDSActionDropdownItems.get(1));
+
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"upload", "export-for-translation", "Export for Translation", null,
 			fdsActionDropdownItems.get(13));

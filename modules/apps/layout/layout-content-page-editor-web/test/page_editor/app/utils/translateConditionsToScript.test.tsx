@@ -310,6 +310,36 @@ describe('translateConditionsToScript', () => {
 			).toBe('(contains(tags, "news") OR contains(tags, "press"))');
 		});
 
+		it('emits a sort-joined string equality for equal', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getMultiselectCondition('tags', 'equal', [
+							'press',
+							'news',
+						]),
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe('tags == "news,press"');
+		});
+
+		it('emits a sort-joined string inequality for not-equal', () => {
+			expect(
+				translateConditionsToScript(
+					[
+						getMultiselectCondition('tags', 'not-equal', [
+							'press',
+							'news',
+						]),
+					],
+					'all',
+					fieldTypes
+				)
+			).toBe('tags != "news,press"');
+		});
+
 		it('wraps the OR expression in NOT for does-not-contain', () => {
 			expect(
 				translateConditionsToScript(
@@ -322,9 +352,7 @@ describe('translateConditionsToScript', () => {
 					'all',
 					fieldTypes
 				)
-			).toBe(
-				'NOT((contains(tags, "news") OR contains(tags, "press")))'
-			);
+			).toBe('NOT((contains(tags, "news") OR contains(tags, "press")))');
 		});
 
 		it('emits isEmpty for is-empty', () => {
@@ -451,9 +479,11 @@ function getFieldCondition(
 	};
 }
 
+type SelectCondition = Extract<Condition, {fieldType: 'select'}>;
+
 function getSelectCondition(
 	field: string,
-	type: 'equal' | 'is-empty' | 'is-not-empty' | 'not-equal',
+	type: NonNullable<SelectCondition['options']>['type'],
 	value: string
 ): Condition {
 	return {
@@ -465,9 +495,11 @@ function getSelectCondition(
 	};
 }
 
+type MultiselectCondition = Extract<Condition, {fieldType: 'multiselect'}>;
+
 function getMultiselectCondition(
 	field: string,
-	type: 'contains' | 'does-not-contain' | 'is-empty' | 'is-not-empty',
+	type: NonNullable<MultiselectCondition['options']>['type'],
 	value: string[]
 ): Condition {
 	return {

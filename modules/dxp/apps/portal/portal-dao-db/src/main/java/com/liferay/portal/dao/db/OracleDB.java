@@ -414,7 +414,7 @@ public class OracleDB extends BaseDB {
 			return super.getQueryInfos(connection, sql, threshold);
 		}
 		catch (SQLException sqlException) {
-			if (sqlException.getErrorCode() == _ORA_942_TABLE_NOT_FOUND) {
+			if (sqlException.getErrorCode() == _ERROR_CODE_ORA_942) {
 				throw new SQLException(
 					StringBundler.concat(
 						"Grant select privileges on \"sys.v_$session\" and ",
@@ -589,7 +589,7 @@ public class OracleDB extends BaseDB {
 		}
 	}
 
-	private static final int _ORA_942_TABLE_NOT_FOUND = 942;
+	private static final int _ERROR_CODE_ORA_942 = 942;
 
 	private static final String[] _ORACLE = {
 		"--", "1", "0",

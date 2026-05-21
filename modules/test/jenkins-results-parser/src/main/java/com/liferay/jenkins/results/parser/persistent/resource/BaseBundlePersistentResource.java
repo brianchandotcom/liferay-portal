@@ -204,7 +204,7 @@ public abstract class BaseBundlePersistentResource
 
 		JenkinsMaster producerJenkinsMaster =
 			JenkinsResultsParserUtil.getMostAvailableJenkinsMaster(
-				_getBaseInvocationURL(), 1, _SLAVE_LABEL);
+				_getBaseInvocationURL(), 1);
 
 		long producerQueueId = JenkinsResultsParserUtil.invokeJenkinsBuild(
 			producerJenkinsMaster, _JOB_NAME, buildParameters);

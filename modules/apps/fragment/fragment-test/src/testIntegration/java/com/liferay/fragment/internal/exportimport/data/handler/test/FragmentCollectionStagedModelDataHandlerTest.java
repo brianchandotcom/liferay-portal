@@ -84,6 +84,9 @@ public class FragmentCollectionStagedModelDataHandlerTest
 
 		Assert.assertEquals(
 			importedFragmentCollection.getName(), fragmentCollection.getName());
+		Assert.assertEquals(
+			fragmentCollection.getFragmentCollectionKey(),
+			importedFragmentCollection.getFragmentCollectionKey());
 	}
 
 	@Inject

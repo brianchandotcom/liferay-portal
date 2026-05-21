@@ -75,8 +75,8 @@ public class ProjectFaroControllerTest {
 	private void _assert(String corpProjectUuid, String productEntryId)
 		throws Exception {
 
-		OSBAccountEntry osbAccountEntry = _projectFaroController.getOSBAccountEntry(
-			corpProjectUuid);
+		OSBAccountEntry osbAccountEntry =
+			_projectFaroController.getOSBAccountEntry(corpProjectUuid);
 
 		List<OSBOfferingEntry> offeringEntries =
 			osbAccountEntry.getOfferingEntries();

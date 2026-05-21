@@ -1837,7 +1837,8 @@ public class DataSourceFaroController extends BaseFaroController {
 		}
 
 		for (FieldMappingMap fieldMappingMap : fieldMappingMaps) {
-			_fieldMappingFaroController.validateCreate(fieldMappingMap.getName());
+			_fieldMappingFaroController.validateCreate(
+				fieldMappingMap.getName());
 		}
 	}
 

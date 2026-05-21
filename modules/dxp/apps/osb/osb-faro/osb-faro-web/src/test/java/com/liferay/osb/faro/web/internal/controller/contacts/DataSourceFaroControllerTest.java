@@ -90,7 +90,8 @@ public class DataSourceFaroControllerTest {
 		);
 
 		ReflectionTestUtils.setField(
-			_dataSourceFaroController, "_contactsCSVHelper", _contactsCSVHelper);
+			_dataSourceFaroController, "_contactsCSVHelper",
+			_contactsCSVHelper);
 
 		Mockito.when(
 			_contactsEngineClient.getFieldMappings(
@@ -196,7 +197,8 @@ public class DataSourceFaroControllerTest {
 			FaroPropsValues.class, "FARO_URL", "https://faro.test");
 
 		String dataSourceAccessToken =
-			_dataSourceFaroController.generateDataSourceAccessToken(12345L, 67890L);
+			_dataSourceFaroController.generateDataSourceAccessToken(
+				12345L, 67890L);
 
 		Assert.assertNotNull(dataSourceAccessToken);
 

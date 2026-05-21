@@ -92,13 +92,15 @@ public class ContactsApplication extends BaseApplication {
 	private ActivityGroupFaroController _activityGroupFaroController;
 
 	@Reference
-	private AssetSummaryCategoryFaroController _assetSummaryCategoryFaroController;
+	private AssetSummaryCategoryFaroController
+		_assetSummaryCategoryFaroController;
 
 	@Reference
 	private AssetSummaryFaroController _assetSummaryFaroController;
 
 	@Reference
-	private AssetSummaryMimeTypeFaroController _assetSummaryMimeTypeFaroController;
+	private AssetSummaryMimeTypeFaroController
+		_assetSummaryMimeTypeFaroController;
 
 	@Reference
 	private AssetSummaryTagFaroController _assetSummaryTagFaroController;
@@ -107,19 +109,22 @@ public class ContactsApplication extends BaseApplication {
 	private AssetSummaryTypeFaroController _assetSummaryTypeFaroController;
 
 	@Reference
-	private AssetSummaryVocabularyFaroController _assetSummaryVocabularyFaroController;
+	private AssetSummaryVocabularyFaroController
+		_assetSummaryVocabularyFaroController;
 
 	@Reference
 	private ContactsCardFaroController _contactsCardFaroController;
 
 	@Reference
-	private ContactsCardTemplateFaroController _contactsCardTemplateFaroController;
+	private ContactsCardTemplateFaroController
+		_contactsCardTemplateFaroController;
 
 	@Reference
 	private ContactsLayoutFaroController _contactsLayoutFaroController;
 
 	@Reference
-	private ContactsLayoutTemplateFaroController _contactsLayoutTemplateFaroController;
+	private ContactsLayoutTemplateFaroController
+		_contactsLayoutTemplateFaroController;
 
 	@Reference
 	private DataSourceFaroController _dataSourceFaroController;

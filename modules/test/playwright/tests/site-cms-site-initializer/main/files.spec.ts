@@ -104,9 +104,7 @@ test(
 
 			await assetsPage.gotoFiles();
 
-			await page
-				.getByRole('link', {name: parentFolderTitle})
-				.click();
+			await page.getByRole('link', {name: parentFolderTitle}).click();
 
 			await expect(
 				page.getByRole('combobox', {name: 'Gallery View Selected'})
@@ -147,12 +145,19 @@ test(
 test(
 	'Navigates between items in Gallery View',
 	{tag: '@LPD-68467'},
-	async ({apiHelpers, assetsPage}) => {
+	async ({apiHelpers, assetsPage, folderPage}) => {
 		const applicationName = 'cms/basic-documents';
 
 		const image1 = `image_${getRandomString()}`;
 		const image2 = `image_${getRandomString()}`;
 		const folder = `folder_${getRandomString()}`;
+		const parentFolderTitle = getRandomString();
+
+		const parentFolder =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: parentFolderTitle,
+			});
 
 		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
 			{
@@ -160,7 +165,8 @@ test(
 					fileBase64: validImageFileBase64,
 					name: `${image1}.png`,
 				},
-				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				objectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				title: `title ${image1}`,
 			},
 			applicationName,
@@ -173,8 +179,9 @@ test(
 					fileBase64: validImageFileBase64,
 					name: `${image2}.png`,
 				},
-				objectEntryFolderExternalReferenceCode: 'L_FILES',
-				title: `title ${image1}`,
+				objectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
+				title: `title ${image2}`,
 			},
 			applicationName,
 			'Default'
@@ -182,6 +189,8 @@ test(
 
 		const folderData =
 			await apiHelpers.objectFolder.createObjectEntryFolder({
+				parentObjectEntryFolderExternalReferenceCode:
+					parentFolder.externalReferenceCode,
 				scopeKey: 'Default',
 				title: folder,
 			});
@@ -199,38 +208,74 @@ test(
 
 			await assetsPage.gotoFiles();
 
-			await expect(
-				assetsPage.galleryPreview.getByRole('img', {
-					name: `${image1}.png`,
-				})
-			).toBeVisible();
+			await assetsPage.changeVisualizationMode('Table');
 
-			await assetsPage.navigateByGalleryArrows('Next');
+			await folderPage.clickOption(parentFolderTitle, 'View Folder');
 
-			await expect(
-				assetsPage.galleryPreview.getByRole('img', {
-					name: `${image2}.png`,
-				})
-			).toBeVisible();
+			const carouselItems = [
+				{
+					label: 'image1',
+					locator: assetsPage.galleryPreview.getByRole('img', {
+						name: `${image1}.png`,
+					}),
+				},
+				{
+					label: 'image2',
+					locator: assetsPage.galleryPreview.getByRole('img', {
+						name: `${image2}.png`,
+					}),
+				},
+				{
+					label: 'folder',
+					locator: assetsPage.galleryPreview.getByText(folder, {
+						exact: true,
+					}),
+				},
+			];
 
-			await assetsPage.navigateByGalleryArrows('Next');
+			const anyCarouselItem = carouselItems
+				.map((item) => item.locator)
+				.reduce((acc, locator) => acc.or(locator));
 
-			await expect(
-				assetsPage.galleryPreview.getByText(folder)
-			).toBeVisible();
+			const currentLabel = async () => {
+				for (const item of carouselItems) {
+					if (await item.locator.isVisible()) {
+						return item.label;
+					}
+				}
 
-			await assetsPage.navigateByGalleryArrows('Next');
+				return null;
+			};
 
-			await expect(
-				assetsPage.galleryPreview.getByRole('img', {
-					name: `${image1}.png`,
-				})
-			).toBeVisible();
+			const locatorFor = (label: string) =>
+				carouselItems.find((item) => item.label === label)!.locator;
+
+			await expect(anyCarouselItem).toBeVisible();
+
+			const visitedOrder: string[] = [];
+
+			for (let i = 0; i < carouselItems.length; i++) {
+				const label = await currentLabel();
+
+				expect(label).not.toBeNull();
+
+				visitedOrder.push(label!);
+
+				await assetsPage.navigateByGalleryArrows('Next');
+
+				await expect(anyCarouselItem).toBeVisible();
+			}
+
+			expect(new Set(visitedOrder)).toEqual(
+				new Set(['image1', 'image2', 'folder'])
+			);
+
+			await expect(locatorFor(visitedOrder[0])).toBeVisible();
 
 			await assetsPage.navigateByGalleryArrows('Previous');
 
 			await expect(
-				assetsPage.galleryPreview.getByText(folder)
+				locatorFor(visitedOrder[visitedOrder.length - 1])
 			).toBeVisible();
 		}
 		finally {
@@ -244,6 +289,9 @@ test(
 			);
 			await apiHelpers.objectFolder.deleteObjectEntryFolder(
 				folderData.id
+			);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				parentFolder.id
 			);
 		}
 	}

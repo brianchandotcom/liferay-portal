@@ -534,7 +534,7 @@ public class CollaboratorUtil {
 		if (ticket == null) {
 			return ticketLocalService.addTicket(
 				companyId, className, classPK,
-				TicketConstants.TYPE_INVITE_COLLABORATOR, emailAddress,
+				TicketConstants.TYPE_INVITE_COLLABORATOR, null, emailAddress,
 				GetterUtil.getObject(
 					collaborator.getDateExpired(),
 					() -> new Date(

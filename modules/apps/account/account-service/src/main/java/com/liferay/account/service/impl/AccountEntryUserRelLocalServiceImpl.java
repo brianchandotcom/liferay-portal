@@ -543,6 +543,7 @@ public class AccountEntryUserRelLocalServiceImpl
 			Ticket ticket = _ticketLocalService.addTicket(
 				inviter.getCompanyId(), AccountEntry.class.getName(),
 				accountEntryId, AccountTicketConstants.TYPE_USER_INVITATION,
+				null,
 				JSONUtil.put(
 					"accountRoleIds", accountRoleIds
 				).put(

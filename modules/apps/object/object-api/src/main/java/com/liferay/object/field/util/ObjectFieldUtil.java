@@ -493,12 +493,29 @@ public class ObjectFieldUtil {
 
 				return;
 			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
+					 Objects.equals(
+						 objectField.getRelationshipType(),
+						 ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-			BigDecimal bigDecimal1 = new BigDecimal(existingValue.toString());
-			BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+				if (Objects.equals(existingValue, value) ||
+					((existingValue != null) && (value != null) &&
+					 Objects.equals(
+						 existingValue.toString(), value.toString()))) {
 
-			if (bigDecimal1.compareTo(bigDecimal2) == 0) {
-				return;
+					return;
+				}
+			}
+			else {
+				BigDecimal bigDecimal1 = new BigDecimal(
+					existingValue.toString());
+				BigDecimal bigDecimal2 = new BigDecimal(value.toString());
+
+				if (bigDecimal1.compareTo(bigDecimal2) == 0) {
+					return;
+				}
 			}
 		}
 		else if (Objects.equals(

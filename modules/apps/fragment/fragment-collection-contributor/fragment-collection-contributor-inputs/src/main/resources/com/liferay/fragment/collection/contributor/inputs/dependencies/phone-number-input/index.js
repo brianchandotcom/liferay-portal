@@ -9,13 +9,6 @@ const SPRITEMAP =
 		? themeDisplay.getPathThemeImages() + '/clay/icons.svg'
 		: '';
 
-const COUNTRIES = (input.attributes.countries || []).map((country) => ({
-	a2: country.a2,
-	flagSymbol: country.flagSymbol || '',
-	idd: country.prefix,
-	name: country.name,
-}));
-
 // DOM elements
 
 const inputElement = document.getElementById(`${fragmentElementId}-input`);
@@ -44,10 +37,18 @@ const hiddenInputContainer = document.getElementById(
 async function main() {
 	const {
 		focusInput,
+		getFlagSymbol,
 		parsePhoneValue,
 		registerLocalizedInput,
 		registerUnlocalizedInput,
 	} = await import('@liferay/fragment-impl/api');
+
+	const COUNTRIES = (input.attributes.countries || []).map((country) => ({
+		a2: country.a2,
+		flagSymbol: getFlagSymbol(country.a2),
+		idd: country.prefix,
+		name: country.name,
+	}));
 
 	// Utils
 

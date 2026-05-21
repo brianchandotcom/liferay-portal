@@ -11,15 +11,11 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -76,26 +72,7 @@ public class LayoutInformationMessagesDisplayContext {
 			"portletNamespace",
 			PortalUtil.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES)
 		).put(
-			"resetPrototypeURL",
-			() -> PortletURLBuilder.create(
-				PortletURLFactoryUtil.create(
-					_httpServletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-					PortletRequest.ACTION_PHASE)
-			).setActionName(
-				"/layout_admin/reset_prototype"
-			).setRedirect(
-				PortalUtil.getLayoutURL(themeDisplay)
-			).setParameter(
-				"groupId", themeDisplay.getSiteGroupId()
-			).buildString()
-		).put(
 			"showLinkedLayoutMessage", showLinkedLayoutMessage
-		).put(
-			"showModifiedLayoutMessage",
-			GetterUtil.getBoolean(
-				_httpServletRequest.getAttribute(
-					InformationMessagesProductNavigationControlMenuEntry.
-						INFORMATION_MESSAGES_MODIFIED_LAYOUT))
 		).build();
 	}
 

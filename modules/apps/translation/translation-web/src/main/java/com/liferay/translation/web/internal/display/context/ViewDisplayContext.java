@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -228,7 +229,8 @@ public class ViewDisplayContext {
 		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
 			translationEntry.getTranslationEntryId());
 
-		return assetRenderer.getTitle(_themeDisplay.getLocale());
+		return HtmlUtil.escape(
+			assetRenderer.getTitle(_themeDisplay.getLocale()));
 	}
 
 	public PortletURL getTranslatePortletURL(

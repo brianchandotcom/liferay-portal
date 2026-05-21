@@ -13,7 +13,7 @@ import com.liferay.sharing.model.SharingEntry;
  */
 public interface SharingCollaborationMailSender {
 
-	public void sendInvitation(
+	public void sendEmail(
 			ServiceContext serviceContext, SharingEntry sharingEntry)
 		throws Exception;
 

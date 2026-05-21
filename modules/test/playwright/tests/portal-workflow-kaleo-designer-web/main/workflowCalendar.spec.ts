@@ -14,6 +14,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import getRandomString from '../../../utils/getRandomString';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
@@ -122,5 +123,162 @@ test(
 				page.locator('.calendar-portlet-event-approved')
 			).toHaveCount(2);
 		});
+	}
+);
+
+test(
+	'deleting and restoring a pending calendar event preserves the workflow task',
+	{tag: '@LPD-64494'},
+	async ({
+		apiHelpers,
+		calendarWidgetPage,
+		page,
+		pageEditorPage,
+		site,
+		workflowPage,
+		workflowTasksPage,
+	}) => {
+		await workflowPage.goto(site.friendlyUrlPath);
+
+		await workflowPage.changeWorkflow('Calendar Event', 'Single Approver');
+
+		const eventTitle = getRandomString();
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_calendar_web_portlet_CalendarPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.publishPage();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await calendarWidgetPage.createAndSubmitEvent({
+			title: eventTitle,
+			withWorkflow: true,
+		});
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeVisible();
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		const taskRow = page.getByRole('row', {name: eventTitle});
+
+		await expect(taskRow).toBeVisible();
+
+		await expect(taskRow.getByText('Calendar Event')).toBeVisible();
+
+		await expect(taskRow.getByText('Review')).toBeVisible();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await calendarWidgetPage.deleteEvent(eventTitle);
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeHidden();
+
+		await workflowTasksPage.goto();
+
+		await expect(
+			page.getByText('There are no tasks assigned to you.')
+		).toBeVisible();
+
+		await workflowTasksPage.assignedToMyRolesLink.click();
+
+		await expect(
+			page.getByText('There are no tasks assigned to your roles.')
+		).toBeVisible();
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.recycleBin}`
+		);
+
+		await page
+			.getByRole('row', {name: eventTitle})
+			.locator('.dropdown-toggle')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Restore'}).click();
+
+		await expect(page.getByText('The item was restored.')).toBeVisible();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeVisible();
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		await expect(page.getByRole('row', {name: eventTitle})).toBeVisible();
+
+		await workflowTasksPage.assignToMe(eventTitle);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await calendarWidgetPage.deleteEvent(eventTitle);
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeHidden();
+
+		await workflowTasksPage.goto();
+
+		await expect(
+			page.getByText('There are no tasks assigned to you.')
+		).toBeVisible();
+
+		await workflowTasksPage.assignedToMyRolesLink.click();
+
+		await expect(
+			page.getByText('There are no tasks assigned to your roles.')
+		).toBeVisible();
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.recycleBin}`
+		);
+
+		await page
+			.getByRole('row', {name: eventTitle})
+			.locator('.dropdown-toggle')
+			.click();
+
+		await page.getByRole('menuitem', {name: 'Restore'}).click();
+
+		await expect(page.getByText('The item was restored.')).toBeVisible();
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeVisible();
+
+		await workflowTasksPage.goToAssignedToMyRoles();
+
+		await workflowTasksPage.assignToMe(eventTitle);
+
+		await workflowTasksPage.approve(eventTitle);
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+
+		await expect(
+			page.locator('.calendar-portlet-event-approved')
+		).toBeVisible();
+
+		await expect(
+			page.locator('.calendar-portlet-event-pending')
+		).toBeHidden();
 	}
 );

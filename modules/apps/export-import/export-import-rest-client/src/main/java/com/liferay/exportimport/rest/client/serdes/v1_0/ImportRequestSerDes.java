@@ -47,16 +47,6 @@ public class ImportRequestSerDes {
 
 		sb.append("{");
 
-		if (importRequest.getFileEntryId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileEntryId\": ");
-
-			sb.append(importRequest.getFileEntryId());
-		}
-
 		if (importRequest.getRequestPortletDataHandlers() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,14 +93,6 @@ public class ImportRequestSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (importRequest.getFileEntryId() == null) {
-			map.put("fileEntryId", null);
-		}
-		else {
-			map.put(
-				"fileEntryId", String.valueOf(importRequest.getFileEntryId()));
-		}
-
 		if (importRequest.getRequestPortletDataHandlers() == null) {
 			map.put("requestPortletDataHandlers", null);
 		}
@@ -138,11 +120,8 @@ public class ImportRequestSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "requestPortletDataHandlers")) {
+			if (Objects.equals(
+					jsonParserFieldName, "requestPortletDataHandlers")) {
 
 				return false;
 			}
@@ -155,14 +134,8 @@ public class ImportRequestSerDes {
 			ImportRequest importRequest, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
-				if (jsonParserFieldValue != null) {
-					importRequest.setFileEntryId(
-						Long.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "requestPortletDataHandlers")) {
+			if (Objects.equals(
+					jsonParserFieldName, "requestPortletDataHandlers")) {
 
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -266,4 +239,4 @@ public class ImportRequestSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:741441850
+// LIFERAY-REST-BUILDER-HASH:-1289026677

@@ -19,7 +19,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -37,9 +36,6 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName("ImportRequest")
-@io.swagger.v3.oas.annotations.media.Schema(
-	requiredProperties = {"fileEntryId"}
-)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "ImportRequest")
 public class ImportRequest implements Serializable {
@@ -51,48 +47,6 @@ public class ImportRequest implements Serializable {
 	public static ImportRequest unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(ImportRequest.class, json);
 	}
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getFileEntryId() {
-		if (_fileEntryIdSupplier != null) {
-			fileEntryId = _fileEntryIdSupplier.get();
-
-			_fileEntryIdSupplier = null;
-		}
-
-		return fileEntryId;
-	}
-
-	public void setFileEntryId(Long fileEntryId) {
-		this.fileEntryId = fileEntryId;
-
-		_fileEntryIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFileEntryId(
-		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
-
-		_fileEntryIdSupplier = () -> {
-			try {
-				return fileEntryIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected Long fileEntryId;
-
-	@JsonIgnore
-	private Supplier<Long> _fileEntryIdSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -167,18 +121,6 @@ public class ImportRequest implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Long fileEntryId = getFileEntryId();
-
-		if (fileEntryId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileEntryId\": ");
-
-			sb.append(fileEntryId);
-		}
 
 		RequestPortletDataHandler[] requestPortletDataHandlers =
 			getRequestPortletDataHandlers();
@@ -304,4 +246,4 @@ public class ImportRequest implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1952497180
+// LIFERAY-REST-BUILDER-HASH:596775765

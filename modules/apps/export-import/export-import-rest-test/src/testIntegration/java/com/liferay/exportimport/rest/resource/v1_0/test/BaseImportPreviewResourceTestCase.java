@@ -400,14 +400,6 @@ public abstract class BaseImportPreviewResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("fileEntryId", additionalAssertFieldName)) {
-				if (importPreview.getFileEntryId() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("fileName", additionalAssertFieldName)) {
 				if (importPreview.getFileName() == null) {
 					valid = false;
@@ -601,17 +593,6 @@ public abstract class BaseImportPreviewResourceTestCase {
 				if (!Objects.deepEquals(
 						importPreview1.getExportDate(),
 						importPreview2.getExportDate())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("fileEntryId", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						importPreview1.getFileEntryId(),
-						importPreview2.getFileEntryId())) {
 
 					return false;
 				}
@@ -848,11 +829,6 @@ public abstract class BaseImportPreviewResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("fileEntryId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("fileName")) {
 			Object object = importPreview.getFileName();
 
@@ -965,7 +941,6 @@ public abstract class BaseImportPreviewResourceTestCase {
 				author = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				deletionCount = RandomTestUtil.randomLong();
 				exportDate = RandomTestUtil.nextDate();
-				fileEntryId = RandomTestUtil.randomLong();
 				fileName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				fileSize = RandomTestUtil.randomLong();
@@ -1197,4 +1172,4 @@ public abstract class BaseImportPreviewResourceTestCase {
 		_importPreviewResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-164208994
+// LIFERAY-REST-BUILDER-HASH:1343842195

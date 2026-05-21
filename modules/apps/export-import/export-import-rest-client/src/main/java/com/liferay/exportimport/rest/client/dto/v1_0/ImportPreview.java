@@ -110,27 +110,6 @@ public class ImportPreview implements Cloneable, Serializable {
 
 	protected Date exportDate;
 
-	public Long getFileEntryId() {
-		return fileEntryId;
-	}
-
-	public void setFileEntryId(Long fileEntryId) {
-		this.fileEntryId = fileEntryId;
-	}
-
-	public void setFileEntryId(
-		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
-
-		try {
-			fileEntryId = fileEntryIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long fileEntryId;
-
 	public String getFileName() {
 		return fileName;
 	}
@@ -234,4 +213,4 @@ public class ImportPreview implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:2101446171
+// LIFERAY-REST-BUILDER-HASH:-1381364917

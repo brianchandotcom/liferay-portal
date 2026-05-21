@@ -217,47 +217,6 @@ public class ImportPreview implements Serializable {
 	private Supplier<Date> _exportDateSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Long getFileEntryId() {
-		if (_fileEntryIdSupplier != null) {
-			fileEntryId = _fileEntryIdSupplier.get();
-
-			_fileEntryIdSupplier = null;
-		}
-
-		return fileEntryId;
-	}
-
-	public void setFileEntryId(Long fileEntryId) {
-		this.fileEntryId = fileEntryId;
-
-		_fileEntryIdSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setFileEntryId(
-		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
-
-		_fileEntryIdSupplier = () -> {
-			try {
-				return fileEntryIdUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Long fileEntryId;
-
-	@JsonIgnore
-	private Supplier<Long> _fileEntryIdSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public String getFileName() {
 		if (_fileNameSupplier != null) {
 			fileName = _fileNameSupplier.get();
@@ -476,18 +435,6 @@ public class ImportPreview implements Serializable {
 			sb.append("\"");
 		}
 
-		Long fileEntryId = getFileEntryId();
-
-		if (fileEntryId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileEntryId\": ");
-
-			sb.append(fileEntryId);
-		}
-
 		String fileName = getFileName();
 
 		if (fileName != null) {
@@ -640,4 +587,4 @@ public class ImportPreview implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:780029990
+// LIFERAY-REST-BUILDER-HASH:535476161

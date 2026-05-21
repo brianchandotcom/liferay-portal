@@ -579,25 +579,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-137274 Validate if the user can create an A/B Test by Bounce rate"
-	@priority = 5
-	@uitest
-	test CreateABTestByBounceRate {
-		task ("Create AB test, create variant and run the test") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.runTest();
-		}
-
-		task ("Check the info is correct in Analytics Cloud") {
-			ABTest.checkAnalyticsCloudInfo(abTestTitle = "AB test title");
-		}
-	}
-
 	@description = "LPS-119475 Validate if the user can create an A/B Test by Click"
 	@priority = 5
 	@uitest

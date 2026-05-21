@@ -94,15 +94,6 @@ public class RoleFinderTest {
 
 			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
 				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
-				null, _TYPES, null, 0, _user.getGroupId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-			Assert.assertEquals(roles.toString(), 1, roles.size());
-
-			Assert.assertEquals(_roleWithViewPermission, roles.get(0));
-
-			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
-				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
 				null, _TYPES, "space", 0, _user.getGroupId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -116,6 +107,15 @@ public class RoleFinderTest {
 				_user.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			Assert.assertTrue(roles.toString(), roles.isEmpty());
+
+			roles = _roleFinder.filterFindByGroupRoleAndTeamRole(
+				TestPropsValues.getCompanyId(), null, existingRoleNames, null,
+				null, _TYPES, null, 0, _user.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+			Assert.assertEquals(roles.toString(), 1, roles.size());
+
+			Assert.assertEquals(_roleWithViewPermission, roles.get(0));
 		}
 	}
 

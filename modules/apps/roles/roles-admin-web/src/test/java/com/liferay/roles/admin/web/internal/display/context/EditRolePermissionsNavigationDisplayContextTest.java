@@ -70,25 +70,15 @@ public class EditRolePermissionsNavigationDisplayContextTest {
 	@Test
 	public void testHasObjectDefinitionValidDomain() {
 		Mockito.when(
-			_role.getType()
+			_role.getSubtype()
 		).thenReturn(
-			RoleConstants.TYPE_REGULAR
+			null
 		);
-
-		Assert.assertTrue(
-			_invokeHasObjectDefinitionValidDomain(
-				Mockito.mock(ObjectDefinition.class)));
 
 		Mockito.when(
 			_role.getType()
 		).thenReturn(
 			RoleConstants.TYPE_DEPOT
-		);
-
-		Mockito.when(
-			_role.getSubtype()
-		).thenReturn(
-			null
 		);
 
 		Assert.assertTrue(
@@ -142,10 +132,10 @@ public class EditRolePermissionsNavigationDisplayContextTest {
 					Mockito.eq(ObjectDefinitionSettingConstants.NAME_DOMAIN),
 					Mockito.any())
 			).thenReturn(
-				"space"
+				"project"
 			);
 
-			Assert.assertTrue(
+			Assert.assertFalse(
 				_invokeHasObjectDefinitionValidDomain(
 					Mockito.mock(ObjectDefinition.class)));
 
@@ -154,13 +144,29 @@ public class EditRolePermissionsNavigationDisplayContextTest {
 					Mockito.eq(ObjectDefinitionSettingConstants.NAME_DOMAIN),
 					Mockito.any())
 			).thenReturn(
-				"project"
+				"space"
 			);
 
-			Assert.assertFalse(
+			Assert.assertTrue(
 				_invokeHasObjectDefinitionValidDomain(
 					Mockito.mock(ObjectDefinition.class)));
 		}
+
+		Mockito.when(
+			_role.getSubtype()
+		).thenReturn(
+			null
+		);
+
+		Mockito.when(
+			_role.getType()
+		).thenReturn(
+			RoleConstants.TYPE_REGULAR
+		);
+
+		Assert.assertTrue(
+			_invokeHasObjectDefinitionValidDomain(
+				Mockito.mock(ObjectDefinition.class)));
 	}
 
 	private boolean _invokeHasObjectDefinitionValidDomain(

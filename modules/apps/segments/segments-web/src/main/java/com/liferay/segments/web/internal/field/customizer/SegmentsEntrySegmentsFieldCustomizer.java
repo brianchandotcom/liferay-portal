@@ -100,6 +100,8 @@ public class SegmentsEntrySegmentsFieldCustomizer
 			segmentsEntryItemSelectorCriterion.setExcludedSources(
 				new String[] {
 					StringUtil.toLowerCase(
+						SegmentsEntryConstants.SOURCE_AUDIENCE),
+					StringUtil.toLowerCase(
 						SegmentsEntryConstants.SOURCE_REFERRED)
 				});
 

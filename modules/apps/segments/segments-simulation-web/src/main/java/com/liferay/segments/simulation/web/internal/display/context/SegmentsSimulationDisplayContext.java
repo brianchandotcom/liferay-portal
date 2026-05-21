@@ -99,7 +99,13 @@ public class SegmentsSimulationDisplayContext {
 				CompanyConstants.SYSTEM, "LPD-78863")) {
 
 			_segmentsEntries = SegmentsEntryServiceUtil.getSegmentsEntries(
-				_getStagingAwareGroupId());
+				_getStagingAwareGroupId(),
+				new String[] {
+					SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+					SegmentsEntryConstants.SOURCE_DEFAULT,
+					SegmentsEntryConstants.SOURCE_REFERRED
+				},
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 		else {
 			_segmentsEntries = SegmentsEntryServiceUtil.getSegmentsEntries(

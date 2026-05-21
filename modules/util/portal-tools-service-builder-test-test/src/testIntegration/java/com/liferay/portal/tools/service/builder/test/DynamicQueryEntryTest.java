@@ -58,23 +58,23 @@ public class DynamicQueryEntryTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		long now = System.currentTimeMillis();
+		long time = System.currentTimeMillis();
 
 		_dynamicQueryEntries.add(
 			_addDynamicQueryEntry(
-				100, new Date(now - 4000), "first", new Date(now - 4000),
+				100, new Date(time - 4000), "first", new Date(time - 4000),
 				"alpha", 1));
 		_dynamicQueryEntries.add(
 			_addDynamicQueryEntry(
-				200, new Date(now - 3000), null, new Date(now - 1500), "beta",
+				200, new Date(time - 3000), null, new Date(time - 1500), "beta",
 				2));
 		_dynamicQueryEntries.add(
 			_addDynamicQueryEntry(
-				300, new Date(now - 2000), "third", new Date(now - 2000),
+				300, new Date(time - 2000), "third", new Date(time - 2000),
 				"gamma", 1));
 		_dynamicQueryEntries.add(
 			_addDynamicQueryEntry(
-				400, new Date(now - 1000), "fourth", new Date(now - 500),
+				400, new Date(time - 1000), "fourth", new Date(time - 500),
 				"delta", 3));
 	}
 

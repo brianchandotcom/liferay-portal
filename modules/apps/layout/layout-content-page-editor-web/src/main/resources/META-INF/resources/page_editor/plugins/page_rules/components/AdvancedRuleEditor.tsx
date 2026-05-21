@@ -31,10 +31,10 @@ import useCache from '../../../app/utils/useCache';
 import {visitSelectedInputLayoutDataItems} from '../../../app/utils/visitSelectedInputLayoutDataItems';
 import {State} from '../../../types/State';
 import {FragmentLayoutDataItem} from '../../../types/layout_data/FragmentLayoutDataItem';
-import {filterAndConvertMappingFields} from './Condition';
+import {MappingFieldItem} from '../utils/useMappingFieldItems';
 
 type Props = {
-	mappingFields: ObjectFields | null;
+	mappingFieldItems: MappingFieldItem[];
 	onChange: (value: string | undefined) => void;
 	value?: string;
 };
@@ -42,7 +42,7 @@ type Props = {
 type CodeEditorSidebarPanel = (typeof config.codeEditorSidebarPanels)[number];
 
 export default function AdvancedRuleEditor({
-	mappingFields,
+	mappingFieldItems,
 	onChange,
 	value,
 }: Props) {
@@ -89,7 +89,7 @@ export default function AdvancedRuleEditor({
 	);
 
 	useEffect(() => {
-		getFormFieldsSections(state, mappingFields).then((sections) => {
+		getFormFieldsSections(state, mappingFieldItems).then((sections) => {
 			setCodeEditorSidebarPanels([
 				...config.codeEditorSidebarPanels,
 				...sections,
@@ -99,7 +99,7 @@ export default function AdvancedRuleEditor({
 			]);
 		});
 	}, [
-		mappingFields,
+		mappingFieldItems,
 		rolesSection,
 		segmentEntriesSection,
 		state,
@@ -163,18 +163,19 @@ function getUsersSection(
 
 async function getFormFieldsSections(
 	state: State,
-	mappingFields: ObjectFields | null
+	mappingFieldItems: MappingFieldItem[]
 ) {
 	const sections: CodeEditorSidebarPanel[] = [];
 
-	if (config.layoutType === LAYOUT_TYPES.display && mappingFields) {
+	if (
+		config.layoutType === LAYOUT_TYPES.display &&
+		mappingFieldItems.length
+	) {
 		sections.push({
-			items: filterAndConvertMappingFields(mappingFields).map((field) => {
-				return {
-					content: field.value,
-					label: field.label,
-				};
-			}),
+			items: mappingFieldItems.map((field) => ({
+				content: field.value,
+				label: field.label,
+			})),
 			key: 'mappingFields',
 			label: sub(
 				Liferay.Language.get('x-default'),

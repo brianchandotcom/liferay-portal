@@ -113,7 +113,6 @@ function FirstSectionComponent({
 						</label>
 
 						<CountryCodePicker
-							aria-label={Liferay.Language.get('prefix')}
 							countries={config.countries}
 							disabled={disabled}
 							id={prefixId}

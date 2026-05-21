@@ -59,6 +59,25 @@ export class DesignLibrariesPage extends POM {
 		}
 	}
 
+	async createStyleBook(designLibraryName: string, styleBookName: string) {
+		await this.goToDesignLibrary(designLibraryName);
+
+		await this.page.getByRole('button', {name: 'New Style Book'}).click();
+
+		const modal = this.page.getByRole('dialog');
+
+		await expect(modal).toBeVisible();
+
+		await modal.getByLabel('Name').fill(styleBookName);
+
+		await modal.getByRole('button', {name: 'Save'}).click();
+
+		await expect(modal).toBeHidden();
+		await expect(this.page).toHaveURL(/style_book.+edit/);
+
+		await this.goToDesignLibrary(designLibraryName);
+	}
+
 	async delete(name: string) {
 		await this.page
 			.locator('table.table tbody tr', {hasText: name})

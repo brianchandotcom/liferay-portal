@@ -20,8 +20,11 @@ const test = mergeTests(
 	apiHelpersTest,
 	designLibrariesPageTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 		'LPD-34594': {enabled: true},
+		'LPD-35443': {enabled: true},
+		'LPD-56718': {enabled: true},
 		'LPD-57283': {enabled: true},
 	}),
 	loginTest()
@@ -75,17 +78,20 @@ test(
 
 				await expect(modal).toBeVisible();
 
-				await modal.getByLabel('Name').fill(getRandomString());
+				const styleBookName = getRandomString();
+
+				await modal.getByLabel('Name').fill(styleBookName);
 
 				await modal.getByRole('button', {name: 'Save'}).click();
 
 				await expect(modal).toBeHidden();
-				await expect(
-					page.getByRole('heading', {
-						exact: true,
-						name: 'Style Books',
-					})
-				).toBeVisible();
+				await expect(page).toHaveURL(/style_book.+edit/);
+
+				const breadcrumb = page
+					.getByRole('navigation', {name: 'Breadcrumb'})
+					.last();
+
+				await expect(breadcrumb.getByText(styleBookName)).toBeVisible();
 			});
 
 			await test.step('Clicking the back button returns to the design library', async () => {
@@ -186,5 +192,85 @@ test(
 				);
 			});
 		}
+	}
+);
+
+test(
+	'Design Library content screen lists the style books added to it',
+	{tag: '@LPD-74829'},
+	async ({apiHelpers, designLibrariesPage, page}) => {
+		const designLibraryName = getRandomString();
+		const styleBookName = getRandomString();
+
+		const createdDesignLibrary =
+			await test.step('Create a new design library via headless', async () => {
+				return await apiHelpers.headlessAssetLibrary.createAssetLibrary(
+					{
+						name: designLibraryName,
+						settings: {},
+						type: 'DesignLibrary',
+					}
+				);
+			});
+
+		await test.step('Add a style book to the design library via UI', async () => {
+			await designLibrariesPage.createStyleBook(
+				designLibraryName,
+				styleBookName
+			);
+		});
+
+		await test.step('Check that the style book is listed', async () => {
+			const contentTable = page.locator(
+				'.design-library-fds-wrapper--resources table'
+			);
+
+			await expect(
+				contentTable.getByRole('row', {name: styleBookName})
+			).toBeVisible();
+		});
+
+		await test.step('Check that the author column shows the creator name', async () => {
+			const contentTable = page.locator(
+				'.design-library-fds-wrapper--resources table'
+			);
+
+			const styleBookRow = contentTable.getByRole('row', {
+				name: styleBookName,
+			});
+
+			await expect(
+				styleBookRow.getByRole('cell', {name: 'Test Test'})
+			).toBeVisible();
+		});
+
+		await test.step('Check that the row action menu exposes Edit and Delete', async () => {
+			const contentTable = page.locator(
+				'.design-library-fds-wrapper--resources table'
+			);
+
+			const styleBookRow = contentTable.getByRole('row', {
+				name: styleBookName,
+			});
+
+			await styleBookRow.getByRole('button', {name: /Actions$/}).click();
+
+			await expect(
+				page.getByRole('menuitem', {
+					exact: true,
+					name: 'Edit in Style Book Editor',
+				})
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('menuitem', {exact: true, name: 'Delete'})
+			).toBeVisible();
+		});
+
+		await test.step('Remove the design library', async () => {
+			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(
+				createdDesignLibrary.externalReferenceCode
+			);
+		});
 	}
 );

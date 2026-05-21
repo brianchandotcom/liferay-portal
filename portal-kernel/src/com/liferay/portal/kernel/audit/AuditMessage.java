@@ -35,6 +35,7 @@ public class AuditMessage implements Serializable {
 	public AuditMessage(String message) throws JSONException {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(message);
 
+		_accountEntryId = jsonObject.getLong(_ACCOUNT_ENTRY_ID);
 		_additionalInfoJSONObject = jsonObject.getJSONObject(_ADDITIONAL_INFO);
 		_className = jsonObject.getString(_CLASS_NAME);
 		_classPK = jsonObject.getString(_CLASS_PK);
@@ -48,6 +49,11 @@ public class AuditMessage implements Serializable {
 		}
 
 		_companyId = jsonObject.getLong(_COMPANY_ID);
+
+		if (jsonObject.has(_CONTEXT_NAME)) {
+			_contextName = jsonObject.getString(_CONTEXT_NAME);
+		}
+
 		_eventType = jsonObject.getString(_EVENT_TYPE);
 		_groupId = jsonObject.getLong(_GROUP_ID);
 		_message = jsonObject.getString(_MESSAGE);
@@ -73,13 +79,15 @@ public class AuditMessage implements Serializable {
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long groupId, long userId,
-		String userName, String className, String classPK, String message,
-		Date timestamp, JSONObject additionalInfoJSONObject) {
+		String eventType, long companyId, long groupId, long accountEntryId,
+		long userId, String userName, String className, String classPK,
+		String message, Date timestamp, JSONObject additionalInfoJSONObject,
+		String contextName) {
 
 		_eventType = eventType;
 		_companyId = companyId;
 		_groupId = groupId;
+		_accountEntryId = accountEntryId;
 		_userId = userId;
 		_userName = userName;
 		_className = className;
@@ -89,6 +97,7 @@ public class AuditMessage implements Serializable {
 		_additionalInfoJSONObject =
 			(additionalInfoJSONObject != null) ? additionalInfoJSONObject :
 				JSONFactoryUtil.createJSONObject();
+		_contextName = contextName;
 
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
@@ -98,7 +107,6 @@ public class AuditMessage implements Serializable {
 		_serverName = auditRequestThreadLocal.getServerName();
 		_serverPort = auditRequestThreadLocal.getServerPort();
 		_sessionID = auditRequestThreadLocal.getSessionID();
-
 		_userEmailAddress = auditRequestThreadLocal.getRealUserEmailAddress();
 
 		long realUserId = auditRequestThreadLocal.getRealUserId();
@@ -136,11 +144,21 @@ public class AuditMessage implements Serializable {
 	}
 
 	public AuditMessage(
+		String eventType, long companyId, long groupId, long userId,
+		String userName, String className, String classPK, String message,
+		Date timestamp, JSONObject additionalInfoJSONObject) {
+
+		this(
+			eventType, companyId, groupId, 0, userId, userName, className,
+			classPK, message, timestamp, additionalInfoJSONObject, null);
+	}
+
+	public AuditMessage(
 		String eventType, long companyId, long userId, String userName) {
 
 		this(
-			eventType, companyId, 0, userId, userName, null, null, null, null,
-			null);
+			eventType, companyId, 0, 0, userId, userName, null, null, null,
+			null, null, null);
 	}
 
 	public AuditMessage(
@@ -148,8 +166,8 @@ public class AuditMessage implements Serializable {
 		String className, String classPK) {
 
 		this(
-			eventType, companyId, 0, userId, userName, className, classPK, null,
-			null, null);
+			eventType, companyId, 0, 0, userId, userName, className, classPK,
+			null, null, null, null);
 	}
 
 	public AuditMessage(
@@ -157,8 +175,8 @@ public class AuditMessage implements Serializable {
 		String className, String classPK, String message) {
 
 		this(
-			eventType, companyId, 0, userId, userName, className, classPK,
-			message, null, null);
+			eventType, companyId, 0, 0, userId, userName, className, classPK,
+			message, null, null, null);
 	}
 
 	public AuditMessage(
@@ -167,8 +185,8 @@ public class AuditMessage implements Serializable {
 		JSONObject additionalInfoJSONObject) {
 
 		this(
-			eventType, companyId, 0, userId, userName, className, classPK,
-			message, timestamp, additionalInfoJSONObject);
+			eventType, companyId, 0, 0, userId, userName, className, classPK,
+			message, timestamp, additionalInfoJSONObject, null);
 	}
 
 	public AuditMessage(
@@ -177,8 +195,12 @@ public class AuditMessage implements Serializable {
 		JSONObject additionalInfoJSONObject) {
 
 		this(
-			eventType, companyId, 0, userId, userName, className, classPK,
-			message, null, additionalInfoJSONObject);
+			eventType, companyId, 0, 0, userId, userName, className, classPK,
+			message, null, additionalInfoJSONObject, null);
+	}
+
+	public long getAccountEntryId() {
+		return _accountEntryId;
 	}
 
 	public JSONObject getAdditionalInfo() {
@@ -203,6 +225,10 @@ public class AuditMessage implements Serializable {
 
 	public long getCompanyId() {
 		return _companyId;
+	}
+
+	public String getContextName() {
+		return _contextName;
 	}
 
 	public String getEventType() {
@@ -249,6 +275,10 @@ public class AuditMessage implements Serializable {
 		return _userName;
 	}
 
+	public void setAccountEntryId(long accountEntryId) {
+		_accountEntryId = accountEntryId;
+	}
+
 	public void setAdditionalInfo(JSONObject additionalInfoJSONObject) {
 		_additionalInfoJSONObject = additionalInfoJSONObject;
 	}
@@ -275,6 +305,10 @@ public class AuditMessage implements Serializable {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+	}
+
+	public void setContextName(String contextName) {
+		_contextName = contextName;
 	}
 
 	public void setEventType(String eventType) {
@@ -323,6 +357,8 @@ public class AuditMessage implements Serializable {
 
 	public JSONObject toJSONObject() {
 		return JSONUtil.put(
+			_ACCOUNT_ENTRY_ID, _accountEntryId
+		).put(
 			_ADDITIONAL_INFO, _additionalInfoJSONObject
 		).put(
 			_CLASS_NAME, _className
@@ -334,6 +370,8 @@ public class AuditMessage implements Serializable {
 			_CLIENT_IP, _clientIP
 		).put(
 			_COMPANY_ID, _companyId
+		).put(
+			_CONTEXT_NAME, _contextName
 		).put(
 			_EVENT_TYPE, _eventType
 		).put(
@@ -361,6 +399,8 @@ public class AuditMessage implements Serializable {
 		return DateFormatFactoryUtil.getSimpleDateFormat(_DATE_FORMAT);
 	}
 
+	private static final String _ACCOUNT_ENTRY_ID = "accountEntryId";
+
 	private static final String _ADDITIONAL_INFO = "additionalInfo";
 
 	private static final String _CLASS_NAME = "className";
@@ -372,6 +412,8 @@ public class AuditMessage implements Serializable {
 	private static final String _CLIENT_IP = "clientIP";
 
 	private static final String _COMPANY_ID = "companyId";
+
+	private static final String _CONTEXT_NAME = "contextName";
 
 	private static final String _DATE_FORMAT = "yyyyMMddkkmmssSSS";
 
@@ -399,12 +441,14 @@ public class AuditMessage implements Serializable {
 
 	private static final Log _log = LogFactoryUtil.getLog(AuditMessage.class);
 
+	private long _accountEntryId;
 	private JSONObject _additionalInfoJSONObject;
 	private String _className;
 	private String _classPK;
 	private String _clientHost;
 	private String _clientIP;
 	private long _companyId = -1;
+	private String _contextName;
 	private String _eventType;
 	private long _groupId = -1;
 	private String _message;

@@ -96,7 +96,7 @@ describe('fetch lifecycle', () => {
 		await waitFor(() => {
 			expect(mockOpenToast).toHaveBeenCalledWith(
 				expect.objectContaining({
-					message: 'failed-to-load-model-armor-template-data',
+					message: 'failed-to-load-guardrail-data',
 					type: 'danger',
 				})
 			);
@@ -222,7 +222,7 @@ describe('useModelArmorTemplateForm', () => {
 			await waitFor(() => {
 				expect(mockOpenToast).toHaveBeenCalledWith(
 					expect.objectContaining({
-						message: 'failed-to-save-model-armor-template',
+						message: 'failed-to-save-guardrail',
 						type: 'danger',
 					})
 				);
@@ -251,7 +251,7 @@ describe('useModelArmorTemplateForm', () => {
 			await waitFor(() => {
 				expect(mockOpenToast).toHaveBeenCalledWith(
 					expect.objectContaining({
-						message: 'model-armor-template-saved-successfully',
+						message: 'guardrail-saved-successfully',
 						type: 'success',
 					})
 				);

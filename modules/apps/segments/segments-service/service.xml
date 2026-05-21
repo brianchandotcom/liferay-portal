@@ -62,7 +62,7 @@
 		</finder>
 		<finder name="G_SRC" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />
-			<finder-column name="source" />
+			<finder-column arrayable-operator="OR" name="source" />
 		</finder>
 		<finder name="G_A_SRC" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="groupId" />

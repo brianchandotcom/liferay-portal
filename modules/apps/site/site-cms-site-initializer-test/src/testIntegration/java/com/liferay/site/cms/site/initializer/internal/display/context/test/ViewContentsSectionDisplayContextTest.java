@@ -95,6 +95,9 @@ public class ViewContentsSectionDisplayContextTest
 			"copy", "copy-to", "Copy To", null, bulkActionDropdownItems.get(2));
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"time", "expire", "Expire", null, bulkActionDropdownItems.get(3));
+			"copy", "duplicate", "Duplicate", null,
+			bulkActionDropdownItems.get(3));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"upload", "export-for-translation", "Export for Translation", null,
 			bulkActionDropdownItems.get(4));
@@ -168,8 +171,27 @@ public class ViewContentsSectionDisplayContextTest
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"move-folder", "move", "Move", null,
 			fdsActionDropdownItems.get(10));
+
+		FDSActionDropdownItem copyFDSActionDropdownItem =
+			fdsActionDropdownItems.get(11);
+
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
-			"copy", "copy", "Copy To", null, fdsActionDropdownItems.get(11));
+			"copy", "copy-menu", "Copy", null, "contextual", null,
+			copyFDSActionDropdownItem);
+
+		List<FDSActionDropdownItem> copyFDSActionDropdownItems =
+			(List<FDSActionDropdownItem>)copyFDSActionDropdownItem.get("items");
+
+		Assert.assertEquals(
+			copyFDSActionDropdownItems.toString(), 2,
+			copyFDSActionDropdownItems.size());
+
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "copy", "Copy To", null, copyFDSActionDropdownItems.get(0));
+		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
+			"copy", "duplicate", "Duplicate", null,
+			copyFDSActionDropdownItems.get(1));
+
 		FrontendDataSetTestUtil.assertFDSActionDropdownItem(
 			"upload", "export-for-translation", "Export for Translation", null,
 			fdsActionDropdownItems.get(12));

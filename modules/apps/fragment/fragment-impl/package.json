@@ -10,6 +10,7 @@
 		"@liferay/frontend-js-item-selector-web": "*",
 		"@liferay/frontend-js-state-web": "*",
 		"@liferay/layout-js-components-web": "*",
+		"@liferay/object-js-components-web": "*",
 		"classnames": "2.3.1",
 		"document-library-video": "*",
 		"frontend-js-components-web": "*",

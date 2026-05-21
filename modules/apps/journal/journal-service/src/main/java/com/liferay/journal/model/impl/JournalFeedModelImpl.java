@@ -127,6 +127,8 @@ public class JournalFeedModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY journalFeed.feedId ASC";
 
+	public static final String FILTER_PK_COLUMN = "journalFeed.id_";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1510,4 +1512,4 @@ public class JournalFeedModelImpl
 	private JournalFeed _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1770886168
+// LIFERAY-SERVICE-BUILDER-HASH:386854720

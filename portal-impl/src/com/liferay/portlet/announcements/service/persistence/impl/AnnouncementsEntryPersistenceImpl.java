@@ -1567,16 +1567,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, AnnouncementsEntry::getUuid));
@@ -1604,16 +1594,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, AnnouncementsEntry::getUuid),
@@ -1644,16 +1624,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId));
@@ -1681,16 +1651,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "userId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getUserId));
@@ -1718,16 +1678,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1767,16 +1717,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId),
@@ -1818,16 +1758,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "classNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1878,16 +1808,6 @@ public class AnnouncementsEntryPersistenceImpl
 				_SQL_COUNT_ANNOUNCEMENTSENTRY_WHERE,
 				AnnouncementsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					AnnouncementsEntryImpl.class, AnnouncementsEntry.class,
-					"announcementsEntry", "AnnouncementsEntry",
-					"announcementsEntry.entryId",
-					"SELECT DISTINCT {announcementsEntry.*} FROM AnnouncementsEntry announcementsEntry WHERE ",
-					"SELECT {AnnouncementsEntry.*} FROM (SELECT DISTINCT announcementsEntry.entryId FROM AnnouncementsEntry announcementsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN AnnouncementsEntry ON TEMP_TABLE.entryId = AnnouncementsEntry.entryId",
-					"SELECT COUNT(DISTINCT announcementsEntry.entryId) AS COUNT_VALUE FROM AnnouncementsEntry announcementsEntry WHERE ",
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL,
-					AnnouncementsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"announcementsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, AnnouncementsEntry::getCompanyId),
@@ -1935,4 +1855,4 @@ public class AnnouncementsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2097722807
+// LIFERAY-SERVICE-BUILDER-HASH:-345564075

@@ -114,6 +114,9 @@ public class AssetListEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY assetListEntry.assetListEntryId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"assetListEntry.assetListEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1298,4 +1301,4 @@ public class AssetListEntryModelImpl
 	private AssetListEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-427402719
+// LIFERAY-SERVICE-BUILDER-HASH:36314247

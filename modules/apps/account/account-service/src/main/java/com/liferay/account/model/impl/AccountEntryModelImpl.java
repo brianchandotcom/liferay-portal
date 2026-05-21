@@ -130,6 +130,8 @@ public class AccountEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY accountEntry.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "accountEntry.accountEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1691,4 +1693,4 @@ public class AccountEntryModelImpl
 	private AccountEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2079740540
+// LIFERAY-SERVICE-BUILDER-HASH:-2141965942

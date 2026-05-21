@@ -123,6 +123,9 @@ public class SegmentsEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY segmentsEntry.modifiedDate DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"segmentsEntry.segmentsEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1601,4 +1604,4 @@ public class SegmentsEntryModelImpl
 	private SegmentsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1484837394
+// LIFERAY-SERVICE-BUILDER-HASH:-1067220900

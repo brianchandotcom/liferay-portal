@@ -130,6 +130,9 @@ public class CommerceNotificationTemplateModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY commerceNotificationTemplate.modifiedDate DESC, commerceNotificationTemplate.name DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceNotificationTemplate.commerceNotificationTemplateId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1829,4 +1832,4 @@ public class CommerceNotificationTemplateModelImpl
 	private CommerceNotificationTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-222845420
+// LIFERAY-SERVICE-BUILDER-HASH:1480473082

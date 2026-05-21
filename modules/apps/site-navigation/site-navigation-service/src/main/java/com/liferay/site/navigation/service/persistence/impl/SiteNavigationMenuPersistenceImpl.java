@@ -1987,16 +1987,6 @@ public class SiteNavigationMenuPersistenceImpl
 				_SQL_COUNT_SITENAVIGATIONMENU_WHERE,
 				SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SiteNavigationMenuImpl.class, SiteNavigationMenu.class,
-					"siteNavigationMenu", "SiteNavigationMenu",
-					"siteNavigationMenu.siteNavigationMenuId",
-					"SELECT DISTINCT {siteNavigationMenu.*} FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					"SELECT {SiteNavigationMenu.*} FROM (SELECT DISTINCT siteNavigationMenu.siteNavigationMenuId FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					") TEMP_TABLE INNER JOIN SiteNavigationMenu ON TEMP_TABLE.siteNavigationMenuId = SiteNavigationMenu.siteNavigationMenuId",
-					"SELECT COUNT(DISTINCT siteNavigationMenu.siteNavigationMenuId) AS COUNT_VALUE FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL,
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, SiteNavigationMenu::getGroupId));
@@ -2064,16 +2054,6 @@ public class SiteNavigationMenuPersistenceImpl
 				_SQL_COUNT_SITENAVIGATIONMENU_WHERE,
 				SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SiteNavigationMenuImpl.class, SiteNavigationMenu.class,
-					"siteNavigationMenu", "SiteNavigationMenu",
-					"siteNavigationMenu.siteNavigationMenuId",
-					"SELECT DISTINCT {siteNavigationMenu.*} FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					"SELECT {SiteNavigationMenu.*} FROM (SELECT DISTINCT siteNavigationMenu.siteNavigationMenuId FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					") TEMP_TABLE INNER JOIN SiteNavigationMenu ON TEMP_TABLE.siteNavigationMenuId = SiteNavigationMenu.siteNavigationMenuId",
-					"SELECT COUNT(DISTINCT siteNavigationMenu.siteNavigationMenuId) AS COUNT_VALUE FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL,
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", false, true, true, SiteNavigationMenu::getGroupId),
@@ -2108,16 +2088,6 @@ public class SiteNavigationMenuPersistenceImpl
 				_SQL_COUNT_SITENAVIGATIONMENU_WHERE,
 				SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SiteNavigationMenuImpl.class, SiteNavigationMenu.class,
-					"siteNavigationMenu", "SiteNavigationMenu",
-					"siteNavigationMenu.siteNavigationMenuId",
-					"SELECT DISTINCT {siteNavigationMenu.*} FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					"SELECT {SiteNavigationMenu.*} FROM (SELECT DISTINCT siteNavigationMenu.siteNavigationMenuId FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					") TEMP_TABLE INNER JOIN SiteNavigationMenu ON TEMP_TABLE.siteNavigationMenuId = SiteNavigationMenu.siteNavigationMenuId",
-					"SELECT COUNT(DISTINCT siteNavigationMenu.siteNavigationMenuId) AS COUNT_VALUE FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL,
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SiteNavigationMenu::getGroupId),
@@ -2152,16 +2122,6 @@ public class SiteNavigationMenuPersistenceImpl
 				_SQL_COUNT_SITENAVIGATIONMENU_WHERE,
 				SiteNavigationMenuModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SiteNavigationMenuImpl.class, SiteNavigationMenu.class,
-					"siteNavigationMenu", "SiteNavigationMenu",
-					"siteNavigationMenu.siteNavigationMenuId",
-					"SELECT DISTINCT {siteNavigationMenu.*} FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					"SELECT {SiteNavigationMenu.*} FROM (SELECT DISTINCT siteNavigationMenu.siteNavigationMenuId FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					") TEMP_TABLE INNER JOIN SiteNavigationMenu ON TEMP_TABLE.siteNavigationMenuId = SiteNavigationMenu.siteNavigationMenuId",
-					"SELECT COUNT(DISTINCT siteNavigationMenu.siteNavigationMenuId) AS COUNT_VALUE FROM SiteNavigationMenu siteNavigationMenu WHERE ",
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL,
-					SiteNavigationMenuModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"siteNavigationMenu.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, SiteNavigationMenu::getGroupId),
@@ -2259,4 +2219,4 @@ public class SiteNavigationMenuPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-388905672
+// LIFERAY-SERVICE-BUILDER-HASH:35945208

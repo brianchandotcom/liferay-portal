@@ -115,6 +115,8 @@ public class CTCollectionModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY ctCollection.createDate ASC";
 
+	public static final String FILTER_PK_COLUMN = "ctCollection.ctCollectionId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1248,4 +1250,4 @@ public class CTCollectionModelImpl
 	private CTCollection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1335110339
+// LIFERAY-SERVICE-BUILDER-HASH:-1989947715

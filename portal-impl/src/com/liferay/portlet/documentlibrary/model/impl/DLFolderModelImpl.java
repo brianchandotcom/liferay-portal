@@ -129,6 +129,8 @@ public class DLFolderModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "dlFolder.folderId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1780,4 +1782,4 @@ public class DLFolderModelImpl
 	private DLFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-550516070
+// LIFERAY-SERVICE-BUILDER-HASH:2103111516

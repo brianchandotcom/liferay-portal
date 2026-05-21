@@ -126,6 +126,9 @@ public class DDMFormInstanceModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY ddmFormInstance.formInstanceId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"ddmFormInstance.formInstanceId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1615,4 +1618,4 @@ public class DDMFormInstanceModelImpl
 	private DDMFormInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1038359170
+// LIFERAY-SERVICE-BUILDER-HASH:-369748927

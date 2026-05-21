@@ -1216,16 +1216,6 @@ public class CommerceChannelPersistenceImpl
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					"commerceChannel", "CommerceChannel",
-					"commerceChannel.commerceChannelId",
-					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
-					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
-					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceChannel::getUuid));
@@ -1253,16 +1243,6 @@ public class CommerceChannelPersistenceImpl
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					"commerceChannel", "CommerceChannel",
-					"commerceChannel.commerceChannelId",
-					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
-					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
-					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceChannel::getUuid),
@@ -1293,16 +1273,6 @@ public class CommerceChannelPersistenceImpl
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					"commerceChannel", "CommerceChannel",
-					"commerceChannel.commerceChannelId",
-					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
-					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
-					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getCompanyId));
@@ -1332,16 +1302,6 @@ public class CommerceChannelPersistenceImpl
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					"commerceChannel", "CommerceChannel",
-					"commerceChannel.commerceChannelId",
-					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
-					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
-					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1370,16 +1330,6 @@ public class CommerceChannelPersistenceImpl
 				_SQL_COUNT_COMMERCECHANNEL_WHERE,
 				CommerceChannelModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceChannelImpl.class, CommerceChannel.class,
-					"commerceChannel", "CommerceChannel",
-					"commerceChannel.commerceChannelId",
-					"SELECT DISTINCT {commerceChannel.*} FROM CommerceChannel commerceChannel WHERE ",
-					"SELECT {CommerceChannel.*} FROM (SELECT DISTINCT commerceChannel.commerceChannelId FROM CommerceChannel commerceChannel WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceChannel ON TEMP_TABLE.commerceChannelId = CommerceChannel.commerceChannelId",
-					"SELECT COUNT(DISTINCT commerceChannel.commerceChannelId) AS COUNT_VALUE FROM CommerceChannel commerceChannel WHERE ",
-					CommerceChannelModelImpl.ORDER_BY_SQL,
-					CommerceChannelModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceChannel.", "siteGroupId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceChannel::getSiteGroupId));
@@ -1474,4 +1424,4 @@ public class CommerceChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:177725546
+// LIFERAY-SERVICE-BUILDER-HASH:1612880758

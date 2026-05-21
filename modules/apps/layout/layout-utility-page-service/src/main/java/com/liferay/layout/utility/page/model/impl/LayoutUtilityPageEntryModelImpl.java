@@ -117,6 +117,9 @@ public class LayoutUtilityPageEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY layoutUtilityPageEntry.name ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutUtilityPageEntry.LayoutUtilityPageEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1298,4 +1301,4 @@ public class LayoutUtilityPageEntryModelImpl
 	private LayoutUtilityPageEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:97510814
+// LIFERAY-SERVICE-BUILDER-HASH:-1318382204

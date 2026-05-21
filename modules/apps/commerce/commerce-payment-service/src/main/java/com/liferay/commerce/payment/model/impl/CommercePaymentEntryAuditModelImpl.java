@@ -111,6 +111,9 @@ public class CommercePaymentEntryAuditModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY commercePaymentEntryAudit.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"commercePaymentEntryAudit.commercePaymentEntryAuditId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -996,4 +999,4 @@ public class CommercePaymentEntryAuditModelImpl
 	private CommercePaymentEntryAudit _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-263970515
+// LIFERAY-SERVICE-BUILDER-HASH:2080894075

@@ -2333,16 +2333,6 @@ public class CommerceOrderPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_COMMERCEORDER_WHERE, _SQL_COUNT_COMMERCEORDER_WHERE,
 				CommerceOrderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderImpl.class, CommerceOrder.class,
-					"commerceOrder", "CommerceOrder",
-					"commerceOrder.commerceOrderId",
-					"SELECT DISTINCT {commerceOrder.*} FROM CommerceOrder commerceOrder WHERE ",
-					"SELECT {CommerceOrder.*} FROM (SELECT DISTINCT commerceOrder.commerceOrderId FROM CommerceOrder commerceOrder WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrder ON TEMP_TABLE.commerceOrderId = CommerceOrder.commerceOrderId",
-					"SELECT COUNT(DISTINCT commerceOrder.commerceOrderId) AS COUNT_VALUE FROM CommerceOrder commerceOrder WHERE ",
-					CommerceOrderModelImpl.ORDER_BY_SQL,
-					CommerceOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceOrder::getGroupId));
@@ -2480,16 +2470,6 @@ public class CommerceOrderPersistenceImpl
 					new String[] {"groupId", "commerceAccountId"}, false),
 				_SQL_SELECT_COMMERCEORDER_WHERE, _SQL_COUNT_COMMERCEORDER_WHERE,
 				CommerceOrderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderImpl.class, CommerceOrder.class,
-					"commerceOrder", "CommerceOrder",
-					"commerceOrder.commerceOrderId",
-					"SELECT DISTINCT {commerceOrder.*} FROM CommerceOrder commerceOrder WHERE ",
-					"SELECT {CommerceOrder.*} FROM (SELECT DISTINCT commerceOrder.commerceOrderId FROM CommerceOrder commerceOrder WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrder ON TEMP_TABLE.commerceOrderId = CommerceOrder.commerceOrderId",
-					"SELECT COUNT(DISTINCT commerceOrder.commerceOrderId) AS COUNT_VALUE FROM CommerceOrder commerceOrder WHERE ",
-					CommerceOrderModelImpl.ORDER_BY_SQL,
-					CommerceOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceOrder::getGroupId),
@@ -2521,16 +2501,6 @@ public class CommerceOrderPersistenceImpl
 					false, null),
 				_SQL_SELECT_COMMERCEORDER_WHERE, _SQL_COUNT_COMMERCEORDER_WHERE,
 				CommerceOrderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderImpl.class, CommerceOrder.class,
-					"commerceOrder", "CommerceOrder",
-					"commerceOrder.commerceOrderId",
-					"SELECT DISTINCT {commerceOrder.*} FROM CommerceOrder commerceOrder WHERE ",
-					"SELECT {CommerceOrder.*} FROM (SELECT DISTINCT commerceOrder.commerceOrderId FROM CommerceOrder commerceOrder WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrder ON TEMP_TABLE.commerceOrderId = CommerceOrder.commerceOrderId",
-					"SELECT COUNT(DISTINCT commerceOrder.commerceOrderId) AS COUNT_VALUE FROM CommerceOrder commerceOrder WHERE ",
-					CommerceOrderModelImpl.ORDER_BY_SQL,
-					CommerceOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceOrder::getGroupId),
@@ -2567,16 +2537,6 @@ public class CommerceOrderPersistenceImpl
 					new String[] {"groupId", "userId", "orderStatus"}, false),
 				_SQL_SELECT_COMMERCEORDER_WHERE, _SQL_COUNT_COMMERCEORDER_WHERE,
 				CommerceOrderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderImpl.class, CommerceOrder.class,
-					"commerceOrder", "CommerceOrder",
-					"commerceOrder.commerceOrderId",
-					"SELECT DISTINCT {commerceOrder.*} FROM CommerceOrder commerceOrder WHERE ",
-					"SELECT {CommerceOrder.*} FROM (SELECT DISTINCT commerceOrder.commerceOrderId FROM CommerceOrder commerceOrder WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrder ON TEMP_TABLE.commerceOrderId = CommerceOrder.commerceOrderId",
-					"SELECT COUNT(DISTINCT commerceOrder.commerceOrderId) AS COUNT_VALUE FROM CommerceOrder commerceOrder WHERE ",
-					CommerceOrderModelImpl.ORDER_BY_SQL,
-					CommerceOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceOrder::getGroupId),
@@ -2624,16 +2584,6 @@ public class CommerceOrderPersistenceImpl
 					false),
 				_SQL_SELECT_COMMERCEORDER_WHERE, _SQL_COUNT_COMMERCEORDER_WHERE,
 				CommerceOrderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderImpl.class, CommerceOrder.class,
-					"commerceOrder", "CommerceOrder",
-					"commerceOrder.commerceOrderId",
-					"SELECT DISTINCT {commerceOrder.*} FROM CommerceOrder commerceOrder WHERE ",
-					"SELECT {CommerceOrder.*} FROM (SELECT DISTINCT commerceOrder.commerceOrderId FROM CommerceOrder commerceOrder WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrder ON TEMP_TABLE.commerceOrderId = CommerceOrder.commerceOrderId",
-					"SELECT COUNT(DISTINCT commerceOrder.commerceOrderId) AS COUNT_VALUE FROM CommerceOrder commerceOrder WHERE ",
-					CommerceOrderModelImpl.ORDER_BY_SQL,
-					CommerceOrderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrder.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CommerceOrder::getGroupId),
@@ -2827,4 +2777,4 @@ public class CommerceOrderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-756810372
+// LIFERAY-SERVICE-BUILDER-HASH:-1638672190

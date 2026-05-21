@@ -2277,15 +2277,6 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
-					"DDMStructure", "ddmStructure.structureId",
-					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
-					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
-					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
-					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
-					DDMStructureModelImpl.ORDER_BY_SQL,
-					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId));
@@ -2367,15 +2358,6 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId", "parentStructureId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
-					"DDMStructure", "ddmStructure.structureId",
-					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
-					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
-					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
-					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
-					DDMStructureModelImpl.ORDER_BY_SQL,
-					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getGroupId),
@@ -2405,15 +2387,6 @@ public class DDMStructurePersistenceImpl
 					new String[] {"groupId", "classNameId"}, false),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
-					"DDMStructure", "ddmStructure.structureId",
-					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
-					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
-					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
-					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
-					DDMStructureModelImpl.ORDER_BY_SQL,
-					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId),
@@ -2526,15 +2499,6 @@ public class DDMStructurePersistenceImpl
 					false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
-					"DDMStructure", "ddmStructure.structureId",
-					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
-					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
-					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
-					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
-					DDMStructureModelImpl.ORDER_BY_SQL,
-					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, DDMStructure::getGroupId),
@@ -2582,15 +2546,6 @@ public class DDMStructurePersistenceImpl
 					0, 12, false, null),
 				_SQL_SELECT_DDMSTRUCTURE_WHERE, _SQL_COUNT_DDMSTRUCTURE_WHERE,
 				DDMStructureModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMStructureImpl.class, DDMStructure.class, "ddmStructure",
-					"DDMStructure", "ddmStructure.structureId",
-					"SELECT DISTINCT {ddmStructure.*} FROM DDMStructure ddmStructure WHERE ",
-					"SELECT {DDMStructure.*} FROM (SELECT DISTINCT ddmStructure.structureId FROM DDMStructure ddmStructure WHERE ",
-					") TEMP_TABLE INNER JOIN DDMStructure ON TEMP_TABLE.structureId = DDMStructure.structureId",
-					"SELECT COUNT(DISTINCT ddmStructure.structureId) AS COUNT_VALUE FROM DDMStructure ddmStructure WHERE ",
-					DDMStructureModelImpl.ORDER_BY_SQL,
-					DDMStructureModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmStructure.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMStructure::getGroupId),
@@ -2676,4 +2631,4 @@ public class DDMStructurePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-525751786
+// LIFERAY-SERVICE-BUILDER-HASH:303323811

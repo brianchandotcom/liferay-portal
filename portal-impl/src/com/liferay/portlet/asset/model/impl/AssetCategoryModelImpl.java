@@ -124,6 +124,8 @@ public class AssetCategoryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY assetCategory.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "assetCategory.categoryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1613,4 +1615,4 @@ public class AssetCategoryModelImpl
 	private AssetCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1726226812
+// LIFERAY-SERVICE-BUILDER-HASH:-1161109568

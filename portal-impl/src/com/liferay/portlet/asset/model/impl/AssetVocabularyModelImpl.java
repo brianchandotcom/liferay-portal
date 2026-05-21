@@ -122,6 +122,9 @@ public class AssetVocabularyModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY assetVocabulary.name ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"assetVocabulary.vocabularyId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1563,4 +1566,4 @@ public class AssetVocabularyModelImpl
 	private AssetVocabulary _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1624424846
+// LIFERAY-SERVICE-BUILDER-HASH:663229664

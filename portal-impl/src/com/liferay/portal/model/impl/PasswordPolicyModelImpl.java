@@ -141,6 +141,9 @@ public class PasswordPolicyModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY passwordPolicy.passwordPolicyId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"passwordPolicy.passwordPolicyId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1797,4 +1800,4 @@ public class PasswordPolicyModelImpl
 	private PasswordPolicy _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1866654999
+// LIFERAY-SERVICE-BUILDER-HASH:1199659409

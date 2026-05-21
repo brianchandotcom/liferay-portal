@@ -1705,14 +1705,6 @@ public class TeamPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_TEAM_WHERE, _SQL_COUNT_TEAM_WHERE,
 				TeamModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					TeamImpl.class, Team.class, "team", "Team", "team.teamId",
-					"SELECT DISTINCT {team.*} FROM Team team WHERE ",
-					"SELECT {Team.*} FROM (SELECT DISTINCT team.teamId FROM Team team WHERE ",
-					") TEMP_TABLE INNER JOIN Team ON TEMP_TABLE.teamId = Team.teamId",
-					"SELECT COUNT(DISTINCT team.teamId) AS COUNT_VALUE FROM Team team WHERE ",
-					TeamModelImpl.ORDER_BY_SQL,
-					TeamModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"team.", "groupId", FinderColumn.Type.LONG, "=", true, true,
 					Team::getGroupId));
@@ -1782,4 +1774,4 @@ public class TeamPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-737449399
+// LIFERAY-SERVICE-BUILDER-HASH:1667755781

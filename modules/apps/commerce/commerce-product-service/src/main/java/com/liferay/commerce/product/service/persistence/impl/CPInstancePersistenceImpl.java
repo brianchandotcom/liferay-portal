@@ -2275,15 +2275,6 @@ public class CPInstancePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPInstanceImpl.class, CPInstance.class, "cpInstance",
-					"CPInstance", "cpInstance.CPInstanceId",
-					"SELECT DISTINCT {cpInstance.*} FROM CPInstance cpInstance WHERE ",
-					"SELECT {CPInstance.*} FROM (SELECT DISTINCT cpInstance.CPInstanceId FROM CPInstance cpInstance WHERE ",
-					") TEMP_TABLE INNER JOIN CPInstance ON TEMP_TABLE.CPInstanceId = CPInstance.CPInstanceId",
-					"SELECT COUNT(DISTINCT cpInstance.CPInstanceId) AS COUNT_VALUE FROM CPInstance cpInstance WHERE ",
-					CPInstanceModelImpl.ORDER_BY_SQL,
-					CPInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpInstance.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CPInstance::getGroupId));
@@ -2393,15 +2384,6 @@ public class CPInstancePersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_CPINSTANCE_WHERE, _SQL_COUNT_CPINSTANCE_WHERE,
 				CPInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CPInstanceImpl.class, CPInstance.class, "cpInstance",
-					"CPInstance", "cpInstance.CPInstanceId",
-					"SELECT DISTINCT {cpInstance.*} FROM CPInstance cpInstance WHERE ",
-					"SELECT {CPInstance.*} FROM (SELECT DISTINCT cpInstance.CPInstanceId FROM CPInstance cpInstance WHERE ",
-					") TEMP_TABLE INNER JOIN CPInstance ON TEMP_TABLE.CPInstanceId = CPInstance.CPInstanceId",
-					"SELECT COUNT(DISTINCT cpInstance.CPInstanceId) AS COUNT_VALUE FROM CPInstance cpInstance WHERE ",
-					CPInstanceModelImpl.ORDER_BY_SQL,
-					CPInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"cpInstance.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, CPInstance::getGroupId),
@@ -2692,4 +2674,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1211901787
+// LIFERAY-SERVICE-BUILDER-HASH:807696229

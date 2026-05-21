@@ -114,6 +114,9 @@ public class CPTaxCategoryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY cpTaxCategory.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"cpTaxCategory.CPTaxCategoryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1295,4 +1298,4 @@ public class CPTaxCategoryModelImpl
 	private CPTaxCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-446833846
+// LIFERAY-SERVICE-BUILDER-HASH:-1146336696

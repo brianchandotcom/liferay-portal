@@ -1567,16 +1567,6 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectEntryFolderImpl.class, ObjectEntryFolder.class,
-					"objectEntryFolder", "ObjectEntryFolder",
-					"objectEntryFolder.objectEntryFolderId",
-					"SELECT DISTINCT {objectEntryFolder.*} FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					"SELECT {ObjectEntryFolder.*} FROM (SELECT DISTINCT objectEntryFolder.objectEntryFolderId FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectEntryFolder ON TEMP_TABLE.objectEntryFolderId = ObjectEntryFolder.objectEntryFolderId",
-					"SELECT COUNT(DISTINCT objectEntryFolder.objectEntryFolderId) AS COUNT_VALUE FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL,
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1612,16 +1602,6 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectEntryFolderImpl.class, ObjectEntryFolder.class,
-					"objectEntryFolder", "ObjectEntryFolder",
-					"objectEntryFolder.objectEntryFolderId",
-					"SELECT DISTINCT {objectEntryFolder.*} FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					"SELECT {ObjectEntryFolder.*} FROM (SELECT DISTINCT objectEntryFolder.objectEntryFolderId FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectEntryFolder ON TEMP_TABLE.objectEntryFolderId = ObjectEntryFolder.objectEntryFolderId",
-					"SELECT COUNT(DISTINCT objectEntryFolder.objectEntryFolderId) AS COUNT_VALUE FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL,
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1668,16 +1648,6 @@ public class ObjectEntryFolderPersistenceImpl
 				_SQL_COUNT_OBJECTENTRYFOLDER_WHERE,
 				ObjectEntryFolderModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ObjectEntryFolderImpl.class, ObjectEntryFolder.class,
-					"objectEntryFolder", "ObjectEntryFolder",
-					"objectEntryFolder.objectEntryFolderId",
-					"SELECT DISTINCT {objectEntryFolder.*} FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					"SELECT {ObjectEntryFolder.*} FROM (SELECT DISTINCT objectEntryFolder.objectEntryFolderId FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					") TEMP_TABLE INNER JOIN ObjectEntryFolder ON TEMP_TABLE.objectEntryFolderId = ObjectEntryFolder.objectEntryFolderId",
-					"SELECT COUNT(DISTINCT objectEntryFolder.objectEntryFolderId) AS COUNT_VALUE FROM ObjectEntryFolder objectEntryFolder WHERE ",
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL,
-					ObjectEntryFolderModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"objectEntryFolder.", "groupId", FinderColumn.Type.LONG,
 					"=", true, true, ObjectEntryFolder::getGroupId),
@@ -1764,4 +1734,4 @@ public class ObjectEntryFolderPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:356337899
+// LIFERAY-SERVICE-BUILDER-HASH:345032093

@@ -145,6 +145,9 @@ public class JournalArticleModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"journalArticle.resourcePrimKey";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -2277,4 +2280,4 @@ public class JournalArticleModelImpl
 	private JournalArticle _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1686193697
+// LIFERAY-SERVICE-BUILDER-HASH:-125405128

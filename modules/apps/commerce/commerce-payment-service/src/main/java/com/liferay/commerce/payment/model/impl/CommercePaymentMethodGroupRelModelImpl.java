@@ -118,6 +118,9 @@ public class CommercePaymentMethodGroupRelModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY commercePaymentMethodGroupRel.priority ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1442,4 +1445,4 @@ public class CommercePaymentMethodGroupRelModelImpl
 	private CommercePaymentMethodGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:509537058
+// LIFERAY-SERVICE-BUILDER-HASH:-274734618

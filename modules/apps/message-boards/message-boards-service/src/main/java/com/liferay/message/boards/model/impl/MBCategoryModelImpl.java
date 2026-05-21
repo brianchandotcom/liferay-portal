@@ -121,6 +121,8 @@ public class MBCategoryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "mbCategory.categoryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1547,4 +1549,4 @@ public class MBCategoryModelImpl
 	private MBCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:462271848
+// LIFERAY-SERVICE-BUILDER-HASH:830330807

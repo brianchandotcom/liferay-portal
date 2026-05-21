@@ -118,6 +118,9 @@ public class CPOptionCategoryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY cpOptionCategory.title ASC, cpOptionCategory.priority ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"cpOptionCategory.CPOptionCategoryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1454,4 +1457,4 @@ public class CPOptionCategoryModelImpl
 	private CPOptionCategory _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1021149552
+// LIFERAY-SERVICE-BUILDER-HASH:231871702

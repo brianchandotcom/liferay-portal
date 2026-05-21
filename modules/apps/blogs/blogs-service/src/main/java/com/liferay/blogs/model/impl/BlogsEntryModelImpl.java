@@ -139,6 +139,8 @@ public class BlogsEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN = "blogsEntry.entryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1935,4 +1937,4 @@ public class BlogsEntryModelImpl
 	private BlogsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2044629755
+// LIFERAY-SERVICE-BUILDER-HASH:-990509424

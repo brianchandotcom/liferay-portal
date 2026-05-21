@@ -112,6 +112,9 @@ public class PatcherProjectVersionModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY patcherProjectVersion.patcherProjectVersionId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"patcherProjectVersion.patcherProjectVersionId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1180,4 +1183,4 @@ public class PatcherProjectVersionModelImpl
 	private PatcherProjectVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-282542042
+// LIFERAY-SERVICE-BUILDER-HASH:237414836

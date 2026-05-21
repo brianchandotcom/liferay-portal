@@ -1095,16 +1095,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1141,16 +1131,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1202,16 +1182,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1274,16 +1244,6 @@ public class CommercePaymentEntryPersistenceImpl
 				_SQL_COUNT_COMMERCEPAYMENTENTRY_WHERE,
 				CommercePaymentEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePaymentEntryImpl.class, CommercePaymentEntry.class,
-					"commercePaymentEntry", "CommercePaymentEntry",
-					"commercePaymentEntry.commercePaymentEntryId",
-					"SELECT DISTINCT {commercePaymentEntry.*} FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					"SELECT {CommercePaymentEntry.*} FROM (SELECT DISTINCT commercePaymentEntry.commercePaymentEntryId FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePaymentEntry ON TEMP_TABLE.commercePaymentEntryId = CommercePaymentEntry.commercePaymentEntryId",
-					"SELECT COUNT(DISTINCT commercePaymentEntry.commercePaymentEntryId) AS COUNT_VALUE FROM CommercePaymentEntry commercePaymentEntry WHERE ",
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL,
-					CommercePaymentEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePaymentEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1391,4 +1351,4 @@ public class CommercePaymentEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-33118869
+// LIFERAY-SERVICE-BUILDER-HASH:1021423643

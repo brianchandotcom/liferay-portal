@@ -1987,16 +1987,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceTermEntry::getUuid));
@@ -2024,16 +2014,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceTermEntry::getUuid),
@@ -2068,16 +2048,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2121,16 +2091,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2160,16 +2120,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "displayDate", FinderColumn.Type.DATE,
 					"<", true, true, CommerceTermEntry::getDisplayDate),
@@ -2199,16 +2149,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "expirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -2243,16 +2183,6 @@ public class CommerceTermEntryPersistenceImpl
 				_SQL_COUNT_COMMERCETERMENTRY_WHERE,
 				CommerceTermEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceTermEntryImpl.class, CommerceTermEntry.class,
-					"commerceTermEntry", "CommerceTermEntry",
-					"commerceTermEntry.commerceTermEntryId",
-					"SELECT DISTINCT {commerceTermEntry.*} FROM CommerceTermEntry commerceTermEntry WHERE ",
-					"SELECT {CommerceTermEntry.*} FROM (SELECT DISTINCT commerceTermEntry.commerceTermEntryId FROM CommerceTermEntry commerceTermEntry WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceTermEntry ON TEMP_TABLE.commerceTermEntryId = CommerceTermEntry.commerceTermEntryId",
-					"SELECT COUNT(DISTINCT commerceTermEntry.commerceTermEntryId) AS COUNT_VALUE FROM CommerceTermEntry commerceTermEntry WHERE ",
-					CommerceTermEntryModelImpl.ORDER_BY_SQL,
-					CommerceTermEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceTermEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceTermEntry::getCompanyId),
@@ -2377,4 +2307,4 @@ public class CommerceTermEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1144458006
+// LIFERAY-SERVICE-BUILDER-HASH:-1090107492

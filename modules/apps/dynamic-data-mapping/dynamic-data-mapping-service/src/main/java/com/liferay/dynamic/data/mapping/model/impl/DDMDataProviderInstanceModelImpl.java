@@ -120,6 +120,9 @@ public class DDMDataProviderInstanceModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY ddmDataProviderInstance.dataProviderInstanceId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"ddmDataProviderInstance.dataProviderInstanceId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1431,4 +1434,4 @@ public class DDMDataProviderInstanceModelImpl
 	private DDMDataProviderInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:337908002
+// LIFERAY-SERVICE-BUILDER-HASH:65324461

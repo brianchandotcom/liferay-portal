@@ -1583,16 +1583,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId));
@@ -1647,16 +1637,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, CalendarResource::getGroupId),
@@ -1691,16 +1671,6 @@ public class CalendarResourcePersistenceImpl
 				_SQL_COUNT_CALENDARRESOURCE_WHERE,
 				CalendarResourceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CalendarResourceImpl.class, CalendarResource.class,
-					"calendarResource", "CalendarResource",
-					"calendarResource.calendarResourceId",
-					"SELECT DISTINCT {calendarResource.*} FROM CalendarResource calendarResource WHERE ",
-					"SELECT {CalendarResource.*} FROM (SELECT DISTINCT calendarResource.calendarResourceId FROM CalendarResource calendarResource WHERE ",
-					") TEMP_TABLE INNER JOIN CalendarResource ON TEMP_TABLE.calendarResourceId = CalendarResource.calendarResourceId",
-					"SELECT COUNT(DISTINCT calendarResource.calendarResourceId) AS COUNT_VALUE FROM CalendarResource calendarResource WHERE ",
-					CalendarResourceModelImpl.ORDER_BY_SQL,
-					CalendarResourceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"calendarResource.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, CalendarResource::getGroupId),
@@ -1829,4 +1799,4 @@ public class CalendarResourcePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-719566531
+// LIFERAY-SERVICE-BUILDER-HASH:-1731993669

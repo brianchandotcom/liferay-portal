@@ -174,6 +174,8 @@ public class CPDefinitionModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN = "cpDefinition.CPDefinitionId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -2968,4 +2970,4 @@ public class CPDefinitionModelImpl
 	private CPDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-143300548
+// LIFERAY-SERVICE-BUILDER-HASH:847980822

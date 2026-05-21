@@ -115,6 +115,9 @@ public class NotificationQueueEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY notificationQueueEntry.notificationQueueEntryId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"notificationQueueEntry.notificationQueueEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1212,4 +1215,4 @@ public class NotificationQueueEntryModelImpl
 	private NotificationQueueEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1907449991
+// LIFERAY-SERVICE-BUILDER-HASH:-1414327315

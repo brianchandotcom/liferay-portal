@@ -1134,16 +1134,6 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					"clientExtensionEntry", "ClientExtensionEntry",
-					"clientExtensionEntry.clientExtensionEntryId",
-					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
-					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ClientExtensionEntry::getUuid));
@@ -1171,16 +1161,6 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					"clientExtensionEntry", "ClientExtensionEntry",
-					"clientExtensionEntry.clientExtensionEntryId",
-					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
-					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, ClientExtensionEntry::getUuid),
@@ -1212,16 +1192,6 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					"clientExtensionEntry", "ClientExtensionEntry",
-					"clientExtensionEntry.clientExtensionEntryId",
-					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
-					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1250,16 +1220,6 @@ public class ClientExtensionEntryPersistenceImpl
 				_SQL_COUNT_CLIENTEXTENSIONENTRY_WHERE,
 				ClientExtensionEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					ClientExtensionEntryImpl.class, ClientExtensionEntry.class,
-					"clientExtensionEntry", "ClientExtensionEntry",
-					"clientExtensionEntry.clientExtensionEntryId",
-					"SELECT DISTINCT {clientExtensionEntry.*} FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					"SELECT {ClientExtensionEntry.*} FROM (SELECT DISTINCT clientExtensionEntry.clientExtensionEntryId FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					") TEMP_TABLE INNER JOIN ClientExtensionEntry ON TEMP_TABLE.clientExtensionEntryId = ClientExtensionEntry.clientExtensionEntryId",
-					"SELECT COUNT(DISTINCT clientExtensionEntry.clientExtensionEntryId) AS COUNT_VALUE FROM ClientExtensionEntry clientExtensionEntry WHERE ",
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL,
-					ClientExtensionEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"clientExtensionEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1359,4 +1319,4 @@ public class ClientExtensionEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-216042310
+// LIFERAY-SERVICE-BUILDER-HASH:-217753926

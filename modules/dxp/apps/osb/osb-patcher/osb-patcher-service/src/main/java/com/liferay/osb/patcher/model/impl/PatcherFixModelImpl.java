@@ -134,6 +134,8 @@ public class PatcherFixModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY patcherFix.patcherFixId ASC";
 
+	public static final String FILTER_PK_COLUMN = "patcherFix.patcherFixId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1859,4 +1861,4 @@ public class PatcherFixModelImpl
 	private PatcherFix _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1127563585
+// LIFERAY-SERVICE-BUILDER-HASH:467895591

@@ -1227,16 +1227,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuthClientEntry::getUuid));
@@ -1264,16 +1254,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, OAuthClientEntry::getUuid),
@@ -1304,16 +1284,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId));
@@ -1341,16 +1311,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, OAuthClientEntry::getUserId));
@@ -1380,16 +1340,6 @@ public class OAuthClientEntryPersistenceImpl
 				_SQL_COUNT_OAUTHCLIENTENTRY_WHERE,
 				OAuthClientEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					OAuthClientEntryImpl.class, OAuthClientEntry.class,
-					"oAuthClientEntry", "OAuthClientEntry",
-					"oAuthClientEntry.oAuthClientEntryId",
-					"SELECT DISTINCT {oAuthClientEntry.*} FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					"SELECT {OAuthClientEntry.*} FROM (SELECT DISTINCT oAuthClientEntry.oAuthClientEntryId FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					") TEMP_TABLE INNER JOIN OAuthClientEntry ON TEMP_TABLE.oAuthClientEntryId = OAuthClientEntry.oAuthClientEntryId",
-					"SELECT COUNT(DISTINCT oAuthClientEntry.oAuthClientEntryId) AS COUNT_VALUE FROM OAuthClientEntry oAuthClientEntry WHERE ",
-					OAuthClientEntryModelImpl.ORDER_BY_SQL,
-					OAuthClientEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"oAuthClientEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, OAuthClientEntry::getCompanyId),
@@ -1512,4 +1462,4 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:432743029
+// LIFERAY-SERVICE-BUILDER-HASH:-1485443029

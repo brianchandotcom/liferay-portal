@@ -927,16 +927,6 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPrototypeImpl.class, LayoutPrototype.class,
-					"layoutPrototype", "LayoutPrototype",
-					"layoutPrototype.layoutPrototypeId",
-					"SELECT DISTINCT {layoutPrototype.*} FROM LayoutPrototype layoutPrototype WHERE ",
-					"SELECT {LayoutPrototype.*} FROM (SELECT DISTINCT layoutPrototype.layoutPrototypeId FROM LayoutPrototype layoutPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPrototype ON TEMP_TABLE.layoutPrototypeId = LayoutPrototype.layoutPrototypeId",
-					"SELECT COUNT(DISTINCT layoutPrototype.layoutPrototypeId) AS COUNT_VALUE FROM LayoutPrototype layoutPrototype WHERE ",
-					LayoutPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPrototype.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, LayoutPrototype::getUuid));
@@ -964,16 +954,6 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPrototypeImpl.class, LayoutPrototype.class,
-					"layoutPrototype", "LayoutPrototype",
-					"layoutPrototype.layoutPrototypeId",
-					"SELECT DISTINCT {layoutPrototype.*} FROM LayoutPrototype layoutPrototype WHERE ",
-					"SELECT {LayoutPrototype.*} FROM (SELECT DISTINCT layoutPrototype.layoutPrototypeId FROM LayoutPrototype layoutPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPrototype ON TEMP_TABLE.layoutPrototypeId = LayoutPrototype.layoutPrototypeId",
-					"SELECT COUNT(DISTINCT layoutPrototype.layoutPrototypeId) AS COUNT_VALUE FROM LayoutPrototype layoutPrototype WHERE ",
-					LayoutPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPrototype.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, LayoutPrototype::getUuid),
@@ -1004,16 +984,6 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPrototypeImpl.class, LayoutPrototype.class,
-					"layoutPrototype", "LayoutPrototype",
-					"layoutPrototype.layoutPrototypeId",
-					"SELECT DISTINCT {layoutPrototype.*} FROM LayoutPrototype layoutPrototype WHERE ",
-					"SELECT {LayoutPrototype.*} FROM (SELECT DISTINCT layoutPrototype.layoutPrototypeId FROM LayoutPrototype layoutPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPrototype ON TEMP_TABLE.layoutPrototypeId = LayoutPrototype.layoutPrototypeId",
-					"SELECT COUNT(DISTINCT layoutPrototype.layoutPrototypeId) AS COUNT_VALUE FROM LayoutPrototype layoutPrototype WHERE ",
-					LayoutPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId));
@@ -1045,16 +1015,6 @@ public class LayoutPrototypePersistenceImpl
 				_SQL_COUNT_LAYOUTPROTOTYPE_WHERE,
 				LayoutPrototypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutPrototypeImpl.class, LayoutPrototype.class,
-					"layoutPrototype", "LayoutPrototype",
-					"layoutPrototype.layoutPrototypeId",
-					"SELECT DISTINCT {layoutPrototype.*} FROM LayoutPrototype layoutPrototype WHERE ",
-					"SELECT {LayoutPrototype.*} FROM (SELECT DISTINCT layoutPrototype.layoutPrototypeId FROM LayoutPrototype layoutPrototype WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutPrototype ON TEMP_TABLE.layoutPrototypeId = LayoutPrototype.layoutPrototypeId",
-					"SELECT COUNT(DISTINCT layoutPrototype.layoutPrototypeId) AS COUNT_VALUE FROM LayoutPrototype layoutPrototype WHERE ",
-					LayoutPrototypeModelImpl.ORDER_BY_SQL,
-					LayoutPrototypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutPrototype.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, LayoutPrototype::getCompanyId),
@@ -1095,4 +1055,4 @@ public class LayoutPrototypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-315670993
+// LIFERAY-SERVICE-BUILDER-HASH:-1657178553

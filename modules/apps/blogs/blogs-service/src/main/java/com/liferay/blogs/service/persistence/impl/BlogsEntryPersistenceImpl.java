@@ -5246,15 +5246,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId));
@@ -5318,15 +5309,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5359,15 +5341,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5395,15 +5368,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5562,15 +5526,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "displayDate"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5609,15 +5564,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5650,15 +5596,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "userId", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5697,15 +5634,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5738,15 +5666,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5779,15 +5698,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5820,15 +5730,6 @@ public class BlogsEntryPersistenceImpl
 					new String[] {"groupId", "displayDate", "status"}, false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -5995,15 +5896,6 @@ public class BlogsEntryPersistenceImpl
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -6043,15 +5935,6 @@ public class BlogsEntryPersistenceImpl
 					false),
 				_SQL_SELECT_BLOGSENTRY_WHERE, _SQL_COUNT_BLOGSENTRY_WHERE,
 				BlogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					BlogsEntryImpl.class, BlogsEntry.class, "blogsEntry",
-					"BlogsEntry", "blogsEntry.entryId",
-					"SELECT DISTINCT {blogsEntry.*} FROM BlogsEntry blogsEntry WHERE ",
-					"SELECT {BlogsEntry.*} FROM (SELECT DISTINCT blogsEntry.entryId FROM BlogsEntry blogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN BlogsEntry ON TEMP_TABLE.entryId = BlogsEntry.entryId",
-					"SELECT COUNT(DISTINCT blogsEntry.entryId) AS COUNT_VALUE FROM BlogsEntry blogsEntry WHERE ",
-					BlogsEntryModelImpl.ORDER_BY_SQL,
-					BlogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"blogsEntry.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, BlogsEntry::getGroupId),
@@ -6154,4 +6037,4 @@ public class BlogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-370665846
+// LIFERAY-SERVICE-BUILDER-HASH:1518970315

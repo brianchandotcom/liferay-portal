@@ -3418,15 +3418,6 @@ public class MBCategoryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId));
@@ -3477,15 +3468,6 @@ public class MBCategoryPersistenceImpl
 					new String[] {"groupId", "parentCategoryId"}, false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId),
@@ -3534,15 +3516,6 @@ public class MBCategoryPersistenceImpl
 					new String[] {"groupId", "status"}, false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId),
@@ -3601,15 +3574,6 @@ public class MBCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"mbCategory.", "categoryId", FinderColumn.Type.LONG, "!=",
 					true, true, true, MBCategory::getCategoryId),
@@ -3651,15 +3615,6 @@ public class MBCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId),
@@ -3694,15 +3649,6 @@ public class MBCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbCategory.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBCategory::getGroupId),
@@ -3741,15 +3687,6 @@ public class MBCategoryPersistenceImpl
 					false),
 				_SQL_SELECT_MBCATEGORY_WHERE, _SQL_COUNT_MBCATEGORY_WHERE,
 				MBCategoryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBCategoryImpl.class, MBCategory.class, "mbCategory",
-					"MBCategory", "mbCategory.categoryId",
-					"SELECT DISTINCT {mbCategory.*} FROM MBCategory mbCategory WHERE ",
-					"SELECT {MBCategory.*} FROM (SELECT DISTINCT mbCategory.categoryId FROM MBCategory mbCategory WHERE ",
-					") TEMP_TABLE INNER JOIN MBCategory ON TEMP_TABLE.categoryId = MBCategory.categoryId",
-					"SELECT COUNT(DISTINCT mbCategory.categoryId) AS COUNT_VALUE FROM MBCategory mbCategory WHERE ",
-					MBCategoryModelImpl.ORDER_BY_SQL,
-					MBCategoryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"mbCategory.", "categoryId", FinderColumn.Type.LONG, "!=",
 					true, true, true, MBCategory::getCategoryId),
@@ -3852,4 +3789,4 @@ public class MBCategoryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1818123651
+// LIFERAY-SERVICE-BUILDER-HASH:1002475614

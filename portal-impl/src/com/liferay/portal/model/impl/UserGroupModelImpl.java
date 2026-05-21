@@ -109,6 +109,8 @@ public class UserGroupModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY userGroup.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "userGroup.userGroupId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1192,4 +1194,4 @@ public class UserGroupModelImpl
 	private UserGroup _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1560780849
+// LIFERAY-SERVICE-BUILDER-HASH:421977023

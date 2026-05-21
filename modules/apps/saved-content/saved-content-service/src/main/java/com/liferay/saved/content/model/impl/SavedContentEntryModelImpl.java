@@ -107,6 +107,9 @@ public class SavedContentEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY savedContentEntry.savedContentEntryId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"savedContentEntry.savedContentEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1063,4 +1066,4 @@ public class SavedContentEntryModelImpl
 	private SavedContentEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2051169650
+// LIFERAY-SERVICE-BUILDER-HASH:1824580036

@@ -117,6 +117,9 @@ public class LayoutPageTemplateCollectionModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY layoutPageTemplateCollection.name ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutPageTemplateCollection.layoutPageTemplateCollectionId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1343,4 +1346,4 @@ public class LayoutPageTemplateCollectionModelImpl
 	private LayoutPageTemplateCollection _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704994375
+// LIFERAY-SERVICE-BUILDER-HASH:491284723

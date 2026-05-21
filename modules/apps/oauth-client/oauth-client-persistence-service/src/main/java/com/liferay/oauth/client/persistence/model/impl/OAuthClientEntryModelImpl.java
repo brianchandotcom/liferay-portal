@@ -117,6 +117,9 @@ public class OAuthClientEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY oAuthClientEntry.oAuthClientEntryId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"oAuthClientEntry.oAuthClientEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1362,4 +1365,4 @@ public class OAuthClientEntryModelImpl
 	private OAuthClientEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1071379799
+// LIFERAY-SERVICE-BUILDER-HASH:-237828989

@@ -112,6 +112,9 @@ public class CommerceCatalogModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY commerceCatalog.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceCatalog.commerceCatalogId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1183,4 +1186,4 @@ public class CommerceCatalogModelImpl
 	private CommerceCatalog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1524279874
+// LIFERAY-SERVICE-BUILDER-HASH:-121354948

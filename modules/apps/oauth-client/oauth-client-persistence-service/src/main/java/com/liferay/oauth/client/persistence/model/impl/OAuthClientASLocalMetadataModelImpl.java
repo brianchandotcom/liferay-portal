@@ -115,6 +115,9 @@ public class OAuthClientASLocalMetadataModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"oAuthClientASLocalMetadata.oAuthClientASLocalMetadataId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1291,4 +1294,4 @@ public class OAuthClientASLocalMetadataModelImpl
 	private OAuthClientASLocalMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:114478209
+// LIFERAY-SERVICE-BUILDER-HASH:-1047307749

@@ -1037,16 +1037,6 @@ public class RedirectEntryPersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RedirectEntryImpl.class, RedirectEntry.class,
-					"redirectEntry", "RedirectEntry",
-					"redirectEntry.redirectEntryId",
-					"SELECT DISTINCT {redirectEntry.*} FROM RedirectEntry redirectEntry WHERE ",
-					"SELECT {RedirectEntry.*} FROM (SELECT DISTINCT redirectEntry.redirectEntryId FROM RedirectEntry redirectEntry WHERE ",
-					") TEMP_TABLE INNER JOIN RedirectEntry ON TEMP_TABLE.redirectEntryId = RedirectEntry.redirectEntryId",
-					"SELECT COUNT(DISTINCT redirectEntry.redirectEntryId) AS COUNT_VALUE FROM RedirectEntry redirectEntry WHERE ",
-					RedirectEntryModelImpl.ORDER_BY_SQL,
-					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId));
@@ -1074,16 +1064,6 @@ public class RedirectEntryPersistenceImpl
 					null),
 				_SQL_SELECT_REDIRECTENTRY_WHERE, _SQL_COUNT_REDIRECTENTRY_WHERE,
 				RedirectEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					RedirectEntryImpl.class, RedirectEntry.class,
-					"redirectEntry", "RedirectEntry",
-					"redirectEntry.redirectEntryId",
-					"SELECT DISTINCT {redirectEntry.*} FROM RedirectEntry redirectEntry WHERE ",
-					"SELECT {RedirectEntry.*} FROM (SELECT DISTINCT redirectEntry.redirectEntryId FROM RedirectEntry redirectEntry WHERE ",
-					") TEMP_TABLE INNER JOIN RedirectEntry ON TEMP_TABLE.redirectEntryId = RedirectEntry.redirectEntryId",
-					"SELECT COUNT(DISTINCT redirectEntry.redirectEntryId) AS COUNT_VALUE FROM RedirectEntry redirectEntry WHERE ",
-					RedirectEntryModelImpl.ORDER_BY_SQL,
-					RedirectEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"redirectEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, RedirectEntry::getGroupId),
@@ -1177,4 +1157,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1443577391
+// LIFERAY-SERVICE-BUILDER-HASH:107033519

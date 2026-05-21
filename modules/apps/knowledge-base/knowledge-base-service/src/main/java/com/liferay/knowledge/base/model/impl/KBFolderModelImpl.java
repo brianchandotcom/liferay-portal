@@ -119,6 +119,8 @@ public class KBFolderModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY kbFolder.kbFolderId ASC";
 
+	public static final String FILTER_PK_COLUMN = "kbFolder.kbFolderId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1483,4 +1485,4 @@ public class KBFolderModelImpl
 	private KBFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704257678
+// LIFERAY-SERVICE-BUILDER-HASH:1223518840

@@ -121,6 +121,9 @@ public class ObjectEntryFolderModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY objectEntryFolder.objectEntryFolderId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"objectEntryFolder.objectEntryFolderId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1452,4 +1455,4 @@ public class ObjectEntryFolderModelImpl
 	private ObjectEntryFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:286391771
+// LIFERAY-SERVICE-BUILDER-HASH:712858319

@@ -817,16 +817,6 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
-					LayoutSetBranchModelImpl.ORDER_BY_SQL,
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId));
@@ -858,16 +848,6 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
-					LayoutSetBranchModelImpl.ORDER_BY_SQL,
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId),
@@ -928,16 +908,6 @@ public class LayoutSetBranchPersistenceImpl
 				_SQL_COUNT_LAYOUTSETBRANCH_WHERE,
 				LayoutSetBranchModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutSetBranchImpl.class, LayoutSetBranch.class,
-					"layoutSetBranch", "LayoutSetBranch",
-					"layoutSetBranch.layoutSetBranchId",
-					"SELECT DISTINCT {layoutSetBranch.*} FROM LayoutSetBranch layoutSetBranch WHERE ",
-					"SELECT {LayoutSetBranch.*} FROM (SELECT DISTINCT layoutSetBranch.layoutSetBranchId FROM LayoutSetBranch layoutSetBranch WHERE ",
-					") TEMP_TABLE INNER JOIN LayoutSetBranch ON TEMP_TABLE.layoutSetBranchId = LayoutSetBranch.layoutSetBranchId",
-					"SELECT COUNT(DISTINCT layoutSetBranch.layoutSetBranchId) AS COUNT_VALUE FROM LayoutSetBranch layoutSetBranch WHERE ",
-					LayoutSetBranchModelImpl.ORDER_BY_SQL,
-					LayoutSetBranchModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layoutSetBranch.", "groupId", FinderColumn.Type.LONG, "=",
 					true, true, LayoutSetBranch::getGroupId),
@@ -985,4 +955,4 @@ public class LayoutSetBranchPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1732204010
+// LIFERAY-SERVICE-BUILDER-HASH:-2047384510

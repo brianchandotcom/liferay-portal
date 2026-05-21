@@ -122,6 +122,8 @@ public class CalendarModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY calendar.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "calendar.calendarId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1529,4 +1531,4 @@ public class CalendarModelImpl
 	private Calendar _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-986719733
+// LIFERAY-SERVICE-BUILDER-HASH:-1132371163

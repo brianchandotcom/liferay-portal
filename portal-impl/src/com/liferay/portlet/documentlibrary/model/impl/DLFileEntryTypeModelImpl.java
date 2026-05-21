@@ -121,6 +121,9 @@ public class DLFileEntryTypeModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY dlFileEntryType.fileEntryTypeId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"dlFileEntryType.fileEntryTypeId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1549,4 +1552,4 @@ public class DLFileEntryTypeModelImpl
 	private DLFileEntryType _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1779701401
+// LIFERAY-SERVICE-BUILDER-HASH:1795289815

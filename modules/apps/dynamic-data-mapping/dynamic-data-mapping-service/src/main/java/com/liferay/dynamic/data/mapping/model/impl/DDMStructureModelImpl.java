@@ -134,6 +134,8 @@ public class DDMStructureModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY ddmStructure.structureId ASC";
 
+	public static final String FILTER_PK_COLUMN = "ddmStructure.structureId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1945,4 +1947,4 @@ public class DDMStructureModelImpl
 	private DDMStructure _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1629893648
+// LIFERAY-SERVICE-BUILDER-HASH:167686597

@@ -121,6 +121,8 @@ public class JournalFolderModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "journalFolder.folderId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1550,4 +1552,4 @@ public class JournalFolderModelImpl
 	private JournalFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1226288231
+// LIFERAY-SERVICE-BUILDER-HASH:229314906

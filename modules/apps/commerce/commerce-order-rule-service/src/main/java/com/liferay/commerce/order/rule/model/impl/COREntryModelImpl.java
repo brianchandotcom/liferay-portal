@@ -122,6 +122,8 @@ public class COREntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY corEntry.priority DESC";
 
+	public static final String FILTER_PK_COLUMN = "corEntry.COREntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1542,4 +1544,4 @@ public class COREntryModelImpl
 	private COREntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087706043
+// LIFERAY-SERVICE-BUILDER-HASH:-1986009355

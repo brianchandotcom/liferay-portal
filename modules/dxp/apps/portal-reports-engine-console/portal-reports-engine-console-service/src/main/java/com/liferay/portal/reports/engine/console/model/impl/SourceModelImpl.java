@@ -115,6 +115,8 @@ public class SourceModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY source.sourceId ASC";
 
+	public static final String FILTER_PK_COLUMN = "source.sourceId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1227,4 +1229,4 @@ public class SourceModelImpl
 	private Source _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1666055765
+// LIFERAY-SERVICE-BUILDER-HASH:1721813135

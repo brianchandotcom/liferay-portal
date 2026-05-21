@@ -116,6 +116,8 @@ public class WikiNodeModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY wikiNode.name ASC";
 
+	public static final String FILTER_PK_COLUMN = "wikiNode.nodeId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1405,4 +1407,4 @@ public class WikiNodeModelImpl
 	private WikiNode _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:225690823
+// LIFERAY-SERVICE-BUILDER-HASH:729379229

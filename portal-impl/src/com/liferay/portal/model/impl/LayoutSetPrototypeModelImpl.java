@@ -116,6 +116,9 @@ public class LayoutSetPrototypeModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY layoutSetPrototype.layoutSetPrototypeId ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutSetPrototype.layoutSetPrototypeId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1356,4 +1359,4 @@ public class LayoutSetPrototypeModelImpl
 	private LayoutSetPrototype _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1369345545
+// LIFERAY-SERVICE-BUILDER-HASH:1770628131

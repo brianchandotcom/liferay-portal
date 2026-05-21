@@ -99,6 +99,8 @@ public class CTProcessModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY ctProcess.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN = "ctProcess.ctProcessId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -801,4 +803,4 @@ public class CTProcessModelImpl
 	private CTProcess _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-715307174
+// LIFERAY-SERVICE-BUILDER-HASH:319496608

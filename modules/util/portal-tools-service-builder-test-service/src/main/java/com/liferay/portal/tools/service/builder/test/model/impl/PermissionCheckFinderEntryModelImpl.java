@@ -97,6 +97,9 @@ public class PermissionCheckFinderEntryModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY permissionCheckFinderEntry.integer_ ASC, permissionCheckFinderEntry.type_ ASC";
 
+	public static final String FILTER_PK_COLUMN =
+		"permissionCheckFinderEntry.permissionCheckFinderEntryId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -815,4 +818,4 @@ public class PermissionCheckFinderEntryModelImpl
 	private PermissionCheckFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:650458417
+// LIFERAY-SERVICE-BUILDER-HASH:-1394760137

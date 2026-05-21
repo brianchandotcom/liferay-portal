@@ -144,6 +144,9 @@ public class CommerceDiscountModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY commerceDiscount.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceDiscount.commerceDiscountId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1986,4 +1989,4 @@ public class CommerceDiscountModelImpl
 	private CommerceDiscount _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1939165663
+// LIFERAY-SERVICE-BUILDER-HASH:685836807

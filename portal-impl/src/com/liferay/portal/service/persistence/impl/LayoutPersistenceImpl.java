@@ -7153,15 +7153,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId));
@@ -7300,15 +7291,6 @@ public class LayoutPersistenceImpl
 					new String[] {"groupId", "privateLayout"}, false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7338,15 +7320,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7379,15 +7352,6 @@ public class LayoutPersistenceImpl
 					null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7576,15 +7540,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7624,15 +7579,6 @@ public class LayoutPersistenceImpl
 					false),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7707,15 +7653,6 @@ public class LayoutPersistenceImpl
 					0, 4, false, null),
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7756,15 +7693,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7896,15 +7824,6 @@ public class LayoutPersistenceImpl
 				_SQL_SELECT_LAYOUT_WHERE, _SQL_COUNT_LAYOUT_WHERE,
 				LayoutModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"layout.system = [$FALSE$]",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					LayoutImpl.class, Layout.class, "layout", "Layout",
-					"layout.plid",
-					"SELECT DISTINCT {layout.*} FROM Layout layout WHERE ",
-					"SELECT {Layout.*} FROM (SELECT DISTINCT layout.plid FROM Layout layout WHERE ",
-					") TEMP_TABLE INNER JOIN Layout ON TEMP_TABLE.plid = Layout.plid",
-					"SELECT COUNT(DISTINCT layout.plid) AS COUNT_VALUE FROM Layout layout WHERE ",
-					LayoutModelImpl.ORDER_BY_SQL,
-					LayoutModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"layout.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, Layout::getGroupId),
@@ -7999,4 +7918,4 @@ public class LayoutPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:252872862
+// LIFERAY-SERVICE-BUILDER-HASH:1428494030

@@ -172,6 +172,8 @@ public class CPInstanceModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 
+	public static final String FILTER_PK_COLUMN = "cpInstance.CPInstanceId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -2562,4 +2564,4 @@ public class CPInstanceModelImpl
 	private CPInstance _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:72251342
+// LIFERAY-SERVICE-BUILDER-HASH:836003944

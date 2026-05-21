@@ -124,6 +124,9 @@ public class CPSpecificationOptionModelImpl
 	public static final String ORDER_BY_SQL_INLINE_DISTINCT =
 		" ORDER BY cpSpecificationOption.priority DESC";
 
+	public static final String FILTER_PK_COLUMN =
+		"cpSpecificationOption.CPSpecificationOptionId";
+
 	public static final String DATA_SOURCE = "liferayDataSource";
 
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
@@ -1586,4 +1589,4 @@ public class CPSpecificationOptionModelImpl
 	private CPSpecificationOption _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1167781641
+// LIFERAY-SERVICE-BUILDER-HASH:1282331497

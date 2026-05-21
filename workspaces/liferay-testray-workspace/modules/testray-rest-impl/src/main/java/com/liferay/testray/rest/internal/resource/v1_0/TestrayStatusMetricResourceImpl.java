@@ -118,11 +118,13 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayCaseTypeMetric() {
 					{
-						testrayCaseTypeId = GetterUtil.getLong(
-							value.get("c_casetypeid_"));
-						testrayCaseTypeName = GetterUtil.getString(
-							value.get("name_"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
+						setTestrayCaseTypeId(
+							() -> GetterUtil.getLong(
+								value.get("c_casetypeid_")));
+						setTestrayCaseTypeName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);
@@ -203,11 +205,13 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayComponentMetric() {
 					{
-						testrayComponentId = GetterUtil.getLong(
-							value.get("c_componentid_"));
-						testrayComponentName = GetterUtil.getString(
-							value.get("name_"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
+						setTestrayComponentId(
+							() -> GetterUtil.getLong(
+								value.get("c_componentid_")));
+						setTestrayComponentName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);
@@ -289,13 +293,14 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayRunMetric() {
 					{
-						testrayRunId = GetterUtil.getLong(
-							value.get("c_runid_"));
-						testrayRunName = GetterUtil.getString(
-							value.get("name_"));
-						testrayRunNumber = GetterUtil.getLong(
-							value.get("number_"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
+						setTestrayRunId(
+							() -> GetterUtil.getLong(value.get("c_runid_")));
+						setTestrayRunName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayRunNumber(
+							() -> GetterUtil.getLong(value.get("number_")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);
@@ -382,11 +387,12 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayTeamMetric() {
 					{
-						testrayStatusMetric = _getTestrayStatusMetric(value);
-						testrayTeamId = GetterUtil.getLong(
-							value.get("c_teamid_"));
-						testrayTeamName = GetterUtil.getString(
-							value.get("name_"));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
+						setTestrayTeamId(
+							() -> GetterUtil.getLong(value.get("c_teamid_")));
+						setTestrayTeamName(
+							() -> GetterUtil.getString(value.get("name_")));
 					}
 				}),
 			pagination, totalCount);
@@ -477,13 +483,16 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayIssueMetric() {
 					{
-						testrayIssueKey = GetterUtil.getString(
-							value.get("externalreferencecode"));
-						testrayIssueTitle = GetterUtil.getString(
-							value.get("title_"));
-						testrayIssueType = GetterUtil.getString(
-							value.get("issuetype_"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
+						setTestrayIssueKey(
+							() -> GetterUtil.getString(
+								value.get("externalreferencecode")));
+						setTestrayIssueTitle(
+							() -> GetterUtil.getString(value.get("title_")));
+						setTestrayIssueType(
+							() -> GetterUtil.getString(
+								value.get("issuetype_")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);
@@ -555,12 +564,6 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayRoutineMetric() {
 					{
-						testrayRoutineId = GetterUtil.getLong(
-							value.get("c_routineid_"));
-						testrayRoutineName = GetterUtil.getString(
-							value.get("name_"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
-
 						setTestrayBuildCPUUseTime(
 							() -> {
 								if (Validator.isNull(
@@ -583,6 +586,13 @@ public class TestrayStatusMetricResourceImpl
 									"duedate_"
 								).toString();
 							});
+						setTestrayRoutineId(
+							() -> GetterUtil.getLong(
+								value.get("c_routineid_")));
+						setTestrayRoutineName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);
@@ -713,26 +723,12 @@ public class TestrayStatusMetricResourceImpl
 				values,
 				value -> new TestrayBuildMetric() {
 					{
-						testrayBuildArchived = GetterUtil.getBoolean(
-							String.valueOf(value.get("archived_")));
-						testrayBuildCPUUseTime = GetterUtil.getString(
-							value.get("cpuusetime_"));
-						testrayBuildGitHash = GetterUtil.getString(
-							value.get("githash_"));
-						testrayBuildId = GetterUtil.getLong(
-							value.get("c_buildid_"));
-						testrayBuildImportStatus = GetterUtil.getString(
-							value.get("importstatus_"));
-						testrayBuildName = GetterUtil.getString(
-							value.get("name_"));
-						testrayBuildProductVersion = GetterUtil.getString(
-							value.get("productversionname"));
-						testrayBuildPromoted = GetterUtil.getBoolean(
-							String.valueOf(value.get("promoted_")));
-						testrayBuildTaskStatus = GetterUtil.getString(
-							value.get("taskstatus"));
-						testrayStatusMetric = _getTestrayStatusMetric(value);
-
+						setTestrayBuildArchived(
+							() -> GetterUtil.getBoolean(
+								String.valueOf(value.get("archived_"))));
+						setTestrayBuildCPUUseTime(
+							() -> GetterUtil.getString(
+								value.get("cpuusetime_")));
 						setTestrayBuildDueDate(
 							() -> {
 								if (value.get("duedate_") == null) {
@@ -743,6 +739,26 @@ public class TestrayStatusMetricResourceImpl
 									"duedate_"
 								).toString();
 							});
+						setTestrayBuildGitHash(
+							() -> GetterUtil.getString(value.get("githash_")));
+						setTestrayBuildId(
+							() -> GetterUtil.getLong(value.get("c_buildid_")));
+						setTestrayBuildImportStatus(
+							() -> GetterUtil.getString(
+								value.get("importstatus_")));
+						setTestrayBuildName(
+							() -> GetterUtil.getString(value.get("name_")));
+						setTestrayBuildProductVersion(
+							() -> GetterUtil.getString(
+								value.get("productversionname")));
+						setTestrayBuildPromoted(
+							() -> GetterUtil.getBoolean(
+								String.valueOf(value.get("promoted_"))));
+						setTestrayBuildTaskStatus(
+							() -> GetterUtil.getString(
+								value.get("taskstatus")));
+						setTestrayStatusMetric(
+							() -> _getTestrayStatusMetric(value));
 					}
 				}),
 			pagination, totalCount);

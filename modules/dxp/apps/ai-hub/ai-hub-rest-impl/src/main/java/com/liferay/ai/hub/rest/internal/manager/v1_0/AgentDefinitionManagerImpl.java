@@ -319,9 +319,13 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		return new AgentDefinition() {
 			{
-				if (dtoConverterContext != null) {
-					setActions(
-						() -> HashMapBuilder.put(
+				setActions(
+					() -> {
+						if (dtoConverterContext == null) {
+							return null;
+						}
+
+						return HashMapBuilder.put(
 							"activate",
 							() -> {
 								if (workflowDefinition.isActive()) {
@@ -360,9 +364,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								dtoConverterContext,
 								"deleteAgentDefinitionByExternalReferenceCode",
 								workflowDefinition)
-						).build());
-				}
-
+						).build();
+					});
 				setActive(
 					() -> GetterUtil.getBoolean(
 						objectEntry.getPropertyValue("active")));

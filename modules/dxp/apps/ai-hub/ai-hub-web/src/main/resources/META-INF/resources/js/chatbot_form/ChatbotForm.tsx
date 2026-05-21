@@ -107,6 +107,7 @@ export default function ChatbotForm({
 	companyLogoUploadTip,
 	externalReferenceCode,
 	portalURL,
+	readOnly,
 }: {
 	accountEntryExternalReferenceCode: string;
 	backURL: string;
@@ -116,6 +117,7 @@ export default function ChatbotForm({
 	companyLogoUploadTip: string;
 	externalReferenceCode: string;
 	portalURL: string;
+	readOnly: boolean;
 }) {
 	const [availableAgentDefinitions, setAvailableAgentDefinitions] = useState<
 		AgentDefinitionOption[]
@@ -443,6 +445,7 @@ export default function ChatbotForm({
 						aria-label={Liferay.Language.get('save')}
 						data-title="Save Button"
 						data-title-set-as-html
+						disabled={readOnly}
 						onClick={handleSubmit}
 						size="sm"
 					>
@@ -467,6 +470,7 @@ export default function ChatbotForm({
 										</h2>
 
 										<ClayToggle
+											disabled={readOnly}
 											label={Liferay.Language.get(
 												'enable-chatbot'
 											)}
@@ -488,6 +492,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="title"
 											label={Liferay.Language.get(
 												'title'
@@ -523,6 +528,7 @@ export default function ChatbotForm({
 										</label>
 
 										<ClayInput
+											disabled={readOnly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
 											onChange={handleInputChange}
@@ -547,6 +553,7 @@ export default function ChatbotForm({
 
 										<textarea
 											className="form-control"
+											disabled={readOnly}
 											id="description"
 											name="description"
 											onChange={handleInputChange}
@@ -575,7 +582,10 @@ export default function ChatbotForm({
 														'company-logo'
 													)
 												)}
-												disabled={companyLogoLoading}
+												disabled={
+													companyLogoLoading ||
+													readOnly
+												}
 												displayType="secondary"
 												onClick={
 													handleSelectCompanyLogo
@@ -604,6 +614,7 @@ export default function ChatbotForm({
 													</span>
 
 													<Button
+														disabled={readOnly}
 														displayType="danger"
 														onClick={
 															handleClearCompanyLogo
@@ -650,6 +661,7 @@ export default function ChatbotForm({
 										<ClayMultiSelect
 											allowDuplicateValues={false}
 											allowsCustomLabel={false}
+											disabled={readOnly}
 											inputName="assignedAgents"
 											items={selectedAgentDefinitions}
 											locator={{
@@ -670,6 +682,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="notificationMessage"
 											label={Liferay.Language.get(
 												'notification-message'
@@ -695,6 +708,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="placeholderMessage"
 											label={Liferay.Language.get(
 												'placeholder-message'
@@ -720,6 +734,7 @@ export default function ChatbotForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readOnly}
 											id="introMessage"
 											label={Liferay.Language.get(
 												'intro-message'
@@ -743,6 +758,7 @@ export default function ChatbotForm({
 									</ClayForm.Group>
 
 									<ClayToggle
+										disabled={readOnly}
 										label={Liferay.Language.get(
 											'show-company-logo'
 										)}

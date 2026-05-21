@@ -11,22 +11,25 @@ const AI_HUB_ENDPOINT = '/o/ai-hub/v1.0';
 
 const AUTHORIZATION_TOKEN_TTL = 9 * 60 * 1000;
 
+let aiHubURL = '';
 let cachedAuthorizationToken: AuthorizationToken | null = null;
 let cachedAuthorizationTokenMintedAt = 0;
 let pendingAuthorizationTokenPromise: Promise<AuthorizationToken | null> | null =
 	null;
 
+export function setAIHubURL(url: string) {
+	aiHubURL = url;
+}
+
 async function postAuthorizationToken(): Promise<AuthorizationToken | null> {
 	try {
-		const authToken = (
-			window as unknown as {Liferay?: {authToken?: string}}
-		).Liferay?.authToken;
+		const csrfToken = (window as any).Liferay?.authToken;
 
 		const response = await fetch(
-			'/o/ai-hub-cell/v1.0/authorization-tokens',
+			`${aiHubURL}/o/ai-hub-cell/v1.0/authorization-tokens`,
 			{
-				headers: authToken
-					? new Headers({'x-csrf-token': authToken})
+				headers: csrfToken
+					? new Headers({'x-csrf-token': csrfToken})
 					: undefined,
 				method: 'POST',
 			}

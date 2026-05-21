@@ -951,11 +951,11 @@ $cadmin-label-inverse-success: map-deep-merge(
 	(
 		background-color: $cadmin-success-l2,
 		border-color: $cadmin-success-l2,
-		color: $cadmin-success-d1,
+		color: $cadmin-success-d2,
 
 		href: (
 			hover: (
-				color: $cadmin-success-d1,
+				color: $cadmin-success-d2,
 			),
 		),
 	),
@@ -967,11 +967,11 @@ $cadmin-label-inverse-info: map-deep-merge(
 	(
 		background-color: $cadmin-info-l2,
 		border-color: $cadmin-info-l2,
-		color: $cadmin-info-d1,
+		color: $cadmin-info-d2,
 
 		href: (
 			hover: (
-				color: $cadmin-info-d1,
+				color: $cadmin-info-d2,
 			),
 		),
 	),
@@ -983,11 +983,11 @@ $cadmin-label-inverse-warning: map-deep-merge(
 	(
 		background-color: $cadmin-warning-l2,
 		border-color: $cadmin-warning-l2,
-		color: $cadmin-warning-d1,
+		color: $cadmin-warning-d2,
 
 		href: (
 			hover: (
-				color: $cadmin-warning-d1,
+				color: $cadmin-warning-d2,
 			),
 		),
 	),
@@ -999,11 +999,11 @@ $cadmin-label-inverse-danger: map-deep-merge(
 	(
 		background-color: $cadmin-danger-l2,
 		border-color: $cadmin-danger-l2,
-		color: $cadmin-danger-d1,
+		color: $cadmin-danger-d2,
 
 		href: (
 			hover: (
-				color: $cadmin-danger-d1,
+				color: $cadmin-danger-d2,
 			),
 		),
 	),

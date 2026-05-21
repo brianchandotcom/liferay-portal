@@ -65,17 +65,13 @@ public class ClusterLinkTest implements Serializable {
 	}
 
 	@Test
-	public void testControlChannelProperties() throws Exception {
+	public void testChannelProperties() throws Exception {
 		_testChannelProperties(
 			false, "TCP", ClusterLinkTest::_getControlChannelTransportName,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=tcp.xml");
 		_testChannelProperties(
 			true, "UDP", ClusterLinkTest::_getControlChannelTransportName,
 			PropsKeys.CLUSTER_LINK_CHANNEL_PROPERTIES_CONTROL + "=udp.xml");
-	}
-
-	@Test
-	public void testTransportChannelProperties() throws Exception {
 		_testChannelProperties(
 			false, "TCP", ClusterLinkTest::_getTransportChannelTransportName,
 			"cluster.link.channel.properties.transport.0=tcp.xml");

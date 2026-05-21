@@ -104,6 +104,7 @@ export function NewExport({
 				dateFilter: {range: Range.All} as DateFilterValues,
 				deletions: false,
 				fileName: '',
+				permissions: false,
 			}}
 			onSubmit={async (values) => {
 				const result = await postExportProcess({
@@ -111,6 +112,7 @@ export function NewExport({
 						...normalizeDateFilter(values.dateFilter),
 						deletions: !!values.deletions,
 						fileName: values.fileName,
+						permissions: !!values.permissions,
 						requestPortletDataHandlers:
 							toRequestPortletDataHandlers(
 								sections,

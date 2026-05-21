@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
-import com.liferay.ai.hub.web.internal.util.ActionUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -40,7 +40,8 @@ public class ViewInstructionDefinitionsDisplayContext {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					ActionUtil.getAIHubURL(_themeDisplay) + "/instruction");
+					DisplayContextUtil.getAIHubURL(_themeDisplay) +
+						"/instruction");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new-instruction"));
 			}
@@ -53,7 +54,8 @@ public class ViewInstructionDefinitionsDisplayContext {
 		return List.of(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					ActionUtil.getAIHubURL(_themeDisplay), "/instruction",
+					DisplayContextUtil.getAIHubURL(_themeDisplay),
+					"/instruction",
 					"?externalReferenceCode={externalReferenceCode}"),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),

@@ -395,6 +395,7 @@ function buildSelectedItemsLabel(
 interface DateTimeRangeFilterProps
 	extends DateTimeRangeFilterImplementationArgs {
 	dateTime: boolean;
+	onClose?: () => void;
 }
 
 const DateTimeRangeFilter = ({
@@ -402,6 +403,7 @@ const DateTimeRangeFilter = ({
 	id,
 	max,
 	min,
+	onClose,
 	placeholder,
 	selectedData,
 	setFilter,
@@ -597,6 +599,10 @@ const DateTimeRangeFilter = ({
 									to: toSelectedData(toDateParts),
 								},
 							});
+						}
+
+						if (onClose) {
+							onClose();
 						}
 					}}
 					small

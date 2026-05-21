@@ -49,6 +49,10 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Supplier;
 
@@ -281,20 +285,52 @@ public class UpgradeLogProgressTracker {
 	private static Long _getTotalRowCount(
 		PreparedStatement countPreparedStatement) {
 
-		try (SafeCloseable safeCloseable =
-				UpgradeSQLRecorder.suppressRecording()) {
+		FutureTask<Long> futureTask = new FutureTask<>(
+			() -> {
+				try (SafeCloseable safeCloseable =
+						UpgradeSQLRecorder.suppressRecording()) {
 
-			_setQueryTimeout(countPreparedStatement);
+					_setQueryTimeout(countPreparedStatement);
 
-			try (ResultSet resultSet = countPreparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getLong(1);
+					try (ResultSet resultSet =
+							countPreparedStatement.executeQuery()) {
+
+						if (resultSet.next()) {
+							return resultSet.getLong(1);
+						}
+					}
 				}
+
+				return null;
+			});
+
+		Thread thread = new Thread(
+			futureTask, "Liferay Upgrade Count Query Thread");
+
+		thread.setDaemon(true);
+
+		thread.start();
+
+		try {
+			return futureTask.get(
+				_COUNT_QUERY_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+		}
+		catch (TimeoutException timeoutException) {
+			futureTask.cancel(true);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Count query timed out", timeoutException);
 			}
 		}
-		catch (Throwable throwable) {
+		catch (ExecutionException executionException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to run count query", throwable);
+				_log.debug(
+					"Unable to run count query", executionException.getCause());
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to run count query", exception);
 			}
 		}
 

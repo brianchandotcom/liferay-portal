@@ -5,6 +5,7 @@
 
 import {
 	dateTimeRangeFilterImplementation,
+	getDateConfig,
 	isWithinBounds,
 	parseClayValue,
 } from '../../../../../src/main/resources/META-INF/resources/management_bar/controls/filters/implementation/DateTimeRangeFilter';
@@ -18,6 +19,14 @@ const toDateTime = {day: 11, hour: 17, minute: 45, month: 5, year: 2026};
 function setTimeZone(timeZone: string) {
 	globalThis.Liferay.ThemeDisplay.getTimeZone = () => timeZone;
 }
+
+function setLocale(locale: string) {
+	globalThis.Liferay.ThemeDisplay.getBCP47LanguageId = () => locale;
+}
+
+beforeEach(() => {
+	setLocale('en-US');
+});
 
 describe('DateTimeRangeFilter.getOdataString', () => {
 	beforeEach(() => {
@@ -154,10 +163,55 @@ describe('DateTimeRangeFilter.isWithinBounds', () => {
 	});
 });
 
+describe('DateTimeRangeFilter.getDateConfig', () => {
+	it('returns en-US date-only config (MM/dd/yyyy)', () => {
+		const config = getDateConfig(false, 'en-US');
+
+		expect(config.clayFormat).toBe('MM/dd/yyyy');
+		expect(config.dateFormat).toBe('MM/dd/yyyy');
+		expect(config.placeholder).toBe('mm/dd/yyyy');
+		expect(config.use12Hours).toBe(false);
+	});
+
+	it('returns en-US dateTime config with 12-hour clock', () => {
+		const config = getDateConfig(true, 'en-US');
+
+		expect(config.clayFormat).toBe('MM/dd/yyyy hh:mm aa');
+		expect(config.dateFormat).toBe('MM/dd/yyyy');
+		expect(config.placeholder).toBe('mm/dd/yyyy hh:mm aa');
+		expect(config.use12Hours).toBe(true);
+	});
+
+	it('returns es-ES date-only config (dd/MM/yyyy)', () => {
+		const config = getDateConfig(false, 'es-ES');
+
+		expect(config.clayFormat).toBe('dd/MM/yyyy');
+		expect(config.use12Hours).toBe(false);
+	});
+
+	it('returns es-ES dateTime config with 24-hour clock', () => {
+		const config = getDateConfig(true, 'es-ES');
+
+		expect(config.clayFormat).toBe('dd/MM/yyyy HH:mm');
+		expect(config.use12Hours).toBe(false);
+	});
+
+	it('returns de-DE date-only config (dd.MM.yyyy)', () => {
+		const config = getDateConfig(false, 'de-DE');
+
+		expect(config.clayFormat).toBe('dd.MM.yyyy');
+		expect(config.placeholder).toBe('dd.mm.yyyy');
+	});
+});
+
 describe('DateTimeRangeFilter.parseClayValue', () => {
-	describe('in date-only mode', () => {
+	const enDateFormat = 'MM/dd/yyyy';
+	const enDateTimeFormat = 'MM/dd/yyyy hh:mm aa';
+	const esDateTimeFormat = 'dd/MM/yyyy HH:mm';
+
+	describe('in date-only mode (en-US format)', () => {
 		it('parses a valid date', () => {
-			expect(parseClayValue('2026-05-11', false, false)).toEqual({
+			expect(parseClayValue('05/11/2026', enDateFormat)).toEqual({
 				day: 11,
 				hour: 0,
 				minute: 0,
@@ -167,7 +221,7 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 		});
 
 		it('accepts February 29 on a leap year', () => {
-			expect(parseClayValue('2024-02-29', false, false)).toEqual({
+			expect(parseClayValue('02/29/2024', enDateFormat)).toEqual({
 				day: 29,
 				hour: 0,
 				minute: 0,
@@ -177,33 +231,43 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 		});
 
 		it('rejects February 29 on a non-leap year', () => {
-			expect(parseClayValue('2023-02-29', false, false)).toBeNull();
+			expect(parseClayValue('02/29/2023', enDateFormat)).toBeNull();
 		});
 
 		it('rejects February 30', () => {
-			expect(parseClayValue('2026-02-30', false, false)).toBeNull();
+			expect(parseClayValue('02/30/2026', enDateFormat)).toBeNull();
 		});
 
 		it('rejects month 13', () => {
-			expect(parseClayValue('2026-13-01', false, false)).toBeNull();
+			expect(parseClayValue('13/01/2026', enDateFormat)).toBeNull();
 		});
 
 		it('rejects day 32', () => {
-			expect(parseClayValue('2026-01-32', false, false)).toBeNull();
+			expect(parseClayValue('01/32/2026', enDateFormat)).toBeNull();
 		});
 
 		it('rejects an empty string', () => {
-			expect(parseClayValue('', false, false)).toBeNull();
+			expect(parseClayValue('', enDateFormat)).toBeNull();
 		});
 
-		it('rejects a malformed string', () => {
-			expect(parseClayValue('2026/05/11', false, false)).toBeNull();
+		it('rejects a value in a different locale format', () => {
+			expect(parseClayValue('11/05/2026', enDateFormat)).toEqual({
+				day: 5,
+				hour: 0,
+				minute: 0,
+				month: 11,
+				year: 2026,
+			});
+
+			expect(parseClayValue('2026-05-11', enDateFormat)).toBeNull();
 		});
 	});
 
-	describe('in 24-hour dateTime mode', () => {
+	describe('in 24-hour dateTime mode (es-ES format)', () => {
 		it('parses a valid datetime', () => {
-			expect(parseClayValue('2026-05-11 15:30', false, true)).toEqual({
+			expect(
+				parseClayValue('11/05/2026 15:30', esDateTimeFormat)
+			).toEqual({
 				day: 11,
 				hour: 15,
 				minute: 30,
@@ -213,26 +277,28 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 		});
 
 		it('rejects hour 24', () => {
-			expect(parseClayValue('2026-05-11 24:00', false, true)).toBeNull();
+			expect(
+				parseClayValue('11/05/2026 24:00', esDateTimeFormat)
+			).toBeNull();
 		});
 
 		it('rejects minute 60', () => {
-			expect(parseClayValue('2026-05-11 23:60', false, true)).toBeNull();
+			expect(
+				parseClayValue('11/05/2026 23:60', esDateTimeFormat)
+			).toBeNull();
 		});
 
 		it('rejects month 13', () => {
-			expect(parseClayValue('2026-13-01 12:00', false, true)).toBeNull();
-		});
-
-		it('rejects day 99', () => {
-			expect(parseClayValue('2026-01-99 12:00', false, true)).toBeNull();
+			expect(
+				parseClayValue('01/13/2026 12:00', esDateTimeFormat)
+			).toBeNull();
 		});
 	});
 
-	describe('in 12-hour dateTime mode', () => {
+	describe('in 12-hour dateTime mode (en-US format)', () => {
 		it('parses a valid AM datetime', () => {
 			expect(
-				parseClayValue('2026-05-11 09:30 AM', true, true)
+				parseClayValue('05/11/2026 09:30 AM', enDateTimeFormat)
 			).toEqual({
 				day: 11,
 				hour: 9,
@@ -244,7 +310,7 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 
 		it('parses 12:00 PM as noon', () => {
 			expect(
-				parseClayValue('2026-05-11 12:00 PM', true, true)
+				parseClayValue('05/11/2026 12:00 PM', enDateTimeFormat)
 			).toEqual({
 				day: 11,
 				hour: 12,
@@ -256,7 +322,7 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 
 		it('parses 12:00 AM as midnight', () => {
 			expect(
-				parseClayValue('2026-05-11 12:00 AM', true, true)
+				parseClayValue('05/11/2026 12:00 AM', enDateTimeFormat)
 			).toEqual({
 				day: 11,
 				hour: 0,
@@ -266,27 +332,43 @@ describe('DateTimeRangeFilter.parseClayValue', () => {
 			});
 		});
 
+		it('rejects a non-padded hour against the padded hh format', () => {
+			expect(
+				parseClayValue('05/11/2026 9:30 AM', enDateTimeFormat)
+			).toBeNull();
+		});
+
 		it('rejects minute 60', () => {
 			expect(
-				parseClayValue('2026-05-11 11:60 AM', true, true)
+				parseClayValue('05/11/2026 11:60 AM', enDateTimeFormat)
 			).toBeNull();
 		});
 
 		it('rejects February 30', () => {
 			expect(
-				parseClayValue('2026-02-30 11:00 AM', true, true)
+				parseClayValue('02/30/2026 11:00 AM', enDateTimeFormat)
 			).toBeNull();
 		});
 	});
 });
 
 describe('DateTimeRangeFilter.getSelectedItemsLabel', () => {
-	it('formats a from-and-to range', () => {
+	it('formats a from-and-to range in the user locale (en-US)', () => {
 		const result = getSelectedItemsLabel({
 			selectedData: {from: fromDateTime, to: toDateTime},
 		} as any);
 
-		expect(result).toBe('2026-05-11 15:30 - 2026-05-11 17:45');
+		expect(result).toBe('05/11/2026 03:30 PM - 05/11/2026 05:45 PM');
+	});
+
+	it('formats a from-and-to range in es-ES', () => {
+		setLocale('es-ES');
+
+		const result = getSelectedItemsLabel({
+			selectedData: {from: fromDateTime, to: toDateTime},
+		} as any);
+
+		expect(result).toBe('11/05/2026 15:30 - 11/05/2026 17:45');
 	});
 
 	it('returns an empty string when nothing is selected', () => {

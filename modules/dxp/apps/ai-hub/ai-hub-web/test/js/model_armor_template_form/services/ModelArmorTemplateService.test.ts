@@ -21,44 +21,22 @@ describe('ModelArmorTemplateService', () => {
 		mockFetch.mockReset();
 	});
 
+	const fullPickerFields = {
+		guardrailType: {key: 'input', name: 'Input'},
+		piAndJailbreakConfidenceLevel: {
+			key: 'mediumAndAbove',
+			name: 'Medium and Above',
+		},
+		raiDangerousLevel: {key: 'none', name: 'None'},
+		raiHarassmentLevel: {key: 'none', name: 'None'},
+		raiHateSpeechLevel: {key: 'none', name: 'None'},
+		raiSexuallyExplicitLevel: {key: 'none', name: 'None'},
+	};
+
 	describe('getModelArmorTemplate', () => {
-		it('falls back to defaults when picker fields are missing', async () => {
-			mockFetch.mockResolvedValueOnce({
-				json: () =>
-					Promise.resolve({externalReferenceCode: 'TEMPLATE_X'}),
-				ok: true,
-			});
-
-			const result = await getModelArmorTemplate('TEMPLATE_X');
-
-			expect(result.guardrailType).toBe('');
-			expect(result.piAndJailbreakConfidenceLevel).toBe('mediumAndAbove');
-			expect(result.raiDangerousLevel).toBe('none');
-			expect(result.raiHarassmentLevel).toBe('none');
-			expect(result.raiHateSpeechLevel).toBe('none');
-			expect(result.raiSexuallyExplicitLevel).toBe('none');
-		});
-
-		it('keeps picker fields that already arrive as bare strings', async () => {
-			mockFetch.mockResolvedValueOnce({
-				json: () =>
-					Promise.resolve({
-						externalReferenceCode: 'TEMPLATE_X',
-						guardrailType: 'input',
-						raiDangerousLevel: 'mediumAndAbove',
-					}),
-				ok: true,
-			});
-
-			const result = await getModelArmorTemplate('TEMPLATE_X');
-
-			expect(result.guardrailType).toBe('input');
-			expect(result.raiDangerousLevel).toBe('mediumAndAbove');
-		});
-
 		it('targets the by-external-reference-code endpoint', async () => {
 			mockFetch.mockResolvedValueOnce({
-				json: () => Promise.resolve({}),
+				json: () => Promise.resolve(fullPickerFields),
 				ok: true,
 			});
 
@@ -94,7 +72,7 @@ describe('ModelArmorTemplateService', () => {
 						},
 						raiHateSpeechLevel: {key: 'high', name: 'High'},
 						raiSexuallyExplicitLevel: {key: 'none', name: 'None'},
-						title: 'My Template',
+						title_i18n: {en_US: 'My Template'},
 					}),
 				ok: true,
 			});
@@ -116,27 +94,29 @@ describe('ModelArmorTemplateService', () => {
 				json: () =>
 					Promise.resolve({
 						externalReferenceCode: 'TEMPLATE_X',
-						title: 'Saved',
+						title_i18n: {en_US: 'Saved'},
 					}),
+				ok: true,
 			});
 
 			const result = await putModelArmorTemplate({
 				externalReferenceCode: 'TEMPLATE_X',
 			} as any);
 
-			expect(result.title).toBe('Saved');
+			expect(result.title_i18n.en_US).toBe('Saved');
 		});
 
 		it('sends a PUT with the template serialized as JSON', async () => {
 			mockFetch.mockResolvedValueOnce({
 				json: () =>
 					Promise.resolve({externalReferenceCode: 'TEMPLATE_X'}),
+				ok: true,
 			});
 
 			const template = {
 				active: true,
 				externalReferenceCode: 'TEMPLATE_X',
-				title: 'My Template',
+				title_i18n: {en_US: 'My Template'},
 			} as any;
 
 			await putModelArmorTemplate(template);
@@ -149,6 +129,35 @@ describe('ModelArmorTemplateService', () => {
 					method: 'PUT',
 				})
 			);
+		});
+
+		it("throws with the server's detail when the response is not ok", async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () =>
+					Promise.resolve({
+						detail: 'External reference code already in use',
+					}),
+				ok: false,
+			});
+
+			await expect(
+				putModelArmorTemplate({
+					externalReferenceCode: 'TEMPLATE_X',
+				} as any)
+			).rejects.toThrow('External reference code already in use');
+		});
+
+		it('throws with an empty message when the response body is not JSON', async () => {
+			mockFetch.mockResolvedValueOnce({
+				json: () => Promise.reject(new Error('not json')),
+				ok: false,
+			});
+
+			await expect(
+				putModelArmorTemplate({
+					externalReferenceCode: 'TEMPLATE_X',
+				} as any)
+			).rejects.toThrow();
 		});
 	});
 });

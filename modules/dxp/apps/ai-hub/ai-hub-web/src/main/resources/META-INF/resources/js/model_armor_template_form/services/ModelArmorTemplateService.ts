@@ -5,25 +5,11 @@
 
 import {fetch} from 'frontend-js-web';
 
-import {DEFAULT_MODEL_ARMOR_TEMPLATE} from '../constants';
-import {
-	FilterLevel,
-	ModelArmorTemplate,
-	RAILevel,
-} from '../types/ModelArmorTemplate';
+import {ModelArmorTemplate} from '../types/ModelArmorTemplate';
 
 const MODEL_ARMOR_TEMPLATE_BASE_URI = '/o/ai-hub/model-armor-templates';
 
-const normalizeKey = <T extends string>(
-	value: {key: T} | T | null | undefined,
-	fallback: T
-): T => {
-	if (typeof value === 'object' && value !== null) {
-		return value.key;
-	}
-
-	return value ?? fallback;
-};
+const normalizeKey = <T extends string>(value: {key: T}): T => value.key;
 
 async function getModelArmorTemplate(
 	externalReferenceCode: string
@@ -42,33 +28,21 @@ async function getModelArmorTemplate(
 	const raw = await response.json();
 
 	return {
-		...DEFAULT_MODEL_ARMOR_TEMPLATE,
 		...raw,
-		guardrailType: normalizeKey(raw.guardrailType, ''),
-		piAndJailbreakConfidenceLevel: normalizeKey<FilterLevel>(
-			raw.piAndJailbreakConfidenceLevel,
-			'mediumAndAbove'
+		guardrailType: normalizeKey(raw.guardrailType),
+		piAndJailbreakConfidenceLevel: normalizeKey(
+			raw.piAndJailbreakConfidenceLevel
 		),
-		raiDangerousLevel: normalizeKey<RAILevel>(
-			raw.raiDangerousLevel,
-			'none'
-		),
-		raiHarassmentLevel: normalizeKey<RAILevel>(
-			raw.raiHarassmentLevel,
-			'none'
-		),
-		raiHateSpeechLevel: normalizeKey<RAILevel>(
-			raw.raiHateSpeechLevel,
-			'none'
-		),
-		raiSexuallyExplicitLevel: normalizeKey<RAILevel>(
-			raw.raiSexuallyExplicitLevel,
-			'none'
-		),
+		raiDangerousLevel: normalizeKey(raw.raiDangerousLevel),
+		raiHarassmentLevel: normalizeKey(raw.raiHarassmentLevel),
+		raiHateSpeechLevel: normalizeKey(raw.raiHateSpeechLevel),
+		raiSexuallyExplicitLevel: normalizeKey(raw.raiSexuallyExplicitLevel),
 	};
 }
 
-async function putModelArmorTemplate(modelArmorTemplate: ModelArmorTemplate) {
+async function putModelArmorTemplate(
+	modelArmorTemplate: ModelArmorTemplate
+): Promise<ModelArmorTemplate> {
 	const response = await fetch(
 		`${MODEL_ARMOR_TEMPLATE_BASE_URI}/by-external-reference-code/${modelArmorTemplate.externalReferenceCode}`,
 		{
@@ -79,6 +53,12 @@ async function putModelArmorTemplate(modelArmorTemplate: ModelArmorTemplate) {
 			method: 'PUT',
 		}
 	);
+
+	if (!response.ok) {
+		const errorBody = await response.json().catch(() => ({}));
+
+		throw new Error(errorBody?.detail || errorBody?.title || '');
+	}
 
 	return response.json();
 }

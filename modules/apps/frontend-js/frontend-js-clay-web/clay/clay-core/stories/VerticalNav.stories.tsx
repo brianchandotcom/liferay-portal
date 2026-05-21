@@ -689,3 +689,48 @@ export function Primary() {
 		</VerticalNav>
 	);
 }
+export function KeyboardArrowsIndicator() {
+	const navItems = [
+		{
+			href: '#home',
+			id: 'home',
+			label: 'Home',
+		},
+		{
+			id: 'about',
+			items: [
+				{href: '#team', id: 'team', label: 'Team'},
+				{href: '#history', id: 'history', label: 'History'},
+			],
+			label: 'About',
+		},
+		{
+			href: '#contact',
+			id: 'contact',
+			label: 'Contact',
+		},
+	];
+
+	return (
+		<div style={{maxWidth: '320px'}}>
+			<VerticalNav
+				active="home"
+				aria-label="Site navigation"
+				defaultExpandedKeys={new Set(['about'])}
+				displayKeyboardArrowsIndicator
+				items={navItems}
+				keyboardArrowsIndicatorLabel="Use arrow keys to navigate the menu"
+			>
+				{(item: Item) => (
+					<VerticalNav.Item
+						href={item.href}
+						items={item.items}
+						key={item.id}
+					>
+						{item.label}
+					</VerticalNav.Item>
+				)}
+			</VerticalNav>
+		</div>
+	);
+}

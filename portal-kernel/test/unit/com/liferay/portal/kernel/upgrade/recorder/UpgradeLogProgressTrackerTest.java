@@ -153,6 +153,51 @@ public class UpgradeLogProgressTrackerTest {
 	}
 
 	@Test
+	public void testCaptureProgressLogsSQLOnceAcrossIntervals()
+		throws Exception {
+
+		try (SafeCloseable enabledSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_ENABLED", true);
+			SafeCloseable intervalSafeCloseable =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"UPGRADE_LOG_PROGRESS_INTERVAL", _LOG_PROGRESS_INTERVAL)) {
+
+			Log log = _getLog();
+
+			Mockito.when(
+				log.isDebugEnabled()
+			).thenReturn(
+				true
+			);
+
+			UpgradeLogProgressTracker.start();
+
+			ResultSet wrappedResultSet = _executeQueryWithCount(
+				_TOTAL_ROW_COUNT);
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			_resetLogTime(wrappedResultSet);
+
+			Assert.assertTrue(wrappedResultSet.next());
+
+			Mockito.verify(
+				log, Mockito.times(1)
+			).debug(
+				StringBundler.concat(
+					_getProgressId(wrappedResultSet), " is iterating SQL: ",
+					_SELECT_SQL)
+			);
+		}
+		finally {
+			UpgradeLogProgressTracker.stop();
+		}
+	}
+
+	@Test
 	public void testCaptureProgressLogsTentativeTotal() throws Exception {
 		try (SafeCloseable enabledSafeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(

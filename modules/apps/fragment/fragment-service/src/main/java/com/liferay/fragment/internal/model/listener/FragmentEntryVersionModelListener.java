@@ -53,8 +53,11 @@ public class FragmentEntryVersionModelListener
 					fragmentEntryId, MAX_VERSIONS, versionCount,
 					orderByComparator);
 
-			for (FragmentEntryVersion version : fragmentEntryVersions) {
-				_fragmentEntryVersionPersistence.remove(version);
+			for (FragmentEntryVersion currentFragmentEntryVersion :
+					fragmentEntryVersions) {
+
+				_fragmentEntryVersionPersistence.remove(
+					currentFragmentEntryVersion);
 			}
 		}
 		catch (Exception exception) {

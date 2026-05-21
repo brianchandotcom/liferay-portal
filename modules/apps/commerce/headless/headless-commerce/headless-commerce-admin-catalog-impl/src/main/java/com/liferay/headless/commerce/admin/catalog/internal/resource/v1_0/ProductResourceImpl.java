@@ -412,10 +412,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			Long id, Integer version, Product product)
 		throws Exception {
 
-		CPDefinition cpDefinition =
-			_cpDefinitionService.getCProductCPDefinition(id, version);
-
-		_updateProduct(cpDefinition, product);
+		_updateProduct(
+			_cpDefinitionService.getCProductCPDefinition(id, version), product);
 
 		Response.ResponseBuilder responseBuilder = Response.noContent();
 
@@ -1539,7 +1537,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
 			cpDefinition.getGroupId());
 
-		boolean publish = false;
+		int productStatus = GetterUtil.getInteger(product.getProductStatus());
 
 		CProduct cProduct = cpDefinition.getCProduct();
 
@@ -1547,7 +1545,7 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			_cpDefinitionService.fetchCPDefinition(
 				cProduct.getPublishedCPDefinitionId());
 
-		int productStatus = GetterUtil.getInteger(product.getProductStatus());
+		boolean publish = false;
 
 		if (productStatus == WorkflowConstants.STATUS_DRAFT) {
 			serviceContext.setWorkflowAction(

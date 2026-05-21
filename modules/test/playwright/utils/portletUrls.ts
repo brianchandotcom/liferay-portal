@@ -133,6 +133,8 @@ export const PORTLET_URLS = {
 	teams: '/~/control_panel/manage/-/site_teams/teams',
 	templates:
 		'/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view',
+	translation:
+		'/~/control_panel/manage?p_p_id=com_liferay_translation_web_internal_portlet_TranslationPortlet',
 	utilityPages:
 		'/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=utility-pages',
 	widgetPageTemplates:

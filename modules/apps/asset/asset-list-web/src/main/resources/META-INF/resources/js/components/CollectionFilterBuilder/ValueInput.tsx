@@ -10,7 +10,8 @@ import {
 	AssetTagsSelector,
 	AssetVocabularyCategoriesSelector,
 } from 'asset-taglib';
-import React from 'react';
+import classNames from 'classnames';
+import React, {ReactNode} from 'react';
 
 import {TriggerLabel} from './ConditionBuilder';
 import DateValueInput from './DateValueInput';
@@ -18,18 +19,37 @@ import {config} from './config';
 
 import type {FilterProperty} from './types';
 
-export const VALUE_INPUT_CLASSNAME =
-	'condition-builder__value-input d-flex flex-grow-1';
-
 interface SelectedItem {
 	label: string;
 	value: string;
 }
 
-function _handlePreventEnterSubmit(event: React.KeyboardEvent) {
+function handlePreventEnterSubmit(event: React.KeyboardEvent) {
 	if (event.key === 'Enter') {
 		event.preventDefault();
 	}
+}
+
+export function ValueInputContainer({
+	children,
+	className,
+	onKeyDown,
+}: {
+	children: ReactNode;
+	className?: string;
+	onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
+}) {
+	return (
+		<div
+			className={classNames(
+				'condition-builder__value-input d-flex flex-grow-1',
+				className
+			)}
+			onKeyDown={onKeyDown}
+		>
+			{children}
+		</div>
+	);
 }
 
 export interface ValueInputProps {
@@ -59,43 +79,53 @@ export default function ValueInput({
 
 	if (type === 'asset-tags') {
 		return (
-			<AssetTagsSelector
-				eventName={`${namespace}selectTag`}
-				formGroupClassName="condition-builder__asset-selector mb-0"
-				groupIds={groupIds}
-				inputName={`${namespace}queryTagNames`}
-				onSelectedItemsChange={(selectedItems: SelectedItem[]) =>
-					onChange(
-						selectedItems.map(({label, value}) => ({label, value}))
-					)
-				}
-				portletURL={tagSelectorURL}
-				selectedItems={value}
-				showLabel={false}
-				showSelectButton
-				showSubtitle={false}
-				tagNames={value || ''}
-			/>
+			<ValueInputContainer onKeyDown={handlePreventEnterSubmit}>
+				<AssetTagsSelector
+					eventName={`${namespace}selectTag`}
+					formGroupClassName="condition-builder__asset-selector mb-0"
+					groupIds={groupIds}
+					inputName={`${namespace}queryTagNames`}
+					onSelectedItemsChange={(selectedItems: SelectedItem[]) =>
+						onChange(
+							selectedItems.map(({label, value}) => ({
+								label,
+								value,
+							}))
+						)
+					}
+					portletURL={tagSelectorURL}
+					selectedItems={value}
+					showLabel={false}
+					showSelectButton
+					showSubtitle={false}
+					tagNames={value || ''}
+				/>
+			</ValueInputContainer>
 		);
 	}
 
 	if (type === 'asset-categories') {
 		return (
-			<AssetVocabularyCategoriesSelector
-				categoryIds={value || ''}
-				eventName={`${namespace}selectCategory`}
-				formGroupClassName="condition-builder__asset-selector mb-0"
-				groupIds={groupIds}
-				inputName={`${namespace}queryCategoryIds`}
-				onSelectedItemsChange={(selectedItems: SelectedItem[]) =>
-					onChange(
-						selectedItems.map(({label, value}) => ({label, value}))
-					)
-				}
-				portletURL={categorySelectorURL}
-				selectedItems={value}
-				sourceItemsVocabularyIds={vocabularyIds}
-			/>
+			<ValueInputContainer onKeyDown={handlePreventEnterSubmit}>
+				<AssetVocabularyCategoriesSelector
+					categoryIds={value || ''}
+					eventName={`${namespace}selectCategory`}
+					formGroupClassName="condition-builder__asset-selector mb-0"
+					groupIds={groupIds}
+					inputName={`${namespace}queryCategoryIds`}
+					onSelectedItemsChange={(selectedItems: SelectedItem[]) =>
+						onChange(
+							selectedItems.map(({label, value}) => ({
+								label,
+								value,
+							}))
+						)
+					}
+					portletURL={categorySelectorURL}
+					selectedItems={value}
+					sourceItemsVocabularyIds={vocabularyIds}
+				/>
+			</ValueInputContainer>
 		);
 	}
 
@@ -106,7 +136,7 @@ export default function ValueInput({
 		];
 
 		return (
-			<div className={VALUE_INPUT_CLASSNAME}>
+			<ValueInputContainer>
 				<Picker
 					aria-label={Liferay.Language.get('value')}
 					as={TriggerLabel}
@@ -117,7 +147,7 @@ export default function ValueInput({
 				>
 					{(item) => <Option key={item.value}>{item.label}</Option>}
 				</Picker>
-			</div>
+			</ValueInputContainer>
 		);
 	}
 
@@ -125,7 +155,7 @@ export default function ValueInput({
 		const items = (Array.isArray(value) ? value : []) as SelectedItem[];
 
 		return (
-			<div className={VALUE_INPUT_CLASSNAME}>
+			<ValueInputContainer>
 				<MultiSelect
 					allowsCustomLabel={false}
 					aria-label={Liferay.Language.get('value')}
@@ -144,11 +174,11 @@ export default function ValueInput({
 
 						onChange(uniqueNewItems as Array<string | object>);
 					}}
-					onKeyDown={_handlePreventEnterSubmit}
+					onKeyDown={handlePreventEnterSubmit}
 					size="sm"
 					sourceItems={options}
 				/>
-			</div>
+			</ValueInputContainer>
 		);
 	}
 
@@ -157,7 +187,7 @@ export default function ValueInput({
 			const [from, to] = (value as string[]) || [];
 
 			return (
-				<div className={`c-gap-2 ${VALUE_INPUT_CLASSNAME}`}>
+				<ValueInputContainer className="c-gap-2">
 					<ClayInput
 						aria-label={Liferay.Language.get('from')}
 						className="form-control-sm"
@@ -165,7 +195,7 @@ export default function ValueInput({
 						onChange={(event) =>
 							onChange([event.target.value, to] as string[])
 						}
-						onKeyDown={_handlePreventEnterSubmit}
+						onKeyDown={handlePreventEnterSubmit}
 						placeholder={Liferay.Language.get('from')}
 						step={type === 'decimal' ? '0.001' : '1'}
 						type="number"
@@ -179,30 +209,30 @@ export default function ValueInput({
 						onChange={(event) =>
 							onChange([from, event.target.value] as string[])
 						}
-						onKeyDown={_handlePreventEnterSubmit}
+						onKeyDown={handlePreventEnterSubmit}
 						placeholder={Liferay.Language.get('to')}
 						step={type === 'decimal' ? '0.001' : '1'}
 						type="number"
 						value={to}
 					/>
-				</div>
+				</ValueInputContainer>
 			);
 		}
 
 		return (
-			<div className={VALUE_INPUT_CLASSNAME}>
+			<ValueInputContainer>
 				<ClayInput
 					aria-label={Liferay.Language.get('value')}
 					className="form-control-sm"
 					id={`${property.name}-${index}`}
 					onChange={(event) => onChange(event.target.value)}
-					onKeyDown={_handlePreventEnterSubmit}
+					onKeyDown={handlePreventEnterSubmit}
 					placeholder={Liferay.Language.get('enter-value')}
 					step={type === 'decimal' ? '0.001' : '1'}
 					type="number"
 					value={(value as string) ?? ''}
 				/>
-			</div>
+			</ValueInputContainer>
 		);
 	}
 
@@ -219,17 +249,17 @@ export default function ValueInput({
 	}
 
 	return (
-		<div className={VALUE_INPUT_CLASSNAME}>
+		<ValueInputContainer>
 			<ClayInput
 				aria-label={Liferay.Language.get('value')}
 				className="form-control-sm"
 				id={`${property.name}-${index}`}
 				onChange={(event) => onChange(event.target.value)}
-				onKeyDown={_handlePreventEnterSubmit}
+				onKeyDown={handlePreventEnterSubmit}
 				placeholder={Liferay.Language.get('enter-value')}
 				type="text"
 				value={(value as string) ?? ''}
 			/>
-		</div>
+		</ValueInputContainer>
 	);
 }

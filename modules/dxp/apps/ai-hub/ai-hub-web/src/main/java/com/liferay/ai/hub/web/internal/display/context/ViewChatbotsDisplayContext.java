@@ -5,7 +5,7 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
-import com.liferay.ai.hub.web.internal.util.ActionUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -38,7 +38,7 @@ public class ViewChatbotsDisplayContext {
 		return CreationMenuBuilder.addDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setHref(
-					ActionUtil.getAIHubURL(_themeDisplay) + "/chatbot");
+					DisplayContextUtil.getAIHubURL(_themeDisplay) + "/chatbot");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "new-chatbot"));
 			}
@@ -51,7 +51,7 @@ public class ViewChatbotsDisplayContext {
 		return List.of(
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					ActionUtil.getAIHubURL(_themeDisplay), "/chatbot",
+					DisplayContextUtil.getAIHubURL(_themeDisplay), "/chatbot",
 					"?externalReferenceCode={externalReferenceCode}"),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),

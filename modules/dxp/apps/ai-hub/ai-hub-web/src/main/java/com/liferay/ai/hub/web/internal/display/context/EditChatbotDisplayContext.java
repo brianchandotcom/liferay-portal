@@ -7,14 +7,14 @@ package com.liferay.ai.hub.web.internal.display.context;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.util.AccountEntryUtil;
-import com.liferay.ai.hub.web.internal.util.ActionUtil;
+import com.liferay.ai.hub.web.internal.util.DisplayContextUtil;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -31,15 +31,11 @@ public class EditChatbotDisplayContext {
 
 	public EditChatbotDisplayContext(
 		AttachmentManager attachmentManager,
-		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectFieldLocalService objectFieldLocalService) {
+		HttpServletRequest httpServletRequest, Language language) {
 
 		_attachmentManager = attachmentManager;
 		_httpServletRequest = httpServletRequest;
 		_language = language;
-		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectFieldLocalService = objectFieldLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -74,7 +70,8 @@ public class EditChatbotDisplayContext {
 				return accountEntry.getExternalReferenceCode();
 			}
 		).put(
-			"backURL", ActionUtil.getAIHubURL(_themeDisplay) + "/chatbots"
+			"backURL",
+			DisplayContextUtil.getAIHubURL(_themeDisplay) + "/chatbots"
 		).put(
 			"companyLogoAcceptedFileExtensions", acceptedFileExtensions
 		).put(
@@ -97,12 +94,18 @@ public class EditChatbotDisplayContext {
 			_httpServletRequest.getParameter("externalReferenceCode")
 		).put(
 			"portalURL", _themeDisplay.getPortalURL()
+		).put(
+			"readOnly",
+			DisplayContextUtil.isReadOnly(
+				_themeDisplay.getCompanyId(),
+				_httpServletRequest.getParameter("externalReferenceCode"),
+				"L_AI_HUB_CHATBOT")
 		).build();
 	}
 
 	private ObjectField _getCompanyLogoObjectField() {
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
+			ObjectDefinitionLocalServiceUtil.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_AI_HUB_CHATBOT", _themeDisplay.getCompanyId());
 
@@ -110,15 +113,13 @@ public class EditChatbotDisplayContext {
 			return null;
 		}
 
-		return _objectFieldLocalService.fetchObjectField(
+		return ObjectFieldLocalServiceUtil.fetchObjectField(
 			objectDefinition.getObjectDefinitionId(), "companyLogo");
 	}
 
 	private final AttachmentManager _attachmentManager;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

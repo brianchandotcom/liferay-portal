@@ -152,7 +152,7 @@ public class UnsubscribeHooks {
 			return _ticketLocalService.addTicket(
 				subscription.getCompanyId(), Subscription.class.getName(),
 				subscription.getSubscriptionId(),
-				TicketConstants.TYPE_SUBSCRIPTION, StringPool.BLANK,
+				TicketConstants.TYPE_SUBSCRIPTION, null, StringPool.BLANK,
 				calendar.getTime(), _subscriptionSender.getServiceContext());
 		}
 

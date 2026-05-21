@@ -73,7 +73,7 @@ public class TicketResourceImpl extends BaseTicketResourceImpl {
 		com.liferay.portal.kernel.model.Ticket ticket =
 			_ticketLocalService.addTicket(
 				user.getCompanyId(), User.class.getName(), userAccountId, type,
-				null, expirationDate,
+				null, null, expirationDate,
 				ServiceContextThreadLocal.getServiceContext());
 
 		String unencryptedKey = ticket.getKey();

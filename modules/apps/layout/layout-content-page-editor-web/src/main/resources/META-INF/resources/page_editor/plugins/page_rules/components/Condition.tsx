@@ -25,7 +25,8 @@ import RuleDatePickerField from './RuleDatePickerField';
 import RuleMultiSelectField from './RuleMultiSelectField';
 import RuleSelect from './RuleSelect';
 import RuleTextField from './RuleTextField';
-import OPERATORS from './operators';
+import OPERATORS from '../constants/operators';
+import SUPPORTED_FIELD_TYPES from '../constants/supportedFieldTypes';
 
 interface ConditionProps {
 	condition: ConditionType;
@@ -810,16 +811,3 @@ export function filterAndConvertMappingFields(
 			};
 		});
 }
-
-const SUPPORTED_FIELD_TYPES = new Set<string>([
-	'boolean',
-	'date',
-	'date-time',
-	'file',
-	'long-text',
-	'multiselect',
-	'number',
-	'select',
-	'text',
-	'url',
-]);

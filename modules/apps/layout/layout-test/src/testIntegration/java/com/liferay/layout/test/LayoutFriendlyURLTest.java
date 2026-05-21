@@ -402,7 +402,7 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
-	public void testPropagateLayoutSetPrototype() throws Exception {
+	public void testSyncLayoutSetPrototype() throws Exception {
 		LayoutSetPrototype layoutSetPrototype =
 			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
 
@@ -421,7 +421,7 @@ public class LayoutFriendlyURLTest {
 			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
 			false);
 
-		_testMergeLayoutSetPrototypeLayouts(
+		_testSyncLayoutSetPrototype(
 			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
 
 		Group curGroup = GroupTestUtil.addGroup();
@@ -430,7 +430,7 @@ public class LayoutFriendlyURLTest {
 			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
 			true);
 
-		_testMergeLayoutSetPrototypeLayouts(
+		_testSyncLayoutSetPrototype(
 			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
 	}
 
@@ -616,7 +616,7 @@ public class LayoutFriendlyURLTest {
 			friendlyURLMap, serviceContext);
 	}
 
-	private void _testMergeLayoutSetPrototypeLayouts(
+	private void _testSyncLayoutSetPrototype(
 			Group group, LayoutSet layoutSet, Layout layoutSetPrototypeLayout)
 		throws Exception {
 

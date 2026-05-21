@@ -402,39 +402,6 @@ public class LayoutFriendlyURLTest {
 	}
 
 	@Test
-	public void testSyncLayoutSetPrototype() throws Exception {
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
-
-		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
-
-		Layout layoutSetPrototypeLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(),
-			layoutSetPrototypeGroup.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, null,
-			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(
-				layoutSetPrototypeGroup.getGroupId()));
-
-		_sites.updateLayoutSetPrototypesLinks(
-			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
-			false);
-
-		_testSyncLayoutSetPrototype(
-			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
-
-		Group curGroup = GroupTestUtil.addGroup();
-
-		_sites.updateLayoutSetPrototypesLinks(
-			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
-			true);
-
-		_testSyncLayoutSetPrototype(
-			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
-	}
-
-	@Test
 	public void testSameFriendlyURLDifferentLocaleDifferentLayout()
 		throws Exception {
 
@@ -518,6 +485,39 @@ public class LayoutFriendlyURLTest {
 				_log.debug(layoutFriendlyURLsException);
 			}
 		}
+	}
+
+	@Test
+	public void testSyncLayoutSetPrototype() throws Exception {
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
+
+		Layout layoutSetPrototypeLayout = _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(),
+			layoutSetPrototypeGroup.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), null, null,
+			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
+			ServiceContextTestUtil.getServiceContext(
+				layoutSetPrototypeGroup.getGroupId()));
+
+		_sites.updateLayoutSetPrototypesLinks(
+			_group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+			false);
+
+		_testSyncLayoutSetPrototype(
+			_group, _group.getPublicLayoutSet(), layoutSetPrototypeLayout);
+
+		Group curGroup = GroupTestUtil.addGroup();
+
+		_sites.updateLayoutSetPrototypesLinks(
+			curGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(), false,
+			true);
+
+		_testSyncLayoutSetPrototype(
+			curGroup, curGroup.getPrivateLayoutSet(), layoutSetPrototypeLayout);
 	}
 
 	@Test

@@ -275,7 +275,11 @@ public class ObjectDefinitionUtil {
 		).put(
 			"SEOStudioDomain", "/seo-studio/domains"
 		).put(
+			"SEOStudioInsightType", "/seo-studio/insight-types"
+		).put(
 			"SEOStudioInstance", "/seo-studio/instances"
+		).put(
+			"SEOStudioPage", "/seo-studio/pages"
 		).put(
 			"SEOStudioScan", "/seo-studio/scans"
 		).put(

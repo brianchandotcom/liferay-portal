@@ -151,42 +151,6 @@
 				.icon-group {
 					display: flex;
 
-					.label-info {
-						background-color: $cadmin-info-l2;
-						border-color: $cadmin-info-l2;
-						color: $cadmin-info-d1;
-						padding: 2px;
-
-						.label-item {
-							border-radius: 0.25rem;
-							border-width: 0.0625rem;
-							font-size: 0.75rem;
-							letter-spacing: math.div(
-								$fontSizeExtraSmall * -0.2,
-								13
-							);
-							text-transform: none;
-						}
-					}
-
-					.label-success {
-						background-color: $cadmin-success-l2;
-						border-color: $cadmin-success-l2;
-						color: $cadmin-success-d1;
-						padding: 2px;
-
-						.label-item {
-							border-radius: 0.25rem;
-							border-width: 0.0625rem;
-							font-size: 0.75rem;
-							letter-spacing: math.div(
-								$fontSizeExtraSmall * -0.2,
-								13
-							);
-							text-transform: none;
-						}
-					}
-
 					.device-icon {
 						height: 25px;
 						margin-left: 42px;
@@ -195,6 +159,32 @@
 						.icon-root {
 							font-size: $fontSizeMedium;
 						}
+					}
+
+					.label-info {
+						background-color: $cadmin-info-l2;
+						border-color: $cadmin-info-l2;
+						color: $cadmin-info-d1;
+						padding: 2px;
+					}
+
+					.label-item {
+						border-radius: 0.25rem;
+						border-width: 0.0625rem;
+						font-size: 0.75rem;
+						letter-spacing: math.div(
+							$fontSizeExtraSmall * -0.2,
+							13
+						);
+						padding: 0.125rem 0.25rem;
+						text-transform: none;
+					}
+
+					.label-success {
+						background-color: $cadmin-success-l2;
+						border-color: $cadmin-success-l2;
+						color: $cadmin-success-d1;
+						padding: 2px;
 					}
 				}
 			}

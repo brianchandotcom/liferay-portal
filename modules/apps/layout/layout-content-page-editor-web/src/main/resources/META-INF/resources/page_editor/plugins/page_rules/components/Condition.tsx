@@ -509,23 +509,23 @@ function ConditionValueInput({
 		);
 	}
 
-	if (fieldType === 'multiselect' && attributes?.options) {
+	if (fieldType === 'multiselect') {
 		return (
 			<RuleMultiSelectField
 				onBlur={onBlur}
 				onChange={onChange}
 				onErrorChange={onErrorChange}
-				options={attributes.options}
+				options={attributes?.options ?? []}
 				value={Array.isArray(value) ? value : []}
 			/>
 		);
 	}
 
-	if (fieldType === 'select' && attributes?.options) {
+	if (fieldType === 'select') {
 		return (
 			<RuleSelect
 				aria-label={Liferay.Language.get('select-a-value')}
-				items={attributes.options}
+				items={attributes?.options ?? []}
 				onErrorChange={onErrorChange}
 				onSelectionChange={(selectedValue) => {
 					onChange(selectedValue);

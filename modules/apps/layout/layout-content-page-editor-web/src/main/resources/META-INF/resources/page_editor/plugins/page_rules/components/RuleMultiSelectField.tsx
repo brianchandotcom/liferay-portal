@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayInput} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {useId} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
@@ -59,34 +60,48 @@ export default function RuleMultiSelectField({
 			fieldId={id}
 			hasError={hasError}
 		>
-			<ClayMultiSelect
-				items={selection}
-				onItemsChange={(items: {label: string; value: string}[]) => {
-					const next = items
-						.map((item) =>
-							options.find(
-								(option) =>
-									option.label.toLowerCase() ===
-									item.label.toLowerCase()
+			{options.length ? (
+				<ClayMultiSelect
+					items={selection}
+					onItemsChange={(
+						items: {label: string; value: string}[]
+					) => {
+						const next = items
+							.map((item) =>
+								options.find(
+									(option) =>
+										option.label.toLowerCase() ===
+										item.label.toLowerCase()
+								)
 							)
-						)
-						.filter(
-							(
-								option
-							): option is {label: string; value: string} =>
-								Boolean(option)
-						);
+							.filter(
+								(
+									option
+								): option is {label: string; value: string} =>
+									Boolean(option)
+							);
 
-					onChange(next.map((option) => option.value));
+						onChange(next.map((option) => option.value));
 
-					setHasError(false);
+						setHasError(false);
 
-					onBlur();
-				}}
-				ref={inputRef}
-				size="sm"
-				sourceItems={options}
-			/>
+						onBlur();
+					}}
+					ref={inputRef}
+					size="sm"
+					sourceItems={options}
+				/>
+			) : (
+				<ClayInput
+					aria-label={Liferay.Language.get('no-options-available')}
+					className="w-auto"
+					id={id}
+					readOnly
+					ref={inputRef}
+					sizing="sm"
+					value={Liferay.Language.get('no-options-available')}
+				/>
+			)}
 		</RuleField>
 	);
 }

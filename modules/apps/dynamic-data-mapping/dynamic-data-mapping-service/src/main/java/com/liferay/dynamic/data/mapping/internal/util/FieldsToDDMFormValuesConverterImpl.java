@@ -67,27 +67,21 @@ public class FieldsToDDMFormValuesConverterImpl
 			String[] rawFieldsDisplayValues = splitFieldsDisplayValue(
 				fieldsDisplayField);
 
-			ddmFieldsDisplayValues = TransformUtil.transform(
-				rawFieldsDisplayValues,
-				value -> {
-					String fieldName = StringUtil.extractFirst(
-						value, DDMImpl.INSTANCE_SEPARATOR);
-
-					if (!ddmFormFieldsMap.containsKey(fieldName)) {
-						return null;
-					}
-
-					return fieldName;
-				},
-				String.class);
+			List<String> ddmFieldsDisplayValuesList = new ArrayList<>(
+				rawFieldsDisplayValues.length);
 
 			instanceIdsByFieldNamesMap = new HashMap<>();
 
-			for (String value : rawFieldsDisplayValues) {
+			for (String rawFieldsDisplayValue : rawFieldsDisplayValues) {
 				String fieldName = StringUtil.extractFirst(
-					value, DDMImpl.INSTANCE_SEPARATOR);
+					rawFieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
+
+				if (ddmFormFieldsMap.containsKey(fieldName)) {
+					ddmFieldsDisplayValuesList.add(fieldName);
+				}
+
 				String instanceId = StringUtil.extractLast(
-					value, DDMImpl.INSTANCE_SEPARATOR);
+					rawFieldsDisplayValue, DDMImpl.INSTANCE_SEPARATOR);
 
 				List<String> instanceIds =
 					instanceIdsByFieldNamesMap.computeIfAbsent(
@@ -95,6 +89,9 @@ public class FieldsToDDMFormValuesConverterImpl
 
 				instanceIds.add(instanceId);
 			}
+
+			ddmFieldsDisplayValues = ddmFieldsDisplayValuesList.toArray(
+				new String[0]);
 		}
 
 		for (String fieldName :

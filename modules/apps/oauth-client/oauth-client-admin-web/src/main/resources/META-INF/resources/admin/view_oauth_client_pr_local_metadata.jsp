@@ -20,6 +20,7 @@ OAuthClientPRLocalMetadataManagementToolbarDisplayContext oAuthClientPRLocalMeta
 	disabled="<%= oAuthClientPRLocalMetadatasCount == 0 %>"
 	itemsTotal="<%= oAuthClientPRLocalMetadatasCount %>"
 	orderDropdownItems="<%= oAuthClientPRLocalMetadataManagementToolbarDisplayContext.getOrderByDropdownItems() %>"
+	propsTransformer="{OAuthClientPRLocalMetadatasManagementToolbarPropsTransformer} from oauth-client-admin-web"
 	searchContainerId="oAuthClientPRLocalMetadataSearchContainer"
 	selectable="<%= true %>"
 	showCreationMenu="<%= true %>"
@@ -32,51 +33,56 @@ OAuthClientPRLocalMetadataManagementToolbarDisplayContext oAuthClientPRLocalMeta
 <clay:container-fluid
 	cssClass="closed"
 >
-	<liferay-ui:search-container
-		emptyResultsMessage="no-oauth-client-pr-local-metadata-were-found"
-		id="oAuthClientPRLocalMetadataSearchContainer"
-		iteratorURL="<%= currentURLObj %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		total="<%= oAuthClientPRLocalMetadatasCount %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= OAuthClientPRLocalMetadataServiceUtil.getCompanyOAuthClientPRLocalMetadata(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+	<aui:form action="<%= currentURLObj %>" method="get" name="fm">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="oAuthClientPRLocalMetadataIds" type="hidden" />
 
-		<liferay-ui:search-container-row
-			className="com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata"
-			escapedModel="<%= true %>"
-			keyProperty="resource"
-			modelVar="oAuthClientPRLocalMetadata"
+		<liferay-ui:search-container
+			emptyResultsMessage="no-oauth-client-pr-local-metadata-were-found"
+			id="oAuthClientPRLocalMetadataSearchContainer"
+			iteratorURL="<%= currentURLObj %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			total="<%= oAuthClientPRLocalMetadatasCount %>"
 		>
-			<portlet:renderURL var="editURL">
-				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_pr_local_metadata" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="oAuthClientPRLocalMetadataId" value="<%= String.valueOf(oAuthClientPRLocalMetadata.getOAuthClientPRLocalMetadataId()) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				href="<%= editURL %>"
-				name="oauth-client-pr-resource"
-				property="resource"
+			<liferay-ui:search-container-results
+				results="<%= OAuthClientPRLocalMetadataServiceUtil.getCompanyOAuthClientPRLocalMetadata(themeDisplay.getCompanyId(), searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand"
-				name="oauth-client-pr-local-well-known-uri"
-				property="localWellKnownURI"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.oauth.client.persistence.model.OAuthClientPRLocalMetadata"
+				escapedModel="<%= true %>"
+				keyProperty="OAuthClientPRLocalMetadataId"
+				modelVar="oAuthClientPRLocalMetadata"
+			>
+				<portlet:renderURL var="editURL">
+					<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_pr_local_metadata" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="oAuthClientPRLocalMetadataId" value="<%= String.valueOf(oAuthClientPRLocalMetadata.getOAuthClientPRLocalMetadataId()) %>" />
+				</portlet:renderURL>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				path="/admin/oauth_client_pr_local_metadata_actions.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					href="<%= editURL %>"
+					name="oauth-client-pr-local-metadata-resource"
+					property="protectedResourceURI"
+				/>
 
-		<liferay-ui:search-iterator
-			displayStyle="list"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-text
+					cssClass="table-cell-expand"
+					name="oauth-client-pr-local-well-known-uri"
+					property="localWellKnownURI"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					path="/admin/oauth_client_pr_local_metadata_actions.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator
+				displayStyle="list"
+				markupView="lexicon"
+			/>
+		</liferay-ui:search-container>
+	</aui:form>
 </clay:container-fluid>

@@ -7,6 +7,7 @@ Export-Package:\
 	com.liferay.account.exception,\
 	com.liferay.account.manager,\
 	com.liferay.account.model,\
+	com.liferay.account.notification,\
 	com.liferay.account.retriever,\
 	com.liferay.account.role,\
 	com.liferay.account.service,\

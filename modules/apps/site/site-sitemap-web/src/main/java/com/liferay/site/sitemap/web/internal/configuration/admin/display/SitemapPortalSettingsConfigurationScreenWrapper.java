@@ -75,7 +75,7 @@ public class SitemapPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public String getCategoryKey() {
-			return "seo";
+			return "aeo-seo";
 		}
 
 		@Override

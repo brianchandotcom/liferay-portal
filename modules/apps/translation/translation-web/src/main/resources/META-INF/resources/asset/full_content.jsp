@@ -119,7 +119,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 									</label>
 
 									<div class="translation-editor-preview" dir="<%= sourceContentDir %>">
-										<%= sourceContent %>
+										<%= viewTranslationDisplayContext.getSanitizedHTML(sourceContent) %>
 									</div>
 								</c:when>
 								<c:otherwise>
@@ -138,7 +138,7 @@ ViewTranslationDisplayContext viewTranslationDisplayContext = (ViewTranslationDi
 									</label>
 
 									<div class="translation-editor-preview" dir="<%= LanguageUtil.get(viewTranslationDisplayContext.getTargetLocale(), "lang.dir") %>">
-										<%= targetContent %>
+										<%= viewTranslationDisplayContext.getSanitizedHTML(targetContent) %>
 									</div>
 								</c:when>
 								<c:otherwise>

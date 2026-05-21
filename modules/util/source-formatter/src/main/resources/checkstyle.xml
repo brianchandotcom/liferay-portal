@@ -810,6 +810,7 @@
 			<property name="description" value="Ensures using set calls with `UnsafeSupplier` parameter for REST DTO." />
 			<property name="enabled" value="false" />
 			<message key="set.method.use.instead" value="Use &quot;{0}(UnsafeSupplier)&quot; instead" />
+			<message key="statement.move" value="Instance initializers should only contain set calls" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ResultSetGetCallCheck">
 			<property name="category" value="Bug Prevention" />

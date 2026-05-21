@@ -5,15 +5,37 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import {
 	IDataSet,
 	getDataSetResourceURL,
 } from '@liferay/frontend-data-set-admin-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
-import {useId} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import {openSelectionModal, useId} from 'frontend-js-components-web';
+import {fetch, sub} from 'frontend-js-web';
+import React, {useCallback, useState} from 'react';
+
+const EDITOR_PORTLET_ID =
+	'com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet';
+
+const ITEM_SELECTOR_URL_RESOURCE_COMMAND =
+	'/frontend_data_set_fragment/get_info_item_selector_url';
+
+type IdentifierField = 'classPK' | 'externalReferenceCode';
+
+interface IMappedTokenValue {
+	className: string;
+	classPK: string;
+	externalReferenceCode: string;
+	fieldId: IdentifierField;
+	title?: string;
+}
+
+type TokenValue = string | IMappedTokenValue;
+
+function isMappedTokenValue(value: TokenValue): value is IMappedTokenValue {
+	return typeof value === 'object' && value !== null;
+}
 
 interface IConfigurationField {
 	onValueSelect: (name: string, value: any) => void;
@@ -23,12 +45,211 @@ interface IConfigurationField {
 	};
 }
 
+function buildResourceURL(resourceCommand: string): string {
+	const url = new URL(window.location.href);
+
+	const params = new URLSearchParams();
+
+	url.searchParams.forEach((paramValue, paramKey) => {
+		if (!paramKey.startsWith('p_p_') && !paramKey.startsWith('_')) {
+			params.append(paramKey, paramValue);
+		}
+	});
+
+	params.set('p_p_id', EDITOR_PORTLET_ID);
+	params.set('p_p_lifecycle', '2');
+	params.set('p_p_resource_id', resourceCommand);
+	params.set('p_p_state', 'normal');
+
+	if (Liferay.authToken) {
+		params.set('p_auth', Liferay.authToken);
+	}
+
+	url.search = params.toString();
+
+	return url.toString();
+}
+
+function TokenRow({
+	onChange,
+	token,
+	tokenInputId,
+	value,
+}: {
+	onChange: (next: TokenValue) => void;
+	token: string;
+	tokenInputId: string;
+	value: TokenValue;
+}) {
+	const fieldSelectId = useId();
+
+	const [inputValue, setInputValue] = useState(
+		isMappedTokenValue(value) ? '' : value
+	);
+
+	const openInfoItemSelector = useCallback(async () => {
+		const response = await fetch(
+			buildResourceURL(ITEM_SELECTOR_URL_RESOURCE_COMMAND)
+		);
+
+		if (!response.ok) {
+			return;
+		}
+
+		const {eventName, url} = (await response.json()) as {
+			eventName: string;
+			url: string;
+		};
+
+		if (!url) {
+			return;
+		}
+
+		openSelectionModal({
+			onSelect: (selection: any) => {
+				if (!selection) {
+					return;
+				}
+
+				const selectedValue = JSON.parse(selection.value);
+
+				if (!selectedValue) {
+					return;
+				}
+
+				const currentFieldId = isMappedTokenValue(value)
+					? value.fieldId
+					: 'classPK';
+
+				onChange({
+					className: selectedValue.className,
+					classPK: String(selectedValue.classPK ?? ''),
+					externalReferenceCode:
+						selectedValue.externalReferenceCode ?? '',
+					fieldId: currentFieldId,
+					title: selectedValue.title,
+				});
+			},
+			selectEventName: eventName,
+			title: Liferay.Language.get('select-an-entity'),
+			url,
+		});
+	}, [onChange, value]);
+
+	const unmap = useCallback(() => {
+		onChange('');
+	}, [onChange]);
+
+	if (isMappedTokenValue(value)) {
+		const fieldOptions = [
+			{label: Liferay.Language.get('id'), value: 'classPK'},
+			{
+				label: Liferay.Language.get('external-reference-code'),
+				value: 'externalReferenceCode',
+			},
+		];
+
+		const displayValue =
+			value.title ||
+			(value.fieldId === 'externalReferenceCode'
+				? value.externalReferenceCode
+				: value.classPK);
+
+		return (
+			<ClayForm.Group key={token}>
+				<label htmlFor={tokenInputId}>{token}</label>
+
+				<ClayInput.Group small>
+					<ClayInput.GroupItem>
+						<ClayInput
+							id={tokenInputId}
+							readOnly
+							sizing="sm"
+							type="text"
+							value={displayValue}
+						/>
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem shrink>
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('change-entity')}
+							displayType="secondary"
+							onClick={openInfoItemSelector}
+							size="sm"
+							symbol="change"
+							title={Liferay.Language.get('change-entity')}
+						/>
+					</ClayInput.GroupItem>
+
+					<ClayInput.GroupItem shrink>
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('unmap')}
+							displayType="secondary"
+							onClick={unmap}
+							size="sm"
+							symbol="times"
+							title={Liferay.Language.get('unmap')}
+						/>
+					</ClayInput.GroupItem>
+				</ClayInput.Group>
+
+				<label htmlFor={fieldSelectId}>
+					{Liferay.Language.get('identifier-field')}
+				</label>
+
+				<ClaySelectWithOption
+					id={fieldSelectId}
+					onChange={(event) => {
+						onChange({
+							...value,
+							fieldId: event.target.value as IdentifierField,
+						});
+					}}
+					options={fieldOptions}
+					sizing="sm"
+					value={value.fieldId}
+				/>
+			</ClayForm.Group>
+		);
+	}
+
+	return (
+		<ClayForm.Group key={token}>
+			<label htmlFor={tokenInputId}>{token}</label>
+
+			<ClayInput.Group small>
+				<ClayInput.GroupItem>
+					<ClayInput
+						id={tokenInputId}
+						onBlur={(event) => onChange(event.target.value)}
+						onChange={(event) => setInputValue(event.target.value)}
+						sizing="sm"
+						type="text"
+						value={inputValue || ''}
+					/>
+				</ClayInput.GroupItem>
+
+				<ClayInput.GroupItem shrink>
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('map-to-entity')}
+						displayType="secondary"
+						onClick={openInfoItemSelector}
+						size="sm"
+						symbol="link"
+						title={Liferay.Language.get('map-to-entity')}
+					/>
+				</ClayInput.GroupItem>
+			</ClayInput.Group>
+		</ClayForm.Group>
+	);
+}
+
 export default function DataSetConfigurationFields({
 	onValueSelect,
 	values,
 }: IConfigurationField) {
 	const [localAPIURLTokenValues, setLocalAPIURLTokenValues] = useState<
-		Record<string, string>
+		Record<string, TokenValue>
 	>(JSON.parse(values.apiURLTokenValues || '{}'));
 
 	const itemSelectorInputId = useId();
@@ -92,6 +313,20 @@ export default function DataSetConfigurationFields({
 	];
 
 	const tokens = values.itemSelector.restEndpoint?.match(/{(.*?)}/g);
+
+	const updateTokenValue = useCallback(
+		(tokenKey: string, value: TokenValue) => {
+			const newTokensValue = {
+				...localAPIURLTokenValues,
+				[tokenKey]: value,
+			};
+
+			setLocalAPIURLTokenValues(newTokensValue);
+
+			onValueSelect('apiURLTokenValues', JSON.stringify(newTokensValue));
+		},
+		[localAPIURLTokenValues, onValueSelect]
+	);
 
 	return (
 		<>
@@ -203,32 +438,19 @@ export default function DataSetConfigurationFields({
 
 					const tokenInputId = `${tokenBaseInputId}_${tokenKey}`;
 
+					const tokenValue: TokenValue =
+						localAPIURLTokenValues[tokenKey] ?? '';
+
 					return (
-						<ClayForm.Group key={token}>
-							<label htmlFor={tokenInputId}>{token}</label>
-
-							<ClayInput
-								defaultValue={
-									localAPIURLTokenValues[tokenKey] || token
-								}
-								id={tokenInputId}
-								onChange={(event) => {
-									const newTokensValue = {
-										...localAPIURLTokenValues,
-										[tokenKey]: event.target.value,
-									};
-
-									setLocalAPIURLTokenValues(newTokensValue);
-
-									onValueSelect(
-										'apiURLTokenValues',
-										JSON.stringify(newTokensValue)
-									);
-								}}
-								sizing="sm"
-								type="text"
-							/>
-						</ClayForm.Group>
+						<TokenRow
+							key={token}
+							onChange={(value) =>
+								updateTokenValue(tokenKey, value)
+							}
+							token={token}
+							tokenInputId={tokenInputId}
+							value={tokenValue}
+						/>
 					);
 				})}
 		</>

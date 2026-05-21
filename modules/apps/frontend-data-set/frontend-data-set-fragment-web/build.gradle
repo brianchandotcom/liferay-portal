@@ -14,6 +14,7 @@ dependencies {
 	compileOnly project(":apps:info:info-api")
 	compileOnly project(":apps:item-selector:item-selector-api")
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
+	compileOnly project(":apps:layout:layout-content-page-editor-api")
 	compileOnly project(":apps:object:object-api")
 	compileOnly project(":apps:object:object-rest-api")
 	compileOnly project(":apps:portal-url-builder:portal-url-builder-api")

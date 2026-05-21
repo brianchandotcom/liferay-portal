@@ -92,7 +92,12 @@ export const USER_CONDITION_ITEMS = [
 	},
 ];
 
-const DEFAULT_OPERATORS = [OPERATORS.EQUAL, OPERATORS.NOT_EQUAL] as const;
+const DEFAULT_OPERATORS = [
+	OPERATORS.EQUAL,
+	OPERATORS.NOT_EQUAL,
+	OPERATORS.CONTAINS,
+	OPERATORS.DOES_NOT_CONTAIN,
+] as const;
 
 export function hasValueInput(
 	type: NonNullable<ConditionType['options']>['type'] | undefined

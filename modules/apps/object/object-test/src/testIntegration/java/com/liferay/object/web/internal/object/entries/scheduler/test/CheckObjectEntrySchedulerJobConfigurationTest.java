@@ -201,6 +201,28 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 			objectEntry2.getObjectEntryId());
 
 		Assert.assertTrue(objectEntry2.isExpired());
+
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			0, _objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+			).build());
+
+		objectEntry3 = _objectEntryLocalService.moveObjectEntryToTrash(
+			TestPropsValues.getUserId(), objectEntry3,
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertTrue(objectEntry3.isInTrash());
+
+		_updateExpirationDate(new Date(), objectEntry3);
+
+		_jobExecutorUnsafeRunnable.run();
+
+		objectEntry3 = _objectEntryLocalService.getObjectEntry(
+			objectEntry3.getObjectEntryId());
+
+		Assert.assertFalse(objectEntry3.isExpired());
+		Assert.assertTrue(objectEntry3.isInTrash());
 	}
 
 	@Test

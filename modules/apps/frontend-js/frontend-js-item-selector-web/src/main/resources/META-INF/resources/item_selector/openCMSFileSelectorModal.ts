@@ -166,9 +166,9 @@ const FDS_PROPS: Omit<
 				fields: [
 					{
 						contentRenderer: 'cmsFilesTitleCellRenderer',
-						fieldName: 'embedded.title',
+						fieldName: 'title',
 						label: Liferay.Language.get('title'),
-						sortable: false,
+						sortable: true,
 					},
 					{
 						fieldName: 'embedded.file.mimeType',
@@ -182,15 +182,15 @@ const FDS_PROPS: Omit<
 					},
 					{
 						contentRenderer: 'dateTime',
-						fieldName: 'embedded.dateModified',
+						fieldName: 'dateModified',
 						label: Liferay.Language.get('modified-date'),
-						sortable: false,
+						sortable: true,
 					},
 					{
 						contentRenderer: 'dateTime',
-						fieldName: 'embedded.dateCreated',
+						fieldName: 'dateCreated',
 						label: Liferay.Language.get('create-date'),
-						sortable: false,
+						sortable: true,
 					},
 				],
 			},

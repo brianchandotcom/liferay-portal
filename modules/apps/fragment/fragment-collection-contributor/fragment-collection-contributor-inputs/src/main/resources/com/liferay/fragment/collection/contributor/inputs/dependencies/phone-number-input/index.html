@@ -193,7 +193,7 @@
 				[/#if]
 			[/#if]
 
-			<div class="input-group-item input-group-append">
+			<div class="input-group-append input-group-item">
 				<input aria-describedby="${fragmentElementId}-help-text" aria-labelledby="${fragmentElementId}-label [#if input.errorMessage?has_content]${fragmentElementId}-error-message[/#if]" autocomplete="tel" class="form-control" [#if disabled]disabled[/#if] id="${fragmentElementId}-input" inputmode="tel" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then("required", "")} type="tel" [#if input.value??]value="${displayValue}"[/#if] />
 			</div>
 

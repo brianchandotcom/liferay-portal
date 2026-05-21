@@ -72,7 +72,7 @@ public class MVCCEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MVCCEntry>
+	private CollectionPersistenceFinder<MVCCEntry, NoSuchMVCCEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -113,16 +113,8 @@ public class MVCCEntryPersistenceImpl
 			long companyId, OrderByComparator<MVCCEntry> orderByComparator)
 		throws NoSuchMVCCEntryException {
 
-		MVCCEntry mvccEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (mvccEntry != null) {
-			return mvccEntry;
-		}
-
-		throw new NoSuchMVCCEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -163,7 +155,8 @@ public class MVCCEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<MVCCEntry> _uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder<MVCCEntry, NoSuchMVCCEntryException>
+		_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the mvcc entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchMVCCEntryException</code> if it could not be found.
@@ -177,21 +170,8 @@ public class MVCCEntryPersistenceImpl
 	public MVCCEntry findByC_N(long companyId, String name)
 		throws NoSuchMVCCEntryException {
 
-		MVCCEntry mvccEntry = fetchByC_N(companyId, name);
-
-		if (mvccEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMVCCEntryException(message);
-		}
-
-		return mvccEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -517,4 +497,4 @@ public class MVCCEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:91739843
+// LIFERAY-SERVICE-BUILDER-HASH:1906997069

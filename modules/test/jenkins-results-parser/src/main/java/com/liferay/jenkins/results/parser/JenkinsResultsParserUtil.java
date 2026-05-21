@@ -2908,25 +2908,20 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static JenkinsMaster getMostAvailableJenkinsMaster(
-		String baseInvocationURL, int invokedBatchSize,
-		String labelExpression) {
+		String baseInvocationURL, int invokedBatchSize) {
 
 		String mostAvailableMasterURL = getMostAvailableMasterURL(
-			baseInvocationURL, null, invokedBatchSize, null, labelExpression,
-			JenkinsMaster.getSlaveRAMMinimumDefault(),
-			JenkinsMaster.getSlavesPerHostDefault());
+			baseInvocationURL, null, invokedBatchSize);
 
 		return JenkinsMaster.getInstance(
 			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
 	}
 
 	public static JenkinsMaster getMostAvailableJenkinsMaster(
-		String baseInvocationURL, String blacklist, int invokedBatchSize,
-		int minimumRAM, int maximumSlavesPerHost) {
+		String baseInvocationURL, String blacklist, int invokedBatchSize) {
 
 		String mostAvailableMasterURL = getMostAvailableMasterURL(
-			baseInvocationURL, blacklist, invokedBatchSize, minimumRAM,
-			maximumSlavesPerHost);
+			baseInvocationURL, blacklist, invokedBatchSize);
 
 		return JenkinsMaster.getInstance(
 			mostAvailableMasterURL.replaceAll("http://(.+)", "$1"));
@@ -2936,42 +2931,19 @@ public class JenkinsResultsParserUtil {
 		String baseInvocationURL, int invokedBatchSize) {
 
 		return getMostAvailableMasterURL(
-			baseInvocationURL, null, invokedBatchSize,
-			JenkinsMaster.getSlaveRAMMinimumDefault(),
-			JenkinsMaster.getSlavesPerHostDefault());
+			baseInvocationURL, null, invokedBatchSize);
 	}
 
 	public static String getMostAvailableMasterURL(
-		String baseInvocationURL, int invokedBatchSize, int minimumRAM,
-		int maximumSlavesPerHost) {
+		String baseInvocationURL, String blacklist, int invokedBatchSize) {
 
 		return getMostAvailableMasterURL(
-			baseInvocationURL, null, invokedBatchSize, minimumRAM,
-			maximumSlavesPerHost);
+			baseInvocationURL, blacklist, invokedBatchSize, null);
 	}
 
 	public static String getMostAvailableMasterURL(
 		String baseInvocationURL, String blacklist, int invokedBatchSize,
-		int minimumRAM, int maximumSlavesPerHost) {
-
-		return getMostAvailableMasterURL(
-			baseInvocationURL, blacklist, invokedBatchSize, null, minimumRAM,
-			maximumSlavesPerHost);
-	}
-
-	public static String getMostAvailableMasterURL(
-		String baseInvocationURL, String blacklist, int invokedBatchSize,
-		String jobName, int minimumRAM, int maximumSlavesPerHost) {
-
-		return getMostAvailableMasterURL(
-			baseInvocationURL, blacklist, invokedBatchSize, jobName, null,
-			minimumRAM, maximumSlavesPerHost);
-	}
-
-	public static String getMostAvailableMasterURL(
-		String baseInvocationURL, String blacklist, int invokedBatchSize,
-		String jobName, String labelExpression, int minimumRAM,
-		int maximumSlavesPerHost) {
+		String jobName) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -2992,16 +2964,6 @@ public class JenkinsResultsParserUtil {
 		if (!isNullOrEmpty(jobName)) {
 			sb.append("&jobName=");
 			sb.append(fixURL(jobName));
-		}
-
-		if (!isNullOrEmpty(labelExpression)) {
-			sb.append("&labelExpression=");
-			sb.append(fixURL(labelExpression));
-		}
-
-		if (minimumRAM > 0) {
-			sb.append("&minimumRAM=");
-			sb.append(minimumRAM);
 		}
 
 		try {
@@ -3025,8 +2987,7 @@ public class JenkinsResultsParserUtil {
 			List<JenkinsMaster> availableJenkinsMasters =
 				LoadBalancerUtil.getAvailableJenkinsMasters(
 					LoadBalancerUtil.getMasterPrefix(baseInvocationURL),
-					blacklist, false, jobName, minimumRAM, maximumSlavesPerHost,
-					buildProperties, true);
+					blacklist, buildProperties, true);
 
 			Random random = new Random(getCurrentTimeMillis());
 

@@ -8,7 +8,6 @@ package com.liferay.jenkins.results.parser.github.webhook;
 import com.liferay.jenkins.results.parser.GitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitCommit;
 import com.liferay.jenkins.results.parser.GitHubRemoteGitRepository;
-import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil.HttpRequestMethod;
 import com.liferay.jenkins.results.parser.JenkinsStopBuildUtil;
@@ -1629,8 +1628,7 @@ public class GitHubWebhookPayloadProcessor {
 				"http://test-1.liferay.com",
 				_jenkinsBuildProperties.getProperty(
 					"jenkins.load.balancer.blacklist", ""),
-				1, JenkinsMaster.getSlaveRAMMinimumDefault(),
-				JenkinsMaster.getSlavesPerHostDefault());
+				1);
 		}
 		catch (Exception exception) {
 			if (_log.isInfoEnabled()) {

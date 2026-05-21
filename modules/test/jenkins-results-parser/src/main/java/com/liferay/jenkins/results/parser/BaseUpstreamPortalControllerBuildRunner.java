@@ -37,7 +37,7 @@ public abstract class BaseUpstreamPortalControllerBuildRunner
 		if (masterURL == null) {
 			masterURL = JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				"http://" + getInvocationCohortName() + ".liferay.com", null, 1,
-				invocationJobName, getSlaveLabel(testSuite), 24, 2);
+				invocationJobName);
 		}
 
 		return JenkinsResultsParserUtil.combine(

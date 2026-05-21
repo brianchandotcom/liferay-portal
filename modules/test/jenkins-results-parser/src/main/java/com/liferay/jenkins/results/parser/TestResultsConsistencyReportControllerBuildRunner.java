@@ -71,9 +71,7 @@ public class TestResultsConsistencyReportControllerBuildRunner
 		return JenkinsResultsParserUtil.combine(
 			JenkinsResultsParserUtil.getMostAvailableMasterURL(
 				"http://" + getInvocationCohortName() + ".liferay.com", null, 1,
-				jobName, getLabelExpression(jobName),
-				JenkinsMaster.getSlaveRAMMinimumDefault(),
-				JenkinsMaster.getSlavesPerHostDefault()),
+				jobName),
 			"/job/", jobName);
 	}
 

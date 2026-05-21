@@ -890,6 +890,10 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 		<mkdir dir="${project.dir}/dist" />
 
+		<property name="workspace.artifact.extension" value="" />
+		<property name="workspace.includes" value="**/*" />
+		<property name="workspace.repository.url" value="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases" />
+
 		<for param="workspace.dir">
 			<path>
 				<dirset
@@ -914,7 +918,15 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 				<local name="artifact.id" />
 
-				<property name="artifact.id" value="com.${processed.dir.name}" />
+				<if>
+					<equals arg1="${workspace.artifact.extension}" arg2="" />
+					<then>
+						<property name="artifact.id" value="com.${processed.dir.name}" />
+					</then>
+					<else>
+						<property name="artifact.id" value="com.${processed.dir.name}.${workspace.artifact.extension}" />
+					</else>
+				</if>
 
 				<delete dir="${user.home}/.m2/repository/com/liferay/workspaces/${artifact.id}" />
 				<delete file="${project.dir}/dist/${artifact.id}.pom" />
@@ -926,6 +938,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 				>
 					<zipfileset
 						dir="@{workspace.dir}"
+						includes="${workspace.includes}"
 					/>
 				</zip>
 
@@ -935,7 +948,7 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 				<artifact:deploy file="dist/${artifact.id}.zip">
 					<pom file="dist/${artifact.id}.pom" />
-					<remoteRepository url="https://repository-cdn.liferay.com/nexus/content/repositories/liferay-public-releases">
+					<remoteRepository url="${workspace.repository.url}">
 						<authentication password="${sonatype.release.password}" username="${sonatype.release.username}" />
 					</remoteRepository>
 				</artifact:deploy>

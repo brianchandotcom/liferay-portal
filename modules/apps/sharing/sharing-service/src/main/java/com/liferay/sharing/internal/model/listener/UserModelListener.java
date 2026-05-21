@@ -59,11 +59,11 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	private void _updateSharingEntries(User user) {
+		Date now = new Date();
+
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			user.getCompanyId(), TicketConstants.TYPE_INVITE_COLLABORATOR,
 			user.getEmailAddress());
-
-		Date now = new Date();
 
 		for (Ticket ticket : tickets) {
 			Date expirationDate = ticket.getExpirationDate();

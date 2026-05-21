@@ -9,6 +9,7 @@ import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
+import com.liferay.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.petra.lang.HashUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -253,7 +255,10 @@ public class JournalContentImpl implements JournalContent {
 
 				try {
 					if (productionMode) {
-						_portalCache.put(journalContentKey, articleDisplay);
+						_portalCache.put(
+							journalContentKey,
+							_replaceNonceWithPlaceholder(
+								articleDisplay, themeDisplay));
 					}
 				}
 				catch (ClassCastException classCastException) {
@@ -264,6 +269,10 @@ public class JournalContentImpl implements JournalContent {
 					}
 				}
 			}
+		}
+		else {
+			articleDisplay = _replacePlaceholderWithNonce(
+				articleDisplay, themeDisplay);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -477,6 +486,25 @@ public class JournalContentImpl implements JournalContent {
 		_journalTemplatePortalCacheIndexer.removeKeys(ddmTemplateKey);
 	}
 
+	private JournalArticleDisplay _copyWithContent(
+		JournalArticleDisplay articleDisplay, String content) {
+
+		return new JournalArticleDisplayImpl(
+			articleDisplay.getCompanyId(),
+			articleDisplay.getExternalReferenceCode(), articleDisplay.getId(),
+			articleDisplay.getResourcePrimKey(), articleDisplay.getGroupId(),
+			articleDisplay.getUserId(), articleDisplay.getArticleId(),
+			articleDisplay.getVersion(), articleDisplay.getTitle(),
+			articleDisplay.getUrlTitle(), articleDisplay.getDescription(),
+			articleDisplay.getAvailableLocales(), content,
+			articleDisplay.getDDMStructureId(),
+			articleDisplay.getDDMTemplateKey(), articleDisplay.isSmallImage(),
+			articleDisplay.getSmallImageId(), articleDisplay.getSmallImageURL(),
+			articleDisplay.getArticleDisplayImageURL(null),
+			articleDisplay.getNumberOfPages(), articleDisplay.getCurrentPage(),
+			articleDisplay.isPaginate(), articleDisplay.isCacheable());
+	}
+
 	private ThemeDisplay _getDefaultThemeDisplay() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -487,6 +515,48 @@ public class JournalContentImpl implements JournalContent {
 
 		return serviceContext.getThemeDisplay();
 	}
+
+	private JournalArticleDisplay _replaceNonceWithPlaceholder(
+		JournalArticleDisplay articleDisplay, ThemeDisplay themeDisplay) {
+
+		String nonceAttribute =
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				(themeDisplay != null) ? themeDisplay.getRequest() : null);
+
+		if (Validator.isBlank(nonceAttribute)) {
+			return articleDisplay;
+		}
+
+		String content = articleDisplay.getContent();
+
+		if ((content == null) || !content.contains(nonceAttribute)) {
+			return articleDisplay;
+		}
+
+		return _copyWithContent(
+			articleDisplay,
+			StringUtil.replace(content, nonceAttribute, _NONCE_PLACEHOLDER));
+	}
+
+	private JournalArticleDisplay _replacePlaceholderWithNonce(
+		JournalArticleDisplay articleDisplay, ThemeDisplay themeDisplay) {
+
+		String content = articleDisplay.getContent();
+
+		if ((content == null) || !content.contains(_NONCE_PLACEHOLDER)) {
+			return articleDisplay;
+		}
+
+		return _copyWithContent(
+			articleDisplay,
+			StringUtil.replace(
+				content, _NONCE_PLACEHOLDER,
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+					(themeDisplay != null) ? themeDisplay.getRequest() :
+						null)));
+	}
+
+	private static final String _NONCE_PLACEHOLDER = "data-lfr-nonce";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentImpl.class);

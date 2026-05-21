@@ -35,6 +35,7 @@ interface DateParts {
 	hour: number;
 	minute: number;
 	month: number;
+	offset?: string;
 	year: number;
 }
 
@@ -57,6 +58,7 @@ function normalizeDateParts(
 		hour: dateParts.hour ?? 0,
 		minute: dateParts.minute ?? 0,
 		month: dateParts.month ?? 0,
+		offset: dateParts.offset,
 		year: dateParts.year ?? 0,
 	};
 }
@@ -273,13 +275,15 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 	return '+00:00';
 }
 
-function zonedDatePartsToOdataDateTime(
-	dateParts: DateParts,
-	timeZone: string
-): string {
-	const naiveUTCMs = datePartsToInstantMs(dateParts);
+function computeOffsetForParts(dateParts: DateParts): string {
+	return getTimeZoneOffset(
+		Liferay.ThemeDisplay.getTimeZone(),
+		new Date(datePartsToInstantMs(dateParts))
+	);
+}
 
-	const offset = getTimeZoneOffset(timeZone, new Date(naiveUTCMs));
+function partsToOdataDateTime(dateParts: DateParts): string {
+	const offset = dateParts.offset || computeOffsetForParts(dateParts);
 
 	const offsetMatch = /^([+-])(\d{2}):(\d{2})$/.exec(offset);
 
@@ -292,7 +296,9 @@ function zonedDatePartsToOdataDateTime(
 			sign * (Number(offsetMatch[2]) * 60 + Number(offsetMatch[3]));
 	}
 
-	const utcDate = new Date(naiveUTCMs - offsetMinutes * 60 * 1000);
+	const utcDate = new Date(
+		datePartsToInstantMs(dateParts) - offsetMinutes * 60_000
+	);
 
 	return `${utcDate.getUTCFullYear()}-${pad2(
 		utcDate.getUTCMonth() + 1
@@ -330,10 +336,7 @@ function buildOdataString(
 
 	const edgeToOdata = (dateParts: DateParts, edge: 'from' | 'to'): string => {
 		if (dateTime) {
-			return zonedDatePartsToOdataDateTime(
-				dateParts,
-				Liferay.ThemeDisplay.getTimeZone()
-			);
+			return partsToOdataDateTime(dateParts);
 		}
 
 		const iso = dateOnlyEdgeIso(dateParts, edge);
@@ -592,11 +595,19 @@ const DateTimeRangeFilter = ({
 							setFilter({active: false});
 						}
 						else {
+							const withOffset = (
+								dateParts: DateParts | null
+							): DateParts | null =>
+								dateParts && {
+									...dateParts,
+									offset: computeOffsetForParts(dateParts),
+								};
+
 							setFilter({
 								active: true,
 								selectedData: {
-									from: toSelectedData(fromDateParts),
-									to: toSelectedData(toDateParts),
+									from: toSelectedData(withOffset(fromDateParts)),
+									to: toSelectedData(withOffset(toDateParts)),
 								},
 							});
 						}

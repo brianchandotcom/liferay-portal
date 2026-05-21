@@ -25,27 +25,6 @@ public class ImportRequest implements Cloneable, Serializable {
 		return ImportRequestSerDes.toDTO(json);
 	}
 
-	public Long getFileEntryId() {
-		return fileEntryId;
-	}
-
-	public void setFileEntryId(Long fileEntryId) {
-		this.fileEntryId = fileEntryId;
-	}
-
-	public void setFileEntryId(
-		UnsafeSupplier<Long, Exception> fileEntryIdUnsafeSupplier) {
-
-		try {
-			fileEntryId = fileEntryIdUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Long fileEntryId;
-
 	public RequestPortletDataHandler[] getRequestPortletDataHandlers() {
 		return requestPortletDataHandlers;
 	}
@@ -103,4 +82,4 @@ public class ImportRequest implements Cloneable, Serializable {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2076290035
+// LIFERAY-REST-BUILDER-HASH:838738253

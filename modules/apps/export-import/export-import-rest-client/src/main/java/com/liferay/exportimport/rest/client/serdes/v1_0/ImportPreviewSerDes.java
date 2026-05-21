@@ -102,16 +102,6 @@ public class ImportPreviewSerDes {
 			sb.append("\"");
 		}
 
-		if (importPreview.getFileEntryId() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"fileEntryId\": ");
-
-			sb.append(importPreview.getFileEntryId());
-		}
-
 		if (importPreview.getFileName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -222,14 +212,6 @@ public class ImportPreviewSerDes {
 				liferayToJSONDateFormat.format(importPreview.getExportDate()));
 		}
 
-		if (importPreview.getFileEntryId() == null) {
-			map.put("fileEntryId", null);
-		}
-		else {
-			map.put(
-				"fileEntryId", String.valueOf(importPreview.getFileEntryId()));
-		}
-
 		if (importPreview.getFileName() == null) {
 			map.put("fileName", null);
 		}
@@ -284,9 +266,6 @@ public class ImportPreviewSerDes {
 			else if (Objects.equals(jsonParserFieldName, "exportDate")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "fileName")) {
 				return false;
 			}
@@ -329,12 +308,6 @@ public class ImportPreviewSerDes {
 				if (jsonParserFieldValue != null) {
 					importPreview.setExportDate(
 						toDate((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "fileEntryId")) {
-				if (jsonParserFieldValue != null) {
-					importPreview.setFileEntryId(
-						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fileName")) {
@@ -455,4 +428,4 @@ public class ImportPreviewSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1494994145
+// LIFERAY-REST-BUILDER-HASH:810142079

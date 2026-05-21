@@ -81,7 +81,9 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 					tabIndex={0}
 					title={formattedDate ?? ''}
 				>
-					<Label displayType="warning">{expiringSoonText}</Label>
+					<Label displayType="warning" inverse>
+						{expiringSoonText}
+					</Label>
 				</span>
 			</ClayTooltipProvider>
 		</span>

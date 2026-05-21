@@ -794,6 +794,11 @@ export function filterAndConvertMappingFields(
 
 	return mappingFields
 		.flatMap((field) => ('fields' in field ? field.fields : [field]))
+		.filter((field) => {
+			const objectField = field as ObjectField;
+
+			return SUPPORTED_FIELD_TYPES.has(objectField.type);
+		})
 		.map((field) => {
 			const objectField = field as ObjectField;
 
@@ -805,3 +810,16 @@ export function filterAndConvertMappingFields(
 			};
 		});
 }
+
+const SUPPORTED_FIELD_TYPES = new Set<string>([
+	'boolean',
+	'date',
+	'date-time',
+	'file',
+	'long-text',
+	'multiselect',
+	'number',
+	'select',
+	'text',
+	'url',
+]);

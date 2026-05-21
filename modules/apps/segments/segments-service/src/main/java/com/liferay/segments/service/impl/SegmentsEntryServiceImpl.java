@@ -141,11 +141,11 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, int start, int end,
+		long groupId, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return segmentsEntryLocalService.getSegmentsEntries(
-			groupId, source, start, end, orderByComparator);
+			groupId, sources, start, end, orderByComparator);
 	}
 
 	@Override
@@ -155,9 +155,9 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public int getSegmentsEntriesCount(long groupId, String source) {
+	public int getSegmentsEntriesCount(long groupId, String[] sources) {
 		return segmentsEntryPersistence.filterCountByG_SRC(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId), source);
+			_portal.getCurrentAndAncestorSiteGroupIds(groupId), sources);
 	}
 
 	@Override
@@ -191,16 +191,15 @@ public class SegmentsEntryServiceImpl extends SegmentsEntryServiceBaseImpl {
 
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords, int start, int end,
-			Sort sort)
+			long companyId, long groupId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.VIEW);
 
 		return segmentsEntryLocalService.searchSegmentsEntries(
-			companyId, groupId, keywords, new LinkedHashMap<>(), start, end,
-			sort);
+			companyId, groupId, keywords, params, start, end, sort);
 	}
 
 	@Override

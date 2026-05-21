@@ -30,23 +30,11 @@ function buildVocabulariesURL(currentSiteId) {
 
 const ACTIONS = {
 	deleteVocabularies(itemData, portletNamespace) {
-		const TitleCell = ({itemData: vocabulary}) =>
-			`${vocabulary.name} (${itemData.siteName})`;
-
 		openItemSelectorModal({
 			apiURL: buildVocabulariesURL(itemData.currentSiteId),
 			confirmButtonLabel: Liferay.Language.get('delete'),
 			fdsProps: {
 				configInURLBehavior: 'OFF',
-				customRenderers: {
-					tableCell: [
-						{
-							component: TitleCell,
-							name: 'titleWithScope',
-							type: 'internal',
-						},
-					],
-				},
 				id: 'assetCategoriesAdminVocabularyDeleteFDS',
 				pagination: {
 					deltas: [{label: 20}, {label: 50}],
@@ -60,7 +48,6 @@ const ACTIONS = {
 						schema: {
 							fields: [
 								{
-									contentRenderer: 'titleWithScope',
 									fieldName: 'name',
 									label: Liferay.Language.get('title'),
 								},

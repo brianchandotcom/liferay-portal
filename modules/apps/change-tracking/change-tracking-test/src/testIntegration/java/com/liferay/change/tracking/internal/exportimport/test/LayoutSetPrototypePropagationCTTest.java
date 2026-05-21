@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTProcessLocalService;
+import com.liferay.layout.set.prototype.helper.LayoutSetPrototypeHelper;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -95,7 +96,7 @@ public class LayoutSetPrototypePropagationCTTest {
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			group.getGroupId(), false);
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 
 		Thread.sleep(2000);
 
@@ -212,6 +213,9 @@ public class LayoutSetPrototypePropagationCTTest {
 
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
+
+	@Inject
+	private LayoutSetPrototypeHelper _layoutSetPrototypeHelper;
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

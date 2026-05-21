@@ -1071,8 +1071,8 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, 0, layoutSetPrototype.getLayoutSetPrototypeId(),
 				false, true);
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup, testGroup.getPrivateLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, testGroup.getPrivateLayoutSet());
 
 			LayoutSet publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -1139,8 +1139,8 @@ public class LayoutSetPrototypePropagationTest
 				testGroup, layoutSetPrototype.getLayoutSetPrototypeId(), 0,
 				true, false);
 
-			_sites.mergeLayoutSetPrototypeLayouts(
-				testGroup, testGroup.getPublicLayoutSet());
+			_layoutSetPrototypeHelper.executeLayoutSetSync(
+				false, testGroup.getPublicLayoutSet());
 
 			publicLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
 				testGroup.getGroupId(), false);
@@ -1471,7 +1471,7 @@ public class LayoutSetPrototypePropagationTest
 
 		layoutSet = LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
 
-		_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+		_layoutSetPrototypeHelper.executeLayoutSetSync(false, layoutSet);
 
 		Thread.sleep(2000);
 

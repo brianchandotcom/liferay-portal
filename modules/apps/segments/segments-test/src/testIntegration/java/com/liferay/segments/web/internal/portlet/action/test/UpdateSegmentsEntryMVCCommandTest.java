@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -118,6 +120,84 @@ public class UpdateSegmentsEntryMVCCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-91094")
+	public void testAddSegmentsEntryFromAudiencesPortletUsesAudienceSource()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequests(SegmentsPortletKeys.AUDIENCES);
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.USER, TestPropsValues.getUser());
+
+		mockLiferayPortletActionRequest.setParameter("active", StringPool.TRUE);
+		mockLiferayPortletActionRequest.setParameter(
+			"criterionFiltercontext",
+			String.format("(url eq '%s')", "/pricing"));
+		mockLiferayPortletActionRequest.setParameter(
+			"description_" + LocaleUtil.getDefault(), "An audience.");
+		mockLiferayPortletActionRequest.setParameter(
+			"name_" + LocaleUtil.getDefault(), "New Audience Entry");
+		mockLiferayPortletActionRequest.setParameter(
+			"saveAndContinue", StringPool.TRUE);
+		mockLiferayPortletActionRequest.setParameter(
+			"segmentsEntryKey", "audience_key");
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "audience_key");
+
+		Assert.assertEquals(
+			SegmentsEntryConstants.SOURCE_AUDIENCE, segmentsEntry.getSource());
+	}
+
+	@Test
+	@TestInfo("LPD-91094")
+	public void testAddSegmentsEntryFromSegmentsPortletUsesDefaultSource()
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequests();
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		User user = TestPropsValues.getUser();
+
+		mockLiferayPortletActionRequest.setAttribute(WebKeys.USER, user);
+
+		mockLiferayPortletActionRequest.setParameter(
+			"criterionFilteruser",
+			String.format("(lastName eq '%s')", user.getLastName()));
+
+		mockLiferayPortletActionRequest.setParameter(
+			"name_" + LocaleUtil.getDefault(), "New Segment Entry");
+		mockLiferayPortletActionRequest.setParameter(
+			"description_" + LocaleUtil.getDefault(), "A segment.");
+		mockLiferayPortletActionRequest.setParameter("active", StringPool.TRUE);
+		mockLiferayPortletActionRequest.setParameter(
+			"saveAndContinue", StringPool.TRUE);
+		mockLiferayPortletActionRequest.setParameter(
+			"segmentsEntryKey", "segment_key");
+
+		_mvcActionCommand.processAction(
+			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+
+		SegmentsEntry segmentsEntry =
+			_segmentsEntryLocalService.fetchSegmentsEntry(
+				_group.getGroupId(), "segment_key");
+
+		Assert.assertEquals(
+			SegmentsEntryConstants.SOURCE_DEFAULT, segmentsEntry.getSource());
+	}
+
+	@Test
 	public void testUpdateSegmentsEntry() throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequests();
@@ -192,14 +272,21 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			_getMockLiferayPortletActionRequests()
 		throws Exception {
 
+		return _getMockLiferayPortletActionRequests(
+			SegmentsPortletKeys.SEGMENTS);
+	}
+
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequests(String portletId)
+		throws Exception {
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
-		Portlet portlet = _portletLocalService.getPortletById(
-			SegmentsPortletKeys.SEGMENTS);
+		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		LiferayPortletConfig liferayPortletConfig =
 			(LiferayPortletConfig)PortletConfigFactoryUtil.create(
@@ -209,7 +296,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 			JavaConstants.JAKARTA_PORTLET_CONFIG, liferayPortletConfig);
 
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.PORTLET_ID, SegmentsPortletKeys.SEGMENTS);
+			WebKeys.PORTLET_ID, portletId);
 
 		return mockLiferayPortletActionRequest;
 	}

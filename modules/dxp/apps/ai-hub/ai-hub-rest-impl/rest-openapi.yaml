@@ -181,8 +181,24 @@ components:
             type: object
         ProvisioningRequest:
             properties:
-                customerName:
+                accountEntryExternalReferenceCode:
                     type: string
+                accountEntryId:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                accountEntryName:
+                    type: string
+                liferayDXPURL:
+                    type: string
+                userAccounts:
+                    items:
+                        $ref: "#/components/schemas/UserAccount"
+                    type: array
+            required:
+                -   accountEntryName
+                -   liferayDXPURL
+                -   userAccounts
             type: object
         Site:
             properties:
@@ -199,6 +215,19 @@ components:
                     type: string
                 label_i18n:
                     type: string
+            type: object
+        UserAccount:
+            properties:
+                emailAddress:
+                    type: string
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                screenName:
+                    type: string
+            required:
+                -   emailAddress
             type: object
         Variable:
             properties:
@@ -484,8 +513,12 @@ paths:
             responses:
                 200:
                     content:
-                        application/json: {}
-                        application/xml: {}
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ProvisioningRequest"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ProvisioningRequest"
             tags: ["ProvisioningRequest"]
     "/sites/by-external-reference-code/{externalReferenceCode}/site-initializer":
         put:

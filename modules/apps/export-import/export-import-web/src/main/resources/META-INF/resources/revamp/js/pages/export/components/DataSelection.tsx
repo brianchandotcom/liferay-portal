@@ -64,6 +64,15 @@ export default function DataSelection({
 				/>
 			)}
 
+			<CheckboxSheet
+				description={Liferay.Language.get(
+					'export-import-permissions-help'
+				)}
+				label={Liferay.Language.get('export-permissions')}
+				name="permissions"
+				title={Liferay.Language.get('permissions')}
+			/>
+
 			<div className="sr-only" role="status">
 				{loading
 					? Liferay.Language.get('loading')

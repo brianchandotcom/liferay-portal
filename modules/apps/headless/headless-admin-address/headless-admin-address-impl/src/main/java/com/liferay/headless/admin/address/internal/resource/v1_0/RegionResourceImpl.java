@@ -12,9 +12,11 @@ import com.liferay.headless.admin.address.internal.dto.v1_0.converter.constants.
 import com.liferay.headless.admin.address.resource.v1_0.RegionResource;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.RegionTable;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
@@ -99,6 +102,12 @@ public class RegionResourceImpl
 				_toOrderByComparator(sorts));
 
 		return Page.of(
+			HashMapBuilder.put(
+				"createBatch",
+				addAction(
+					ActionKeys.UPDATE, "postCountryRegionBatch",
+					Country.class.getName(), countryId)
+			).build(),
 			transform(baseModelSearchResult.getBaseModels(), this::_toRegion),
 			pagination, baseModelSearchResult.getLength());
 	}

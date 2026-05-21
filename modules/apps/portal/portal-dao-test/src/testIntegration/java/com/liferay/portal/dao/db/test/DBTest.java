@@ -672,10 +672,14 @@ public class DBTest {
 
 			futureTask = new FutureTask<>(
 				() -> {
-					db.runSQL(
-						connection,
-						"update " + TABLE_NAME_1 +
-							" set nilColumn = 'waiting' where id = 1");
+					try (Connection backgroundConnection =
+							DataAccess.getConnection()) {
+
+						db.runSQL(
+							backgroundConnection,
+							"update " + TABLE_NAME_1 +
+								" set nilColumn = 'waiting' where id = 1");
+					}
 
 					return null;
 				});
@@ -689,6 +693,10 @@ public class DBTest {
 			long endTime = System.currentTimeMillis() + 30000;
 
 			while (System.currentTimeMillis() < endTime) {
+				if (futureTask.isDone()) {
+					futureTask.get();
+				}
+
 				for (DB.QueryInfo lockedQueryInfo :
 						db.getLockedQueryInfos(lockingConnection)) {
 

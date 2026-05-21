@@ -71,9 +71,10 @@ public class AssetAnalyticsAttributesProviderTest {
 	}
 
 	private void _assertCMSVersion(
-		AssetAnalyticsAttributesProvider provider, String expectedVersion) {
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider,
+		String expectedVersion) {
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_VIEW,
 			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
 
@@ -83,9 +84,10 @@ public class AssetAnalyticsAttributesProviderTest {
 	}
 
 	private void _assertType(
-		AssetAnalyticsAttributesProvider provider, String expectedType) {
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider,
+		String expectedType) {
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_VIEW,
 			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
 
@@ -139,7 +141,7 @@ public class AssetAnalyticsAttributesProviderTest {
 		AssetEntry objectEntry = _mockAssetEntry(
 			className, RandomTestUtil.randomLong(), companyId);
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
 
 		ObjectDefinition objectDefinition = Mockito.mock(
@@ -159,7 +161,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			true
 		);
 
-		_assertCMSVersion(provider, "2.0");
+		_assertCMSVersion(assetAnalyticsAttributesProvider, "2.0");
 
 		Mockito.when(
 			objectDefinition.isCMS()
@@ -167,7 +169,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			false
 		);
 
-		_assertCMSVersion(provider, "1.0");
+		_assertCMSVersion(assetAnalyticsAttributesProvider, "1.0");
 
 		_objectDefinitionLocalServiceUtilMockedStatic.when(
 			() ->
@@ -177,7 +179,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			null
 		);
 
-		_assertCMSVersion(provider, "1.0");
+		_assertCMSVersion(assetAnalyticsAttributesProvider, "1.0");
 	}
 
 	private void _testBuildAttributesForBlogsEntry() {
@@ -185,10 +187,10 @@ public class AssetAnalyticsAttributesProviderTest {
 			"com.liferay.blogs.model.BlogsEntry", RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 			AssetAnalyticsAttributesProvider.FIELD_TITLE);
 
@@ -201,10 +203,10 @@ public class AssetAnalyticsAttributesProviderTest {
 			"com.liferay.document.library.kernel.model.DLFileEntry",
 			RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 			AssetAnalyticsAttributesProvider.FIELD_TITLE);
 
@@ -244,11 +246,11 @@ public class AssetAnalyticsAttributesProviderTest {
 			_CLASS_NAME_JOURNAL_ARTICLE, journalArticleClassPK,
 			RandomTestUtil.randomLong());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(
 				assetEntry, assetRenderer, LocaleUtil.US);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_VIEW,
 			AssetAnalyticsAttributesProvider.FIELD_CONTENT);
 
@@ -283,7 +285,7 @@ public class AssetAnalyticsAttributesProviderTest {
 		AssetEntry objectEntry = _mockAssetEntry(
 			className, RandomTestUtil.randomLong(), companyId);
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(objectEntry, null, null);
 
 		ObjectDefinition objectDefinition = Mockito.mock(
@@ -303,7 +305,7 @@ public class AssetAnalyticsAttributesProviderTest {
 			"MyCMSType"
 		);
 
-		_assertType(provider, "my-cms-type");
+		_assertType(assetAnalyticsAttributesProvider, "my-cms-type");
 
 		Mockito.when(
 			objectDefinition.getName()
@@ -311,16 +313,16 @@ public class AssetAnalyticsAttributesProviderTest {
 			null
 		);
 
-		_assertType(provider, "object-entry");
+		_assertType(assetAnalyticsAttributesProvider, "object-entry");
 	}
 
 	private void _testBuildAttributesWithoutAssetEntry() {
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(null, null, null);
 
 		Assert.assertEquals(
 			StringPool.BLANK,
-			provider.buildAttributes(
+			assetAnalyticsAttributesProvider.buildAttributes(
 				AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 				AssetAnalyticsAttributesProvider.FIELD_TITLE));
 	}
@@ -330,10 +332,10 @@ public class AssetAnalyticsAttributesProviderTest {
 			_CLASS_NAME_JOURNAL_ARTICLE, RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(assetEntry, null, null);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 			AssetAnalyticsAttributesProvider.FIELD_TITLE);
 
@@ -348,11 +350,11 @@ public class AssetAnalyticsAttributesProviderTest {
 		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
 			RandomTestUtil.randomString());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(
 				assetEntry, assetRenderer, LocaleUtil.US);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION, null);
 
 		Assert.assertFalse(attributes.contains("analytics-asset-field="));
@@ -366,11 +368,11 @@ public class AssetAnalyticsAttributesProviderTest {
 		AssetRenderer<?> assetRenderer = _mockAssetRenderer(
 			RandomTestUtil.randomString());
 
-		AssetAnalyticsAttributesProvider provider =
+		AssetAnalyticsAttributesProvider assetAnalyticsAttributesProvider =
 			new AssetAnalyticsAttributesProvider(
 				assetEntry, assetRenderer, null);
 
-		String attributes = provider.buildAttributes(
+		String attributes = assetAnalyticsAttributesProvider.buildAttributes(
 			AssetAnalyticsAttributesProvider.ACTION_IMPRESSION,
 			AssetAnalyticsAttributesProvider.FIELD_TITLE);
 

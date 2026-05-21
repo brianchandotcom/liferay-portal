@@ -314,4 +314,61 @@ describe('Picker basic rendering', () => {
 		expect(getByText('2').closest('a')).toBeNull();
 		expect(getByText('4').closest('a')).toBeNull();
 	});
+
+	it('does not render the keyboard arrows indicator by default', () => {
+		const {getByRole, queryByRole} = render(
+			<Picker>
+				<Option key="apple">Apple</Option>
+
+				<Option key="banana">Banana</Option>
+			</Picker>
+		);
+
+		userEvent.click(getByRole('combobox'));
+
+		expect(queryByRole('img')).not.toHaveClass(
+			'clay-keyboard-arrows-indicator'
+		);
+	});
+
+	it('renders the keyboard arrows indicator alongside the menu when enabled', () => {
+		const {getByRole} = render(
+			<Picker displayKeyboardArrowsIndicator>
+				<Option key="apple">Apple</Option>
+
+				<Option key="banana">Banana</Option>
+			</Picker>
+		);
+
+		userEvent.click(getByRole('combobox'));
+
+		const indicator = document.querySelector(
+			'.clay-keyboard-arrows-indicator'
+		);
+
+		expect(indicator).toBeInTheDocument();
+		expect(indicator).toHaveClass('clay-keyboard-arrows-vertical');
+		expect(indicator).toHaveClass(
+			'clay-keyboard-arrows-indicator-floating'
+		);
+	});
+
+	it('uses the localized label on the keyboard arrows indicator', () => {
+		const {getByRole} = render(
+			<Picker
+				displayKeyboardArrowsIndicator
+				keyboardArrowsIndicatorLabel="Use up and down to navigate options"
+			>
+				<Option key="apple">Apple</Option>
+
+				<Option key="banana">Banana</Option>
+			</Picker>
+		);
+
+		userEvent.click(getByRole('combobox'));
+
+		expect(
+			document.querySelector('.clay-keyboard-arrows-indicator')
+		).toHaveAttribute('aria-label', 'Use up and down to navigate options');
+	});
 });

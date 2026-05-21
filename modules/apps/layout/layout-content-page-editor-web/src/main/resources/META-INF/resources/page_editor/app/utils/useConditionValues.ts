@@ -13,7 +13,7 @@ import {
 	filterAndConvertMappingFields,
 } from '../../plugins/page_rules/components/Condition';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
-import OPERATORS from '../../plugins/page_rules/components/operators';
+import OPERATORS from '../../plugins/page_rules/constants/operators';
 import {Condition} from '../../types/Rule';
 import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';

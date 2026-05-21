@@ -234,34 +234,28 @@ export default function CriteriaRowEditable({
 					displayType=""
 					onClick={_handleDelete}
 				>
-					{Liferay.Language.get('delete-segment-property')}
+					{Liferay.Language.get('delete-property')}
 				</ClayButton>
 			) : (
 				<>
 					<ClayButton
-						aria-label={Liferay.Language.get(
-							'duplicate-segment-property'
-						)}
+						aria-label={Liferay.Language.get('duplicate-property')}
 						className="btn-outline-borderless btn-sm c-mr-1"
 						displayType="secondary"
 						monospaced
 						onClick={_handleDuplicate}
-						title={Liferay.Language.get(
-							'duplicate-segment-property'
-						)}
+						title={Liferay.Language.get('duplicate-property')}
 					>
 						<ClayIcon symbol="paste" />
 					</ClayButton>
 
 					<ClayButton
-						aria-label={Liferay.Language.get(
-							'delete-segment-property'
-						)}
+						aria-label={Liferay.Language.get('delete-property')}
 						className="btn-outline-borderless btn-sm"
 						displayType="secondary"
 						monospaced
 						onClick={_handleDelete}
-						title={Liferay.Language.get('delete-segment-property')}
+						title={Liferay.Language.get('delete-property')}
 					>
 						<ClayIcon symbol="times-circle" />
 					</ClayButton>

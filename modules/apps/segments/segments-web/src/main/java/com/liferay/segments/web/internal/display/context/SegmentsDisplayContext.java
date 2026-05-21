@@ -49,6 +49,7 @@ import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.web.internal.security.permission.resource.SegmentsEntryPermission;
+import com.liferay.segments.web.internal.util.AudiencesPortletUtil;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryModifiedDateComparator;
 import com.liferay.segments.web.internal.util.comparator.SegmentsEntryNameComparator;
 
@@ -168,7 +169,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
-			_renderRequest, SegmentsPortletKeys.SEGMENTS, "list");
+			_renderRequest, _getPortletId(), "list");
 
 		return _displayStyle;
 	}
@@ -191,7 +192,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
-			_renderRequest, SegmentsPortletKeys.SEGMENTS, "asc");
+			_renderRequest, _getPortletId(), "asc");
 
 		return _orderByType;
 	}
@@ -255,7 +256,9 @@ public class SegmentsDisplayContext {
 		}
 
 		SearchContainer<SegmentsEntry> searchContainer = new SearchContainer<>(
-			_renderRequest, _getPortletURL(), null, "there-are-no-segments");
+			_renderRequest, _getPortletURL(), null,
+			AudiencesPortletUtil.isAudiencesPortlet(_renderRequest) ?
+				"there-are-no-audiences" : "there-are-no-segments");
 
 		searchContainer.setId("segmentsEntries");
 		searchContainer.setOrderByCol(_getOrderByCol());
@@ -271,7 +274,8 @@ public class SegmentsDisplayContext {
 					searchContainer.getEnd(), _getSort()));
 		}
 		else if (!FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863")) {
+					CompanyConstants.SYSTEM, "LPD-78863") &&
+				 !AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
 
 			searchContainer.setResultsAndTotal(
 				() -> _segmentsEntryService.getSegmentsEntries(
@@ -298,7 +302,8 @@ public class SegmentsDisplayContext {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-78863")) {
+				CompanyConstants.SYSTEM, "LPD-78863") &&
+			!AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
 
 			searchContainer.setRowChecker(null);
 		}
@@ -354,7 +359,8 @@ public class SegmentsDisplayContext {
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyConstants.SYSTEM, "LPD-78863")) {
+				CompanyConstants.SYSTEM, "LPD-78863") &&
+			!AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
 
 			return StringPool.BLANK;
 		}
@@ -436,8 +442,14 @@ public class SegmentsDisplayContext {
 					_permissionChecker, segmentsEntry,
 					ActionKeys.ASSIGN_USER_ROLES)) {
 
-				return FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863");
+				if (FeatureFlagManagerUtil.isEnabled(
+						CompanyConstants.SYSTEM, "LPD-78863") ||
+					AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+
+					return true;
+				}
+
+				return false;
 			}
 
 			return false;
@@ -482,8 +494,9 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowUpdateAction(SegmentsEntry segmentsEntry) {
 		try {
-			if (FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863") &&
+			if ((FeatureFlagManagerUtil.isEnabled(
+					CompanyConstants.SYSTEM, "LPD-78863") ||
+				 AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) &&
 				SegmentsEntryPermission.contains(
 					_permissionChecker, segmentsEntry, ActionKeys.UPDATE)) {
 
@@ -501,8 +514,9 @@ public class SegmentsDisplayContext {
 
 	public boolean isShowViewAction(SegmentsEntry segmentsEntry) {
 		try {
-			if (FeatureFlagManagerUtil.isEnabled(
-					CompanyConstants.SYSTEM, "LPD-78863") &&
+			if ((FeatureFlagManagerUtil.isEnabled(
+					CompanyConstants.SYSTEM, "LPD-78863") ||
+				 AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) &&
 				SegmentsEntryPermission.contains(
 					_permissionChecker, segmentsEntry, ActionKeys.VIEW)) {
 
@@ -546,7 +560,7 @@ public class SegmentsDisplayContext {
 		}
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
-			_renderRequest, SegmentsPortletKeys.SEGMENTS, "modified-date");
+			_renderRequest, _getPortletId(), "modified-date");
 
 		return _orderByCol;
 	}
@@ -568,6 +582,14 @@ public class SegmentsDisplayContext {
 		}
 
 		return null;
+	}
+
+	private String _getPortletId() {
+		if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+			return SegmentsPortletKeys.AUDIENCES;
+		}
+
+		return SegmentsPortletKeys.SEGMENTS;
 	}
 
 	private PortletURL _getPortletURL() {

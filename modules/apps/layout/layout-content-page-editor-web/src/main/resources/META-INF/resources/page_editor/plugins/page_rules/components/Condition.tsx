@@ -126,6 +126,9 @@ export function getOperators(type: string | undefined): ReadonlyArray<{
 				OPERATORS.LESS_THAN_OR_EQUALS,
 			];
 
+		case 'file':
+			return [OPERATORS.IS_EMPTY, OPERATORS.IS_NOT_EMPTY];
+
 		case 'multiselect':
 			return [
 				OPERATORS.EQUAL,

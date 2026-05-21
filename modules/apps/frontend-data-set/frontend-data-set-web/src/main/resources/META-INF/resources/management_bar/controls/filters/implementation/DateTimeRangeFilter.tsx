@@ -159,7 +159,37 @@ export function parseClayValue(
 	};
 }
 
-function nowInTimeZone(timeZone: string): DateParts {
+function parseGmtOffset(value: string | undefined): string {
+	if (!value) {
+		return '+00:00';
+	}
+
+	const match = /^GMT([+-])(\d{1,2})(?::(\d{2}))?$/.exec(value);
+
+	if (!match) {
+		return '+00:00';
+	}
+
+	return `${match[1]}${match[2].padStart(2, '0')}:${(match[3] || '00').padStart(2, '0')}`;
+}
+
+function parseOffsetMinutes(offset: string | undefined): number {
+	if (!offset) {
+		return 0;
+	}
+
+	const match = /^([+-])(\d{2}):(\d{2})$/.exec(offset);
+
+	if (!match) {
+		return 0;
+	}
+
+	const sign = match[1] === '+' ? 1 : -1;
+
+	return sign * (Number(match[2]) * 60 + Number(match[3]));
+}
+
+function extractPartsInTimeZone(date: Date, timeZone: string): DateParts {
 	const formatter = new Intl.DateTimeFormat('en-US', {
 		day: '2-digit',
 		hour: '2-digit',
@@ -167,12 +197,13 @@ function nowInTimeZone(timeZone: string): DateParts {
 		minute: '2-digit',
 		month: '2-digit',
 		timeZone,
+		timeZoneName: 'longOffset',
 		year: 'numeric',
 	});
 
 	const dateParts: Record<string, string> = {};
 
-	for (const part of formatter.formatToParts(new Date())) {
+	for (const part of formatter.formatToParts(date)) {
 		if (part.type !== 'literal') {
 			dateParts[part.type] = part.value;
 		}
@@ -183,8 +214,36 @@ function nowInTimeZone(timeZone: string): DateParts {
 		hour: dateParts.hour === '24' ? 0 : Number(dateParts.hour),
 		minute: Number(dateParts.minute),
 		month: Number(dateParts.month),
+		offset: parseGmtOffset(dateParts.timeZoneName),
 		year: Number(dateParts.year),
 	};
+}
+
+function nowInTimeZone(timeZone: string): DateParts {
+	return extractPartsInTimeZone(new Date(), timeZone);
+}
+
+function toViewerWallClock(dateParts: DateParts): DateParts {
+	if (!dateParts.offset) {
+		return dateParts;
+	}
+
+	const offsetMinutes = parseOffsetMinutes(dateParts.offset);
+
+	const instantMs = datePartsToInstantMs(dateParts) - offsetMinutes * 60_000;
+
+	return extractPartsInTimeZone(
+		new Date(instantMs),
+		Liferay.ThemeDisplay.getTimeZone()
+	);
+}
+
+function toViewerDateParts(
+	dateParts: Partial<DateParts> | null | undefined
+): DateParts | null {
+	const normalized = normalizeDateParts(dateParts);
+
+	return normalized ? toViewerWallClock(normalized) : null;
 }
 
 function resolveBound(bound?: Bound): DateParts | undefined {
@@ -252,19 +311,7 @@ function getTimeZoneOffset(timeZone: string, atDate: Date): string {
 			.formatToParts(atDate)
 			.find((p) => p.type === 'timeZoneName');
 
-		if (!part) {
-			return '+00:00';
-		}
-
-		const match = /^GMT([+-])(\d{1,2})(?::(\d{2}))?$/.exec(part.value);
-
-		if (match) {
-			const sign = match[1];
-			const hours = match[2].padStart(2, '0');
-			const minutes = (match[3] || '00').padStart(2, '0');
-
-			return `${sign}${hours}:${minutes}`;
-		}
+		return parseGmtOffset(part?.value);
 	}
 	catch {
 
@@ -372,8 +419,8 @@ function buildSelectedItemsLabel(
 ): string {
 	const {from: rawFrom, to: rawTo} = (selectedData ||
 		{}) as unknown as SelectedData;
-	const from = normalizeDateParts(rawFrom);
-	const to = normalizeDateParts(rawTo);
+	const from = toViewerDateParts(rawFrom);
+	const to = toViewerDateParts(rawTo);
 
 	const {clayFormat} = getDateConfig(dateTime);
 
@@ -415,8 +462,8 @@ const DateTimeRangeFilter = ({
 
 	const months = useMemo(() => dateUtils.getMonthsLong(), []);
 
-	const initialFromDateParts = normalizeDateParts(selectedData?.from);
-	const initialToDateParts = normalizeDateParts(selectedData?.to);
+	const initialFromDateParts = toViewerDateParts(selectedData?.from);
+	const initialToDateParts = toViewerDateParts(selectedData?.to);
 
 	const [fromValue, setFromValue] = useState(
 		initialFromDateParts
@@ -606,7 +653,9 @@ const DateTimeRangeFilter = ({
 							setFilter({
 								active: true,
 								selectedData: {
-									from: toSelectedData(withOffset(fromDateParts)),
+									from: toSelectedData(
+										withOffset(fromDateParts)
+									),
 									to: toSelectedData(withOffset(toDateParts)),
 								},
 							});

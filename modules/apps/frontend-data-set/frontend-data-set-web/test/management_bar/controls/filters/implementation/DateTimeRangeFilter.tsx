@@ -480,4 +480,31 @@ describe('DateTimeRangeFilter.getSelectedItemsLabel', () => {
 
 		expect(result).toBe('');
 	});
+
+	it('displays stored parts converted to the viewer time zone', () => {
+		setTimeZone('America/Los_Angeles');
+
+		const madridFromDateTime = {
+			day: 11,
+			hour: 17,
+			minute: 0,
+			month: 5,
+			offset: '+02:00',
+			year: 2026,
+		};
+		const madridToDateTime = {
+			day: 11,
+			hour: 19,
+			minute: 25,
+			month: 5,
+			offset: '+02:00',
+			year: 2026,
+		};
+
+		const result = getSelectedItemsLabel({
+			selectedData: {from: madridFromDateTime, to: madridToDateTime},
+		} as any);
+
+		expect(result).toBe('05/11/2026 08:00 AM - 05/11/2026 10:25 AM');
+	});
 });

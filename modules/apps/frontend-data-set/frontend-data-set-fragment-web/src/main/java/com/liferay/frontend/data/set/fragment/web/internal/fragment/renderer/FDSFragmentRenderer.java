@@ -43,6 +43,7 @@ import java.io.PrintWriter;
 
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -354,8 +355,8 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		JSONObject tokenResolutionsJSONObject = _jsonFactory.createJSONObject();
 
 		for (String tokenName : tokenNames) {
-			String tokenValue = apiURLTokenValuesJSONObject.getString(
-				tokenName);
+			String tokenValue = _getTokenValue(
+				apiURLTokenValuesJSONObject, tokenName);
 
 			if (Validator.isNotNull(tokenValue)) {
 				tokenResolutionsJSONObject.put(
@@ -364,6 +365,25 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 		}
 
 		return tokenResolutionsJSONObject;
+	}
+
+	private String _getTokenValue(
+		JSONObject apiURLTokenValuesJSONObject, String tokenName) {
+
+		JSONObject mappingJSONObject =
+			apiURLTokenValuesJSONObject.getJSONObject(tokenName);
+
+		if (mappingJSONObject != null) {
+			String fieldId = mappingJSONObject.getString("fieldId");
+
+			if (Objects.equals(fieldId, "externalReferenceCode")) {
+				return mappingJSONObject.getString("externalReferenceCode");
+			}
+
+			return mappingJSONObject.getString("classPK");
+		}
+
+		return apiURLTokenValuesJSONObject.getString(tokenName);
 	}
 
 	private boolean _hasTokens(

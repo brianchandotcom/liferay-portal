@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {__NOT_PUBLIC_COLLECTION} from '@clayui/core';
+import {KeyboardArrowsIndicator, __NOT_PUBLIC_COLLECTION} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {
+	ClayPortal,
 	FOCUSABLE_ELEMENTS,
 	Keys,
 	getFocusableList,
@@ -80,6 +81,16 @@ interface IProps<T> extends DropDownHTMLAttributes {
 	defaultActive?: boolean;
 
 	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the DropDown
+	 * menu, hinting that up and down arrow keys can be used to navigate
+	 * the menu items. The indicator floats to the right of the menu and
+	 * flips to the left when it would overflow the viewport. It is only
+	 * rendered while the menu is open and visible while the menu has
+	 * keyboard focus.
+	 */
+	displayKeyboardArrowsIndicator?: boolean;
+
+	/**
 	 * Defines the name of the property key that is used in the items filter
 	 * test (Dynamic content).
 	 */
@@ -99,6 +110,14 @@ interface IProps<T> extends DropDownHTMLAttributes {
 	 * Property to render content with dynamic data.
 	 */
 	items?: Array<T>;
+
+	/**
+	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
+	 * to the indicator's built-in English string when omitted. Pass a
+	 * translated value (e.g. via `Liferay.Language.get`) when the host
+	 * page needs i18n.
+	 */
+	keyboardArrowsIndicatorLabel?: string;
 
 	/**
 	 * Prop to pass DOM element attributes to DropDown.Menu.
@@ -176,10 +195,12 @@ function DropDown<T>({
 	closeOnClickOutside,
 	containerElement: ContainerElement = 'div',
 	defaultActive = false,
+	displayKeyboardArrowsIndicator = false,
 	filterKey,
 	hasLeftSymbols,
 	hasRightSymbols,
 	items,
+	keyboardArrowsIndicatorLabel,
 	menuElementAttrs,
 	menuHeight,
 	menuWidth,
@@ -405,6 +426,16 @@ function DropDown<T>({
 						</DropDownContext.Provider>
 					</FocusMenu>
 				</Menu>
+			)}
+
+			{internalActive && displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={menuElementRef}
+						direction="vertical"
+						label={keyboardArrowsIndicatorLabel}
+					/>
+				</ClayPortal>
 			)}
 		</ContainerElement>
 	);

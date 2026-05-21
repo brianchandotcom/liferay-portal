@@ -1459,8 +1459,6 @@ public class ObjectEntryResourceImpl
 
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
 			null;
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
 
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
@@ -1469,6 +1467,9 @@ public class ObjectEntryResourceImpl
 		String scopeKey =
 			objectScopeProvider.isGroupAware() ?
 				GroupUtil.getScopeKey(parameters) : null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
 
 		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 			unsafeFunction = objectEntry -> {
@@ -1593,10 +1594,11 @@ public class ObjectEntryResourceImpl
 			Map<String, Serializable> parameters, String scopeKey)
 		throws Exception {
 
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
 			null;
+
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			if (scopeKey != null) {

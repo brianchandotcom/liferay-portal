@@ -227,7 +227,6 @@ public class ObjectEntryVulcanBatchEngineTaskItemDelegateTest {
 					}
 
 				});
-
 			objectEntryResource.setContextCompany(
 				CompanyLocalServiceUtil.getCompany(
 					objectDefinition.getCompanyId()));

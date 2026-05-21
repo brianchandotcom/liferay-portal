@@ -430,9 +430,10 @@ const DateTimeRangeFilter = ({
 	const fromDateParts = parseClayValue(fromValue, dateConfig.clayFormat);
 	const toDateParts = parseClayValue(toValue, dateConfig.clayFormat);
 
-	const hasInvalidInput =
-		(!!fromValue.length && !fromDateParts) ||
-		(!!toValue.length && !toDateParts);
+	const fromFormatInvalid = !!fromValue.length && !fromDateParts;
+	const toFormatInvalid = !!toValue.length && !toDateParts;
+
+	const hasInvalidInput = fromFormatInvalid || toFormatInvalid;
 
 	const isValidRange =
 		!fromDateParts ||
@@ -440,9 +441,16 @@ const DateTimeRangeFilter = ({
 		datePartsToInstantMs(fromDateParts) <=
 			datePartsToInstantMs(toDateParts);
 
-	const withinBounds =
-		isWithinBounds(fromDateParts, min, max) &&
-		isWithinBounds(toDateParts, min, max);
+	const fromOutOfBounds = isWithinBounds(fromDateParts, min, max) === false;
+	const toOutOfBounds = isWithinBounds(toDateParts, min, max) === false;
+
+	const withinBounds = !fromOutOfBounds && !toOutOfBounds;
+
+	const fromInvalid = fromFormatInvalid || fromOutOfBounds || !isValidRange;
+	const toInvalid = toFormatInvalid || toOutOfBounds || !isValidRange;
+
+	const feedbackId = `${id}-feedback`;
+	const hasError = hasInvalidInput || !isValidRange || !withinBounds;
 
 	let actionType = 'edit';
 
@@ -506,8 +514,13 @@ const DateTimeRangeFilter = ({
 						</label>
 
 						<ClayDatePicker
+							aria-describedby={
+								fromInvalid ? feedbackId : undefined
+							}
+							aria-invalid={fromInvalid || undefined}
 							dateFormat={dateConfig.dateFormat}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+							id={`from-${id}`}
 							inputName={`from-${id}`}
 							months={months}
 							onChange={(value: string) => setFromValue(value)}
@@ -526,8 +539,13 @@ const DateTimeRangeFilter = ({
 						</label>
 
 						<ClayDatePicker
+							aria-describedby={
+								toInvalid ? feedbackId : undefined
+							}
+							aria-invalid={toInvalid || undefined}
 							dateFormat={dateConfig.dateFormat}
 							firstDayOfWeek={dateUtils.getFirstDayOfWeek()}
+							id={`to-${id}`}
 							inputName={`to-${id}`}
 							months={months}
 							onChange={(value: string) => setToValue(value)}
@@ -540,8 +558,12 @@ const DateTimeRangeFilter = ({
 						/>
 					</ClayForm.Group>
 
-					{(hasInvalidInput || !isValidRange || !withinBounds) && (
-						<ClayForm.FeedbackGroup>
+					{hasError && (
+						<ClayForm.FeedbackGroup
+							aria-live="polite"
+							id={feedbackId}
+							role="alert"
+						>
 							<ClayForm.FeedbackItem>
 								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
 

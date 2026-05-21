@@ -119,7 +119,7 @@ const DetailsPanel: React.FC<IProps> = ({
 						touched.location ? errors.location : undefined
 					}
 					helpMessage={Liferay.Language.get(
-						'model-armor-location-help'
+						'guardrail-location-help'
 					)}
 					id="location"
 					label={Liferay.Language.get('location')}

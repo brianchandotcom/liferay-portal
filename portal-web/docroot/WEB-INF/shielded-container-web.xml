@@ -142,6 +142,11 @@
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet>
+		<servlet-name>LLMS Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.servlet.LLMSServlet</servlet-class>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet>
 		<servlet-name>Module Framework Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.module.framework.ModuleFrameworkServletAdapter</servlet-class>
 		<async-supported>true</async-supported>
@@ -975,6 +980,10 @@
 	<servlet-mapping>
 		<servlet-name>Language Servlet</servlet-name>
 		<url-pattern>/language/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LLMS Servlet</servlet-name>
+		<url-pattern>/llms.txt</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Netvibes Servlet</servlet-name>

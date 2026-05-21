@@ -33,6 +33,7 @@ public class LogoutPreAction extends Action {
 		HttpServletResponse httpServletResponse) {
 
 		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
 		long groupId = 0;
 
 		ThemeDisplay themeDisplay =
@@ -40,7 +41,6 @@ public class LogoutPreAction extends Action {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay != null) {
-			companyId = themeDisplay.getCompanyId();
 			groupId = themeDisplay.getSiteGroupId();
 		}
 

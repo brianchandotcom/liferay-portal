@@ -335,7 +335,9 @@ public class SegmentsEntryPersistenceTest {
 	public void testCountByG_SRCArrayable() throws Exception {
 		_persistence.countByG_SRC(
 			new long[] {RandomTestUtil.nextLong(), 0L},
-			RandomTestUtil.randomString());
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
 	}
 
 	@Test
@@ -773,4 +775,4 @@ public class SegmentsEntryPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1065797480
+// LIFERAY-SERVICE-BUILDER-HASH:-1054229648

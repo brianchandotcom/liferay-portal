@@ -1229,7 +1229,8 @@ public class SegmentsEntryPersistenceImpl
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByG_SRC.find(
-			finderCache, new Object[] {new long[] {groupId}, source}, start,
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}}, start,
 			end, orderByComparator, useFinderCache);
 	}
 
@@ -1284,7 +1285,8 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_SRC.fetchFirst(
-			finderCache, new Object[] {new long[] {groupId}, source},
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}},
 			orderByComparator);
 	}
 
@@ -1308,19 +1310,20 @@ public class SegmentsEntryPersistenceImpl
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return _collectionPersistenceFinderByG_SRC.filterFind(
-			finderCache, new Object[] {new long[] {groupId}, source}, start,
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}}, start,
 			end, orderByComparator, groupId);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1328,14 +1331,15 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public List<SegmentsEntry> filterFindByG_SRC(
-		long[] groupIds, String source, int start, int end,
+		long[] groupIds, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		groupIds = ArrayUtil.sortedUnique(groupIds);
 
 		return _collectionPersistenceFinderByG_SRC.filterFind(
-			finderCache, new Object[] {groupIds, source}, start, end,
-			orderByComparator, groupIds);
+			finderCache,
+			new Object[] {groupIds, ArrayUtil.sortedUnique(sources)}, start,
+			end, orderByComparator, groupIds);
 	}
 
 	/**
@@ -1346,7 +1350,7 @@ public class SegmentsEntryPersistenceImpl
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1355,14 +1359,17 @@ public class SegmentsEntryPersistenceImpl
 	 */
 	@Override
 	public List<SegmentsEntry> findByG_SRC(
-		long[] groupIds, String source, int start, int end,
+		long[] groupIds, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator,
 		boolean useFinderCache) {
 
 		return _collectionPersistenceFinderByG_SRC.find(
 			finderCache,
-			new Object[] {ArrayUtil.sortedUnique(groupIds), source}, start, end,
-			orderByComparator, useFinderCache);
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources)
+			},
+			start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
@@ -1374,7 +1381,8 @@ public class SegmentsEntryPersistenceImpl
 	@Override
 	public void removeByG_SRC(long groupId, String source) {
 		_collectionPersistenceFinderByG_SRC.remove(
-			finderCache, new Object[] {new long[] {groupId}, source});
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}});
 	}
 
 	/**
@@ -1387,21 +1395,25 @@ public class SegmentsEntryPersistenceImpl
 	@Override
 	public int countByG_SRC(long groupId, String source) {
 		return _collectionPersistenceFinderByG_SRC.count(
-			finderCache, new Object[] {new long[] {groupId}, source});
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}});
 	}
 
 	/**
-	 * Returns the number of segments entries where groupId = any &#63; and source = &#63;.
+	 * Returns the number of segments entries where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the number of matching segments entries
 	 */
 	@Override
-	public int countByG_SRC(long[] groupIds, String source) {
+	public int countByG_SRC(long[] groupIds, String[] sources) {
 		return _collectionPersistenceFinderByG_SRC.count(
 			finderCache,
-			new Object[] {ArrayUtil.sortedUnique(groupIds), source});
+			new Object[] {
+				ArrayUtil.sortedUnique(groupIds),
+				ArrayUtil.sortedUnique(sources)
+			});
 	}
 
 	/**
@@ -1414,22 +1426,25 @@ public class SegmentsEntryPersistenceImpl
 	@Override
 	public int filterCountByG_SRC(long groupId, String source) {
 		return _collectionPersistenceFinderByG_SRC.filterCount(
-			finderCache, new Object[] {new long[] {groupId}, source}, groupId);
+			finderCache,
+			new Object[] {new long[] {groupId}, new String[] {source}},
+			groupId);
 	}
 
 	/**
-	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the number of matching segments entries that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_SRC(long[] groupIds, String source) {
+	public int filterCountByG_SRC(long[] groupIds, String[] sources) {
 		groupIds = ArrayUtil.sortedUnique(groupIds);
 
 		return _collectionPersistenceFinderByG_SRC.filterCount(
-			finderCache, new Object[] {groupIds, source}, groupIds);
+			finderCache,
+			new Object[] {groupIds, ArrayUtil.sortedUnique(sources)}, groupIds);
 	}
 
 	private FilterCollectionPersistenceFinder<SegmentsEntry>
@@ -2422,9 +2437,9 @@ public class SegmentsEntryPersistenceImpl
 				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, SegmentsEntry::getGroupId),
-				new FinderColumn<>(
+				new ArrayableFinderColumn<>(
 					"segmentsEntry.", "source", FinderColumn.Type.STRING, "=",
-					true, true, SegmentsEntry::getSource));
+					false, true, true, SegmentsEntry::getSource));
 
 		_collectionPersistenceFinderByG_A_SRC =
 			new FilterCollectionPersistenceFinder<>(
@@ -2565,4 +2580,4 @@ public class SegmentsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:955747373
+// LIFERAY-SERVICE-BUILDER-HASH:-91617443

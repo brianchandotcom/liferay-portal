@@ -346,11 +346,11 @@ public class SegmentsEntryLocalServiceUtil {
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
-		long groupId, String source, int start, int end,
+		long groupId, String[] sources, int start, int end,
 		OrderByComparator<SegmentsEntry> orderByComparator) {
 
 		return getService().getSegmentsEntries(
-			groupId, source, start, end, orderByComparator);
+			groupId, sources, start, end, orderByComparator);
 	}
 
 	public static List<SegmentsEntry> getSegmentsEntries(
@@ -416,6 +416,10 @@ public class SegmentsEntryLocalServiceUtil {
 
 	public static int getSegmentsEntriesCount(long groupId) {
 		return getService().getSegmentsEntriesCount(groupId);
+	}
+
+	public static int getSegmentsEntriesCount(long groupId, String[] sources) {
+		return getService().getSegmentsEntriesCount(groupId, sources);
 	}
 
 	/**
@@ -512,4 +516,4 @@ public class SegmentsEntryLocalServiceUtil {
 			SegmentsEntryLocalService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-667194267
+// LIFERAY-SERVICE-BUILDER-HASH:-1670083519

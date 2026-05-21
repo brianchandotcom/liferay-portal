@@ -815,21 +815,21 @@ public interface SegmentsEntryPersistence
 			orderByComparator);
 
 	/**
-	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns an ordered range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching segments entries that the user has permission to view
 	 */
 	public java.util.List<SegmentsEntry> filterFindByG_SRC(
-		long[] groupIds, String source, int start, int end,
+		long[] groupIds, String[] sources, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator);
 
@@ -841,7 +841,7 @@ public interface SegmentsEntryPersistence
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -849,7 +849,7 @@ public interface SegmentsEntryPersistence
 	 * @return the ordered range of matching segments entries
 	 */
 	public java.util.List<SegmentsEntry> findByG_SRC(
-		long[] groupIds, String source, int start, int end,
+		long[] groupIds, String[] sources, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator,
 		boolean useFinderCache);
@@ -872,13 +872,13 @@ public interface SegmentsEntryPersistence
 	public int countByG_SRC(long groupId, String source);
 
 	/**
-	 * Returns the number of segments entries where groupId = any &#63; and source = &#63;.
+	 * Returns the number of segments entries where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the number of matching segments entries
 	 */
-	public int countByG_SRC(long[] groupIds, String source);
+	public int countByG_SRC(long[] groupIds, String[] sources);
 
 	/**
 	 * Returns the number of segments entries that the user has permission to view where groupId = &#63; and source = &#63;.
@@ -890,13 +890,13 @@ public interface SegmentsEntryPersistence
 	public int filterCountByG_SRC(long groupId, String source);
 
 	/**
-	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns the number of segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the number of matching segments entries that the user has permission to view
 	 */
-	public int filterCountByG_SRC(long[] groupIds, String source);
+	public int filterCountByG_SRC(long[] groupIds, String[] sources);
 
 	/**
 	 * Returns an ordered range of all the segments entries where groupId = &#63; and active = &#63; and source = &#63;.
@@ -1913,61 +1913,61 @@ public interface SegmentsEntryPersistence
 	}
 
 	/**
-	 * Returns all the segments entries where groupId = any &#63; and source = &#63;.
+	 * Returns all the segments entries where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the matching segments entries
 	 */
 	public default java.util.List<SegmentsEntry> findByG_SRC(
-		long[] groupIds, String source) {
+		long[] groupIds, String[] sources) {
 
 		return findByG_SRC(
-			groupIds, source,
+			groupIds, sources,
 			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
 			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null, true);
 	}
 
 	/**
-	 * Returns a range of all the segments entries where groupId = any &#63; and source = &#63;.
+	 * Returns a range of all the segments entries where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @return the range of matching segments entries
 	 */
 	public default java.util.List<SegmentsEntry> findByG_SRC(
-		long[] groupIds, String source, int start, int end) {
+		long[] groupIds, String[] sources, int start, int end) {
 
-		return findByG_SRC(groupIds, source, start, end, null, true);
+		return findByG_SRC(groupIds, sources, start, end, null, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the segments entries where groupId = any &#63; and source = &#63;.
+	 * Returns an ordered range of all the segments entries where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching segments entries
 	 */
 	public default java.util.List<SegmentsEntry> findByG_SRC(
-		long[] groupIds, String source, int start, int end,
+		long[] groupIds, String[] sources, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SegmentsEntry>
 			orderByComparator) {
 
 		return findByG_SRC(
-			groupIds, source, start, end, orderByComparator, true);
+			groupIds, sources, start, end, orderByComparator, true);
 	}
 
 	/**
@@ -2006,38 +2006,38 @@ public interface SegmentsEntryPersistence
 	}
 
 	/**
-	 * Returns all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @return the matching segments entries that the user has permission to view
 	 */
 	public default java.util.List<SegmentsEntry> filterFindByG_SRC(
-		long[] groupIds, String source) {
+		long[] groupIds, String[] sources) {
 
 		return filterFindByG_SRC(
-			groupIds, source,
+			groupIds, sources,
 			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS,
 			com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the segments entries that the user has permission to view where groupId = any &#63; and source = &#63;.
+	 * Returns a range of all the segments entries that the user has permission to view where groupId = any &#63; and source = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>com.liferay.segments.model.impl.SegmentsEntryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param source the source
+	 * @param sources the sources
 	 * @param start the lower bound of the range of segments entries
 	 * @param end the upper bound of the range of segments entries (not inclusive)
 	 * @return the range of matching segments entries that the user has permission to view
 	 */
 	public default java.util.List<SegmentsEntry> filterFindByG_SRC(
-		long[] groupIds, String source, int start, int end) {
+		long[] groupIds, String[] sources, int start, int end) {
 
-		return filterFindByG_SRC(groupIds, source, start, end, null);
+		return filterFindByG_SRC(groupIds, sources, start, end, null);
 	}
 
 	/**
@@ -2237,4 +2237,4 @@ public interface SegmentsEntryPersistence
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-952239664
+// LIFERAY-SERVICE-BUILDER-HASH:-1030634594

@@ -337,6 +337,18 @@ export class CalendarWidgetPage {
 		}
 	}
 
+	async deleteEvent(title: string) {
+		await this.page
+			.locator('.scheduler-event-content', {hasText: title})
+			.click();
+
+		this.page.once('dialog', async (dialog) => {
+			await dialog.accept();
+		});
+
+		await this.page.getByRole('button', {name: 'Delete'}).click();
+	}
+
 	async fillEventWithRecurrenceAndAllDay(
 		allDay: boolean,
 		recurrence: Recurrence

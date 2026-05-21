@@ -14,7 +14,7 @@ type CustomFields = {
 };
 
 export default class MarketplaceDeliveryOrder {
-	constructor(private order: PlacedOrder) { }
+	constructor(private order: PlacedOrder) {}
 
 	get canDownload() {
 		return [
@@ -38,7 +38,8 @@ export default class MarketplaceDeliveryOrder {
 				OrderTypes.DXP_APP,
 			].includes(
 				this.order.orderTypeExternalReferenceCode as OrderTypes
-			) && (!this.isFreeApp || this.paymentMethod === "paypal-integration")
+			) &&
+			(!this.isFreeApp || this.paymentMethod === 'paypal-integration')
 		);
 	}
 	get customFields() {
@@ -76,7 +77,7 @@ export default class MarketplaceDeliveryOrder {
 	}
 
 	get paymentMethod() {
-		return this.order.paymentMethod;
+		return this.order?.paymentMethod;
 	}
 
 	get productThumbnail() {

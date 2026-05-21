@@ -111,7 +111,8 @@ public class ViewVersionHistoryDisplayContextTest
 				"/o", _objectDefinition.getRESTContextPath(), "/scopes/",
 				_objectEntry.getGroupId(), "/by-external-reference-code/",
 				_objectEntry.getExternalReferenceCode(),
-				"/versions?nestedFields=file.thumbnailURL"),
+				"/versions?nestedFields=file.metadata,file.previewURL,",
+				"file.thumbnailURL"),
 			ReflectionTestUtil.invoke(
 				_getViewVersionHistoryDisplayContext(
 					_getMockHttpServletRequest(_objectEntry)),

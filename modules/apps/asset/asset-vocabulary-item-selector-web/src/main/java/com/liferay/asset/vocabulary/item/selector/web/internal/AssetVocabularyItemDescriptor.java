@@ -67,6 +67,24 @@ public class AssetVocabularyItemDescriptor
 		).put(
 			"groupId", String.valueOf(_assetVocabulary.getGroupId())
 		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				long scopeGroupId = themeDisplay.getRefererGroupId();
+
+				if (scopeGroupId <= 0) {
+					scopeGroupId = themeDisplay.getScopeGroupId();
+				}
+
+				if (_assetVocabulary.getGroupId() == scopeGroupId) {
+					return null;
+				}
+
+				Group group = GroupLocalServiceUtil.getGroup(
+					_assetVocabulary.getGroupId());
+
+				return group.getExternalReferenceCode();
+			}
+		).put(
 			"title", _assetVocabulary.getTitle(themeDisplay.getLocale())
 		).put(
 			"uuid", _assetVocabulary.getUuid()

@@ -871,17 +871,28 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 	}
 
 	@Test
-	public void testRenderEditPageWithDeletedScopeGroup() throws Exception {
-		Group scopeGroup = GroupTestUtil.addGroup();
+	public void testRenderEditPage() throws Exception {
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
 
-		ServiceContext scopeServiceContext =
-			ServiceContextTestUtil.getServiceContext(
-				scopeGroup.getGroupId(), TestPropsValues.getUserId());
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		AssetVocabulary scopeAssetVocabulary =
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		Group group = GroupTestUtil.addGroup();
+
+		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), scopeGroup.getGroupId(),
-				RandomTestUtil.randomString(), scopeServiceContext);
+				TestPropsValues.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
@@ -898,31 +909,18 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 					true
 				).put(
 					"externalReferenceCode",
-					scopeAssetVocabulary.getExternalReferenceCode()
+					assetVocabulary.getExternalReferenceCode()
 				).put(
 					"scopeExternalReferenceCode",
-					scopeGroup.getExternalReferenceCode()
+					group.getExternalReferenceCode()
 				).put(
-					"title", scopeAssetVocabulary.getTitle()
+					"title", assetVocabulary.getTitle()
 				).put(
 					"type", "asset-vocabulary"
 				).buildString(),
 				_serviceContext);
 
-		_groupLocalService.deleteGroup(scopeGroup);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_RESPONSE,
-			new MockLiferayPortletRenderResponse());
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				SiteNavigationMenuItemTypeConstants.ASSET_VOCABULARY);
+		_groupLocalService.deleteGroup(group);
 
 		siteNavigationMenuItemType.renderEditPage(
 			mockHttpServletRequest, new MockHttpServletResponse(),

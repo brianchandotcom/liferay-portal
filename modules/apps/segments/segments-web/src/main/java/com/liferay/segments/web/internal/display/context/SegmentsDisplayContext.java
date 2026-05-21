@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
@@ -266,12 +267,35 @@ public class SegmentsDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		if (_isSearch()) {
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+			if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+				params.put(
+					"excludedSources",
+					new String[] {
+						StringUtil.toLowerCase(
+							SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND),
+						StringUtil.toLowerCase(
+							SegmentsEntryConstants.SOURCE_DEFAULT),
+						StringUtil.toLowerCase(
+							SegmentsEntryConstants.SOURCE_REFERRED)
+					});
+			}
+			else {
+				params.put(
+					"excludedSources",
+					new String[] {
+						StringUtil.toLowerCase(
+							SegmentsEntryConstants.SOURCE_AUDIENCE)
+					});
+			}
+
 			searchContainer.setResultsAndTotal(
 				_segmentsEntryService.searchSegmentsEntries(
 					_themeDisplay.getCompanyId(),
-					_themeDisplay.getScopeGroupId(), _getKeywords(),
-					new LinkedHashMap<>(), searchContainer.getStart(),
-					searchContainer.getEnd(), _getSort()));
+					_themeDisplay.getScopeGroupId(), _getKeywords(), params,
+					searchContainer.getStart(), searchContainer.getEnd(),
+					_getSort()));
 		}
 		else if (!FeatureFlagManagerUtil.isEnabled(
 					CompanyConstants.SYSTEM, "LPD-78863") &&
@@ -291,14 +315,35 @@ public class SegmentsDisplayContext {
 						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND
 					}));
 		}
+		else if (AudiencesPortletUtil.isAudiencesPortlet(_renderRequest)) {
+			searchContainer.setResultsAndTotal(
+				() -> _segmentsEntryService.getSegmentsEntries(
+					_themeDisplay.getScopeGroupId(),
+					new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE},
+					searchContainer.getStart(), searchContainer.getEnd(),
+					searchContainer.getOrderByComparator()),
+				_segmentsEntryService.getSegmentsEntriesCount(
+					_themeDisplay.getScopeGroupId(),
+					new String[] {SegmentsEntryConstants.SOURCE_AUDIENCE}));
+		}
 		else {
 			searchContainer.setResultsAndTotal(
 				() -> _segmentsEntryService.getSegmentsEntries(
-					_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-					searchContainer.getEnd(),
+					_themeDisplay.getScopeGroupId(),
+					new String[] {
+						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+						SegmentsEntryConstants.SOURCE_DEFAULT,
+						SegmentsEntryConstants.SOURCE_REFERRED
+					},
+					searchContainer.getStart(), searchContainer.getEnd(),
 					searchContainer.getOrderByComparator()),
 				_segmentsEntryService.getSegmentsEntriesCount(
-					_themeDisplay.getScopeGroupId()));
+					_themeDisplay.getScopeGroupId(),
+					new String[] {
+						SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+						SegmentsEntryConstants.SOURCE_DEFAULT,
+						SegmentsEntryConstants.SOURCE_REFERRED
+					}));
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(

@@ -5,10 +5,10 @@
 
 package com.liferay.exportimport.rest.internal.resource.v1_0;
 
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
@@ -17,6 +17,7 @@ import com.liferay.exportimport.rest.dto.v1_0.ImportRequest;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.internal.util.ParameterMapUtil;
 import com.liferay.exportimport.rest.internal.util.PermissionUtil;
+import com.liferay.exportimport.rest.resource.v1_0.ImportPreviewResource;
 import com.liferay.exportimport.rest.resource.v1_0.ImportProcessResource;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.background.task.model.BackgroundTask;
@@ -236,20 +237,6 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		return dynamicQuery;
 	}
 
-	private FileEntry _getFileEntry(long groupId, long fileEntryId)
-		throws Exception {
-
-		FileEntry fileEntry = _dlAppLocalService.fetchFileEntry(fileEntryId);
-
-		if ((fileEntry == null) || (fileEntry.getGroupId() != groupId) ||
-			(fileEntry.getUserId() != contextUser.getUserId())) {
-
-			throw new NotFoundException();
-		}
-
-		return fileEntry;
-	}
-
 	private ImportProcess _postImportProcess(
 			Group group, ImportRequest importRequest)
 		throws Exception {
@@ -259,8 +246,13 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 		PermissionUtil.checkImportPermission(
 			contextCompany.getCompanyId(), groupId);
 
-		FileEntry fileEntry = _getFileEntry(
-			groupId, importRequest.getFileEntryId());
+		FileEntry fileEntry = _exportImportHelper.getTempFileEntry(
+			groupId, contextUser.getUserId(),
+			ImportPreviewResource.class.getName());
+
+		if (fileEntry == null) {
+			throw new NotFoundException();
+		}
 
 		Map<String, String[]> parameterMap = ParameterMapUtil.toParameterMap(
 			importRequest.getRequestPortletDataHandlers());
@@ -364,15 +356,15 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Reference
-	private DLAppLocalService _dlAppLocalService;
-
-	@Reference
 	private ExportImportConfigurationLocalService
 		_exportImportConfigurationLocalService;
 
 	@Reference
 	private ExportImportConfigurationSettingsMapFactory
 		_exportImportConfigurationSettingsMapFactory;
+
+	@Reference
+	private ExportImportHelper _exportImportHelper;
 
 	@Reference
 	private ExportImportLocalService _exportImportLocalService;

@@ -171,6 +171,65 @@ describe('ResizeHandle', () => {
 			);
 		});
 	});
+
+	describe('keyboard arrows indicator', () => {
+		test('does not render the indicator by default', () => {
+			renderComponent({});
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).not.toBeInTheDocument();
+		});
+
+		test('renders the centered indicator with direction "all" when enabled', () => {
+			render(
+				<ResizeHandle
+					data-testid="resizer"
+					displayKeyboardArrowsIndicator
+					maxWidth={600}
+					minWidth={200}
+					onWidthChange={jest.fn()}
+					position="left"
+					width={500}
+				/>
+			);
+
+			const indicator = document.body.querySelector(
+				'.clay-keyboard-arrows-indicator'
+			);
+
+			expect(indicator).toBeInTheDocument();
+			expect(indicator).toHaveClass('clay-keyboard-arrows-all');
+			expect(indicator).toHaveClass(
+				'clay-keyboard-arrows-indicator-floating'
+			);
+			expect(indicator).toHaveClass(
+				'clay-keyboard-arrows-indicator-floating-centered'
+			);
+			expect(indicator).not.toHaveClass(
+				'clay-keyboard-arrows-indicator-floating-tooltip'
+			);
+		});
+
+		test('uses the localized label on the indicator', () => {
+			render(
+				<ResizeHandle
+					data-testid="resizer"
+					displayKeyboardArrowsIndicator
+					keyboardArrowsIndicatorLabel="Use arrow keys to resize"
+					maxWidth={600}
+					minWidth={200}
+					onWidthChange={jest.fn()}
+					position="left"
+					width={500}
+				/>
+			);
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).toHaveAttribute('aria-label', 'Use arrow keys to resize');
+		});
+	});
 });
 
 function simulateMouseEvent(

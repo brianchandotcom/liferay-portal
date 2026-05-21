@@ -132,16 +132,16 @@ describe('RoomStatistics', () => {
 		};
 	});
 
+	beforeEach(() => {
+		mockAnalyticsResponse = roomStatisticsDevEnvData;
+	});
+
 	afterAll(() => {
 		cleanup();
 
 		window.Liferay = originalLiferay;
 
 		jest.resetAllMocks();
-	});
-
-	beforeEach(() => {
-		mockAnalyticsResponse = roomStatisticsDevEnvData;
 	});
 
 	it('matches snapshot', () => {

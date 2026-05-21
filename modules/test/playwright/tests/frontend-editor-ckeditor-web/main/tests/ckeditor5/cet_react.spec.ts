@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
-import {loginTest} from '../../../../fixtures/loginTest';
-import {reactPlusCETClassicPageTest} from '../../fixtures/classicPageTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
+import {loginTest} from '../../../../../fixtures/loginTest';
+import {reactPlusCETClassicPageTest} from '../../../../frontend-editor-ckeditor5-sample-web/fixtures/classicPageTest';
 
 export const test = mergeTests(
 	reactPlusCETClassicPageTest,

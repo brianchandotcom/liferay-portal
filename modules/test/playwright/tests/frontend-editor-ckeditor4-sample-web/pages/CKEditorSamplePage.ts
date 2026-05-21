@@ -10,16 +10,11 @@ import {EEditorType, waitForEditor} from '../../../utils/waitFor';
 import {AlloyPage} from './ckeditor4/AlloyPage';
 import {ClassicPage as CKEditor4ClassicPage} from './ckeditor4/ClassicPage';
 
-export enum SubTabName {
-	ADVANCED_CLASSIC = 'Advanced Classic',
+export enum TabName {
 	ALLOY = 'Alloy',
-	BALLOON = 'Balloon',
-	BASIC_CLASSIC = 'Basic Classic',
 	CLASSIC = 'Classic',
-	INPUT_LOCALIZED = 'Input Localized',
 	LEGACY = 'Legacy',
 	REACT = 'React',
-	REACT_PLUS_CET = 'React + CET',
 }
 
 export interface CKEditorSamplePageTab {}
@@ -30,20 +25,20 @@ export class CKEditorSamplePage extends POM {
 	}
 
 	async gotoTab<T extends CKEditorSamplePageTab>(
-		subTabName: SubTabName
+		tabName: TabName
 	): Promise<T | null> {
 		const navLink = this.page
 			.locator(
 				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar'
 			)
-			.getByRole('link', {exact: true, name: subTabName});
+			.getByRole('link', {exact: true, name: tabName});
 
 		await navLink.click();
 
 		await expect(navLink).toHaveClass(/active/);
 
 		const editorType =
-			subTabName === SubTabName.ALLOY
+			tabName === TabName.ALLOY
 				? EEditorType.ALLOYEDITOR
 				: EEditorType.CKEDITOR4;
 
@@ -51,12 +46,12 @@ export class CKEditorSamplePage extends POM {
 
 		let visitedPage = null;
 
-		switch (subTabName) {
-			case SubTabName.ALLOY:
+		switch (tabName) {
+			case TabName.ALLOY:
 				visitedPage = new AlloyPage(this.page);
 				break;
 
-			case SubTabName.CLASSIC:
+			case TabName.CLASSIC:
 				visitedPage = new CKEditor4ClassicPage(this.page);
 				break;
 

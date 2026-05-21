@@ -7,7 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {alloyPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor4/alloyPageTest';
+import {alloyPageTest} from '../../../../frontend-editor-ckeditor4-sample-web/fixtures/ckeditor4/alloyPageTest';
 
 export const test = mergeTests(
 	alloyPageTest,

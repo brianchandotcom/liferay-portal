@@ -113,4 +113,8 @@ public interface SegmentsCriteriaContributor {
 	 */
 	public Criteria.Type getType();
 
+	public default boolean isDisabled(PortletRequest portletRequest) {
+		return false;
+	}
+
 }

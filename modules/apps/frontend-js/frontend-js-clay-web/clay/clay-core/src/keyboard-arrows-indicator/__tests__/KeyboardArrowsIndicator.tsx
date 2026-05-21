@@ -84,4 +84,35 @@ describe('KeyboardArrowsIndicator', () => {
 			container.querySelector('.clay-keyboard-arrows-indicator')
 		).toHaveClass('my-hint');
 	});
+
+	it('does not apply the floating modifier when no anchorRef is provided', () => {
+		const {container} = render(<KeyboardArrowsIndicator direction="all" />);
+
+		expect(
+			container.querySelector('.clay-keyboard-arrows-indicator')
+		).not.toHaveClass('clay-keyboard-arrows-indicator-floating');
+	});
+
+	it('applies the floating modifier when an anchorRef is provided', () => {
+		function Harness() {
+			const anchorRef = React.useRef<HTMLDivElement>(null);
+
+			return (
+				<>
+					<div ref={anchorRef}>Anchor</div>
+
+					<KeyboardArrowsIndicator
+						anchorRef={anchorRef}
+						direction="vertical"
+					/>
+				</>
+			);
+		}
+
+		const {container} = render(<Harness />);
+
+		expect(
+			container.querySelector('.clay-keyboard-arrows-indicator')
+		).toHaveClass('clay-keyboard-arrows-indicator-floating');
+	});
 });

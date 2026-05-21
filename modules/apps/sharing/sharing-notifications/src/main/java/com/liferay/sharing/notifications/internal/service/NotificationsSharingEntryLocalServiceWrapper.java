@@ -300,17 +300,23 @@ public class NotificationsSharingEntryLocalServiceWrapper
 	}
 
 	private void _sendNotificationEvent(
-		SharingEntry sharingEntry, int notificationType,
-		ServiceContext serviceContext) {
+			SharingEntry sharingEntry, int notificationType,
+			ServiceContext serviceContext)
+		throws PortalException {
 
-		try {
-			if (sharingEntry.getToTicketId() > 0) {
+		if (sharingEntry.getToTicketId() > 0) {
+			try {
 				_sharingCollaborationMailSender.sendInvitation(
 					serviceContext, sharingEntry);
-
-				return;
+			}
+			catch (Exception exception) {
+				throw new PortalException(exception);
 			}
 
+			return;
+		}
+
+		try {
 			if (sharingEntry.getToUserId() > 0) {
 				_sendNotificationEvent(
 					sharingEntry, notificationType, serviceContext,

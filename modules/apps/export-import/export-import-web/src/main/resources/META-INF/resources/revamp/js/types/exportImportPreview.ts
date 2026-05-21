@@ -16,7 +16,6 @@ export interface ImportPreview {
 	author: string;
 	deletionCount: number;
 	exportDate: string;
-	fileEntryId: number;
 	fileName: string;
 	fileSize: number;
 	previewPortletDataHandlerSections: PreviewPortletDataHandlerSection[];

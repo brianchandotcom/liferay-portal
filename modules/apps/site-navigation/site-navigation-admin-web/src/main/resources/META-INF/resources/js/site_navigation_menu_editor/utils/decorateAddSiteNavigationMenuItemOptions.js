@@ -22,6 +22,8 @@ const ASSET_VOCABULARY_TYPE = 'asset_vocabulary';
 const HEADLESS_TAXONOMY_VOCABULARIES_BASE =
 	'/o/headless-admin-taxonomy/v1.0/sites';
 
+const VISIBILITY_TYPE_PUBLIC = 0;
+
 function buildVocabulariesURL(currentSiteId) {
 	const url = new URL(
 		`${HEADLESS_TAXONOMY_VOCABULARIES_BASE}/${String(
@@ -30,7 +32,10 @@ function buildVocabulariesURL(currentSiteId) {
 		window.location.origin
 	);
 
-	url.searchParams.set('filter', 'visibilityType eq 0');
+	url.searchParams.set(
+		'filter',
+		`visibilityType eq ${VISIBILITY_TYPE_PUBLIC}`
+	);
 
 	return url.toString();
 }

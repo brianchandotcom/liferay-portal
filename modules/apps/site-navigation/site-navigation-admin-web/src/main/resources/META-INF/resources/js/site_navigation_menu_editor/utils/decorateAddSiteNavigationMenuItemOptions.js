@@ -4,7 +4,11 @@
  */
 
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
-import {openModal, openSelectionModal} from 'frontend-js-components-web';
+import {
+	openModal,
+	openSelectionModal,
+	openToast,
+} from 'frontend-js-components-web';
 import {
 	COOKIE_TYPES,
 	createPortletURL,
@@ -34,15 +38,22 @@ function buildVocabulariesURL(currentSiteId) {
 function getVocabularyScopeName(vocabulary, companyGroupId) {
 	const assetLibrary = vocabulary.assetLibraries?.[0];
 
-	if (!assetLibrary) {
-		return '';
+	if (assetLibrary) {
+		if (String(assetLibrary.id) === String(companyGroupId)) {
+			return Liferay.Language.get('global');
+		}
+
+		return assetLibrary.name;
 	}
 
-	if (String(assetLibrary.id) === String(companyGroupId)) {
+	if (
+		vocabulary.siteId !== undefined &&
+		String(vocabulary.siteId) === String(companyGroupId)
+	) {
 		return Liferay.Language.get('global');
 	}
 
-	return assetLibrary.name;
+	return '';
 }
 
 export default function decorateAddSiteNavigationMenuItemOptions({
@@ -315,11 +326,24 @@ function openAssetVocabularyPicker({
 					})
 				),
 				method: 'POST',
-			}).then(() => {
-				onItemAdd();
+			})
+				.then((response) => {
+					if (!response.ok) {
+						throw new Error();
+					}
 
-				window.location.reload();
-			});
+					onItemAdd();
+
+					window.location.reload();
+				})
+				.catch(() => {
+					openToast({
+						message: Liferay.Language.get(
+							'an-unexpected-error-occurred'
+						),
+						type: 'danger',
+					});
+				});
 		},
 		size: 'lg',
 		title: data.addTitle,

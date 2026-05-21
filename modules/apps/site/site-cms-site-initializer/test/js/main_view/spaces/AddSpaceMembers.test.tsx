@@ -9,17 +9,12 @@ import userEvent from '@testing-library/user-event';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-import AdminUserService from '../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import {
 	AddSpaceMembers,
 	AddSpaceMembersProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/AddSpaceMembers';
-
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
-);
 
 jest.mock('frontend-js-web', () => ({
 	...(jest.requireActual('frontend-js-web') as any),
@@ -134,11 +129,10 @@ describe('AddSpaceMembers', () => {
 			.spyOn(SpaceService, 'linkUserToSpace')
 			.mockResolvedValue({data: {}, error: null});
 
-		jest.spyOn(AdminUserService, 'getUserRoles').mockResolvedValue({
+		jest.spyOn(SpaceService, 'getSpaceRoles').mockResolvedValue({
 			items: [],
 			lastPage: 1,
 			page: 1,
-			pageSize: 1,
 			totalCount: 0,
 		});
 

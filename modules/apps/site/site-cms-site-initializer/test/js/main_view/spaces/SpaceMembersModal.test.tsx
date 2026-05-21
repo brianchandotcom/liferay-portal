@@ -7,16 +7,12 @@ import '@testing-library/jest-dom';
 import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import AdminUserService from '../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService';
 import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import {UserAccount} from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
 import SpaceMembersModal from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersModal';
 
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService'
-);
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/common/services/AdminUserService'
 );
 
 const mockUsers = [
@@ -71,11 +67,10 @@ describe('SpaceMembersModal', () => {
 			page: 1,
 			totalCount: 0,
 		});
-		jest.spyOn(AdminUserService, 'getUserRoles').mockResolvedValue({
+		jest.spyOn(SpaceService, 'getSpaceRoles').mockResolvedValue({
 			items: [],
 			lastPage: 1,
 			page: 1,
-			pageSize: 1,
 			totalCount: 0,
 		});
 

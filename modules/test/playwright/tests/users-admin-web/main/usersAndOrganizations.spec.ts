@@ -1996,21 +1996,18 @@ test(
 		await editUserPage.organizationsLink.click();
 
 		await expect(
-			editUserPage.organizationsTable.getByText(`${organization2.name}`)
-		).toBeVisible();
-
-		await expect(
 			editUserPage.organizationsTable.getByText(`${organization1.name}`)
 		).toBeVisible();
-
+		await expect(
+			editUserPage.organizationsTable.getByText(`${organization2.name}`)
+		).toBeVisible();
+		await expect(
+			editUserPage.organizationsTable.getByText(`${organization3.name}`)
+		).not.toBeVisible();
 		await expect(
 			editUserPage.organizationsTable.getByText(
 				`${parentOrganization.name}`
 			)
 		).toBeVisible();
-
-		await expect(
-			editUserPage.organizationsTable.getByText(`${organization3.name}`)
-		).not.toBeVisible();
 	}
 );

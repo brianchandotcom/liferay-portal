@@ -81,10 +81,6 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
-                fileEntryId:
-                    format: int64
-                    readOnly: true
-                    type: integer
                 fileName:
                     readOnly: true
                     type: string
@@ -134,15 +130,10 @@ components:
             type: object
         ImportRequest:
             properties:
-                fileEntryId:
-                    format: int64
-                    type: integer
                 requestPortletDataHandlers:
                     items:
                         $ref: "#/components/schemas/RequestPortletDataHandler"
                     type: array
-            required:
-                -   fileEntryId
             type: object
         Origin:
             properties:

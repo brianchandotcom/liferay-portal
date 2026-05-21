@@ -164,7 +164,7 @@ describe('RoomStatistics', () => {
 		expect(getByText('5')).toBeInTheDocument();
 	});
 
-	it('renders 1-day when totalSessionDuration is exactly 24h', () => {
+	it('renders 1-day when totalSessionDuration is 24h', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(24 * 60);
 
 		const {getByText} = render(<RoomStatistics />);
@@ -172,7 +172,7 @@ describe('RoomStatistics', () => {
 		expect(getByText('1-day')).toBeInTheDocument();
 	});
 
-	it('renders days and hours when totalSessionDuration is 25h30', () => {
+	it('renders 1-day 1-hour when totalSessionDuration is 25h30', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(25 * 60 + 30);
 
 		const {getByText} = render(<RoomStatistics />);
@@ -180,7 +180,7 @@ describe('RoomStatistics', () => {
 		expect(getByText('1-day 1-hour')).toBeInTheDocument();
 	});
 
-	it('renders days only when totalSessionDuration is exactly 48h', () => {
+	it('renders 2-days when totalSessionDuration is 48h', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(48 * 60);
 
 		const {getByText} = render(<RoomStatistics />);
@@ -188,7 +188,7 @@ describe('RoomStatistics', () => {
 		expect(getByText('2-days')).toBeInTheDocument();
 	});
 
-	it('renders days and hours when totalSessionDuration is 50h15', () => {
+	it('renders 2-days 2-hours when totalSessionDuration is 50h15', () => {
 		mockAnalyticsResponse = withTotalSessionDuration(50 * 60 + 15);
 
 		const {getByText} = render(<RoomStatistics />);

@@ -530,6 +530,8 @@ public class FriendlyURLEntryLocalServiceTest {
 			_friendlyURLEntryLocalService.getUniqueUrlTitleMap(
 				_group.getGroupId(),
 				_classNameLocalService.getClassNameId(User.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				_user.getUserId(),
 				HashMapBuilder.put(
 					LocaleUtil.CHINA, urlTitle1
@@ -589,6 +591,8 @@ public class FriendlyURLEntryLocalServiceTest {
 			_friendlyURLEntryLocalService.getUniqueUrlTitleMap(
 				_group.getGroupId(),
 				_classNameLocalService.getClassNameId(User.class),
+				FriendlyURLEntryConstants.
+					FRIENDLY_URL_ENTRY_PARENT_CLASS_PK_DEFAULT,
 				TestPropsValues.getUserId(),
 				HashMapBuilder.put(
 					LocaleUtil.CHINA, StringPool.BLANK

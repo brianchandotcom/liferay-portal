@@ -512,9 +512,9 @@ String forceReconsentURL = cookiesPreferenceHandlingConfigurationDisplayContext.
 			}
 
 			if (
-				renewalPeriodChanged &&
 				activeInput &&
-				activeInput.value !== 'true'
+				activeInput.value !== 'true' &&
+				renewalPeriodChanged
 			) {
 				event.preventDefault();
 				event.stopImmediatePropagation();

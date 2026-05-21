@@ -50,6 +50,7 @@ public class CookiesConfigurationConfirmJSPDynamicInclude
 
 		ExtendedObjectClassDefinition.Scope scope =
 			ExtendedObjectClassDefinition.Scope.SYSTEM;
+
 		long scopePK = 0L;
 
 		ThemeDisplay themeDisplay =

@@ -540,4 +540,70 @@ describe('ClayDropDown', () => {
 		expect(fruits.length).toBe(1);
 		expect(vegetables.length).toBe(1);
 	});
+
+	it('does not render the keyboard arrows indicator by default', () => {
+		const {container} = render(
+			<DropDownWithState>
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item href="#one" spritemap="/foo/bar">
+						one
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</DropDownWithState>
+		);
+
+		fireEvent.click(container.querySelector('.dropdown-toggle')!);
+
+		expect(
+			document.body.querySelector('.clay-keyboard-arrows-indicator')
+		).not.toBeInTheDocument();
+	});
+
+	it('renders the floating indicator alongside the trigger when enabled', () => {
+		const {container} = render(
+			<DropDownWithState displayKeyboardArrowsIndicator>
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item href="#one" spritemap="/foo/bar">
+						one
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</DropDownWithState>
+		);
+
+		fireEvent.click(container.querySelector('.dropdown-toggle')!);
+
+		const indicator = document.body.querySelector(
+			'.clay-keyboard-arrows-indicator'
+		);
+
+		expect(indicator).toBeInTheDocument();
+		expect(indicator).toHaveClass('clay-keyboard-arrows-vertical');
+		expect(indicator).toHaveClass(
+			'clay-keyboard-arrows-indicator-floating'
+		);
+	});
+
+	it('uses the localized label on the keyboard arrows indicator', () => {
+		const {container} = render(
+			<DropDownWithState
+				displayKeyboardArrowsIndicator
+				keyboardArrowsIndicatorLabel="Use up and down to navigate menu items"
+			>
+				<ClayDropDown.ItemList>
+					<ClayDropDown.Item href="#one" spritemap="/foo/bar">
+						one
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</DropDownWithState>
+		);
+
+		fireEvent.click(container.querySelector('.dropdown-toggle')!);
+
+		expect(
+			document.body.querySelector('.clay-keyboard-arrows-indicator')
+		).toHaveAttribute(
+			'aria-label',
+			'Use up and down to navigate menu items'
+		);
+	});
 });

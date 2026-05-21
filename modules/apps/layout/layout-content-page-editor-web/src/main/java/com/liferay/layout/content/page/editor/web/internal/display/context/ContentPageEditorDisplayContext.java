@@ -1316,7 +1316,7 @@ public class ContentPageEditorDisplayContext {
 			segmentsEntries = _segmentsEntryService.getSegmentsEntries(
 				stagingGroupHelper.getStagedPortletGroupId(
 					getGroupId(), SegmentsPortletKeys.SEGMENTS),
-				SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND,
+				new String[] {SegmentsEntryConstants.SOURCE_ASAH_FARO_BACKEND},
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		}
 

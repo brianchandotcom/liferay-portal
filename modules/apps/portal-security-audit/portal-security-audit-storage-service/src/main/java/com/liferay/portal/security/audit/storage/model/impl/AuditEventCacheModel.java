@@ -53,7 +53,7 @@ public class AuditEventCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{auditEventId=");
 		sb.append(auditEventId);
@@ -61,6 +61,8 @@ public class AuditEventCacheModel
 		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", accountEntryId=");
+		sb.append(accountEntryId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -87,6 +89,8 @@ public class AuditEventCacheModel
 		sb.append(sessionID);
 		sb.append(", additionalInfo=");
 		sb.append(additionalInfo);
+		sb.append(", contextName=");
+		sb.append(contextName);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,6 +103,7 @@ public class AuditEventCacheModel
 		auditEventImpl.setAuditEventId(auditEventId);
 		auditEventImpl.setGroupId(groupId);
 		auditEventImpl.setCompanyId(companyId);
+		auditEventImpl.setAccountEntryId(accountEntryId);
 		auditEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -180,6 +185,13 @@ public class AuditEventCacheModel
 			auditEventImpl.setAdditionalInfo(additionalInfo);
 		}
 
+		if (contextName == null) {
+			auditEventImpl.setContextName("");
+		}
+		else {
+			auditEventImpl.setContextName(contextName);
+		}
+
 		auditEventImpl.resetOriginalValues();
 
 		return auditEventImpl;
@@ -195,6 +207,8 @@ public class AuditEventCacheModel
 
 		companyId = objectInput.readLong();
 
+		accountEntryId = objectInput.readLong();
+
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,6 +223,7 @@ public class AuditEventCacheModel
 		serverPort = objectInput.readInt();
 		sessionID = objectInput.readUTF();
 		additionalInfo = (String)objectInput.readObject();
+		contextName = objectInput.readUTF();
 	}
 
 	@Override
@@ -218,6 +233,8 @@ public class AuditEventCacheModel
 		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
+
+		objectOutput.writeLong(accountEntryId);
 
 		objectOutput.writeLong(userId);
 
@@ -294,11 +311,19 @@ public class AuditEventCacheModel
 		else {
 			objectOutput.writeObject(additionalInfo);
 		}
+
+		if (contextName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(contextName);
+		}
 	}
 
 	public long auditEventId;
 	public long groupId;
 	public long companyId;
+	public long accountEntryId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -312,6 +337,7 @@ public class AuditEventCacheModel
 	public int serverPort;
 	public String sessionID;
 	public String additionalInfo;
+	public String contextName;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2002660291
+// LIFERAY-SERVICE-BUILDER-HASH:574215474

@@ -92,6 +92,20 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	public void setCompanyId(long companyId);
 
 	/**
+	 * Returns the account entry ID of this audit event.
+	 *
+	 * @return the account entry ID of this audit event
+	 */
+	public long getAccountEntryId();
+
+	/**
+	 * Sets the account entry ID of this audit event.
+	 *
+	 * @param accountEntryId the account entry ID of this audit event
+	 */
+	public void setAccountEntryId(long accountEntryId);
+
+	/**
 	 * Returns the user ID of this audit event.
 	 *
 	 * @return the user ID of this audit event
@@ -297,6 +311,21 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	 */
 	public void setAdditionalInfo(String additionalInfo);
 
+	/**
+	 * Returns the context name of this audit event.
+	 *
+	 * @return the context name of this audit event
+	 */
+	@AutoEscape
+	public String getContextName();
+
+	/**
+	 * Sets the context name of this audit event.
+	 *
+	 * @param contextName the context name of this audit event
+	 */
+	public void setContextName(String contextName);
+
 	@Override
 	public AuditEvent cloneWithOriginalValues();
 
@@ -305,4 +334,4 @@ public interface AuditEventModel extends BaseModel<AuditEvent>, ShardedModel {
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:102425204
+// LIFERAY-SERVICE-BUILDER-HASH:-1708754519

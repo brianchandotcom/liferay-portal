@@ -141,7 +141,7 @@ const AccountMembership: React.FC<IAccountMembershipProps> = ({
 						</>
 					}
 					primary
-					title={Liferay.Language.get('there-is-no-data-found')}
+					title={Liferay.Language.get('no-data-was-found')}
 				/>
 			</Card.Body>
 		</Card>

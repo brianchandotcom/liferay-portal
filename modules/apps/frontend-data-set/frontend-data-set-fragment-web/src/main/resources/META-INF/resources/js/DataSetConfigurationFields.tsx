@@ -312,7 +312,11 @@ export default function DataSetConfigurationFields({
 		},
 	];
 
-	const tokens = values.itemSelector.restEndpoint?.match(/{(.*?)}/g);
+	const apiURL =
+		values.itemSelector.restEndpoint +
+		values.itemSelector.additionalAPIURLParameters;
+
+	const tokens = apiURL?.match(/{(.*?)}/g);
 
 	const updateTokenValue = useCallback(
 		(tokenKey: string, value: TokenValue) => {
@@ -372,6 +376,9 @@ export default function DataSetConfigurationFields({
 										: [],
 									onItemsChange: (items: IDataSet[]) => {
 										onValueSelect('itemSelector', {
+											additionalAPIURLParameters:
+												items[0]
+													.additionalAPIURLParameters,
 											externalReferenceCode:
 												items[0].externalReferenceCode,
 											id: items[0].id,

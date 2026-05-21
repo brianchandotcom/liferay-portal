@@ -14,13 +14,11 @@ import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.EmailAddressException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -90,15 +88,10 @@ public class SharingCollaborationMailSenderImpl
 		_validateEmailAddress(emailAddress);
 
 		if (serviceContext.getRequest() == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Sharing collaboration email will not be sent for ",
-						"ticket ", ticket.getTicketId(),
-						" because the service context has no HTTP request"));
-			}
-
-			return;
+			throw new PortalException(
+				"Unable to send sharing collaboration email for ticket ID " +
+					ticket.getTicketId() +
+						" because the service context has no HTTP request");
 		}
 
 		_sendInvitation(emailAddress, serviceContext, sharingEntry, ticket);
@@ -256,9 +249,6 @@ public class SharingCollaborationMailSenderImpl
 				"Invalid email address: \"" + emailAddress + "\"");
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SharingCollaborationMailSenderImpl.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

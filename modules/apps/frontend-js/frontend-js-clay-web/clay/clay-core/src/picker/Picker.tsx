@@ -6,6 +6,7 @@
 import Button from '@clayui/button';
 import Icon from '@clayui/icon';
 import {
+	ClayPortal,
 	InternalDispatch,
 	Keys,
 	Overlay,
@@ -24,6 +25,7 @@ import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {Collection, useCollection} from '../collection';
+import {KeyboardArrowsIndicator} from '../keyboard-arrows-indicator';
 import {LiveAnnouncer} from '../live-announcer';
 import {Search} from './Search';
 import {PickerContext} from './context';
@@ -111,6 +113,15 @@ type Props<T> = {
 	'disabled'?: boolean;
 
 	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the Picker
+	 * trigger, hinting that up and down arrow keys can be used to navigate
+	 * the option list. The indicator floats to the right of the trigger
+	 * and flips to the left when it would overflow the viewport. It is
+	 * only rendered while the menu is open.
+	 */
+	'displayKeyboardArrowsIndicator'?: boolean;
+
+	/**
 	 * Defines the name of the property key that is used in the items filter
 	 * test.
 	 */
@@ -120,6 +131,14 @@ type Props<T> = {
 	 * The id of the component.
 	 */
 	'id'?: string;
+
+	/**
+	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
+	 * to the indicator's built-in English string when omitted. Pass a
+	 * translated value (e.g. via `Liferay.Language.get`) when the host
+	 * page needs i18n.
+	 */
+	'keyboardArrowsIndicatorLabel'?: string;
 
 	/**
 	 * Messages for the Picker.
@@ -196,9 +215,11 @@ export function Picker<T extends Record<string, any> | string | number>({
 	defaultSelectedKey,
 	direction = 'bottom',
 	disabled,
+	displayKeyboardArrowsIndicator = false,
 	filterKey,
 	id,
 	items,
+	keyboardArrowsIndicatorLabel,
 	messages: externalMessages,
 	native = false,
 	onActiveChange,
@@ -778,6 +799,16 @@ export function Picker<T extends Record<string, any> | string | number>({
 							)}
 					</div>
 				</Overlay>
+			)}
+
+			{active && displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={triggerRef}
+						direction="vertical"
+						label={keyboardArrowsIndicatorLabel}
+					/>
+				</ClayPortal>
 			)}
 		</>
 	);

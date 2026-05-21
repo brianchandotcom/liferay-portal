@@ -29,6 +29,7 @@ import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryManage
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryScopeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryStatusExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectEntryValuesExceptionMapper;
+import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectFieldReadOnlyExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.ObjectRelationshipDeletionTypeExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectEntryVersionExceptionMapper;
 import com.liferay.object.rest.internal.jaxrs.exception.mapper.RequiredObjectRelationshipExceptionMapper;
@@ -952,6 +953,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ObjectEntryScopeExceptionMapper::new,
 				() -> new ObjectEntryStatusExceptionMapper(_language),
 				() -> new ObjectEntryValuesExceptionMapper(_language),
+				ObjectFieldReadOnlyExceptionMapper::new,
 				() -> new ObjectRelationshipDeletionTypeExceptionMapper(
 					_language),
 				() -> new RequiredObjectEntryVersionExceptionMapper(_language),

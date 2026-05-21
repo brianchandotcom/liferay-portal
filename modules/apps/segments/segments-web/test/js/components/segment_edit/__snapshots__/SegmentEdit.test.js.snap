@@ -445,7 +445,7 @@ exports[`SegmentEdit renders with given values 1`] = `
           class="criteria-builder-section-sidebar overflow-hidden criteria-builder-section-sidebar--with-warning"
         >
           <div
-            aria-label="segments-contributors-panel"
+            aria-label="contributors-panel"
             class="criteria-sidebar-root d-flex flex-column"
             role="tabpanel"
             tabindex="-1"
@@ -554,7 +554,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                       <p
                         class="c-pt-1 text-secondary"
                       >
-                        inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                        inherited-attributes-are-not-taken-into-account-to-include-members
                       </p>
                       <ul
                         class="c-pl-0"
@@ -737,9 +737,9 @@ exports[`SegmentEdit renders with given values 1`] = `
                               value="value"
                             />
                             <button
-                              aria-label="duplicate-segment-property"
+                              aria-label="duplicate-property"
                               class="btn-outline-borderless btn-sm c-mr-1 btn btn-monospaced btn-secondary"
-                              title="duplicate-segment-property"
+                              title="duplicate-property"
                               type="button"
                             >
                               <svg
@@ -752,9 +752,9 @@ exports[`SegmentEdit renders with given values 1`] = `
                               </svg>
                             </button>
                             <button
-                              aria-label="delete-segment-property"
+                              aria-label="delete-property"
                               class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
-                              title="delete-segment-property"
+                              title="delete-property"
                               type="button"
                             >
                               <svg

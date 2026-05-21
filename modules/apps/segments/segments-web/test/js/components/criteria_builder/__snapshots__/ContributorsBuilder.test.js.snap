@@ -9,7 +9,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
       class="criteria-builder-section-sidebar overflow-hidden criteria-builder-section-sidebar--with-warning"
     >
       <div
-        aria-label="segments-contributors-panel"
+        aria-label="contributors-panel"
         class="criteria-sidebar-root d-flex flex-column"
         role="tabpanel"
         tabindex="-1"
@@ -118,7 +118,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <p
                     class="c-pt-1 text-secondary"
                   >
-                    inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                    inherited-attributes-are-not-taken-into-account-to-include-members
                   </p>
                   <ul
                     class="c-pl-0"
@@ -775,7 +775,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                   <p
                     class="c-pt-1 text-secondary"
                   >
-                    inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                    inherited-attributes-are-not-taken-into-account-to-include-members
                   </p>
                   <ul
                     class="c-pl-0"
@@ -1124,7 +1124,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
       class="criteria-builder-section-sidebar overflow-hidden criteria-builder-section-sidebar--with-warning"
     >
       <div
-        aria-label="segments-contributors-panel"
+        aria-label="contributors-panel"
         class="criteria-sidebar-root d-flex flex-column"
         role="tabpanel"
         tabindex="-1"
@@ -1233,7 +1233,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <p
                     class="c-pt-1 text-secondary"
                   >
-                    inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                    inherited-attributes-are-not-taken-into-account-to-include-members
                   </p>
                   <ul
                     class="c-pl-0"
@@ -1890,7 +1890,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                   <p
                     class="c-pt-1 text-secondary"
                   >
-                    inherited-attributes-are-not-taken-into-account-to-include-members-in-segments
+                    inherited-attributes-are-not-taken-into-account-to-include-members
                   </p>
                   <ul
                     class="c-pl-0"

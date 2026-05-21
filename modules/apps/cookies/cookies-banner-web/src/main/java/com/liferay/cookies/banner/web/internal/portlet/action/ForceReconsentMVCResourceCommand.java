@@ -43,19 +43,20 @@ public class ForceReconsentMVCResourceCommand extends BaseMVCResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+
+		ExtendedObjectClassDefinition.Scope scope =
+			ExtendedObjectClassDefinition.Scope.SYSTEM;
 
 		String scopeName = ParamUtil.getString(
 			resourceRequest, "scope",
 			ExtendedObjectClassDefinition.Scope.SYSTEM.getValue());
 
-		ExtendedObjectClassDefinition.Scope scope =
-			ExtendedObjectClassDefinition.Scope.SYSTEM;
 		long scopePK = 0L;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (scopeName.equals(
 				ExtendedObjectClassDefinition.Scope.COMPANY.getValue()) &&

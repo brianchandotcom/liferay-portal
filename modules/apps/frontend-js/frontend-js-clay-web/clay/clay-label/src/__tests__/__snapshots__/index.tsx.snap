@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Rendering as a link  1`] = `
+exports[`Rendering as a link 1`] = `
 <span
   className="label label-secondary"
 >
@@ -25,7 +25,7 @@ exports[`Rendering default 1`] = `
 </span>
 `;
 
-exports[`Rendering does not renders as inverse for unstyled displayType  1`] = `
+exports[`Rendering does not renders as inverse for unstyled displayType 1`] = `
 <span
   className="label label-unstyled"
 >
@@ -98,7 +98,7 @@ exports[`Rendering renders as closable 1`] = `
 </span>
 `;
 
-exports[`Rendering renders as inverse displayType  1`] = `
+exports[`Rendering renders as inverse displayType 1`] = `
 <span
   className="label label-inverse-success"
 >
@@ -144,7 +144,7 @@ exports[`Rendering renders with ItemBefore 1`] = `
 </span>
 `;
 
-exports[`Rendering with a different displayType  1`] = `
+exports[`Rendering with a different displayType 1`] = `
 <span
   className="label label-success"
 >

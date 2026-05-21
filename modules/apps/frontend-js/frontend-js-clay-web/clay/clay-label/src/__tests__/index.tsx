@@ -19,7 +19,7 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('with a different displayType ', () => {
+	it('with a different displayType', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel displayType="success">Success Label</ClayLabel>
 		);
@@ -27,7 +27,7 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('renders as inverse displayType ', () => {
+	it('renders as inverse displayType', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel displayType="success" inverse>
 				Success Label
@@ -37,7 +37,7 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('does not renders as inverse for unstyled displayType ', () => {
+	it('does not renders as inverse for unstyled displayType', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel displayType="unstyled" inverse>
 				Success Label
@@ -47,7 +47,7 @@ describe('Rendering', () => {
 		expect(testRenderer.toJSON()).toMatchSnapshot();
 	});
 
-	it('as a link ', () => {
+	it('as a link', () => {
 		const testRenderer = TestRenderer.create(
 			<ClayLabel href="#/foo/bar">Label w/ link</ClayLabel>
 		);

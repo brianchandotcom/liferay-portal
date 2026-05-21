@@ -95,14 +95,12 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 			dismissible,
 			displayType = 'secondary',
 			inverse = false,
-
 			large = false,
 			...otherProps
 		},
 		ref
 	) => {
-		const inverseVariant =
-			inverse && displayType !== 'unstyled' ? 'inverse-' : '';
+		const useInverse = inverse && displayType !== 'unstyled';
 
 		return (
 			<span
@@ -110,7 +108,8 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 				className={classNames('label', className, {
 					'label-dismissible': dismissible,
 					'label-lg': large,
-					[`label-${inverseVariant}${displayType}`]: displayType,
+					[`label-${displayType}`]: !useInverse && displayType,
+					[`label-inverse-${displayType}`]: useInverse,
 				})}
 				ref={ref}
 			>

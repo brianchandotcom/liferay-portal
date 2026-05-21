@@ -81,6 +81,8 @@ public abstract class BaseTopLevelBuildReport
 		jsonArray.put(String.valueOf(testrayAttachmentURL));
 
 		buildReportJSONObject.put("testrayAttachmentURLs", jsonArray);
+
+		clearTestrayAttachmentURLCaches();
 	}
 
 	@Override

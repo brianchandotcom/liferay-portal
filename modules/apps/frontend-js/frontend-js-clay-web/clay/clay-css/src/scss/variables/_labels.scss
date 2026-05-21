@@ -9,7 +9,7 @@ $label-border-radius: $border-radius !default;
 $label-border-style: solid !default;
 $label-border-width: 0.0625rem !default;
 $label-color: null !default;
-$label-font-size: 0.75rem !default;
+$label-font-size: 75% !default;
 $label-font-weight: $font-weight-bold !default;
 $label-height: null !default;
 $label-line-height: 1 !default;
@@ -17,7 +17,7 @@ $label-padding-x: 0.4375rem !default; // 7px
 $label-padding-y: 0.1875rem !default; // 3px
 $label-spacer-x: 0.25rem !default; // 4px
 $label-spacer-y: 0.125rem !default; // 2px
-$label-text-transform: none !default;
+$label-text-transform: null !default;
 
 // .label .sticker
 
@@ -349,7 +349,7 @@ $label-primary: map-deep-merge(
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-secondary` instead
 
-$label-secondary-color: $dark-l2 !default;
+$label-secondary-color: $secondary !default;
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-secondary` instead
 
@@ -427,7 +427,7 @@ $label-secondary: map-deep-merge(
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-success` instead
 
-$label-success-color: $success-d1 !default;
+$label-success-color: $success !default;
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-success` instead
 
@@ -505,7 +505,7 @@ $label-success: map-deep-merge(
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-info` instead
 
-$label-info-color: $info-d1 !default;
+$label-info-color: $info !default;
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-info` instead
 
@@ -583,7 +583,7 @@ $label-info: map-deep-merge(
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-warning` instead
 
-$label-warning-color: $warning-d1 !default;
+$label-warning-color: $warning !default;
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-warning` instead
 
@@ -661,7 +661,7 @@ $label-warning: map-deep-merge(
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-danger` instead
 
-$label-danger-color: $danger-d1 !default;
+$label-danger-color: $danger !default;
 
 /// @deprecated as of v2.4.1 use the Sass map `$label-danger` instead
 
@@ -927,27 +927,26 @@ $label-inverse-primary: map-deep-merge(
 $label-inverse-secondary: () !default;
 $label-inverse-secondary: map-deep-merge(
 	(
-		background-color: $secondary-l3,
-		border-color: $secondary-l3,
-		color: $dark-d2,
-
+		background-color: $secondary,
+		border-color: $secondary,
+		color: color-yiq($secondary),
 		href: (
 			hover: (
-				background-color: clay-darken($secondary-l3, 10%),
-				border-color: clay-darken($secondary-l3, 10%),
-				color: clay-darken($dark-d2, 10%),
+				background-color: clay-darken($secondary, 10%),
+				border-color: clay-darken($secondary, 10%),
+				color: color-yiq(clay-darken($secondary, 10%)),
 			),
 		),
 
 		link: (
 			hover: (
-				color: clay-darken($dark-d2, 10%),
+				color: clay-darken(color-yiq(clay-darken($secondary, 10%)), 10%),
 			),
 		),
 
 		close: (
 			hover: (
-				color: clay-darken($dark-d2, 10%),
+				color: clay-darken(color-yiq(clay-darken($secondary, 10%)), 10%),
 			),
 		),
 	),
@@ -957,27 +956,26 @@ $label-inverse-secondary: map-deep-merge(
 $label-inverse-success: () !default;
 $label-inverse-success: map-deep-merge(
 	(
-		background-color: $success-l2,
-		border-color: $success-l2,
-		color: $success-d1,
-
+		background-color: $success,
+		border-color: $success,
+		color: color-yiq($success),
 		href: (
 			hover: (
-				background-color: clay-darken($success-l2, 10%),
-				border-color: clay-darken($success-l2, 10%),
-				color: clay-darken($success-d1, 10%),
+				background-color: clay-darken($success, 10%),
+				border-color: clay-darken($success, 10%),
+				color: color-yiq(clay-darken($success, 10%)),
 			),
 		),
 
 		link: (
 			hover: (
-				color: clay-darken($success-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($success, 10%)), 10%),
 			),
 		),
 
 		close: (
 			hover: (
-				color: clay-darken($success-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($success, 10%)), 10%),
 			),
 		),
 	),
@@ -987,27 +985,26 @@ $label-inverse-success: map-deep-merge(
 $label-inverse-info: () !default;
 $label-inverse-info: map-deep-merge(
 	(
-		background-color: $info-l2,
-		border-color: $info-l2,
-		color: $info-d1,
-
+		background-color: $info,
+		border-color: $info,
+		color: color-yiq($info),
 		href: (
 			hover: (
-				background-color: clay-darken($info-l2, 10%),
-				border-color: clay-darken($info-l2, 10%),
-				color: clay-darken($info-d1, 10%),
+				background-color: clay-darken($info, 10%),
+				border-color: clay-darken($info, 10%),
+				color: color-yiq(clay-darken($info, 10%)),
 			),
 		),
 
 		link: (
 			hover: (
-				color: clay-darken($info-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($info, 10%)), 10%),
 			),
 		),
 
 		close: (
 			hover: (
-				color: clay-darken($info-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($info, 10%)), 10%),
 			),
 		),
 	),
@@ -1017,27 +1014,26 @@ $label-inverse-info: map-deep-merge(
 $label-inverse-warning: () !default;
 $label-inverse-warning: map-deep-merge(
 	(
-		background-color: $warning-l2,
-		border-color: $warning-l2,
-		color: $warning-d1,
-
+		background-color: $warning,
+		border-color: $warning,
+		color: color-yiq($warning),
 		href: (
 			hover: (
-				background-color: clay-darken($warning-l2, 10%),
-				border-color: clay-darken($warning-l2, 10%),
-				color: clay-darken($warning-d1, 10%),
+				background-color: clay-darken($warning, 10%),
+				border-color: clay-darken($warning, 10%),
+				color: color-yiq(clay-darken($warning, 10%)),
 			),
 		),
 
 		link: (
 			hover: (
-				color: clay-darken($warning-d1, 10%),
+				color: clay-lighten(color-yiq(clay-darken($warning, 10%)), 20%),
 			),
 		),
 
 		close: (
 			hover: (
-				color: clay-darken($warning-d1, 10%),
+				color: clay-lighten(color-yiq(clay-darken($warning, 10%)), 20%),
 			),
 		),
 	),
@@ -1047,27 +1043,26 @@ $label-inverse-warning: map-deep-merge(
 $label-inverse-danger: () !default;
 $label-inverse-danger: map-deep-merge(
 	(
-		background-color: $danger-l2,
-		border-color: $danger-l2,
-		color: $danger-d1,
-
+		background-color: $danger,
+		border-color: $danger,
+		color: color-yiq($danger),
 		href: (
 			hover: (
-				background-color: clay-darken($danger-l2, 10%),
-				border-color: clay-darken($danger-l2, 10%),
-				color: clay-darken($danger-d1, 10%),
+				background-color: clay-darken($danger, 10%),
+				border-color: clay-darken($danger, 10%),
+				color: color-yiq(clay-darken($danger, 10%)),
 			),
 		),
 
 		link: (
 			hover: (
-				color: clay-darken($danger-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($danger, 10%)), 10%),
 			),
 		),
 
 		close: (
 			hover: (
-				color: clay-darken($danger-d1, 10%),
+				color: clay-darken(color-yiq(clay-darken($danger, 10%)), 10%),
 			),
 		),
 	),

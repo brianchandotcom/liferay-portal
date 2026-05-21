@@ -72,22 +72,22 @@ public class PortletConfigurationPermissionsDisplayContextTest {
 		Assert.assertNull(_invokeGetSubtype());
 
 		Mockito.when(
-			group.isDepot()
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
 			group.getGroupId()
 		).thenReturn(
 			_GROUP_ID
 		);
 
-		try (MockedStatic<FeatureFlagManagerUtil>
+		Mockito.when(
+			group.isDepot()
+		).thenReturn(
+			true
+		);
+
+		try (MockedStatic<DepotRoleUtil> depotRoleUtilMockedStatic =
+				Mockito.mockStatic(DepotRoleUtil.class);
+			MockedStatic<FeatureFlagManagerUtil>
 				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
-					FeatureFlagManagerUtil.class);
-			MockedStatic<DepotRoleUtil> depotRoleUtilMockedStatic =
-				Mockito.mockStatic(DepotRoleUtil.class)) {
+					FeatureFlagManagerUtil.class)) {
 
 			featureFlagManagerUtilMockedStatic.when(
 				() -> FeatureFlagManagerUtil.isEnabled(
@@ -98,16 +98,16 @@ public class PortletConfigurationPermissionsDisplayContextTest {
 
 			Assert.assertNull(_invokeGetSubtype());
 
-			featureFlagManagerUtilMockedStatic.when(
-				() -> FeatureFlagManagerUtil.isEnabled(_COMPANY_ID, "LPD-17564")
-			).thenReturn(
-				true
-			);
-
 			depotRoleUtilMockedStatic.when(
 				() -> DepotRoleUtil.getSubtype(_GROUP_ID)
 			).thenReturn(
 				"space"
+			);
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(_COMPANY_ID, "LPD-17564")
+			).thenReturn(
+				true
 			);
 
 			Assert.assertEquals("space", _invokeGetSubtype());

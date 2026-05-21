@@ -1159,7 +1159,7 @@ $label-inverse-success: map-deep-merge(
 		background-color:
 			var(--label-inverse-success-background-color, $success-l2),
 		border-color: var(--label-inverse-success-border-color, transparent),
-		color: var(--label-inverse-success-color, $success-d1),
+		color: var(--label-inverse-success-color, $success-d2),
 		href: (
 			hover: (
 				background-color:
@@ -1169,7 +1169,7 @@ $label-inverse-success: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-success-hover-border-color, transparent),
-				color: var(--label-inverse-success-hover-color, $success-d1),
+				color: var(--label-inverse-success-hover-color, $success-d2),
 			),
 
 			focus: (
@@ -1180,7 +1180,7 @@ $label-inverse-success: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-success-focus-border-color, transparent),
-				color: var(--label-inverse-success-focus-color, $success-d1),
+				color: var(--label-inverse-success-focus-color, $success-d2),
 			),
 		),
 	),
@@ -1192,14 +1192,14 @@ $label-inverse-info: map-deep-merge(
 	(
 		background-color: var(--label-inverse-info-background-color, $info-l2),
 		border-color: var(--label-inverse-info-border-color, transparent),
-		color: var(--label-inverse-info-color, $info-d1),
+		color: var(--label-inverse-info-color, $info-d2),
 		href: (
 			hover: (
 				background-color:
 					var(--label-inverse-info-hover-background-color, $info-l2),
 				border-color:
 					var(--label-inverse-info-hover-border-color, transparent),
-				color: var(--label-inverse-info-hover-color, $info-d1),
+				color: var(--label-inverse-info-hover-color, $info-d2),
 			),
 
 			focus: (
@@ -1207,7 +1207,7 @@ $label-inverse-info: map-deep-merge(
 					var(--label-inverse-info-focus-background-color, $info-l2),
 				border-color:
 					var(--label-inverse-info-focus-border-color, transparent),
-				color: var(--label-inverse-info-focus-color, $info-d1),
+				color: var(--label-inverse-info-focus-color, $info-d2),
 			),
 		),
 	),
@@ -1220,7 +1220,7 @@ $label-inverse-warning: map-deep-merge(
 		background-color:
 			var(--label-inverse-warning-background-color, $warning-l2),
 		border-color: var(--label-inverse-warning-border-color, transparent),
-		color: var(--label-inverse-warning-color, $warning-d1),
+		color: var(--label-inverse-warning-color, $warning-d2),
 		href: (
 			hover: (
 				background-color:
@@ -1230,7 +1230,7 @@ $label-inverse-warning: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-warning-hover-border-color, transparent),
-				color: var(--label-inverse-warning-hover-color, $warning-d1),
+				color: var(--label-inverse-warning-hover-color, $warning-d2),
 			),
 
 			focus: (
@@ -1241,7 +1241,7 @@ $label-inverse-warning: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-warning-focus-border-color, transparent),
-				color: var(--label-inverse-warning-focus-color, $warning-d1),
+				color: var(--label-inverse-warning-focus-color, $warning-d2),
 			),
 		),
 	),
@@ -1254,7 +1254,7 @@ $label-inverse-danger: map-deep-merge(
 		background-color:
 			var(--label-inverse-danger-background-color, $danger-l2),
 		border-color: var(--label-inverse-danger-border-color, transparent),
-		color: var(--label-inverse-danger-color, $danger-d1),
+		color: var(--label-inverse-danger-color, $danger-d2),
 		href: (
 			hover: (
 				background-color:
@@ -1264,7 +1264,7 @@ $label-inverse-danger: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-danger-hover-border-color, transparent),
-				color: var(--label-inverse-danger-hover-color, $danger-d1),
+				color: var(--label-inverse-danger-hover-color, $danger-d2),
 			),
 
 			focus: (
@@ -1275,7 +1275,7 @@ $label-inverse-danger: map-deep-merge(
 					),
 				border-color:
 					var(--label-inverse-danger-focus-border-color, transparent),
-				color: var(--label-inverse-danger-focus-color, $danger-d1),
+				color: var(--label-inverse-danger-focus-color, $danger-d2),
 			),
 		),
 	),

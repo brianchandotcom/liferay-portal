@@ -25,6 +25,18 @@ exports[`Rendering default 1`] = `
 </span>
 `;
 
+exports[`Rendering does not renders as inverse for unstyled displayType  1`] = `
+<span
+  className="label label-unstyled"
+>
+  <span
+    className="label-item label-item-expand"
+  >
+    Success Label
+  </span>
+</span>
+`;
+
 exports[`Rendering renders as a link and closable 1`] = `
 <span
   className="label label-dismissible label-secondary"

@@ -101,7 +101,8 @@ const OldLabel = React.forwardRef<HTMLSpanElement, IBaseProps>(
 		},
 		ref
 	) => {
-		const inverseVariant = inverse ? 'inverse-' : '';
+		const inverseVariant =
+			inverse && displayType !== 'unstyled' ? 'inverse-' : '';
 
 		return (
 			<span

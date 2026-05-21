@@ -8,12 +8,14 @@ import {useMemo} from 'react';
 import {
 	CONDITION_TYPE_ITEMS,
 	TYPE_VALUES,
-	USER_CONDITION_ITEMS,
-	convertOptionsToConditionValue,
 	filterAndConvertMappingFields,
 } from '../../plugins/page_rules/components/Condition';
+import {OPERATORS} from '../../plugins/page_rules/components/FieldFragmentTypeSelector';
 import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
-import OPERATORS from '../../plugins/page_rules/constants/operators';
+import {
+	USER_CONDITION_ITEMS,
+	convertOptionsToConditionValue,
+} from '../../plugins/page_rules/components/UserTypeSelector';
 import {Condition} from '../../types/Rule';
 import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';

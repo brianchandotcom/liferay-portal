@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
+import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributorRegistry;
@@ -54,6 +55,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eduardo García
@@ -369,6 +371,11 @@ public class EditSegmentsEntryDisplayContext {
 
 	private Map<String, Object> _getProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"audiences",
+			Objects.equals(
+				PortalUtil.getPortletId(_renderRequest),
+				SegmentsPortletKeys.AUDIENCES)
+		).put(
 			"availableLocales", _getAvailableLocales()
 		).put(
 			"contributors", _getContributorsJSONArray()

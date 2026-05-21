@@ -3,10 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {InternalDispatch, useControlledState, useId} from '@clayui/shared';
+import {
+	ClayPortal,
+	InternalDispatch,
+	useControlledState,
+	useId,
+} from '@clayui/shared';
 import classNames from 'classnames';
-import React from 'react';
+import React, {useRef} from 'react';
 
+import {KeyboardArrowsIndicator} from '../keyboard-arrows-indicator';
 import {Bar} from './Bar';
 import {Content} from './Content';
 import {Item} from './Item';
@@ -56,6 +62,24 @@ type Props = {
 	defaultPanelWidth?: number;
 
 	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the
+	 * component, hinting that up and down arrow keys can be used to step
+	 * between the bar items. The indicator anchors to the outer
+	 * `c-slideout` wrapper so it follows the expanded surface when a
+	 * panel opens, and flips to the opposite side when it would overflow
+	 * the viewport. Visible only while the component has keyboard focus.
+	 */
+	displayKeyboardArrowsIndicator?: boolean;
+
+	/**
+	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
+	 * to the indicator's built-in English string when omitted. Pass a
+	 * translated value (e.g. via `Liferay.Language.get`) when the host
+	 * page needs i18n.
+	 */
+	keyboardArrowsIndicatorLabel?: string;
+
+	/**
 	 * Callback is called when the active state changes (controlled).
 	 */
 	onActiveChange?: InternalDispatch<React.Key | null>;
@@ -99,6 +123,8 @@ export function VerticalBar({
 	className,
 	defaultActive = null,
 	defaultPanelWidth = 320,
+	displayKeyboardArrowsIndicator = false,
+	keyboardArrowsIndicatorLabel,
 	onActiveChange,
 	onPanelWidthChange,
 	panelWidth: externalPanelWidth,
@@ -120,6 +146,8 @@ export function VerticalBar({
 
 	const [panelNext, setPanelNext] = React.useState<React.Key | null>(null);
 
+	const rootRef = useRef<HTMLDivElement>(null);
+
 	const [panelWidth, setPanelWidth] = useControlledState({
 		defaultName: 'defaultPanelWidth',
 		defaultValue: defaultPanelWidth,
@@ -130,33 +158,50 @@ export function VerticalBar({
 	});
 
 	return (
-		<div
-			className={classNames('c-slideout c-slideout-shown', className, {
-				'c-slideout-absolute': absolute,
-				'c-slideout-end': position === 'right',
-				'c-slideout-fixed': !absolute,
-				'c-slideout-start sidenav-start': position === 'left',
-			})}
-		>
-			<VerticalBarContext.Provider
-				value={{
-					activation,
-					activePanel,
-					id: `${id}-verticalbar`,
-					onActivePanel: setActivePanel,
-					onPanelWidthChange: setPanelWidth,
-					panelNext,
-					panelWidth,
-					panelWidthMax,
-					panelWidthMin,
-					position,
-					resize,
-					setPanelNext,
-				}}
+		<>
+			<div
+				className={classNames(
+					'c-slideout c-slideout-shown',
+					className,
+					{
+						'c-slideout-absolute': absolute,
+						'c-slideout-end': position === 'right',
+						'c-slideout-fixed': !absolute,
+						'c-slideout-start sidenav-start': position === 'left',
+					}
+				)}
+				ref={rootRef}
 			>
-				{children}
-			</VerticalBarContext.Provider>
-		</div>
+				<VerticalBarContext.Provider
+					value={{
+						activation,
+						activePanel,
+						id: `${id}-verticalbar`,
+						onActivePanel: setActivePanel,
+						onPanelWidthChange: setPanelWidth,
+						panelNext,
+						panelWidth,
+						panelWidthMax,
+						panelWidthMin,
+						position,
+						resize,
+						setPanelNext,
+					}}
+				>
+					{children}
+				</VerticalBarContext.Provider>
+			</div>
+
+			{displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={rootRef}
+						direction="vertical"
+						label={keyboardArrowsIndicatorLabel}
+					/>
+				</ClayPortal>
+			)}
+		</>
 	);
 }
 

@@ -67,9 +67,11 @@ function _create_worktree {
 	cwd="$(jq --exit-status --raw-output ".cwd" <<< "${input}")" || _die "The cwd field is missing from the hook input ${input}."
 	name="$(jq --exit-status --raw-output ".name" <<< "${input}")" || _die "The name field is missing from the hook input ${input}."
 
-	local target_path
+	local main_worktree target_path
 
-	target_path="$(dirname "$(git -C "${cwd}" rev-parse --show-toplevel)")/liferay-portal-${name}"
+	main_worktree="$(git -C "${cwd}" worktree list --porcelain | grep --extended-regexp "^worktree " | head --lines=1 | sed "s/^worktree //")"
+
+	target_path="$(dirname "${main_worktree}")/$(basename "${main_worktree}")-${name}"
 
 	if ! git -C "${cwd}" worktree list --porcelain | grep --fixed-strings --line-regexp --quiet "worktree ${target_path}"
 	then

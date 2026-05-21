@@ -7,23 +7,33 @@ import {Option, Picker} from '@clayui/core';
 import ClayForm, {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import Icon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import {FormikErrors} from 'formik';
+import {FormikErrors, FormikTouched} from 'formik';
 import {FieldBase, InputLocalized} from 'frontend-js-components-web';
-import React from 'react';
+import React, {FocusEventHandler} from 'react';
 
 import {GUARDRAIL_TYPE_OPTIONS} from './constants';
 import {ModelArmorTemplate} from './types/ModelArmorTemplate';
 
 interface IProps {
 	errors: FormikErrors<ModelArmorTemplate>;
+	handleBlur: FocusEventHandler;
 	setField: <K extends keyof ModelArmorTemplate>(
 		field: K,
 		value: ModelArmorTemplate[K]
 	) => void;
+	setFieldTouched: (field: string, isTouched?: boolean) => void;
+	touched: FormikTouched<ModelArmorTemplate>;
 	values: ModelArmorTemplate;
 }
 
-const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
+const DetailsPanel: React.FC<IProps> = ({
+	errors,
+	handleBlur,
+	setField,
+	setFieldTouched,
+	touched,
+	values,
+}) => {
 	return (
 		<ClayPanel
 			className="model-armor-template-form-details"
@@ -40,39 +50,42 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 					/>
 				</div>
 
-				<ClayForm.Group>
-					<InputLocalized
-						id="title"
-						label={Liferay.Language.get('title')}
-						name="title_i18n"
-						onChange={(value) => setField('title_i18n', value)}
-						onSelectedLocaleChange={() => {}}
-						placeholder={Liferay.Language.get('title')}
-						required
-						translations={values.title_i18n || {}}
-					/>
+				<InputLocalized
+					error={
+						touched.title_i18n
+							? (errors.title_i18n as string | undefined)
+							: undefined
+					}
+					id="title"
+					label={Liferay.Language.get('title')}
+					name="title_i18n"
+					onBlur={() => setFieldTouched('title_i18n', true)}
+					onChange={(value) => setField('title_i18n', value)}
+					placeholder={Liferay.Language.get('title')}
+					required
+					translations={values.title_i18n || {}}
+				/>
 
-					{errors.title_i18n && (
-						<div className="d-block invalid-feedback">
-							{errors.title_i18n as string}
-						</div>
-					)}
-				</ClayForm.Group>
-
-				<ClayForm.Group>
-					<label htmlFor="externalReferenceCode">
-						{Liferay.Language.get('external-reference-code')}
-
-						<span className="ml-1 reference-mark text-warning">
-							<Icon symbol="asterisk" />
-						</span>
-					</label>
-
+				<FieldBase
+					errorMessage={
+						touched.externalReferenceCode
+							? errors.externalReferenceCode
+							: undefined
+					}
+					id="externalReferenceCode"
+					label={Liferay.Language.get('external-reference-code')}
+					required
+				>
 					<ClayInput
 						className={
-							errors.externalReferenceCode ? 'is-invalid' : ''
+							touched.externalReferenceCode &&
+							errors.externalReferenceCode
+								? 'is-invalid'
+								: ''
 						}
 						id="externalReferenceCode"
+						name="externalReferenceCode"
+						onBlur={handleBlur}
 						onChange={(event) =>
 							setField(
 								'externalReferenceCode',
@@ -83,13 +96,7 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 						type="text"
 						value={values.externalReferenceCode}
 					/>
-
-					{errors.externalReferenceCode && (
-						<div className="d-block invalid-feedback">
-							{errors.externalReferenceCode}
-						</div>
-					)}
-				</ClayForm.Group>
+				</FieldBase>
 
 				<ClayForm.Group>
 					<label htmlFor="description">
@@ -108,7 +115,9 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 				</ClayForm.Group>
 
 				<FieldBase
-					errorMessage={errors.location}
+					errorMessage={
+						touched.location ? errors.location : undefined
+					}
 					helpMessage={Liferay.Language.get(
 						'model-armor-location-help'
 					)}
@@ -117,8 +126,14 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 					required
 				>
 					<ClayInput
-						className={errors.location ? 'is-invalid' : ''}
+						className={
+							touched.location && errors.location
+								? 'is-invalid'
+								: ''
+						}
 						id="location"
+						name="location"
+						onBlur={handleBlur}
 						onChange={(event) =>
 							setField('location', event.target.value)
 						}
@@ -132,13 +147,16 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 					<label htmlFor="guardrailType">
 						{Liferay.Language.get('guardrail-type')}
 
-						<span
-							className="model-armor-template-form-help-icon"
-							data-tooltip-align="top"
-							title={Liferay.Language.get('guardrail-type-help')}
-						>
-							<Icon symbol="question-circle-full" />
-						</span>
+						<Icon
+							className="lfr-portal-tooltip ml-1 text-secondary"
+							data-title={Liferay.Language.get(
+								'guardrail-type-help'
+							)}
+							focusable="false"
+							role="dialog"
+							symbol="question-circle-full"
+							tabIndex={0}
+						/>
 					</label>
 
 					<Picker
@@ -160,10 +178,10 @@ const DetailsPanel: React.FC<IProps> = ({errors, setField, values}) => {
 					<ClayCheckbox
 						checked={values.multiLanguageDetectionEnabled}
 						label={Liferay.Language.get('multi-language-detection')}
-						onChange={() =>
+						onChange={(event) =>
 							setField(
 								'multiLanguageDetectionEnabled',
-								!values.multiLanguageDetectionEnabled
+								event.target.checked
 							)
 						}
 					/>

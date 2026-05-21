@@ -64,9 +64,9 @@ exports[`CriteriaRow renders 1`] = `
         value="test_val"
       />
       <button
-        aria-label="duplicate-segment-property"
+        aria-label="duplicate-property"
         class="btn-outline-borderless btn-sm c-mr-1 btn btn-monospaced btn-secondary"
-        title="duplicate-segment-property"
+        title="duplicate-property"
         type="button"
       >
         <svg
@@ -79,9 +79,9 @@ exports[`CriteriaRow renders 1`] = `
         </svg>
       </button>
       <button
-        aria-label="delete-segment-property"
+        aria-label="delete-property"
         class="btn-outline-borderless btn-sm btn btn-monospaced btn-secondary"
-        title="delete-segment-property"
+        title="delete-property"
         type="button"
       >
         <svg
@@ -167,7 +167,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
         class="btn-outline-danger btn-sm btn"
         type="button"
       >
-        delete-segment-property
+        delete-property
       </button>
     </div>
   </div>

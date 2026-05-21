@@ -136,11 +136,17 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 								</MultiStepNav.Title>
 								<MultiStepNav.Divider />
 								<ClaySticker
-									className='rounded-circle'
+									className={classNames('rounded-circle', {
+										'bg-red': isAtRisk
+									})}
 									displayType='secondary'
 								>
 									<ClayIcon
-										className='text-secondary'
+										className={
+											isAtRisk
+												? 'text-white'
+												: 'text-secondary'
+										}
 										symbol='exclamation-circle'
 									/>
 								</ClaySticker>

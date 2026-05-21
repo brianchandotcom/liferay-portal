@@ -72,7 +72,7 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 		);
 	});
 
-	describe('honors the user configured timezone (not the browser TZ)', () => {
+	describe('converts wall-clock to UTC using the user configured timezone (not the browser TZ)', () => {
 		it('converts wall-clock to UTC for America/Los_Angeles (PDT, -07:00)', () => {
 			setTimeZone('America/Los_Angeles');
 
@@ -115,6 +115,37 @@ describe('DateTimeRangeFilter.getOdataString', () => {
 			} as any);
 
 			expect(result).toBe('testField ge 2026-05-11T15:30:00Z');
+		});
+	});
+
+	describe('uses the offset stored in selectedData (URL portability)', () => {
+		it('uses the stored offset even when the viewer is in a different timezone', () => {
+			setTimeZone('Asia/Tokyo');
+
+			const result = getOdataString({
+				id: 'testField',
+				selectedData: {
+					from: {...fromDateTime, offset: '+02:00'},
+				},
+			} as any);
+
+			expect(result).toBe('testField ge 2026-05-11T13:30:00Z');
+		});
+
+		it('preserves a negative offset when the viewer is in UTC', () => {
+			setTimeZone('UTC');
+
+			const result = getOdataString({
+				id: 'testField',
+				selectedData: {
+					from: {...fromDateTime, offset: '-07:00'},
+					to: {...toDateTime, offset: '-07:00'},
+				},
+			} as any);
+
+			expect(result).toBe(
+				'testField ge 2026-05-11T22:30:00Z) and (testField le 2026-05-12T00:45:00Z'
+			);
 		});
 	});
 });

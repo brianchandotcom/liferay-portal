@@ -7,7 +7,6 @@ package com.liferay.fragment.internal.model.listener;
 
 import com.liferay.fragment.model.FragmentEntryVersion;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -51,13 +50,10 @@ public class FragmentEntryVersionModelListener
 
 			List<FragmentEntryVersion> fragmentEntryVersions =
 				_fragmentEntryVersionPersistence.findByFragmentEntryId(
-					fragmentEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					fragmentEntryId, MAX_VERSIONS, versionCount,
 					orderByComparator);
 
-			for (FragmentEntryVersion version :
-					fragmentEntryVersions.subList(
-						MAX_VERSIONS, fragmentEntryVersions.size())) {
-
+			for (FragmentEntryVersion version : fragmentEntryVersions) {
 				_fragmentEntryVersionPersistence.remove(version);
 			}
 		}

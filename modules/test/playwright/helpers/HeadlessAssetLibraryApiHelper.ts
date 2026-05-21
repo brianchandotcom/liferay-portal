@@ -16,17 +16,20 @@ export class HeadlessAssetLibraryApiHelper {
 
 	async createAssetLibrary({
 		description,
+		externalReferenceCode,
 		name,
 		settings = {},
 		type = 'Space',
 	}: {
 		description?: string;
+		externalReferenceCode?: string;
 		name: string;
 		settings?: any;
 		type?: string;
 	}) {
 		const data = JSON.stringify({
 			description,
+			externalReferenceCode,
 			name,
 			settings,
 			type,

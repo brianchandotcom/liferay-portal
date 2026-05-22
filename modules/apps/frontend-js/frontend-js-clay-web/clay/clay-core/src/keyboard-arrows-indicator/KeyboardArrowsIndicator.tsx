@@ -149,14 +149,13 @@ export function KeyboardArrowsIndicator({
 	}, [anchorRef, isTooltip]);
 
 	// Toggle the indicator's visibility based on focus-within of the
-	// anchor element. Anchors that contain the focusable interaction
-	// surface (the input, the trigger, the nav, the open panel) cover
-	// the keyboard-engagement signal cleanly through `contains()` —
-	// including for popups whose menus get portaled, as long as the
-	// consumer points `anchorRef` at the focus-receiving element. CSS
-	// hides the indicator with `visibility: hidden` so the screen-reader
-	// description stays out of the accessibility tree until the user
-	// engages the component with the keyboard.
+	// anchor element. Listeners attach to the anchor itself, not the
+	// document — `focusin`/`focusout` bubble from descendants up to the
+	// anchor, so they fire as long as focus crosses the anchor's
+	// subtree. This stays encapsulated and survives consumers like
+	// Table's `FocusWithinProvider` that call `event.stopPropagation()`
+	// at the React root, which would otherwise stop a document-level
+	// listener from ever seeing the event.
 
 	useEffect(() => {
 		if (!anchorRef?.current) {
@@ -171,12 +170,12 @@ export function KeyboardArrowsIndicator({
 
 		update();
 
-		document.addEventListener('focusin', update);
-		document.addEventListener('focusout', update);
+		anchor.addEventListener('focusin', update);
+		anchor.addEventListener('focusout', update);
 
 		return () => {
-			document.removeEventListener('focusin', update);
-			document.removeEventListener('focusout', update);
+			anchor.removeEventListener('focusin', update);
+			anchor.removeEventListener('focusout', update);
 		};
 	}, [anchorRef]);
 

@@ -19,12 +19,14 @@ import {
 } from './utils/odata';
 import {Criteria, CriterionGroup} from './utils/types';
 import {
-	getSequentialLimitState,
+	hasNestedOrExceeded,
+	hasRootAndExceeded,
 	invalidateCriterionWithMissingProperty,
 	validateSegmentInputs
 } from './utils/utils';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {List} from 'immutable';
+import {NESTED_OR_LIMIT_ALERT, SEQUENTIAL_LIMIT_ALERT} from './utils/constants';
 import {PropertyGroup, Segment} from 'shared/util/records';
 import {
 	ReferencedObjectsContext,
@@ -32,7 +34,6 @@ import {
 } from './context/referencedObjects';
 import {SegmentEnabledSequentialCard} from 'segment/components/SegmentEnabledSequentialCard';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
-import {SEQUENTIAL_LIMIT_ALERT} from './utils/constants';
 import {v4 as uuidv4} from 'uuid';
 
 /**
@@ -51,10 +52,12 @@ export function validateSegmentEditor(
 		!validateSegmentInputs(criteria)
 	) {
 		error = Liferay.Language.get('empty-fields');
-	} else if (
-		getSequentialLimitState(criteria, sequential) === 'exceedsLimit'
-	) {
-		error = SEQUENTIAL_LIMIT_ALERT.exceedsLimit.text;
+	} else if (sequential) {
+		if (hasNestedOrExceeded(criteria)) {
+			error = NESTED_OR_LIMIT_ALERT.exceedsLimit.text;
+		} else if (hasRootAndExceeded(criteria)) {
+			error = SEQUENTIAL_LIMIT_ALERT.exceedsLimit.text;
+		}
 	}
 
 	return error;

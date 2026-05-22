@@ -51,6 +51,7 @@ import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
 import {get} from 'lodash';
 import {
+	Conjunctions,
 	isKnown,
 	isUnknown,
 	PropertyTypes,
@@ -72,13 +73,19 @@ const acceptedDragTypes = [DragTypes.CriteriaRow, DragTypes.Property];
 const canDrop = (
 	{
 		criteriaGroupId: destGroupId,
+		disabled,
 		index: destIndex
 	}: {
 		criteriaGroupId: string;
+		disabled?: boolean;
 		index: number;
 	},
 	monitor: DropTargetMonitor
 ): boolean => {
+	if (disabled) {
+		return false;
+	}
+
 	const {criteriaGroupId: startGroupId, index: startIndex} =
 		monitor.getItem();
 
@@ -97,7 +104,8 @@ const drop = (
 		criterion,
 		index: destIndex,
 		onChange,
-		onMove
+		onMove,
+		sequential
 	}: {
 		addProperty: AddProperty;
 		criteriaGroupId: string;
@@ -105,6 +113,7 @@ const drop = (
 		index: number;
 		onChange: (newGroup: CriterionGroup) => void;
 		onMove: OnMove;
+		sequential?: boolean;
 	},
 	monitor: DropTargetMonitor
 ): void => {
@@ -145,7 +154,10 @@ const drop = (
 
 	const itemType = monitor.getItemType();
 
-	const newGroup = createNewGroup([criterion, newCriterion]);
+	const newGroup = createNewGroup(
+		[criterion, newCriterion],
+		sequential ? Conjunctions.Or : Conjunctions.And
+	);
 
 	if (itemType === DragTypes.Property) {
 		onChange(newGroup);
@@ -200,6 +212,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	connectDropTarget: ConnectDropTarget;
 	criteriaGroupId: string;
 	criterion: Criterion;
+	disabled?: boolean;
 	dragging?: boolean;
 	groupId: string;
 	id?: string;
@@ -211,6 +224,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	onMove: OnMove;
 	referencedProperties: Map<string, Map<string, Property>>;
 	segmentType: SegmentTypes;
+	sequential?: boolean;
 	timeZoneId: string;
 }
 

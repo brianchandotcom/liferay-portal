@@ -50,6 +50,14 @@ describe('utils', () => {
 			expect(criterionGroup.conjunctionName).toBe(And);
 			expect(criterionGroup.criteriaGroupId).toBeTruthy();
 		});
+
+		it('should create a new CriterionGroup with the supplied conjunction', () => {
+			const items = [];
+
+			const criterionGroup = utils.createNewGroup(items, 'or');
+
+			expect(criterionGroup.conjunctionName).toBe('or');
+		});
 	});
 
 	describe('generateGroupId', () => {
@@ -149,6 +157,139 @@ describe('utils', () => {
 
 		it('should return false when value is not an instance of ImmutableMap', () => {
 			expect(utils.isMap({})).toBeFalse();
+		});
+	});
+
+	describe('getNestedOrLimitState', () => {
+		const orWith = count => ({
+			conjunctionName: Conjunctions.Or,
+			criteriaGroupId: 'group-1',
+			items: Array.from({length: count}, (_, i) => ({rowId: `r${i}`}))
+		});
+
+		it('should return null for missing criteria', () => {
+			expect(utils.getNestedOrLimitState(null)).toBeNull();
+			expect(utils.getNestedOrLimitState(undefined)).toBeNull();
+		});
+
+		it('should return null for an AND group regardless of items', () => {
+			const andGroup = {
+				conjunctionName: Conjunctions.And,
+				criteriaGroupId: 'group-1',
+				items: Array.from({length: 5}, (_, i) => ({rowId: `r${i}`}))
+			};
+
+			expect(utils.getNestedOrLimitState(andGroup)).toBeNull();
+		});
+
+		it('should return null for an OR group below the limit', () => {
+			expect(utils.getNestedOrLimitState(orWith(2))).toBeNull();
+		});
+
+		it('should return reachedLimit for an OR group at the limit', () => {
+			expect(utils.getNestedOrLimitState(orWith(3))).toBe('reachedLimit');
+		});
+
+		it('should return exceedsLimit for an OR group past the limit', () => {
+			expect(utils.getNestedOrLimitState(orWith(4))).toBe('exceedsLimit');
+		});
+	});
+
+	describe('hasNestedOrExceeded', () => {
+		const makeRow = rowId => ({rowId});
+
+		it('should return false for missing criteria', () => {
+			expect(utils.hasNestedOrExceeded(null)).toBeFalse();
+			expect(utils.hasNestedOrExceeded(undefined)).toBeFalse();
+		});
+
+		it('should return false for a root group with no nested children', () => {
+			const root = {
+				conjunctionName: Conjunctions.And,
+				criteriaGroupId: 'root',
+				items: [makeRow('r0'), makeRow('r1')]
+			};
+
+			expect(utils.hasNestedOrExceeded(root)).toBeFalse();
+		});
+
+		it('should ignore the size of the root OR group itself', () => {
+			const rootOr = {
+				conjunctionName: Conjunctions.Or,
+				criteriaGroupId: 'root',
+				items: [
+					makeRow('r0'),
+					makeRow('r1'),
+					makeRow('r2'),
+					makeRow('r3')
+				]
+			};
+
+			expect(utils.hasNestedOrExceeded(rootOr)).toBeFalse();
+		});
+
+		it('should return false when a nested OR group is at the limit', () => {
+			const root = {
+				conjunctionName: Conjunctions.And,
+				criteriaGroupId: 'root',
+				items: [
+					{
+						conjunctionName: Conjunctions.Or,
+						criteriaGroupId: 'nested',
+						items: [makeRow('r0'), makeRow('r1'), makeRow('r2')]
+					}
+				]
+			};
+
+			expect(utils.hasNestedOrExceeded(root)).toBeFalse();
+		});
+
+		it('should return true when a nested OR group has more than 3 items', () => {
+			const root = {
+				conjunctionName: Conjunctions.And,
+				criteriaGroupId: 'root',
+				items: [
+					{
+						conjunctionName: Conjunctions.Or,
+						criteriaGroupId: 'nested',
+						items: [
+							makeRow('r0'),
+							makeRow('r1'),
+							makeRow('r2'),
+							makeRow('r3')
+						]
+					}
+				]
+			};
+
+			expect(utils.hasNestedOrExceeded(root)).toBeTrue();
+		});
+
+		it('should return true for an exceeded OR group deeper in the tree', () => {
+			const root = {
+				conjunctionName: Conjunctions.And,
+				criteriaGroupId: 'root',
+				items: [
+					{
+						conjunctionName: Conjunctions.And,
+						criteriaGroupId: 'mid',
+						items: [
+							{
+								conjunctionName: Conjunctions.Or,
+								criteriaGroupId: 'leaf',
+								items: [
+									makeRow('r0'),
+									makeRow('r1'),
+									makeRow('r2'),
+									makeRow('r3')
+								]
+							}
+						]
+					}
+				]
+			};
+
+			expect(utils.hasNestedOrExceeded(root)).toBeTrue();
 		});
 	});
 

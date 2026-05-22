@@ -16,12 +16,29 @@ import java.io.Serializable;
 public class AccountEntryValidatorResult implements Serializable {
 
 	public AccountEntryValidatorResult(boolean valid) {
-		this(valid, StringPool.BLANK);
+		this(valid, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	public AccountEntryValidatorResult(boolean valid, String localizedMessage) {
+		this(valid, localizedMessage, StringPool.BLANK, StringPool.BLANK);
+	}
+
+	public AccountEntryValidatorResult(
+		boolean valid, String localizedMessage, String localizedLabel,
+		String link) {
+
 		_valid = valid;
 		_localizedMessage = localizedMessage;
+		_localizedLabel = localizedLabel;
+		_link = link;
+	}
+
+	public String getLink() {
+		return _link;
+	}
+
+	public String getLocalizedLabel() {
+		return _localizedLabel;
 	}
 
 	public String getLocalizedMessage() {
@@ -36,6 +53,8 @@ public class AccountEntryValidatorResult implements Serializable {
 		return _valid;
 	}
 
+	private final String _link;
+	private final String _localizedLabel;
 	private final String _localizedMessage;
 	private final boolean _valid;
 

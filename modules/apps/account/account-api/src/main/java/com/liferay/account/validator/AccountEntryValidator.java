@@ -5,6 +5,7 @@
 
 package com.liferay.account.validator;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -18,7 +19,8 @@ public interface AccountEntryValidator {
 	public String getKey();
 
 	public AccountEntryValidatorResult validate(
-			Locale locale, Map<String, Object> values)
+			Locale locale, AccountEntry accountEntry,
+			Map<String, Object> context)
 		throws PortalException;
 
 }

@@ -174,7 +174,7 @@ exports[`DynamicSegmentEdit should render in BATCH mode 1`] = `
                   class="btn-group-item cancel"
                 >
                   <a
-                    class="button-root btn btn-secondary"
+                    class="button-root btn btn-sm btn-secondary"
                     href="/workspace/23/contacts/segments/123"
                   >
                     Cancel

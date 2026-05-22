@@ -12,4 +12,6 @@ data:
         {{- $liferayTemplates | nindent 8 }}
 kind: EnvironmentConfig
 metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
     name: liferay-template-store

@@ -6,4 +6,6 @@ data:
     vpcName: {{ $.Values.global.gcp.vpcName | quote }}
 kind: EnvironmentConfig
 metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-40"
     name: environment-config

@@ -80,6 +80,28 @@ export function getProductMaxQuantity(
 	return Number(maxQuantity - maxDifference).toFixed(precision);
 }
 
+export function getQuantity(productConfiguration = {}, skuUnitOfMeasure) {
+	if (productConfiguration.allowedOrderQuantities?.length) {
+		return Math.min(...productConfiguration.allowedOrderQuantities);
+	}
+
+	const precision = skuUnitOfMeasure?.precision || 0;
+
+	return Number(
+		getMinQuantity(
+			skuUnitOfMeasure
+				? productConfiguration.minOrderQuantity
+				: Math.ceil(productConfiguration.minOrderQuantity),
+			getMultipleQuantity(
+				skuUnitOfMeasure?.incrementalOrderQuantity,
+				productConfiguration.multipleOrderQuantity,
+				precision
+			),
+			precision
+		)
+	);
+}
+
 export function getProductMinQuantity({
 	allowedOrderQuantities,
 	minOrderQuantity,

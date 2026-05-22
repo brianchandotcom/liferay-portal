@@ -19,6 +19,11 @@ public class CommerceSAPConstants {
 	public static final String CLASS_NAME_COMMERCE_CART_RESOURCE =
 		"com.liferay.commerce.frontend.internal.cart.CommerceCartResource";
 
+	public static final String
+		CLASS_NAME_COMMERCE_HEADLESS_CART_COMMENT_RESOURCE =
+			"com.liferay.headless.commerce.delivery.cart.internal.resource." +
+				"v1_0.CartCommentResourceImpl";
+
 	public static final String CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE =
 		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
 			"CartItemResourceImpl";
@@ -26,6 +31,11 @@ public class CommerceSAPConstants {
 	public static final String CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE =
 		"com.liferay.headless.commerce.delivery.cart.internal.resource.v1_0." +
 			"CartResourceImpl";
+
+	public static final String
+		CLASS_NAME_COMMERCE_HEADLESS_CART_TRANSITION_RESOURCE =
+			"com.liferay.headless.commerce.delivery.cart.internal.resource." +
+				"v1_0.CartTransitionResourceImpl";
 
 	public static final String CLASS_NAME_COMMERCE_HEADLESS_CHANNEL_RESOURCE =
 		"com.liferay.headless.commerce.delivery.catalog.internal.resource." +
@@ -75,6 +85,8 @@ public class CommerceSAPConstants {
 				CommerceOrderService.class.getName(), "#fetchCommerceOrder\n",
 				CommerceOrderService.class.getName(), "#getCommerceOrder\n",
 				CLASS_NAME_COMMERCE_CART_RESOURCE, "*\n",
+				CLASS_NAME_COMMERCE_HEADLESS_CART_COMMENT_RESOURCE,
+				"#getCartCommentsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE,
 				"#deleteCartItem\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CART_ITEM_RESOURCE,
@@ -91,6 +103,8 @@ public class CommerceSAPConstants {
 				CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE, "#patchCart\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CART_RESOURCE,
 				"#postChannelCart\n",
+				CLASS_NAME_COMMERCE_HEADLESS_CART_TRANSITION_RESOURCE,
+				"#getCartCartTransitionsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CHANNEL_RESOURCE,
 				"#getChannelsPage\n",
 				CLASS_NAME_COMMERCE_HEADLESS_CURRENCY_RESOURCE, "*\n",

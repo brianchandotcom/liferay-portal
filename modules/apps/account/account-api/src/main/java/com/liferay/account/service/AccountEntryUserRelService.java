@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
@@ -70,6 +71,11 @@ public interface AccountEntryUserRelService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Ticket addUserInvitationTicket(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException;
@@ -129,4 +135,4 @@ public interface AccountEntryUserRelService extends BaseService {
 		throws PortalException;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1117727151
+// LIFERAY-SERVICE-BUILDER-HASH:-1108290442

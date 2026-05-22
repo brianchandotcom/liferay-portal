@@ -112,7 +112,7 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to register JGroups JMX beans for " +
-								"cluster " + _clusterName,
+								_clusterName,
 							exception);
 					}
 				}
@@ -135,7 +135,7 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to unregister JGroups JMX beans for cluster " +
+						"Unable to unregister JGroups JMX beans for " +
 							_clusterName,
 						exception);
 				}
@@ -270,7 +270,7 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 		return sb.toString();
 	}
 
-	private static final String _JMX_DOMAIN = "jgroups";
+	private static final String _JMX_DOMAIN = "JGroups";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannel.class);

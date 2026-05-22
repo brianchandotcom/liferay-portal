@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -224,8 +227,20 @@ public class AssetLibraryDTOConverter
 					() -> GetterUtil.getBoolean(
 						unicodeProperties.get("trashEnabled"), true));
 				setTrashEntriesMaxAge(
-					() -> GetterUtil.getInteger(
-						unicodeProperties.getProperty("trashEntriesMaxAge")));
+					() -> {
+						int trashEntriesMaxAge = GetterUtil.getInteger(
+							unicodeProperties.getProperty(
+								"trashEntriesMaxAge"));
+
+						if (trashEntriesMaxAge > 0) {
+							return trashEntriesMaxAge;
+						}
+
+						return PrefsPropsUtil.getInteger(
+							group.getCompanyId(),
+							PropsKeys.TRASH_ENTRIES_MAX_AGE,
+							PropsValues.TRASH_ENTRIES_MAX_AGE);
+					});
 				setUseCustomLanguages(
 					() -> !GetterUtil.getBoolean(
 						unicodeProperties.get("inheritLocales")));

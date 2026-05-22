@@ -30,14 +30,14 @@ export function addMonths(date: number | Date, months: number) {
 
 export function clamp(date: Date, min?: Date, max?: Date) {
 	if (min && isBefore(date, min)) {
-		return min;
+		return clone(min);
 	}
 
 	if (max && isAfter(date, max)) {
-		return max;
+		return clone(max);
 	}
 
-	return date;
+	return clone(date);
 }
 
 /**

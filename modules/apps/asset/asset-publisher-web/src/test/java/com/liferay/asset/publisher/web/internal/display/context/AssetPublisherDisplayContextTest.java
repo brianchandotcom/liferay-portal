@@ -14,10 +14,12 @@ import com.liferay.asset.publisher.web.internal.model.TestClassType;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import jakarta.portlet.PortletResponse;
 
 import java.util.Arrays;
 import java.util.List;
@@ -112,6 +116,12 @@ public class AssetPublisherDisplayContextTest {
 			TransformUtil.transformToLongArray(
 				_assetPublisherDisplayContext.getClassTypes(classTypeReader),
 				classType -> classType.getClassTypeId()));
+	}
+
+	@Test
+	public void testGetPortletURL() throws Exception {
+		_testGetPortletURLRedirectParameter(false);
+		_testGetPortletURLRedirectParameter(true);
 	}
 
 	@Test
@@ -227,6 +237,98 @@ public class AssetPublisherDisplayContextTest {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(_portal);
+	}
+
+	private void _testGetPortletURLRedirectParameter(boolean featureFlagEnabled)
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+
+		LiferayPortletRequest liferayPortletRequest =
+			_getLiferayPortletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Mockito.when(
+			themeDisplay.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		LiferayPortletResponse liferayPortletResponse = Mockito.mock(
+			LiferayPortletResponse.class);
+
+		LiferayPortletURL liferayPortletURL = Mockito.mock(
+			LiferayPortletURL.class);
+
+		Mockito.when(
+			liferayPortletResponse.createRenderURL()
+		).thenReturn(
+			liferayPortletURL
+		);
+
+		Mockito.when(
+			_portal.getLiferayPortletResponse(
+				Mockito.nullable(PortletResponse.class))
+		).thenReturn(
+			liferayPortletResponse
+		);
+
+		String currentURL = RandomTestUtil.randomString();
+
+		Mockito.when(
+			_portal.getCurrentURL(liferayPortletRequest)
+		).thenReturn(
+			currentURL
+		);
+
+		AssetPublisherDisplayContext assetPublisherDisplayContext =
+			new AssetPublisherDisplayContext(
+				null, null, null, null, _assetPublisherHelper, null, null, null,
+				null, _portal, liferayPortletRequest, null,
+				new MockPortletPreferences(), null, null) {
+
+				@Override
+				public long getAssetCategoryId() {
+					return 0;
+				}
+
+				@Override
+				public boolean isPaginationTypeNone() {
+					return false;
+				}
+
+			};
+
+		try (MockedStatic<FeatureFlagManagerUtil>
+				featureFlagManagerUtilMockedStatic = Mockito.mockStatic(
+					FeatureFlagManagerUtil.class)) {
+
+			featureFlagManagerUtilMockedStatic.when(
+				() -> FeatureFlagManagerUtil.isEnabled(companyId, "LPD-89171")
+			).thenReturn(
+				featureFlagEnabled
+			);
+
+			assetPublisherDisplayContext.getPortletURL();
+
+			if (featureFlagEnabled) {
+				Mockito.verify(
+					liferayPortletURL
+				).setParameter(
+					"redirect", currentURL
+				);
+			}
+			else {
+				Mockito.verify(
+					liferayPortletURL, Mockito.never()
+				).setParameter(
+					Mockito.eq("redirect"), Mockito.anyString()
+				);
+			}
+		}
 	}
 
 	private static MockedStatic<ConfigurationProviderUtil>

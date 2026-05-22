@@ -40,16 +40,10 @@ jobs:
                         local aws_infra_provider_version
                         local aws_infra_version
                         local aws_version
-                        local gcp_infra_provider_version
-                        local gcp_infra_version
-                        local gcp_version
 
                         aws_infra_provider_version=$(_chart_version aws-infrastructure-provider)
                         aws_infra_version=$(_chart_version aws-infrastructure)
                         aws_version=$(_chart_version aws)
-                        gcp_infra_provider_version=$(_chart_version gcp-infrastructure-provider)
-                        gcp_infra_version=$(_chart_version gcp-infrastructure)
-                        gcp_version=$(_chart_version gcp)
 
                         _write_aws_comment_body \
                             "${aws_infra_provider_version}-pr-${PR_NUMBER}-g${short_sha}" \
@@ -57,14 +51,23 @@ jobs:
                             "${aws_version}-pr-${PR_NUMBER}-g${short_sha}" \
                             > /tmp/aws-comment.md
 
+                        _upsert_comment "## AWS Helm Charts" /tmp/aws-comment.md
+
+                        local gcp_infra_provider_version
+                        local gcp_infra_version
+                        local gcp_version
+
+                        gcp_infra_provider_version=$(_chart_version gcp-infrastructure-provider)
+                        gcp_infra_version=$(_chart_version gcp-infrastructure)
+                        gcp_version=$(_chart_version gcp)
+
                         _write_gcp_comment_body \
                             "${gcp_infra_provider_version}-pr-${PR_NUMBER}-g${short_sha}" \
                             "${gcp_infra_version}-pr-${PR_NUMBER}-g${short_sha}" \
                             "${gcp_version}-pr-${PR_NUMBER}-g${short_sha}" \
                             > /tmp/gcp-comment.md
 
-                        _upsert_comment argocd-aws-charts /tmp/aws-comment.md
-                        _upsert_comment argocd-gcp-charts /tmp/gcp-comment.md
+                        _upsert_comment "## GCP Helm Charts" /tmp/gcp-comment.md
                     }
 
                     function _chart_version {
@@ -101,7 +104,7 @@ jobs:
                         export aws_infra_provider_version aws_infra_version aws_version
 
                         envsubst '${REGISTRY} ${aws_infra_provider_version} ${aws_infra_version} ${aws_version}' \
-                            < .github/templates/argocd-aws-comment.md.tpl
+                            < .github/templates/argocd-aws-comment.template
                     }
 
                     function _write_gcp_comment_body {
@@ -112,7 +115,7 @@ jobs:
                         export gcp_infra_provider_version gcp_infra_version gcp_version
 
                         envsubst '${REGISTRY} ${gcp_infra_provider_version} ${gcp_infra_version} ${gcp_version}' \
-                            < .github/templates/argocd-gcp-comment.md.tpl
+                            < .github/templates/argocd-gcp-comment.template
                     }
 
                     main "${@}"

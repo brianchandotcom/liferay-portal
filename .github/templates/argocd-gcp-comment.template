@@ -1,4 +1,3 @@
-<!-- argocd-gcp-charts -->
 ## GCP Helm Charts
 
 Charts for this PR are available at `${REGISTRY}`. To test on a GCP cluster, run:

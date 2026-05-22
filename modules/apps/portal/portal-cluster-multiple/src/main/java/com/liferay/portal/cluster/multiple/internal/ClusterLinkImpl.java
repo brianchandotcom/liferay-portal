@@ -118,11 +118,7 @@ public class ClusterLinkImpl implements ClusterLink {
 
 		return _clusterChannels.get(channelIndex);
 	}
-	
-	public List<ClusterChannel> getChannels() {
-		return _clusterChannels;
-	}
-	
+
 	protected ExecutorService getExecutorService() {
 		return _executorService;
 	}

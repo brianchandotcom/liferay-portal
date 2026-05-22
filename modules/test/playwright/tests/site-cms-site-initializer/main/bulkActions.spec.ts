@@ -1676,25 +1676,20 @@ test(
 			'Default'
 		);
 
-		await test.step('Go to All section and try to download a content asset from the bulk action, un unexpected error occurred', async () => {
-			await assetsPage.gotoAll();
+		await assetsPage.gotoAll();
+
+		await test.step('Download bulk action is hidden when a content asset is selected', async () => {
 			await assetsPage.selectItems([content1]);
-			await assetsPage.execBulkItemAction('Download');
 
-			await waitForAlert(
-				page,
-				'Error:Unable to process the bulk download. Please check your selection and try again.',
-				{
-					type: 'danger',
-				}
-			);
-		});
+			await assetsPage.expectBulkItemActionHidden('Download');
 
-		await test.step('Download a file asset from the bulk action', async () => {
 			await assetsPage
 				.getItem(content1)
 				.locator('input[title="Select Item"]')
 				.uncheck();
+		});
+
+		await test.step('Download a file asset from the bulk action', async () => {
 			await assetsPage.selectItems([fileAssetTitle1]);
 
 			const downloadPromise = page.waitForEvent('download');
@@ -1716,12 +1711,19 @@ test(
 			expect(download.suggestedFilename()).toBeDefined();
 		});
 
-		await test.step('Download both content and files assets from the bulk action, a message will inform the user that content assets will be skipped from the download', async () => {
-			await assetsPage.selectItems([
-				content1,
-				fileAssetTitle1,
-				fileAssetTitle2,
-			]);
+		await test.step('Download bulk action is hidden when a content asset and a file are selected together', async () => {
+			await assetsPage.selectItems([content1, fileAssetTitle1]);
+
+			await assetsPage.expectBulkItemActionHidden('Download');
+
+			await assetsPage
+				.getItem(content1)
+				.locator('input[title="Select Item"]')
+				.uncheck();
+		});
+
+		await test.step('Download multiple file assets from the bulk action', async () => {
+			await assetsPage.selectItems([fileAssetTitle1, fileAssetTitle2]);
 
 			const downloadPromise = page.waitForEvent('download');
 
@@ -1729,18 +1731,12 @@ test(
 
 			await waitForAlert(
 				page,
-				'Warning:You have selected both content and file assets. Only file assets can be downloaded. Content assets will be skipped.',
-				{
-					type: 'warning',
-				}
-			);
-			await waitForAlert(
-				page,
 				'Warning:The download of 2 files is being prepared. Please do not close this window or navigate to another section.',
 				{
 					type: 'warning',
 				}
 			);
+
 			await waitForAlert(page, 'Success:The download will begin shortly');
 
 			const download = await downloadPromise;

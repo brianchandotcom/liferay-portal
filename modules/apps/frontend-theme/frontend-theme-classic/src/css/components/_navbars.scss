@@ -20,7 +20,7 @@
 }
 
 .navbar-classic {
-	background-color: #fff;
+	background-color: $white;
 
 	&.navbar-light {
 		border-bottom: 1px solid $secondary-l3;
@@ -40,7 +40,7 @@
 			top: 0;
 
 			.lfr-icon-item {
-				color: #6b6c7e;
+				color: $gray-600;
 			}
 		}
 	}
@@ -70,7 +70,7 @@
 	}
 
 	.nav-link {
-		color: #6b6c7e;
+		color: $gray-600;
 		font-size: 0.9375rem;
 		font-weight: 600;
 	}

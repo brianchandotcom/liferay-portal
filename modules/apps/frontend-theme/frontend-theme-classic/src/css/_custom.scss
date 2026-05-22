@@ -20,7 +20,7 @@ body {
 			top: 2px;
 
 			a {
-				color: #fff;
+				color: $white;
 			}
 		}
 
@@ -43,7 +43,7 @@ body {
 		}
 
 		.text-default {
-			color: #6b6c7e;
+			color: $gray-600;
 			font-weight: 600;
 		}
 	}
@@ -56,7 +56,7 @@ body {
 }
 
 #footer {
-	color: #fff;
+	color: $white;
 	margin-top: 1rem;
 
 	> .container {

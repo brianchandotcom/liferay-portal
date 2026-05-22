@@ -20,17 +20,23 @@ public class AccountEntryValidatorResult implements Serializable {
 	}
 
 	public AccountEntryValidatorResult(boolean valid, String localizedMessage) {
-		this(valid, localizedMessage, StringPool.BLANK, StringPool.BLANK);
+		this(valid, StringPool.BLANK, StringPool.BLANK, localizedMessage);
 	}
 
 	public AccountEntryValidatorResult(
-		boolean valid, String localizedMessage, String localizedLabel,
-		String link) {
+		boolean valid, String link, String localizedMessage) {
+
+		this(valid, link, StringPool.BLANK, localizedMessage);
+	}
+
+	public AccountEntryValidatorResult(
+		boolean valid, String link, String localizedLabel,
+		String localizedMessage) {
 
 		_valid = valid;
-		_localizedMessage = localizedMessage;
-		_localizedLabel = localizedLabel;
 		_link = link;
+		_localizedLabel = localizedLabel;
+		_localizedMessage = localizedMessage;
 	}
 
 	public String getLink() {

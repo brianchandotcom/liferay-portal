@@ -42,7 +42,7 @@ type Props = {
 	'width'?: number;
 } & Omit<
 	React.HTMLAttributes<HTMLDivElement>,
-	'aria-controls' | 'onKeyDown' | 'onKeyUp' | 'onPointerDown'
+	'aria-controls' | 'className' | 'onKeyDown' | 'onKeyUp' | 'onPointerDown'
 >;
 
 const DEFAULT_ARIA_LABELS: Record<Position, string> = {
@@ -95,12 +95,12 @@ export function ResizeHandle({
 			aria-valuemin={minWidth}
 			aria-valuenow={width}
 			aria-valuetext={`${width}px`}
+			{...otherProps}
+			aria-controls={ariaControls}
 			className={classnames('c-horizontal-resizer', {
 				'c-horizontal-resizer-end':
 					document.dir === 'rtl' ? positionLeft : !positionLeft,
 			})}
-			{...otherProps}
-			aria-controls={ariaControls}
 			onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
 				const delta = keyDownCounter > 7 ? 10 : 1;
 

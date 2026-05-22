@@ -11,7 +11,9 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	connectToAnalyticsCloudWithNoSiteSynced,
 	syncAnalyticsCloud,
@@ -20,7 +22,7 @@ import getFragmentDefinition from '../../layout-content-page-editor-web/main/uti
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {faroConfig} from '../../osb-faro-web/main/faro.config';
 import {clickOnLink} from '../../osb-faro-web/main/utils/actions';
-import {openABTesSidebar} from './utils/ab-test';
+import {createABTest, createVariant, openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -183,6 +185,68 @@ test(
 						project.groupId
 					);
 				});
+			}
+		}
+	}
+);
+
+test(
+	'AB Test cannot be run when all variants have been deleted',
+	{tag: '@LPS-86285'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({name: 'AB Test ' + getRandomString(), page});
+
+			await createVariant({name: 'V1', page});
+
+			// Delete the variant
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.locator('table', {hasText: 'V1'})
+					.locator('button.dropdown-toggle'),
+			});
+
+			await page.locator('.modal-footer').getByText('Delete').click();
+
+			await waitForAlert(page);
+
+			await expect(
+				page.getByText('Create at least one variant to run the test.')
+			).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
 			}
 		}
 	}

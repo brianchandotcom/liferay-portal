@@ -12,6 +12,7 @@ import {addCMSAdministrator} from '../../../utils/addCMSAdministrator';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi, {
+	performUserSwitch,
 	performUserSwitchViaApi,
 	userData,
 } from '../../../utils/performLogin';

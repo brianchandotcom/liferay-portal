@@ -116,6 +116,7 @@ export default function MappedProductRow({
 								product.productConfiguration
 									.multipleOrderQuantity
 							}
+							unitOfMeasure={product.skuUnitOfMeasures?.[0]}
 						/>
 					)}
 

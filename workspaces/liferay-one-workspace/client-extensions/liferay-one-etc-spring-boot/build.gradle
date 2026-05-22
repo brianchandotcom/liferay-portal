@@ -19,6 +19,38 @@ apply plugin: "com.liferay.source.formatter"
 apply plugin: "java-library"
 apply plugin: "org.springframework.boot"
 
+def liferayReleaseToolEEDir = file("liferay-release-tool-ee")
+
+clean {
+	delete liferayReleaseToolEEDir
+}
+
+def executeCommand = {
+	String command ->
+	def process = command.execute()
+
+	if (process.waitFor() != 0) {
+		throw new GradleException(
+			"Failed: ${command}\n${process.err.text}")
+	}
+}
+
+task cloneReleaseToolEE
+
+cloneReleaseToolEE {
+	outputs.dir liferayReleaseToolEEDir
+
+	onlyIf {
+		!liferayReleaseToolEEDir.exists()
+	}
+
+	doLast {
+		executeCommand("git clone --branch master --filter=blob:none --no-checkout git@github.com:liferay/liferay-release-tool-ee.git ${liferayReleaseToolEEDir.absolutePath}")
+		executeCommand("git -C ${liferayReleaseToolEEDir.absolutePath} sparse-checkout set --no-cone ext/shared")
+		executeCommand("git -C ${liferayReleaseToolEEDir.absolutePath} checkout HEAD")
+	}
+}
+
 dependencies {
 	implementation group: "com.liferay", name: "com.liferay.client.extension.util.spring.boot3", version: "latest.release"
 	implementation group: "com.liferay", name: "com.liferay.headless.admin.user.client", version: "4.0.50"
@@ -41,3 +73,13 @@ repositories {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
 }
+
+sourceSets {
+	main {
+		java {
+			srcDirs += "liferay-release-tool-ee/ext/shared/ext-impl/src"
+		}
+	}
+}
+
+compileJava.dependsOn cloneReleaseToolEE

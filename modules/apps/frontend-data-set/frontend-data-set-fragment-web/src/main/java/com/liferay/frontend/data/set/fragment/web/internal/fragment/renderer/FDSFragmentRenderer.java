@@ -204,16 +204,20 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext.getLocale(),
 						"apiURLTokenValues"));
 
+			JSONObject tokenValuesJSONObject = _getTokenResolutionsJSONObject(
+				apiURLTokenValuesJSONObject, externalReferenceCode,
+				httpServletRequest);
+
 			if (fragmentRendererContext.isEditMode() && hasTokens) {
 				printWriter.write(
 					_getAPIURLResolutionHTML(
-						apiURLTokenValuesJSONObject, externalReferenceCode,
+						tokenValuesJSONObject, externalReferenceCode,
 						httpServletRequest,
 						fragmentRendererContext.getLocale()));
 			}
 
 			if (_isResolved(
-					apiURLTokenValuesJSONObject, externalReferenceCode,
+					tokenValuesJSONObject, externalReferenceCode,
 					httpServletRequest)) {
 
 				printWriter.write("<div>");
@@ -228,9 +232,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 						"tokenResolutions",
 						() -> {
 							if (hasTokens) {
-								return _getTokenResolutionsJSONObject(
-									apiURLTokenValuesJSONObject,
-									externalReferenceCode, httpServletRequest);
+								return tokenValuesJSONObject;
 							}
 
 							return null;
@@ -362,26 +364,33 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenResolutionsJSONObject.put(
 					tokenName, HtmlUtil.escape(tokenValue));
 			}
+			else {
+				tokenResolutionsJSONObject.remove(tokenName);
+			}
 		}
 
 		return tokenResolutionsJSONObject;
 	}
 
 	private String _getTokenValue(
-		JSONObject apiURLTokenValuesJSONObject, String tokenName) {
+		JSONObject apiURLTokenValuesJSONObject,
+		HttpServletRequest httpServletRequest, String tokenName) {
 
 		JSONObject mappingJSONObject =
 			apiURLTokenValuesJSONObject.getJSONObject(tokenName);
 
-		if (mappingJSONObject != null) {
-			String fieldId = mappingJSONObject.getString("fieldId");
+		if (mappingJSONObject == null) {
+			return apiURLTokenValuesJSONObject.getString(tokenName);
+		}
+
+		String fieldId = mappingJSONObject.getString("fieldId");
 
 			if (Objects.equals(fieldId, "externalReferenceCode")) {
 				return mappingJSONObject.getString("externalReferenceCode");
 			}
 
-			return mappingJSONObject.getString("classPK");
-		}
+		return mappingJSONObject.getString("classPK");
+	}
 
 		return apiURLTokenValuesJSONObject.getString(tokenName);
 	}
@@ -397,15 +406,13 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 	}
 
 	private boolean _isResolved(
-		JSONObject apiURLTokenValuesJSONObject, String externalReferenceCode,
+		JSONObject tokenValuesJSONObject, String externalReferenceCode,
 		HttpServletRequest httpServletRequest) {
 
 		Matcher matcher = _pattern.matcher(
 			_fdsRenderer.getFDSAPIURL(
 				externalReferenceCode, httpServletRequest, true,
-				_getTokenResolutionsJSONObject(
-					apiURLTokenValuesJSONObject, externalReferenceCode,
-					httpServletRequest)));
+				tokenValuesJSONObject));
 
 		return !matcher.find();
 	}

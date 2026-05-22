@@ -103,6 +103,9 @@ public class JSONStorageUpgradeStepFactoryTest {
 	private static final String _JSON_STRING =
 		"{\"array\": [1, 2], \"object\": {\"key\": \"value\"}}";
 
+	@DeleteAfterTestRun
+	private ClassName _className;
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
@@ -111,8 +114,5 @@ public class JSONStorageUpgradeStepFactoryTest {
 
 	@Inject
 	private JSONStorageUpgradeStepFactory _jsonStorageUpgradeStepFactory;
-
-	@DeleteAfterTestRun
-	private ClassName _className;
 
 }

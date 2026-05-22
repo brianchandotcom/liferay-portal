@@ -69,9 +69,6 @@ public class SuspendedSessionConnectionTest {
 		Assert.assertTrue(connectionHolder[0].isClosed());
 	}
 
-	@Inject
-	private CompanyPersistence _companyPersistence;
-
 	private static final TransactionConfig _innerTransactionConfig;
 	private static final TransactionConfig _outerTransactionConfig;
 
@@ -88,5 +85,8 @@ public class SuspendedSessionConnectionTest {
 
 		_outerTransactionConfig = builder.build();
 	}
+
+	@Inject
+	private CompanyPersistence _companyPersistence;
 
 }

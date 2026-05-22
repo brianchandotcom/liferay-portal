@@ -230,11 +230,6 @@ public class UpgradePortletIdTest {
 
 	private static final String _OLD_NESTED_PORTLET_ID = "118";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.nested.portlets.web.internal.upgrade.registry.NestedPortletWebUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -249,5 +244,10 @@ public class UpgradePortletIdTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.nested.portlets.web.internal.upgrade.registry.NestedPortletWebUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

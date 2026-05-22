@@ -583,16 +583,16 @@ public class I18nServletTest extends I18nServlet {
 	private static final boolean _ORIGINAL_LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
-	@Inject
-	private Language _language;
-
-	@Inject
-	private Portal _portal;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Language _language;
+
+	@Inject
+	private Portal _portal;
 
 }

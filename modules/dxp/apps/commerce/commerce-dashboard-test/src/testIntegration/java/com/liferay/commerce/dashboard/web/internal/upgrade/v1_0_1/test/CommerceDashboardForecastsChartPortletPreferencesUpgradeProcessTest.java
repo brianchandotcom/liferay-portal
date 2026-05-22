@@ -128,8 +128,7 @@ public class
 	private PortletLocalService _portletLocalService;
 
 	@Inject
-	private PortletPreferencesLocalService
-		_portletPreferencesLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.dashboard.web.internal.upgrade.registry.CommerceDashboardWebUpgradeStepRegistrator))"

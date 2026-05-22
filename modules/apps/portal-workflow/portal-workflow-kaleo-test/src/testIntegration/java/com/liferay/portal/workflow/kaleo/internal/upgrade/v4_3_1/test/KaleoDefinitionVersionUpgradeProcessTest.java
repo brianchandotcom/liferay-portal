@@ -77,16 +77,16 @@ public class KaleoDefinitionVersionUpgradeProcessTest {
 		"com.liferay.portal.workflow.kaleo.internal.upgrade.v4_3_1." +
 			"KaleoDefinitionVersionUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

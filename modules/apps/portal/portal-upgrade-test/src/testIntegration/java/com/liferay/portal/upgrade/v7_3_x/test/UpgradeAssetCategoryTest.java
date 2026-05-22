@@ -96,17 +96,17 @@ public class UpgradeAssetCategoryTest {
 		return category;
 	}
 
-	@Inject
-	private AssetCategoryLocalService _assetCategoryLocalService;
-
-	@Inject
-	private CounterLocalService _counterLocalService;
-
 	@DeleteAfterTestRun
 	private final List<AssetCategory> _assetCategories = new ArrayList<>();
 
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
 	@DeleteAfterTestRun
 	private AssetVocabulary _assetVocabulary;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

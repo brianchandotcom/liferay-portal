@@ -354,11 +354,6 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest
 		"com.liferay.journal.internal.upgrade.v5_1_1." +
 			"JournalArticleAssetEntryClassTypeIdUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -376,5 +371,10 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcessTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

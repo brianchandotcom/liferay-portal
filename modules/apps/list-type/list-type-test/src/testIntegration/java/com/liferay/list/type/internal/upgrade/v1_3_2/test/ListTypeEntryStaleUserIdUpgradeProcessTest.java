@@ -87,8 +87,7 @@ public class ListTypeEntryStaleUserIdUpgradeProcessTest
 	}
 
 	@Inject
-	private ListTypeDefinitionLocalService
-		_listTypeDefinitionLocalService;
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;

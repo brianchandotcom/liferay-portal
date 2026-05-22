@@ -151,18 +151,13 @@ public class ObjectDefinitionModelListenerTest {
 		Assert.assertNull(layoutPageTemplateEntry);
 	}
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
-	private User _user;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	private DepotEntry _depotEntry;
 
@@ -170,6 +165,10 @@ public class ObjectDefinitionModelListenerTest {
 	private DepotEntryLocalService _depotEntryLocalService;
 
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private Layout _layout;
 
 	@Inject
@@ -187,5 +186,7 @@ public class ObjectDefinitionModelListenerTest {
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	private User _user;
 
 }

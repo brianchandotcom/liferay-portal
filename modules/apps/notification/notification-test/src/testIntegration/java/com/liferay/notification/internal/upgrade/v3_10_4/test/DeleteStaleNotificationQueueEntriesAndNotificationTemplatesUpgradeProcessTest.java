@@ -327,11 +327,6 @@ public class
 	private static final long _NOTIFICATION_TEMPLATE_ID =
 		RandomTestUtil.randomLong();
 
-	@Inject(
-		filter = "component.name=com.liferay.notification.internal.upgrade.registry.NotificationUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private MultiVMPool _multiVMPool;
 
@@ -362,5 +357,10 @@ public class
 
 	private final Timestamp _timestamp = new Timestamp(
 		System.currentTimeMillis());
+
+	@Inject(
+		filter = "component.name=com.liferay.notification.internal.upgrade.registry.NotificationUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

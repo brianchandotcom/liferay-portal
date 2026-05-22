@@ -227,6 +227,8 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 	private static final String _LANGUAGE_ID_FR = "fr_FR";
 
+	private final AbsoluteRedirectsFilter _absoluteRedirectsFilter =
+		new AbsoluteRedirectsFilter();
 	private Set<Locale> _availableLocales;
 	private long _groupId;
 	private long _layoutSetId;
@@ -234,12 +236,10 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 	@Inject
 	private LayoutSetLocalService _layoutSetLocalService;
 
-	@Inject
-	private VirtualHostLocalService _virtualHostLocalService;
-
-	private final AbsoluteRedirectsFilter _absoluteRedirectsFilter =
-		new AbsoluteRedirectsFilter();
 	private MockHttpServletRequest _mockHttpServletRequest;
 	private final TreeMap<String, String> _treeMap = new TreeMap<>();
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

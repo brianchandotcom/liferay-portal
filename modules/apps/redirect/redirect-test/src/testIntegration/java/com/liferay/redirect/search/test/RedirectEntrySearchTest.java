@@ -476,9 +476,9 @@ public class RedirectEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Inject
-	private SearchEngineHelper _searchEngineHelper;
+	private RedirectEntryLocalService _redirectEntryLocalService;
 
 	@Inject
-	private RedirectEntryLocalService _redirectEntryLocalService;
+	private SearchEngineHelper _searchEngineHelper;
 
 }

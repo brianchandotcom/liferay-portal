@@ -323,7 +323,6 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 	private CompanyLocalService _companyLocalService;
 
 	private Connection _connection;
-
 	private boolean _hasUserId;
 
 	@DeleteAfterTestRun

@@ -664,11 +664,6 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 		"com.liferay.journal.internal.upgrade.v6_1_1." +
 			"JournalArticleLayoutClassedModelUsageUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private AssetEntry _assetEntry;
 
 	@Inject
@@ -711,5 +706,10 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

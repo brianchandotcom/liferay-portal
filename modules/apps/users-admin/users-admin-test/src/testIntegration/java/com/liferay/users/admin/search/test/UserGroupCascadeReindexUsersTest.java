@@ -323,6 +323,8 @@ public class UserGroupCascadeReindexUsersTest {
 
 	private static final boolean _STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS = false;
 
+	private int _groupsCount;
+
 	@Inject(filter = "indexer.class.name=com.liferay.portal.kernel.model.User")
 	private Indexer<User> _indexer;
 
@@ -341,7 +343,6 @@ public class UserGroupCascadeReindexUsersTest {
 	@Inject
 	private UserLocalService _userLocalService;
 
-	private int _groupsCount;
 	private int _usersCount;
 
 }

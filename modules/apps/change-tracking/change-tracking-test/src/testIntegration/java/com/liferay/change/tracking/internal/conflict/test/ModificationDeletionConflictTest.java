@@ -111,13 +111,13 @@ public class ModificationDeletionConflictTest {
 	}
 
 	@Inject
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

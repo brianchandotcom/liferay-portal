@@ -248,12 +248,12 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
 	private ServiceRegistration<AntivirusScanner>
 		_antivirusScannerServiceRegistration;
 	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject(filter = "store.type=" + _CLASS_NAME_DB_STORE)
 	private Store _dbStore;

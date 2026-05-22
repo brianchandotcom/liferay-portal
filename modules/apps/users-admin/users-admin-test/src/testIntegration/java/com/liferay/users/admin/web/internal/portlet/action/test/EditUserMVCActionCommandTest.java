@@ -352,14 +352,6 @@ public class EditUserMVCActionCommandTest {
 	}
 
 	@Inject
-	private WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService;
-
-	@Inject
-	private WorkflowInstanceLinkLocalService
-		_workflowInstanceLinkLocalService;
-
-	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -384,6 +376,13 @@ public class EditUserMVCActionCommandTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
+
+	@Inject
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
+
+	@Inject
+	private WorkflowInstanceLinkLocalService _workflowInstanceLinkLocalService;
 
 	@Inject
 	private WorkflowTaskManager _workflowTaskManager;

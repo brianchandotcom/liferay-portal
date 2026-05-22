@@ -1292,8 +1292,6 @@ public class DefaultExportImportContentProcessorTest {
 		CharPool.SPACE
 	};
 
-	private String _oldLayoutFriendlyURLPrivateUserServletMapping;
-
 	private Locale _defaultLocale;
 	private ExportImportContentProcessor<String> _exportImportContentProcessor;
 
@@ -1313,6 +1311,7 @@ public class DefaultExportImportContentProcessorTest {
 
 	private Layout _livePrivateLayout;
 	private Layout _livePublicLayout;
+	private String _oldLayoutFriendlyURLPrivateUserServletMapping;
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;

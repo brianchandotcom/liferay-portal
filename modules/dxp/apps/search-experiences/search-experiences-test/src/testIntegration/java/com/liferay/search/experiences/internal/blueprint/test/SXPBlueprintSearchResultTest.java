@@ -2548,13 +2548,7 @@ public class SXPBlueprintSearchResultTest {
 
 	private static final LocalTime _LOCAL_TIME_20 = LocalTime.of(20, 0, 0);
 
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
 	private static List<SXPElement> _sxpElements;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 	private AssetCategory _assetCategory;
 	private AssetTag _assetTag;
@@ -2581,6 +2575,10 @@ public class SXPBlueprintSearchResultTest {
 	private List<Group> _groups = new ArrayList<>();
 
 	private JournalArticleBuilder _journalArticleBuilder;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private final List<JournalArticle> _journalArticles = new ArrayList<>();
 	private JournalFolder _journalFolder;
 	private String _keywords;
@@ -2604,6 +2602,9 @@ public class SXPBlueprintSearchResultTest {
 		_sxpBlueprintSearchRequestEnhancer;
 
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@Inject(
 		filter = "segments.criteria.contributor.key=user",

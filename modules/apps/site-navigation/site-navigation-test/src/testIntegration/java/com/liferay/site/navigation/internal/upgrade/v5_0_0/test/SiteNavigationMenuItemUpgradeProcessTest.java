@@ -758,11 +758,6 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 		"com.liferay.site.navigation.internal.upgrade.v5_0_0." +
 			"SiteNavigationMenuItemUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -792,5 +787,10 @@ public class SiteNavigationMenuItemUpgradeProcessTest {
 	@Inject
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

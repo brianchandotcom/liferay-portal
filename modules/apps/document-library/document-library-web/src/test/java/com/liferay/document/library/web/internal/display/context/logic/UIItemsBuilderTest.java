@@ -354,8 +354,7 @@ public class UIItemsBuilderTest {
 	private DLURLHelper _dlurlHelper;
 	private FileEntry _fileEntry;
 	private FileVersion _fileVersion;
-	private MockedStatic<GroupPermissionUtil>
-		_groupPermissionUtilMockedStatic;
+	private MockedStatic<GroupPermissionUtil> _groupPermissionUtilMockedStatic;
 	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
 	private MockedStatic<StagedModelDataHandlerRegistryUtil>
 		_stagedModelDataHandlerRegistryUtilMockedStatic;

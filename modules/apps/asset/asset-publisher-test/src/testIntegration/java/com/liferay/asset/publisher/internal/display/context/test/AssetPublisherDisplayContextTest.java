@@ -512,9 +512,6 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	private static Configuration _assetPublisherWebConfiguration;
-	private MockLiferayPortletRenderRequest
-		_mockLiferayPortletRenderRequest;
-	private ThemeDisplay _themeDisplay;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
@@ -542,6 +539,8 @@ public class AssetPublisherDisplayContextTest {
 	@Inject
 	private Localization _localization;
 
+	private MockLiferayPortletRenderRequest _mockLiferayPortletRenderRequest;
+
 	@Inject
 	private Portal _portal;
 
@@ -552,6 +551,8 @@ public class AssetPublisherDisplayContextTest {
 
 	@Inject
 	private PortletLocalService _portletLocalService;
+
+	private ThemeDisplay _themeDisplay;
 
 	private static class TestMockLiferayPortletRenderRequest
 		extends MockLiferayPortletRenderRequest {

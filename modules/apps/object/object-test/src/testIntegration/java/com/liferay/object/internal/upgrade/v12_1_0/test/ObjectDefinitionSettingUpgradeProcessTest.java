@@ -182,11 +182,6 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 		"L_DATA_SET_SORT", "L_DATA_SET_TABLE_SECTION"
 	};
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private MultiVMPool _multiVMPool;
 
@@ -211,5 +206,10 @@ public class ObjectDefinitionSettingUpgradeProcessTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

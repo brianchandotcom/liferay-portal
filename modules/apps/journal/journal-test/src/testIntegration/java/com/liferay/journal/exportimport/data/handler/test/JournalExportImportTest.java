@@ -903,13 +903,13 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Inject
-	private ConfigurationProvider _configurationProvider;
-
-	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private DataDefinitionResource.Factory _dataDefinitionResourceFactory;

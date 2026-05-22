@@ -115,17 +115,17 @@ public class CompanyInfoLocalServiceTest {
 	private static Company _company;
 
 	@Inject
-	private CompanyInfoLocalService _companyInfoLocalService;
+	private static CompanyLocalService _companyLocalService;
+
+	private static SafeCloseable _safeCloseable;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyInfoLocalService _companyInfoLocalService;
 
 	@Inject
 	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private Encryptor _encryptor;
-
-	private static SafeCloseable _safeCloseable;
 
 }

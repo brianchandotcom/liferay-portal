@@ -108,9 +108,9 @@ public class ServiceProviderConfigResourceTest
 				getV2ServiceProviderConfigHttpResponse());
 	}
 
-	private String _pid;
-
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	private String _pid;
 
 }

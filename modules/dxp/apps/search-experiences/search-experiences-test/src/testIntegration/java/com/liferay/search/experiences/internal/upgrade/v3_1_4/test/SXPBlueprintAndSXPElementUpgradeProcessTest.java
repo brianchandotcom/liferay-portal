@@ -197,11 +197,6 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 		"HIDE_CONTENTS_IN_A_CATEGORY_FOR_GUEST_USERS"
 	};
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private final Class<?> _clazz = getClass();
 
 	@Inject
@@ -218,5 +213,10 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 
 	@Inject
 	private SXPElementLocalService _sxpElementLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

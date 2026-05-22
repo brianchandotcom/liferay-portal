@@ -2323,11 +2323,6 @@ public class UserLocalServiceTest {
 			company.isSiteLogo());
 	}
 
-	private Company _company;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private static String _originalName;
 
 	@Inject
@@ -2340,6 +2335,10 @@ public class UserLocalServiceTest {
 	private AuditMessageProcessor _auditMessageProcessor;
 	private BundleActivator _bundleActivator;
 	private BundleContext _bundleContext;
+	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

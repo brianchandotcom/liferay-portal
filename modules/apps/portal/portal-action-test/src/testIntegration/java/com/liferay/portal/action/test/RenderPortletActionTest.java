@@ -342,10 +342,10 @@ public class RenderPortletActionTest {
 	}
 
 	@Inject
-	private PortletLocalService _portletLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private PortletLocalService _portletLocalService;
 
 	private ServiceRegistration<?> _serviceRegistration;
 

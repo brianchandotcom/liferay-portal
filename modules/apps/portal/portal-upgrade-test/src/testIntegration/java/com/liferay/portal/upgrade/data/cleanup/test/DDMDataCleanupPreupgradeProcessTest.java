@@ -455,12 +455,13 @@ public class DDMDataCleanupPreupgradeProcessTest
 			preupgradeUnsafeRunnable, verifyUnsafeConsumer);
 	}
 
-	private List<ClassName> _classNames;
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private List<ClassName> _classNames;
 
 	@Inject
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

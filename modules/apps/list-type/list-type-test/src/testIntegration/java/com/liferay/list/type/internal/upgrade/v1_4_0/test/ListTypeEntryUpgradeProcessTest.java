@@ -103,18 +103,17 @@ public class ListTypeEntryUpgradeProcessTest {
 			"ListTypeEntryUpgradeProcess";
 
 	@Inject
-	private ListTypeDefinitionLocalService
-		_listTypeDefinitionLocalService;
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
 
 	@Inject(
 		filter = "component.name=com.liferay.list.type.internal.upgrade.registry.ListTypeServiceUpgradeStepRegistrator"
 	)
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 }

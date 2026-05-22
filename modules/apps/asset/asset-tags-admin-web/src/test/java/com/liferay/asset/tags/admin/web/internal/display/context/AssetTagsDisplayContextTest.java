@@ -211,11 +211,11 @@ public class AssetTagsDisplayContextTest {
 			assetTagActionDropdownItems.get(2), "trash", "delete");
 	}
 
-	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
 	private static final MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
 			StagingGroupHelperUtil.class);
 
 	private final Language _language = Mockito.mock(Language.class);
+	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
 
 }

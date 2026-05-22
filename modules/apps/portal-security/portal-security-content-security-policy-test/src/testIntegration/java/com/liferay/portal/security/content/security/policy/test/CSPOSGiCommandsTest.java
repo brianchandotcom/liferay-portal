@@ -143,9 +143,6 @@ public class CSPOSGiCommandsTest {
 		"com.liferay.portal.security.content.security.policy.internal." +
 			"configuration.ContentSecurityPolicyConfiguration";
 
-	@Inject(filter = "osgi.command.scope=csp")
-	private OSGiCommands _osgiCommands;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
@@ -159,5 +156,8 @@ public class CSPOSGiCommandsTest {
 			ExtendedObjectClassDefinition.Scope.SYSTEM,
 			"resetSystemConfiguration"
 		).build();
+
+	@Inject(filter = "osgi.command.scope=csp")
+	private OSGiCommands _osgiCommands;
 
 }

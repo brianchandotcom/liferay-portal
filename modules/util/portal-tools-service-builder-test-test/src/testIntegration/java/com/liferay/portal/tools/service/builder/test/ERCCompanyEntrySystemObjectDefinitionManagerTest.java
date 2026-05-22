@@ -110,8 +110,6 @@ public class ERCCompanyEntrySystemObjectDefinitionManagerTest {
 				objectDefinition.getObjectDefinitionId(), "column1"));
 	}
 
-	private SystemObjectDefinitionManager _systemObjectDefinitionManager;
-
 	@Inject
 	private ERCCompanyEntryLocalService _ercCompanyEntryLocalService;
 
@@ -120,6 +118,8 @@ public class ERCCompanyEntrySystemObjectDefinitionManagerTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	private SystemObjectDefinitionManager _systemObjectDefinitionManager;
 
 	@Inject
 	private SystemObjectDefinitionManagerRegistry

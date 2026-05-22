@@ -461,11 +461,6 @@ public class UpgradeAssetDisplayPageEntryTest {
 		"com.liferay.journal.internal.upgrade.v1_1_6." +
 			"AssetDisplayPageEntryUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private UpgradeProcess _assetDisplayPageEntryUpgradeProcess;
 	private final Map<Long, String> _assetEntryClassUuids = new HashMap<>();
 	private long _classNameIdJournalArticle;
@@ -477,5 +472,10 @@ public class UpgradeAssetDisplayPageEntryTest {
 	private List<Group> _groups = new ArrayList<>();
 
 	private Timestamp _timestamp;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

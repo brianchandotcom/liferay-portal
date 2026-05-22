@@ -2405,10 +2405,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	private static Configuration _freeMarkerEngineConfiguration;
-
-	@Inject
-	private Portal _portal;
-
 	private static ServiceRegistration<TemplateContextContributor>
 		_serviceRegistration;
 
@@ -2467,6 +2463,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;

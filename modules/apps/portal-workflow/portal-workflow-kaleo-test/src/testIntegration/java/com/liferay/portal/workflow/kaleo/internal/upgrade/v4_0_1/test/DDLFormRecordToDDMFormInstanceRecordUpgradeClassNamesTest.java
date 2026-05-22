@@ -222,11 +222,6 @@ public class DDLFormRecordToDDMFormInstanceRecordUpgradeClassNamesTest {
 		"com.liferay.portal.workflow.kaleo.internal.upgrade.v4_0_1." +
 			"DDLFormRecordToDDMFormInstanceRecordUpgradeClassNames";
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private KaleoInstance _kaleoInstance;
 
@@ -273,5 +268,10 @@ public class DDLFormRecordToDDMFormInstanceRecordUpgradeClassNamesTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

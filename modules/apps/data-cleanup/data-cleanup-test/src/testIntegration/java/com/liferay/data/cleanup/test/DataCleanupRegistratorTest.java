@@ -459,13 +459,13 @@ public class DataCleanupRegistratorTest {
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
 
+	@DeleteAfterTestRun
+	private Layout _layout;
+
 	@Inject
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
-
-	@DeleteAfterTestRun
-	private Layout _layout;
 
 }

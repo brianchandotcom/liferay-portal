@@ -14,13 +14,13 @@
 		background-color: transparent;
 
 		&.card {
-			border-color: #cdced9;
+			border-color: $gray-400;
 			box-shadow: none;
 		}
 	}
 
 	.panel-default {
-		border-color: #cdced9;
+		border-color: $gray-400;
 	}
 
 	.widget-mode-detail {

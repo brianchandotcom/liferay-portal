@@ -1,0 +1,32 @@
+.seo-studio-insights-section {
+	align-items: flex-start;
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 0;
+
+	.fds {
+		align-self: stretch;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
+		width: 100%;
+
+		> * {
+			width: 100%;
+		}
+
+		.table {
+			border: 1px solid #cdced9;
+			border-radius: 4px;
+			box-sizing: border-box;
+			overflow: hidden;
+
+			td,
+			th {
+				border-color: #cdced9;
+			}
+		}
+	}
+}

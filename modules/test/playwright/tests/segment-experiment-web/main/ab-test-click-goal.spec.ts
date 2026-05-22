@@ -166,3 +166,105 @@ test(
 		}
 	}
 );
+
+test(
+	'AB Test by Click goal warns when the target element is removed via the X button or via the page editor',
+	{tag: ['@LPS-104203', '@LPS-145992']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const buttonId = getRandomString();
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: buttonId,
+						key: 'BASIC_COMPONENT-button',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({
+				goal: 'Click',
+				name: 'AB Test ' + getRandomString(),
+				page,
+			});
+
+			await selectClickElement({page});
+
+			// Eye button toggles the highlight without changing the target
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator(
+					'.lfr-segments-experiment-click-goal-target-overlay'
+				),
+				trigger: page.getByLabel('Show Element'),
+			});
+
+			// Click the X on the target overlay and assert the warning
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByText('An element needs to be selected.'),
+				trigger: page.locator(
+					'.lfr-segments-experiment-click-goal-target-delete'
+				),
+			});
+
+			await waitForAlert(page);
+
+			// Re-select the element, then remove the button fragment from the page
+
+			await selectClickElement({page});
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.removeFragment(buttonId);
+
+			await pageEditorPage.publishPage();
+
+			// Reopen the AB Test panel and assert the warning
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await expect(
+				page.getByText('An element needs to be selected.')
+			).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

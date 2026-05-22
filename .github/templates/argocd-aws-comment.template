@@ -1,7 +1,5 @@
 ## AWS Helm Charts
 
-Charts for this PR are available at `${REGISTRY}`. To test on an AWS cluster, run:
-
 ```bash
 ARGOCD_NS=$(kubectl get pods --all-namespaces --selector app.kubernetes.io/name=argocd-server --output jsonpath='{.items[0].metadata.namespace}')
 

@@ -8,21 +8,15 @@ package com.liferay.fragment.internal.model.listener.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.fragment.internal.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryVersion;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.service.persistence.FragmentEntryVersionPersistence;
-import com.liferay.fragment.test.util.FragmentTestUtil;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.fragment.test.util.FragmentEntryVersionTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -30,10 +24,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,23 +64,6 @@ public class FragmentEntryVersionModelListenerTest {
 		_testOnAfterCreateSkipsCleanup();
 	}
 
-	private FragmentEntry _addFragmentEntry() throws Exception {
-		FragmentCollection fragmentCollection =
-			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
-
-		return _fragmentEntryLocalService.addFragmentEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), false, StringPool.BLANK, null, 0,
-			false, false,
-			com.liferay.fragment.constants.FragmentConstants.TYPE_COMPONENT,
-			null, WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId()));
-	}
-
 	private void _addFragmentEntryVersions(
 			int count, FragmentEntry fragmentEntry)
 		throws Throwable {
@@ -125,52 +98,9 @@ public class FragmentEntryVersionModelListenerTest {
 		}
 	}
 
-	private long _countFragmentEntryVersions(FragmentEntry fragmentEntry)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) as count from FragmentEntryVersion where " +
-					"fragmentEntryId = ?")) {
-
-			preparedStatement.setLong(1, fragmentEntry.getFragmentEntryId());
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getLong("count");
-				}
-
-				return 0;
-			}
-		}
-	}
-
-	private List<Integer> _getFragmentEntryVersions(FragmentEntry fragmentEntry)
-		throws Exception {
-
-		List<Integer> versions = new ArrayList<>();
-
-		try (Connection connection = DataAccess.getConnection();
-
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select version from FragmentEntryVersion where " +
-					"fragmentEntryId = ? order by version")) {
-
-			preparedStatement.setLong(1, fragmentEntry.getFragmentEntryId());
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					versions.add(resultSet.getInt("version"));
-				}
-			}
-		}
-
-		return versions;
-	}
-
 	private void _testOnAfterCreateDeletesOldVersions() throws Throwable {
-		FragmentEntry fragmentEntry = _addFragmentEntry();
+		FragmentEntry fragmentEntry =
+			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
 		_addFragmentEntryVersions(20, fragmentEntry);
 
@@ -186,21 +116,27 @@ public class FragmentEntryVersionModelListenerTest {
 		}
 
 		Assert.assertEquals(
-			expectedVersions, _getFragmentEntryVersions(fragmentEntry));
+			expectedVersions,
+			FragmentEntryVersionTestUtil.getFragmentEntryVersions(
+				fragmentEntry));
 	}
 
 	private void _testOnAfterCreateSkipsCleanup() throws Throwable {
 		int versionsToGenerate = 5;
 
-		FragmentEntry fragmentEntry = _addFragmentEntry();
+		FragmentEntry fragmentEntry =
+			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
 
-		long initialCount = _countFragmentEntryVersions(fragmentEntry);
+		int initialCount =
+			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+				fragmentEntry);
 
 		_addFragmentEntryVersions(versionsToGenerate, fragmentEntry);
 
 		Assert.assertEquals(
 			versionsToGenerate + initialCount,
-			_countFragmentEntryVersions(fragmentEntry));
+			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+				fragmentEntry));
 	}
 
 	private static final TransactionConfig _transactionConfig =
@@ -211,9 +147,6 @@ public class FragmentEntryVersionModelListenerTest {
 	private CounterLocalService _counterLocalService;
 
 	private Date _date;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private FragmentEntryVersionPersistence _fragmentEntryVersionPersistence;

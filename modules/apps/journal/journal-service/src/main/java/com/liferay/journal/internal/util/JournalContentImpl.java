@@ -541,6 +541,14 @@ public class JournalContentImpl implements JournalContent {
 	private JournalArticleDisplay _replacePlaceholderWithNonce(
 		JournalArticleDisplay articleDisplay, ThemeDisplay themeDisplay) {
 
+		String nonceAttribute =
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				(themeDisplay != null) ? themeDisplay.getRequest() : null);
+
+		if (Validator.isBlank(nonceAttribute)) {
+			return articleDisplay;
+		}
+
 		String content = articleDisplay.getContent();
 
 		if ((content == null) || !content.contains(_NONCE_PLACEHOLDER)) {
@@ -549,11 +557,7 @@ public class JournalContentImpl implements JournalContent {
 
 		return _copyWithContent(
 			articleDisplay,
-			StringUtil.replace(
-				content, _NONCE_PLACEHOLDER,
-				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-					(themeDisplay != null) ? themeDisplay.getRequest() :
-						null)));
+			StringUtil.replace(content, _NONCE_PLACEHOLDER, nonceAttribute));
 	}
 
 	private static final String _NONCE_PLACEHOLDER =

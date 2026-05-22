@@ -494,9 +494,11 @@ function Condition({
 
 			{condition.condition}
 
-			<ClayLabel className="m-0" displayType="secondary">
-				{condition.value}
-			</ClayLabel>
+			{condition.value ? (
+				<ClayLabel className="m-0" displayType="secondary">
+					{condition.value}
+				</ClayLabel>
+			) : null}
 		</>
 	);
 }

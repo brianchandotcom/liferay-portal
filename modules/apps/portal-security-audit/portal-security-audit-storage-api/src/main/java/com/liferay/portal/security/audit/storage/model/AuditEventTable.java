@@ -30,40 +30,40 @@ public class AuditEventTable extends BaseTable<AuditEventTable> {
 		"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<AuditEventTable, Long> accountEntryId = createColumn(
-		"accountEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Long> userId = createColumn(
 		"userId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> userName = createColumn(
 		"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Date> createDate = createColumn(
 		"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-	public final Column<AuditEventTable, String> eventType = createColumn(
-		"eventType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, Long> accountEntryId = createColumn(
+		"accountEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, Clob> additionalInfo = createColumn(
+		"additionalInfo", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> className = createColumn(
 		"className", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> classPK = createColumn(
 		"classPK", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<AuditEventTable, String> message = createColumn(
-		"message", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> clientHost = createColumn(
 		"clientHost", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> clientIP = createColumn(
 		"clientIP", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, String> contextName = createColumn(
+		"contextName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, String> eventType = createColumn(
+		"eventType", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<AuditEventTable, String> message = createColumn(
+		"message", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> serverName = createColumn(
 		"serverName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, Integer> serverPort = createColumn(
 		"serverPort", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<AuditEventTable, String> sessionID = createColumn(
 		"sessionID", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<AuditEventTable, Clob> additionalInfo = createColumn(
-		"additionalInfo", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<AuditEventTable, String> contextName = createColumn(
-		"contextName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private AuditEventTable() {
 		super("Audit_AuditEvent", AuditEventTable::new);
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1087307254
+// LIFERAY-SERVICE-BUILDER-HASH:619688008

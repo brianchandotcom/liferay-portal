@@ -36,21 +36,21 @@ public class AuditEventWrapper
 		attributes.put("auditEventId", getAuditEventId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
-		attributes.put("accountEntryId", getAccountEntryId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("eventType", getEventType());
+		attributes.put("accountEntryId", getAccountEntryId());
+		attributes.put("additionalInfo", getAdditionalInfo());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("message", getMessage());
 		attributes.put("clientHost", getClientHost());
 		attributes.put("clientIP", getClientIP());
+		attributes.put("contextName", getContextName());
+		attributes.put("eventType", getEventType());
+		attributes.put("message", getMessage());
 		attributes.put("serverName", getServerName());
 		attributes.put("serverPort", getServerPort());
 		attributes.put("sessionID", getSessionID());
-		attributes.put("additionalInfo", getAdditionalInfo());
-		attributes.put("contextName", getContextName());
 
 		return attributes;
 	}
@@ -75,12 +75,6 @@ public class AuditEventWrapper
 			setCompanyId(companyId);
 		}
 
-		Long accountEntryId = (Long)attributes.get("accountEntryId");
-
-		if (accountEntryId != null) {
-			setAccountEntryId(accountEntryId);
-		}
-
 		Long userId = (Long)attributes.get("userId");
 
 		if (userId != null) {
@@ -99,10 +93,16 @@ public class AuditEventWrapper
 			setCreateDate(createDate);
 		}
 
-		String eventType = (String)attributes.get("eventType");
+		Long accountEntryId = (Long)attributes.get("accountEntryId");
 
-		if (eventType != null) {
-			setEventType(eventType);
+		if (accountEntryId != null) {
+			setAccountEntryId(accountEntryId);
+		}
+
+		String additionalInfo = (String)attributes.get("additionalInfo");
+
+		if (additionalInfo != null) {
+			setAdditionalInfo(additionalInfo);
 		}
 
 		String className = (String)attributes.get("className");
@@ -117,12 +117,6 @@ public class AuditEventWrapper
 			setClassPK(classPK);
 		}
 
-		String message = (String)attributes.get("message");
-
-		if (message != null) {
-			setMessage(message);
-		}
-
 		String clientHost = (String)attributes.get("clientHost");
 
 		if (clientHost != null) {
@@ -133,6 +127,24 @@ public class AuditEventWrapper
 
 		if (clientIP != null) {
 			setClientIP(clientIP);
+		}
+
+		String contextName = (String)attributes.get("contextName");
+
+		if (contextName != null) {
+			setContextName(contextName);
+		}
+
+		String eventType = (String)attributes.get("eventType");
+
+		if (eventType != null) {
+			setEventType(eventType);
+		}
+
+		String message = (String)attributes.get("message");
+
+		if (message != null) {
+			setMessage(message);
 		}
 
 		String serverName = (String)attributes.get("serverName");
@@ -151,18 +163,6 @@ public class AuditEventWrapper
 
 		if (sessionID != null) {
 			setSessionID(sessionID);
-		}
-
-		String additionalInfo = (String)attributes.get("additionalInfo");
-
-		if (additionalInfo != null) {
-			setAdditionalInfo(additionalInfo);
-		}
-
-		String contextName = (String)attributes.get("contextName");
-
-		if (contextName != null) {
-			setContextName(contextName);
 		}
 	}
 
@@ -587,4 +587,4 @@ public class AuditEventWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1780685168
+// LIFERAY-SERVICE-BUILDER-HASH:-358961658

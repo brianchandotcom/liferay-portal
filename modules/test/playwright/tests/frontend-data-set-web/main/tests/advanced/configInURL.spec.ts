@@ -708,6 +708,24 @@ for (const spaConfiguration of spaConfigurations) {
 					await removeFilter('Status: Approved, Draft', page);
 					await assertNoActiveFiltersInURL('advanced', page);
 				});
+
+				await test.step('Clear all filters in the UI', async () => {
+					await activateFilter(
+						['Yellow', 'Green'],
+						'Color',
+						fdsSamplePage,
+						page
+					);
+					await checkFilter(
+						true,
+						'color',
+						'Color: Yellow, Green',
+						true
+					);
+
+					await fdsSamplePage.activeFiltersToolbar.clearButton.click();
+					await assertNoActiveFiltersInURL('advanced', page);
+				});
 			}
 		);
 

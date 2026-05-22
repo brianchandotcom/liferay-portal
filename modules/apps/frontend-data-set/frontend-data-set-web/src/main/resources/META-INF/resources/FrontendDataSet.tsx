@@ -748,8 +748,14 @@ const FrontendDataSetContent = ({
 		const globalFDSStateSearchQuery = globalFDSState.search.query;
 		const urlSearchQuery = configInURL?.q;
 
-		const shouldUpdateFilters = globalFDSState.filters.some(
-			(filter: IBaseFilterState) => {
+		const hasActiveFilterInURL = Boolean(configInURL?.filters?.length);
+		const hasActiveFilterInState = globalFDSState.filters.some(
+			(filter: IBaseFilterState) => filter.active
+		);
+
+		const shouldUpdateFilters =
+			(hasActiveFilterInURL && !hasActiveFilterInState) ||
+			globalFDSState.filters.some((filter: IBaseFilterState) => {
 				if (filter.preloadedData || filter.selectedData) {
 					const preloadedData = JSON.stringify(filter.preloadedData);
 					const selectedData = JSON.stringify(filter.selectedData);
@@ -760,8 +766,7 @@ const FrontendDataSetContent = ({
 				}
 
 				return false;
-			}
-		);
+			});
 
 		const shouldUpdateSearch =
 			(urlSearchQuery ?? '') !== (globalFDSStateSearchQuery ?? '') &&

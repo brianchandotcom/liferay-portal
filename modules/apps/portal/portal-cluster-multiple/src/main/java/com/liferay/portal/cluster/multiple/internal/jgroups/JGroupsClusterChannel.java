@@ -105,9 +105,8 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 			if (PropsValues.CLUSTER_LINK_JMX_ENABLED) {
 				try {
 					JmxConfigurator.registerChannel(
-						_jChannel,
-						ManagementFactory.getPlatformMBeanServer(), _JMX_DOMAIN,
-						_clusterName, true);
+						_jChannel, ManagementFactory.getPlatformMBeanServer(),
+						_JMX_DOMAIN, _clusterName, true);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
@@ -172,10 +171,6 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 	@Override
 	public ClusterReceiver getClusterReceiver() {
 		return _clusterReceiver;
-	}
-
-	public JChannel getJChannel() {
-		return _jChannel;
 	}
 
 	@Override

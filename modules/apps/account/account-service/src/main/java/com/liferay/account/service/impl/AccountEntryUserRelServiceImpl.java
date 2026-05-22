@@ -11,6 +11,7 @@ import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.base.AccountEntryUserRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -144,6 +145,21 @@ public class AccountEntryUserRelServiceImpl
 			accountEntryId, creatorUserId, screenName, emailAddress, locale,
 			firstName, middleName, lastName, prefixListTypeId, suffixListTypeId,
 			jobTitle, serviceContext);
+	}
+
+	@Override
+	public Ticket addUserInvitationTicket(
+			long accountEntryId, long[] accountRoleIds, String emailAddress,
+			User inviter, ServiceContext serviceContext)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), accountEntryId,
+			AccountActionKeys.INVITE_USER);
+
+		return accountEntryUserRelLocalService.addUserInvitationTicket(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
 	}
 
 	@Override

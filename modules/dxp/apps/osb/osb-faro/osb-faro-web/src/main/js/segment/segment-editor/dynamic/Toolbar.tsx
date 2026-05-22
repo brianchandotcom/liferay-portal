@@ -295,6 +295,7 @@ export class Toolbar extends React.Component<IToolbarProps, IToolbarState> {
 														}
 												  )
 										}
+										small
 									>
 										{Liferay.Language.get('cancel')}
 									</ClayLink>

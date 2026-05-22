@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.headless.admin.site.api
 Bundle-Version: 24.4.0
 Export-Package:\
 	com.liferay.headless.admin.site.dto.v1_0,\
+	com.liferay.headless.admin.site.dto.v1_0.util,\
 	com.liferay.headless.admin.site.resource.v1_0

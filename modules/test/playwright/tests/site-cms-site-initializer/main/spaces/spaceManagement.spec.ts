@@ -99,6 +99,50 @@ test(
 );
 
 test(
+	'Trash entries max age field shows the company default in days and rejects values below 1',
+	{tag: '@LPD-91035'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const spaceName = `Space ${getRandomString()}`;
+
+		await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+			name: spaceName,
+			settings: {},
+			type: 'Space',
+		});
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await page.getByRole('button', {name: 'More Actions'}).click();
+		await page.getByRole('menuitem', {name: 'Settings'}).click();
+
+		const trashEntriesMaxAgeField = page.getByRole('spinbutton', {
+			name: 'Trash Entries Max Age',
+		});
+
+		await expect(trashEntriesMaxAgeField).toHaveValue('30');
+
+		await trashEntriesMaxAgeField.fill('0');
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page.getByText('Please enter a value greater than or equal to 1')
+		).toBeVisible();
+
+		await trashEntriesMaxAgeField.fill('7');
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page, 'Success');
+
+		await spaceSummaryPage.goto(spaceName);
+
+		await page.getByRole('button', {name: 'More Actions'}).click();
+		await page.getByRole('menuitem', {name: 'Settings'}).click();
+
+		await expect(trashEntriesMaxAgeField).toHaveValue('7');
+	}
+);
+
+test(
 	'The Permissions modal can be opened from the All Spaces row actions',
 	{tag: '@LPD-85670'},
 	async ({apiHelpers, page}) => {

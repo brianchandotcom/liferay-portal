@@ -29,14 +29,14 @@ public class ContainsFunction
 			return false;
 		}
 
+		if (object1 instanceof JSONArray) {
+			return apply((JSONArray)object1, object2);
+		}
+
 		if ((object1 instanceof JSONObjectImpl) &&
 			(object2 instanceof JSONObjectImpl)) {
 
 			return apply((JSONObjectImpl)object1, (JSONObjectImpl)object2);
-		}
-
-		if (object1 instanceof JSONArray) {
-			return apply((JSONArray)object1, object2);
 		}
 
 		return apply(object1.toString(), object2.toString());

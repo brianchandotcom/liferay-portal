@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayRadio} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React, {useState} from 'react';
 
@@ -20,19 +20,79 @@ interface Props {
 	value: HandlerSelection | undefined;
 }
 
+function SelectPagesButton({onClick}: {onClick: () => void}) {
+	return (
+		<ClayButton
+			className="border-0 ml-2 p-0"
+			displayType="link"
+			onClick={onClick}
+			size="sm"
+		>
+			{Liferay.Language.get('select-layouts')}
+		</ClayButton>
+	);
+}
+
+function LayoutVisibilitySelector({
+	onSelectPages,
+	onSetMode,
+	privateLayout,
+}: {
+	onSelectPages: () => void;
+	onSetMode: (mode: boolean) => void;
+	privateLayout: boolean;
+}) {
+	return (
+		<div className="mt-2 pl-4">
+			<div className="align-items-center d-flex mb-1">
+				<ClayRadio
+					checked={!privateLayout}
+					containerProps={{className: 'mb-0'}}
+					label={Liferay.Language.get('public-pages')}
+					name="layoutSetPrivateLayout"
+					onChange={() => onSetMode(false)}
+					value="false"
+				/>
+
+				{!privateLayout && (
+					<SelectPagesButton onClick={onSelectPages} />
+				)}
+			</div>
+
+			<div className="align-items-center d-flex mb-1">
+				<ClayRadio
+					checked={privateLayout}
+					containerProps={{className: 'mb-0'}}
+					label={Liferay.Language.get('private-pages')}
+					name="layoutSetPrivateLayout"
+					onChange={() => onSetMode(true)}
+					value="true"
+				/>
+
+				{privateLayout && <SelectPagesButton onClick={onSelectPages} />}
+			</div>
+		</div>
+	);
+}
+
 export default function LayoutSetControl({
 	label,
 	onChange,
 	pageTreeModalConfiguration,
 	value,
 }: Props) {
+	const {privateLayoutsEnabled, ...modalConfiguration} =
+		pageTreeModalConfiguration;
+
 	const [showModal, setShowModal] = useState(false);
 
-	const selection = (value && typeof value === 'object' ? value : {}) as {
-		layoutIds?: number[];
-	};
-	const layoutIds = selection.layoutIds ?? [];
-	const isAll = !!value && typeof value === 'object' && !selection.layoutIds;
+	const {layoutIds = [], privateLayout = false} = (
+		typeof value === 'object' ? value : {}
+	) as {layoutIds?: number[]; privateLayout?: boolean};
+
+	const isAll = !!value && !layoutIds.length;
+
+	const openModal = () => setShowModal(true);
 
 	return (
 		<div className="p-3">
@@ -42,7 +102,7 @@ export default function LayoutSetControl({
 						checked={isAll}
 						indeterminate={!isAll && !!layoutIds.length}
 						onChange={() =>
-							onChange(value ? undefined : {privateLayout: false})
+							onChange(isAll ? undefined : {privateLayout})
 						}
 					/>
 				</ClayLayout.ContentCol>
@@ -53,21 +113,24 @@ export default function LayoutSetControl({
 							{label}
 						</span>
 
-						<ClayButton
-							className="border-0 p-0"
-							displayType="link"
-							onClick={() => setShowModal(true)}
-							small
-						>
-							{Liferay.Language.get('select-layouts')}
-						</ClayButton>
+						{!privateLayoutsEnabled && (
+							<SelectPagesButton onClick={openModal} />
+						)}
 					</div>
 				</ClayLayout.ContentCol>
 			</ClayLayout.ContentRow>
 
+			{privateLayoutsEnabled && (
+				<LayoutVisibilitySelector
+					onSelectPages={openModal}
+					onSetMode={(next) => onChange({privateLayout: next})}
+					privateLayout={privateLayout}
+				/>
+			)}
+
 			{showModal && (
 				<PageTreeModal
-					{...pageTreeModalConfiguration}
+					{...modalConfiguration}
 					initialSelectedIds={layoutIds}
 					onClose={() => setShowModal(false)}
 					onSubmit={(result) => {
@@ -75,6 +138,7 @@ export default function LayoutSetControl({
 
 						onChange(result ?? undefined);
 					}}
+					privateLayout={privateLayout}
 				/>
 			)}
 		</div>

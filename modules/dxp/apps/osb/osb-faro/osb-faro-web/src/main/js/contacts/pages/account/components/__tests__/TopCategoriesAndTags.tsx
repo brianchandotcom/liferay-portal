@@ -137,7 +137,7 @@ describe('TopCategoriesAndTags', () => {
 		it('should render the Group By dropdown with the default metric (Impressions)', () => {
 			render(<TopCategoriesAndTags />);
 
-			expect(screen.getAllByText('Group by').length).toBeGreaterThan(0);
+			expect(screen.getAllByText('Group By').length).toBeGreaterThan(0);
 			expect(screen.getAllByText('Impressions').length).toBeGreaterThan(
 				0
 			);
@@ -179,7 +179,7 @@ describe('TopCategoriesAndTags', () => {
 			const {container} = render(<TopCategoriesAndTags />);
 
 			const tabPanel = container.querySelector(
-				'[aria-labelledby="tab-top-categories-and-tags-category"]'
+				'.tab-pane'
 			) as HTMLElement;
 
 			expect(within(tabPanel).getByText('Name')).toBeInTheDocument();
@@ -191,7 +191,7 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group by/})[0]
+				screen.getAllByRole('button', {name: /Group By/})[0]
 			);
 
 			fireEvent.click(
@@ -210,7 +210,7 @@ describe('TopCategoriesAndTags', () => {
 			render(<TopCategoriesAndTags />);
 
 			fireEvent.click(
-				screen.getAllByRole('button', {name: /Group by/})[0]
+				screen.getAllByRole('button', {name: /Group By/})[0]
 			);
 
 			fireEvent.click(
@@ -308,19 +308,49 @@ describe('TopCategoriesAndTags', () => {
 	});
 
 	describe('empty state', () => {
-		it('should render the empty message when no items are returned', () => {
+		it('should render the categories empty message on the Category tab when no items are returned', () => {
 			mockUseRequestWith({data: {items: []}});
 
 			render(<TopCategoriesAndTags />);
 
 			expect(
-				screen.getAllByText('No Categorization Available').length
+				screen.getAllByText('No Categories Available').length
 			).toBeGreaterThan(0);
 			expect(
 				screen.getAllByText(
-					'Vocabularies, Categories and Tags will appear here once they are available.'
+					'Categories will appear here once they are available.'
 				).length
 			).toBeGreaterThan(0);
+		});
+
+		it('should render the tags empty message on the Tag tab when no items are returned', () => {
+			mockUseRequestWith({data: {items: []}});
+
+			render(<TopCategoriesAndTags />);
+
+			fireEvent.click(screen.getByRole('tab', {name: 'Tag'}));
+
+			expect(
+				screen.getAllByText('No Tags Available').length
+			).toBeGreaterThan(0);
+			expect(
+				screen.getAllByText(
+					'Tags will appear here once they are available.'
+				).length
+			).toBeGreaterThan(0);
+		});
+
+		it('should keep tabs visible in the empty state', () => {
+			mockUseRequestWith({data: {items: []}});
+
+			render(<TopCategoriesAndTags />);
+
+			expect(
+				screen.getByRole('tab', {name: 'Category'})
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('tab', {name: 'Tag'})
+			).toBeInTheDocument();
 		});
 
 		it('should not render rows when no items are returned', () => {
@@ -351,7 +381,7 @@ describe('TopCategoriesAndTags', () => {
 			const {container} = render(<TopCategoriesAndTags />);
 
 			const tabPanel = container.querySelector(
-				'[aria-labelledby="tab-top-categories-and-tags-category"]'
+				'.tab-pane'
 			) as HTMLElement;
 
 			expect(within(tabPanel).getAllByText('999').length).toBe(1);

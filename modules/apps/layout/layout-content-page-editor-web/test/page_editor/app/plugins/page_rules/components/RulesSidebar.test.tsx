@@ -110,6 +110,7 @@ const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 							},
 							pageRules: rules || [],
 						},
+						mappingFields: {},
 					}) as unknown as State
 				}
 			>

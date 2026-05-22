@@ -42,6 +42,8 @@ export function MembersListItem({
 		<>
 			{items.map((item) => {
 				const isUser = itemType === 'user';
+				const isCurrentUser =
+					isUser && currentUserId === String(item.id);
 				const isOwner =
 					isUser &&
 					String(assetLibraryCreatorUserId) === String(item.id);
@@ -101,7 +103,7 @@ export function MembersListItem({
 								{item.name}
 							</span>
 
-							{isUser && currentUserId === String(item.id) && (
+							{isCurrentUser && (
 								<span className="ml-1 text-lowercase text-secondary">
 									({Liferay.Language.get('you')})
 								</span>
@@ -117,6 +119,7 @@ export function MembersListItem({
 						) : hasAssignMembersPermission ? (
 							<div className="align-items-center c-gap-2 d-flex">
 								<SpaceMembersPermissionSelect
+									disabled={isCurrentUser}
 									onChange={(newRoles) =>
 										onUpdateItemRoles(item, newRoles)
 									}

@@ -41,6 +41,24 @@ const maxLength =
 		}
 	};
 
+const minValue =
+	(min: number): ValidationFunction =>
+	(value) => {
+		if (
+			value !== '' &&
+			value !== undefined &&
+			value !== null &&
+			Number(value) < min
+		) {
+			return sub(
+				Liferay.Language.get(
+					'please-enter-a-value-greater-than-or-equal-to-x'
+				),
+				min
+			);
+		}
+	};
+
 const notNull: ValidationFunction = (value) => {
 	if (value === 'null') {
 		return Liferay.Language.get('name-cannot-be-null');
@@ -102,6 +120,7 @@ export {
 	alphanumeric,
 	invalidCharacters,
 	maxLength,
+	minValue,
 	notNull,
 	nonNumeric,
 	required,

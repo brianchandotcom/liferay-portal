@@ -20,8 +20,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TrashedModel;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -29,14 +34,18 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.trash.TrashHelper;
+import com.liferay.trash.model.TrashEntry;
+import com.liferay.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -103,6 +112,13 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		_testAddDeletionSystemEvent(group.getGroupId(), (ObjectEntry)baseModel);
+	}
+
+	@Test
+	@TestInfo("LPD-91679")
+	public void testCheckEntries() throws Exception {
+		_testCheckEntriesWithPermissions();
+		_testCheckEntriesWithoutPermissions();
 	}
 
 	@Override
@@ -203,6 +219,27 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
+	private ObjectEntry _addExpiredTrashedObjectEntry() throws Exception {
+		baseModel = addBaseModel(
+			group,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		long primaryKey = (Long)baseModel.getPrimaryKeyObj();
+
+		moveBaseModelToTrash(primaryKey);
+
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
+			_objectDefinition.getClassName(), primaryKey);
+
+		Date createDate = trashEntry.getCreateDate();
+
+		trashEntry.setCreateDate(new Date(createDate.getTime() - Time.YEAR));
+
+		TrashEntryLocalServiceUtil.updateTrashEntry(trashEntry);
+
+		return (ObjectEntry)baseModel;
+	}
+
 	private void _testAddDeletionSystemEvent(
 			long groupId, ObjectEntry objectEntry)
 		throws Exception {
@@ -226,6 +263,42 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 			systemEvent.getClassExternalReferenceCode());
 		Assert.assertEquals(
 			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
+	}
+
+	private void _testCheckEntriesWithoutPermissions() throws Exception {
+		ObjectEntry objectEntry = _addExpiredTrashedObjectEntry();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(
+					UserLocalServiceUtil.getGuestUser(
+						TestPropsValues.getCompanyId())));
+
+			TrashEntryLocalServiceUtil.checkEntries();
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		Assert.assertNull(
+			TrashEntryLocalServiceUtil.fetchEntry(
+				_objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
+	}
+
+	private void _testCheckEntriesWithPermissions() throws Exception {
+		ObjectEntry objectEntry = _addExpiredTrashedObjectEntry();
+
+		TrashEntryLocalServiceUtil.checkEntries();
+
+		Assert.assertNull(
+			TrashEntryLocalServiceUtil.fetchEntry(
+				_objectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
 	}
 
 	private ObjectDefinition _objectDefinition;

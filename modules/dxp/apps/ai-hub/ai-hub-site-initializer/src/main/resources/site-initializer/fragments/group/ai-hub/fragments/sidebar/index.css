@@ -111,3 +111,15 @@
 		}
 	}
 }
+
+@media (max-width: 767.98px) {
+	.top-bar {
+		position: static;
+	}
+}
+
+.lfr-layout-structure-item-sidebar .sidebar-container {
+	position: static;
+	transform: none;
+	width: unset;
+}

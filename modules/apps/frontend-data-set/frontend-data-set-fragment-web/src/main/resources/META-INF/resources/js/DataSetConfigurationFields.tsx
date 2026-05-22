@@ -23,18 +23,36 @@ const ITEM_SELECTOR_URL_RESOURCE_COMMAND =
 
 type IdentifierField = 'classPK' | 'externalReferenceCode';
 
-interface IMappedTokenValue {
+interface IContentMappedTokenValue {
 	className: string;
 	classPK: string;
 	externalReferenceCode: string;
 	fieldId: IdentifierField;
+	source?: 'content';
 	title?: string;
 }
+
+interface IContextMappedTokenValue {
+	fieldId: IdentifierField;
+	source: 'context';
+}
+
+type IMappedTokenValue = IContentMappedTokenValue | IContextMappedTokenValue;
 
 type TokenValue = string | IMappedTokenValue;
 
 function isMappedTokenValue(value: TokenValue): value is IMappedTokenValue {
 	return typeof value === 'object' && value !== null;
+}
+
+function isContextMapped(
+	value: IMappedTokenValue
+): value is IContextMappedTokenValue {
+	return value.source === 'context';
+}
+
+function isOnDisplayPageTemplate(): boolean {
+	return !!document.getElementById('infoItemSelectorContainer');
 }
 
 interface IConfigurationField {
@@ -87,6 +105,19 @@ function TokenRow({
 		isMappedTokenValue(value) ? '' : value
 	);
 
+	const displayPageTemplate = isOnDisplayPageTemplate();
+
+	const mapToContext = useCallback(() => {
+		const currentFieldId = isMappedTokenValue(value)
+			? value.fieldId
+			: 'classPK';
+
+		onChange({
+			fieldId: currentFieldId,
+			source: 'context',
+		});
+	}, [onChange, value]);
+
 	const openInfoItemSelector = useCallback(async () => {
 		const response = await fetch(
 			buildResourceURL(ITEM_SELECTOR_URL_RESOURCE_COMMAND)
@@ -127,6 +158,7 @@ function TokenRow({
 					externalReferenceCode:
 						selectedValue.externalReferenceCode ?? '',
 					fieldId: currentFieldId,
+					source: 'content',
 					title: selectedValue.title,
 				});
 			},
@@ -140,20 +172,21 @@ function TokenRow({
 		onChange('');
 	}, [onChange]);
 
-	if (isMappedTokenValue(value)) {
-		const fieldOptions = [
-			{label: Liferay.Language.get('id'), value: 'classPK'},
-			{
-				label: Liferay.Language.get('external-reference-code'),
-				value: 'externalReferenceCode',
-			},
-		];
+	const fieldOptions = [
+		{label: Liferay.Language.get('id'), value: 'classPK'},
+		{
+			label: Liferay.Language.get('external-reference-code'),
+			value: 'externalReferenceCode',
+		},
+	];
 
-		const displayValue =
-			value.title ||
-			(value.fieldId === 'externalReferenceCode'
-				? value.externalReferenceCode
-				: value.classPK);
+	if (isMappedTokenValue(value)) {
+		const displayValue = isContextMapped(value)
+			? Liferay.Language.get('current-entity-display-page-template')
+			: value.title ||
+				(value.fieldId === 'externalReferenceCode'
+					? value.externalReferenceCode
+					: value.classPK);
 
 		return (
 			<ClayForm.Group key={token}>
@@ -170,16 +203,20 @@ function TokenRow({
 						/>
 					</ClayInput.GroupItem>
 
-					<ClayInput.GroupItem shrink>
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('change-entity')}
-							displayType="secondary"
-							onClick={openInfoItemSelector}
-							size="sm"
-							symbol="change"
-							title={Liferay.Language.get('change-entity')}
-						/>
-					</ClayInput.GroupItem>
+					{!isContextMapped(value) && (
+						<ClayInput.GroupItem shrink>
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get(
+									'change-entity'
+								)}
+								displayType="secondary"
+								onClick={openInfoItemSelector}
+								size="sm"
+								symbol="change"
+								title={Liferay.Language.get('change-entity')}
+							/>
+						</ClayInput.GroupItem>
+					)}
 
 					<ClayInput.GroupItem shrink>
 						<ClayButtonWithIcon
@@ -230,14 +267,48 @@ function TokenRow({
 				</ClayInput.GroupItem>
 
 				<ClayInput.GroupItem shrink>
-					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('map-to-entity')}
-						displayType="secondary"
-						onClick={openInfoItemSelector}
-						size="sm"
-						symbol="link"
-						title={Liferay.Language.get('map-to-entity')}
-					/>
+					{displayPageTemplate ? (
+						<ClayDropDownWithItems
+							items={[
+								{
+									title: Liferay.Language.get(
+										'map-to-current-entity'
+									),
+									onClick: mapToContext,
+									symbolLeft: 'page',
+								},
+								{
+									title: Liferay.Language.get(
+										'map-to-a-specific-entity'
+									),
+									onClick: openInfoItemSelector,
+									symbolLeft: 'link',
+								},
+							]}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('map')}
+									displayType="secondary"
+									size="sm"
+									symbol="link"
+									title={Liferay.Language.get('map')}
+								/>
+							}
+						/>
+					) : (
+						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get(
+								'map-to-a-specific-entity'
+							)}
+							displayType="secondary"
+							onClick={openInfoItemSelector}
+							size="sm"
+							symbol="link"
+							title={Liferay.Language.get(
+								'map-to-a-specific-entity'
+							)}
+						/>
+					)}
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
 		</ClayForm.Group>

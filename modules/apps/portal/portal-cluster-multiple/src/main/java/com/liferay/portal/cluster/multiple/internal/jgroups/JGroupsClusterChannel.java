@@ -16,10 +16,12 @@ import com.liferay.portal.kernel.cluster.Address;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;
 
 import java.net.InetAddress;
@@ -32,6 +34,7 @@ import java.util.concurrent.ExecutorService;
 
 import org.jgroups.JChannel;
 import org.jgroups.conf.ProtocolStackConfigurator;
+import org.jgroups.jmx.JmxConfigurator;
 import org.jgroups.protocols.TP;
 import org.jgroups.stack.Protocol;
 import org.jgroups.stack.ProtocolStack;
@@ -98,6 +101,23 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 								excludedPropertyKeys()),
 						"}"));
 			}
+
+			if (PropsValues.CLUSTER_LINK_JMX_ENABLED) {
+				try {
+					JmxConfigurator.registerChannel(
+						_jChannel,
+						ManagementFactory.getPlatformMBeanServer(), _JMX_DOMAIN,
+						_clusterName, true);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to register JGroups JMX beans for " +
+								"cluster " + _clusterName,
+							exception);
+					}
+				}
+			}
 		}
 		catch (Exception exception) {
 			throw new SystemException(
@@ -107,6 +127,22 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 
 	@Override
 	public void close() {
+		if (PropsValues.CLUSTER_LINK_JMX_ENABLED) {
+			try {
+				JmxConfigurator.unregisterChannel(
+					_jChannel, ManagementFactory.getPlatformMBeanServer(),
+					_JMX_DOMAIN, _clusterName);
+			}
+			catch (Exception exception) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to unregister JGroups JMX beans for cluster " +
+							_clusterName,
+						exception);
+				}
+			}
+		}
+
 		_jChannel.setReceiver(null);
 
 		_jChannel.close();
@@ -136,6 +172,10 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 	@Override
 	public ClusterReceiver getClusterReceiver() {
 		return _clusterReceiver;
+	}
+
+	public JChannel getJChannel() {
+		return _jChannel;
 	}
 
 	@Override
@@ -190,10 +230,6 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 				"Unable to send unicast message", exception);
 		}
 	}
-	
-	public JChannel getJChannel() {
-		return _jChannel;
-	}
 
 	private String _getJChannelProperties(String[] excludedPropertyKeys)
 		throws ReflectiveOperationException {
@@ -238,6 +274,8 @@ public class JGroupsClusterChannel extends BaseClusterChannel {
 
 		return sb.toString();
 	}
+
+	private static final String _JMX_DOMAIN = "jgroups";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannel.class);

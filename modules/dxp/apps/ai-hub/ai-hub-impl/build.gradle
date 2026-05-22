@@ -33,6 +33,7 @@ dependencies {
 	compileInclude group: "dev.langchain4j", name: "langchain4j", version: "1.10.0"
 	compileInclude group: "dev.langchain4j", name: "langchain4j-agentic", version: "1.10.0-beta18"
 	compileInclude group: "dev.langchain4j", name: "langchain4j-core", version: "1.10.0"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-guardrails", version: "1.10.0-beta18"
 	compileInclude group: "dev.langchain4j", name: "langchain4j-http-client", version: "1.10.0"
 	compileInclude group: "dev.langchain4j", name: "langchain4j-mcp", version: "1.10.0-beta18"
 	compileInclude group: "dev.langchain4j", name: "langchain4j-vertex-ai", version: "1.10.0-beta18"

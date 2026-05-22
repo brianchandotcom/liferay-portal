@@ -5,12 +5,15 @@
 
 package com.liferay.ai.hub.internal.assistant.handler;
 
+import dev.langchain4j.guardrail.InputGuardrail;
+import dev.langchain4j.guardrail.OutputGuardrail;
 import dev.langchain4j.invocation.InvocationParameters;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiStreamingChatModel;
 import dev.langchain4j.rag.RetrievalAugmentor;
 import dev.langchain4j.service.tool.ToolProvider;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -24,6 +27,8 @@ public class AssistantHandlerContext {
 	}
 
 	public AssistantHandlerContext(AssistantHandlerContext.Builder builder) {
+		_inputGuardrails = builder._inputGuardrails;
+		_outputGuardrails = builder._outputGuardrails;
 		_invocationParameters = builder._invocationParameters;
 		_memoryId = builder._memoryId;
 		_onCompleteResponseConsumer = builder._onCompleteResponseConsumer;
@@ -35,6 +40,10 @@ public class AssistantHandlerContext {
 		_userMessage = builder._userMessage;
 		_vertexAiGeminiStreamingChatModel =
 			builder._vertexAiGeminiStreamingChatModel;
+	}
+
+	public List<InputGuardrail> getInputGuardrails() {
+		return _inputGuardrails;
 	}
 
 	public InvocationParameters getInvocationParameters() {
@@ -51,6 +60,10 @@ public class AssistantHandlerContext {
 
 	public Consumer<Throwable> getOnErrorConsumer() {
 		return _onErrorConsumer;
+	}
+
+	public List<OutputGuardrail> getOutputGuardrails() {
+		return _outputGuardrails;
 	}
 
 	public RetrievalAugmentor getRetrievalAugmentor() {
@@ -85,6 +98,12 @@ public class AssistantHandlerContext {
 			return new AssistantHandlerContext(this);
 		}
 
+		public Builder inputGuardrails(List<InputGuardrail> inputGuardrails) {
+			_inputGuardrails = inputGuardrails;
+
+			return this;
+		}
+
 		public Builder invocationParameters(
 			InvocationParameters invocationParameters) {
 
@@ -109,6 +128,14 @@ public class AssistantHandlerContext {
 
 		public Builder onErrorConsumer(Consumer<Throwable> onErrorConsumer) {
 			_onErrorConsumer = onErrorConsumer;
+
+			return this;
+		}
+
+		public Builder outputGuardrails(
+			List<OutputGuardrail> outputGuardrails) {
+
+			_outputGuardrails = outputGuardrails;
 
 			return this;
 		}
@@ -158,10 +185,12 @@ public class AssistantHandlerContext {
 			return this;
 		}
 
+		private List<InputGuardrail> _inputGuardrails;
 		private InvocationParameters _invocationParameters;
 		private String _memoryId;
 		private Consumer<ChatResponse> _onCompleteResponseConsumer;
 		private Consumer<Throwable> _onErrorConsumer;
+		private List<OutputGuardrail> _outputGuardrails;
 		private RetrievalAugmentor _retrievalAugmentor;
 		private Function<Object, String> _systemMessageProviderFunction;
 		private ToolProvider _toolProvider;
@@ -172,10 +201,12 @@ public class AssistantHandlerContext {
 
 	}
 
+	private final List<InputGuardrail> _inputGuardrails;
 	private final InvocationParameters _invocationParameters;
 	private final String _memoryId;
 	private final Consumer<ChatResponse> _onCompleteResponseConsumer;
 	private final Consumer<Throwable> _onErrorConsumer;
+	private final List<OutputGuardrail> _outputGuardrails;
 	private final RetrievalAugmentor _retrievalAugmentor;
 	private final Function<Object, String> _systemMessageProviderFunction;
 	private final ToolProvider _toolProvider;

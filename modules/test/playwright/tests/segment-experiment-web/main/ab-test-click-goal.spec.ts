@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -257,6 +258,109 @@ test(
 			await expect(
 				page.getByText('An element needs to be selected.')
 			).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'AB Test by Click goal selects submit elements with an ID and ignores submit elements without one',
+	{tag: '@LPS-119476'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		test.setTimeout(150000);
+
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-html',
+					}),
+				]),
+				siteId: site.id,
+				title: 'My Page',
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			await pageEditorPage.editHTMLEditable({
+				editableId: 'element-html',
+				fragmentId: await pageEditorPage.getFragmentId('HTML'),
+				value: '<input type="submit" id="customId" /><input type="submit" />',
+			});
+
+			await pageEditorPage.publishPage();
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({
+				goal: 'Click',
+				name: 'AB Test ' + getRandomString(),
+				page,
+			});
+
+			// Typing the submit element ID selects it
+
+			await page.locator('#clickableElement').fill('customId');
+
+			await page.locator('#clickableElement').press('Enter');
+
+			await expect(page.getByText('Target', {exact: true})).toBeVisible();
+
+			await expect(page.locator('#clickableElement')).toHaveValue(
+				'customId'
+			);
+
+			// Submit elements without an ID do not show as selectable
+
+			await clickAndExpectToBeHidden({
+				target: page.locator(
+					'.lfr-segments-experiment-click-goal-target-overlay-selected'
+				),
+				trigger: page.locator(
+					'.lfr-segments-experiment-click-goal-target-delete'
+				),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: false,
+				target: page.locator(
+					'.lfr-segments-experiment-click-goal-target-overlay'
+				),
+				trigger: page.getByRole('button', {
+					name: 'Select Clickable Element',
+				}),
+			});
+
+			await expect(
+				page.locator(
+					'.lfr-segments-experiment-click-goal-target-overlay'
+				)
+			).toHaveCount(1);
 		}
 		finally {
 			if (channel && project) {

@@ -17,21 +17,18 @@ import React, {useId, useMemo} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
-import {config} from '../../../app/config/index';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
-import InfoItemService from '../../../app/services/InfoItemService';
-import {CACHE_KEYS} from '../../../app/utils/cache';
 import {isAllowedInRules} from '../../../app/utils/isAllowedInRules';
 import {isLayoutDataItemDeleted} from '../../../app/utils/isLayoutDataItemDeleted';
 import {translateConditionsToScript} from '../../../app/utils/translateConditionsToScript';
 import useActionValues from '../../../app/utils/useActionValues';
-import useCache from '../../../app/utils/useCache';
 import useConditionValues from '../../../app/utils/useConditionValues';
 import {Action, Condition} from '../../../types/Rule';
+import useMappingFieldItems from '../utils/useMappingFieldItems';
 import ActionComponent from './Action';
 import AdvancedRuleEditor from './AdvancedRuleEditor';
-import ConditionComponent, {filterAndConvertMappingFields} from './Condition';
+import ConditionComponent from './Condition';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -196,6 +193,8 @@ export function RuleBuilderConditionSection({
 	script,
 	setRuleConditions,
 }: RuleBuilderConditionProps) {
+	const mappingFieldItems = useMappingFieldItems();
+
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 
@@ -234,29 +233,8 @@ export function RuleBuilderConditionSection({
 		conditionType,
 		conditions,
 		items: inputFragmentItems,
+		mappingFieldItems,
 	});
-
-	const {subtype, type} = config.selectedMappingTypes ?? {};
-
-	const mappingFields = useCache({
-		fetcher: () =>
-			type
-				? InfoItemService.getAvailableStructureMappingFields({
-						classNameId: type.id,
-						classTypeId: subtype ? subtype.id : '',
-					})
-				: Promise.resolve([]),
-		key: type
-			? subtype
-				? [CACHE_KEYS.mappingFields, type.id, subtype.id]
-				: [CACHE_KEYS.mappingFields, type.id]
-			: [CACHE_KEYS.mappingFields],
-	});
-
-	const mappingFieldItems = useMemo(
-		() => filterAndConvertMappingFields(mappingFields),
-		[mappingFields]
-	);
 
 	const fieldTypes = useMemo(() => {
 		const types: Record<string, string> = {};
@@ -465,6 +443,7 @@ export function RuleBuilderConditionSection({
 				) : (
 					<div>
 						<AdvancedRuleEditor
+							mappingFieldItems={mappingFieldItems}
 							onChange={(value: string | undefined) => {
 								setRuleConditions({script: value || ''});
 							}}

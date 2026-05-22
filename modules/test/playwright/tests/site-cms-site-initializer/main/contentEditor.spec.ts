@@ -1070,6 +1070,143 @@ test.describe('Categorization Panel', () => {
 			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(spaceId);
 		}
 	);
+
+	test(
+		'Prevent publish, open Categorization panel and preserve tags when a required vocabulary has no selected category',
+		{tag: '@LPD-89784'},
+		async ({apiHelpers, contentsPage, page}) => {
+			const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+
+			await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: getRandomString(),
+				siteId: site.id,
+				visibilityType: 'PUBLIC',
+			});
+
+			await contentsPage.goto();
+			await contentsPage.createContent('Basic Web Content');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			await contentsPage.openSidePanel('Categorization');
+
+			const tagName = getRandomString();
+
+			const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+			await tagsAutocomplete.fill(tagName);
+
+			const newTagOption = page.getByRole('option', {
+				name: 'Create New Tag:',
+			});
+
+			await newTagOption.waitFor();
+			await newTagOption.click();
+
+			await contentsPage.publishButton.click();
+
+			await expect(
+				page
+					.locator('.content-editor__side-panel .sidebar-header')
+					.filter({hasText: 'Categorization'})
+			).toBeVisible();
+
+			await expect(
+				page
+					.locator('.form-group.has-error')
+					.getByPlaceholder('Add category')
+			).toBeFocused();
+
+			await expect(
+				page.locator('.label-item', {hasText: tagName})
+			).toBeAttached();
+
+			await expect(
+				page.getByPlaceholder('New Basic Web Content')
+			).toHaveValue(title);
+		}
+	);
+
+	test(
+		'Publish proceeds and the categories error clears once a required vocabulary has a selected category',
+		{tag: '@LPD-89784'},
+		async ({apiHelpers, contentsPage, page}) => {
+			const site = await apiHelpers.headlessAdminSite.getSite('L_CMS');
+
+			const categoryName = getRandomString();
+
+			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
+				{
+					name: categoryName,
+					vocabularyId: (
+						await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
+							{
+								assetLibraries: [{id: -1}],
+								assetTypes: [
+									{
+										required: true,
+										subtype: 'AllAssetSubtypes',
+										type: 'AllAssetTypes',
+									},
+								],
+								name: getRandomString(),
+								siteId: site.id,
+								visibilityType: 'PUBLIC',
+							}
+						)
+					).id,
+				}
+			);
+
+			await contentsPage.goto();
+			await contentsPage.createContent('Basic Web Content');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			await contentsPage.openSidePanel('Categorization');
+
+			await contentsPage.publishButton.click();
+
+			const categoriesInput = page
+				.locator('.form-group.has-error')
+				.getByPlaceholder('Add category');
+
+			await expect(categoriesInput).toBeFocused();
+
+			await categoriesInput.fill(categoryName);
+
+			const categoryOption = page.getByRole('option', {
+				name: categoryName,
+			});
+
+			await categoryOption.waitFor();
+			await categoryOption.click();
+
+			await expect(
+				page.locator('.label-item', {hasText: categoryName})
+			).toBeAttached();
+
+			await expect(page.locator('.form-group.has-error')).toBeHidden();
+
+			await contentsPage.publishButton.click();
+
+			await expect(
+				page.locator('.table-list-title a', {hasText: title})
+			).toBeVisible();
+		}
+	);
 });
 
 test(

@@ -1,3 +1,4 @@
+import ClayLayout from '@clayui/layout';
 import MetricCard from 'shared/components/MetricCard';
 import React from 'react';
 import {IOverviewMetric, OverviewMetricType} from '../utils/types';
@@ -23,9 +24,6 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 	const netNewPipelineGenerated = getMetric(OverviewMetricType.NewPipeline);
 	const stalledAccounts = getMetric(OverviewMetricType.Stalled);
 
-	const cardContainerClassName = 'col-12 col-lg-4 d-flex';
-	const bodyClassName = 'd-flex flex-column justify-content-around';
-
 	const cards = [
 		{
 			description: Liferay.Language.get(
@@ -36,7 +34,7 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 		},
 		{
 			description: Liferay.Language.get(
-				'the-total-number-of-accounts-specifically-stuck-in-the-engaged-stage-that-have-exceeded-their-designated-time-in-stage-threshold-(>-90-days)'
+				'the-total-number-of-accounts-specifically-stuck-in-the-engaged-stage-that-have-exceeded-their-designated-time-in-stage-threshold-90-days'
 			),
 			metric: stalledAccounts,
 			title: Liferay.Language.get('stalled-accounts')
@@ -56,22 +54,23 @@ const OverviewSection: React.FC<IOverviewSectionProps> = ({
 				icon='box-container'
 				title={Liferay.Language.get('overview')}
 			/>
-			<div className='row g-4'>
+
+			<ClayLayout.Row className='row g-4'>
 				{cards.map(({description, metric, title}) => (
-					<div className={cardContainerClassName} key={title}>
+					<ClayLayout.Col key={title} lg={4} md={12}>
 						<MetricCard
-							bodyClassName={bodyClassName}
 							description={description}
 							loading={loading}
+							minHeight={200}
 							renderTrendLabel={renderTrendLabel}
 							title={title}
 							trend={metric?.trend}
 							trendClassName='text-lowercase'
 							value={metric?.value ?? 0}
 						/>
-					</div>
+					</ClayLayout.Col>
 				))}
-			</div>
+			</ClayLayout.Row>
 		</>
 	);
 };

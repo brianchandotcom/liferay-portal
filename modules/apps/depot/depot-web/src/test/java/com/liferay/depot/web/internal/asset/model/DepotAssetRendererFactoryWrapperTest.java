@@ -381,9 +381,6 @@ public class DepotAssetRendererFactoryWrapperTest {
 		);
 	}
 
-	private static MockedStatic<StagingGroupHelperUtil>
-		_stagingGroupHelperUtilMockedStatic;
-
 	private final AssetRendererFactory<Object> _assetRendererFactory =
 		Mockito.mock(AssetRendererFactory.class);
 	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
@@ -393,5 +390,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 	private final SiteConnectedGroupGroupProvider
 		_siteConnectedGroupGroupProvider = Mockito.mock(
 			SiteConnectedGroupGroupProvider.class);
+	private MockedStatic<StagingGroupHelperUtil>
+		_stagingGroupHelperUtilMockedStatic;
 
 }

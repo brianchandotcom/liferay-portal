@@ -52,6 +52,7 @@ export interface ConnectorConfig {
 
 	helpUrl?: string;
 	languages: Languages;
+	requiresLDP?: boolean;
 	singleton?: boolean;
 	slug: string;
 	type: string;

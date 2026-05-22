@@ -70,7 +70,7 @@ export default function ObjectManagementToolbar({
 					: 'label-inverse-secondary'
 			}
 			inheritanceIconSymbol={
-				isRootDescendantNode
+				Liferay.FeatureFlags['LPD-69877'] && isRootDescendantNode
 					? allowStandaloneObjectEntry
 						? 'unlock'
 						: 'lock'
@@ -78,7 +78,7 @@ export default function ObjectManagementToolbar({
 			}
 			inheritanceLabel={inheritanceLabel}
 			inheritanceTitle={
-				isRootDescendantNode
+				Liferay.FeatureFlags['LPD-69877'] && isRootDescendantNode
 					? allowStandaloneObjectEntry
 						? Liferay.Language.get('flexible-inheritance-tooltip')
 						: Liferay.Language.get('strict-inheritance-tooltip')

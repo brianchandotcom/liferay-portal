@@ -448,24 +448,24 @@ public class DataCleanupRegistratorTest {
 	}
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Inject
-	private static ExpandoTableLocalService _expandoTableLocalService;
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Inject
-	private static ExpandoValueLocalService _expandoValueLocalService;
-
-	@Inject
-	private static LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private static ReleaseLocalService _releaseLocalService;
+	private ExpandoValueLocalService _expandoValueLocalService;
 
 	@DeleteAfterTestRun
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 }

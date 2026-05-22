@@ -215,7 +215,7 @@ public class BaseCommerceMLForecastServiceImplTest {
 		return Date.from(zonedDateTime.toInstant());
 	}
 
-	private static BaseCommerceMLForecastServiceImpl
+	private BaseCommerceMLForecastServiceImpl
 		_baseCommerceMLForecastServiceImpl;
 
 }

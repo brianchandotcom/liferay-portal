@@ -181,12 +181,12 @@ public class PortalInstancesFilterTest {
 	}
 
 	@Inject
-	private static LayoutSetLocalService _layoutSetLocalService;
-
-	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	private final PortalInstancesFilter _portalInstancesFilter =
 		new PortalInstancesFilter();
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

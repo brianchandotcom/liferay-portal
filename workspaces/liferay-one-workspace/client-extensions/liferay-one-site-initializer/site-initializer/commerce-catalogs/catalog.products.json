@@ -53,5 +53,31 @@
 		"externalReferenceCode": "LO_PRODUCT_DXP",
 		"name": "Liferay DXP",
 		"sku": "LO_PRODUCT_DXP"
+	},
+	{
+		"categories": [
+			"Analytics and Optimization",
+			"Fragments"
+		],
+		"description": "Sample Marketplace app used to verify the App Detail Display Page Template renders end-to-end.",
+		"displayAvailability": true,
+		"displayStockQuantity": true,
+		"externalReferenceCode": "LO_PRODUCT_SAMPLE_APP",
+		"images": [
+			"sample-marketplace-app.png"
+		],
+		"name": "Sample Marketplace App",
+		"options": [
+			{
+				"key": "base-license-usage-type",
+				"values": [
+					"standard"
+				]
+			}
+		],
+		"price": 0,
+		"sku": "LO_PRODUCT_SAMPLE_APP",
+		"specificationOptions": [
+		]
 	}
 ]

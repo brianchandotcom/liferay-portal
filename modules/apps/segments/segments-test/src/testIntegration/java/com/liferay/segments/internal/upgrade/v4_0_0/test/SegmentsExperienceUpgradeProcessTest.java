@@ -298,11 +298,6 @@ public class SegmentsExperienceUpgradeProcessTest
 		}
 	}
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.segments.internal.upgrade.registry.SegmentsServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private Connection _connection;
 	private DBInspector _dbInspector;
 
@@ -324,5 +319,10 @@ public class SegmentsExperienceUpgradeProcessTest
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.segments.internal.upgrade.registry.SegmentsServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

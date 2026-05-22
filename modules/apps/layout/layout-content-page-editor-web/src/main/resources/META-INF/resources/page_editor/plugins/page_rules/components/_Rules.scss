@@ -29,16 +29,17 @@ html#{$cadmin-selector} .cadmin {
 		border-left: 4px solid $purple;
 	}
 
-	.page-editor__rule-builder-date-picker {
-		max-width: 180px;
-
-		.form-feedback-item {
-			white-space: nowrap;
-		}
-	}
-
+	.page-editor__rule-builder-date-picker,
 	.page-editor__rule-builder-select {
 		max-width: 180px;
+	}
+
+	.page-editor__rule-builder-date-picker .form-feedback-item {
+		white-space: nowrap;
+	}
+
+	.page-editor__rule-builder-multi-select {
+		min-width: 180px;
 	}
 
 	.page-editor__rule-builder-section {

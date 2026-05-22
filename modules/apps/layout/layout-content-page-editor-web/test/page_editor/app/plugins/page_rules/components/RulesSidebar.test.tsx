@@ -110,6 +110,7 @@ const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 							},
 							pageRules: rules || [],
 						},
+						mappingFields: {},
 					}) as unknown as State
 				}
 			>
@@ -226,6 +227,41 @@ describe('RulesSidebar', () => {
 
 		expect(rule.textContent).toBe(
 			'Rule 1ifFragment 3is-equal-totruedisableFragment 2'
+		);
+	});
+
+	it('does not render value label when condition has no value', () => {
+		renderComponent({
+			rules: [
+				{
+					actions: [
+						{
+							id: 'action-id',
+							itemId: 'formItem1',
+							type: 'disable',
+						},
+					],
+					conditionType: 'all',
+					conditions: [
+						{
+							field: 'formItem2',
+							id: 'condition-id',
+							options: {
+								type: 'is-empty',
+							},
+							type: 'form',
+						},
+					],
+					id: 'rule-1',
+					name: 'Rule 1',
+				},
+			],
+		});
+
+		const rule = document.querySelector('li')!;
+
+		expect(rule.textContent).toBe(
+			'Rule 1ifFragment 3is-emptydisableFragment 2'
 		);
 	});
 

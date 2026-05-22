@@ -422,30 +422,30 @@ public class WikiAttachmentsTest {
 		"Content: Enterprise. Open Source. For Life.";
 
 	@Inject
-	private static DLAppLocalService _dlAppLocalService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
-	private static DLFileEntryLocalService _dlFileEntryLocalService;
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject
-	private static FacetedSearcherManager _facetedSearcherManager;
-
-	@Inject
-	private static GroupLocalService _groupLocalService;
-
-	@Inject
-	private static WikiNodeLocalService _wikiNodeLocalService;
-
-	@Inject
-	private static WikiPageLocalService _wikiPageLocalService;
+	private FacetedSearcherManager _facetedSearcherManager;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	private WikiNode _node;
 	private WikiPage _page;
+
+	@Inject
+	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Inject
+	private WikiPageLocalService _wikiPageLocalService;
 
 }

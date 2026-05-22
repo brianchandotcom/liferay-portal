@@ -7,25 +7,31 @@ package com.liferay.headless.dsr.internal.resource.v1_0;
 
 import com.liferay.headless.dsr.dto.v1_0.InvitedMember;
 import com.liferay.headless.dsr.resource.v1_0.InvitedMemberResource;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Ticket;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.TicketLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
-import java.io.Serializable;
-
-import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,14 +57,12 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(roomId);
-		Ticket ticket = _ticketLocalService.getTicket(invitedMemberId);
+		ObjectEntry objectEntry = _getObjectEntry(roomId);
 
-		if (!Objects.equals(Group.class.getName(), ticket.getClassName()) ||
-			(group.getGroupId() != ticket.getClassPK())) {
-
-			throw new NoSuchModelException();
-		}
+		Ticket ticket = _getTicket(
+			_groupService.getGroup(
+				MapUtil.getLong(objectEntry.getValues(), "siteId")),
+			objectEntry, invitedMemberId);
 
 		_ticketLocalService.deleteTicket(ticket.getTicketId());
 	}
@@ -73,7 +77,10 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(roomId);
+		ObjectEntry objectEntry = _getObjectEntry(roomId);
+
+		Group group = _groupService.getGroup(
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		return Page.of(
 			transform(
@@ -83,15 +90,111 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 				this::_toInvitedMember));
 	}
 
-	private Group _getGroup(long roomId) throws Exception {
+	@Override
+	public InvitedMember patchRoomInvitedMember(
+			Long roomId, Long invitedMemberId, InvitedMember invitedMember)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66359")) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		ObjectEntry objectEntry = _getObjectEntry(roomId);
+
+		Ticket ticket = _getTicket(
+			_groupService.getGroup(
+				MapUtil.getLong(objectEntry.getValues(), "siteId")),
+			objectEntry, invitedMemberId);
+
+		if (invitedMember.getRoleKey() == null) {
+			return _toInvitedMember(ticket);
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			ticket.getExtraInfo());
+
+		jsonObject.put("roleKey", invitedMember.getRoleKey());
+
+		ticket.setExtraInfo(jsonObject.toString());
+
+		ticket = _ticketLocalService.updateTicket(ticket);
+
+		return _toInvitedMember(ticket);
+	}
+
+	private ObjectEntry _getObjectEntry(long roomId) throws Exception {
 		ObjectEntry objectEntry = _objectEntryService.getObjectEntry(roomId);
 
-		_objectEntryService.checkModelResourcePermission(
-			objectEntry.getObjectDefinitionId(), roomId, ActionKeys.UPDATE);
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
 
-		Map<String, Serializable> values = objectEntry.getValues();
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
 
-		return _groupService.getGroup(GetterUtil.getLong(values.get("siteId")));
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!modelResourcePermission.contains(
+				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
+
+			GroupPermissionUtil.check(
+				permissionChecker,
+				MapUtil.getLong(objectEntry.getValues(), "siteId"),
+				ActionKeys.ASSIGN_MEMBERS);
+		}
+
+		return objectEntry;
+	}
+
+	private Ticket _getTicket(
+			Group group, ObjectEntry objectEntry, long ticketId)
+		throws Exception {
+
+		Ticket ticket = _ticketLocalService.getTicket(ticketId);
+
+		if (!Objects.equals(Group.class.getName(), ticket.getClassName()) ||
+			(group.getGroupId() != ticket.getClassPK())) {
+
+			throw new NoSuchModelException();
+		}
+
+		ObjectDefinition objectDefinition = objectEntry.getObjectDefinition();
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (modelResourcePermission.contains(
+				permissionChecker, objectEntry, ActionKeys.UPDATE)) {
+
+			return ticket;
+		}
+
+		if (GroupPermissionUtil.contains(
+				permissionChecker, group, ActionKeys.ASSIGN_MEMBERS)) {
+
+			long ownerId = 0;
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				ticket.getExtraInfo());
+
+			if ((jsonObject != null) && !jsonObject.isNull("ownerId")) {
+				ownerId = jsonObject.getLong("ownerId");
+			}
+
+			if (ownerId == contextUser.getUserId()) {
+				return ticket;
+			}
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			contextUser.getUserId(), ObjectEntry.class.getName(),
+			objectEntry.getObjectEntryId(), ActionKeys.UPDATE);
 	}
 
 	private InvitedMember _toInvitedMember(Ticket ticket) throws Exception {
@@ -113,6 +216,9 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 		target = "(component.name=com.liferay.headless.dsr.internal.dto.v1_0.converter.InvitedMemberDTOConverter)"
 	)
 	private DTOConverter<Ticket, InvitedMember> _invitedMemberDTOConverter;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private ObjectEntryService _objectEntryService;

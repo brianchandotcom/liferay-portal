@@ -77,9 +77,9 @@ public class ConfigurationAdminTest {
 		Assert.assertEquals("value2", properties.get("key1"));
 	}
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	private Configuration _configuration;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 }

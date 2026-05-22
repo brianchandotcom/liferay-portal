@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -31,13 +32,21 @@ public class LogoutPreAction extends Action {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+		long groupId = 0;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		if (themeDisplay != null) {
+			groupId = themeDisplay.getSiteGroupId();
+		}
+
 		ClickToChatConfiguration clickToChatConfiguration =
 			ClickToChatConfigurationUtil.getClickToChatConfiguration(
-				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
+				companyId, groupId);
 
 		if ((clickToChatConfiguration == null) ||
 			!clickToChatConfiguration.enabled() ||

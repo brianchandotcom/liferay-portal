@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.dsr.site.initializer.constants.DSRRoleConstants;
 
 import java.util.Objects;
 
@@ -80,6 +81,12 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 		serviceContext.setModelPermissions(
 			ModelPermissionsFactory.create(
 				HashMapBuilder.put(
+					DSRRoleConstants.NAME_DSR_CONTRIBUTOR,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
+						ActionKeys.SUBSCRIBE, ActionKeys.UPDATE, ActionKeys.VIEW
+					}
+				).put(
 					RoleConstants.OWNER,
 					ArrayUtil.filter(
 						actionIds,
@@ -93,12 +100,6 @@ public class DLFileEntryModelListener extends BaseModelListener<DLFileEntry> {
 					}
 				).put(
 					RoleConstants.SITE_OWNER, actionIds
-				).put(
-					"DSR Contributor",
-					new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.DOWNLOAD,
-						ActionKeys.SUBSCRIBE, ActionKeys.UPDATE, ActionKeys.VIEW
-					}
 				).build(),
 				DLFileEntry.class.getName()));
 	}

@@ -263,12 +263,11 @@ public class SanitizerLogWrapperTest {
 		}
 	}
 
-	private static Log _log;
-
 	private static String _message;
 	private static char[] _messageChars;
 	private static Properties _systemProperties;
 
+	private Log _log;
 	private LogCapture _logCapture;
 
 }

@@ -15,6 +15,7 @@ export type ObjectField = {
 		| 'MultiselectPicklist'
 		| 'Long'
 		| 'LongText'
+		| 'PhoneNumber'
 		| 'Picklist'
 		| 'RichText'
 		| 'Relationship'

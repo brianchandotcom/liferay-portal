@@ -446,9 +446,6 @@ public class DDMStructureModelListenerTest {
 			_dataDefinition.getId(), _dataDefinition);
 	}
 
-	@Inject
-	private static CTCollectionService _ctCollectionService;
-
 	private static final Map<String, List<String>> _expectedFieldValuesMap =
 		HashMapBuilder.<String, List<String>>put(
 			"Field32391309",
@@ -493,10 +490,10 @@ public class DDMStructureModelListenerTest {
 			).build();
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private CompanyLocalService _companyLocalService;
+	private CTCollectionService _ctCollectionService;
 
 	private DataDefinition _dataDefinition;
 
@@ -508,6 +505,9 @@ public class DDMStructureModelListenerTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private Portal _portal;

@@ -115,22 +115,12 @@ test(
 		let site: Site;
 
 		await test.step('Setup remote staging and sites', async () => {
-			site = await apiHelpers.headlessSite.createSite({
+			site = await apiHelpers.headlessAdminSite.postSite({
 				name: `site-${getRandomString()}`,
 			});
 
-			apiHelpers.data.push({
-				id: site.externalReferenceCode,
-				type: 'site',
-			});
-
-			remoteSite = await remoteApiHelpers.headlessSite.createSite({
+			remoteSite = await remoteApiHelpers.headlessAdminSite.postSite({
 				name: site.name,
-			});
-
-			remoteApiHelpers.data.push({
-				id: remoteSite.externalReferenceCode,
-				type: 'site',
 			});
 
 			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({

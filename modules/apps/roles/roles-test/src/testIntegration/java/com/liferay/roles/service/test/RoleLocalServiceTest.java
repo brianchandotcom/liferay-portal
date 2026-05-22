@@ -366,7 +366,7 @@ public class RoleLocalServiceTest {
 		excludedRoleNames.add(RoleConstants.GUEST);
 
 		List<Role> actualRoles = _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, null, excludedRoleNames, null, null, roleTypes, 0,
+			companyId, null, excludedRoleNames, null, null, roleTypes, null, 0,
 			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		List<Role> expectedRoles = ListUtil.filter(
@@ -401,8 +401,8 @@ public class RoleLocalServiceTest {
 		Assert.assertEquals(
 			expectedRoles.size(),
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
-				companyId, null, excludedRoleNames, null, null, roleTypes, 0,
-				groupId));
+				companyId, null, excludedRoleNames, null, null, roleTypes, null,
+				0, groupId));
 
 		actualRoles = new ArrayList(actualRoles);
 		expectedRoles = new ArrayList(expectedRoles);
@@ -445,11 +445,11 @@ public class RoleLocalServiceTest {
 			1,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
 				companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
-				0, groupId));
+				null, 0, groupId));
 
 		List<Role> roles = _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, keyword, excludedRoleNames, keyword, null, roleTypes, 0,
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
+			null, 0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(role1, roles.get(0));
 
@@ -459,11 +459,11 @@ public class RoleLocalServiceTest {
 			0,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
 				companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
-				0, groupId));
+				null, 0, groupId));
 
 		roles = _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, keyword, excludedRoleNames, keyword, null, roleTypes, 0,
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
+			null, 0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertTrue(roles.toString(), roles.isEmpty());
 
@@ -471,11 +471,11 @@ public class RoleLocalServiceTest {
 			1,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
 				companyId, keyword, excludedRoleNames, keyword, keyword,
-				roleTypes, 0, groupId));
+				roleTypes, null, 0, groupId));
 
 		roles = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, keyword, excludedRoleNames, keyword, keyword, roleTypes,
-			0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			null, 0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(role2, roles.get(0));
 
@@ -492,11 +492,11 @@ public class RoleLocalServiceTest {
 			1,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
 				companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
-				0, groupId));
+				null, 0, groupId));
 
 		roles = _roleLocalService.getGroupRolesAndTeamRoles(
-			companyId, keyword, excludedRoleNames, keyword, null, roleTypes, 0,
-			groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, keyword, excludedRoleNames, keyword, null, roleTypes,
+			null, 0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_role = roles.get(0);
 
@@ -506,11 +506,11 @@ public class RoleLocalServiceTest {
 			2,
 			_roleLocalService.getGroupRolesAndTeamRolesCount(
 				companyId, keyword, excludedRoleNames, keyword, keyword,
-				roleTypes, 0, groupId));
+				roleTypes, null, 0, groupId));
 
 		roles = _roleLocalService.getGroupRolesAndTeamRoles(
 			companyId, keyword, excludedRoleNames, keyword, keyword, roleTypes,
-			0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			null, 0, groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_role = roles.get(0);
 
@@ -989,12 +989,6 @@ public class RoleLocalServiceTest {
 	private static Role _arbitraryRole;
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
-
-	@Inject
-	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
 	private static ResourceActionLocalService _resourceActionLocalService;
 
 	private static ResourcePermission _resourcePermission;
@@ -1006,24 +1000,17 @@ public class RoleLocalServiceTest {
 	@Inject
 	private static RoleLocalService _roleLocalService;
 
-	@Inject
-	private static TeamLocalService _teamLocalService;
-
-	@Inject
-	private static UserGroupGroupRoleLocalService
-		_userGroupGroupRoleLocalService;
-
-	@Inject
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	@DeleteAfterTestRun
 	private Organization _organization;
+
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
 	private Portal _portal;
@@ -1036,10 +1023,22 @@ public class RoleLocalServiceTest {
 
 	private Team _team;
 
+	@Inject
+	private TeamLocalService _teamLocalService;
+
 	@DeleteAfterTestRun
 	private User _user;
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;
+
+	@Inject
+	private UserGroupGroupRoleLocalService _userGroupGroupRoleLocalService;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

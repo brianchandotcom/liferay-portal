@@ -107,18 +107,17 @@ public class CommerceOrganizationPortletPreferencesUpgradeProcessTest {
 			"CommerceOrganizationPortletPreferencesUpgradeProcess";
 
 	@Inject
-	private static OrganizationLocalService _organizationLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private static PortletLocalService _portletLocalService;
+	private PortletLocalService _portletLocalService;
 
 	@Inject
-	private static PortletPreferencesLocalService
-		_portletPreferencesLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.organization.web.internal.upgrade.registry.CommerceOrganizationWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

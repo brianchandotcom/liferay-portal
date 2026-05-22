@@ -3,6 +3,88 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"backgroundColor": "whiteColor",
+						"paddingBottom": "5",
+						"paddingTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"gutters": false,
+							"indexed": true,
+							"modulesPerRow": 1,
+							"numberOfColumns": 1
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"size": 12
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h1"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Applications Marketplace"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-paragraph"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"text": {
+															"value_i18n": {
+																"en_US": "Expand Liferay's portfolio through apps from our partner and developer ecosystems to enhance your digital transformation"
+															}
+														}
+													}
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
 					"indexed": true,
 					"layout": {
 						"widthType": "Fluid"
@@ -60,20 +142,6 @@
 									"size": 3
 								},
 								"pageElements": [
-									{
-										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"displayStyle": "ddmTemplate_LO_SIDE_NAV",
-													"siteNavigationMenuExternalReferenceCode": "LO_MARKETPLACE_NAV",
-													"siteNavigationMenuName": "Marketplace Navigation",
-													"siteNavigationMenuType": "-1"
-												},
-												"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
-											}
-										},
-										"type": "Widget"
-									},
 									{
 										"definition": {
 											"fragmentStyle": {
@@ -142,7 +210,7 @@
 													"groupVocabularyExternalReferenceCodes": "",
 													"maxTerms": "10",
 													"order": "key:desc",
-													"parameterName": "Liferay Version",
+													"parameterName": "DXP Versions",
 													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Version$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
@@ -187,7 +255,7 @@
 													"frequencyThreshold": "1",
 													"maxTerms": "10",
 													"order": "key:asc",
-													"parameterName": "Area",
+													"parameterName": "App Category",
 													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace App Category$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
@@ -234,7 +302,7 @@
 													"frequencyThreshold": "1",
 													"maxTerms": "10",
 													"order": "count:desc",
-													"parameterName": "Liferay Platform Offering",
+													"parameterName": "Deployment Method",
 													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Marketplace Liferay Platform Offering$]"
 												},
 												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
@@ -244,9 +312,6 @@
 									},
 									{
 										"definition": {
-											"fragmentStyle": {
-												"borderRadius": "1px"
-											},
 											"widgetInstance": {
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_LO_MARKETPLACE_SPECIFICATIONS_FACET",
@@ -256,6 +321,16 @@
 													"maxTerms": "10"
 												},
 												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+											}
+										},
+										"type": "Widget"
+									},
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+												},
+												"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPPriceRangeFacetsPortlet"
 											}
 										},
 										"type": "Widget"
@@ -381,5 +456,10 @@
 			}
 		],
 		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "liferay-one"
+		}
 	}
 }

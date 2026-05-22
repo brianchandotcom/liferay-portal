@@ -32,12 +32,17 @@ type FieldType =
 	| 'upload';
 
 export type ObjectField = {
+	attributes?: ObjectFieldAttributes;
 	key: string;
 	label: string;
 	localizable: boolean;
 	name: string;
 	required: boolean;
 	type: FieldType;
+};
+
+export type ObjectFieldAttributes = {
+	options?: {label: string; value: string}[];
 };
 
 export type ObjectFieldSet = {

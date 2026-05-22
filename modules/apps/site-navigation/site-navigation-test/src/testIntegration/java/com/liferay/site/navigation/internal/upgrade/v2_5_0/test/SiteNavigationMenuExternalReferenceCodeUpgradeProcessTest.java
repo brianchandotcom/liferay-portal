@@ -63,12 +63,12 @@ public class SiteNavigationMenuExternalReferenceCodeUpgradeProcessTest
 		return new Version(2, 5, 0);
 	}
 
+	@Inject
+	private SiteNavigationMenuService _siteNavigationMenuService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private SiteNavigationMenuService _siteNavigationMenuService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

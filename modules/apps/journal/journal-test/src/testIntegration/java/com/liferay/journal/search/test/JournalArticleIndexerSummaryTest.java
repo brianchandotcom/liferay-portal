@@ -201,23 +201,24 @@ public class JournalArticleIndexerSummaryTest {
 	}
 
 	@Inject
-	private static DDMStructureLocalService _ddmStructureLocalService;
-
-	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static Portal _portal;
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer<JournalArticle> _indexer;
 
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	@DeleteAfterTestRun
 	private List<JournalArticle> _journalArticles;
 
 	private JournalArticleSearchFixture _journalArticleSearchFixture;
+
+	@Inject
+	private Portal _portal;
+
 	private SummaryFixture<JournalArticle> _summaryFixture;
 
 	@DeleteAfterTestRun

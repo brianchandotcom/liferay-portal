@@ -73,7 +73,7 @@ renderResponse.setTitle(title);
 				<aui:validator name="maxLength"><%= ModelHintsUtil.getMaxLength(AssetCategory.class.getName(), "name") %></aui:validator>
 			</aui:input>
 
-			<aui:input disabled='<%= (category != null) && !FeatureFlagManagerUtil.isEnabled("LPD-31228") %>' label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
+			<aui:input label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
 
 			<div>
 				<label for="<portlet:namespace />description"><liferay-ui:message key="description" /></label>

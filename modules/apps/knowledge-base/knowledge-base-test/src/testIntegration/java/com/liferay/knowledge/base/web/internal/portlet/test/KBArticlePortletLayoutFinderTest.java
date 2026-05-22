@@ -170,14 +170,13 @@ public class KBArticlePortletLayoutFinderTest {
 		return themeDisplay;
 	}
 
-	private static String[] _portletIds;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private long _kbArticleGroupId;
 	private Layout _kbLayout;
 	private PermissionChecker _originalPermissionChecker;
+	private String[] _portletIds;
 	private PortletLayoutFinder _portletLayoutFinder;
 
 }

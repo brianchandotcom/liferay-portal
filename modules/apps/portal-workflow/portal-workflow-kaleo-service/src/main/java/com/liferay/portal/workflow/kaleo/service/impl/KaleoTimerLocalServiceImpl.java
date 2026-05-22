@@ -124,6 +124,14 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<KaleoTimer> getKaleoDefinitionVersionKaleoTimers(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return kaleoTimerPersistence.findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId);
+	}
+
+	@Override
 	public List<KaleoTimer> getKaleoTimers(
 		String kaleoClassName, long kaleoClassPK) {
 

@@ -551,4 +551,4 @@ public interface AssetCategoryLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:959833920
+// LIFERAY-SERVICE-BUILDER-HASH:1373125127

@@ -69,6 +69,17 @@ public class DepotRoleUtil {
 		return descriptionMap;
 	}
 
+	public static String getSubtype(long groupId) {
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
+			groupId);
+
+		if (depotEntry == null) {
+			return null;
+		}
+
+		return DepotRolesConstants.getSubtype(depotEntry.getType());
+	}
+
 	public static Map<Locale, String> getTitleMap(
 		Language language, String name) {
 

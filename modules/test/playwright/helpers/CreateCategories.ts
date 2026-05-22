@@ -29,7 +29,7 @@ export async function createCategories({
 	siteId?: string;
 	vocabularyName: string;
 	vocabularyVisibility?: boolean;
-}): Promise<({id: number} & TCategory)[]> {
+}): Promise<({externalReferenceCode: string; id: number} & TCategory)[]> {
 	const {id: vocabularyId} =
 		await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
 			assetLibraries,
@@ -43,7 +43,7 @@ export async function createCategories({
 
 	const categories = [];
 	for (const {name, name_i18n} of categoryNames) {
-		const {id} =
+		const {externalReferenceCode, id} =
 			await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabularyTaxonomyCategory(
 				{
 					name,
@@ -53,6 +53,7 @@ export async function createCategories({
 			);
 
 		categories.push({
+			externalReferenceCode,
 			id,
 			name,
 			name_i18n,

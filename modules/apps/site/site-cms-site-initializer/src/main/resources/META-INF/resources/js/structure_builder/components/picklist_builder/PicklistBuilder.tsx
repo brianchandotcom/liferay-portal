@@ -10,6 +10,10 @@ import {ILearnResourceContext} from 'frontend-js-components-web';
 import React, {useEffect} from 'react';
 
 import {Picklist} from '../../../common/types/Picklist';
+import {
+	DefaultLanguageLabels,
+	setDefaultLanguageLabels,
+} from '../../../common/utils/defaultLanguageLabels';
 import PicklistBuilderContextProvider, {
 	buildState,
 	useId,
@@ -19,12 +23,16 @@ import PicklistFields from './PicklistFields';
 import PicklistOptions from './PicklistOptions';
 
 export default function PicklistBuilder({
+	defaultLanguageLabels,
 	learnResources,
 	state,
 }: {
+	defaultLanguageLabels: DefaultLanguageLabels;
 	learnResources: ILearnResourceContext;
 	state: {listTypeDefinition: Picklist};
 }) {
+	setDefaultLanguageLabels(defaultLanguageLabels);
+
 	return (
 		<PicklistBuilderContextProvider
 			initialState={buildState(state.listTypeDefinition)}

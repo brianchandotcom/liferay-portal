@@ -209,11 +209,6 @@ public class ObjectFieldUpgradeProcessTest {
 
 	private static DB _db;
 
-	@Inject(
-		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
@@ -225,5 +220,10 @@ public class ObjectFieldUpgradeProcessTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

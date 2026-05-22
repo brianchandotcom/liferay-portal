@@ -7,6 +7,7 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
@@ -151,10 +152,11 @@ public class ObjectEntryResourceImpl
 				_objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			_create(objectEntries, parameters);
+			_create(
+				objectEntries, parameters, GroupUtil.getScopeKey(parameters));
 		}
 		else {
-			super.create(objectEntries, parameters);
+			_create(objectEntries, parameters, null);
 		}
 	}
 
@@ -241,8 +243,8 @@ public class ObjectEntryResourceImpl
 				_objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			UnsafeFunction<ObjectEntry, ObjectEntry, Exception>
-				objectEntryUnsafeFunction = objectEntry -> {
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
+				objectEntry -> {
 					if (objectEntry.getId() != null) {
 						try {
 							deleteObjectEntry(objectEntry.getId());
@@ -277,19 +279,7 @@ public class ObjectEntryResourceImpl
 						"Unable to delete by external reference code or ID");
 				};
 
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(
-					objectEntries, objectEntryUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					objectEntries, objectEntryUnsafeFunction::apply);
-			}
-			else {
-				for (ObjectEntry objectEntry : objectEntries) {
-					objectEntryUnsafeFunction.apply(objectEntry);
-				}
-			}
+			_applyUnsafeFunction(objectEntries, unsafeFunction);
 		}
 		else {
 			super.delete(objectEntries, parameters);
@@ -1462,6 +1452,76 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public void update(
+			Collection<ObjectEntry> objectEntries,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
+			null;
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				_objectDefinition.getScope());
+
+		String scopeKey =
+			objectScopeProvider.isGroupAware() ?
+				GroupUtil.getScopeKey(parameters) : null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			unsafeFunction = objectEntry -> {
+				if ((objectEntry.getId() != null) &&
+					StringUtil.equals(
+						_objectDefinition.getStorageType(),
+						ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+					return patchObjectEntry(objectEntry.getId(), objectEntry);
+				}
+
+				if (scopeKey != null) {
+					return patchScopeScopeKeyByExternalReferenceCode(
+						scopeKey, objectEntry.getExternalReferenceCode(),
+						objectEntry);
+				}
+
+				return patchByExternalReferenceCode(
+					objectEntry.getExternalReferenceCode(), objectEntry);
+			};
+		}
+		else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			unsafeFunction = objectEntry -> {
+				if ((objectEntry.getId() != null) &&
+					StringUtil.equals(
+						_objectDefinition.getStorageType(),
+						ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
+
+					return putObjectEntry(objectEntry.getId(), objectEntry);
+				}
+
+				if (scopeKey != null) {
+					return putScopeScopeKeyByExternalReferenceCode(
+						scopeKey, objectEntry.getExternalReferenceCode(),
+						objectEntry);
+				}
+
+				return putByExternalReferenceCode(
+					objectEntry.getExternalReferenceCode(), objectEntry);
+			};
+		}
+
+		if (unsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for object entry");
+		}
+
+		_applyUnsafeFunction(objectEntries, unsafeFunction);
+	}
+
+	@Override
 	protected String getApplicationPath() {
 		String restContextPath = null;
 
@@ -1502,6 +1562,25 @@ public class ObjectEntryResourceImpl
 		}
 	}
 
+	private void _applyUnsafeFunction(
+			Collection<ObjectEntry> objectEntries,
+			UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction)
+		throws Exception {
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntries, unsafeFunction::apply);
+		}
+		else {
+			for (ObjectEntry objectEntry : objectEntries) {
+				unsafeFunction.apply(objectEntry);
+			}
+		}
+	}
+
 	private void _checkFeatureFlag() {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_objectDefinition.getCompanyId(), "LPD-17564")) {
@@ -1512,18 +1591,23 @@ public class ObjectEntryResourceImpl
 
 	private void _create(
 			Collection<ObjectEntry> objectEntries,
-			Map<String, Serializable> parameters)
+			Map<String, Serializable> parameters, String scopeKey)
 		throws Exception {
 
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-		String scopeKey = GroupUtil.getScopeKey(parameters);
 		UnsafeFunction<ObjectEntry, ObjectEntry, Exception> unsafeFunction =
 			null;
 
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
+
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			unsafeFunction = objectEntry -> postScopeScopeKey(
-				scopeKey, objectEntry);
+			if (scopeKey != null) {
+				unsafeFunction = objectEntry -> postScopeScopeKey(
+					scopeKey, objectEntry);
+			}
+			else {
+				unsafeFunction = objectEntry -> postObjectEntry(objectEntry);
+			}
 		}
 		else if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 			String updateStrategy = (String)parameters.getOrDefault(
@@ -1532,37 +1616,69 @@ public class ObjectEntryResourceImpl
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
 				unsafeFunction = objectEntry -> {
 					try {
-						ObjectEntry getObjectEntry =
-							getScopeScopeKeyByExternalReferenceCode(
-								scopeKey,
-								objectEntry.getExternalReferenceCode());
+						ObjectEntry getObjectEntry = null;
 
-						return patchObjectEntry(
-							getObjectEntry.getId(), objectEntry);
+						if (scopeKey != null) {
+							getObjectEntry =
+								getScopeScopeKeyByExternalReferenceCode(
+									scopeKey,
+									objectEntry.getExternalReferenceCode());
+						}
+						else {
+							getObjectEntry = getByExternalReferenceCode(
+								objectEntry.getExternalReferenceCode());
+						}
+
+						if (getObjectEntry.getId() != null) {
+							return patchObjectEntry(
+								getObjectEntry.getId(), objectEntry);
+						}
+
+						if (scopeKey != null) {
+							return patchScopeScopeKeyByExternalReferenceCode(
+								scopeKey,
+								objectEntry.getExternalReferenceCode(),
+								objectEntry);
+						}
+
+						return patchByExternalReferenceCode(
+							objectEntry.getExternalReferenceCode(),
+							objectEntry);
 					}
 					catch (NoSuchModelException noSuchModelException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(noSuchModelException);
 						}
 
-						return postScopeScopeKey(scopeKey, objectEntry);
+						if (scopeKey != null) {
+							return postScopeScopeKey(scopeKey, objectEntry);
+						}
+
+						return postObjectEntry(objectEntry);
 					}
 				};
 			}
 			else if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				unsafeFunction =
-					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
-						scopeKey, objectEntry.getExternalReferenceCode(),
-						objectEntry);
+				if (scopeKey != null) {
+					unsafeFunction =
+						objectEntry -> putScopeScopeKeyByExternalReferenceCode(
+							scopeKey, objectEntry.getExternalReferenceCode(),
+							objectEntry);
+				}
+				else {
+					unsafeFunction = objectEntry -> putByExternalReferenceCode(
+						objectEntry.getExternalReferenceCode(), objectEntry);
+				}
 			}
 		}
 
 		if (unsafeFunction == null) {
 			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy + "\" is not supported");
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for object entry");
 		}
 
-		contextBatchUnsafeBiConsumer.accept(objectEntries, unsafeFunction);
+		_applyUnsafeFunction(objectEntries, unsafeFunction);
 	}
 
 	private void _deleteTempFile(File file) {

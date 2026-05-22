@@ -119,21 +119,20 @@ public class
 			"CommerceDashboardForecastsChartPortletPreferencesUpgradeProcess";
 
 	@Inject
-	private static AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
-	private static AssetVocabularyLocalService _assetVocabularyLocalService;
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Inject
-	private static PortletLocalService _portletLocalService;
+	private PortletLocalService _portletLocalService;
 
 	@Inject
-	private static PortletPreferencesLocalService
-		_portletPreferencesLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.commerce.dashboard.web.internal.upgrade.registry.CommerceDashboardWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

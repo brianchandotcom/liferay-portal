@@ -26,6 +26,7 @@ import {
 	PREVIEW_CHANNEL_SESSION_KEY,
 	PREVIEW_DISPLAY_PAGE_SESSION_KEY,
 	PREVIEW_VISIBLE_SESSION_KEY,
+	PREVIEW_WIDTH_SESSION_KEY,
 } from './preview/sessionKeys';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
@@ -424,5 +425,6 @@ function clearSessionStates() {
 		PREVIEW_VISIBLE_SESSION_KEY,
 		PREVIEW_CHANNEL_SESSION_KEY,
 		PREVIEW_DISPLAY_PAGE_SESSION_KEY,
+		PREVIEW_WIDTH_SESSION_KEY,
 	].forEach((key) => sessionStorage.removeItem(key));
 }

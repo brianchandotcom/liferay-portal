@@ -149,9 +149,6 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 	private static final String _CLASS_NAME_GCS_STORE =
 		"com.liferay.portal.store.gcs.GCSStore";
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static final Snapshot<StoreAreaProcessor>
 		_storeAreaProcessorSnapshot = new Snapshot<>(
 			GCStoreStoreAreaAwareStoreWrapperTest.class,
@@ -164,6 +161,9 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 		_storeSnapshot::get, _storeAreaProcessorSnapshot::get);
 
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(
 		filter = "store.type=com.liferay.portal.store.gcs.GCSStore",

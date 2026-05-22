@@ -278,13 +278,13 @@ public class JournalFolderFinderTest {
 		Assert.assertEquals(_folder2.getFolderId(), folder.getFolderId());
 	}
 
-	@Inject
-	private static JournalFolderFinder _journalFolderFinder;
-
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalFolderFinder _journalFolderFinder;
 
 }

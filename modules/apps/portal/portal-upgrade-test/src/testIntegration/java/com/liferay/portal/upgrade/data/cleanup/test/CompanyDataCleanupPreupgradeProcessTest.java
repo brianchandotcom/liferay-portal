@@ -248,11 +248,10 @@ public class CompanyDataCleanupPreupgradeProcessTest
 		}
 	}
 
-	private static List<ClassName> _classNames;
-	private static List<ResourceAction> _resourceActions;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private List<ClassName> _classNames;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -265,5 +264,7 @@ public class CompanyDataCleanupPreupgradeProcessTest
 
 	@Inject
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	private List<ResourceAction> _resourceActions;
 
 }

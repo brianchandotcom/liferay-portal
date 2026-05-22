@@ -233,9 +233,6 @@ public class CommitCSGGenerationObjectActionExecutorTest {
 			_serviceContext);
 	}
 
-	@Inject
-	private static DLAppLocalService _dlAppLocalService;
-
 	private static ObjectDefinition _generationItemObjectDefinition;
 	private static ObjectDefinition _generationObjectDefinition;
 	private static Group _group;
@@ -247,14 +244,17 @@ public class CommitCSGGenerationObjectActionExecutorTest {
 		_listTypeDefinitionLocalService;
 
 	@Inject
-	private static ObjectActionEngine _objectActionEngine;
-
-	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
-	@Inject
-	private static ObjectEntryLocalService _objectEntryLocalService;
-
 	private static ServiceContext _serviceContext;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private ObjectActionEngine _objectActionEngine;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 }

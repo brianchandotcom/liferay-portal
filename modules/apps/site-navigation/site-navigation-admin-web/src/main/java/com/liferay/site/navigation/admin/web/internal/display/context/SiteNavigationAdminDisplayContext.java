@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.NavItem;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -389,19 +388,6 @@ public class SiteNavigationAdminDisplayContext {
 			_liferayPortletResponse
 		).setMVCPath(
 			"/add_site_navigation_menu_item.jsp"
-		).setRedirect(
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setMVCPath(
-				"/add_site_navigation_menu_item_redirect.jsp"
-			).setPortletResource(
-				() -> {
-					PortletDisplay portletDisplay =
-						_themeDisplay.getPortletDisplay();
-
-					return portletDisplay.getId();
-				}
-			).buildString()
 		).setParameter(
 			"siteNavigationMenuId", getSiteNavigationMenuId()
 		).setParameter(

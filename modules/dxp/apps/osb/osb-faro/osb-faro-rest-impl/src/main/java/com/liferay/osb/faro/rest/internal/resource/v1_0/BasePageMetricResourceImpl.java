@@ -54,7 +54,7 @@ public abstract class BasePageMetricResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/faro-rest/v1.0/workspace/{groupId}/pages'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "List analytics metrics for tracked pages on the workspace, ranked by views or another metric, optionally narrowed to a single channel (also known as property) or data source. Returns flattened view, visitor, bounce, exit, and access-path metrics for each page. Use this for 'top pages' style queries."
+		description = "List analytics metrics for tracked pages on the workspace, ranked by views or another metric, optionally narrowed to a single channel (also known as property) or data source. Returns flattened view, visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this for 'top pages' style queries."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -83,6 +83,7 @@ public abstract class BasePageMetricResourceImpl
 				name = "rangeEnd"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
+				example = "LAST_30_DAYS",
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "rangeKey"
 			),
@@ -124,7 +125,7 @@ public abstract class BasePageMetricResourceImpl
 			String rangeEnd,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeKey")
-			Integer rangeKey,
+			String rangeKey,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("rangeStart")
 			String rangeStart,
@@ -591,4 +592,4 @@ public abstract class BasePageMetricResourceImpl
 		LogFactoryUtil.getLog(BasePageMetricResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2080527648
+// LIFERAY-REST-BUILDER-HASH:-1599738894

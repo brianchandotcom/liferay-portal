@@ -1759,10 +1759,6 @@ public class CompanyLocalServiceTest {
 	private static SafeCloseable _safeCloseable;
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new CopyOnWriteArrayList<>();
-
-	@Inject
-	private static SystemEventLocalService _systemEventLocalService;
-
 	private static final TransactionConfig _transactionConfig;
 
 	@Inject
@@ -1838,6 +1834,9 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 	@Inject
 	private VirtualHostLocalService _virtualHostLocalService;

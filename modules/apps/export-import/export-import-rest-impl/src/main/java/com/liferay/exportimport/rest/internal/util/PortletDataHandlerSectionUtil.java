@@ -133,8 +133,11 @@ public class PortletDataHandlerSectionUtil {
 					long additionCount = 0;
 					long deletionCount = 0;
 
+					List<PreviewPortletDataHandler> previewPortletDataHandlers =
+						entry.getValue();
+
 					for (PreviewPortletDataHandler previewPortletDataHandler :
-							entry.getValue()) {
+							previewPortletDataHandlers) {
 
 						additionCount +=
 							previewPortletDataHandler.getAdditionCount();
@@ -143,17 +146,18 @@ public class PortletDataHandlerSectionUtil {
 					}
 
 					long finalAdditionCount = additionCount;
-					long finalDeletionCount = deletionCount;
 
 					setAdditionCount(() -> finalAdditionCount);
+
+					long finalDeletionCount = deletionCount;
+
 					setDeletionCount(() -> finalDeletionCount);
+
 					setLabel(() -> LanguageUtil.get(locale, entry.getKey()));
 					setName(entry::getKey);
 					setPreviewPortletDataHandlers(
-						() -> entry.getValue(
-						).toArray(
-							new PreviewPortletDataHandler[0]
-						));
+						() -> previewPortletDataHandlers.toArray(
+							new PreviewPortletDataHandler[0]));
 				}
 			},
 			PreviewPortletDataHandlerSection.class);
@@ -189,12 +193,11 @@ public class PortletDataHandlerSectionUtil {
 						String portletTitle = portletDataHandler.getTitle(
 							locale);
 
-						if (portletTitle == null) {
-							portletTitle = PortalUtil.getPortletTitle(
-								portlet, locale);
+						if (portletTitle != null) {
+							return portletTitle;
 						}
 
-						return portletTitle;
+						return PortalUtil.getPortletTitle(portlet, locale);
 					});
 				setName(
 					() ->

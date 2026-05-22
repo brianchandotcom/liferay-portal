@@ -21,6 +21,37 @@ async function fetchVocabulary(vocabularyId: number) {
 	);
 }
 
+async function getRequiredVocabularies({
+	assetLibraryId,
+	assetTypeId,
+	siteId,
+}: {
+	assetLibraryId: number | string;
+	assetTypeId: number | string;
+	siteId: number | string;
+}) {
+	const vocabularies = await ApiHelper.getAll<IVocabulary>({
+		url: `/o/headless-admin-taxonomy/v1.0/sites/${siteId}/taxonomy-vocabularies`,
+	});
+
+	return vocabularies.filter(({assetLibraries, assetTypes}) => {
+		const appliesToScope =
+			!assetLibraries ||
+			!assetLibraries.length ||
+			assetLibraries.some(
+				({id}) => id === -1 || id === Number(assetLibraryId)
+			);
+
+		return (
+			appliesToScope &&
+			assetTypes?.some(
+				({required, typeId}) =>
+					required && (typeId === 0 || typeId === Number(assetTypeId))
+			)
+		);
+	});
+}
+
 async function updateVocabulary(vocabulary: IVocabulary) {
 	return await ApiHelper.put<IVocabulary>(
 		`/o/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${vocabulary.id}`,
@@ -46,5 +77,6 @@ export default {
 	createVocabulary,
 	fetchVocabulary,
 	getCommonCategories,
+	getRequiredVocabularies,
 	updateVocabulary,
 };

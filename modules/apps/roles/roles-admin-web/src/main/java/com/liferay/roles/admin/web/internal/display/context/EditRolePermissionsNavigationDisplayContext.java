@@ -17,9 +17,12 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PersonalMenuEntryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -192,7 +195,9 @@ public class EditRolePermissionsNavigationDisplayContext {
 			});
 	}
 
-	private List<NavigationItem> _getObjectsNavigationItems() {
+	private void _getObjectsNavigationItems(
+		NavigationItem topLevelNavigationItem) {
+
 		List<NavigationItem> navigationItems = new ArrayList<>();
 
 		for (ObjectDefinition objectDefinition :
@@ -200,22 +205,35 @@ public class EditRolePermissionsNavigationDisplayContext {
 					_themeDisplay.getCompanyId(),
 					WorkflowConstants.STATUS_APPROVED)) {
 
-			if (!objectDefinition.isUnmodifiableSystemObject() &&
-				Validator.isNull(objectDefinition.getPanelCategoryKey())) {
+			if (objectDefinition.isUnmodifiableSystemObject() ||
+				Validator.isNotNull(objectDefinition.getPanelCategoryKey()) ||
+				!_hasObjectDefinitionValidDomain(objectDefinition)) {
 
-				NavigationItem navigationItem = NavigationItem.create(
-					objectDefinition.getLabel(_locale),
-					_getPortletResourceNavigationItemConsumer(
-						objectDefinition.getPortletId()));
-
-				navigationItem.setId(
-					"object_" + objectDefinition.getObjectDefinitionId());
-
-				navigationItems.add(navigationItem);
+				continue;
 			}
+
+			NavigationItem navigationItem = NavigationItem.create(
+				objectDefinition.getLabel(_locale),
+				_getPortletResourceNavigationItemConsumer(
+					objectDefinition.getPortletId()));
+
+			navigationItem.setId(
+				"object_" + objectDefinition.getObjectDefinitionId());
+
+			navigationItems.add(navigationItem);
 		}
 
-		return navigationItems;
+		if (navigationItems.isEmpty()) {
+			return;
+		}
+
+		topLevelNavigationItem.addNavigationItems(
+			NavigationItem.create(
+				LanguageUtil.get(_locale, "objects"),
+				navigationItem -> {
+					navigationItem.addNavigationItems(navigationItems);
+					navigationItem.setInitialExpanded(true);
+				}));
 	}
 
 	private NavigationItem _getPanelCategoryNavigationItem(
@@ -420,17 +438,15 @@ public class EditRolePermissionsNavigationDisplayContext {
 						navigationItem.setInitialExpanded(true);
 					}));
 
-			List<NavigationItem> navigationItems = _getObjectsNavigationItems();
+			_getObjectsNavigationItems(topLevelNavigationItem);
+		}
+		else if ((roleType == RoleConstants.TYPE_DEPOT) &&
+				 (FeatureFlagManagerUtil.isEnabled(
+					 _themeDisplay.getCompanyId(), "LPD-17564") ||
+				  FeatureFlagManagerUtil.isEnabled(
+					  _themeDisplay.getCompanyId(), "LPD-58677"))) {
 
-			if (!navigationItems.isEmpty()) {
-				topLevelNavigationItem.addNavigationItems(
-					NavigationItem.create(
-						LanguageUtil.get(_locale, "objects"),
-						navigationItem -> {
-							navigationItem.addNavigationItems(navigationItems);
-							navigationItem.setInitialExpanded(true);
-						}));
-			}
+			_getObjectsNavigationItems(topLevelNavigationItem);
 		}
 
 		if (!_accountRoleGroupScope) {
@@ -562,6 +578,30 @@ public class EditRolePermissionsNavigationDisplayContext {
 				usersAdminPortlet, _servletContext, _locale),
 			_getPortletResourceNavigationItemConsumer(
 				usersAdminPortlet.getPortletId()));
+	}
+
+	private boolean _hasObjectDefinitionValidDomain(
+		ObjectDefinition objectDefinition) {
+
+		if ((_role.getType() != RoleConstants.TYPE_DEPOT) ||
+			Validator.isNull(_role.getSubtype()) ||
+			(!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-17564") &&
+			 !FeatureFlagManagerUtil.isEnabled(
+				 _themeDisplay.getCompanyId(), "LPD-58677"))) {
+
+			return true;
+		}
+
+		String domain = ObjectDefinitionSettingUtil.getValue(
+			ObjectDefinitionSettingConstants.NAME_DOMAIN,
+			objectDefinition.getObjectDefinitionSettings());
+
+		if (Validator.isNull(domain)) {
+			return true;
+		}
+
+		return Objects.equals(domain, _role.getSubtype());
 	}
 
 	private final Boolean _accountRoleGroupScope;

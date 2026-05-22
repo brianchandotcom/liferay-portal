@@ -6,6 +6,7 @@ import hubspotConfig from './configs/hubspot';
 import marketoConfig from './configs/marketo';
 import {ConnectorConfig} from './types';
 import {DataSourceTypes} from 'shared/util/constants';
+import {isLDPPlan} from 'shared/util/subscriptions';
 
 const connectorRegistry: Record<string, ConnectorConfig> = {
 	[DataSourceTypes.Demandbase]: demandbaseConfig,
@@ -28,11 +29,22 @@ export function listConnectors(): ConnectorConfig[] {
 }
 
 export function listAvailableConnectors(
-	existingTypes: ReadonlySet<string>
+	existingTypes: ReadonlySet<string>,
+	subscriptionName: string | null = null
 ): ConnectorConfig[] {
-	return listConnectors().filter(
-		config => !(config.singleton && existingTypes.has(config.type))
-	);
+	const ldpAllowed = isLDPPlan(subscriptionName);
+
+	return listConnectors().filter(config => {
+		if (config.singleton && existingTypes.has(config.type)) {
+			return false;
+		}
+
+		if (config.requiresLDP && !ldpAllowed) {
+			return false;
+		}
+
+		return true;
+	});
 }
 
 export {connectorRegistry};

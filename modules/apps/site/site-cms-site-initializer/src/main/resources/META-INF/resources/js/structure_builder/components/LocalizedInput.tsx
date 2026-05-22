@@ -37,9 +37,7 @@ export function LocalizedInput({
 	const [translations, setTranslations] =
 		useState<Translations>(initialTranslations);
 
-	const [locale, setLocale] = useState(
-		Liferay.ThemeDisplay.getDefaultLanguageId()
-	);
+	const [locale, setLocale] = useState(Liferay.ThemeDisplay.getLanguageId());
 
 	useEffect(() => {
 		setTranslations(initialTranslations);

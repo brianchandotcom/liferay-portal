@@ -17,7 +17,10 @@ import {
 } from './ContentEditorToolbar';
 import PreviewBody from './preview/PreviewBody';
 import PreviewHeader from './preview/PreviewHeader';
-import {PREVIEW_VISIBLE_SESSION_KEY} from './preview/sessionKeys';
+import {
+	PREVIEW_VISIBLE_SESSION_KEY,
+	PREVIEW_WIDTH_SESSION_KEY,
+} from './preview/sessionKeys';
 import useIsContentEdited from './useIsContentEdited';
 import useLocalizationLanguageId from './useLocalizationLanguageId';
 
@@ -26,7 +29,6 @@ import '../../../css/content_editor/ContentEditorPreview.scss';
 const BREAKPOINT_LG = 992;
 const FORM_SELECTOR = '.lfr-layout-structure-item-form';
 const PREVIEW_WIDTH_MIN = 500;
-const PREVIEW_WIDTH_SESSION_KEY = 'CMSContentEditorPreviewWidth';
 
 export default function ContentEditorPreview({
 	defaultLanguageId,

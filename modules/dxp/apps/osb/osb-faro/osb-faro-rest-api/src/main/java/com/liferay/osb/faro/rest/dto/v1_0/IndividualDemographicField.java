@@ -5,9 +5,12 @@
 
 package com.liferay.osb.faro.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -17,6 +20,8 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
+
+import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -52,9 +57,11 @@ public class IndividualDemographicField implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Logical data type of the value: (e.g. 'string', 'number', 'boolean', 'date'). Use this to interpret the `value` field."
+		description = "Logical data type of the value. Use this to interpret the `value` field."
 	)
-	public String getFieldType() {
+	@JsonGetter("fieldType")
+	@Valid
+	public FieldType getFieldType() {
 		if (_fieldTypeSupplier != null) {
 			fieldType = _fieldTypeSupplier.get();
 
@@ -64,7 +71,18 @@ public class IndividualDemographicField implements Serializable {
 		return fieldType;
 	}
 
-	public void setFieldType(String fieldType) {
+	@JsonIgnore
+	public String getFieldTypeAsString() {
+		FieldType fieldType = getFieldType();
+
+		if (fieldType == null) {
+			return null;
+		}
+
+		return fieldType.toString();
+	}
+
+	public void setFieldType(FieldType fieldType) {
 		this.fieldType = fieldType;
 
 		_fieldTypeSupplier = null;
@@ -72,7 +90,7 @@ public class IndividualDemographicField implements Serializable {
 
 	@JsonIgnore
 	public void setFieldType(
-		UnsafeSupplier<String, Exception> fieldTypeUnsafeSupplier) {
+		UnsafeSupplier<FieldType, Exception> fieldTypeUnsafeSupplier) {
 
 		_fieldTypeSupplier = () -> {
 			try {
@@ -88,13 +106,13 @@ public class IndividualDemographicField implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Logical data type of the value: (e.g. 'string', 'number', 'boolean', 'date'). Use this to interpret the `value` field."
+		description = "Logical data type of the value. Use this to interpret the `value` field."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String fieldType;
+	protected FieldType fieldType;
 
 	@JsonIgnore
-	private Supplier<String> _fieldTypeSupplier;
+	private Supplier<FieldType> _fieldTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "Human-readable label for the attribute."
@@ -183,7 +201,7 @@ public class IndividualDemographicField implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Attribute value. Use with `fieldType` to convert to the appropriate type."
+		description = "Attribute value, always serialized as a string. Use `fieldType` to interpret/parse it as the underlying logical type."
 	)
 	public String getValue() {
 		if (_valueSupplier != null) {
@@ -219,7 +237,7 @@ public class IndividualDemographicField implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Attribute value. Use with `fieldType` to convert to the appropriate type."
+		description = "Attribute value, always serialized as a string. Use `fieldType` to interpret/parse it as the underlying logical type."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String value;
@@ -256,7 +274,7 @@ public class IndividualDemographicField implements Serializable {
 
 		sb.append("{");
 
-		String fieldType = getFieldType();
+		FieldType fieldType = getFieldType();
 
 		if (fieldType != null) {
 			if (sb.length() > 1) {
@@ -266,9 +284,7 @@ public class IndividualDemographicField implements Serializable {
 			sb.append("\"fieldType\": ");
 
 			sb.append("\"");
-
-			sb.append(_escape(fieldType));
-
+			sb.append(fieldType);
 			sb.append("\"");
 		}
 
@@ -331,6 +347,44 @@ public class IndividualDemographicField implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("FieldType")
+	public static enum FieldType {
+
+		BOOLEAN("boolean"), DATE("date"), NUMBER("number"), STRING("string");
+
+		@JsonCreator
+		public static FieldType create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (FieldType fieldType : values()) {
+				if (Objects.equals(fieldType.getValue(), value)) {
+					return fieldType;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FieldType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(
@@ -421,4 +475,4 @@ public class IndividualDemographicField implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1372221556
+// LIFERAY-REST-BUILDER-HASH:-551876361

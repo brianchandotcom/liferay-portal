@@ -1146,20 +1146,19 @@ public class UserODataRetrieverTest {
 		_ELASTICSEARCH_MAX_RESULT_WINDOW * 3;
 
 	private static Group _companyGuestGroup;
-
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static User _companyUser;
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
 
 	@DeleteAfterTestRun
 	private final List<AssetTag> _assetTags = new ArrayList<>();
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private ContactLocalService _contactLocalService;

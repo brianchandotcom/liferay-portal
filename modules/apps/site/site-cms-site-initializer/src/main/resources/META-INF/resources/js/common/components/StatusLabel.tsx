@@ -44,6 +44,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 					>
 						<Label
 							displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}
+							inverse
 						>
 							{Liferay.Language.get(label)}
 						</Label>
@@ -55,7 +56,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 
 	if (label !== ASSET_STATUS.APPROVED || !isExpiringSoon(expirationDate)) {
 		return (
-			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}>
+			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]} inverse>
 				{Liferay.Language.get(label)}
 			</Label>
 		);
@@ -70,7 +71,7 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 
 	return (
 		<span className="align-items-center c-gap-2 d-flex flex-wrap">
-			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]}>
+			<Label displayType={ASSET_STATUS_TO_DISPLAY_TYPE[label]} inverse>
 				{Liferay.Language.get(label)}
 			</Label>
 
@@ -80,7 +81,9 @@ const StatusLabel = ({expirationDate, label}: StatusLabelProps) => {
 					tabIndex={0}
 					title={formattedDate ?? ''}
 				>
-					<Label displayType="warning">{expiringSoonText}</Label>
+					<Label displayType="warning" inverse>
+						{expiringSoonText}
+					</Label>
 				</span>
 			</ClayTooltipProvider>
 		</span>

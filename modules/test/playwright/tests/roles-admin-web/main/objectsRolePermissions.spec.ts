@@ -24,6 +24,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
+		'LPD-69877': {enabled: true},
 	}),
 	loginTest(),
 	rolesPagesTest
@@ -286,7 +287,7 @@ test(
 		);
 
 		const banner = page.getByText(
-			"Standalone entries are disabled. Some of these permissions are not active and will take effect when standalone entries are enabled in the object's settings."
+			"Standalone entries are disabled. Some of these permissions are inactive and will take effect when standalone entries are enabled in the object's settings."
 		);
 
 		await rolesPage.goto();

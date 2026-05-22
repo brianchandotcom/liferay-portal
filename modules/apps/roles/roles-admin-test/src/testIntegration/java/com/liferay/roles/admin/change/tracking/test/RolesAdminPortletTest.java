@@ -264,24 +264,18 @@ public class RolesAdminPortletTest {
 		}
 	}
 
-	private static CTCollection _ctCollection;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
-
-	private static Group _group;
-
-	@Inject
-	private static RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private static UserGroup _userGroup;
-
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private CTCollection _ctCollection;
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
+
+	private Group _group;
 
 	@Inject(
 		filter = "component.name=com.liferay.roles.admin.web.internal.portlet.RolesAdminPortlet"
@@ -289,5 +283,11 @@ public class RolesAdminPortletTest {
 	private Portlet _portlet;
 
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

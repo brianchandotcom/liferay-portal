@@ -6,20 +6,26 @@
 package com.liferay.portal.workflow.kaleo.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.IndexableAware;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalServiceUtil;
 import com.liferay.portal.workflow.kaleo.service.KaleoNodeLocalServiceUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
+public class KaleoInstanceTokenImpl
+	extends KaleoInstanceTokenBaseImpl implements IndexableAware {
 
 	@Override
 	public List<KaleoInstanceToken> getChildrenKaleoInstanceTokens() {
@@ -84,7 +90,25 @@ public class KaleoInstanceTokenImpl extends KaleoInstanceTokenBaseImpl {
 		setCurrentKaleoNodeId(kaleoNode.getKaleoNodeId());
 
 		KaleoInstanceTokenLocalServiceUtil.updateKaleoInstanceToken(
-			getKaleoInstanceTokenId(), kaleoNode.getKaleoNodeId());
+			getKaleoInstanceTokenId(), kaleoNode.getKaleoNodeId(),
+			kaleoNode.getName());
+	}
+
+	@Override
+	public boolean shouldIndex() {
+		KaleoDefinition kaleoDefinition =
+			KaleoDefinitionLocalServiceUtil.fetchKaleoDefinition(
+				getKaleoDefinitionId());
+
+		if ((kaleoDefinition != null) &&
+			Objects.equals(
+				WorkflowDefinitionConstants.SCOPE_AI,
+				kaleoDefinition.getScope())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

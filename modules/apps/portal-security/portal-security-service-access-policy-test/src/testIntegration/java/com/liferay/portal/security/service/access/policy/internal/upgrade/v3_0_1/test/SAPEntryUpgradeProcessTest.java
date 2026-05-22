@@ -104,11 +104,6 @@ public class SAPEntryUpgradeProcessTest {
 		"com.liferay.portal.security.service.access.policy.internal.upgrade." +
 			"v3_0_1.SAPEntryUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
@@ -118,5 +113,10 @@ public class SAPEntryUpgradeProcessTest {
 
 	@Inject
 	private SAPEntryLocalService _sapEntryLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.portal.security.service.access.policy.internal.upgrade.registry.SAPServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

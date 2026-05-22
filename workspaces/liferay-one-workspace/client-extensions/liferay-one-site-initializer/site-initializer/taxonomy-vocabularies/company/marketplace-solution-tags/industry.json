@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_SOLUTION_TAGS_INDUSTRY",
+	"name": "industry",
+	"name_i18n": {
+		"en_US": "Industry"
+	},
+	"viewableBy": "Anyone"
+}

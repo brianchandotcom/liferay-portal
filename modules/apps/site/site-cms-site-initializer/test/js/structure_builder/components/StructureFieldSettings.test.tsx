@@ -85,8 +85,8 @@ const DEFAULT_PICKLISTS = [
 
 const DEFAULT_CONFIG = {
 	countries: [
-		{a2: 'US', name: 'United States', prefix: '1'},
-		{a2: 'ES', name: 'Spain', prefix: '34'},
+		{a2: 'US', idd: '1', name: 'United States'},
+		{a2: 'ES', idd: '34', name: 'Spain'},
 	],
 } as Config;
 
@@ -462,7 +462,7 @@ describe('StructureFieldSettings', () => {
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				fixedCountryCode: 'US',
+				prefix: '+1',
 				prefixType: 'fixed',
 			},
 			type: 'update-field',
@@ -475,27 +475,8 @@ describe('StructureFieldSettings', () => {
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				prefixType: 'defined-by-user',
+				prefixType: 'definedByUser',
 				uniqueValues: true,
-			},
-			type: 'update-field',
-			uuid,
-		});
-
-		await userEvent.click(screen.getByLabelText('limit-characters'));
-
-		const numberOfCharactersInput = screen.getByLabelText(
-			'maximum-number-of-characters'
-		);
-
-		await userEvent.type(numberOfCharactersInput, '15');
-		fireEvent.blur(numberOfCharactersInput);
-
-		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
-			settings: {
-				maxLength: 15,
-				prefixType: 'defined-by-user',
-				showCounter: true,
 			},
 			type: 'update-field',
 			uuid,
@@ -519,7 +500,7 @@ describe('StructureFieldSettings', () => {
 									type: 'phone-number',
 								}),
 								settings: {
-									fixedCountryCode: 'US',
+									prefix: '+1',
 									prefixType: 'fixed',
 								},
 								uuid,
@@ -536,7 +517,7 @@ describe('StructureFieldSettings', () => {
 
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
-				fixedCountryCode: 'ES',
+				prefix: '+34',
 				prefixType: 'fixed',
 			},
 			type: 'update-field',

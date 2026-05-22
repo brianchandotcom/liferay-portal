@@ -232,7 +232,7 @@ public class UpgradeReportTest {
 				(Map<String, Object>)reportData.get("document.library");
 
 			Assert.assertEquals(
-				"Unable to determine", documentLibrary.get("storage.size"));
+				"unable to determine", documentLibrary.get("storage.size"));
 		}
 		finally {
 			Files.deleteIfExists(tempFilePath);

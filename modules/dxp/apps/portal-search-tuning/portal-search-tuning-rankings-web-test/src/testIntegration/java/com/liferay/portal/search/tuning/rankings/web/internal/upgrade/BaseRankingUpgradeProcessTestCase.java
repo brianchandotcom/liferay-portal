@@ -141,11 +141,11 @@ public abstract class BaseRankingUpgradeProcessTestCase
 	@Inject
 	private static RankingIndexNameBuilder _rankingIndexNameBuilder;
 
+	private final List<Long> _jsonStorageEntryClassPKs = new ArrayList<>();
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.portal.search.tuning.rankings.web.internal.upgrade.registry.PortalSearchTuningRankingsWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private final List<Long> _jsonStorageEntryClassPKs = new ArrayList<>();
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

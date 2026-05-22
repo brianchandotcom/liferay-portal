@@ -3,20 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useMemo} from 'react';
-
 import {
 	CONDITION_TYPE_ITEMS,
 	TYPE_VALUES,
+} from '../../plugins/page_rules/components/Condition';
+import {OPERATORS} from '../../plugins/page_rules/components/FieldFragmentTypeSelector';
+import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
+import {
 	USER_CONDITION_ITEMS,
 	convertOptionsToConditionValue,
-	filterAndConvertMappingFields,
-} from '../../plugins/page_rules/components/Condition';
-import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
-import OPERATORS from '../../plugins/page_rules/components/operators';
+} from '../../plugins/page_rules/components/UserTypeSelector';
+import {MappingFieldItem} from '../../plugins/page_rules/utils/useMappingFieldItems';
 import {Condition} from '../../types/Rule';
 import {config} from '../config/index';
-import InfoItemService from '../services/InfoItemService';
 import RulesService from '../services/RulesService';
 import {CACHE_KEYS} from './cache';
 import useCache from './useCache';
@@ -31,6 +30,7 @@ type Props = {
 	conditionType?: ConditionType;
 	conditions: Condition[];
 	items: Item[];
+	mappingFieldItems: MappingFieldItem[];
 };
 
 export type ConditionValues = {
@@ -48,6 +48,7 @@ export default function useConditionValues({
 	conditionType,
 	conditions,
 	items,
+	mappingFieldItems,
 }: Props): ConditionValues[] {
 	const roles = useCache({
 		fetcher: () => RulesService.getRoles(),
@@ -60,35 +61,6 @@ export default function useConditionValues({
 	});
 
 	const segments = config.availableSegmentsEntries;
-
-	const mappingFields = useCache({
-		fetcher: () =>
-			config.selectedMappingTypes
-				? InfoItemService.getAvailableStructureMappingFields({
-						classNameId: config.selectedMappingTypes?.type.id,
-						classTypeId: config.selectedMappingTypes?.subtype
-							? config.selectedMappingTypes?.subtype?.id
-							: '',
-					})
-				: Promise.resolve([]),
-		key: config.selectedMappingTypes
-			? config.selectedMappingTypes!.subtype
-				? [
-						CACHE_KEYS.mappingFields,
-						config.selectedMappingTypes?.type.id,
-						config.selectedMappingTypes?.subtype?.id,
-					]
-				: [
-						CACHE_KEYS.mappingFields,
-						config.selectedMappingTypes?.type.id,
-					]
-			: [CACHE_KEYS.mappingFields],
-	});
-
-	const mappingFieldItems = useMemo(
-		() => filterAndConvertMappingFields(mappingFields),
-		[mappingFields]
-	);
 
 	return (
 		conditions?.map((_condition, index) => {
@@ -196,7 +168,11 @@ function getValue(
 		condition?.type === TYPE_VALUES.formFragment ||
 		condition?.type === TYPE_VALUES.field
 	) {
-		return value;
+		return Array.isArray(value) ? value.join(', ') : value;
+	}
+
+	if (Array.isArray(value)) {
+		return '';
 	}
 
 	switch (condition?.field) {

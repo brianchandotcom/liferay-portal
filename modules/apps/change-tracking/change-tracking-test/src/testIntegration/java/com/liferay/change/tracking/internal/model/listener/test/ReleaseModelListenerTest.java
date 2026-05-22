@@ -369,36 +369,36 @@ public class ReleaseModelListenerTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private static CTPreferencesLocalService _ctPreferencesLocalService;
-
-	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
-
-	@Inject
-	private static CTSchemaVersionLocalService _ctSchemaVersionLocalService;
-
-	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
-
-	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
-
-	@Inject
-	private static ReleaseLocalService _releaseLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;
 
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
+
 	@DeleteAfterTestRun
 	private CTPreferences _ctPreferences;
+
+	@Inject
+	private CTPreferencesLocalService _ctPreferencesLocalService;
+
+	@Inject
+	private CTProcessLocalService _ctProcessLocalService;
+
+	@Inject
+	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
+
+	@Inject
+	private DLFolderLocalService _dlFolderLocalService;
 
 	private final JournalFolderFixture _journalFolderFixture =
 		new JournalFolderFixture(_journalFolderLocalService);
 
 	@DeleteAfterTestRun
 	private Release _release;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 }

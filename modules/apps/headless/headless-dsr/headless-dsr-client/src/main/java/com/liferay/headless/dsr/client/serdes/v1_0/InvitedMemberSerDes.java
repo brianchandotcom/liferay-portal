@@ -70,6 +70,16 @@ public class InvitedMemberSerDes {
 			sb.append(invitedMember.getId());
 		}
 
+		if (invitedMember.getOwnerId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"ownerId\": ");
+
+			sb.append(invitedMember.getOwnerId());
+		}
+
 		if (invitedMember.getRoleKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -119,6 +129,13 @@ public class InvitedMemberSerDes {
 			map.put("id", String.valueOf(invitedMember.getId()));
 		}
 
+		if (invitedMember.getOwnerId() == null) {
+			map.put("ownerId", null);
+		}
+		else {
+			map.put("ownerId", String.valueOf(invitedMember.getOwnerId()));
+		}
+
 		if (invitedMember.getRoleKey() == null) {
 			map.put("roleKey", null);
 		}
@@ -150,6 +167,9 @@ public class InvitedMemberSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "roleKey")) {
 				return false;
 			}
@@ -170,6 +190,12 @@ public class InvitedMemberSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					invitedMember.setId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "ownerId")) {
+				if (jsonParserFieldValue != null) {
+					invitedMember.setOwnerId(
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
@@ -259,4 +285,4 @@ public class InvitedMemberSerDes {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:727654800
+// LIFERAY-REST-BUILDER-HASH:-1697776880

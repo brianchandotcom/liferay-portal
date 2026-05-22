@@ -1,5 +1,15 @@
 @import 'atlas-variables';
 
+.lfr-objects__allow-standalone-entries {
+	align-items: center;
+	display: flex;
+}
+
+.lfr-objects__allow-standalone-entries-tooltip-icon {
+	color: $secondary-l1;
+	margin-left: 12px;
+}
+
 .lfr-objects__comments-enable-comments {
 	display: flex;
 }

@@ -1,5 +1,5 @@
-argocd_helm_chart_version="9.1.5"
 argo_workflows_helm_chart_version="1.0.10"
+argocd_helm_chart_version="9.1.5"
 crossplane_helm_chart_version="2.1.3"
 envoy_gateway_helm_chart_version="1.6.3"
 external_secrets_helm_chart_version="1.0.0"

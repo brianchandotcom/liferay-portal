@@ -21,6 +21,8 @@ export type Comment = {
 	commentId: string;
 	dateDescription: string;
 	edited: boolean;
+	hasDeletePermission: boolean;
+	hasUpdatePermission: boolean;
 	negativeVotes: number;
 	positiveVotes: number;
 	rootComment: boolean;

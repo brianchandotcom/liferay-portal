@@ -5,12 +5,6 @@ import {LifecycleStages} from 'contacts/pages/account/utils/constants';
 
 jest.unmock('react-dom');
 
-const useFrontendDataSetMock = jest.fn();
-
-jest.mock('shared/hooks/useFrontendDataSet', () => ({
-	useFrontendDataSet: () => useFrontendDataSetMock()
-}));
-
 type FakeFilter = {
 	id: string;
 	preloadedData?: {
@@ -29,40 +23,32 @@ type FakeCustomDataRenderers = {
 let lastCustomDataRenderers: FakeCustomDataRenderers | undefined;
 let lastFilters: FakeFilter[] | undefined;
 
-const FakeDataSet = ({
-	customDataRenderers,
-	filters,
-	id
-}: {
-	customDataRenderers: FakeCustomDataRenderers;
-	filters: FakeFilter[];
-	id: string;
-}) => {
-	lastCustomDataRenderers = customDataRenderers;
-	lastFilters = filters;
+jest.mock('@liferay/frontend-data-set-web', () => ({
+	...jest.requireActual('@liferay/frontend-data-set-web'),
+	FrontendDataSet: ({
+		customDataRenderers,
+		filters,
+		id
+	}: {
+		customDataRenderers: FakeCustomDataRenderers;
+		filters: FakeFilter[];
+		id: string;
+	}) => {
+		lastCustomDataRenderers = customDataRenderers;
+		lastFilters = filters;
 
-	return <div data-testid='fds-component' id={id} />;
-};
+		return <div data-testid='fds-component' id={id} />;
+	}
+}));
 
 describe('AccountsDataSet', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		lastCustomDataRenderers = undefined;
 		lastFilters = undefined;
-		useFrontendDataSetMock.mockReturnValue(FakeDataSet);
 	});
 
 	afterEach(cleanup);
-
-	it('should render nothing while FrontendDataSet is loading', () => {
-		useFrontendDataSetMock.mockReturnValue(null);
-
-		const {container} = render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
-		);
-
-		expect(container).toBeEmptyDOMElement();
-	});
 
 	it('should render the FrontendDataSet with id "accounts-list-dataset"', () => {
 		render(

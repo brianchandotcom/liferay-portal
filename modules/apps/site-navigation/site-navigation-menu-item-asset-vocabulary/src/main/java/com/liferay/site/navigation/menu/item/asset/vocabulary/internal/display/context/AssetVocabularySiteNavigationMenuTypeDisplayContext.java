@@ -77,11 +77,17 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 				scopeExternalReferenceCode, _themeDisplay.getCompanyId());
 		}
 
-		_assetVocabulary =
-			AssetVocabularyLocalServiceUtil.
-				fetchAssetVocabularyByExternalReferenceCode(
-					_typeSettingsUnicodeProperties.get("externalReferenceCode"),
-					group.getGroupId());
+		if (group == null) {
+			_assetVocabulary = null;
+		}
+		else {
+			_assetVocabulary =
+				AssetVocabularyLocalServiceUtil.
+					fetchAssetVocabularyByExternalReferenceCode(
+						_typeSettingsUnicodeProperties.get(
+							"externalReferenceCode"),
+						group.getGroupId());
+		}
 	}
 
 	public Map<String, Object> getAssetVocabularyContextualSidebarContext()
@@ -179,7 +185,7 @@ public class AssetVocabularySiteNavigationMenuTypeDisplayContext {
 
 				if (scopeExternalReferenceCode != null) {
 					group =
-						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+						GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 							scopeExternalReferenceCode,
 							_themeDisplay.getCompanyId());
 				}

@@ -390,14 +390,14 @@ public interface RoleLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRolesAndTeamRoles(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId, int start, int end);
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesAndTeamRolesCount(
 		long companyId, String name, List<String> excludedNames, String title,
-		String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId);
+		String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getGroupRolesCount(long groupId);
@@ -1068,4 +1068,4 @@ public interface RoleLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-50567879
+// LIFERAY-SERVICE-BUILDER-HASH:1060176827

@@ -201,13 +201,12 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private static File _outputDirectory;
-
 	private final ByteArrayOutputStream _errByteArrayOutputStream =
 		new ByteArrayOutputStream();
 	private final PrintStream _originalErrPrintStream = System.err;
 	private final PrintStream _originalOutPrintStream = System.out;
 	private final ByteArrayOutputStream _outByteArrayOutputStream =
 		new ByteArrayOutputStream();
+	private File _outputDirectory;
 
 }

@@ -56,7 +56,7 @@ public class SettingsHelperImpl implements SettingsHelper {
 		source = source.trim();
 
 		if (source.charAt(0) == CharPool.OPEN_CURLY_BRACE) {
-			IndexUtil.mergeToJsonObject(
+			IndexUtil.mergeToJSONObject(
 				_settingsJSONObject, _createJSONObject(source));
 		}
 		else {
@@ -90,7 +90,7 @@ public class SettingsHelperImpl implements SettingsHelper {
 
 					ObjectMapper objectMapper = new ObjectMapper();
 
-					IndexUtil.mergeToJsonObject(
+					IndexUtil.mergeToJSONObject(
 						_settingsJSONObject,
 						_createJSONObject(
 							objectMapper.writeValueAsString(object)));
@@ -125,7 +125,7 @@ public class SettingsHelperImpl implements SettingsHelper {
 				}
 			}
 
-			IndexUtil.mergeToJsonObject(_settingsJSONObject, settingJSONObject);
+			IndexUtil.mergeToJSONObject(_settingsJSONObject, settingJSONObject);
 		}
 	}
 

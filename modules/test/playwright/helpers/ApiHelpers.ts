@@ -41,7 +41,6 @@ import {HeadlessCommerceReturnApiHelper} from './HeadlessCommerceReturnApiHelper
 import {HeadlessDeliveryApiHelper} from './HeadlessDeliveryApiHelper';
 import {HeadlessDigitalSalesRoomApiHelper} from './HeadlessDigitalSalesRoomApiHelper';
 import {HeadlessPortalInstanceApiHelper} from './HeadlessPortalInstanceApiHelper';
-import {HeadlessSiteApiHelper} from './HeadlessSiteApiHelper';
 import {LanguageApiHelper} from './LanguageApiHelper';
 import {ListTypeAdminApiHelper} from './ListTypeAdminApiHelper';
 import {NotificationApiHelper} from './NotificationApiHelper';
@@ -148,7 +147,6 @@ export class ApiHelpers {
 	readonly headlessCommerceReturn: HeadlessCommerceReturnApiHelper;
 	readonly headlessDelivery: HeadlessDeliveryApiHelper;
 	readonly headlessDigitalSalesRoom: HeadlessDigitalSalesRoomApiHelper;
-	readonly headlessSite: HeadlessSiteApiHelper;
 	readonly headlessPortalInstance: HeadlessPortalInstanceApiHelper;
 	readonly jsonWebServicesAnnouncementsEntryApiHelper: JSONWebServicesAnnouncementsEntryApiHelper;
 	readonly jsonWebServicesAssetDisplayPageEntry: JSONWebServicesAssetDisplayPageEntryApiHelper;
@@ -240,7 +238,6 @@ export class ApiHelpers {
 		this.headlessDigitalSalesRoom = new HeadlessDigitalSalesRoomApiHelper(
 			this
 		);
-		this.headlessSite = new HeadlessSiteApiHelper(this);
 		this.headlessPortalInstance = new HeadlessPortalInstanceApiHelper(this);
 		this.jsonWebServicesAnnouncementsEntryApiHelper =
 			new JSONWebServicesAnnouncementsEntryApiHelper(this);

@@ -218,6 +218,10 @@ public interface KaleoNotificationLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KaleoNotification> getKaleoDefinitionVersionKaleoNotifications(
+		String kaleoClassName, long kaleoDefinitionVersionId);
+
 	/**
 	 * Returns the kaleo notification with the primary key.
 	 *
@@ -304,4 +308,4 @@ public interface KaleoNotificationLocalService
 		throws E;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1926879954
+// LIFERAY-SERVICE-BUILDER-HASH:1082231854

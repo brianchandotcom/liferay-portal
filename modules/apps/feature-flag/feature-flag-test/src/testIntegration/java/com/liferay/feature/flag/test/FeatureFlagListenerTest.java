@@ -237,10 +237,10 @@ public class FeatureFlagListenerTest {
 			featureFlagKey, enabled);
 	}
 
-	private static long _companyId;
 	private static FeatureFlagTestHelper _featureFlagTestHelper;
 
 	private BundleContext _bundleContext;
+	private long _companyId;
 	private final List<Long> _companyIds = new ArrayList<>();
 	private boolean _value1;
 	private boolean _value2;

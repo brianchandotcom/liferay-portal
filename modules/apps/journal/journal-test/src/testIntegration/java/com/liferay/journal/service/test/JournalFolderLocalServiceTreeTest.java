@@ -159,10 +159,10 @@ public class JournalFolderLocalServiceTreeTest
 	}
 
 	@Inject
-	private static IndexerRegistry _indexerRegistry;
+	private static JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
-	private static JournalFolderLocalService _journalFolderLocalService;
+	private IndexerRegistry _indexerRegistry;
 
 	private final JournalFolderFixture _journalFolderFixture =
 		new JournalFolderFixture(_journalFolderLocalService);

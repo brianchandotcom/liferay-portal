@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,11 +109,14 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		QuotaUtil.checkUsage(
-			serviceContext.getCompanyId(), currentKaleoNode.getName(),
-			prompt + "\n" + userMessage, workflowContext,
-			kaleoInstanceToken.getKaleoInstanceId(),
-			serviceContext.getUserId());
+		if (QuotaUtil.hasExceededQuota(
+				serviceContext.getCompanyId(), currentKaleoNode.getName(),
+				prompt + "\n" + userMessage, workflowContext,
+				kaleoInstanceToken.getKaleoInstanceId(),
+				serviceContext.getUserId())) {
+
+			return;
+		}
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiUtil.createVertexAiGeminiStreamingChatModel(
@@ -141,10 +143,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			AssistantHandlerContext.builder(
 			).invocationParameters(
 				InvocationParameters.from(
-					Map.of(
-						"executionContext", executionContext,
-						"permissionChecker",
-						PermissionThreadLocal.getPermissionChecker()))
+					Map.of("executionContext", executionContext))
 			).memoryId(
 				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponseConsumer(

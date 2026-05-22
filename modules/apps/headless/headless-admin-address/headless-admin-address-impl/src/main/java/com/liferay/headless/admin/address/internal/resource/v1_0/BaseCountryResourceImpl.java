@@ -12,6 +12,7 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -141,6 +142,37 @@ public abstract class BaseCountryResourceImpl
 			vulcanBatchEngineImportTaskResource.deleteImportTask(
 				Country.class.getName(), callbackURL, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(description = "Deletes a country.")
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@jakarta.ws.rs.DELETE
+	@jakarta.ws.rs.Path(
+		"/countries/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteCountryByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
 	}
 
 	/**
@@ -287,6 +319,38 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path(
+		"/countries/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country getCountryByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new Country();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-name/{name}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -347,7 +411,7 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "externalReferenceCode": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "regions": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -391,6 +455,11 @@ public abstract class BaseCountryResourceImpl
 			existingCountry.setBillingAllowed(country.getBillingAllowed());
 		}
 
+		if (country.getExternalReferenceCode() != null) {
+			existingCountry.setExternalReferenceCode(
+				country.getExternalReferenceCode());
+		}
+
 		if (country.getGroupFilterEnabled() != null) {
 			existingCountry.setGroupFilterEnabled(
 				country.getGroupFilterEnabled());
@@ -431,6 +500,107 @@ public abstract class BaseCountryResourceImpl
 		preparePatch(country, existingCountry);
 
 		return putCountry(countryId, existingCountry);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-external-reference-code/{externalReferenceCode}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "externalReferenceCode": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "regions": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the country with information sent in the request body. Only the provided fields are updated."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.PATCH
+	@jakarta.ws.rs.Path(
+		"/countries/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Country patchCountryByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Country country)
+		throws Exception {
+
+		Country existingCountry = getCountryByExternalReferenceCode(
+			externalReferenceCode);
+
+		if (country.getA2() != null) {
+			existingCountry.setA2(country.getA2());
+		}
+
+		if (country.getA3() != null) {
+			existingCountry.setA3(country.getA3());
+		}
+
+		if (country.getActive() != null) {
+			existingCountry.setActive(country.getActive());
+		}
+
+		if (country.getBillingAllowed() != null) {
+			existingCountry.setBillingAllowed(country.getBillingAllowed());
+		}
+
+		if (country.getExternalReferenceCode() != null) {
+			existingCountry.setExternalReferenceCode(
+				country.getExternalReferenceCode());
+		}
+
+		if (country.getGroupFilterEnabled() != null) {
+			existingCountry.setGroupFilterEnabled(
+				country.getGroupFilterEnabled());
+		}
+
+		if (country.getIdd() != null) {
+			existingCountry.setIdd(country.getIdd());
+		}
+
+		if (country.getName() != null) {
+			existingCountry.setName(country.getName());
+		}
+
+		if (country.getNumber() != null) {
+			existingCountry.setNumber(country.getNumber());
+		}
+
+		if (country.getPosition() != null) {
+			existingCountry.setPosition(country.getPosition());
+		}
+
+		if (country.getShippingAllowed() != null) {
+			existingCountry.setShippingAllowed(country.getShippingAllowed());
+		}
+
+		if (country.getSubjectToVAT() != null) {
+			existingCountry.setSubjectToVAT(country.getSubjectToVAT());
+		}
+
+		if (country.getTitle_i18n() != null) {
+			existingCountry.setTitle_i18n(country.getTitle_i18n());
+		}
+
+		if (country.getZipRequired() != null) {
+			existingCountry.setZipRequired(country.getZipRequired());
+		}
+
+		preparePatch(country, existingCountry);
+
+		return putCountryByExternalReferenceCode(
+			externalReferenceCode, existingCountry);
 	}
 
 	/**
@@ -516,7 +686,7 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-address/v1.0/countries' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-address/v1.0/countries' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "externalReferenceCode": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "regions": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
@@ -577,7 +747,7 @@ public abstract class BaseCountryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/{countryId}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "externalReferenceCode": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "regions": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -650,6 +820,43 @@ public abstract class BaseCountryResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-address/v1.0/countries/by-external-reference-code/{externalReferenceCode}' -d $'{"a2": ___, "a3": ___, "active": ___, "billingAllowed": ___, "externalReferenceCode": ___, "groupFilterEnabled": ___, "idd": ___, "name": ___, "number": ___, "position": ___, "regions": ___, "shippingAllowed": ___, "subjectToVAT": ___, "title_i18n": ___, "zipRequired": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the country with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Country")}
+	)
+	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
+	@jakarta.ws.rs.Path(
+		"/countries/by-external-reference-code/{externalReferenceCode}"
+	)
+	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.PUT
+	@Override
+	public Country putCountryByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Country country)
+		throws Exception {
+
+		return new Country();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -664,6 +871,42 @@ public abstract class BaseCountryResourceImpl
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 			countryUnsafeFunction = country -> postCountry(country);
+		}
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				countryUnsafeFunction = country -> {
+					Country getCountry = null;
+					Country persistedCountry = null;
+
+					try {
+						getCountry = getCountryByExternalReferenceCode(
+							country.getExternalReferenceCode());
+
+						persistedCountry = patchCountry(
+							getCountry.getId(), country);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedCountry = postCountry(country);
+					}
+
+					return persistedCountry;
+				};
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				countryUnsafeFunction = country -> {
+					Country persistedCountry = null;
+
+					persistedCountry = putCountryByExternalReferenceCode(
+						country.getExternalReferenceCode(), country);
+
+					return persistedCountry;
+				};
+			}
 		}
 
 		if (countryUnsafeFunction == null) {
@@ -694,9 +937,30 @@ public abstract class BaseCountryResourceImpl
 
 		UnsafeFunction<Country, Country, Exception> countryUnsafeFunction =
 			country -> {
-				deleteCountry(country.getId());
+				if (country.getId() != null) {
+					try {
+						deleteCountry(country.getId());
 
-				return country;
+						return country;
+					}
+					catch (Exception exception) {
+						if (country.getExternalReferenceCode() != null) {
+							deleteCountryByExternalReferenceCode(
+								country.getExternalReferenceCode());
+
+							return country;
+						}
+					}
+				}
+				else if (country.getExternalReferenceCode() != null) {
+					deleteCountryByExternalReferenceCode(
+						country.getExternalReferenceCode());
+
+					return country;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {
@@ -715,7 +979,7 @@ public abstract class BaseCountryResourceImpl
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("INSERT");
+		return SetUtil.fromArray("INSERT", "UPSERT");
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -1399,4 +1663,4 @@ public abstract class BaseCountryResourceImpl
 		LogFactoryUtil.getLog(BaseCountryResourceImpl.class);
 
 }
-// LIFERAY-REST-BUILDER-HASH:1260434394
+// LIFERAY-REST-BUILDER-HASH:-356974426

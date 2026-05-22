@@ -194,16 +194,6 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 	private static Company _company;
 
 	@Inject
-	private static SitemapConfigurationManager _sitemapConfigurationManager;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.site.internal.upgrade.registry.SiteServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	private static String _xmlSitemapIndexEnabled;
-
-	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
@@ -211,5 +201,15 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private SitemapConfigurationManager _sitemapConfigurationManager;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.site.internal.upgrade.registry.SiteServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
+
+	private String _xmlSitemapIndexEnabled;
 
 }

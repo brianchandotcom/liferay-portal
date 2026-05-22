@@ -4,20 +4,10 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {
-	ILearnResourceContext,
-	LearnMessage,
-	LearnResourcesContext,
-} from 'frontend-js-components-web';
+import {LearnMessage} from 'frontend-js-components-web';
 import React from 'react';
 
-interface InheritanceObjectDefinitionAlertProps {
-	learnResources: ILearnResourceContext;
-}
-
-export function InheritanceObjectDefinitionAlert({
-	learnResources,
-}: InheritanceObjectDefinitionAlertProps) {
+export function InheritanceObjectDefinitionAlert() {
 	return (
 		<ClayAlert
 			displayType="info"
@@ -27,13 +17,11 @@ export function InheritanceObjectDefinitionAlert({
 				'inheritance-is-enabled-for-at-least-one-relationship-in-this-definition'
 			)}
 			&nbsp;
-			<LearnResourcesContext.Provider value={learnResources}>
-				<LearnMessage
-					className="alert-link"
-					resource="object-web"
-					resourceKey="inheritance-relationships"
-				/>
-			</LearnResourcesContext.Provider>
+			<LearnMessage
+				className="alert-link"
+				resource="object-web"
+				resourceKey="inheritance-relationships"
+			/>
 		</ClayAlert>
 	);
 }

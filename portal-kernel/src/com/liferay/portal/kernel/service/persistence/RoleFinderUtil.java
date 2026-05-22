@@ -15,11 +15,11 @@ public class RoleFinderUtil {
 
 	public static int countByGroupRoleAndTeamRole(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return getFinder().countByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId);
 	}
 
@@ -72,11 +72,11 @@ public class RoleFinderUtil {
 
 	public static int filterCountByGroupRoleAndTeamRole(
 		long companyId, String name, java.util.List<String> excludedNames,
-		String title, String description, int[] types, long excludedTeamRoleId,
-		long teamGroupId) {
+		String title, String description, int[] types, String subtype,
+		long excludedTeamRoleId, long teamGroupId) {
 
 		return getFinder().filterCountByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId);
 	}
 
@@ -125,11 +125,11 @@ public class RoleFinderUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Role>
 		filterFindByGroupRoleAndTeamRole(
 			long companyId, String name, java.util.List<String> excludedNames,
-			String title, String description, int[] types,
+			String title, String description, int[] types, String subtype,
 			long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return getFinder().filterFindByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
@@ -200,11 +200,11 @@ public class RoleFinderUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Role>
 		findByGroupRoleAndTeamRole(
 			long companyId, String name, java.util.List<String> excludedNames,
-			String title, String description, int[] types,
+			String title, String description, int[] types, String subtype,
 			long excludedTeamRoleId, long teamGroupId, int start, int end) {
 
 		return getFinder().findByGroupRoleAndTeamRole(
-			companyId, name, excludedNames, title, description, types,
+			companyId, name, excludedNames, title, description, types, subtype,
 			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
@@ -299,4 +299,4 @@ public class RoleFinderUtil {
 	private static RoleFinder _finder;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:100601961
+// LIFERAY-SERVICE-BUILDER-HASH:934564243

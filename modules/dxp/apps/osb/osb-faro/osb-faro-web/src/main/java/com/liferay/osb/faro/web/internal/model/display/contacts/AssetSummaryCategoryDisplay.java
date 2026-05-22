@@ -5,30 +5,35 @@
 
 package com.liferay.osb.faro.web.internal.model.display.contacts;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.liferay.osb.faro.engine.client.model.AssetSummaryCategory;
+import com.liferay.osb.faro.engine.client.model.Metric;
 
 /**
  * @author Ivica Cardic
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AssetSummaryCategoryDisplay {
 
 	public AssetSummaryCategoryDisplay(
 		AssetSummaryCategory assetSummaryCategory) {
 
+		_downloadsMetric = assetSummaryCategory.getDownloadsMetric();
 		_id = assetSummaryCategory.getId();
+		_impressionsMetric = assetSummaryCategory.getImpressionsMetric();
 		_name = assetSummaryCategory.getName();
+		_viewsMetric = assetSummaryCategory.getViewsMetric();
 		_vocabularyId = assetSummaryCategory.getVocabularyId();
+		_vocabularyName = assetSummaryCategory.getVocabularyName();
 	}
 
-	@JsonProperty("id")
+	private final Metric _downloadsMetric;
 	private final String _id;
-
-	@JsonProperty("name")
+	private final Metric _impressionsMetric;
 	private final String _name;
-
-	@JsonProperty("vocabularyId")
+	private final Metric _viewsMetric;
 	private final String _vocabularyId;
+	private final String _vocabularyName;
 
 }

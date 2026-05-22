@@ -133,7 +133,7 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupAccount(accountId: ___, groupId: ___){accountName, annualRevenue, country, dateModified, id, industry, lastActivityDate, lifecycleStage}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an account id. To search accounts by name or filter, use `getAccountsPage`."
+		description = "Fetch a single account by id from an Analytics Cloud Workspace. Use this when you already have an account id. To search accounts by name or filter, use `getWorkspaceGroupAccountsPage`."
 	)
 	public Account workspaceGroupAccount(
 			@GraphQLName("groupId") Long groupId,
@@ -179,13 +179,13 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupAssetSummaries(channelId: ___, groupId: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read, and view counts along with their period-over-period trend percentages. Optionally narrow results to a single channel (also known as property) or to a date range. Use this to answer 'what content is performing best' and to pick assets for deeper drill-down via `getSitePagesPage`."
+		description = "List analytics asset summaries for pages, blogs, documents, forms, journal articles, and object entries. Rank summaries by the requested sort metric. Each summary includes download, impression, read, and view counts along with their period-over-period trend percentages. Optionally narrow results to a single channel (also known as property) or to a date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this to answer 'what content is performing best' and to pick assets for deeper drill-down via `getWorkspaceGroupPagesPage`."
 	)
 	public AssetSummaryMetricPage workspaceGroupAssetSummaries(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("channelId") String channelId,
 			@GraphQLName("rangeEnd") String rangeEnd,
-			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeKey") String rangeKey,
 			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
@@ -252,14 +252,14 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupChannelEvents(channelId: ___, groupId: ___, includeAnonymousUsers: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a date range. For aggregated metrics across events, prefer `getSiteAssetSummariesPage` or `getSitePagesPage`."
+		description = "List tracked analytics events for a specific channel (also known as property), optionally narrowed to a date range. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. For aggregated metrics across events, prefer `getWorkspaceGroupAssetSummariesPage` or `getWorkspaceGroupPagesPage`."
 	)
 	public EventPage workspaceGroupChannelEvents(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("channelId") String channelId,
 			@GraphQLName("includeAnonymousUsers") Boolean includeAnonymousUsers,
 			@GraphQLName("rangeEnd") String rangeEnd,
-			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeKey") String rangeKey,
 			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
@@ -415,14 +415,14 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupPages(channelId: ___, dataSourceId: ___, groupId: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___, search: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List analytics metrics for tracked pages on the workspace, ranked by views or another metric, optionally narrowed to a single channel (also known as property) or data source. Returns flattened view, visitor, bounce, exit, and access-path metrics for each page. Use this for 'top pages' style queries."
+		description = "List analytics metrics for tracked pages on the workspace, ranked by views or another metric, optionally narrowed to a single channel (also known as property) or data source. Returns flattened view, visitor, bounce, exit, and access-path metrics for each page. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this for 'top pages' style queries."
 	)
 	public PageMetricPage workspaceGroupPages(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("channelId") String channelId,
 			@GraphQLName("dataSourceId") String dataSourceId,
 			@GraphQLName("rangeEnd") String rangeEnd,
-			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeKey") String rangeKey,
 			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("search") String search,
 			@GraphQLName("pageSize") int pageSize,
@@ -446,13 +446,13 @@ public class Query {
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workspaceGroupChannelSearchTerms(channelId: ___, groupId: ___, page: ___, pageSize: ___, rangeEnd: ___, rangeKey: ___, rangeStart: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
-		description = "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single channel (also known as property). Results are ordered in descending order of number of times terms have been searched. Use this for 'most searched words' style queries."
+		description = "List search terms used on pages tracked by the Analytics Cloud workspace for a date range in a single channel (also known as property). Results are ordered in descending order of number of times terms have been searched. For date-range filtering pass `rangeKey` as one of LAST_24_HOURS, YESTERDAY, LAST_7_DAYS, LAST_28_DAYS, LAST_30_DAYS, LAST_90_DAYS, LAST_180_DAYS, LAST_YEAR. Alternatively, pass `rangeStart` and `rangeEnd` as dates for a custom window. Use this for 'most searched words' style queries."
 	)
 	public SearchTermPage workspaceGroupChannelSearchTerms(
 			@GraphQLName("groupId") Long groupId,
 			@GraphQLName("channelId") String channelId,
 			@GraphQLName("rangeEnd") String rangeEnd,
-			@GraphQLName("rangeKey") Integer rangeKey,
+			@GraphQLName("rangeKey") String rangeKey,
 			@GraphQLName("rangeStart") String rangeStart,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -987,4 +987,4 @@ public class Query {
 	private com.liferay.portal.kernel.model.User _user;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-341859726
+// LIFERAY-REST-BUILDER-HASH:-242389805

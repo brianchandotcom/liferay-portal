@@ -35,6 +35,7 @@ interface BasePhoneNumberProps {
 	name: string;
 	onBlur?: (event: React.FocusEvent) => void;
 	onFocus?: (event: React.FocusEvent) => void;
+	pageValidationFailed?: boolean;
 	predefinedValue?: string;
 	prefix?: string;
 	prefixType?: PrefixType;
@@ -58,25 +59,21 @@ type PhoneNumberProps =
 	| (NonLocalizablePhoneNumberProps & {localizedObjectField?: false});
 
 const getValidationState = (value: string) => {
-	if (!value) {
-		return {displayErrors: false, errorMessage: undefined, valid: true};
+	if (value && !PHONE_NUMBER_PATTERN.test(value)) {
+		return {
+			displayErrors: true,
+			errorMessage: Liferay.Language.get(
+				'please-enter-a-valid-phone-number'
+			),
+			valid: false,
+		};
 	}
 
-	const valid = PHONE_NUMBER_PATTERN.test(value);
-
-	return {
-		displayErrors: !valid,
-		errorMessage: valid
-			? undefined
-			: Liferay.Language.get('please-enter-a-valid-phone-number'),
-		valid,
-	};
+	return {};
 };
 
 const LocalizablePhoneNumber = ({
 	countries = [],
-	displayErrors,
-	errorMessage,
 	fieldName,
 	name,
 	onBlur,
@@ -86,33 +83,25 @@ const LocalizablePhoneNumber = ({
 	prefix,
 	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
-	valid = true,
 	value = {} as LocalizedValue<string>,
 	...otherProps
 }: LocalizablePhoneNumberProps) => {
 	const {availableLocales, editingLanguageId} = useFormState();
 
-	const [validationState, setValidationState] = useState({
-		displayErrors,
-		errorMessage,
-		valid,
-	});
+	const [touched, setTouched] = useState(false);
 
 	const currentValue = value[editingLanguageId] ?? predefinedValue ?? '';
 	const disabled = readOnly || otherProps.disabled;
 
+	const validationState =
+		touched || otherProps.pageValidationFailed
+			? getValidationState(currentValue)
+			: {};
+
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidationState(getValidationState(currentValue));
+		setTouched(true);
 
 		onBlur?.(event);
-	};
-
-	const handleLanguageClicked = (localeId: Liferay.Language.Locale) => {
-		if (validationState.displayErrors) {
-			setValidationState(
-				getValidationState(value[localeId] ?? predefinedValue ?? '')
-			);
-		}
 	};
 
 	const handleChange = (event: {target: {value: string}}) => {
@@ -120,14 +109,6 @@ const LocalizablePhoneNumber = ({
 			...value,
 			[editingLanguageId]: event.target.value,
 		} as LocalizedValue<string>;
-
-		// Re-getValidationState on change only while an error is already visible,
-		// so the message clears live as the user fixes it (typing or
-		// country switch) without flashing on first entry.
-
-		if (validationState.displayErrors) {
-			setValidationState(getValidationState(event.target.value));
-		}
 
 		onChange?.({target: {value: newValue}});
 	};
@@ -158,7 +139,6 @@ const LocalizablePhoneNumber = ({
 					<LocalesDropdown
 						availableLocales={availableLocales}
 						fieldName={fieldName}
-						onLanguageClicked={handleLanguageClicked}
 						value={value}
 					/>
 				</ClayInput.GroupItem>
@@ -169,8 +149,6 @@ const LocalizablePhoneNumber = ({
 
 const NonLocalizablePhoneNumber = ({
 	countries = [],
-	displayErrors,
-	errorMessage,
 	name,
 	onBlur,
 	onChange,
@@ -179,37 +157,29 @@ const NonLocalizablePhoneNumber = ({
 	prefix,
 	prefixType = PREFIX_TYPE.DEFINED_BY_USER,
 	readOnly,
-	valid = true,
 	value: initialValue,
 	...otherProps
 }: NonLocalizablePhoneNumberProps) => {
 	const [combinedValue, setCombinedValue] = useState(
 		initialValue || predefinedValue || ''
 	);
-	const [validationState, setValidationState] = useState({
-		displayErrors,
-		errorMessage,
-		valid,
-	});
+	const [touched, setTouched] = useState(false);
 
 	const disabled = readOnly || otherProps.disabled;
 
+	const validationState =
+		touched || otherProps.pageValidationFailed
+			? getValidationState(combinedValue)
+			: {};
+
 	const handleBlur = (event: React.FocusEvent) => {
-		setValidationState(getValidationState(combinedValue));
+		setTouched(true);
 
 		onBlur?.(event);
 	};
 
 	const handleChange = (event: {target: {value: string}}) => {
 		setCombinedValue(event.target.value);
-
-		// Re-getValidationState on change only while an error is already visible,
-		// so the message clears as the user fixes it without flashing on
-		// first entry.
-
-		if (validationState.displayErrors) {
-			setValidationState(getValidationState(event.target.value));
-		}
 
 		onChange?.(event);
 	};

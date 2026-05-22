@@ -37,6 +37,7 @@ import {
 	Condition as ConditionType,
 	Rule,
 } from '../../../types/Rule';
+import useMappingFieldItems from '../utils/useMappingFieldItems';
 
 const MAX_RULES = 20;
 
@@ -149,6 +150,8 @@ function RuleItem({
 	rule: Rule;
 	rules: Rule[];
 }) {
+	const mappingFieldItems = useMappingFieldItems();
+
 	const highlightItems = useHighlightItems();
 	const {isTarget: isNavigationTarget, setElement} = useKeyboardNavigation({
 		type: LIST_ITEM_TYPES.listItem,
@@ -226,6 +229,7 @@ function RuleItem({
 		...rule,
 		conditions: rule.conditions || [],
 		items,
+		mappingFieldItems,
 	});
 	const actions = useActionValues({...rule, items});
 
@@ -490,9 +494,11 @@ function Condition({
 
 			{condition.condition}
 
-			<ClayLabel className="m-0" displayType="secondary">
-				{condition.value}
-			</ClayLabel>
+			{condition.value ? (
+				<ClayLabel className="m-0" displayType="secondary">
+					{condition.value}
+				</ClayLabel>
+			) : null}
 		</>
 	);
 }

@@ -768,10 +768,6 @@ public class PersistenceNestedSetsTreeManagerTest {
 	private static NestedSetsTreeEntry[] _nestedSetsTreeEntries;
 
 	@Inject
-	private static NestedSetsTreeEntryLocalService
-		_nestedSetsTreeEntryLocalService;
-
-	@Inject
 	private static NestedSetsTreeEntryPersistence
 		_nestedSetsTreeEntryPersistence;
 
@@ -779,6 +775,9 @@ public class PersistenceNestedSetsTreeManagerTest {
 		_nestedSetsTreeManager;
 	private static SessionFactoryInvocationHandler
 		_sessionFactoryInvocationHandler;
+
+	@Inject
+	private NestedSetsTreeEntryLocalService _nestedSetsTreeEntryLocalService;
 
 	private static class SessionFactoryInvocationHandler
 		implements InvocationHandler {

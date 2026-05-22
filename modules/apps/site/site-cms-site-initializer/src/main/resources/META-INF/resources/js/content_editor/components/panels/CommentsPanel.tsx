@@ -325,35 +325,51 @@ function CommentNode({
 							</time>
 						</header>
 
-						<ClayDropDownWithItems
-							items={[
-								{
-									label: Liferay.Language.get('edit'),
-									onClick: () => setStatus('edit'),
-									symbolLeft: 'pencil',
-								},
-								{
-									label: Liferay.Language.get('delete'),
-									onClick: () =>
-										onDeleteComment(
-											comment.commentId,
-											parentCommentId
-										),
-									symbolLeft: 'trash',
-								},
-							]}
-							menuWidth="shrink"
-							trigger={
-								<ClayButtonWithIcon
-									borderless
-									displayType="secondary"
-									monospaced
-									size="xs"
-									symbol="ellipsis-v"
-									title={Liferay.Language.get('actions')}
-								/>
-							}
-						/>
+						{(comment.hasDeletePermission ||
+							comment.hasUpdatePermission) && (
+							<ClayDropDownWithItems
+								items={[
+									...(comment.hasUpdatePermission
+										? [
+												{
+													label: Liferay.Language.get(
+														'edit'
+													),
+													onClick: () =>
+														setStatus('edit'),
+													symbolLeft: 'pencil',
+												},
+											]
+										: []),
+									...(comment.hasDeletePermission
+										? [
+												{
+													label: Liferay.Language.get(
+														'delete'
+													),
+													onClick: () =>
+														onDeleteComment(
+															comment.commentId,
+															parentCommentId
+														),
+													symbolLeft: 'trash',
+												},
+											]
+										: []),
+								]}
+								menuWidth="shrink"
+								trigger={
+									<ClayButtonWithIcon
+										borderless
+										displayType="secondary"
+										monospaced
+										size="xs"
+										symbol="ellipsis-v"
+										title={Liferay.Language.get('actions')}
+									/>
+								}
+							/>
+						)}
 					</div>
 
 					{status === 'edit' ? (

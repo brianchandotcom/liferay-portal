@@ -52,7 +52,7 @@ jest.mock('@ckeditor/ckeditor5-react', () => ({
 	},
 }));
 
-const initialComments = [
+const initialComments: Comment[] = [
 	{
 		author: {
 			fullName: 'Test User 1',
@@ -73,6 +73,8 @@ const initialComments = [
 				commentId: '2',
 				dateDescription: '55 Seconds Ago',
 				edited: false,
+				hasDeletePermission: true,
+				hasUpdatePermission: true,
 				negativeVotes: 0,
 				positiveVotes: 0,
 				rootComment: true,
@@ -82,11 +84,13 @@ const initialComments = [
 		commentId: '1',
 		dateDescription: '18 Seconds Ago',
 		edited: false,
+		hasDeletePermission: true,
+		hasUpdatePermission: true,
 		negativeVotes: 0,
 		positiveVotes: 0,
 		rootComment: true,
 	},
-] as Comment[];
+];
 
 const renderComponent = (addCommentURL = 'addCommentURL') => {
 	return render(
@@ -245,6 +249,8 @@ describe('CommentsPanel', () => {
 					commentId: '345',
 					dateDescription: 'Just now',
 					edited: false,
+					hasDeletePermission: true,
+					hasUpdatePermission: true,
 					negativeVotes: 0,
 					positiveVotes: 0,
 					rootComment: true,

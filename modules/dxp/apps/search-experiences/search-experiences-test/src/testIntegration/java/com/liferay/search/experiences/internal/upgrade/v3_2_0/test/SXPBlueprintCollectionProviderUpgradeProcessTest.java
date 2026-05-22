@@ -113,11 +113,6 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 
 	private static final String _OLD_SCHEMA_VERSION = "1.1";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
-	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private final Class<?> _clazz = getClass();
 
 	@DeleteAfterTestRun
@@ -131,5 +126,10 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

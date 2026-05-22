@@ -2,9 +2,12 @@ import Card from 'shared/components/Card';
 import classNames from 'classnames';
 import React from 'react';
 import {columns, pagination} from 'shared/util/frontend-data-set';
+import {
+	EConfigInURLBehavior,
+	FrontendDataSet
+} from '@liferay/frontend-data-set-web';
 import {Routes} from 'shared/util/router';
 import {Text} from '@clayui/core';
-import {useFrontendDataSet} from 'shared/hooks/useFrontendDataSet';
 import {useParams} from 'react-router-dom';
 
 const FDS_ID = 'account-individuals-dataset';
@@ -21,11 +24,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 		groupId: string;
 		id: string;
 	}>();
-	const FrontendDataSet = useFrontendDataSet();
-
-	if (!FrontendDataSet) {
-		return null;
-	}
 
 	return (
 		<Card className={classNames(className)}>
@@ -47,7 +45,7 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 				<div className='mt-3'>
 					<FrontendDataSet
 						apiURL={`/o/faro/contacts/${groupId}/account/${id}/individuals`}
-						configInURLBehavior='off'
+						configInURLBehavior={EConfigInURLBehavior.OFF}
 						customDataRenderers={{
 							department: ({
 								itemData
@@ -88,7 +86,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 								schema: {
 									fields: [
 										{
-											_key: 'individualName',
 											contentRenderer:
 												'individualNameRenderer',
 											fieldName: 'name',
@@ -98,7 +95,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											sortable: true
 										},
 										{
-											_key: 'department',
 											contentRenderer: 'department',
 											fieldName: 'department',
 											label: Liferay.Language.get(
@@ -107,7 +103,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											sortable: true
 										},
 										{
-											_key: 'jobTitle',
 											contentRenderer: 'jobTitle',
 											fieldName: 'jobTitle',
 											label: Liferay.Language.get(
@@ -116,7 +111,6 @@ const AccountIndividuals: React.FC<IAccountIndividualsProps> = ({
 											sortable: true
 										},
 										{
-											_key: 'lastActive',
 											contentRenderer:
 												'lastActiveRenderer',
 											fieldName: 'lastActivityDate',

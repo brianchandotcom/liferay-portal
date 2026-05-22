@@ -103,6 +103,9 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 		_originalXMLSitemapIndexEnabled =
 			_sitemapConfigurationManager.xmlSitemapIndexCompanyEnabled(
 				_company.getCompanyId());
+		_originalXMLSitemapIndexMode =
+			_sitemapConfigurationManager.xmlSitemapIndexMode(
+				_company.getCompanyId());
 
 		_originalName = PrincipalThreadLocal.getName();
 
@@ -116,7 +119,8 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 			ArrayUtil.toArray(_originalCompanySitemapGroupIds),
 			ArrayUtil.toArray(_originalCompanySitemapObjectDefinitionIds),
 			_originalIncludeCategories, _originalIncludePages,
-			_originalIncludeWebContent, _originalXMLSitemapIndexEnabled);
+			_originalIncludeWebContent, _originalXMLSitemapIndexEnabled,
+			_originalXMLSitemapIndexMode);
 
 		PrincipalThreadLocal.setName(_originalName);
 	}
@@ -420,18 +424,12 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static CompanyLocalService _companyLocalService;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
 	private static GroupLocalService _groupLocalService;
 
 	private static Layout _layout;
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private static Long[] _originalCompanySitemapGroupIds;
 	private static Long[] _originalCompanySitemapObjectDefinitionIds;
@@ -440,13 +438,20 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static boolean _originalIncludeWebContent;
 	private static String _originalName;
 	private static boolean _originalXMLSitemapIndexEnabled;
+	private static String _originalXMLSitemapIndexMode;
 
 	@Inject
 	private static SitemapConfigurationManager _sitemapConfigurationManager;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject(
 		filter = "mvc.command.name=/site_sitemap/save_company_configuration"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

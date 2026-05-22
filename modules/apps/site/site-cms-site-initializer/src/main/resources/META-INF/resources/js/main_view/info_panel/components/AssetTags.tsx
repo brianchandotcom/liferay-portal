@@ -208,6 +208,7 @@ const AssetTags = ({
 									'title': Liferay.Language.get('close'),
 								}}
 								displayType="secondary"
+								inverse
 								key={`${keyword}_${index}`}
 								style={{textTransform: 'none'}}
 							>

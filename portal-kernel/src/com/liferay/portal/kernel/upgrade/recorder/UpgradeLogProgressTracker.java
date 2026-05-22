@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -433,11 +432,11 @@ public class UpgradeLogProgressTracker {
 		UpgradeLogProgressTracker.class);
 
 	private static volatile boolean _enabled;
-	private static final AtomicLong _handlerCounter = new AtomicLong();
 	private static final Map<String, Long> _lastKnownProgresses =
 		new ConcurrentHashMap<>();
 	private static final Map<String, Long> _lastKnownTotalCounts =
 		new ConcurrentHashMap<>();
+	private static final AtomicLong _queryCounter = new AtomicLong();
 	private static final Set<String> _unsafeSetters = new HashSet<>(
 		Arrays.asList(
 			"setAsciiStream", "setBinaryStream", "setBlob",
@@ -502,17 +501,17 @@ public class UpgradeLogProgressTracker {
 			_statementProxy = statementProxy;
 			_totalRowCountSupplier = totalRowCountSupplier;
 
-			long handlerId = _handlerCounter.incrementAndGet();
+			long queryId = _queryCounter.incrementAndGet();
 
 			if (PropsValues.DATABASE_PARTITION_ENABLED) {
 				_progressId = StringBundler.concat(
 					upgradeProcessClassName, " {companyId=",
-					CompanyThreadLocal.getCompanyId(), ", handlerId=",
-					handlerId, "}");
+					CompanyThreadLocal.getCompanyId(), ", queryId=", queryId,
+					"}");
 			}
 			else {
 				_progressId = StringBundler.concat(
-					upgradeProcessClassName, " {handlerId=", handlerId, "}");
+					upgradeProcessClassName, " {queryId=", queryId, "}");
 			}
 
 			_lastLogTime = System.currentTimeMillis();
@@ -523,24 +522,23 @@ public class UpgradeLogProgressTracker {
 
 			_logged = true;
 
-			if (!_totalRowCountComputed && (_totalRowCountSupplier != null)) {
-				_totalRowCount = GetterUtil.getLong(
-					_totalRowCountSupplier.get());
-				_totalRowCountComputed = true;
-			}
-
-			if (_totalRowCount == 0) {
+			if (_totalRowCountSupplier == null) {
 				return;
 			}
 
-			if (_rowCount > _totalRowCount) {
-				_totalRowCount = 0;
-				_lastKnownTotalCounts.remove(_progressId);
-
-				return;
+			if (_totalRowCountComputed) {
+				_removeExceededTotal();
+			}
+			else if (_firstCount == null) {
+				_setTentativeTotal();
+			}
+			else {
+				_verifyTotal();
 			}
 
-			_lastKnownTotalCounts.put(_progressId, _totalRowCount);
+			if (_totalRowCount > 0) {
+				_lastKnownTotalCounts.put(_progressId, _totalRowCount);
+			}
 		}
 
 		private void _finishProgress() {
@@ -578,7 +576,48 @@ public class UpgradeLogProgressTracker {
 					" rows."));
 		}
 
+		private void _removeExceededTotal() {
+			if ((_totalRowCount > 0) && (_rowCount > _totalRowCount)) {
+				_totalRowCount = 0;
+				_lastKnownTotalCounts.remove(_progressId);
+			}
+		}
+
+		private void _setTentativeTotal() {
+			Long count = _totalRowCountSupplier.get();
+
+			if (count == null) {
+				_totalRowCountComputed = true;
+
+				return;
+			}
+
+			_firstCount = count;
+			_totalRowCount = count + _rowCount;
+		}
+
+		private void _verifyTotal() {
+			_totalRowCountComputed = true;
+
+			Long count = _totalRowCountSupplier.get();
+
+			if (count == null) {
+				_totalRowCount = Math.max(_totalRowCount, _rowCount);
+
+				return;
+			}
+
+			if (Objects.equals(_firstCount, count)) {
+				_totalRowCount = Math.max(count, _rowCount);
+
+				return;
+			}
+
+			_totalRowCount = count + _rowCount;
+		}
+
 		private boolean _finished;
+		private Long _firstCount;
 		private long _lastLogTime;
 		private boolean _logged;
 		private final String _progressId;

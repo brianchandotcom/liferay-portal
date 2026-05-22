@@ -359,18 +359,18 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	@Inject
-	private static OAuthClientASLocalMetadataLocalService
-		_oAuthClientASLocalMetadataLocalService;
-
 	private static User _user;
-
-	@Inject
-	private static UserLocalService _userLocalService;
 
 	@Inject(
 		filter = "mvc.command.name=/oauth_client_admin/update_oauth_client_as_local_metadata"
 	)
 	private MVCActionCommand _editMVCActionCommand;
+
+	@Inject
+	private OAuthClientASLocalMetadataLocalService
+		_oAuthClientASLocalMetadataLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

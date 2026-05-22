@@ -56,13 +56,24 @@ public interface KaleoDefinitionVersion
 	public KaleoDefinition getKaleoDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<KaleoAction> getKaleoNodeKaleoActions(
+		long kaleoNodeId);
+
+	public java.util.List<KaleoNotification> getKaleoNodeKaleoNotifications(
+		long kaleoNodeId);
+
+	public java.util.List<KaleoTransition> getKaleoNodeKaleoTransitions(
+		long kaleoNodeId);
+
 	public KaleoNode getKaleoStartNode()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean isBlockingKaleoTimerExists();
+
+	public boolean isKaleoTimerExists();
 
 	public boolean isLatest()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void setContentAsXML(String contentAsXML);
-
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1536076810
+// LIFERAY-SERVICE-BUILDER-HASH:-32175281

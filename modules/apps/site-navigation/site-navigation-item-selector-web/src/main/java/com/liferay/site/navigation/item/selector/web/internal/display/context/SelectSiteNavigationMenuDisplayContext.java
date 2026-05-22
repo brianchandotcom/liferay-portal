@@ -539,7 +539,7 @@ public class SelectSiteNavigationMenuDisplayContext {
 					selectSiteNavigationMenuLevelURL != null);
 
 				breadcrumbEntry.setTitle(siteNavigationMenu.getName());
-				breadcrumbEntry.setURL(siteNavigationMenu.getName());
+				breadcrumbEntry.setURL(selectSiteNavigationMenuLevelURL);
 			}
 		).addAll(
 			() -> getParentSiteNavigationMenuItemId() != 0,

@@ -174,7 +174,6 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 
 		assetSummaryMetric.setAssetId(regex);
 		assetSummaryMetric.setAssetTitle(regex);
-		assetSummaryMetric.setAssetType(regex);
 
 		String json = AssetSummaryMetricSerDes.toJSON(assetSummaryMetric);
 
@@ -184,7 +183,6 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 
 		Assert.assertEquals(regex, assetSummaryMetric.getAssetId());
 		Assert.assertEquals(regex, assetSummaryMetric.getAssetTitle());
-		Assert.assertEquals(regex, assetSummaryMetric.getAssetType());
 	}
 
 	@Test
@@ -196,7 +194,7 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		Page<AssetSummaryMetric> page =
 			assetSummaryMetricResource.getWorkspaceGroupAssetSummariesPage(
 				groupId, RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), null, Pagination.of(1, 10),
 				null);
 
@@ -1186,49 +1184,8 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		}
 
 		if (entityFieldName.equals("assetType")) {
-			Object object = assetSummaryMetric.getAssetType();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("downloads")) {
@@ -1334,8 +1291,6 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 			{
 				assetId = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				assetTitle = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
-				assetType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				downloads = RandomTestUtil.randomDouble();
 				downloadsTrendPercentage = RandomTestUtil.randomDouble();
@@ -1574,4 +1529,4 @@ public abstract class BaseAssetSummaryMetricResourceTestCase {
 		_assetSummaryMetricResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:767041380
+// LIFERAY-REST-BUILDER-HASH:-831532037

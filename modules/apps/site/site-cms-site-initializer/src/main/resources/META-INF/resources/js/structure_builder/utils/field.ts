@@ -4,6 +4,8 @@
  */
 
 import {ObjectField} from '../../common/types/ObjectDefinition';
+import buildLocalizedValue from '../../common/utils/buildLocalizedValue';
+import {getDefaultLanguageLabel} from '../../common/utils/defaultLanguageLabels';
 import {Uuid} from '../types/Uuid';
 import getRandomId from './getRandomId';
 import getUuid from './getUuid';
@@ -25,6 +27,21 @@ export const FIELD_TYPES = [
 	'boolean',
 	'upload',
 ] as const;
+
+const FIELD_TYPE_LANGUAGE_KEY: Record<FieldType, string> = {
+	'boolean': 'boolean',
+	'date': 'date',
+	'datetime': 'date-and-time',
+	'decimal': 'decimal',
+	'email': 'email',
+	'integer': 'numeric',
+	'long-text': 'long-text',
+	'phone-number': 'phone-number',
+	'rich-text': 'rich-text',
+	'select-from-list': 'select-from-list',
+	'text': 'text',
+	'upload': 'upload',
+} as const;
 
 export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
 	'boolean': Liferay.Language.get('boolean'),
@@ -83,7 +100,7 @@ export function getFieldBusinessType(
 		case 'long-text':
 			return 'LongText';
 		case 'phone-number':
-			return 'Text';
+			return 'PhoneNumber';
 		case 'rich-text':
 			return 'RichText';
 		case 'text':
@@ -169,12 +186,11 @@ export type NumericField = BaseField & {
 
 export type PhoneNumberField = BaseField & {
 	settings: {
-		fixedCountryCode?: string;
-		prefixType: 'defined-by-user' | 'fixed';
+		prefix?: string;
+		prefixType: 'definedByUser' | 'fixed';
 	};
 	type: 'phone-number';
-} & MaxLengthSettingsField &
-	UniqueValuesSettingsField;
+} & UniqueValuesSettingsField;
 
 export type SelectFromListField = BaseField & {
 	multiselection: boolean;
@@ -232,20 +248,23 @@ export type FieldType = (typeof FIELD_TYPES)[number];
 // Functions
 
 export function getDefaultField({
-	label,
+	languageKey,
 	locked = false,
 	name,
 	parent,
 	required = false,
 	type,
 }: {
-	label?: string;
+	languageKey?: string;
 	locked?: boolean;
 	name?: string;
 	parent: Uuid;
 	required?: boolean;
 	type: FieldType;
 }): Field {
+	const resolvedLanguageKey = languageKey ?? FIELD_TYPE_LANGUAGE_KEY[type];
+	const defaultLocaleLabel = getDefaultLanguageLabel(resolvedLanguageKey);
+
 	const base = {
 		erc: getRandomId(),
 		indexableConfig: {
@@ -253,13 +272,10 @@ export function getDefaultField({
 			indexedAsKeyword: false,
 			indexedLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
 		},
-		label: {
-			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-				label ?? FIELD_TYPE_LABEL[type],
-		},
+		label: buildLocalizedValue(resolvedLanguageKey),
 		localized: true,
 		locked,
-		name: name ?? normalizeString(FIELD_TYPE_LABEL[type], {style: 'camel'}),
+		name: name ?? normalizeString(defaultLocaleLabel, {style: 'camel'}),
 		parent,
 		required,
 		settings: {},
@@ -287,7 +303,7 @@ export function getDefaultField({
 		return {
 			...base,
 			settings: {
-				prefixType: 'defined-by-user',
+				prefixType: 'definedByUser',
 			},
 			type: 'phone-number',
 		};

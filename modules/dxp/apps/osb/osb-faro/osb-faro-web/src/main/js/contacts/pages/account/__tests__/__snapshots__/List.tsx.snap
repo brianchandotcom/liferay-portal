@@ -67,13 +67,14 @@ exports[`List rendering should match the snapshot 1`] = `
         class="children-wrapper"
       >
         <div
-          class="row g-4"
+          class="row"
         >
           <div
-            class="col-12 col-lg-4 d-flex"
+            class="col-lg-4 col-md-12"
           >
             <div
               class="card card-root flex-fill p-3 w-100"
+              style="min-height: 160px;"
             >
               <div
                 class="card-title"
@@ -89,10 +90,10 @@ exports[`List rendering should match the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="card-body no-padding"
+                class="card-body justify-content-between d-flex no-padding"
               >
                 <div
-                  class="mt-1"
+                  class="mt-2"
                 >
                   <span
                     class="text-3 text-secondary"
@@ -100,34 +101,37 @@ exports[`List rendering should match the snapshot 1`] = `
                     Displays all accounts included in this property.
                   </span>
                 </div>
-                <span
-                  class="mt-3 text-lowercase text-weight-semi-bold"
-                >
-                  <span
-                    class="text-7"
+                <div>
+                  <div
+                    class="mt-2 text-lowercase text-weight-semi-bold"
                   >
-                    0 Accounts
-                  </span>
-                </span>
-                <span
-                  class="text-secondary"
-                >
-                  <span
-                    class="mr-1"
-                    style="color: rgb(107, 108, 126);"
+                    <span
+                      class="text-7"
+                    >
+                      0 Accounts
+                    </span>
+                  </div>
+                  <div
+                    class="text-secondary"
                   >
-                    0%
-                  </span>
-                   vs. Previous 90 Days
-                </span>
+                    <span
+                      class="mr-1"
+                      style="color: rgb(107, 108, 126);"
+                    >
+                      0%
+                    </span>
+                     vs. Previous 90 Days
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div
-            class="col-12 col-lg-4 d-flex"
+            class="col-lg-4 col-md-12"
           >
             <div
               class="card card-root flex-fill p-3 w-100"
+              style="min-height: 160px;"
             >
               <div
                 class="card-title"
@@ -143,10 +147,10 @@ exports[`List rendering should match the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="card-body no-padding"
+                class="card-body justify-content-between d-flex no-padding"
               >
                 <div
-                  class="mt-1"
+                  class="mt-2"
                 >
                   <span
                     class="text-3 text-secondary"
@@ -154,34 +158,37 @@ exports[`List rendering should match the snapshot 1`] = `
                     Displays all new accounts included in this property.
                   </span>
                 </div>
-                <span
-                  class="mt-3 text-lowercase text-weight-semi-bold"
-                >
-                  <span
-                    class="text-7"
+                <div>
+                  <div
+                    class="mt-2 text-lowercase text-weight-semi-bold"
                   >
-                    0 Accounts
-                  </span>
-                </span>
-                <span
-                  class="text-secondary"
-                >
-                  <span
-                    class="mr-1"
-                    style="color: rgb(107, 108, 126);"
+                    <span
+                      class="text-7"
+                    >
+                      0 Accounts
+                    </span>
+                  </div>
+                  <div
+                    class="text-secondary"
                   >
-                    0%
-                  </span>
-                   vs. Previous 90 Days
-                </span>
+                    <span
+                      class="mr-1"
+                      style="color: rgb(107, 108, 126);"
+                    >
+                      0%
+                    </span>
+                     vs. Previous 90 Days
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div
-            class="col-12 col-lg-4 d-flex"
+            class="col-lg-4 col-md-12"
           >
             <div
               class="card card-root flex-fill p-3 w-100"
+              style="min-height: 160px;"
             >
               <div
                 class="card-title"
@@ -197,10 +204,10 @@ exports[`List rendering should match the snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="card-body no-padding"
+                class="card-body justify-content-between d-flex no-padding"
               >
                 <div
-                  class="mt-1"
+                  class="mt-2"
                 >
                   <span
                     class="text-3 text-secondary"
@@ -208,26 +215,28 @@ exports[`List rendering should match the snapshot 1`] = `
                     Displays all active accounts included in this property.
                   </span>
                 </div>
-                <span
-                  class="mt-3 text-lowercase text-weight-semi-bold"
-                >
-                  <span
-                    class="text-7"
+                <div>
+                  <div
+                    class="mt-2 text-lowercase text-weight-semi-bold"
                   >
-                    0 Accounts
-                  </span>
-                </span>
-                <span
-                  class="text-secondary"
-                >
-                  <span
-                    class="mr-1"
-                    style="color: rgb(107, 108, 126);"
+                    <span
+                      class="text-7"
+                    >
+                      0 Accounts
+                    </span>
+                  </div>
+                  <div
+                    class="text-secondary"
                   >
-                    0%
-                  </span>
-                   vs. Previous 90 Days
-                </span>
+                    <span
+                      class="mr-1"
+                      style="color: rgb(107, 108, 126);"
+                    >
+                      0%
+                    </span>
+                     vs. Previous 90 Days
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -586,6 +586,35 @@ public class PullRequest {
 			getSenderUsername(), "-", getNumber(), "-", getSenderBranchName());
 	}
 
+	public String getMergeableState() {
+		Retryable<String> retryable = new Retryable<String>(false, 5, 5, true) {
+
+			@Override
+			public String execute() {
+				if (_firstAttempt) {
+					_firstAttempt = false;
+				}
+				else {
+					_refreshJSONObject();
+				}
+
+				String mergeableState = _jsonObject.getString(
+					"mergeable_state");
+
+				if (mergeableState.equals("unknown")) {
+					throw new RuntimeException("Mergeable state is unknown");
+				}
+
+				return mergeableState;
+			}
+
+			private boolean _firstAttempt = true;
+
+		};
+
+		return retryable.executeWithRetries();
+	}
+
 	public String getNumber() {
 		return String.valueOf(_number);
 	}

@@ -1185,22 +1185,14 @@ public class CompanyLocalServiceDBPartitionTest
 		CompanyLocalServiceDBPartitionTest.class.getName() + 2;
 
 	private static BundleContext _bundleContext;
-	private static ClassName _className1;
-	private static ClassName _className2;
-
-	@Inject
-	private static ClassNameLocalService _classNameLocalService;
-
-	private static long _counter;
-
-	@Inject
-	private static CounterLocalService _counterLocalService;
-
 	private static long _defaultCompanyId;
 	private static SafeCloseable _safeCloseable;
 
+	private ClassName _className1;
+	private ClassName _className2;
+
 	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private Company _company1;
@@ -1214,8 +1206,13 @@ public class CompanyLocalServiceDBPartitionTest
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
+	private long _counter;
+
 	@Inject
 	private CounterFinder _counterFinder;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -1247,5 +1244,8 @@ public class CompanyLocalServiceDBPartitionTest
 		filter = "(&(objectClass=com.liferay.document.library.kernel.store.Store)(default=true))"
 	)
 	private Store _store;
+
+	@Inject
+	private VirtualHostLocalService _virtualHostLocalService;
 
 }

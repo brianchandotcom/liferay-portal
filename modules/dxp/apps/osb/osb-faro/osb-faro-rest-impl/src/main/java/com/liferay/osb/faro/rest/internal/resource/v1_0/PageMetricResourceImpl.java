@@ -36,7 +36,7 @@ public class PageMetricResourceImpl extends BasePageMetricResourceImpl {
 	@Override
 	public Page<PageMetric> getWorkspaceGroupPagesPage(
 			Long groupId, String channelId, String dataSourceId,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
@@ -57,7 +57,7 @@ public class PageMetricResourceImpl extends BasePageMetricResourceImpl {
 				).put(
 					"rangeEnd", rangeEnd
 				).put(
-					"rangeKey", rangeKey
+					"rangeKey", TimeRange.getRangeKey(rangeKey)
 				).put(
 					"rangeStart", rangeStart
 				).put(

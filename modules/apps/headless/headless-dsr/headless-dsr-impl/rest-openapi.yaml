@@ -9,8 +9,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
-                roleKey:
+                ownerId:
+                    format: int64
                     readOnly: true
+                    type: integer
+                roleKey:
                     type: string
         UserAccount:
             properties:
@@ -84,6 +87,39 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["InvitedMember"]
+        patch:
+            operationId: patchRoomInvitedMember
+            parameters:
+                -   in: path
+                    name: roomId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: invitedMemberId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/InvitedMember"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/InvitedMember"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/InvitedMember"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/InvitedMember"
             tags: ["InvitedMember"]
     "/rooms/{roomId}/user-accounts":
         get:

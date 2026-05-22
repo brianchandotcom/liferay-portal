@@ -12,6 +12,7 @@ import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {
 	BACKSPACE_KEY_CODE,
 	C_KEY_CODE,
+	DELETE_KEY_CODE,
 	D_KEY_CODE,
 	H_KEY_CODE,
 	PERIOD_KEY_CODE,
@@ -277,7 +278,9 @@ export default function ShortcutManager() {
 						) &&
 						!isInteractiveElement(event.target)
 				),
-			isKeyCombination: (event) => event.code === BACKSPACE_KEY_CODE,
+			isKeyCombination: (event) =>
+				event.code === BACKSPACE_KEY_CODE ||
+				event.code === DELETE_KEY_CODE,
 		},
 		rename: {
 			action: () => setEditedNodeId(activeItemIds[0]),

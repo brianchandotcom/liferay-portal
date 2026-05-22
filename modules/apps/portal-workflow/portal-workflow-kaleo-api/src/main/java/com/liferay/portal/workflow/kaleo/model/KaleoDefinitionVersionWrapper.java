@@ -294,6 +294,27 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 	@Override
+	public java.util.List<KaleoAction> getKaleoNodeKaleoActions(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoActions(kaleoNodeId);
+	}
+
+	@Override
+	public java.util.List<KaleoNotification> getKaleoNodeKaleoNotifications(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoNotifications(kaleoNodeId);
+	}
+
+	@Override
+	public java.util.List<KaleoTransition> getKaleoNodeKaleoTransitions(
+		long kaleoNodeId) {
+
+		return model.getKaleoNodeKaleoTransitions(kaleoNodeId);
+	}
+
+	@Override
 	public KaleoNode getKaleoStartNode()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -526,6 +547,11 @@ public class KaleoDefinitionVersionWrapper
 		return model.isApproved();
 	}
 
+	@Override
+	public boolean isBlockingKaleoTimerExists() {
+		return model.isBlockingKaleoTimerExists();
+	}
+
 	/**
 	 * Returns <code>true</code> if this kaleo definition version is denied.
 	 *
@@ -574,6 +600,11 @@ public class KaleoDefinitionVersionWrapper
 	@Override
 	public boolean isIncomplete() {
 		return model.isIncomplete();
+	}
+
+	@Override
+	public boolean isKaleoTimerExists() {
+		return model.isKaleoTimerExists();
 	}
 
 	@Override
@@ -641,11 +672,6 @@ public class KaleoDefinitionVersionWrapper
 	@Override
 	public void setContent(String content) {
 		model.setContent(content);
-	}
-
-	@Override
-	public void setContentAsXML(String contentAsXML) {
-		model.setContentAsXML(contentAsXML);
 	}
 
 	/**
@@ -939,4 +965,4 @@ public class KaleoDefinitionVersionWrapper
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1562154547
+// LIFERAY-SERVICE-BUILDER-HASH:687919407

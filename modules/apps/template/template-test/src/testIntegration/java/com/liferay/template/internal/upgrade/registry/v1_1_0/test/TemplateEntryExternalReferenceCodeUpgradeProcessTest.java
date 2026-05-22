@@ -64,12 +64,12 @@ public class TemplateEntryExternalReferenceCodeUpgradeProcessTest
 		return new Version(1, 1, 0);
 	}
 
+	@Inject
+	private TemplateEntryLocalService _templateEntryLocalService;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.template.internal.upgrade.registry.TemplateEntryUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private TemplateEntryLocalService _templateEntryLocalService;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

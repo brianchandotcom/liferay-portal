@@ -15,6 +15,10 @@ import java.util.Map;
  */
 public class AssetSummaryTag {
 
+	public Metric getDownloadsMetric() {
+		return _downloadsMetric;
+	}
+
 	@JsonProperty("_embedded")
 	public Map<String, Object> getEmbeddedResources() {
 		return _embeddedResources;
@@ -24,8 +28,20 @@ public class AssetSummaryTag {
 		return _id;
 	}
 
+	public Metric getImpressionsMetric() {
+		return _impressionsMetric;
+	}
+
 	public String getName() {
 		return _name;
+	}
+
+	public Metric getViewsMetric() {
+		return _viewsMetric;
+	}
+
+	public void setDownloadsMetric(Metric downloadsMetric) {
+		_downloadsMetric = downloadsMetric;
 	}
 
 	public void setEmbeddedResources(Map<String, Object> embeddedResources) {
@@ -36,12 +52,23 @@ public class AssetSummaryTag {
 		_id = id;
 	}
 
+	public void setImpressionsMetric(Metric impressionsMetric) {
+		_impressionsMetric = impressionsMetric;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
 
+	public void setViewsMetric(Metric viewsMetric) {
+		_viewsMetric = viewsMetric;
+	}
+
+	private Metric _downloadsMetric;
 	private Map<String, Object> _embeddedResources = new HashMap<>();
 	private String _id;
+	private Metric _impressionsMetric;
 	private String _name;
+	private Metric _viewsMetric;
 
 }

@@ -103,13 +103,13 @@ public class RedirectPatternConfigurationUpgradeProcessTest {
 				null));
 	}
 
-	private static UpgradeProcess _upgradeProcess;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;
+
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.redirect.internal.upgrade.registry.RedirectServiceUpgradeStepRegistrator))"

@@ -137,6 +137,7 @@ public class AccountController extends BaseFaroController {
 				@PathParam("groupId") long groupId, @PathParam("id") String id,
 				@QueryParam("page") int page,
 				@QueryParam("pageSize") int pageSize,
+				@QueryParam("search") String search,
 				@DefaultValue(StringPool.BLANK) @QueryParam("sort") String
 					sortString)
 		throws Exception {
@@ -144,7 +145,7 @@ public class AccountController extends BaseFaroController {
 		return new FaroFDSResultsDisplay<>(
 			contactsEngineClient.getAccountIndividuals(
 				faroProjectLocalService.getFaroProjectByGroupId(groupId), id,
-				page, pageSize, sortString),
+				search, page, pageSize, sortString),
 			IndividualDisplay::new, page, pageSize);
 	}
 

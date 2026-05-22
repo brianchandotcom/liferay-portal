@@ -149,7 +149,7 @@ public class DummyFolderExportImportTest
 
 	protected StagedModelRepository<DummyFolder> stagedModelRepository;
 
-	private static DummyFolderStagedModelDataHandler
+	private DummyFolderStagedModelDataHandler
 		_dummyFolderStagedModelDataHandler;
 
 }

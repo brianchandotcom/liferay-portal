@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.site.cms.site.initializer.internal.display.context.PicklistBuilderDisplayContext;
 
@@ -42,8 +43,9 @@ public class PicklistBuilderComponentSectionFragmentRenderer
 
 	@Override
 	protected Map<String, Object> getProps(
-		FragmentRendererContext fragmentRendererContext,
-		HttpServletRequest httpServletRequest) {
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
 
 		PicklistBuilderDisplayContext picklistBuilderDisplayContext =
 			new PicklistBuilderDisplayContext(

@@ -55,4 +55,9 @@ public interface SitemapCompanyConfiguration {
 	)
 	public boolean xmlSitemapIndexEnabled();
 
+	@Meta.AD(
+		deflt = "page-layout", name = "xml-sitemap-index-mode", required = false
+	)
+	public String xmlSitemapIndexMode();
+
 }

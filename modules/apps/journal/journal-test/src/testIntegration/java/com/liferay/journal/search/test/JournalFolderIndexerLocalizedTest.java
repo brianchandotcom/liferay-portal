@@ -184,12 +184,12 @@ public class JournalFolderIndexerLocalizedTest {
 		}
 	}
 
-	@Inject
-	private static IndexerRegistry _indexerRegistry;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Indexer<JournalFolder> _indexer;
+
+	@Inject
+	private IndexerRegistry _indexerRegistry;
 
 }

@@ -357,24 +357,6 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 	private static final boolean _STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS = false;
 
-	@Inject
-	private static OrganizationLocalService _organizationLocalService;
-
-	@Inject
-	private static Reindexer _reindexer;
-
-	@Inject
-	private static Searcher _searcher;
-
-	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Inject
-	private static UserGroupLocalService _userGroupLocalService;
-
-	@Inject
-	private static UserLocalService _userLocalService;
-
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();
 
@@ -383,11 +365,29 @@ public class UserReindexerPerformanceOfLargeUserGroupInManySitesTest {
 
 	private int _groupsCount;
 
+	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
 	@DeleteAfterTestRun
 	private List<Organization> _organizations;
 
+	@Inject
+	private Reindexer _reindexer;
+
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
 	@DeleteAfterTestRun
 	private List<UserGroup> _userGroups;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

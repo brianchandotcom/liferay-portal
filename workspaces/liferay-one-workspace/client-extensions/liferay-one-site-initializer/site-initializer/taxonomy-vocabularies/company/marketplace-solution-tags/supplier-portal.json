@@ -1,0 +1,8 @@
+{
+	"externalReferenceCode": "MARKETPLACE_SOLUTION_TAGS_SUPPLIER_PORTAL",
+	"name": "supplier-portal",
+	"name_i18n": {
+		"en_US": "Supplier Portal"
+	},
+	"viewableBy": "Anyone"
+}

@@ -356,9 +356,6 @@ public class GroupServicePermissionTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupServicePermissionTest.class);
 
-	@Inject
-	private static RoleLocalService _roleLocalService;
-
 	private Group _group1;
 	private Group _group11;
 	private Group _group111;
@@ -379,6 +376,9 @@ public class GroupServicePermissionTest {
 
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

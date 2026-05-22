@@ -5,6 +5,8 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.test.BaseDBTestCase;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -14,10 +16,16 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Method;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Shinn Lok
@@ -343,6 +351,69 @@ public class OracleDBTest extends BaseDBTestCase {
 	}
 
 	@Test
+	public void testGetQueryInfosSQLExceptionHandling() throws Exception {
+		OracleDB oracleDB = new OracleDB(0, 0);
+
+		Connection connection = Mockito.mock(Connection.class);
+
+		PreparedStatement preparedStatement = Mockito.mock(
+			PreparedStatement.class);
+
+		Mockito.when(
+			connection.prepareStatement(Mockito.anyString())
+		).thenReturn(
+			preparedStatement
+		);
+
+		SQLException sqlException1 = new SQLException(
+			StringPool.BLANK, _SQL_STATE_SYNTAX_ERROR, _ORA_100_NO_DATA_FOUND);
+
+		Mockito.when(
+			preparedStatement.executeQuery()
+		).thenThrow(
+			sqlException1
+		);
+
+		try {
+			oracleDB.getQueryInfos(connection, "select 1 from dual", 0);
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException2) {
+			Assert.assertSame(sqlException1, sqlException2);
+		}
+
+		SQLException sqlException2 = new SQLException(
+			_ORA_942_MESSAGE, _SQL_STATE_OBJECT_NOT_FOUND,
+			_ORA_942_TABLE_NOT_FOUND);
+
+		Mockito.doThrow(
+			sqlException2
+		).when(
+			preparedStatement
+		).executeQuery();
+
+		try {
+			oracleDB.getQueryInfos(connection, "select 1 from dual", 0);
+
+			Assert.fail();
+		}
+		catch (SQLException sqlException3) {
+			Assert.assertEquals(
+				sqlException2.getErrorCode(), sqlException3.getErrorCode());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Grant select privileges on \"sys.v_$session\" and ",
+					"\"sys.v_$sql\", or assign \"SELECT_CATALOG_ROLE\" or ",
+					"\"DBA\", because the database user lacks the required ",
+					"select privileges"),
+				sqlException3.getMessage());
+			Assert.assertEquals(
+				sqlException2.getSQLState(), sqlException3.getSQLState());
+		}
+	}
+
+	@Test
 	public void testGetVarcharDefaultValue() {
 		Assert.assertEquals("test", db.getDefaultValue("'test'"));
 	}
@@ -508,6 +579,17 @@ public class OracleDBTest extends BaseDBTestCase {
 
 		};
 	}
+
+	private static final int _ORA_100_NO_DATA_FOUND = 100;
+
+	private static final String _ORA_942_MESSAGE =
+		"ORA-00942: table or view does not exist";
+
+	private static final int _ORA_942_TABLE_NOT_FOUND = 942;
+
+	private static final String _SQL_STATE_OBJECT_NOT_FOUND = "42000";
+
+	private static final String _SQL_STATE_SYNTAX_ERROR = "42001";
 
 	private boolean _nullable;
 

@@ -4,10 +4,15 @@
  */
 
 import ClayPanel from '@clayui/panel';
+import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {API, openToast, stringUtils} from '@liferay/object-js-components-web';
-import {ILearnResourceContext} from 'frontend-js-components-web';
-import React, {useEffect, useState} from 'react';
+import {
+	ILearnResourceContext,
+	LearnResourcesContext,
+} from 'frontend-js-components-web';
+import React, {useEffect, useRef, useState} from 'react';
 
+import {checkHasStandaloneEntries} from '../../utils/checkHasStandaloneEntries';
 import {Error, handleErrors} from '../../utils/errors';
 import ObjectManagementToolbar from '../ObjectManagementToolbar';
 import {AccountRestrictionContainer} from './AccountRestrictionContainer';
@@ -101,6 +106,7 @@ export default function EditObjectDetails({
 	storageTypes,
 }: EditObjectDetailsProps) {
 	const [backEndErrors, setBackEndErrors] = useState<Error>({});
+	const [hasStandaloneEntries, setHasStandaloneEntries] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
 	const {errors, handleChange, handleValidate, setValues, values} =
@@ -204,6 +210,14 @@ export default function EditObjectDetails({
 
 			setValues(objectDefinitionResponse);
 			setObjectFields(objectFieldsResponse);
+
+			setHasStandaloneEntries(
+				await checkHasStandaloneEntries(
+					isRootDescendantNode,
+					objectDefinitionResponse
+				)
+			);
+
 			setLoading(false);
 		};
 
@@ -211,6 +225,35 @@ export default function EditObjectDetails({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectDefinitionId]);
+
+	// Refresh the standalone entries check when the tab regains focus, so
+	// entries created in another tab are reflected without a manual reload.
+	// The initial fetch is owned by the load useEffect above, so skip the
+	// first run here to avoid a duplicate request on mount.
+
+	const isBrowserTabVisible = useBrowserTabVisibility();
+	const isInitialVisibilityRunRef = useRef(true);
+	const valuesRef = useRef(values);
+
+	valuesRef.current = values;
+
+	useEffect(() => {
+		if (isInitialVisibilityRunRef.current) {
+			isInitialVisibilityRunRef.current = false;
+
+			return;
+		}
+
+		if (!isBrowserTabVisible || !valuesRef.current.id) {
+			return;
+		}
+
+		checkHasStandaloneEntries(isRootDescendantNode, valuesRef.current).then(
+			setHasStandaloneEntries
+		);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isBrowserTabVisible]);
 
 	const showSeoSection =
 		values.friendlyURLSeparator !== undefined &&
@@ -225,7 +268,7 @@ export default function EditObjectDetails({
 		!(!values.modifiable && values.system);
 
 	return (
-		<>
+		<LearnResourcesContext.Provider value={learnResources}>
 			<div className="lfr-objects__object-definition-details-management-toolbar">
 				<ObjectManagementToolbar
 					allowStandaloneObjectEntry={allowStandaloneObjectEntry}
@@ -258,9 +301,7 @@ export default function EditObjectDetails({
 			<div className="lfr-objects__object-definition-details">
 				<Sheet title={Liferay.Language.get('basic-information')}>
 					{isRootDescendantNode && (
-						<InheritanceObjectDefinitionAlert
-							learnResources={learnResources}
-						/>
+						<InheritanceObjectDefinitionAlert />
 					)}
 
 					<ClayPanel
@@ -380,6 +421,7 @@ export default function EditObjectDetails({
 					>
 						<ClayPanel.Body>
 							<ConfigurationContainer
+								hasStandaloneEntries={hasStandaloneEntries}
 								hasUpdateObjectDefinitionPermission={
 									hasUpdateObjectDefinitionPermission
 								}
@@ -387,6 +429,7 @@ export default function EditObjectDetails({
 								isEnableObjectEntrySchedule={
 									isEnableObjectEntrySchedule
 								}
+								isRootDescendantNode={isRootDescendantNode}
 								setValues={setValues}
 								values={values}
 							/>
@@ -444,6 +487,6 @@ export default function EditObjectDetails({
 					)}
 				</Sheet>
 			</div>
-		</>
+		</LearnResourcesContext.Provider>
 	);
 }

@@ -56,6 +56,10 @@
 			<finder-column name="kaleoClassName" />
 			<finder-column name="kaleoClassPK" />
 		</finder>
+		<finder name="KCN_KDVI" return-type="Collection">
+			<finder-column name="kaleoClassName" />
+			<finder-column name="kaleoDefinitionVersionId" />
+		</finder>
 		<finder name="C_KCN_KCPK" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="kaleoClassName" />
@@ -564,6 +568,10 @@
 			<finder-column name="kaleoClassName" />
 			<finder-column name="kaleoClassPK" />
 		</finder>
+		<finder name="KCN_KDVI" return-type="Collection">
+			<finder-column name="kaleoClassName" />
+			<finder-column name="kaleoDefinitionVersionId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="KaleoNotificationRecipient" remote-service="false">
 
@@ -1014,6 +1022,10 @@
 		<finder name="KCN_KCPK" return-type="Collection">
 			<finder-column name="kaleoClassName" />
 			<finder-column name="kaleoClassPK" />
+		</finder>
+		<finder name="KCN_KDVI" return-type="Collection">
+			<finder-column name="kaleoClassName" />
+			<finder-column name="kaleoDefinitionVersionId" />
 		</finder>
 		<finder name="KCN_KCPK_Blocking" return-type="Collection">
 			<finder-column name="kaleoClassName" />

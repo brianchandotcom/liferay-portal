@@ -516,13 +516,14 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort,
-		String vocabularyId, int cur, int delta) {
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, String vocabularyId, int cur,
+		int delta) {
 
 		return contactsEngineClient.getAssetSummaryCategories(
-			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
-			sort, vocabularyId, cur, delta);
+			faroProject, accountId, channelId, keywords, rangeEnd, rangeKey,
+			rangeStart, selectedMetric, sort, vocabularyId, cur, delta);
 	}
 
 	@Override
@@ -536,13 +537,13 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public Results<AssetSummaryTag> getAssetSummaryTags(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta) {
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, int cur, int delta) {
 
 		return contactsEngineClient.getAssetSummaryTags(
-			faroProject, channelId, keywords, rangeEnd, rangeKey, rangeStart,
-			sort, cur, delta);
+			faroProject, accountId, channelId, keywords, rangeEnd, rangeKey,
+			rangeStart, selectedMetric, sort, cur, delta);
 	}
 
 	@Override

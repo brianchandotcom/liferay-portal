@@ -23,6 +23,94 @@
 			"type": "oneToMany"
 		},
 		{
+			"deletionType": "prevent",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_CONTRACT",
+			"label": {
+				"en_US": "Account Entry to Contract"
+			},
+			"name": "accountEntryToContract",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_CONTRACT",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "disassociate",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_LICENSE_KEY",
+			"label": {
+				"en_US": "Account Entry to License Key"
+			},
+			"name": "accountEntryToLicenseKey",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_PROPERTY",
+			"label": {
+				"en_US": "Account Entry to Property"
+			},
+			"name": "accountEntryToProperty",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_PROPERTY",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_PUBLISHER_ASSETS",
+			"label": {
+				"en_US": "Account Entry to Publisher Assets"
+			},
+			"name": "accountEntryToPublisherAssets",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_PUBLISHER_ASSETS",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_PUBLISHER_DETAILS",
+			"label": {
+				"en_US": "Account Entry to Publisher Details"
+			},
+			"name": "accountEntryToPublisherDetails",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_PUBLISHER_DETAILS",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_TO_OAUTH2_DXP_AUTHORIZATION",
+			"label": {
+				"en_US": "Account to OAuth2 DXP Authorization"
+			},
+			"name": "accountToOAuth2DxpAuthorization",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_OAUTH2_DXP_AUTHORIZATION",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_TO_PUBLISHER",
+			"label": {
+				"en_US": "Account to Publisher"
+			},
+			"name": "accountToPublisher",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_PUBLISHER_SALES_SUMMARY",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ACCOUNT_TO_TRIAL_EXTENSION_REQUEST",
+			"label": {
+				"en_US": "Account to Trial Extension Request"
+			},
+			"name": "accountToTrialExtensionRequest",
+			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
+			"objectDefinitionExternalReferenceCode2": "C_TRIAL_EXTENSION_REQUEST",
+			"type": "oneToMany"
+		},
+		{
 			"deletionType": "disassociate",
 			"externalReferenceCode": "R_COMMERCE_ORDER_ITEM_TO_ENTITLEMENT",
 			"label": {
@@ -67,39 +155,6 @@
 			"type": "oneToMany"
 		},
 		{
-			"deletionType": "prevent",
-			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_CONTRACT",
-			"label": {
-				"en_US": "Account Entry to Contract"
-			},
-			"name": "accountEntryToContract",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectDefinitionExternalReferenceCode2": "C_CONTRACT",
-			"type": "oneToMany"
-		},
-		{
-			"deletionType": "disassociate",
-			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_LICENSE_KEY",
-			"label": {
-				"en_US": "Account Entry to License Key"
-			},
-			"name": "accountEntryToLicenseKey",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
-			"type": "oneToMany"
-		},
-		{
-			"deletionType": "cascade",
-			"externalReferenceCode": "R_ACCOUNT_ENTRY_TO_PROPERTY",
-			"label": {
-				"en_US": "Account Entry to Property"
-			},
-			"name": "accountEntryToProperty",
-			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
-			"objectDefinitionExternalReferenceCode2": "C_PROPERTY",
-			"type": "oneToMany"
-		},
-		{
 			"deletionType": "cascade",
 			"externalReferenceCode": "R_CONTRACT_TO_ENTITLEMENT",
 			"label": {
@@ -130,6 +185,105 @@
 			"name": "entitlementToLicenseKey",
 			"objectDefinitionExternalReferenceCode1": "C_ENTITLEMENT",
 			"objectDefinitionExternalReferenceCode2": "C_LICENSE_KEY",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ORDER_TO_AI_HUB_BETA_PRIVATE_ACCESS_REQUEST",
+			"label": {
+				"en_US": "Order to AI Hub Beta Private Access Request"
+			},
+			"name": "orderToAIHubBetaPrivateAccessRequest",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+			"objectDefinitionExternalReferenceCode2": "C_AI_HUB_BETA_PRIVATE_ACCESS_REQUEST",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ORDER_TO_DSR_REQUEST",
+			"label": {
+				"en_US": "Order to DSR Request"
+			},
+			"name": "orderToDSRRequest",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+			"objectDefinitionExternalReferenceCode2": "C_DSR_REQUEST",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ORDER_TO_DXP_FREE_ACTIVATION_KEY_REQUEST",
+			"label": {
+				"en_US": "Order to DXP Free Activation Key Request"
+			},
+			"name": "orderToDXPFreeActivationKeyRequest",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+			"objectDefinitionExternalReferenceCode2": "C_DXP_FREE_ACTIVATION_KEY_REQUEST",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ORDER_TO_PRODUCT_FEEDBACK",
+			"label": {
+				"en_US": "Order to Product Feedback"
+			},
+			"name": "orderToProductFeedback",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+			"objectDefinitionExternalReferenceCode2": "C_PRODUCT_FEEDBACK",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_ORDER_TO_TRIAL_EXTENSION_REQUEST",
+			"label": {
+				"en_US": "Order to Trial Extension Request"
+			},
+			"name": "orderToTrialExtensionRequest",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_ORDER",
+			"objectDefinitionExternalReferenceCode2": "C_TRIAL_EXTENSION_REQUEST",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_PRODUCT_ENTRY_TO_PRODUCT_FEEDBACK",
+			"label": {
+				"en_US": "Product to Product Feedback"
+			},
+			"name": "productEntryToProductFeedback",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT_DEFINITION",
+			"objectDefinitionExternalReferenceCode2": "C_PRODUCT_FEEDBACK",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_PRODUCT_ENTRY_TO_PUBLISHER_ASSETS",
+			"label": {
+				"en_US": "Product to Publisher Assets"
+			},
+			"name": "productEntryToPublisherAssets",
+			"objectDefinitionExternalReferenceCode1": "L_COMMERCE_PRODUCT_DEFINITION",
+			"objectDefinitionExternalReferenceCode2": "C_PUBLISHER_ASSETS",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_PUBLISHER_ASSETS_TO_ATTACHMENT",
+			"label": {
+				"en_US": "Publisher Assets to Publisher Asset Attachment"
+			},
+			"name": "publisherAssetsToAttachment",
+			"objectDefinitionExternalReferenceCode1": "C_PUBLISHER_ASSETS",
+			"objectDefinitionExternalReferenceCode2": "C_PUBLISHER_ASSET_ATTACHMENT",
+			"type": "oneToMany"
+		},
+		{
+			"deletionType": "cascade",
+			"externalReferenceCode": "R_PUBLISHER_TO_COMMERCE_ORDER",
+			"label": {
+				"en_US": "Publisher to Commerce Order"
+			},
+			"name": "publisherToCommerceOrder",
+			"objectDefinitionExternalReferenceCode1": "C_PUBLISHER_SALES_SUMMARY",
+			"objectDefinitionExternalReferenceCode2": "L_COMMERCE_ORDER",
 			"type": "oneToMany"
 		},
 		{

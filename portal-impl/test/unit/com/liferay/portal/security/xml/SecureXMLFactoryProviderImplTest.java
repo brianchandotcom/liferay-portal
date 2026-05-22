@@ -310,14 +310,13 @@ public class SecureXMLFactoryProviderImplTest {
 		}
 	}
 
-	private static String _xmlBombBillionLaughsXML;
-	private static String _xmlBombQuadraticBlowupXML;
-	private static String _xxeGeneralEntitiesXML1;
-	private static String _xxeGeneralEntitiesXML2;
-	private static String _xxeParameterEntitiesXML1;
-	private static String _xxeParameterEntitiesXML2;
-
 	private SecureXMLFactoryProviderImpl _secureXMLFactoryProviderImpl;
+	private String _xmlBombBillionLaughsXML;
+	private String _xmlBombQuadraticBlowupXML;
+	private String _xxeGeneralEntitiesXML1;
+	private String _xxeGeneralEntitiesXML2;
+	private String _xxeParameterEntitiesXML1;
+	private String _xxeParameterEntitiesXML2;
 
 	private abstract class XMLSecurityTest {
 

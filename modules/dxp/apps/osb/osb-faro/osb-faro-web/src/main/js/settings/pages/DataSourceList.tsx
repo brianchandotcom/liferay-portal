@@ -31,59 +31,33 @@ import {
 } from 'settings/components/3rd-party-connector/registry';
 import {getConnectorStatusDisplay} from 'settings/components/3rd-party-connector/getConnectorStatusDisplay';
 import {getDataSourceDisplayObject} from 'shared/util/data-sources';
+import {isLDPPlan} from 'shared/util/subscriptions';
 import {Link, useHistory, useParams} from 'react-router-dom';
 import {Routes, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
-import {SubscriptionNames} from 'shared/util/subscriptions';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useSubscriptionName} from 'shared/hooks/useSubscriptionName';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 
-const DATA_SOURCE_SUBSCRIPTION_RULES: {
-	[type: string]: {excluded?: string[]; included?: string[]};
-} = {
-	[DataSourceTypes.Demandbase]: {
-		included: [
-			SubscriptionNames.LiferayDataPlatform,
-			SubscriptionNames.LiferayDataPlatformEnterprise
-		]
+interface StandaloneDataSourceDescriptor {
+	label: string;
+	requiresLDP?: boolean;
+	type: DataSourceTypes;
+}
+
+const STANDALONE_DATA_SOURCES: StandaloneDataSourceDescriptor[] = [
+	{
+		label: Liferay.Language.get('liferay-dxp'),
+		type: DataSourceTypes.Liferay
 	},
-	[DataSourceTypes.Hubspot]: {
-		included: [
-			SubscriptionNames.LiferayDataPlatform,
-			SubscriptionNames.LiferayDataPlatformEnterprise
-		]
-	},
-	[DataSourceTypes.Salesforce]: {
-		included: [
-			SubscriptionNames.LiferayDataPlatform,
-			SubscriptionNames.LiferayDataPlatformEnterprise
-		]
+	{
+		label: Liferay.Language.get('salesforce'),
+		requiresLDP: true,
+		type: DataSourceTypes.Salesforce
 	}
-};
-
-export const isDataSourceVisible = (
-	type: string,
-	subscriptionName: string | null
-): boolean => {
-	const rule = DATA_SOURCE_SUBSCRIPTION_RULES[type];
-
-	if (!rule || !subscriptionName) {
-		return true;
-	}
-
-	if (rule.excluded?.includes(subscriptionName)) {
-		return false;
-	}
-
-	if (rule.included && !rule.included.includes(subscriptionName)) {
-		return false;
-	}
-
-	return true;
-};
+];
 
 interface ICellProps {
 	data: {[key: string]: any};
@@ -268,49 +242,36 @@ const DataSourceList: React.FC<IDataSourceListProps> = ({className}) => {
 		)
 	);
 
-	const connectorItems = listAvailableConnectors(existingConnectorTypes)
-		.filter(config => isDataSourceVisible(config.type, subscriptionName))
-		.map(config => ({
-			label: config.displayName,
-			onClick: () => {
-				history.push(
-					toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
-						groupId,
-						id: config.type
-					})
-				);
-			}
-		}));
+	const ldpAllowed = isLDPPlan(subscriptionName);
 
-	const dataSourceItems = [
-		{
-			label: Liferay.Language.get('liferay-dxp'),
-			onClick: () => {
-				history.push(
-					toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
-						groupId,
-						id: DataSourceTypes.Liferay
-					})
-				);
-			},
-			type: DataSourceTypes.Liferay
-		},
-		{
-			label: Liferay.Language.get('salesforce'),
-			onClick: () => {
-				history.push(
-					toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
-						groupId,
-						id: DataSourceTypes.Salesforce
-					})
-				);
-			},
-			type: DataSourceTypes.Salesforce
+	const connectorItems = listAvailableConnectors(
+		existingConnectorTypes,
+		subscriptionName
+	).map(config => ({
+		label: config.displayName,
+		onClick: () => {
+			history.push(
+				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+					groupId,
+					id: config.type
+				})
+			);
 		}
-	]
-		.filter(({type}) => isDataSourceVisible(type, subscriptionName))
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		.map(({type, ...item}) => item);
+	}));
+
+	const dataSourceItems = STANDALONE_DATA_SOURCES.filter(
+		({requiresLDP}) => !requiresLDP || ldpAllowed
+	).map(({label, type}) => ({
+		label,
+		onClick: () => {
+			history.push(
+				toRoute(Routes.SETTINGS_DATA_SOURCE_ONBOARDING, {
+					groupId,
+					id: type
+				})
+			);
+		}
+	}));
 
 	const renderDataSourcesDropdown = () => (
 		<ClayDropDownWithItems

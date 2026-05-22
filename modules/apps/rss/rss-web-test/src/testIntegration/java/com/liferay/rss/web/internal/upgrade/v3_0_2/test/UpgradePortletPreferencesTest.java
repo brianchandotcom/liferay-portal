@@ -41,6 +41,6 @@ public class UpgradePortletPreferencesTest
 	@Inject(
 		filter = "(&(component.name=com.liferay.rss.web.internal.upgrade.registry.RSSWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

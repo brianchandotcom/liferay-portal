@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -86,7 +87,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			return commercePaymentEntry;
 		}
 
-		User currentUser = _portal.getUser(httpServletRequest);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -168,7 +169,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.cancel(
 				httpServletRequest, commercePaymentEntry);
 
-		User currentUser = _portal.getUser(httpServletRequest);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -271,7 +272,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			return commercePaymentEntry;
 		}
 
-		User currentUser = _portal.getUser(httpServletRequest);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -353,7 +354,7 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			commercePaymentIntegration.refund(
 				httpServletRequest, commercePaymentEntry);
 
-		User currentUser = _portal.getUser(httpServletRequest);
+		User currentUser = _getUser(commercePaymentEntry, httpServletRequest);
 
 		PermissionThreadLocal.setPermissionChecker(
 			_defaultPermissionCheckerFactory.create(currentUser));
@@ -442,6 +443,21 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 			CommercePaymentEntryAuditConfiguration.class, companyId);
 	}
 
+	private User _getUser(
+			CommercePaymentEntry commercePaymentEntry,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if ((user == null) && (commercePaymentEntry != null)) {
+			user = _userLocalService.fetchUser(
+				commercePaymentEntry.getUserId());
+		}
+
+		return user;
+	}
+
 	private void _logOptimisticLockException(Exception exception) {
 		if (!(exception.getCause() instanceof SystemException)) {
 			return;
@@ -489,5 +505,8 @@ public class CommercePaymentGatewayImpl implements CommercePaymentGateway {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

@@ -105,11 +105,10 @@ describe('MetricCard', () => {
 		).toBeNull();
 	});
 
-	it('should apply className, bodyClassName, and trendClassName', () => {
+	it('should apply className and trendClassName', () => {
 		const {container} = render(
 			<MetricCard
 				{...defaultProps}
-				bodyClassName='custom-body'
 				className='custom-card'
 				trend={{
 					percentage: 10,
@@ -120,7 +119,6 @@ describe('MetricCard', () => {
 		);
 
 		expect(container.querySelector('.custom-card')).toBeTruthy();
-		expect(container.querySelector('.custom-body')).toBeTruthy();
 		expect(container.querySelector('.custom-trend')).toBeTruthy();
 	});
 

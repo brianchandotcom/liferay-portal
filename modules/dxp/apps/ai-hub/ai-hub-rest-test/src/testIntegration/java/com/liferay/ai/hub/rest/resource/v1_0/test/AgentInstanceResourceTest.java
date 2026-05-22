@@ -10,7 +10,6 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.ai.hub.cell.configuration.AIHubCellConfiguration;
-import com.liferay.ai.hub.rest.manager.v1_0.ContentRetrieverManager;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.TokenTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
@@ -21,7 +20,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -67,12 +65,12 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowNode;
-import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
@@ -84,10 +82,16 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -183,11 +187,6 @@ public class AgentInstanceResourceTest
 				getObjectDefinitionByExternalReferenceCode(
 					"L_AI_HUB_AGENT_DEFINITION",
 					TestPropsValues.getCompanyId());
-		_contentRetrieverObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_AI_HUB_CONTENT_RETRIEVER",
-					TestPropsValues.getCompanyId());
 		_instructionObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -254,6 +253,8 @@ public class AgentInstanceResourceTest
 		_addAgentDefinitionObjectEntry(
 			"L_WORKFLOW_DEFINITION", "text", "workflow-definition.json",
 			"Workflow Definition");
+
+		SseUtil.closeAll();
 	}
 
 	@AfterClass
@@ -374,6 +375,12 @@ public class AgentInstanceResourceTest
 				values
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private void _assertContains(String line, String... texts) {
+		for (String text : texts) {
+			Assert.assertTrue(line, line.contains(text));
+		}
 	}
 
 	private String _getExpectedPromptInput(
@@ -806,10 +813,9 @@ public class AgentInstanceResourceTest
 
 		Assert.assertEquals(lines.toString(), 6, lines.size());
 
-		response = StringUtil.toLowerCase(lines.get(5));
-
-		Assert.assertTrue(response, response.contains("brazilian barbecue"));
-		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
+		_assertContains(
+			StringUtil.toLowerCase(lines.get(5)), "brazilian barbecue",
+			"\"nodename\":\"llm\"");
 
 		SseUtil.closeAll();
 	}
@@ -892,12 +898,9 @@ public class AgentInstanceResourceTest
 
 				Assert.assertEquals(lines.toString(), 6, lines.size());
 
-				response = StringUtil.toLowerCase(lines.get(5));
-
-				Assert.assertTrue(
-					response, response.contains("brazilian barbecue"));
-				Assert.assertTrue(
-					response, response.contains("\"nodename\":\"llm\""));
+				_assertContains(
+					StringUtil.toLowerCase(lines.get(5)), "brazilian barbecue",
+					"\"nodename\":\"llm\"");
 			}
 		);
 
@@ -922,10 +925,9 @@ public class AgentInstanceResourceTest
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 
-		String response = StringUtil.toLowerCase(lines.get(3));
-
-		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
-		Assert.assertTrue(response, response.contains("yes"));
+		_assertContains(
+			StringUtil.toLowerCase(lines.get(3)), "\"nodename\":\"llm\"",
+			"yes");
 
 		SseUtil.closeAll();
 	}
@@ -1010,7 +1012,7 @@ public class AgentInstanceResourceTest
 				"externalReferenceCode",
 				"quota-" + _accountEntry.getAccountEntryId()
 			).put(
-				"limit", 0
+				"limit", 100
 			).put(
 				"r_accountToAIHubQuotas_accountEntryId",
 				_accountEntry.getAccountEntryId()
@@ -1019,23 +1021,68 @@ public class AgentInstanceResourceTest
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		CountDownLatch countDownLatch = new CountDownLatch(3);
-		List<String> lines = new ArrayList<>();
+		int threadsCount = 4;
+
+		List<JSONObject> jsonObjects = new ArrayList<>();
+
+		for (int i = 0; i < threadsCount; i++) {
+			jsonObjects.add(TokenTestUtil.postToken());
+		}
+
+		CountDownLatch countDownLatch1 = new CountDownLatch(10);
+
+		List<String> lines = Collections.synchronizedList(new ArrayList<>());
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "agent-instances/subscribe");
+			List.of(countDownLatch1), lines, "agent-instances/subscribe");
 
-		_postAgentInstance(
-			"L_MAKE_SHORTER", "This is a long text.", "text", sseEventSinkKey);
+		CountDownLatch countDownLatch2 = new CountDownLatch(1);
 
-		Assert.assertTrue(countDownLatch.await(20, TimeUnit.SECONDS));
+		ExecutorService executorService = Executors.newFixedThreadPool(
+			threadsCount);
 
-		Assert.assertEquals(lines.toString(), 4, lines.size());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SqlExceptionHelper.class.getName(), LoggerTestUtil.OFF)) {
 
-		String line = lines.get(3);
+			List<Future<?>> futures = new ArrayList<>();
 
-		Assert.assertTrue(
-			line, line.contains("You have exceeded your token quota"));
+			for (JSONObject jsonObject : jsonObjects) {
+				futures.add(
+					executorService.submit(
+						() -> {
+							countDownLatch2.await();
+
+							return _postAgentInstance(
+								"L_MAKE_SHORTER", "This is a long text.",
+								"text", null, jsonObject, sseEventSinkKey);
+						}));
+			}
+
+			countDownLatch2.countDown();
+
+			for (Future<?> future : futures) {
+				future.get(60, TimeUnit.SECONDS);
+			}
+
+			Assert.assertTrue(countDownLatch1.await(30, TimeUnit.SECONDS));
+		}
+
+		executorService.shutdown();
+
+		Assert.assertEquals(lines.toString(), 10, lines.size());
+
+		int count = 0;
+
+		for (String line :
+				List.of(
+					lines.get(3), lines.get(5), lines.get(7), lines.get(9))) {
+
+			if (line.contains("You have exceeded your token quota")) {
+				count++;
+			}
+		}
+
+		Assert.assertEquals(lines.toString(), 3, count);
 
 		SseUtil.closeAll();
 	}
@@ -1064,12 +1111,9 @@ public class AgentInstanceResourceTest
 		Assert.assertEquals(
 			"pageBuilder", outputJSONObject.getString("nodeName"));
 
-		String data = outputJSONObject.getString("data");
-
-		Assert.assertTrue(data, data.contains("BASIC_COMPONENT-heading"));
-		Assert.assertTrue(data, data.contains("ContentPage"));
-		Assert.assertTrue(data, data.contains("ContentPageSpecification"));
-		Assert.assertTrue(data, data.contains("Hello World"));
+		_assertContains(
+			outputJSONObject.getString("data"), "BASIC_COMPONENT-heading",
+			"ContentPage", "ContentPageSpecification", "Hello World");
 
 		SseUtil.closeAll();
 	}
@@ -1088,7 +1132,6 @@ public class AgentInstanceResourceTest
 	@Inject
 	private static ClassNameLocalService _classNameLocalService;
 
-	private static ObjectDefinition _contentRetrieverObjectDefinition;
 	private static ObjectDefinition _instructionObjectDefinition;
 	private static ObjectDefinition _mcpServerObjectDefinition;
 	private static ObjectDefinition _objectDefinition;
@@ -1109,22 +1152,10 @@ public class AgentInstanceResourceTest
 	private static WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
-	private ContentRetrieverManager _contentRetrieverManager;
-
-	@Inject
-	private DTOConverterRegistry _dtoConverterRegistry;
-
-	@Inject
 	private JSONFactory _jsonFactory;
 
 	@Inject
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Inject
 	private UserLocalService _userLocalService;

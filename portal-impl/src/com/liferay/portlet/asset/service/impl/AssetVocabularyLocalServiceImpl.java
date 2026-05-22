@@ -191,7 +191,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		long vocabularyId = counterLocalService.increment();
 
-		_validateExternalReferenceCode(externalReferenceCode, groupId);
+		_validateExternalReferenceCode(externalReferenceCode, groupId, 0);
 
 		AssetVocabulary vocabulary = assetVocabularyPersistence.create(
 			vocabularyId);
@@ -532,9 +532,9 @@ public class AssetVocabularyLocalServiceImpl
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
-		if (Validator.isNotNull(externalReferenceCode) &&
-			FeatureFlagManagerUtil.isEnabled(
-				vocabulary.getCompanyId(), "LPD-31228")) {
+		if (Validator.isNotNull(externalReferenceCode)) {
+			_validateExternalReferenceCode(
+				externalReferenceCode, vocabulary.getGroupId(), vocabularyId);
 
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
@@ -572,6 +572,9 @@ public class AssetVocabularyLocalServiceImpl
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);
 
 		if (Validator.isNotNull(externalReferenceCode)) {
+			_validateExternalReferenceCode(
+				externalReferenceCode, vocabulary.getGroupId(), vocabularyId);
+
 			vocabulary.setExternalReferenceCode(externalReferenceCode);
 		}
 
@@ -740,7 +743,7 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-			String externalReferenceCode, long groupId)
+			String externalReferenceCode, long groupId, long vocabularyId)
 		throws PortalException {
 
 		if (Validator.isNull(externalReferenceCode)) {
@@ -761,7 +764,9 @@ public class AssetVocabularyLocalServiceImpl
 			assetVocabularyPersistence.fetchByERC_G(
 				externalReferenceCode, groupId);
 
-		if (assetVocabulary != null) {
+		if ((assetVocabulary != null) &&
+			(assetVocabulary.getVocabularyId() != vocabularyId)) {
+
 			throw new DuplicateVocabularyExternalReferenceCodeException(
 				StringBundler.concat(
 					"Duplicate vocabulary external reference code ",

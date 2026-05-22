@@ -157,6 +157,7 @@ const renderComponent = ({
 						},
 						pageRules: rules,
 					},
+					mappingFields: {},
 				}) as unknown as State
 			}
 		>
@@ -185,7 +186,7 @@ const selectPickerOption = async (pickerLabel: string, optionValue: string) => {
 	await userEvent.click(option);
 };
 
-describe('RulesSidebar', () => {
+describe('RulesModal', () => {
 	afterEach(() => {
 		Liferay.FeatureFlags['LPS-169837'] = false;
 	});

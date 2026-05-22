@@ -13,7 +13,6 @@
 				<a
 					class="lo-side-nav__item-link${isActive?then(' lo-side-nav__item-link--active', '')}"
 					href="${url}"
-					style="padding-left: ${(depth + 1)}rem"
 				>
 					${navItem.getName()}
 				</a>

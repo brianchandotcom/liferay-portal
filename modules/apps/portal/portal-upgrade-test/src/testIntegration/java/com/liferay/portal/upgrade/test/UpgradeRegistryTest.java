@@ -96,10 +96,10 @@ public class UpgradeRegistryTest {
 		Assert.assertTrue(testUpgradeSteps[3]._upgradeCalled);
 	}
 
-	private static String _originalUpgradeDatabaseAutoRun;
+	private String _originalUpgradeDatabaseAutoRun;
 
 	@Inject
-	private static ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 

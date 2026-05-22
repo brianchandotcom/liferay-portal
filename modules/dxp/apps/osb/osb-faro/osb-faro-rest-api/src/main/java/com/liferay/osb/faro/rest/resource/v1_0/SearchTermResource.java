@@ -44,7 +44,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SearchTermResource {
 
 	public Page<SearchTerm> getWorkspaceGroupChannelSearchTermsPage(
-			Long groupId, String channelId, String rangeEnd, Integer rangeKey,
+			Long groupId, String channelId, String rangeEnd, String rangeKey,
 			String rangeStart, Pagination pagination)
 		throws Exception;
 
@@ -136,4 +136,4 @@ public interface SearchTermResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:48963523
+// LIFERAY-REST-BUILDER-HASH:-577041824

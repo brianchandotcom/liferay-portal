@@ -177,4 +177,44 @@ describe('BaseResults', () => {
 			{timeout: 1000}
 		);
 	});
+
+	it('should not re-invoke resultsRenderer while typing in the search input', async () => {
+		const resultsRenderer = jest.fn(({items}) => (
+			<ul data-testid='results'>
+				{items.map(item => (
+					<li key={item.id}>{item.name}</li>
+				))}
+			</ul>
+		));
+
+		const {container} = render(
+			<DefaultComponent
+				dataSourceFn={() =>
+					Promise.resolve({items: INDIVIDUALS, total: TOTAL})
+				}
+				groupId='23'
+				resultsRenderer={resultsRenderer}
+			/>
+		);
+
+		await waitFor(
+			() => {
+				expect(resultsRenderer).toHaveBeenCalled();
+				expect(resultsRenderer.mock.lastCall[0].loading).toBe(false);
+			},
+			{timeout: 1000}
+		);
+
+		const callsAfterLoad = resultsRenderer.mock.calls.length;
+
+		const searchInput = container.querySelector('input.input-root');
+
+		fireEvent.change(searchInput, {target: {value: 'a'}});
+		fireEvent.change(searchInput, {target: {value: 'ab'}});
+		fireEvent.change(searchInput, {target: {value: 'abc'}});
+
+		expect(searchInput.value).toBe('abc');
+
+		expect(resultsRenderer).toHaveBeenCalledTimes(callsAfterLoad);
+	});
 });

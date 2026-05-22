@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 import {renderHook} from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -38,9 +38,13 @@ const TOGGLES_DISABLED_FOR_SYSTEM_UNMODIFIABLE = ALL_TOGGLES.filter(
 describe('The ConfigurationContainer', () => {
 	beforeEach(() => {
 		global.Liferay = {
-			FeatureFlags: {'LPD-17564': true},
+			FeatureFlags: {'LPD-17564': true, 'LPD-69877': true},
 			Language: {
 				get: jest.fn((key) => key),
+			},
+			ThemeDisplay: {
+				getDefaultLanguageId: () => 'en_US',
+				getLanguageId: () => 'en_US',
 			},
 		} as any;
 	});
@@ -172,4 +176,192 @@ describe('The ConfigurationContainer', () => {
 			expect(screen.getByRole('switch', {name: label})).toBeDisabled();
 		}
 	);
+
+	describe('allow-standalone-entries toggle', () => {
+		it('appends a new setting entry when none exists', async () => {
+			const setValues = jest.fn();
+
+			render(
+				<ConfigurationContainer
+					hasUpdateObjectDefinitionPermission
+					isApproved={true}
+					isEnableObjectEntrySchedule={false}
+					isRootDescendantNode={true}
+					setValues={setValues}
+					values={initialValues}
+				/>
+			);
+
+			await userEvent.click(
+				screen.getByRole('switch', {name: 'allow-standalone-entries'})
+			);
+
+			expect(setValues).toHaveBeenCalledWith({
+				objectDefinitionSettings: [
+					{name: 'allowStandaloneObjectEntry', value: 'false'},
+				],
+			});
+		});
+
+		it('is disabled when hasStandaloneEntries is true and the setting is "true"', () => {
+			renderConfigurationContainer(
+				{
+					objectDefinitionSettings: [
+						{
+							name: 'allowStandaloneObjectEntry',
+							value: 'true',
+						},
+					],
+				},
+				{hasStandaloneEntries: true, isRootDescendantNode: true}
+			);
+
+			expect(
+				screen.getByRole('switch', {name: 'allow-standalone-entries'})
+			).toBeDisabled();
+		});
+
+		it('is enabled when hasStandaloneEntries is false', () => {
+			renderConfigurationContainer(initialValues, {
+				hasStandaloneEntries: false,
+				isRootDescendantNode: true,
+			});
+
+			expect(
+				screen.getByRole('switch', {name: 'allow-standalone-entries'})
+			).toBeEnabled();
+		});
+
+		it('is hidden when isRootDescendantNode is not set', () => {
+			renderConfigurationContainer();
+
+			expect(
+				screen.queryByRole('switch', {name: 'allow-standalone-entries'})
+			).toBeNull();
+		});
+
+		it('is visible and defaults to ON when isRootDescendantNode is true and the setting is absent', () => {
+			renderConfigurationContainer(initialValues, {
+				isRootDescendantNode: true,
+			});
+
+			const toggle = screen.getByRole('switch', {
+				name: 'allow-standalone-entries',
+			});
+
+			expect(toggle).toBeVisible();
+			expect(toggle).toBeChecked();
+		});
+
+		it.each([
+			['false', false],
+			['true', true],
+		])(
+			'reflects the existing "%s" setting value',
+			(value, expectedChecked) => {
+				renderConfigurationContainer(
+					{
+						objectDefinitionSettings: [
+							{name: 'allowStandaloneObjectEntry', value},
+						],
+					},
+					{isRootDescendantNode: true}
+				);
+
+				const toggle = screen.getByRole('switch', {
+					name: 'allow-standalone-entries',
+				});
+
+				if (expectedChecked) {
+					expect(toggle).toBeChecked();
+				}
+				else {
+					expect(toggle).not.toBeChecked();
+				}
+			}
+		);
+
+		it('shows the default popover content when no standalone entries exist', async () => {
+			renderConfigurationContainer(initialValues, {
+				isRootDescendantNode: true,
+			});
+
+			const icon = document.querySelector(
+				'.lfr-objects__allow-standalone-entries-tooltip-icon'
+			);
+
+			fireEvent.mouseOver(icon!);
+
+			expect(
+				await screen.findByText('standalone-entries')
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(
+					/when-enabled-you-can-create-entries-without-a-parent-object/
+				)
+			).toBeInTheDocument();
+		});
+
+		it('shows the disabling-not-allowed popover content when standalone entries exist', async () => {
+			renderConfigurationContainer(
+				{
+					objectDefinitionSettings: [
+						{
+							name: 'allowStandaloneObjectEntry',
+							value: 'true',
+						},
+					],
+				},
+				{hasStandaloneEntries: true, isRootDescendantNode: true}
+			);
+
+			const icon = document.querySelector(
+				'.lfr-objects__allow-standalone-entries-tooltip-icon'
+			);
+
+			fireEvent.mouseOver(icon!);
+
+			expect(
+				await screen.findByText(
+					'disabling-standalone-entries-not-allowed'
+				)
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(/this-object-has-existing-standalone-entries/)
+			).toBeInTheDocument();
+		});
+
+		it('writes the setting value to objectDefinitionSettings on toggle', async () => {
+			const setValues = jest.fn();
+
+			render(
+				<ConfigurationContainer
+					hasUpdateObjectDefinitionPermission
+					isApproved={true}
+					isEnableObjectEntrySchedule={false}
+					isRootDescendantNode={true}
+					setValues={setValues}
+					values={{
+						...initialValues,
+						objectDefinitionSettings: [
+							{
+								name: 'allowStandaloneObjectEntry',
+								value: 'true',
+							},
+						],
+					}}
+				/>
+			);
+
+			await userEvent.click(
+				screen.getByRole('switch', {name: 'allow-standalone-entries'})
+			);
+
+			expect(setValues).toHaveBeenCalledWith({
+				objectDefinitionSettings: [
+					{name: 'allowStandaloneObjectEntry', value: 'false'},
+				],
+			});
+		});
+	});
 });

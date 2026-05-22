@@ -239,6 +239,46 @@ public class AccountGroupRelServiceHttp {
 		}
 	}
 
+	public static com.liferay.account.model.AccountGroupRel getAccountGroupRel(
+			HttpPrincipal httpPrincipal, long accountGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AccountGroupRelServiceUtil.class, "getAccountGroupRel",
+				_getAccountGroupRelParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, accountGroupRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.account.model.AccountGroupRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AccountGroupRelServiceHttp.class);
 
@@ -252,6 +292,8 @@ public class AccountGroupRelServiceHttp {
 		new Class[] {long.class, String.class, long[].class};
 	private static final Class<?>[] _fetchAccountGroupRelParameterTypes4 =
 		new Class[] {long.class, String.class, long.class};
+	private static final Class<?>[] _getAccountGroupRelParameterTypes5 =
+		new Class[] {long.class};
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:660431897
+// LIFERAY-SERVICE-BUILDER-HASH:143140855

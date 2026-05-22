@@ -8,8 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
 long siteNavigationMenuId = ParamUtil.getLong(request, "siteNavigationMenuId");
 
 String type = ParamUtil.getString(request, "type");
@@ -32,7 +30,6 @@ if (addURL == null) {
 </liferay-ui:error>
 
 <aui:form action="<%= addURL %>" cssClass="add-site-navigation-menu-item container-fluid" name="fm" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenuId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
 
@@ -47,14 +44,14 @@ if (addURL == null) {
 	<aui:button-row cssClass="modal-footer position-fixed">
 		<clay:button
 			id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
-			label='<%= type.equals("layout") ? "select" : "add" %>'
+			label="add"
 			type="submit"
 		/>
 
 		<clay:button
-			displayType="btn-secondary cancel"
+			displayType="secondary"
+			id='<%= liferayPortletResponse.getNamespace() + "cancelButton" %>'
 			label="cancel"
-			onClick='<%= "Liferay.Util.navigation('" + redirect + "')" %>'
 			type="button"
 		/>
 	</aui:button-row>

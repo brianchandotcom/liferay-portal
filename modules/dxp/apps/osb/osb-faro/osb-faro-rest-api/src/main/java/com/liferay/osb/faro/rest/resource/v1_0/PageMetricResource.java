@@ -45,7 +45,7 @@ public interface PageMetricResource {
 
 	public Page<PageMetric> getWorkspaceGroupPagesPage(
 			Long groupId, String channelId, String dataSourceId,
-			String rangeEnd, Integer rangeKey, String rangeStart, String search,
+			String rangeEnd, String rangeKey, String rangeStart, String search,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
@@ -138,4 +138,4 @@ public interface PageMetricResource {
 	}
 
 }
-// LIFERAY-REST-BUILDER-HASH:1396969034
+// LIFERAY-REST-BUILDER-HASH:1048719995

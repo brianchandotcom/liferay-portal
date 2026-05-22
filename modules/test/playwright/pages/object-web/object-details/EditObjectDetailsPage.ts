@@ -11,6 +11,7 @@ export class EditObjectDetailsPage {
 	readonly accountRestrictedFieldCombobox: Locator;
 	readonly accountRestrictionToggle: Locator;
 	readonly allowDraftToggle: Locator;
+	readonly allowStandaloneEntriesToggle: Locator;
 	readonly detailsTabItem: Locator;
 	readonly entryTitleField: Locator;
 	readonly entryTitleFieldCombobox: Locator;
@@ -38,6 +39,9 @@ export class EditObjectDetailsPage {
 		);
 		this.allowDraftToggle = page.getByRole('switch', {
 			name: 'Allow Users to Save Entries as Draft',
+		});
+		this.allowStandaloneEntriesToggle = page.getByRole('switch', {
+			name: 'Allow Standalone Entries',
 		});
 		this.detailsTabItem = page.getByRole('link', {name: 'Details'});
 		this.entryTitleField = page.getByLabel('Entry Title Field', {

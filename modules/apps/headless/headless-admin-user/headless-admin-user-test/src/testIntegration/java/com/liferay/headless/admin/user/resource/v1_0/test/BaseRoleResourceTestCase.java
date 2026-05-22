@@ -218,6 +218,7 @@ public abstract class BaseRoleResourceTestCase {
 		role.setExternalReferenceCode(regex);
 		role.setName(regex);
 		role.setRoleType(regex);
+		role.setSubtype(regex);
 
 		String json = RoleSerDes.toJSON(role);
 
@@ -229,6 +230,7 @@ public abstract class BaseRoleResourceTestCase {
 		Assert.assertEquals(regex, role.getExternalReferenceCode());
 		Assert.assertEquals(regex, role.getName());
 		Assert.assertEquals(regex, role.getRoleType());
+		Assert.assertEquals(regex, role.getSubtype());
 	}
 
 	@Test
@@ -2626,6 +2628,14 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (role.getSubtype() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -2880,6 +2890,16 @@ public abstract class BaseRoleResourceTestCase {
 			if (Objects.equals("roleType", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						role1.getRoleType(), role2.getRoleType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("subtype", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						role1.getSubtype(), role2.getSubtype())) {
 
 					return false;
 				}
@@ -3276,6 +3296,52 @@ public abstract class BaseRoleResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("subtype")) {
+			Object object = role.getSubtype();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -3333,6 +3399,7 @@ public abstract class BaseRoleResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				roleType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				subtype = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 	}
@@ -3602,4 +3669,4 @@ public abstract class BaseRoleResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1861813402
+// LIFERAY-REST-BUILDER-HASH:476784898

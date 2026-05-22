@@ -43,6 +43,24 @@ export default function ({
 		`${namespace}selectSiteLink`
 	) as HTMLButtonElement;
 
+	const xmlSitemapIndexEnabledCheckbox = document.getElementById(
+		`${namespace}xmlSitemapIndexEnabled`
+	) as HTMLInputElement;
+
+	const xmlSitemapIndexModeSelect = document.getElementById(
+		`${namespace}xmlSitemapIndexMode`
+	) as HTMLSelectElement;
+
+	const onXmlSitemapIndexEnabledChange = () => {
+		xmlSitemapIndexModeSelect.disabled =
+			!xmlSitemapIndexEnabledCheckbox.checked;
+	};
+
+	xmlSitemapIndexEnabledCheckbox.addEventListener(
+		'change',
+		onXmlSitemapIndexEnabledChange
+	);
+
 	// @ts-ignore
 
 	const groupsSearchContainer = Liferay.SearchContainer.get(
@@ -272,6 +290,10 @@ export default function ({
 			onRemoveSite.detach();
 			selectObjectDefinitionDelegate.dispose();
 			selectSiteDelegate.dispose();
+			xmlSitemapIndexEnabledCheckbox.removeEventListener(
+				'change',
+				onXmlSitemapIndexEnabledChange
+			);
 		},
 	};
 }

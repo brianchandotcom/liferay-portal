@@ -932,16 +932,16 @@ public class LVEntryTest {
 
 	private static final String _TITLE_3 = "TITLE 3";
 
+	@DeleteAfterTestRun
+	private LVEntry _lvEntry;
+
 	@Inject
-	private static LVEntryLocalService _lvEntryLocalService;
+	private LVEntryLocalService _lvEntryLocalService;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.portal.tools.service.builder.test.model.LVEntry"
 	)
-	private static VersionService<LVEntry, LVEntryVersion> _versionService;
-
-	@DeleteAfterTestRun
-	private LVEntry _lvEntry;
+	private VersionService<LVEntry, LVEntryVersion> _versionService;
 
 	private static class TestVersionServiceListener
 		implements VersionServiceListener<LVEntry, LVEntryVersion> {

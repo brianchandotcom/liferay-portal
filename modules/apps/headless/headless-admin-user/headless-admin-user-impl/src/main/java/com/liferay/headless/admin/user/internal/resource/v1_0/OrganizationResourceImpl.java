@@ -950,6 +950,7 @@ public class OrganizationResourceImpl
 		}
 
 		return ServiceBuilderCountryUtil.toServiceBuilderCountryId(
+			location.getAddressCountryExternalReferenceCode(),
 			contextCompany.getCompanyId(), location.getAddressCountry());
 	}
 
@@ -1215,7 +1216,9 @@ public class OrganizationResourceImpl
 		}
 
 		return ServiceBuilderRegionUtil.getServiceBuilderRegionId(
-			location.getAddressRegion(), countryId);
+			location.getAddressRegionExternalReferenceCode(),
+			contextCompany.getCompanyId(), location.getAddressRegion(),
+			countryId);
 	}
 
 	private long _getServiceBuilderOrganizationId(String organizationId)

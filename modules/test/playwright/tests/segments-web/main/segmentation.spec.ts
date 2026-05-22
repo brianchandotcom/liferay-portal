@@ -8,15 +8,20 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
+import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {performUserSwitch, userData} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {goToSegmentsAdmin} from '../../change-tracking-web/main/utils/segments';
 import {segmentsPageTest} from './fixtures/segmentsPageTest';
@@ -28,6 +33,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-78863': {enabled: true, system: true},
 	}),
+	instanceSettingsPagesTest,
 	pageEditorPagesTest,
 	productMenuPageTest,
 	segmentsPageTest,
@@ -260,6 +266,120 @@ test(
 );
 
 test(
+	`Can validate a segment can be created using the "Organization > Category" criterion`,
+	{
+		tag: '@LPS-187282',
+	},
+	async ({apiHelpers, editOrganizationPage, page, segmentsPage, site}) => {
+
+		// Create a global vocabulary with a category
+
+		const companyId = await page.evaluate(() =>
+			Liferay.ThemeDisplay.getCompanyId()
+		);
+
+		const globalGroup = await apiHelpers.jsonWebServicesGroup.getGroupByKey(
+			companyId,
+			companyId
+		);
+
+		const categoryName = 'Category' + getRandomInt();
+		const vocabularyName = 'Vocabulary' + getRandomInt();
+
+		await createCategories({
+			apiHelpers,
+			categoryNames: [{name: categoryName}],
+			siteId: globalGroup.groupId,
+			vocabularyName,
+		});
+
+		// Create an organization, a user, and assign the user to the organization
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: getRandomString(),
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+		});
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		// Tag the organization with the global category
+
+		await page.goto(
+			`/group${site.friendlyUrlPath}${PORTLET_URLS.organizations}`
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Edit'}),
+			trigger: page.getByRole('button', {name: 'Show Actions'}),
+		});
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: editOrganizationPage.categoryOption(categoryName),
+			trigger: editOrganizationPage.categoryInput(vocabularyName),
+		});
+
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Add a segment with the Organization Category criterion
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		const segmentName = 'AddSegmentByOrganizationCategory Test';
+
+		await segmentsPage.addSegmentField(
+			'Category',
+			'Organization',
+			segmentName
+		);
+
+		const iframe = page
+			.locator('iframe[title="Select Category"]')
+			.contentFrame();
+
+		await clickAndExpectToBeVisible({
+			target: iframe.getByText(`${vocabularyName} (Global)`),
+			trigger: page.getByRole('button', {name: 'Select'}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: iframe.getByText(categoryName),
+			trigger: iframe.getByText(`${vocabularyName} (Global)`),
+		});
+
+		await iframe.getByText(categoryName).click();
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the user is a member and the criterion is persisted
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewMembers({expectedEmail: userEmailAddress});
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue(categoryName);
+	}
+);
+
+test(
 	`Can validate that a user cannot create a segment when no segments are available`,
 	{
 		tag: '@LPS-130346',
@@ -480,6 +600,206 @@ test(
 );
 
 test(
+	'Can validate a segment can be created using the "Session > Hostname" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionHostname Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Hostname', 'Session', segmentName);
+
+		await segmentsPage.fillField('localhost');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('localhost');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Cookies" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionCookies Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Cookies', 'Session', segmentName);
+
+		await page
+			.getByLabel('Cookies: Input a key.')
+			.fill('GUEST_LANGUAGE_ID');
+
+		await page.getByLabel('Cookies: Input a value.').fill('en_US');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			'GUEST_LANGUAGE_ID=en_US'
+		);
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > IP Geocoder Country" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionIPGeocoderCountry Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'IP Geocoder Country',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.selectOption('Spain');
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('ES');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Referrer URL" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionReferrerURL Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'Referrer URL',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.fillField('http://localhost:8080');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('http://localhost:8080');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Request Parameters" criterion',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionRequestParameters Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'Request Parameters',
+			'Session',
+			segmentName
+		);
+
+		await page
+			.getByLabel('Request Parameters: Input a key.')
+			.fill('languageId');
+
+		await page
+			.getByLabel('Request Parameters: Input a value.')
+			.fill('en_US');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			'languageId=en_US'
+		);
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > User Agent" criterion with the Contains operator',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionUserAgent Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField(
+			'User Agent',
+			'Session',
+			segmentName
+		);
+
+		await segmentsPage.changeCriterionInput('Contains');
+
+		await segmentsPage.fillField('Chrome');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('Chrome');
+
+		await expect(page.locator('.operator')).toContainText('Contains');
+	}
+);
+
+test(
+	'Can validate a segment can be created using the "Session > Signed In" criterion with the False option',
+	{tag: '@LPS-130319'},
+	async ({page, segmentsPage, site}) => {
+		const segmentName = 'AddSegmentBySessionSignedIn Test';
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addSegmentField('Signed In', 'Session', segmentName);
+
+		await page.getByLabel('Signed In: Select Option').selectOption('False');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await segmentsPage.clickLinkByText(segmentName);
+
+		await segmentsPage.viewCriterionValue('false');
+	}
+);
+
+test(
 	`Can validate a segment can be created using an 'Apostrophe' in segment property`,
 	{
 		tag: '@LPS-146550',
@@ -686,6 +1006,41 @@ test(
 
 			await segmentsPage.viewMembers({expectedName: `User 1 + / ? # &`});
 		});
+	}
+);
+
+test(
+	'Can validate a segment name and value with script tags are escaped',
+	{
+		tag: '@LPS-92366',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Add a segment with a script tag as both name and First Name value
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		const scriptTag = '</script>';
+
+		await segmentsPage.addSegmentField('First Name', 'User', scriptTag);
+
+		await segmentsPage.changeCriterionInput('Contains');
+
+		await segmentsPage.fillField(scriptTag);
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Reopen the segment in view mode and assert the script tag survives as plain text
+
+		await segmentsPage.clickLinkByText(scriptTag);
+
+		await expect(page.locator('span.criterion-string')).toContainText(
+			scriptTag
+		);
 	}
 );
 
@@ -1211,6 +1566,77 @@ test(
 );
 
 test(
+	'Can edit a non-first segment without loading the first one',
+	{
+		tag: ['@LPS-153512', '@LPS-94855'],
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Seed two segments
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(firstName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(firstName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'First Segment',
+		});
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(lastName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(lastName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Second Segment',
+		});
+
+		// Edit the second segment and change its value
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.editSegmentsEntry('Second Segment');
+
+		await segmentsPage.fillField('User');
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the second segment persists the edit and the first is untouched
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText('Second Segment');
+
+		await segmentsPage.viewCriterionValue('User');
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickLinkByText('First Segment');
+
+		await segmentsPage.viewCriterionValue('Test');
+	}
+);
+
+test(
 	`Can edit segment with Country criterion.`,
 	{
 		tag: '@LPS-102740',
@@ -1472,6 +1898,109 @@ test(
 );
 
 test(
+	'Can validate a segment can be created using each User string property (First Name, Last Name, User Name, Screen Name, Job Title)',
+	{
+		tag: '@LPS-130286',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Create a user with a custom name, screen name and job title
+
+		const alternateName = 'usersn' + getRandomString();
+		const emailAddress = getRandomString() + '@liferay.com';
+		const familyName = 'userln' + getRandomString();
+		const givenName = 'userfn' + getRandomString();
+		const jobTitle = 'QA' + getRandomString();
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			alternateName,
+			emailAddress,
+			familyName,
+			givenName,
+			jobTitle,
+		});
+
+		// Create one segment per User string property and assert the user is a member
+
+		for (const {property, value} of [
+			{property: 'First Name', value: givenName},
+			{property: 'Last Name', value: familyName},
+			{property: 'User Name', value: `${givenName} ${familyName}`},
+			{property: 'Screen Name', value: alternateName},
+			{property: 'Job Title', value: jobTitle},
+		]) {
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			const segmentName = getRandomString();
+
+			await segmentsPage.addSegmentField(property, 'User', segmentName);
+
+			await segmentsPage.fillField(value);
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewCriterionValue(value);
+		}
+	}
+);
+
+test(
+	'Can validate a segment can be created using "Email Address" with each supported operator (Contains, Equals, Not Contains, Not Equals)',
+	{
+		tag: '@LPS-130291',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Create a user whose email address contains "liferay"
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+		});
+
+		// Create one segment per supported Email Address operator
+
+		for (const operator of [
+			'Contains',
+			'Equals',
+			'Not Contains',
+			'Not Equals',
+		]) {
+			const segmentName = `AddSegmentByUserEmailAddress ${operator} Test`;
+
+			await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+			await segmentsPage.clickAddNewSegmentButton();
+
+			await segmentsPage.addSegmentField(
+				'Email Address',
+				'User',
+				segmentName
+			);
+
+			await segmentsPage.changeCriterionInput(operator);
+
+			await segmentsPage.fillField('liferay');
+
+			await segmentsPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await segmentsPage.clickLinkByText(segmentName);
+
+			await segmentsPage.viewCriterionValue('liferay');
+
+			await expect(page.locator('.operator')).toContainText(operator);
+		}
+	}
+);
+
+test(
 	'Segment member preview count shows the correct number of users when segments are combined',
 	{
 		tag: '@LPS-130344',
@@ -1700,6 +2229,341 @@ test(
 			await expect(
 				page.getByText('Spanish Segment Heading')
 			).toBeVisible();
+		});
+	}
+);
+
+test(
+	'Can see Analytics Cloud Segments help texts at Instance Settings > Segments',
+	{
+		tag: '@LPS-130917',
+	},
+	async ({instanceSettingsPage, page}) => {
+
+		// Open the Analytics Cloud Segments configuration
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'Segments',
+			'Analytics Cloud Segments'
+		);
+
+		// Assert the Anonymous Segment and Interest Terms cache help texts are displayed
+
+		await expect(
+			page.getByText(
+				'Define the time (in seconds) before clearing the Anonymous Segment cache.'
+			)
+		).toBeVisible();
+
+		await expect(
+			page.getByText(
+				'Define the time (in seconds) before clearing the Interest Terms cache.'
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can see the back-button tooltip in the segments admin and in the page editor new experience flow',
+	{
+		tag: '@LPS-177714',
+	},
+	async ({apiHelpers, page, pageEditorPage, segmentsPage, site}) => {
+
+		// Open the segment editor from segments admin and assert the back link targets Segments
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await expect(
+			page.getByRole('link', {name: 'Go to Segments'})
+		).toBeVisible();
+
+		// Open a content page in the editor
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Test Page Name',
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Create a new segment from a new experience
+
+		await pageEditorPage.openExperienceSelector();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText('New Segment'),
+			trigger: page.getByRole('button', {name: 'New Experience'}),
+		});
+
+		// Assert the back link targets the originating content page
+
+		await expect(
+			page.getByRole('link', {name: 'Go to Test Page Name'})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can expand each segment editor sidebar section to view its own properties',
+	{
+		tag: '@LPS-135969',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor; the User section is expanded by default
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await segmentsPage.addCriterion('Date of Birth', 'User');
+
+		// Expand Organization and assert Country is visible
+
+		await segmentsPage.addCriterion('Country', 'Organization');
+
+		// Expand Session and assert Browser is visible
+
+		await segmentsPage.addCriterion('Browser', 'Session');
+
+		// Expand Segments and assert Segment is visible
+
+		await segmentsPage.addCriterion('Segment', 'Segments');
+	}
+);
+
+test(
+	'Can drop properties from different sections of the segment editor sidebar',
+	{
+		tag: ['@LPS-135969', '@LPS-94651'],
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		// Add the User > User property from the User sidebar section
+
+		await segmentsPage.addCriterion('User', 'User');
+
+		// Add the Organization > Country property from the Organization sidebar section
+
+		await segmentsPage.addCriterion('Country', 'Organization');
+
+		await expect(
+			page.locator('.criteria-group-item-root', {hasText: 'Country'})
+		).toBeVisible();
+
+		await expect(
+			page.locator('.criteria-group-item-root', {hasText: 'User'})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can list a segment created on one locale from the admin URL of any other locale',
+	{
+		tag: '@LPS-153509',
+	},
+	async ({apiHelpers, page, site}) => {
+
+		// Seed a segment on the site
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(lastName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(lastName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Segmento Espanol',
+		});
+
+		// Assert the segment is visible from the Spanish admin URL
+
+		await page.goto(
+			`/es/group${site.friendlyUrlPath}/~/control_panel/manage/-/segments/entries`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Segmento Espanol'})
+		).toBeVisible();
+
+		// Assert the segment is also visible from the Portuguese admin URL
+
+		await page.goto(
+			`/pt/group${site.friendlyUrlPath}/~/control_panel/manage/-/segments/entries`
+		);
+
+		await expect(
+			page.getByRole('link', {name: 'Segmento Espanol'})
+		).toBeVisible();
+	}
+);
+
+test(
+	'Can refresh the members count when conjunctions between conditions change',
+	{
+		tag: ['@LPS-153507', '@LPS-95412'],
+	},
+	async ({apiHelpers, page, pageEditorPage, segmentsPage, site}) => {
+
+		// Create a Developer user
+
+		await apiHelpers.headlessAdminUser.postUserAccount({
+			emailAddress: userEmailAddress,
+			familyName: 'userln',
+			givenName: 'userfn',
+			jobTitle: 'Developer',
+		});
+
+		// Build a segment with Job Title=Developer And First Name=Test
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		await pageEditorPage.segmentEditorPage.createSegment(
+			'SegmentationCheckMembersWithConditions Test',
+			{
+				user: ['Job Title', 'First Name'],
+			}
+		);
+
+		await page.getByLabel('Job Title: Input a value.').fill('Developer');
+
+		await page.getByLabel('First Name: Input a value.').fill('Test');
+
+		// Assert And matches no user
+
+		await segmentsPage.viewMemberCount('0 Members');
+
+		// Switch the conjunction to Or and assert the count refreshes to the union
+
+		await segmentsPage.chooseLogic('Or');
+
+		await segmentsPage.viewMemberCount('2 Members');
+	}
+);
+
+test(
+	'Can translate a segment title and edit it only after enabling edit mode',
+	{
+		tag: '@LPS-135495',
+	},
+	async ({apiHelpers, page, segmentsPage, site}) => {
+
+		// Seed a segment on the site
+
+		await apiHelpers.jsonWebServicesSegmentsEntry.addSegmentsEntry({
+			criteria: {
+				criteria: {
+					user: {
+						conjunction: 'and',
+						filterString: `(screenName eq 'Test')`,
+						typeValue: 'model',
+					},
+				},
+				filterString: {
+					model: `(screenName eq 'Test')`,
+				},
+			},
+			groupId: site.id,
+			name: 'Original Segment',
+		});
+
+		// Translate the title to pt-BR
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.editSegmentsEntry('Original Segment');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'pt-BR language: Untranslated',
+			}),
+			trigger: page.getByTitle('en-US'),
+		});
+
+		await fillAndClickOutside(
+			page,
+			page.getByTestId('localized-input-button'),
+			'Segmento Traduzido'
+		);
+
+		await segmentsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		// Assert the entries list still shows the default-language title
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await expect(
+			page.getByRole('link', {name: 'Original Segment'})
+		).toBeVisible();
+
+		// In view mode, the pt-BR title field is read-only
+
+		await segmentsPage.clickLinkByText('Original Segment');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('option', {
+				name: 'pt-BR language: Translated',
+			}),
+			trigger: page.getByTitle('en-US'),
+		});
+
+		await expect(
+			page.getByTestId('localized-input-button')
+		).toHaveAttribute('readonly');
+
+		// After enabling Edit Mode the field becomes editable
+
+		await page.getByLabel('Enter Edit Mode').click();
+
+		await expect(
+			page.getByTestId('localized-input-button')
+		).not.toHaveAttribute('readonly');
+	}
+);
+
+test(
+	'Can see the portal default language tagged as Default in the segment locale dropdown',
+	{
+		tag: '@LPS-135495',
+	},
+	async ({page, segmentsPage, site}) => {
+
+		// Open the segment editor
+
+		await goToSegmentsAdmin(page, site.friendlyUrlPath);
+
+		await segmentsPage.clickAddNewSegmentButton();
+
+		// Assert the portal default language is tagged as Default
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {
+				name: 'en-US language: Default.',
+			}),
+			trigger: page.getByRole('combobox', {name: 'Open Localizations'}),
 		});
 	}
 );

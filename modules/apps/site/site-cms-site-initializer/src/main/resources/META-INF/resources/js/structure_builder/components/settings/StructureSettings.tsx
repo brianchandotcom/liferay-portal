@@ -62,7 +62,7 @@ export default function StructureSettings() {
 				</ClayAlert>
 			) : null}
 
-			<ClayLabel className="mb-3" displayType="info">
+			<ClayLabel className="mb-3" displayType="info" inverse>
 				{STRUCTURE_TYPES[structureType]}
 			</ClayLabel>
 

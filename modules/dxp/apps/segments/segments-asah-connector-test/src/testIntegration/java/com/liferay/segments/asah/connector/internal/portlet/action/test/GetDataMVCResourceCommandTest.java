@@ -168,13 +168,14 @@ public class GetDataMVCResourceCommandTest {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	@Inject
-	private static LayoutSetLocalService _layoutSetLocalService;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutSetLocalService _layoutSetLocalService;
+
 	private final Locale _locale = LocaleUtil.US;
 
 	@Inject(filter = "mvc.command.name=/segments_experiment/get_data")

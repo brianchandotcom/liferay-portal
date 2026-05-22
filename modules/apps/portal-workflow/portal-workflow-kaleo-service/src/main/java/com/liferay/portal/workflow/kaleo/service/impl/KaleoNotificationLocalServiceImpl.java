@@ -148,6 +148,14 @@ public class KaleoNotificationLocalServiceImpl
 	}
 
 	@Override
+	public List<KaleoNotification> getKaleoDefinitionVersionKaleoNotifications(
+		String kaleoClassName, long kaleoDefinitionVersionId) {
+
+		return kaleoNotificationPersistence.findByKCN_KDVI(
+			kaleoClassName, kaleoDefinitionVersionId);
+	}
+
+	@Override
 	public List<KaleoNotification> getKaleoNotifications(
 		String kaleoClassName, long kaleoClassPK) {
 

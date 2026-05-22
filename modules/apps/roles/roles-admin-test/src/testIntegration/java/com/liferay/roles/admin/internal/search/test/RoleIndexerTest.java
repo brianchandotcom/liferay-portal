@@ -149,9 +149,9 @@ public class RoleIndexerTest {
 			document.get(Field.ENTRY_CLASS_PK));
 	}
 
-	private static Indexer<Role> _indexer;
+	private Indexer<Role> _indexer;
 
 	@Inject
-	private static IndexerRegistry _indexerRegistry;
+	private IndexerRegistry _indexerRegistry;
 
 }

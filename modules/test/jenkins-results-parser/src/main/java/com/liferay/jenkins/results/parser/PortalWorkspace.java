@@ -124,12 +124,6 @@ public class PortalWorkspace extends BaseWorkspace {
 
 		super.setUp();
 
-		Job.BuildProfile buildProfile = getBuildProfile();
-
-		if (buildProfile == Job.BuildProfile.DXP) {
-			portalWorkspaceGitRepository.setUpPortalProfile();
-		}
-
 		portalWorkspaceGitRepository.setUpTCKHome();
 
 		updateOSBAsahModule();

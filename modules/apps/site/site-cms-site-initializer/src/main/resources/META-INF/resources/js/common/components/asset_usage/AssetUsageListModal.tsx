@@ -439,6 +439,7 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 															? 'danger'
 															: 'secondary'
 													}
+													inverse
 												>
 													{item.attributes
 														.deletionType ===

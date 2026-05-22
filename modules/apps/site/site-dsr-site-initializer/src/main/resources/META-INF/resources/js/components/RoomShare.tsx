@@ -76,6 +76,11 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	const [loading, setLoading] = useState(false);
 	const [roleKey, setRoleKey] = useState('Site Member');
 	const [users, setUsers] = useState<IUserAccount[]>([]);
+	const currentUserId = Number(Liferay.ThemeDisplay.getUserId());
+
+	const isOwner =
+		users.find((user) => user.id === currentUserId)?.roleKey ===
+		OWNER_ROLE_KEY;
 
 	const loadUsers = useCallback(async () => {
 		setLoading(true);
@@ -93,6 +98,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 					id: invitedMember.id,
 					isInvitedMember: true,
 					name: '',
+					ownerId: invitedMember.ownerId,
 					roleKey: invitedMember.roleKey,
 				})),
 			]);
@@ -210,13 +216,24 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	);
 
 	const handleUpdateUserRole = useCallback(
-		async (userId: number, newRoleKey: string) => {
+		async (
+			userId: number,
+			newRoleKey: string,
+			isInvitedMember?: boolean
+		) => {
 			setLoading(true);
 
 			try {
-				await RoomService.updateRoomUserAccount(roomId, userId, {
-					roleKey: newRoleKey,
-				});
+				if (isInvitedMember) {
+					await RoomService.updateRoomInvitedMember(roomId, userId, {
+						roleKey: newRoleKey,
+					});
+				}
+				else {
+					await RoomService.updateRoomUserAccount(roomId, userId, {
+						roleKey: newRoleKey,
+					});
+				}
 
 				openToast({
 					message: Liferay.Language.get(
@@ -243,6 +260,21 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 	useEffect(() => {
 		loadUsers();
 	}, [loadUsers]);
+
+	const canEditMember = (user: IUserAccount): boolean => {
+		if (user.roleKey === OWNER_ROLE_KEY) {
+			return false;
+		}
+
+		if (
+			isOwner ||
+			(user.isInvitedMember && user.ownerId === currentUserId)
+		) {
+			return true;
+		}
+
+		return false;
+	};
 
 	const renderContent = () => {
 		return (
@@ -368,11 +400,7 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 										<span className="text-secondary">
 											{Liferay.Language.get('owner')}
 										</span>
-									) : user.isInvitedMember ? (
-										<span className="text-secondary">
-											{getRoleLabel(user.roleKey)}
-										</span>
-									) : (
+									) : canEditMember(user) ? (
 										<DropDown
 											closeOnClick
 											trigger={
@@ -403,7 +431,8 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 														onClick={() =>
 															handleUpdateUserRole(
 																user.id,
-																item.key
+																item.key,
+																user.isInvitedMember
 															)
 														}
 													>
@@ -418,9 +447,13 @@ function RoomShare({closeModal, roomId}: IRoomShareProps) {
 												)}
 											</DropDown.ItemList>
 										</DropDown>
+									) : (
+										<span className="text-secondary">
+											{getRoleLabel(user.roleKey)}
+										</span>
 									)}
 
-									{user.roleKey !== OWNER_ROLE_KEY && (
+									{canEditMember(user) && (
 										<ClayButton
 											className="ml-3 text-secondary"
 											disabled={loading}

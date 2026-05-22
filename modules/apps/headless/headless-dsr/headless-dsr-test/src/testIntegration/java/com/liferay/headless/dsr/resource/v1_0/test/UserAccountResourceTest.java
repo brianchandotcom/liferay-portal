@@ -10,6 +10,8 @@ import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.dsr.client.dto.v1_0.UserAccount;
+import com.liferay.headless.dsr.client.problem.Problem;
+import com.liferay.headless.dsr.client.resource.v1_0.UserAccountResource;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
 import com.liferay.notification.constants.NotificationRecipientSettingConstants;
@@ -24,18 +26,24 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -93,6 +101,36 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_accountEntry.getAccountEntryId()
 			).build(),
 			serviceContext);
+
+		_objectEntry = _objectEntryLocalService.getObjectEntry(
+			_objectEntry.getObjectEntryId());
+
+		long groupId = _getGroupId(_objectEntry);
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[] {groupId}, ServiceContextTestUtil.getServiceContext());
+
+		Role role = _roleLocalService.getRole(
+			_objectEntry.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		_userGroupRoleLocalService.addUserGroupRoles(
+			new long[] {user.getUserId()}, groupId, role.getRoleId());
+
+		_userAccountSiteMemberResource = UserAccountResource.builder(
+		).authentication(
+			user.getEmailAddress(), password
+		).endpoint(
+			testCompany.getVirtualHostname(),
+			PortalUtil.getPortalServerPort(false), "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 	}
 
 	@Override
@@ -105,13 +143,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			_objectEntry.getObjectEntryId(), postUserAccount.getId(),
 			new UserAccount() {
 				{
-					roleKey = "Site Administrator";
+					roleKey = RoleConstants.SITE_ADMINISTRATOR;
 				}
 			});
 
 		Assert.assertEquals(postUserAccount.getId(), patchUserAccount.getId());
 		Assert.assertEquals(
-			"Site Administrator", patchUserAccount.getRoleKey());
+			RoleConstants.SITE_ADMINISTRATOR, patchUserAccount.getRoleKey());
 	}
 
 	@Override
@@ -120,6 +158,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testPostRoomUserAccount();
 
 		_testPostRoomUserAccount();
+		_testPostRoomUserAccountSiteMember();
 	}
 
 	@Override
@@ -149,19 +188,13 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private long _getGroupId(ObjectEntry objectEntry) throws Exception {
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		Group group = _groupLocalService.getGroup(
-			GetterUtil.getLong(values.get("siteId")));
+			MapUtil.getLong(objectEntry.getValues(), "siteId"));
 
 		return group.getGroupId();
 	}
 
 	private void _testPostRoomUserAccount() throws Exception {
-
-		// A new get is required to retrieve updated values for the
-		// object entry
-
 		_objectEntry = _objectEntryLocalService.getObjectEntry(
 			_objectEntry.getObjectEntryId());
 
@@ -278,6 +311,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				}));
 	}
 
+	private void _testPostRoomUserAccountSiteMember() throws Exception {
+		try {
+			_userAccountSiteMemberResource.postRoomUserAccount(
+				testGetRoomUserAccountsPage_getRoomId(), randomUserAccount());
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			String message = problemException.getMessage();
+
+			Assert.assertTrue(message, message.contains("Forbidden"));
+		}
+	}
+
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -305,6 +351,14 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private TicketLocalService _ticketLocalService;
+
+	private UserAccountResource _userAccountSiteMemberResource;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

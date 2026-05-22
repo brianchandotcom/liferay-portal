@@ -409,13 +409,13 @@ public class IFrameSanitizerImplTest {
 	private static final String _INITIAL_IFRAME_TAG_SANDBOX =
 		"<iframe src=\"test\" sandbox=\"\"></iframe>";
 
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
 	private long _companyId;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private ConfigurationProvider _configurationProvider;

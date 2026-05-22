@@ -409,9 +409,6 @@ public class
 
 	private static final String _FILE_NAME = "Title.txt";
 
-	@Inject
-	private static DLAppService _dlAppService;
-
 	private AssetCategory _assetCategory;
 
 	@Inject
@@ -438,6 +435,9 @@ public class
 	private Group _depotGroup;
 
 	private Folder _depotParentFolder;
+
+	@Inject
+	private DLAppService _dlAppService;
 
 	@DeleteAfterTestRun
 	private Group _group;

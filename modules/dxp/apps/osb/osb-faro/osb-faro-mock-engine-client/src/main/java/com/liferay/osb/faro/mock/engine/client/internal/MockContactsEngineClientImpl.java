@@ -36,11 +36,11 @@ public class MockContactsEngineClientImpl
 
 	@Override
 	public Results<Individual> getAccountIndividuals(
-		FaroProject faroProject, String accountId, int cur, int delta,
-		String sortString) {
+		FaroProject faroProject, String accountId, String query, int cur,
+		int delta, String sortString) {
 
 		return contactsEngineClient.getAccountIndividuals(
-			faroProject, accountId, cur, delta, sortString);
+			faroProject, accountId, query, cur, delta, sortString);
 	}
 
 	@Override

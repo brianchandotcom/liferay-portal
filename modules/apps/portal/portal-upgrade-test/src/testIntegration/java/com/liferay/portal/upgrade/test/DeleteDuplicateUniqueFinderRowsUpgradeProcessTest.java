@@ -294,24 +294,24 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 		_assertCount(tableName, columnNames, true);
 	}
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
 	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
 
 	@Inject
-	private static PortalPreferencesLocalService _portalPreferencesLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private static PortletItemLocalService _portletItemLocalService;
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Inject
-	private static SocialActivitySettingLocalService
+	private PortletItemLocalService _portletItemLocalService;
+
+	@Inject
+	private SocialActivitySettingLocalService
 		_socialActivitySettingLocalService;
 
 	@Inject
-	private static TicketLocalService _ticketLocalService;
+	private TicketLocalService _ticketLocalService;
 
 }

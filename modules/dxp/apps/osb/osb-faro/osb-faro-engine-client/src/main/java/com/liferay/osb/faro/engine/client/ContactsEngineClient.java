@@ -186,8 +186,8 @@ public interface ContactsEngineClient {
 		String query, int cur, int delta);
 
 	public Results<Individual> getAccountIndividuals(
-		FaroProject faroProject, String accountId, int cur, int delta,
-		String sortString);
+		FaroProject faroProject, String accountId, String query, int cur,
+		int delta, String sortString);
 
 	public Results<IndividualSegment> getAccountIndividualSegments(
 		FaroProject faroProject, String accountId, String channelId,
@@ -270,18 +270,19 @@ public interface ContactsEngineClient {
 		String keywords, int rangeKey, int cur, int delta, String sortString);
 
 	public Results<AssetSummaryCategory> getAssetSummaryCategories(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort,
-		String vocabularyId, int cur, int delta);
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, String vocabularyId, int cur,
+		int delta);
 
 	public Results<AssetSummaryMimeType> getAssetSummaryMimeTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,
 		String rangeStart, int cur, int delta);
 
 	public Results<AssetSummaryTag> getAssetSummaryTags(
-		FaroProject faroProject, long channelId, String keywords,
-		String rangeEnd, int rangeKey, String rangeStart, String sort, int cur,
-		int delta);
+		FaroProject faroProject, String accountId, long channelId,
+		String keywords, String rangeEnd, int rangeKey, String rangeStart,
+		String selectedMetric, String sort, int cur, int delta);
 
 	public Results<AssetSummaryType> getAssetSummaryTypes(
 		FaroProject faroProject, long channelId, String rangeEnd, int rangeKey,

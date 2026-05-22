@@ -116,9 +116,6 @@ public class RedirectEntryPermissionPortalInstanceLifecycleListenerTest {
 			role.getRoleId(), ActionKeys.VIEW);
 	}
 
-	@Inject
-	private static ServiceComponentRuntime _serviceComponentRuntime;
-
 	@DeleteAfterTestRun
 	private Company _company;
 
@@ -135,5 +132,8 @@ public class RedirectEntryPermissionPortalInstanceLifecycleListenerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

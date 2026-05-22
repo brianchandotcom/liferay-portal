@@ -81,6 +81,7 @@ export type TRole = {
 	};
 	rolePermissions?: Array<TPermission>;
 	roleType?: number | string;
+	subtype?: string;
 };
 
 type TServices = {

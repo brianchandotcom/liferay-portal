@@ -11,7 +11,7 @@ import {
 	AssetVocabularyCategoriesSelector,
 } from 'asset-taglib';
 import classNames from 'classnames';
-import React, {ReactNode} from 'react';
+import React from 'react';
 
 import {TriggerLabel} from './ConditionBuilder';
 import DateValueInput from './DateValueInput';
@@ -30,22 +30,23 @@ function handlePreventEnterSubmit(event: React.KeyboardEvent) {
 	}
 }
 
+interface ValueInputContainerProps
+	extends React.HTMLAttributes<HTMLDivElement> {
+	children: React.ReactNode;
+}
+
 export function ValueInputContainer({
 	children,
 	className,
-	onKeyDown,
-}: {
-	children: ReactNode;
-	className?: string;
-	onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
-}) {
+	...otherProps
+}: ValueInputContainerProps) {
 	return (
 		<div
 			className={classNames(
 				'condition-builder__value-input d-flex flex-grow-1',
 				className
 			)}
-			onKeyDown={onKeyDown}
+			{...otherProps}
 		>
 			{children}
 		</div>

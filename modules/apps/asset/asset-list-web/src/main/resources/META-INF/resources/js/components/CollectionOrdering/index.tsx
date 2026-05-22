@@ -42,13 +42,17 @@ function parseInitialOrderByColumn(value: string): OrderBySelection {
 		try {
 			const parsed = JSON.parse(value);
 
-			return {
-				classNameId: parsed.classNameId,
-				classTypeId: parsed.classTypeId,
-				name: parsed.name,
-			};
+			if (parsed && typeof parsed === 'object') {
+				return {
+					classNameId: parsed.classNameId,
+					classTypeId: parsed.classTypeId,
+					name: parsed.name,
+				};
+			}
 		}
-		catch {}
+		catch {
+			console.error('Failed to parse initial selection: ', value);
+		}
 	}
 
 	return {
@@ -152,8 +156,8 @@ function OrderByField({
 				<ClayButton
 					aria-label={
 						ascending
-							? Liferay.Language.get('ascending')
-							: Liferay.Language.get('descending')
+							? Liferay.Language.get('descending')
+							: Liferay.Language.get('ascending')
 					}
 					borderless
 					displayType="secondary"
@@ -161,8 +165,8 @@ function OrderByField({
 					onClick={() => onTypeChange(ascending ? 'DESC' : 'ASC')}
 					title={
 						ascending
-							? Liferay.Language.get('ascending')
-							: Liferay.Language.get('descending')
+							? Liferay.Language.get('descending')
+							: Liferay.Language.get('ascending')
 					}
 				>
 					<ClayIcon
@@ -253,7 +257,9 @@ export default function CollectionOrdering({
 	const items = useMemo<Array<FilterProperty | FilterPropertyGroup>>(() => {
 		return properties
 			.map(({items, label}) => ({
-				items: items.filter((property) => property.sortable !== false),
+				items: (items ?? []).filter(
+					(property) => property.sortable !== false
+				),
 				label,
 			}))
 			.filter(({items}) => items.length);
@@ -263,7 +269,7 @@ export default function CollectionOrdering({
 		const map = new Map<string, OrderBySelection>();
 
 		properties
-			.flatMap((group) => group.items)
+			.flatMap((group) => group.items ?? [])
 			.forEach(({classNameId, classTypeId, name}) => {
 				map.set(getPropertyKey(classNameId, classTypeId, name), {
 					classNameId,

@@ -12,9 +12,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
@@ -49,12 +47,11 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @author Cristina González
+ * @author Eudaldo Alonso
  */
 public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 
-	public AudiencesExpressionVisitor(int groupCount, EntityModel entityModel) {
-		_groupCount = groupCount;
+	public AudiencesExpressionVisitor(EntityModel entityModel) {
 		_entityModel = entityModel;
 	}
 
@@ -76,8 +73,7 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 				 Objects.equals(BinaryExpression.Operation.LT, operation) ||
 				 Objects.equals(BinaryExpression.Operation.NE, operation)) {
 
-			return _getOperationJSONObject(
-				String.valueOf(operation), left, right);
+			return _getRuleJSONObject(String.valueOf(operation), left, right);
 		}
 		else if (Objects.equals(BinaryExpression.Operation.SUB, operation)) {
 			return _sub(left, right);
@@ -105,7 +101,6 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 
 		return lambdaFunctionExpression.accept(
 			new AudiencesExpressionVisitor(
-				0,
 				new EntityModel() {
 
 					@Override
@@ -123,6 +118,7 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 				}));
 	}
 
+	@Override
 	public Object visitComplexPropertyExpression(
 		ComplexPropertyExpression complexPropertyExpression) {
 
@@ -186,8 +182,7 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 		throws ExpressionVisitException {
 
 		if (operation == ListExpression.Operation.IN) {
-			return _getOperationJSONObject(
-				String.valueOf(operation), left, right);
+			return _getRuleJSONObject(String.valueOf(operation), left, right);
 		}
 
 		throw new UnsupportedOperationException(
@@ -229,7 +224,7 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 						"type ", type, " and ", expressions.size(), "params"));
 			}
 
-			return _getOperationJSONObject(
+			return _getRuleJSONObject(
 				String.valueOf(type), expressions.get(0), expressions.get(1));
 		}
 		else if (type == MethodExpression.Type.NOW) {
@@ -266,10 +261,7 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 			JSONObject jsonObject = (JSONObject)operand;
 
 			jsonObject.put(
-				"operatorName",
-				StringUtil.lowerCase(
-					UnaryExpression.Operation.NOT + "-" +
-						jsonObject.getString("operatorName")));
+				"operation", "not_" + jsonObject.getString("operation"));
 
 			return jsonObject;
 		}
@@ -289,39 +281,28 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 		BinaryExpression.Operation operation, JSONObject leftJSONObject,
 		JSONObject rightJSONObject) {
 
-		String conjunctionName = leftJSONObject.getString("conjunctionName");
+		String operationName = StringUtil.toUpperCase(
+			String.valueOf(operation));
 
-		_groupCount++;
+		if (Objects.equals(
+				leftJSONObject.getString("conjunction"), operationName)) {
 
-		if (Validator.isNotNull(conjunctionName)) {
-			String operationString = operation.toString();
-
-			if (Objects.equals(
-					conjunctionName.toLowerCase(LocaleUtil.ROOT),
-					operationString.toLowerCase(LocaleUtil.ROOT))) {
-
-				return JSONUtil.put(
-					"conjunctionName",
-					StringUtil.lowerCase(String.valueOf(operation))
+			return JSONUtil.put(
+				"conjunction", operationName
+			).put(
+				"rules",
+				leftJSONObject.getJSONArray(
+					"rules"
 				).put(
-					"groupId", "group_" + _groupCount
-				).put(
-					"items",
-					leftJSONObject.getJSONArray(
-						"items"
-					).put(
-						rightJSONObject
-					)
-				);
-			}
+					rightJSONObject
+				)
+			);
 		}
 
 		return JSONUtil.put(
-			"conjunctionName", StringUtil.lowerCase(String.valueOf(operation))
+			"conjunction", operationName
 		).put(
-			"groupId", "group_" + _groupCount
-		).put(
-			"items", JSONUtil.putAll(leftJSONObject, rightJSONObject)
+			"rules", JSONUtil.putAll(leftJSONObject, rightJSONObject)
 		);
 	}
 
@@ -340,35 +321,6 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 		}
 	}
 
-	private JSONObject _getOperationJSONObject(
-		String operatorName, Object object, List<Object> fieldValues) {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		fieldValues.forEach(
-			fieldValue -> jsonArray.put(String.valueOf(fieldValue)));
-
-		return JSONUtil.put(
-			"operatorName", StringUtil.lowerCase(operatorName)
-		).put(
-			"propertyName", _getPropertyName(object)
-		).put(
-			"value", jsonArray
-		);
-	}
-
-	private JSONObject _getOperationJSONObject(
-		String operatorName, Object object, Object fieldValue) {
-
-		return JSONUtil.put(
-			"operatorName", StringUtil.lowerCase(operatorName)
-		).put(
-			"propertyName", _getPropertyName(object)
-		).put(
-			"value", fieldValue
-		);
-	}
-
 	private String _getPropertyName(Object object) {
 		if (object instanceof EntityField) {
 			EntityField entityField = (EntityField)object;
@@ -377,6 +329,35 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 		}
 
 		return String.valueOf(object);
+	}
+
+	private JSONObject _getRuleJSONObject(
+		String operation, Object object, List<Object> fieldValues) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		fieldValues.forEach(
+			fieldValue -> jsonArray.put(String.valueOf(fieldValue)));
+
+		return JSONUtil.put(
+			"attribute", _getPropertyName(object)
+		).put(
+			"operation", StringUtil.toLowerCase(operation)
+		).put(
+			"value", jsonArray
+		);
+	}
+
+	private JSONObject _getRuleJSONObject(
+		String operation, Object object, Object fieldValue) {
+
+		return JSONUtil.put(
+			"attribute", _getPropertyName(object)
+		).put(
+			"operation", StringUtil.toLowerCase(operation)
+		).put(
+			"value", fieldValue
+		);
 	}
 
 	private Object _sub(Object left, Object right)
@@ -420,6 +401,5 @@ public class AudiencesExpressionVisitor implements ExpressionVisitor<Object> {
 
 	private final Date _date = new Date();
 	private final EntityModel _entityModel;
-	private int _groupCount;
 
 }

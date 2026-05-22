@@ -167,19 +167,13 @@ export const getNestedOrLimitState = (
 
 /**
  * Returns the current state of the sequential criteria limit for the root
- * AND group, or null when the limit does not apply.
+ * AND group, or null when the limit does not apply. Callers must check that
+ * sequential mode is enabled and that the group is the root.
  */
 export const getSequentialLimitState = (
-	criteria: CriterionGroup | null | undefined,
-	sequential: boolean | undefined,
-	root: boolean | undefined
+	criteria: CriterionGroup | null | undefined
 ): SequentialLimitState | null => {
-	if (
-		!root ||
-		!sequential ||
-		!criteria ||
-		criteria.conjunctionName !== Conjunctions.And
-	) {
+	if (!criteria || criteria.conjunctionName !== Conjunctions.And) {
 		return null;
 	}
 
@@ -188,7 +182,7 @@ export const getSequentialLimitState = (
 
 export const hasRootAndExceeded = (
 	criteria: CriterionGroup | null | undefined
-): boolean => getSequentialLimitState(criteria, true, true) === 'exceedsLimit';
+): boolean => getSequentialLimitState(criteria) === 'exceedsLimit';
 
 export const hasNestedOrExceeded = (
 	criteria: CriterionGroup | Criterion | null | undefined

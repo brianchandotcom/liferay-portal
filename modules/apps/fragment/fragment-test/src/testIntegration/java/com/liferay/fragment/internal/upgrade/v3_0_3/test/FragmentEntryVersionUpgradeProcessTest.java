@@ -75,8 +75,8 @@ public class FragmentEntryVersionUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_testUpgradeDeletesOldVersions();
-		_testUpgradeSkipsCleanup();
+		_testUpgradeDeletesFragmentEntryVersions();
+		_testUpgradePreservesFragmentEntryVersions();
 	}
 
 	private FragmentEntry _addFragmentEntry() throws Exception {
@@ -199,7 +199,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	private void _testUpgradeDeletesOldVersions() throws Exception {
+	private void _testUpgradeDeletesFragmentEntryVersions() throws Exception {
 		FragmentEntry fragmentEntry = _addFragmentEntry();
 
 		_insertFragmentEntryVersions(20, fragmentEntry);
@@ -221,7 +221,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 			expectedVersions, _getFragmentEntryVersions(fragmentEntry));
 	}
 
-	private void _testUpgradeSkipsCleanup() throws Exception {
+	private void _testUpgradePreservesFragmentEntryVersions() throws Exception {
 		int versionsCount = 5;
 
 		FragmentEntry fragmentEntry = _addFragmentEntry();

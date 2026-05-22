@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '5fa062d41a6b1b034a7f3c4311b7f4bc285eebba4fd95a0dbd33736a920d78b1',
+	hash: '05097b20f14f210f442152c224b132906879fa39404d1f8afc696bf8fe3e3276',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -163,6 +163,7 @@ module.exports = {
 			'clipboard',
 			'cropperjs',
 			'dagre',
+			'date-fns',
 			'dom-align',
 			'fuzzy',
 			'highlight.js',
@@ -555,6 +556,7 @@ module.exports = {
 		'clipboard': ['*', 'default'],
 		'cropperjs': ['*', 'default'],
 		'dagre': ['*', 'default'],
+		'date-fns': ['*'],
 		'fuzzy': ['*', 'default'],
 		'graphql-hooks-memcache': ['*', 'default'],
 		'highlight.js': ['*', 'default'],

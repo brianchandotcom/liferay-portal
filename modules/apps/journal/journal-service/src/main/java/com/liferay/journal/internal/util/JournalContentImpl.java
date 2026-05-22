@@ -261,13 +261,13 @@ public class JournalContentImpl implements JournalContent {
 					if (productionMode) {
 						String content = articleDisplay.getContent();
 
-						if (!Validator.isBlank(nonceAttribute) &&
-							(content != null) &&
-							content.contains(nonceAttribute)) {
+						if ((content != null) &&
+							content.contains(nonceAttribute) &&
+							!Validator.isBlank(nonceAttribute)) {
 
 							_portalCache.put(
 								journalContentKey,
-								_copyWithContent(
+								_getArticleDisplay(
 									articleDisplay,
 									StringUtil.replace(
 										content, nonceAttribute,
@@ -291,10 +291,10 @@ public class JournalContentImpl implements JournalContent {
 		else {
 			String content = articleDisplay.getContent();
 
-			if (!Validator.isBlank(nonceAttribute) && (content != null) &&
-				content.contains(_NONCE_PLACEHOLDER)) {
+			if ((content != null) && content.contains(_NONCE_PLACEHOLDER) &&
+				!Validator.isBlank(nonceAttribute)) {
 
-				articleDisplay = _copyWithContent(
+				articleDisplay = _getArticleDisplay(
 					articleDisplay,
 					StringUtil.replace(
 						content, _NONCE_PLACEHOLDER, nonceAttribute),
@@ -513,7 +513,7 @@ public class JournalContentImpl implements JournalContent {
 		_journalTemplatePortalCacheIndexer.removeKeys(ddmTemplateKey);
 	}
 
-	private JournalArticleDisplay _copyWithContent(
+	private JournalArticleDisplay _getArticleDisplay(
 		JournalArticleDisplay articleDisplay, String content,
 		ThemeDisplay themeDisplay) {
 

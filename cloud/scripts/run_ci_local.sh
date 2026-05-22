@@ -10,10 +10,12 @@ function main {
 
 	case "${command}" in
 		all)
+			_check_utils checkov helm kubeconform terraform tflint yq
 			_run_terraform
 			_run_helm
 			;;
 		helm)
+			_check_utils helm kubeconform yq
 			_run_helm ${1+"$@"}
 			;;
 		shell)
@@ -21,6 +23,7 @@ function main {
 			exit 1
 			;;
 		terraform)
+			_check_utils checkov terraform tflint yq
 			_run_terraform ${1+"$@"}
 			;;
 		--help|-h)
@@ -32,6 +35,18 @@ function main {
 			exit 2
 			;;
 	esac
+}
+
+function _check_utils {
+	for util in "${@}"
+	do
+		if (! command -v "${util}" &> /dev/null)
+		then
+			_log_error "The utility ${util} is not installed."
+
+			exit 1
+		fi
+	done
 }
 
 function _list_helm_charts {
@@ -65,6 +80,8 @@ Commands:
 
 Without args, helm and terraform check every chart/stack listed in the CI
 workflow matrices. With args, only the specified charts/stacks are checked.
+
+Local runs abort on the first failure; CI runs every matrix entry.
 EOF
 }
 

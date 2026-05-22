@@ -84,7 +84,7 @@ function FrequencyChart() {
 	return (
 		<AnalyticsFrame
 			icon="liferay-ac"
-			title={Liferay.Language.get('visits-frequency')}
+			title={Liferay.Language.get('average-visits')}
 		>
 			<div ref={setElement}>
 				{isLoading ? (

@@ -71,7 +71,7 @@ export class DSRAnalyticsPage {
 		this.userFilterTrigger = page.locator('.user-filter-button');
 		this.visitsFrequencyFrame = page
 			.locator('.analytics-frame')
-			.filter({hasText: 'Visits Frequency'});
+			.filter({hasText: 'Average Visits'});
 	}
 
 	async goToOverview() {

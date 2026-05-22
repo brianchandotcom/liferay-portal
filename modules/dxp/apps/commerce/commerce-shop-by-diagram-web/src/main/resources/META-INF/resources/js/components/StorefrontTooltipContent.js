@@ -35,6 +35,7 @@ function SkuContent({
 	const isMounted = useIsMounted();
 	const productURL = getProductURL(productBaseURL, product.urls);
 	const productName = getProductName(product);
+	const skuUnitOfMeasure = product.skuUnitOfMeasures?.[0];
 	const [inCart, setInCart] = useState(false);
 	const [loading, setLoading] = useState(true);
 
@@ -52,7 +53,14 @@ function SkuContent({
 		getCartItems(cartId, product.skuId)
 			.then((jsonResponse) => {
 				if (isMounted()) {
-					setInCart(Boolean(jsonResponse.items?.length));
+					const items = jsonResponse.items || [];
+
+					setInCart(
+						items.some(
+							({skuUnitOfMeasure: itemUnitOfMeasure}) =>
+								skuUnitOfMeasure?.key === itemUnitOfMeasure?.key
+						)
+					);
 
 					setLoading(false);
 				}
@@ -62,7 +70,7 @@ function SkuContent({
 					setLoading(false);
 				}
 			});
-	}, [cartId, isMounted, product.skuId]);
+	}, [cartId, isMounted, product.skuId, skuUnitOfMeasure?.key]);
 
 	const productPurchasable = isProductPurchasable(
 		product.availability,
@@ -147,6 +155,7 @@ function SkuContent({
 									product.skuOptions,
 									product.productOptions
 								),
+								skuUnitOfMeasure,
 							}}
 							disabled={!productPurchasable}
 							settings={{

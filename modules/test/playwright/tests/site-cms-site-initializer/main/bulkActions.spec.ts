@@ -1805,14 +1805,14 @@ test(
 			);
 		});
 
-		await test.step('Navigate to history page and bulk delete all versions', async () => {
-			await assetsPage.gotoAll();
+		await assetsPage.gotoAll();
 
-			await assetsPage.execItemAction({
-				action: 'View History',
-				filter: webContentNames[2],
-			});
+		await assetsPage.execItemAction({
+			action: 'View History',
+			filter: webContentNames[2],
+		});
 
+		await test.step('Bulk Delete is hidden when the current version is included in the selection', async () => {
 			for (const webContentName of webContentNames) {
 				await assetsPage
 					.getItem(webContentName)
@@ -1820,6 +1820,15 @@ test(
 					.check();
 			}
 
+			await assetsPage.expectBulkItemActionHidden('Delete');
+
+			await assetsPage
+				.getItem(webContentNames[2])
+				.locator('input[title="Select Item"]')
+				.uncheck();
+		});
+
+		await test.step('Bulk delete the non-current versions', async () => {
 			await assetsPage.execBulkItemAction('Delete');
 
 			await waitForModal({
@@ -1833,7 +1842,7 @@ test(
 
 			await waitForAlert(
 				page,
-				'Info:Delete asset versions action started for 3 versions.',
+				'Info:Delete asset versions action started for 2 versions.',
 				{
 					autoClose: true,
 					type: 'info',
@@ -1841,7 +1850,7 @@ test(
 			);
 		});
 
-		await test.step('All versions are removed excluding the current one', async () => {
+		await test.step('Deleted versions are removed and the current version remains', async () => {
 			await page.reload();
 
 			await expect(
@@ -1855,24 +1864,13 @@ test(
 			await expect(assetsPage.getItem(webContentNames[2])).toBeVisible();
 		});
 
-		await test.step('Assert that current version cannot be deleted', async () => {
+		await test.step('Bulk Delete is hidden when only the current version is selected', async () => {
 			await assetsPage
 				.getItem(webContentNames[2])
 				.locator('input[title="Select Item"]')
 				.check();
 
-			await assetsPage.execBulkItemAction('Delete');
-
-			await waitForModal({
-				page,
-			});
-
-			await page
-				.locator('.modal')
-				.getByRole('button', {name: 'Ok'})
-				.click();
-
-			await expect(assetsPage.getItem(webContentNames[2])).toBeVisible();
+			await assetsPage.expectBulkItemActionHidden('Delete');
 		});
 	}
 );

@@ -152,4 +152,66 @@ describe('MultiSelect incremental interactions', () => {
 
 		expect(document.activeElement).toEqual(close);
 	});
+
+	describe('keyboard arrows indicator', () => {
+		it('does not render the indicator by default', () => {
+			const {getByRole} = render(
+				<MultiSelect
+					defaultItems={[labels[0]!]}
+					sourceItems={labels}
+					spritemap="/foo/bar"
+				/>
+			);
+
+			userEvent.click(getByRole('combobox'));
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).not.toBeInTheDocument();
+		});
+
+		it('renders the floating indicator with direction "vertical" when enabled', () => {
+			const {getByRole} = render(
+				<MultiSelect
+					defaultItems={[labels[0]!]}
+					displayKeyboardArrowsIndicator
+					sourceItems={labels}
+					spritemap="/foo/bar"
+				/>
+			);
+
+			userEvent.click(getByRole('combobox'));
+
+			const indicator = document.body.querySelector(
+				'.clay-keyboard-arrows-indicator'
+			);
+
+			expect(indicator).toBeInTheDocument();
+			expect(indicator).toHaveClass('clay-keyboard-arrows-vertical');
+			expect(indicator).toHaveClass(
+				'clay-keyboard-arrows-indicator-floating'
+			);
+		});
+
+		it('uses the localized label on the indicator', () => {
+			const {getByRole} = render(
+				<MultiSelect
+					defaultItems={[labels[0]!]}
+					displayKeyboardArrowsIndicator
+					keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate suggestions"
+					sourceItems={labels}
+					spritemap="/foo/bar"
+				/>
+			);
+
+			userEvent.click(getByRole('combobox'));
+
+			expect(
+				document.body.querySelector('.clay-keyboard-arrows-indicator')
+			).toHaveAttribute(
+				'aria-label',
+				'Use up and down arrow keys to navigate suggestions'
+			);
+		});
+	});
 });

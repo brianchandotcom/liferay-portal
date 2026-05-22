@@ -483,3 +483,22 @@ export function WithPrimaryAction() {
 		</>
 	);
 }
+export function KeyboardArrowsIndicator() {
+	const [value, setValue] = useState('');
+	const [items, setItems] = useState<Array<any>>([sourceItems[0]!]);
+
+	return (
+		<div style={{maxWidth: '320px'}}>
+			<ClayMultiSelect
+				defaultActive
+				displayKeyboardArrowsIndicator
+				items={items}
+				keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate suggestions"
+				onChange={setValue}
+				onItemsChange={(val) => setItems(val as any)}
+				sourceItems={sourceItems}
+				value={value}
+			/>
+		</div>
+	);
+}

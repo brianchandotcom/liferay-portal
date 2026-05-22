@@ -500,6 +500,8 @@ public class PostalAddressResourceTest
 		Assert.assertEquals(postalAddress.getId(), patchPostalAddress.getId());
 		Assert.assertEquals(
 			region2.getTitle(), patchPostalAddress.getAddressRegion());
+
+		_countryLocalService.deleteCountry(country);
 	}
 
 	private void _testPatchPostalAddressWithoutListType() throws Exception {

@@ -1,0 +1,13 @@
+{
+	"externalReferenceCode": "L_SEO_STUDIO_SCAN_NAMES",
+	"listTypeEntries": [
+		{
+			"externalReferenceCode": "PAGESPEED",
+			"key": "pageSpeed",
+			"name": "PageSpeed",
+			"system": true
+		}
+	],
+	"name": "SEO Studio Scan Names",
+	"system": true
+}

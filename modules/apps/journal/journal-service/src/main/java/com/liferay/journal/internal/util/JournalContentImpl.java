@@ -245,6 +245,10 @@ public class JournalContentImpl implements JournalContent {
 			articleDisplay = _portalCache.get(journalContentKey);
 		}
 
+		String nonceAttribute =
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
+				(themeDisplay != null) ? themeDisplay.getRequest() : null);
+
 		if ((articleDisplay == null) || !lifecycleRender) {
 			articleDisplay = getArticleDisplay(
 				article, ddmTemplateKey, viewMode, languageId, page,
@@ -255,10 +259,24 @@ public class JournalContentImpl implements JournalContent {
 
 				try {
 					if (productionMode) {
-						_portalCache.put(
-							journalContentKey,
-							_replaceNonceWithPlaceholder(
-								articleDisplay, themeDisplay));
+						String content = articleDisplay.getContent();
+
+						if (!Validator.isBlank(nonceAttribute) &&
+							(content != null) &&
+							content.contains(nonceAttribute)) {
+
+							_portalCache.put(
+								journalContentKey,
+								_copyWithContent(
+									articleDisplay,
+									StringUtil.replace(
+										content, nonceAttribute,
+										_NONCE_PLACEHOLDER),
+									themeDisplay));
+						}
+						else {
+							_portalCache.put(journalContentKey, articleDisplay);
+						}
 					}
 				}
 				catch (ClassCastException classCastException) {
@@ -271,8 +289,17 @@ public class JournalContentImpl implements JournalContent {
 			}
 		}
 		else {
-			articleDisplay = _replacePlaceholderWithNonce(
-				articleDisplay, themeDisplay);
+			String content = articleDisplay.getContent();
+
+			if (!Validator.isBlank(nonceAttribute) && (content != null) &&
+				content.contains(_NONCE_PLACEHOLDER)) {
+
+				articleDisplay = _copyWithContent(
+					articleDisplay,
+					StringUtil.replace(
+						content, _NONCE_PLACEHOLDER, nonceAttribute),
+					themeDisplay);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -487,7 +514,8 @@ public class JournalContentImpl implements JournalContent {
 	}
 
 	private JournalArticleDisplay _copyWithContent(
-		JournalArticleDisplay articleDisplay, String content) {
+		JournalArticleDisplay articleDisplay, String content,
+		ThemeDisplay themeDisplay) {
 
 		return new JournalArticleDisplayImpl(
 			articleDisplay.getCompanyId(),
@@ -500,7 +528,7 @@ public class JournalContentImpl implements JournalContent {
 			articleDisplay.getDDMStructureId(),
 			articleDisplay.getDDMTemplateKey(), articleDisplay.isSmallImage(),
 			articleDisplay.getSmallImageId(), articleDisplay.getSmallImageURL(),
-			articleDisplay.getArticleDisplayImageURL(null),
+			articleDisplay.getArticleDisplayImageURL(themeDisplay),
 			articleDisplay.getNumberOfPages(), articleDisplay.getCurrentPage(),
 			articleDisplay.isPaginate(), articleDisplay.isCacheable());
 	}
@@ -514,50 +542,6 @@ public class JournalContentImpl implements JournalContent {
 		}
 
 		return serviceContext.getThemeDisplay();
-	}
-
-	private JournalArticleDisplay _replaceNonceWithPlaceholder(
-		JournalArticleDisplay articleDisplay, ThemeDisplay themeDisplay) {
-
-		String nonceAttribute =
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				(themeDisplay != null) ? themeDisplay.getRequest() : null);
-
-		if (Validator.isBlank(nonceAttribute)) {
-			return articleDisplay;
-		}
-
-		String content = articleDisplay.getContent();
-
-		if ((content == null) || !content.contains(nonceAttribute)) {
-			return articleDisplay;
-		}
-
-		return _copyWithContent(
-			articleDisplay,
-			StringUtil.replace(content, nonceAttribute, _NONCE_PLACEHOLDER));
-	}
-
-	private JournalArticleDisplay _replacePlaceholderWithNonce(
-		JournalArticleDisplay articleDisplay, ThemeDisplay themeDisplay) {
-
-		String nonceAttribute =
-			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				(themeDisplay != null) ? themeDisplay.getRequest() : null);
-
-		if (Validator.isBlank(nonceAttribute)) {
-			return articleDisplay;
-		}
-
-		String content = articleDisplay.getContent();
-
-		if ((content == null) || !content.contains(_NONCE_PLACEHOLDER)) {
-			return articleDisplay;
-		}
-
-		return _copyWithContent(
-			articleDisplay,
-			StringUtil.replace(content, _NONCE_PLACEHOLDER, nonceAttribute));
 	}
 
 	private static final String _NONCE_PLACEHOLDER =

@@ -56,6 +56,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -100,13 +102,51 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			}
 		}
 
+		Map<Long, ExportImportConfiguration> exportImportConfigurations =
+			new HashMap<>();
+
+		boolean hasPreValidationErrors = false;
+
+		for (Iterator<LayoutSet> iterator = mergeableLayoutSets.iterator();
+			 iterator.hasNext();) {
+
+			LayoutSet layoutSet = iterator.next();
+
+			try {
+				exportImportConfigurations.put(
+					layoutSet.getLayoutSetId(),
+					_buildExportImportConfiguration(false, layoutSet));
+			}
+			catch (PortalException portalException) {
+				_log.error(
+					"Unable to add draft export-import configuration for " +
+						"layout set " + layoutSet.getLayoutSetId(),
+					portalException);
+
+				iterator.remove();
+
+				hasPreValidationErrors = true;
+			}
+		}
+
+		if (mergeableLayoutSets.isEmpty() && hasPreValidationErrors) {
+			LayoutSetPrototypeSyncSessionManagerUtil.postFailureNotification(
+				layoutSetPrototype.getNameMap(), userId);
+
+			return;
+		}
+
 		try (SafeCloseable safeCloseable =
 				LayoutSetPrototypeSyncSessionManagerUtil.openSession(
-					mergeableLayoutSets, layoutSetPrototype, userId)) {
+					hasPreValidationErrors, mergeableLayoutSets,
+					layoutSetPrototype, userId)) {
 
 			for (LayoutSet layoutSet : mergeableLayoutSets) {
 				try {
-					_executeLayoutSetSync(false, layoutSet);
+					_runSyncInBackground(
+						exportImportConfigurations.get(
+							layoutSet.getLayoutSetId()),
+						layoutSet);
 				}
 				catch (Exception exception) {
 					_log.error(
@@ -139,7 +179,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 			return;
 		}
 
-		_executeLayoutSetSync(initialSync, layoutSet);
+		_runSyncInBackground(
+			_buildExportImportConfiguration(initialSync, layoutSet), layoutSet);
 	}
 
 	@Override
@@ -368,41 +409,8 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		}
 	}
 
-	/**
-	 * Checks the permissions necessary for resetting the layout or site. If the
-	 * permissions are not sufficient, a {@link PortalException} is thrown.
-	 *
-	 * @param group the site being checked for sufficient permissions
-	 * @param layout the page being checked for sufficient permissions
-	 *        (optionally <code>null</code>). If <code>null</code>, the
-	 *        permissions are only checked for resetting the site.
-	 */
-	private void _checkResetPrototypePermissions(Group group, Layout layout)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		if ((layout != null) &&
-			!_layoutPermission.contains(
-				permissionChecker, layout, ActionKeys.UPDATE)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, layout.getName(), layout.getLayoutId(),
-				ActionKeys.UPDATE);
-		}
-		else if (!GroupPermissionUtil.contains(
-					permissionChecker, group, ActionKeys.UPDATE) &&
-				 (!group.isUser() ||
-				  (permissionChecker.getUserId() != group.getClassPK()))) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, group.getName(), group.getGroupId(),
-				ActionKeys.UPDATE);
-		}
-	}
-
-	private void _executeLayoutSetSync(boolean initialSync, LayoutSet layoutSet)
+	private ExportImportConfiguration _buildExportImportConfiguration(
+			boolean initialSync, LayoutSet layoutSet)
 		throws PortalException {
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -438,27 +446,45 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 					_exportImportHelper.getLayoutIds(layoutSetPrototypeLayouts),
 					parameterMap);
 
-		ExportImportConfiguration exportImportConfiguration = null;
+		return _exportImportConfigurationLocalService.
+			addDraftExportImportConfiguration(
+				user.getUserId(),
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+				exportLayoutSettingsMap);
+	}
 
-		try {
-			exportImportConfiguration =
-				_exportImportConfigurationLocalService.
-					addDraftExportImportConfiguration(
-						user.getUserId(),
-						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-						exportLayoutSettingsMap);
+	/**
+	 * Checks the permissions necessary for resetting the layout or site. If the
+	 * permissions are not sufficient, a {@link PortalException} is thrown.
+	 *
+	 * @param group the site being checked for sufficient permissions
+	 * @param layout the page being checked for sufficient permissions
+	 *        (optionally <code>null</code>). If <code>null</code>, the
+	 *        permissions are only checked for resetting the site.
+	 */
+	private void _checkResetPrototypePermissions(Group group, Layout layout)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if ((layout != null) &&
+			!_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.UPDATE)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, layout.getName(), layout.getLayoutId(),
+				ActionKeys.UPDATE);
 		}
-		catch (PortalException portalException) {
-			_log.error(
-				"Unable to add draft export-import configuration",
-				portalException);
+		else if (!GroupPermissionUtil.contains(
+					permissionChecker, group, ActionKeys.UPDATE) &&
+				 (!group.isUser() ||
+				  (permissionChecker.getUserId() != group.getClassPK()))) {
 
-			return;
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, group.getName(), group.getGroupId(),
+				ActionKeys.UPDATE);
 		}
-
-		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
-			user.getUserId(), layoutSet.getGroupId(),
-			exportImportConfiguration);
 	}
 
 	private Layout _getDuplicatedFriendlyURLPrototypeLayout(Layout layout)
@@ -741,6 +767,18 @@ public class LayoutSetPrototypeHelperImpl implements LayoutSetPrototypeHelper {
 		layout.setModifiedDate(null);
 
 		_layoutLocalService.updateLayout(layout);
+	}
+
+	private void _runSyncInBackground(
+			ExportImportConfiguration exportImportConfiguration,
+			LayoutSet layoutSet)
+		throws PortalException {
+
+		User user = _userLocalService.getDefaultUser(layoutSet.getCompanyId());
+
+		_exportImportLocalService.syncLayoutSetPrototypeInBackground(
+			user.getUserId(), layoutSet.getGroupId(),
+			exportImportConfiguration);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -133,11 +134,21 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 				return;
 			}
 
+			Set<Integer> backgroundTaskStatuses = new HashSet<>(
+				TransformUtil.transformToList(
+					completedBackgroundTasks, BackgroundTask::getStatus));
+
+			if (MapUtil.getBoolean(
+					taskContextMap,
+					LayoutSetPrototypeSyncSessionManagerUtil.
+						KEY_HAS_PRE_VALIDATION_ERRORS)) {
+
+				backgroundTaskStatuses.add(
+					BackgroundTaskConstants.STATUS_FAILED);
+			}
+
 			LayoutSetPrototypeSyncSessionManagerUtil.postNotification(
-				new HashSet<>(
-					TransformUtil.transformToList(
-						completedBackgroundTasks, BackgroundTask::getStatus)),
-				layoutSetPrototype.getNameMap(),
+				backgroundTaskStatuses, layoutSetPrototype.getNameMap(),
 				MapUtil.getLong(
 					taskContextMap,
 					LayoutSetPrototypeSyncSessionManagerUtil.KEY_SYNC_USER_ID));
@@ -233,15 +244,12 @@ public class LayoutSetPrototypeSyncBackgroundTaskStatusMessageListener
 					taskContextMap,
 					LayoutSetPrototypeConstants.KEY_SYNC_SESSION_ID);
 
-				if (!Objects.equals(syncSessionId, taskSyncSessionId)) {
-					return null;
-				}
-
-				if (completed &&
-					MapUtil.getBoolean(
-						taskContextMap,
-						LayoutSetPrototypeSyncSessionManagerUtil.
-							KEY_NOTIFIED)) {
+				if (!Objects.equals(syncSessionId, taskSyncSessionId) ||
+					(completed &&
+					 MapUtil.getBoolean(
+						 taskContextMap,
+						 LayoutSetPrototypeSyncSessionManagerUtil.
+							 KEY_NOTIFIED))) {
 
 					return null;
 				}

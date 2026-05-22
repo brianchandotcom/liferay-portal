@@ -1,6 +1,7 @@
 import CriteriaGroup from '../CriteriaGroup';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
+import {Conjunctions} from '../../utils/constants';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -68,15 +69,15 @@ describe('CriteriaGroup', () => {
 	});
 
 	it.each`
-		conjunction | count | root     | sequential | expectedMessage        | expectedDropDisabled
-		${'and'}    | ${5}  | ${true}  | ${true}    | ${LIMIT_MESSAGE}       | ${'true'}
-		${'and'}    | ${6}  | ${true}  | ${true}    | ${EXCEEDED_MESSAGE}    | ${'true'}
-		${'or'}     | ${3}  | ${false} | ${true}    | ${OR_LIMIT_MESSAGE}    | ${'true'}
-		${'or'}     | ${4}  | ${false} | ${true}    | ${OR_EXCEEDED_MESSAGE} | ${'true'}
-		${'and'}    | ${4}  | ${true}  | ${true}    | ${null}                | ${'false'}
-		${'or'}     | ${2}  | ${false} | ${true}    | ${null}                | ${'false'}
-		${'and'}    | ${5}  | ${true}  | ${false}   | ${null}                | ${'false'}
-		${'or'}     | ${5}  | ${false} | ${false}   | ${null}                | ${'false'}
+		conjunction         | count | root     | sequential | expectedMessage        | expectedDropDisabled
+		${Conjunctions.And} | ${5}  | ${true}  | ${true}    | ${LIMIT_MESSAGE}       | ${'true'}
+		${Conjunctions.And} | ${6}  | ${true}  | ${true}    | ${EXCEEDED_MESSAGE}    | ${'true'}
+		${Conjunctions.Or}  | ${3}  | ${false} | ${true}    | ${OR_LIMIT_MESSAGE}    | ${'true'}
+		${Conjunctions.Or}  | ${4}  | ${false} | ${true}    | ${OR_EXCEEDED_MESSAGE} | ${'true'}
+		${Conjunctions.And} | ${4}  | ${true}  | ${true}    | ${null}                | ${'false'}
+		${Conjunctions.Or}  | ${2}  | ${false} | ${true}    | ${null}                | ${'false'}
+		${Conjunctions.And} | ${5}  | ${true}  | ${false}   | ${null}                | ${'false'}
+		${Conjunctions.Or}  | ${5}  | ${false} | ${false}   | ${null}                | ${'false'}
 	`(
 		'renders $expectedMessage and disabled=$expectedDropDisabled for $conjunction with $count items (root=$root, sequential=$sequential)',
 		({
@@ -116,7 +117,7 @@ describe('CriteriaGroup', () => {
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaGroup
-					criteria={makeCriteria('and', 3)}
+					criteria={makeCriteria(Conjunctions.And, 3)}
 					criteriaGroupId='group'
 					onChange={() => {}}
 					onMove={() => {}}
@@ -140,7 +141,7 @@ describe('CriteriaGroup', () => {
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaGroup
-					criteria={makeCriteria('and', 3)}
+					criteria={makeCriteria(Conjunctions.And, 3)}
 					criteriaGroupId='group'
 					onChange={() => {}}
 					onMove={() => {}}
@@ -159,7 +160,7 @@ describe('CriteriaGroup', () => {
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaGroup
-					criteria={makeCriteria('and', 3)}
+					criteria={makeCriteria(Conjunctions.And, 3)}
 					criteriaGroupId='group'
 					onChange={() => {}}
 					onMove={() => {}}
@@ -176,7 +177,7 @@ describe('CriteriaGroup', () => {
 
 	it('should propagate the parent step number to each row inside a nested top-level group', () => {
 		const nestedGroup = {
-			conjunctionName: 'or',
+			conjunctionName: Conjunctions.Or,
 			criteriaGroupId: 'nested',
 			items: [
 				{rowId: 'n0', valid: true},
@@ -185,7 +186,7 @@ describe('CriteriaGroup', () => {
 		};
 
 		const rootCriteria = {
-			conjunctionName: 'and',
+			conjunctionName: Conjunctions.And,
 			criteriaGroupId: 'root',
 			items: [
 				{rowId: 'r0', valid: true},
@@ -219,7 +220,7 @@ describe('CriteriaGroup', () => {
 
 	it('should render both alerts when the root hits the sequential limit and contains a nested OR at its limit', () => {
 		const nestedOrGroup = {
-			conjunctionName: 'or',
+			conjunctionName: Conjunctions.Or,
 			criteriaGroupId: 'nested-or',
 			items: [
 				{rowId: 'n0', valid: true},
@@ -229,7 +230,7 @@ describe('CriteriaGroup', () => {
 		};
 
 		const rootWithNestedOr = {
-			conjunctionName: 'and',
+			conjunctionName: Conjunctions.And,
 			criteriaGroupId: 'root',
 			items: [
 				{rowId: 'r0', valid: true},

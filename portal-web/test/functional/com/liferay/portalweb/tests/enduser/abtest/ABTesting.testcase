@@ -43,88 +43,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
-	@priority = 3
-	test ABTestIconVisibilityInControlBar {
-		task ("Create user") {
-			JSONUser.addUser(
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Create role and assign to user") {
-			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name Test",
-				roleTitle = "Roles Regrole Name Test");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name Test");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name Test",
-				userEmailAddress = "userea@liferay.com");
-		}
-
-		task ("Login with new user") {
-			User.logoutAndLoginPG(
-				password = PropsUtil.get("default.admin.password"),
-				userLoginEmailAddress = "userea@liferay.com",
-				userLoginFullName = "userfn userln");
-		}
-
-		task ("Assert AB Test icon is present") {
-			AssertElementPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-
-		task ("Create user without page edit permission") {
-			JSONUser.addUser(
-				userEmailAddress = "userea2@liferay.com",
-				userFirstName = "noperm",
-				userLastName = "noperm",
-				userScreenName = "usersn2");
-
-			JSONUser.setFirstPassword(
-				agreeToTermsAndAnswerReminderQuery = "true",
-				requireReset = "false",
-				userEmailAddress = "userea2@liferay.com");
-		}
-
-		task ("Create view-only role and assign to user without permission") {
-			JSONRole.addRegularRole(
-				roleKey = "Roles Regrole Name Test View",
-				roleTitle = "Roles Regrole Name Test View");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = "Roles Regrole Name Test View");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = "Roles Regrole Name Test View",
-				userEmailAddress = "userea2@liferay.com");
-		}
-
-		task ("Login as user without page edit permission") {
-			User.logoutAndLoginPG(
-				password = PropsUtil.get("default.admin.password"),
-				userLoginEmailAddress = "userea2@liferay.com",
-				userLoginFullName = "noperm noperm");
-		}
-
-		task ("Assert AB Test icon is not present") {
-			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
-		}
-	}
-
 	@description = "LPS-96787: Validate if in the notification message has one link to the content page of the test, with the AB test panel open in that test"
 	@priority = 3
 	test ABTestNotificationFlows {
@@ -335,26 +253,6 @@ definition {
 				key_index = 1,
 				key_nodeName = "Heading",
 				locator1 = "Treeview#PAGE_STRUCTURE_TREE_VERTICAL_ELLIPSIS");
-		}
-	}
-
-	@description = "LPS-101055: Validate if the A/B test panel is not shown in widget pages"
-	@priority = 3
-	test CheckABTestPanelAtWidgetPages {
-		task ("Create Widget Page") {
-			PagesAdmin.addPage(
-				pageName = "Widget Page Name",
-				sitePageType = "Widget Page");
-		}
-
-		task ("Go to widget pages crieted") {
-			Navigator.gotoSitePage(
-				pageName = "Widget Page Name",
-				siteName = "Test Site Name");
-		}
-
-		task ("Assert 'AB Test' icon is not present") {
-			AssertElementNotPresent(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
 	}
 

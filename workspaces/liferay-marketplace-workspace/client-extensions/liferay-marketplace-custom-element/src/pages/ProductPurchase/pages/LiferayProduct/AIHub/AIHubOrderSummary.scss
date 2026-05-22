@@ -1,0 +1,48 @@
+.ai-hub-order-summary {
+	.field-base-container_label label {
+		font-size: 18px;
+	}
+
+	.section-divider {
+		margin-bottom: 16px;
+		margin-top: 8px;
+	}
+}
+
+.ai-hub-summary-infomation-card {
+	align-items: center;
+	background-color: transparent;
+	border: 1.5px solid #c9c9cf;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	padding: 16px;
+
+	.text {
+		color: #272833;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 24px;
+	}
+
+	.sub-text {
+		color: #66666f;
+		font-size: 13px;
+		line-height: 16px;
+	}
+}
+
+.ai-hub-alert-card {
+	align-items: center;
+	background-color: #e6ebf5;
+	border-radius: 10px;
+	display: flex;
+	margin-bottom: 16px;
+	padding: 16px;
+
+	&-text {
+		color: #1c3667;
+		font-size: 13px;
+		line-height: 16px;
+	}
+}

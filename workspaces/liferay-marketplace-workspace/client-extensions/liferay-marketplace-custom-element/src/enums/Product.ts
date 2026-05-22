@@ -146,12 +146,14 @@ export enum ProductWorkflowStatusCode {
 
 export enum SkuOptions {
 	DEVELOPER = 'developer',
+	OPEN_BETA = 'open-beta',
 	STANDARD = 'standard',
 	TRIAL = 'trial',
 }
 
 export enum SolutionTypes {
 	AI_HUB = 'ai-hub',
+	AI_HUB_OPEN_BETA = 'ai-hub-open-beta',
 	ANALYTICS = 'analytics',
 	CMP = 'cmp',
 	DSR = 'dsr',

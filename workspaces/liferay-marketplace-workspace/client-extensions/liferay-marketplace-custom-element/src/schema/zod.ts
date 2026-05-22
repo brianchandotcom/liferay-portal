@@ -197,6 +197,15 @@ const zodSchema = {
 		termsAndConditions: z.boolean().refine((value) => value === true),
 		userAgreement: z.boolean().refine((value) => value === true),
 	}),
+	aiHubOpenBetaForm: z.object({
+		...personalInformationSchema,
+		administratorEmailAddress: z
+			.string()
+			.email('Please fill in valid email'),
+		aiHubAccountName: z.string().min(3, 'AI Hub Account Name is required'),
+		termsAndConditions: z.boolean().refine((value) => value === true),
+		userAgreement: z.boolean().refine((value) => value === true),
+	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),
 		_refIncidentReportContacts: z.array(z.any()),
@@ -408,6 +417,7 @@ const zodSchema = {
 		workspaceName: z.string().min(3),
 		workspaceOwnerEmail: z.string().email(),
 	}),
+
 	productFeedback: z.object({
 		companyName: z.string().optional(),
 		emailAddress: z

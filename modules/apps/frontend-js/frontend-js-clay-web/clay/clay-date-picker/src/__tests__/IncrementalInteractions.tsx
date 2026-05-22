@@ -800,4 +800,189 @@ describe('IncrementalInteractions', () => {
 
 		jest.useRealTimers();
 	});
+
+	describe('min/max', () => {
+		it('disables days before min in the calendar grid', () => {
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					min="2019-04-10"
+					spritemap={spritemap}
+				/>
+			);
+
+			const beforeMin = getByLabelText(
+				new Date('2019 04 09').toDateString()
+			);
+			const atMin = getByLabelText(new Date('2019 04 10').toDateString());
+			const afterMin = getByLabelText(
+				new Date('2019 04 11').toDateString()
+			);
+
+			expect(beforeMin).toBeDisabled();
+			expect(atMin).not.toBeDisabled();
+			expect(afterMin).not.toBeDisabled();
+		});
+
+		it('disables days after max in the calendar grid', () => {
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					max="2019-04-20"
+					spritemap={spritemap}
+				/>
+			);
+
+			const beforeMax = getByLabelText(
+				new Date('2019 04 19').toDateString()
+			);
+			const atMax = getByLabelText(new Date('2019 04 20').toDateString());
+			const afterMax = getByLabelText(
+				new Date('2019 04 21').toDateString()
+			);
+
+			expect(beforeMax).not.toBeDisabled();
+			expect(atMax).not.toBeDisabled();
+			expect(afterMax).toBeDisabled();
+		});
+
+		it('does not commit a click on a disabled day', () => {
+			const onChange = jest.fn();
+
+			const {getByLabelText} = render(
+				<ClayDatePicker
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					defaultMonth={new Date(2019, 3, 18)}
+					min="2019-04-10"
+					onChange={onChange}
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			fireEvent.click(
+				getByLabelText(new Date('2019 04 05').toDateString())
+			);
+
+			expect(onChange).not.toHaveBeenCalled();
+		});
+
+		it('does not commit out-of-range values typed into the input', () => {
+			const onChange = jest.fn();
+
+			const {getByLabelText} = render(
+				<ClayDatePicker
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					defaultMonth={new Date(2019, 3, 18)}
+					min="2019-04-10"
+					onChange={onChange}
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			const input: any = getByLabelText(ariaLabels.input);
+
+			fireEvent.change(input, {target: {value: '2019-04-05'}});
+
+			const dayNumber = getByLabelText(
+				new Date('2019 04 05').toDateString()
+			);
+
+			expect(dayNumber.classList).not.toContain('active');
+		});
+
+		it('warns and ignores both bounds when min >= max', () => {
+			const warnSpy = jest
+				.spyOn(console, 'warn')
+				.mockImplementation(() => {});
+
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					max="2019-04-10"
+					min="2019-04-20"
+					spritemap={spritemap}
+				/>
+			);
+
+			expect(warnSpy).toHaveBeenCalled();
+
+			const beforeMin = getByLabelText(
+				new Date('2019 04 05').toDateString()
+			);
+			const afterMax = getByLabelText(
+				new Date('2019 04 25').toDateString()
+			);
+
+			expect(beforeMin).not.toBeDisabled();
+			expect(afterMax).not.toBeDisabled();
+
+			warnSpy.mockRestore();
+		});
+
+		it('applies min/max to both endpoints in range mode', () => {
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					max="2019-04-20"
+					min="2019-04-10"
+					range
+					spritemap={spritemap}
+				/>
+			);
+
+			expect(
+				getByLabelText(new Date('2019 04 09').toDateString())
+			).toBeDisabled();
+			expect(
+				getByLabelText(new Date('2019 04 21').toDateString())
+			).toBeDisabled();
+		});
+
+		it('does not commit a time edit that falls outside min on the boundary day', () => {
+			const onChange = jest.fn();
+
+			const {getByTestId} = render(
+				<ClayDatePicker
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					defaultMonth={new Date(2019, 3, 10, 12, 0)}
+					min="2019-04-10 10:00"
+					onChange={onChange}
+					spritemap={spritemap}
+					time
+					value="2019-04-10 12:00"
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			fireEvent.click(getByTestId('hours'));
+			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
+
+			// Hours start at 12, arrow down loops via config min=10 (down from
+			// 12 → 11 → 10). Further presses are clamped/wrapped by config.
+
+			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
+			fireEvent.keyDown(getByTestId('hours'), {key: 'ArrowDown'});
+
+			// `onChange` should not have been called with a value below 10:00.
+
+			const calls = onChange.mock.calls
+				.map((call: Array<string>) => call[0])
+				.filter(Boolean);
+
+			calls.forEach((value: string) => {
+				const [, hh] = value.split(' ');
+
+				expect(Number(hh!.split(':')[0])).toBeGreaterThanOrEqual(10);
+			});
+		});
+	});
 });

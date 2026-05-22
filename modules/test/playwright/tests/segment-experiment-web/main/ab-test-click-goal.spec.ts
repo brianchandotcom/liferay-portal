@@ -372,3 +372,85 @@ test(
 		}
 	}
 );
+
+test(
+	'Running a Click goal AB Test disables the Change Clickable Element button and makes the ID box readonly',
+	{tag: '@LPS-119475'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-button',
+					}),
+				]),
+				siteId: site.id,
+				title: 'My Page',
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({
+				goal: 'Click',
+				name: 'AB Test ' + getRandomString(),
+				page,
+			});
+
+			await selectClickElement({page});
+
+			await createVariant({name: 'V1', page});
+
+			// Run the test
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Run'}),
+				trigger: page.getByText('Review and Run Test'),
+			});
+
+			await expect(page.getByText('Test is now running.')).toBeVisible();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText('Test is now running.'),
+				trigger: page.getByRole('button', {name: 'OK'}),
+			});
+
+			// The Change Clickable Element button is gone and the ID box is readonly
+
+			await expect(
+				page.getByRole('button', {name: 'Change Clickable Element'})
+			).toHaveCount(0);
+
+			await expect(page.locator('#clickableElement')).toHaveAttribute(
+				'readonly',
+				''
+			);
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);

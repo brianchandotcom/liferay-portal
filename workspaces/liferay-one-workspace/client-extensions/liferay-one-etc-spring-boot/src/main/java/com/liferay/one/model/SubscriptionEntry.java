@@ -15,8 +15,8 @@ public class SubscriptionEntry {
 	public SubscriptionEntry(JSONObject jsonObject) {
 		_className = jsonObject.getString("className");
 		_classPK = jsonObject.getLong("classPK");
+		_customUserId = jsonObject.getLong("customUserId");
 		_subscriptionEntryId = jsonObject.getLong("id");
-		_userId = jsonObject.getLong("userId");
 	}
 
 	public String getClassName() {
@@ -27,17 +27,17 @@ public class SubscriptionEntry {
 		return _classPK;
 	}
 
+	public long getCustomUserId() {
+		return _customUserId;
+	}
+
 	public long getSubscriptionEntryId() {
 		return _subscriptionEntryId;
 	}
 
-	public long getUserId() {
-		return _userId;
-	}
-
 	private final String _className;
 	private final long _classPK;
+	private final long _customUserId;
 	private final long _subscriptionEntryId;
-	private final long _userId;
 
 }

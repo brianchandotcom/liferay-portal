@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import jakarta.portlet.RenderRequest;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -245,9 +247,15 @@ public class JournalContentImpl implements JournalContent {
 			articleDisplay = _portalCache.get(journalContentKey);
 		}
 
+		HttpServletRequest httpServletRequest = null;
+
+		if (themeDisplay != null) {
+			httpServletRequest = themeDisplay.getRequest();
+		}
+
 		String nonceAttribute =
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
-				(themeDisplay != null) ? themeDisplay.getRequest() : null);
+				httpServletRequest);
 
 		if ((articleDisplay == null) || !lifecycleRender) {
 			articleDisplay = getArticleDisplay(
@@ -261,13 +269,13 @@ public class JournalContentImpl implements JournalContent {
 					if (productionMode) {
 						String content = articleDisplay.getContent();
 
-						if (!Validator.isBlank(nonceAttribute) &&
-							(content != null) &&
-							content.contains(nonceAttribute)) {
+						if ((content != null) &&
+							content.contains(nonceAttribute) &&
+							!Validator.isBlank(nonceAttribute)) {
 
 							_portalCache.put(
 								journalContentKey,
-								_copyWithContent(
+								_getArticleDisplay(
 									articleDisplay,
 									StringUtil.replace(
 										content, nonceAttribute,
@@ -291,10 +299,10 @@ public class JournalContentImpl implements JournalContent {
 		else {
 			String content = articleDisplay.getContent();
 
-			if (!Validator.isBlank(nonceAttribute) && (content != null) &&
-				content.contains(_NONCE_PLACEHOLDER)) {
+			if ((content != null) && content.contains(_NONCE_PLACEHOLDER) &&
+				!Validator.isBlank(nonceAttribute)) {
 
-				articleDisplay = _copyWithContent(
+				articleDisplay = _getArticleDisplay(
 					articleDisplay,
 					StringUtil.replace(
 						content, _NONCE_PLACEHOLDER, nonceAttribute),
@@ -513,7 +521,7 @@ public class JournalContentImpl implements JournalContent {
 		_journalTemplatePortalCacheIndexer.removeKeys(ddmTemplateKey);
 	}
 
-	private JournalArticleDisplay _copyWithContent(
+	private JournalArticleDisplay _getArticleDisplay(
 		JournalArticleDisplay articleDisplay, String content,
 		ThemeDisplay themeDisplay) {
 

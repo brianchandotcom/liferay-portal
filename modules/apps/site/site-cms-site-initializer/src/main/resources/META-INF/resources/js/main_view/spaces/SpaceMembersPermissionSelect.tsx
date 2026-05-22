@@ -15,12 +15,14 @@ export const SPACE_MEMBER_ROLE_NAME = 'Asset Library Member';
 export const HIDDEN_MEMBER_ROLES = ['Asset Library Owner', 'CMS Consumer'];
 
 interface SpaceMembersPermissionSelectProps {
+	disabled?: boolean;
 	onChange: (selectedRoles: string[]) => void;
 	roles: Role[];
 	selectedRoles: string[];
 }
 
 export function SpaceMembersPermissionSelect({
+	disabled = false,
 	onChange,
 	roles: rawRoles = [],
 	selectedRoles,
@@ -83,6 +85,7 @@ export function SpaceMembersPermissionSelect({
 				<ClayButton
 					borderless
 					className="align-items-center d-flex"
+					disabled={disabled}
 					displayType="secondary"
 					size="xs"
 				>

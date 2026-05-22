@@ -11,9 +11,12 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../../analytics-settings-web/main/utils/analytics-settings';
+import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {createABTest, createVariant, openABTesSidebar} from './utils/ab-test';
 
 const test = mergeTests(
@@ -195,6 +198,107 @@ test(
 				page.locator('.dropdown-menu__experience', {
 					hasText: experienceName,
 				})
+			).toHaveCount(0);
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
+	'Locked experience elements cannot be edited from the Browser tree',
+	{tag: '@LPS-109345'},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const experienceName = 'E1';
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-heading',
+					}),
+				]),
+				siteId: site.id,
+				title: 'My Page',
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.createExperience(experienceName);
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: `${experienceName} Segment: Anyone Inactive`,
+				}),
+				trigger: page.getByLabel('Experience Selector'),
+			});
+
+			await openABTesSidebar(page);
+
+			await createABTest({name: 'AB Test ' + getRandomString(), page});
+
+			await createVariant({name: 'V1', page});
+
+			// Run the test so the experience becomes locked
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('button', {name: 'Run'}),
+				trigger: page.getByText('Review and Run Test'),
+			});
+
+			await expect(page.getByText('Test is now running.')).toBeVisible();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText('Test is now running.'),
+				trigger: page.getByRole('button', {name: 'OK'}),
+			});
+
+			// Open the Browser tab and assert the Heading has no actions menu
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}?p_l_mode=edit`
+			);
+
+			await pageEditorPage.goToSidebarTab('Browser');
+
+			const headingRow = page
+				.locator('.treeview-link', {hasText: 'Heading'})
+				.first();
+
+			await expect(headingRow).toBeVisible();
+
+			await expect(
+				headingRow.locator('button.dropdown-toggle')
 			).toHaveCount(0);
 		}
 		finally {

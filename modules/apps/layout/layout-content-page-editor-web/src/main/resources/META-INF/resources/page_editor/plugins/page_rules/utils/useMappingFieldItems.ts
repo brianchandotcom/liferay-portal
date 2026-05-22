@@ -6,7 +6,10 @@
 import {useMemo} from 'react';
 
 import {config} from '../../../app/config/index';
-import {ObjectFieldAttributes} from '../../../app/contexts/ObjectDataContext';
+import {
+	ObjectFieldAttributes,
+	ObjectFields,
+} from '../../../app/contexts/ObjectDataContext';
 import {useSelector} from '../../../app/contexts/StoreContext';
 import getMappingFieldsKey from '../../../app/utils/getMappingFieldsKey';
 import {filterAndConvertMappingFields} from '../components/Condition';
@@ -28,7 +31,10 @@ export default function useMappingFieldItems() {
 	);
 
 	return useMemo(
-		() => filterAndConvertMappingFields(mappingFields),
+		() =>
+			filterAndConvertMappingFields(
+				mappingFields as unknown as ObjectFields | null
+			),
 		[mappingFields]
 	);
 }

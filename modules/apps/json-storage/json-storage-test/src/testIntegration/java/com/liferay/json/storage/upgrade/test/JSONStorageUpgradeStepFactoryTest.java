@@ -104,13 +104,13 @@ public class JSONStorageUpgradeStepFactoryTest {
 		"{\"array\": [1, 2], \"object\": {\"key\": \"value\"}}";
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static JSONStorageEntryLocalService _jsonStorageEntryLocalService;
+	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
 
 	@Inject
-	private static JSONStorageUpgradeStepFactory _jsonStorageUpgradeStepFactory;
+	private JSONStorageUpgradeStepFactory _jsonStorageUpgradeStepFactory;
 
 	@DeleteAfterTestRun
 	private ClassName _className;

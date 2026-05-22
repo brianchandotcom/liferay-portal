@@ -315,7 +315,7 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	private static SafeCloseable _safeCloseable;
 
 	@Inject
-	private static ServiceComponentLocalService _serviceComponentLocalService;
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 	private static DataSource _unsupportedCharacterSetDataSource;
 

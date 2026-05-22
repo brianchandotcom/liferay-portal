@@ -89,7 +89,7 @@ public class UserModelPreFilterContributorTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static String _originalName;
 

@@ -447,7 +447,7 @@ public class DDMStructureModelListenerTest {
 	}
 
 	@Inject
-	private static CTCollectionService _ctCollectionService;
+	private CTCollectionService _ctCollectionService;
 
 	private static final Map<String, List<String>> _expectedFieldValuesMap =
 		HashMapBuilder.<String, List<String>>put(
@@ -493,7 +493,7 @@ public class DDMStructureModelListenerTest {
 			).build();
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

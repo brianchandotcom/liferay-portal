@@ -54,7 +54,7 @@ public class RatingsEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static RatingsStatsLocalService _ratingsStatsLocalService;
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	private AssetEntry _assetEntry;
 

@@ -144,7 +144,7 @@ public class CSPOSGiCommandsTest {
 			"configuration.ContentSecurityPolicyConfiguration";
 
 	@Inject(filter = "osgi.command.scope=csp")
-	private static OSGiCommands _osgiCommands;
+	private OSGiCommands _osgiCommands;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

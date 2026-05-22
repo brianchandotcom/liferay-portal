@@ -357,7 +357,7 @@ public class GroupServicePermissionTest {
 		GroupServicePermissionTest.class);
 
 	@Inject
-	private static RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 	private Group _group1;
 	private Group _group11;

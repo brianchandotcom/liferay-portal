@@ -211,7 +211,7 @@ public class AssetTagsDisplayContextTest {
 			assetTagActionDropdownItems.get(2), "trash", "delete");
 	}
 
-	private static MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
+	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
 	private static final MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
 			StagingGroupHelperUtil.class);

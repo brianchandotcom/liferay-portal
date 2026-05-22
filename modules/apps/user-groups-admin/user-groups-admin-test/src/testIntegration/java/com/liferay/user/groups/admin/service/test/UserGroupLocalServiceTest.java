@@ -484,10 +484,10 @@ public class UserGroupLocalServiceTest {
 		}
 	}
 
-	private static int _count;
-	private static Role _role;
-	private static UserGroup _userGroup1;
-	private static UserGroup _userGroup2;
+	private int _count;
+	private Role _role;
+	private UserGroup _userGroup1;
+	private UserGroup _userGroup2;
 
 	@Inject
 	private Portal _portal;

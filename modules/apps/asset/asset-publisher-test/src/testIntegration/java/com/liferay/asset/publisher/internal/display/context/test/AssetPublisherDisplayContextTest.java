@@ -512,9 +512,9 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	private static Configuration _assetPublisherWebConfiguration;
-	private static MockLiferayPortletRenderRequest
+	private MockLiferayPortletRenderRequest
 		_mockLiferayPortletRenderRequest;
-	private static ThemeDisplay _themeDisplay;
+	private ThemeDisplay _themeDisplay;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

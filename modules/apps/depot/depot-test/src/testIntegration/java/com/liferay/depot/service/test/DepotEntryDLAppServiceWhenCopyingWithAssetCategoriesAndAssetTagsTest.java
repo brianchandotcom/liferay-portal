@@ -410,7 +410,7 @@ public class
 	private static final String _FILE_NAME = "Title.txt";
 
 	@Inject
-	private static DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 	private AssetCategory _assetCategory;
 

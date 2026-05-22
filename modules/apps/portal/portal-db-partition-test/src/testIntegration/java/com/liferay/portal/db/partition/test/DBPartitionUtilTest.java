@@ -841,11 +841,11 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	@Inject(
 		filter = "component.name=com.liferay.portal.scheduler.quartz.internal.QuartzSchedulerEngine"
 	)
-	private static SchedulerEngine _schedulerEngine;
+	private SchedulerEngine _schedulerEngine;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.scheduler.quartz.internal.QuartzTriggerFactory"
 	)
-	private static TriggerFactory _triggerFactory;
+	private TriggerFactory _triggerFactory;
 
 }

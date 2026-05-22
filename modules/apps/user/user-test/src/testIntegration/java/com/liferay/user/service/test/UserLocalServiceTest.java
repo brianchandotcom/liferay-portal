@@ -2323,10 +2323,10 @@ public class UserLocalServiceTest {
 			company.isSiteLogo());
 	}
 
-	private static Company _company;
+	private Company _company;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static String _originalName;
 

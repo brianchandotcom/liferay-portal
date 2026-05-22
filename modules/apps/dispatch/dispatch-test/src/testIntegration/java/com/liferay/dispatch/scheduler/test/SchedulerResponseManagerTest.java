@@ -132,7 +132,7 @@ public class SchedulerResponseManagerTest {
 	private static final String _TEST_NAME =
 		SchedulerResponseManagerTest.class.getName();
 
-	private static Company _company;
+	private Company _company;
 	private static String _originalName;
 
 	@Inject

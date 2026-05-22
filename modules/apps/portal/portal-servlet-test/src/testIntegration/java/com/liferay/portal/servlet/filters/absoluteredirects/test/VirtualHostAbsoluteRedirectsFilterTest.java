@@ -227,15 +227,15 @@ public class VirtualHostAbsoluteRedirectsFilterTest {
 
 	private static final String _LANGUAGE_ID_FR = "fr_FR";
 
-	private static Set<Locale> _availableLocales;
-	private static long _groupId;
-	private static long _layoutSetId;
+	private Set<Locale> _availableLocales;
+	private long _groupId;
+	private long _layoutSetId;
 
 	@Inject
-	private static LayoutSetLocalService _layoutSetLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 
 	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private VirtualHostLocalService _virtualHostLocalService;
 
 	private final AbsoluteRedirectsFilter _absoluteRedirectsFilter =
 		new AbsoluteRedirectsFilter();

@@ -211,7 +211,7 @@ public class CPConfigurationUpgradeProcessTest {
 			"CPConfigurationUpgradeProcess";
 
 	@Inject
-	private static Portal _portal;
+	private Portal _portal;
 
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;

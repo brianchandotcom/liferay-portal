@@ -182,7 +182,7 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.web.internal.upgrade.registry.JournalWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
 	private DDMStructure _companyGroupDDMStructure;

@@ -106,7 +106,7 @@ public class VulcanCompanyConfigurationUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.portal.vulcan.internal.upgrade.registry.VulcanImplUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

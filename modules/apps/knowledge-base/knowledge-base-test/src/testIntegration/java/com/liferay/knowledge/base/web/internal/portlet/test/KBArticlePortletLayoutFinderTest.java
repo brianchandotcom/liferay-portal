@@ -170,7 +170,7 @@ public class KBArticlePortletLayoutFinderTest {
 		return themeDisplay;
 	}
 
-	private static String[] _portletIds;
+	private String[] _portletIds;
 
 	@DeleteAfterTestRun
 	private Group _group;

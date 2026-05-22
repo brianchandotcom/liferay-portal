@@ -115,9 +115,9 @@ public class JMXWhiteboardTest {
 	private static BundleContext _bundleContext;
 
 	@Inject
-	private static MBeanServer _mBeanServer;
+	private MBeanServer _mBeanServer;
 
-	private static ServiceRegistration<?> _serviceRegistration;
+	private ServiceRegistration<?> _serviceRegistration;
 
 	private class JMXWhiteboardByDynamicMBean
 		extends StandardMBean implements JMXWhiteboardByInterfaceMBean {

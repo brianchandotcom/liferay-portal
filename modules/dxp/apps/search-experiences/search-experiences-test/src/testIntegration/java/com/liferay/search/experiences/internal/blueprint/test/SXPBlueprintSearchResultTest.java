@@ -2549,12 +2549,12 @@ public class SXPBlueprintSearchResultTest {
 	private static final LocalTime _LOCAL_TIME_20 = LocalTime.of(20, 0, 0);
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	private static List<SXPElement> _sxpElements;
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	private AssetCategory _assetCategory;
 	private AssetTag _assetTag;

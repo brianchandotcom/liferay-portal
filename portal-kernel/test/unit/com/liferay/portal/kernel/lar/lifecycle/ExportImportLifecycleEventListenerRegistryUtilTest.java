@@ -101,7 +101,7 @@ public class ExportImportLifecycleEventListenerRegistryUtilTest {
 						exportImportLifecycleListener));
 	}
 
-	private static ServiceRegistration<ExportImportLifecycleListener>
+	private ServiceRegistration<ExportImportLifecycleListener>
 		_serviceRegistration;
 
 }

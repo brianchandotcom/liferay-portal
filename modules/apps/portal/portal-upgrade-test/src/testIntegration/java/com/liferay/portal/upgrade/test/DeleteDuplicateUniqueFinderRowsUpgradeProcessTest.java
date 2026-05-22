@@ -295,23 +295,23 @@ public class DeleteDuplicateUniqueFinderRowsUpgradeProcessTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
 
 	@Inject
-	private static PortalPreferencesLocalService _portalPreferencesLocalService;
+	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
 	@Inject
-	private static PortletItemLocalService _portletItemLocalService;
+	private PortletItemLocalService _portletItemLocalService;
 
 	@Inject
-	private static SocialActivitySettingLocalService
+	private SocialActivitySettingLocalService
 		_socialActivitySettingLocalService;
 
 	@Inject
-	private static TicketLocalService _ticketLocalService;
+	private TicketLocalService _ticketLocalService;
 
 }

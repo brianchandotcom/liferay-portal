@@ -137,12 +137,12 @@ public class JournalArticleSmallImageSourceUpgradeProcessTest {
 			"JournalArticleSmallImageSourceUpgradeProcess";
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

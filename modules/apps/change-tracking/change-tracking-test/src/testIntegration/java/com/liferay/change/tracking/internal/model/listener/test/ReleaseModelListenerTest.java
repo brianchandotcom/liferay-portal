@@ -369,25 +369,25 @@ public class ReleaseModelListenerTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static CTPreferencesLocalService _ctPreferencesLocalService;
+	private CTPreferencesLocalService _ctPreferencesLocalService;
 
 	@Inject
-	private static CTProcessLocalService _ctProcessLocalService;
+	private CTProcessLocalService _ctProcessLocalService;
 
 	@Inject
-	private static CTSchemaVersionLocalService _ctSchemaVersionLocalService;
+	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
 
 	@Inject
-	private static DLFolderLocalService _dlFolderLocalService;
+	private DLFolderLocalService _dlFolderLocalService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
-	private static ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 	@DeleteAfterTestRun
 	private CTCollection _ctCollection;

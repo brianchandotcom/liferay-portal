@@ -464,7 +464,7 @@ public class UpgradeAssetDisplayPageEntryTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private UpgradeProcess _assetDisplayPageEntryUpgradeProcess;
 	private final Map<Long, String> _assetEntryClassUuids = new HashMap<>();

@@ -231,7 +231,7 @@ public class AssetVocabularyUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.content.dashboard.document.library.internal.upgrade.registry.ContentDashboardDocumentLibraryImplUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

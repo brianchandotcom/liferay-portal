@@ -521,38 +521,38 @@ public class CTCollectionServiceTest {
 	}
 
 	@Inject
-	private static BackgroundTaskDisplayFactory _backgroundTaskDisplayFactory;
+	private BackgroundTaskDisplayFactory _backgroundTaskDisplayFactory;
 
 	@Inject
-	private static BackgroundTaskLocalService _backgroundTaskLocalService;
+	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static CTCollectionService _ctCollectionService;
+	private CTCollectionService _ctCollectionService;
 
 	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
+	private CTEntryLocalService _ctEntryLocalService;
 
 	@Inject
-	private static CTProcessService _ctProcessService;
+	private CTProcessService _ctProcessService;
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
-	private static ResourcePermissionLocalService
+	private ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 
 	@Inject
-	private static RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 	private CTCollection _ctCollection;
 

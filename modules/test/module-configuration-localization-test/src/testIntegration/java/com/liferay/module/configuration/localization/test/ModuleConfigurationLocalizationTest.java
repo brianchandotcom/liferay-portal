@@ -228,6 +228,6 @@ public class ModuleConfigurationLocalizationTest {
 	}
 
 	@Inject
-	private static ExtendedMetaTypeService _extendedMetaTypeService;
+	private ExtendedMetaTypeService _extendedMetaTypeService;
 
 }

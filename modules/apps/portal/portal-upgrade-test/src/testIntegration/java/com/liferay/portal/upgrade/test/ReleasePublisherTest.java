@@ -164,7 +164,7 @@ public class ReleasePublisherTest {
 		}
 	}
 
-	private static String _bundleSymbolicName;
+	private String _bundleSymbolicName;
 
 	private BundleContext _bundleContext;
 

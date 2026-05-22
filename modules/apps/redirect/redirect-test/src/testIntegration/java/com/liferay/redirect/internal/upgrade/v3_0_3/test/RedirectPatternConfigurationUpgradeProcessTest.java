@@ -103,7 +103,7 @@ public class RedirectPatternConfigurationUpgradeProcessTest {
 				null));
 	}
 
-	private static UpgradeProcess _upgradeProcess;
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

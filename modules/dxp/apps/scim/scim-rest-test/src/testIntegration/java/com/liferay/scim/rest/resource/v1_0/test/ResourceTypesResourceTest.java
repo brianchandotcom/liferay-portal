@@ -133,7 +133,7 @@ public class ResourceTypesResourceTest
 			404, resourceTypesResource.getV2ResourceTypesHttpResponse());
 	}
 
-	private static String _pid;
+	private String _pid;
 
 	@Inject
 	private JSONFactory _jsonFactory;

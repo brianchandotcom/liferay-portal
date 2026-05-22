@@ -335,8 +335,8 @@ public class BaseJakartaUpgradeProcessTest extends BaseJakartaUpgradeProcess {
 	private static final String _TABLE_NAME = "BaseJakartaUpgradeProcessTest";
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
-	private static DB _db;
+	private DB _db;
 
 }

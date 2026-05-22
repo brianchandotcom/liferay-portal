@@ -295,10 +295,10 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 	private static final String _FILE_NAME = "Title.txt";
 
 	@Inject
-	private static DLAppService _dlAppService;
+	private DLAppService _dlAppService;
 
 	@Inject
-	private static DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

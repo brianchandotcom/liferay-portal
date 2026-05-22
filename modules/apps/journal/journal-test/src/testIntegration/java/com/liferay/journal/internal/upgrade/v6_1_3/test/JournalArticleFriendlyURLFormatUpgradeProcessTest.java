@@ -175,13 +175,13 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 			"JournalArticleFriendlyURLFormatUpgradeProcess";
 
 	@Inject
-	private static JournalArticleResourceLocalService
+	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private long _classNameId;
 	private JournalArticle _journalArticle;

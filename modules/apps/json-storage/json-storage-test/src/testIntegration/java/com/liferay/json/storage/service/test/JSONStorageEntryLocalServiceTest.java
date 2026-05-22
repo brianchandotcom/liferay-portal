@@ -495,6 +495,6 @@ public class JSONStorageEntryLocalServiceTest {
 	private static final long _COMPANY_ID = 0;
 
 	@Inject
-	private static JSONStorageEntryLocalService _jsonStorageEntryLocalService;
+	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;
 
 }

@@ -635,7 +635,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

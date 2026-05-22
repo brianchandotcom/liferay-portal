@@ -420,7 +420,7 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static CompanyLocalService _companyLocalService;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;
@@ -431,7 +431,7 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private static Long[] _originalCompanySitemapGroupIds;
 	private static Long[] _originalCompanySitemapObjectDefinitionIds;

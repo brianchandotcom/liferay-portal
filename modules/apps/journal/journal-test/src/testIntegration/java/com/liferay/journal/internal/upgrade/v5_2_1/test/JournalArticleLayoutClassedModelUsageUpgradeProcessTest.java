@@ -452,7 +452,7 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private AssetEntry _assetEntry;
 

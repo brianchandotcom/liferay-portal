@@ -91,7 +91,7 @@ public class FeatureFlagUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.feature.flag.web.internal.upgrade.registry.FeatureFlagUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

@@ -463,18 +463,18 @@ public class JournalArticleItemSelectorViewDisplayContextTest {
 		Assert.assertEquals(scope, mockLiferayPortletURL.getParameter("scope"));
 	}
 
-	private static MockedStatic<GroupLocalServiceUtil>
+	private MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic;
-	private static MockedStatic<JournalFolderLocalServiceUtil>
+	private MockedStatic<JournalFolderLocalServiceUtil>
 		_journalFolderLocalServiceUtilMockedStatic;
-	private static MockedStatic<JournalFolderServiceUtil>
+	private MockedStatic<JournalFolderServiceUtil>
 		_journalFolderServiceUtilMockedStatic;
-	private static MockedStatic<PortletURLBuilder>
+	private MockedStatic<PortletURLBuilder>
 		_portletURLBuilderMockedStatic;
-	private static MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
-	private static MockedStatic<SearchDisplayStyleUtil>
+	private MockedStatic<PortletURLUtil> _portletURLUtilMockedStatic;
+	private MockedStatic<SearchDisplayStyleUtil>
 		_searchDisplayStyleUtilMockedStatic;
-	private static MockedStatic<SearchOrderByUtil>
+	private MockedStatic<SearchOrderByUtil>
 		_searchOrderByUtilMockedStatic;
 
 	private final JournalFolder _ancestorJournalFolder = Mockito.mock(

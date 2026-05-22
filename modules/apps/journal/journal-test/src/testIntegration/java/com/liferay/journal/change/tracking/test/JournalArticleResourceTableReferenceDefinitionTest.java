@@ -109,10 +109,10 @@ public class JournalArticleResourceTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
-	private static Portal _portal;
+	private Portal _portal;
 
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;

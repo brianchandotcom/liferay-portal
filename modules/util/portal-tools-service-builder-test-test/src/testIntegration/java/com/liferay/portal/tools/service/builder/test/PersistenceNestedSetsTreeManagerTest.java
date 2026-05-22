@@ -768,7 +768,7 @@ public class PersistenceNestedSetsTreeManagerTest {
 	private static NestedSetsTreeEntry[] _nestedSetsTreeEntries;
 
 	@Inject
-	private static NestedSetsTreeEntryLocalService
+	private NestedSetsTreeEntryLocalService
 		_nestedSetsTreeEntryLocalService;
 
 	@Inject

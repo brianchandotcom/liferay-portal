@@ -118,7 +118,7 @@ public class OAuthClientASLocalMetadataIssuerUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

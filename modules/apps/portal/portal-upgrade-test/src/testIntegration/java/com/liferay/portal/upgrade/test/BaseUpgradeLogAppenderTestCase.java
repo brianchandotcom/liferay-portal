@@ -1461,7 +1461,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		"com.liferay.test.SampleUpgradeProcess";
 
 	private static DB _db;
-	private static Appender _logContextAppender;
+	private Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalNewRelease;
@@ -1474,9 +1474,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
 		type = Inject.NoType.class
 	)
-	private static Object _upgradeRecorder;
+	private Object _upgradeRecorder;
 
-	private static Logger _upgradeReportLogger;
+	private Logger _upgradeReportLogger;
 
 	@Inject(filter = "appender.name=UpgradeLogAppender")
 	private Appender _appender;

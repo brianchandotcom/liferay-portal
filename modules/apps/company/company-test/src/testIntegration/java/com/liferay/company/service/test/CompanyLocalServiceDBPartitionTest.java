@@ -1185,22 +1185,22 @@ public class CompanyLocalServiceDBPartitionTest
 		CompanyLocalServiceDBPartitionTest.class.getName() + 2;
 
 	private static BundleContext _bundleContext;
-	private static ClassName _className1;
-	private static ClassName _className2;
+	private ClassName _className1;
+	private ClassName _className2;
 
 	@Inject
-	private static ClassNameLocalService _classNameLocalService;
+	private ClassNameLocalService _classNameLocalService;
 
-	private static long _counter;
+	private long _counter;
 
 	@Inject
-	private static CounterLocalService _counterLocalService;
+	private CounterLocalService _counterLocalService;
 
 	private static long _defaultCompanyId;
 	private static SafeCloseable _safeCloseable;
 
 	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private VirtualHostLocalService _virtualHostLocalService;
 
 	@DeleteAfterTestRun
 	private Company _company1;

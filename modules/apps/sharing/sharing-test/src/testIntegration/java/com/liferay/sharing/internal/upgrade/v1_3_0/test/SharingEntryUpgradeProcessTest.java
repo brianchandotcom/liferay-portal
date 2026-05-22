@@ -121,7 +121,7 @@ public class SharingEntryUpgradeProcessTest {
 	@Inject(
 		filter = "component.name=com.liferay.sharing.internal.upgrade.registry.SharingServiceUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

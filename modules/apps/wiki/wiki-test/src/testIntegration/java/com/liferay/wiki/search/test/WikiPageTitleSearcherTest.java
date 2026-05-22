@@ -179,7 +179,7 @@ public class WikiPageTitleSearcherTest {
 	protected static WikiPageLocalService wikiPageLocalService;
 
 	@Inject(filter = "model.class.name=com.liferay.wiki.model.WikiPage")
-	private static BaseSearcher _wikiPageSearcher;
+	private BaseSearcher _wikiPageSearcher;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -817,7 +817,7 @@ public class AsyncAntivirusDLStoreTest {
 	private static BundleContext _bundleContext;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	private Configuration _configuration;
 

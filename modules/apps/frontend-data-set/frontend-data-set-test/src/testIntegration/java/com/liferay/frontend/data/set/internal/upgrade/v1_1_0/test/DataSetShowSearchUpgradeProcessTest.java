@@ -125,7 +125,7 @@ public class DataSetShowSearchUpgradeProcessTest {
 	@Inject(
 		filter = "component.name=com.liferay.frontend.data.set.internal.upgrade.registry.FrontendDataSetImplUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
 	private ObjectEntry _dataSetObjectEntry;

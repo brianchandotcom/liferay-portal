@@ -717,7 +717,7 @@ public class EmptyModelManagerImplTest {
 
 	private static final EmptyModelManager _emptyModelManager =
 		new EmptyModelManagerImpl();
-	private static MockedStatic<StagingGroupHelperUtil>
+	private MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic;
 
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(

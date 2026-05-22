@@ -342,7 +342,7 @@ public class RenderPortletActionTest {
 	}
 
 	@Inject
-	private static PortletLocalService _portletLocalService;
+	private PortletLocalService _portletLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

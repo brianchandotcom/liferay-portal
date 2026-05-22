@@ -1181,9 +1181,9 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 	}
 
 	@Inject
-	private static ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
-	private static ServiceTracker
+	private ServiceTracker
 		<ODataRetriever<Organization>, ODataRetriever<Organization>>
 			_serviceTracker;
 

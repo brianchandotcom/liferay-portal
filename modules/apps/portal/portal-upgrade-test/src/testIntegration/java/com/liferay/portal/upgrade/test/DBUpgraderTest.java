@@ -583,7 +583,7 @@ public class DBUpgraderTest {
 	private static String _moduleServiceLifecyclePortletsInitialized;
 
 	@Inject
-	private static ServiceComponentRuntime _serviceComponentRuntime;
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	private static boolean _upgrading;
 

@@ -3090,7 +3090,7 @@ public class JournalArticleLocalServiceTest {
 	@Inject(
 		filter = "model.class.name=com.liferay.journal.model.JournalArticle"
 	)
-	private static ModelResourcePermission<JournalArticle>
+	private ModelResourcePermission<JournalArticle>
 		_journalArticleModelResourcePermission;
 
 	@Inject

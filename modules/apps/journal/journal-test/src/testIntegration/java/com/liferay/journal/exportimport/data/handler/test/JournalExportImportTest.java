@@ -903,7 +903,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Inject
-	private static ConfigurationProvider _configurationProvider;
+	private ConfigurationProvider _configurationProvider;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

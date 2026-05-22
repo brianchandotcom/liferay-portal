@@ -352,11 +352,11 @@ public class EditUserMVCActionCommandTest {
 	}
 
 	@Inject
-	private static WorkflowDefinitionLinkLocalService
+	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
 
 	@Inject
-	private static WorkflowInstanceLinkLocalService
+	private WorkflowInstanceLinkLocalService
 		_workflowInstanceLinkLocalService;
 
 	@Inject

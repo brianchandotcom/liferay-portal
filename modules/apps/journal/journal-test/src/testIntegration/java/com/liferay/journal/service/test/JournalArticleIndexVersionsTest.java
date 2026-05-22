@@ -270,10 +270,10 @@ public class JournalArticleIndexVersionsTest {
 	}
 
 	@Inject
-	private static Searcher _searcher;
+	private Searcher _searcher;
 
 	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@DeleteAfterTestRun
 	private Group _group;

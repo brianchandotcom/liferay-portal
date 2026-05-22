@@ -340,35 +340,35 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Inject
-	private static OrganizationLocalService _organizationLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private static ResourcePermissionLocalService
+	private ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 
 	@Inject
-	private static SearchEngineHelper _searchEngineHelper;
+	private SearchEngineHelper _searchEngineHelper;
 
 	@Inject
-	private static Searcher _searcher;
+	private Searcher _searcher;
 
 	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Inject
-	private static UIDFactory _uidFactory;
+	private UIDFactory _uidFactory;
 
 	@Inject
-	private static UserGroupLocalService _userGroupLocalService;
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
-	private static UserGroupRoleLocalService _userGroupRoleLocalService;
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private List<Address> _addresses = new ArrayList<>();

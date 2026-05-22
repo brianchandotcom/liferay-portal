@@ -292,7 +292,7 @@ public class SXPElementLocalServiceTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static String _originalName;
 

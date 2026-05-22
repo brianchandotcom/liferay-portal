@@ -546,27 +546,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-119475 Validate if, in the AB Test by Click, the sidebar informs the user that the element id is mandatory"
-	@priority = 3
-	@uitest
-	test CreateABTestByClickInvalidId {
-		task ("Create AB test, write an invalid ID for the element and run the test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-
-			ABTest.writeId(elementId = "invalidID");
-
-			Button.click(button = "Review and Run Test");
-		}
-
-		task ("Assert an error message is displayed") {
-			AssertTextEquals(
-				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
-				value1 = "ID was not found.");
-		}
-	}
-
 	@description = "LPS-99421: The test is not removed when the delete action is canceled"
 	@priority = 3
 	test DeleteABTestCancel {

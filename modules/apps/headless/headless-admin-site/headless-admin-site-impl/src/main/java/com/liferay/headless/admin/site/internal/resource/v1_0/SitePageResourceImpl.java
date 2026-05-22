@@ -380,6 +380,10 @@ public class SitePageResourceImpl
 
 		EnabledUtil.checkEnabled(contextCompany, privateLayout);
 
+		if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
+			EnabledUtil.checkAddWidgetPageEnabled(contextCompany);
+		}
+
 		return _toSitePage(
 			_addLayout(
 				sitePage.getExternalReferenceCode(),
@@ -405,6 +409,10 @@ public class SitePageResourceImpl
 			sitePageExternalReferenceCode, groupId);
 
 		if (layout == null) {
+			if (Objects.equals(sitePage.getType(), SitePage.Type.WIDGET_PAGE)) {
+				EnabledUtil.checkAddWidgetPageEnabled(contextCompany);
+			}
+
 			return _toSitePage(
 				_addLayout(
 					sitePageExternalReferenceCode, groupId, privateLayout,

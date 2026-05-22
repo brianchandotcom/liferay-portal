@@ -570,6 +570,8 @@ public class PageTemplateResourceImpl
 			WidgetPageTemplate widgetPageTemplate)
 		throws Exception {
 
+		EnabledUtil.checkAddWidgetPageEnabled(contextCompany);
+
 		if (!((layoutPageTemplateCollectionId ==
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT) ^

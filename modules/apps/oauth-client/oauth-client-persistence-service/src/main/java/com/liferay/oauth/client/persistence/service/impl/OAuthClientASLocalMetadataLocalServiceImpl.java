@@ -457,9 +457,23 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			oidcProviderMetadata.setGrantTypes(
 				TransformUtil.transformToList(
 					supportedGrantTypes, GrantType::parse));
+
+			String introspectionEndpoint = _deriveIntrospectionEndpoint(
+				tokenEndpoint);
+
+			if (introspectionEndpoint != null) {
+				oidcProviderMetadata.setIntrospectionEndpointURI(
+					new URI(introspectionEndpoint));
+			}
+
 			oidcProviderMetadata.setResponseTypes(
 				Collections.singletonList(new ResponseType("code")));
 			oidcProviderMetadata.setScopes(new Scope(supportedScopes));
+			oidcProviderMetadata.setTokenEndpointAuthMethods(
+				Arrays.asList(
+					ClientAuthenticationMethod.CLIENT_SECRET_BASIC,
+					ClientAuthenticationMethod.CLIENT_SECRET_POST,
+					ClientAuthenticationMethod.NONE));
 			oidcProviderMetadata.setTokenEndpointURI(new URI(tokenEndpoint));
 			oidcProviderMetadata.setUserInfoEndpointURI(
 				new URI(userInfoEndpoint));

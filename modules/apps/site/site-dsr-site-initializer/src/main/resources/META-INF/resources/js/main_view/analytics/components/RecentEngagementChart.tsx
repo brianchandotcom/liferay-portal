@@ -59,11 +59,7 @@ const RecentEngagementChart = ({
 		<AnalyticsFrame
 			icon="analytics"
 			title={Liferay.Language.get('recent-engagement')}
-			url={
-				isAnalyticsEnabled
-					? `${BASE_URL}/view-timeline`
-					: undefined
-			}
+			url={isAnalyticsEnabled ? `${BASE_URL}/view-timeline` : undefined}
 		>
 			<div ref={setElement}>
 				{isAnalyticsEnabled ? (

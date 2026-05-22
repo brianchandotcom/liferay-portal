@@ -144,11 +144,7 @@ const formatData = (data: IActivityLogEntry[]) => {
 	}, {});
 };
 
-function ActivityLog({
-	isAnalyticsEnabled,
-}: {
-	isAnalyticsEnabled: boolean;
-}) {
+function ActivityLog({isAnalyticsEnabled}: {isAnalyticsEnabled: boolean}) {
 	const [data, setData] = useState<TActivityLog>({});
 	const [element, setElement] = useState<HTMLElement | null>(null);
 

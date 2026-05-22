@@ -192,6 +192,121 @@ test(
 );
 
 test(
+	'AB Test edit modal only persists when the user saves the changes',
+	{tag: '@LPS-97882'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			const originalName = 'AB Test ' + getRandomString();
+
+			await createABTest({name: originalName, page});
+
+			// Create a variant so the AB Test kebab becomes available.
+
+			await createVariant({name: 'V1', page});
+
+			// Open the edit modal, change values, and cancel
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			const updatedName = originalName + ' updated';
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByLabel('Test Name'),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(page.getByText(originalName)).toBeVisible();
+			await expect(page.getByText('Bounce Rate')).toBeVisible();
+
+			// Open the edit modal, change values, and close
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByLabel('Test Name'),
+				trigger: page
+					.locator('.modal-header')
+					.getByRole('button', {name: 'Close'}),
+			});
+
+			await expect(page.getByText(originalName)).toBeVisible();
+			await expect(page.getByText('Bounce Rate')).toBeVisible();
+
+			// Open the edit modal, change values, and save
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Edit'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByLabel('Show Actions'),
+			});
+
+			await page.getByLabel('Test Name').fill(updatedName);
+
+			await page.getByLabel('Select Goal').selectOption({label: 'Click'});
+
+			await page.locator('.modal-footer').getByText('Save').click();
+
+			await expect(page.getByText(updatedName)).toBeVisible();
+			await expect(page.getByText('Click', {exact: true})).toBeVisible();
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Cancelling delete, review, and delete-variant actions preserves the AB Test draft',
 	{tag: ['@LPS-97195', '@LPS-97196', '@LPS-99421']},
 	async ({apiHelpers, page, site}) => {

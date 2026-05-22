@@ -505,7 +505,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				TrashHandler.class,
 				new ObjectEntryTrashHandler(
 					objectDefinition, _objectDefinitionLocalService,
-					_objectEntryService, _systemEventLocalService),
+					_objectEntryLocalService, _objectEntryService,
+					_systemEventLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()));

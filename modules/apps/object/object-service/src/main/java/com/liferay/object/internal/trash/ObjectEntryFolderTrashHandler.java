@@ -31,7 +31,7 @@ public class ObjectEntryFolderTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		_objectEntryFolderService.deleteObjectEntryFolder(classPK);
+		_objectEntryFolderLocalService.deleteObjectEntryFolder(classPK);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ package com.liferay.object.internal.trash;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
@@ -30,11 +31,13 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 	public ObjectEntryTrashHandler(
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
+		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryService objectEntryService,
 		SystemEventLocalService systemEventLocalService) {
 
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
+		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryService = objectEntryService;
 		_systemEventLocalService = systemEventLocalService;
 	}
@@ -55,7 +58,7 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void deleteTrashEntry(long classPK) throws PortalException {
-		_objectEntryService.deleteObjectEntry(classPK);
+		_objectEntryLocalService.deleteObjectEntry(classPK);
 	}
 
 	@Override
@@ -100,6 +103,7 @@ public class ObjectEntryTrashHandler extends BaseTrashHandler {
 
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryService _objectEntryService;
 	private final SystemEventLocalService _systemEventLocalService;
 

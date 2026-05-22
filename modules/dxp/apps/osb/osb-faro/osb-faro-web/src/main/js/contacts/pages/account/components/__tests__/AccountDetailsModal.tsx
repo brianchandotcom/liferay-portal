@@ -96,7 +96,7 @@ describe('AccountDetailsModal', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 		lastOnItemsPropSearch = undefined;
-		mockedUseRequest.mockReturnValue({data: {fields: mockFields}});
+		mockedUseRequest.mockReturnValue({data: {items: mockFields}});
 	});
 
 	afterEach(cleanup);

@@ -277,8 +277,12 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		} = this.props;
 
 		const criterionGroup = isCriterionGroup(criterion);
+		const hasMultipleTopLevel =
+			(this.props.criteria?.items?.length ?? 0) > 1;
 		const stepNumber =
-			root && sequential ? index + 1 : this.props.stepNumber;
+			root && sequential && hasMultipleTopLevel
+				? index + 1
+				: this.props.stepNumber;
 
 		const classes = getCN('criterion', {
 			'criterion-group': criterionGroup

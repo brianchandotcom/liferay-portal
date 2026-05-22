@@ -167,7 +167,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const {channelId, criteria, groupId, id, segmentType, sequential} =
 			this.props;
 
-		const hasCriteria = !!criteria?.items?.length;
+		const showClearAll = (criteria?.items?.length ?? 0) > 1;
 
 		return (
 			<div className='criteria-builder-root'>
@@ -187,7 +187,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 					sequential={sequential}
 				/>
 
-				{hasCriteria && (
+				{showClearAll && (
 					<ClearAllButton onClear={this.handleClearAll} />
 				)}
 			</div>

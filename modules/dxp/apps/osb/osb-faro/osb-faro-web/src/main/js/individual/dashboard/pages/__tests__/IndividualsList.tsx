@@ -148,4 +148,26 @@ describe('Individuals List', () => {
 			})
 		);
 	});
+
+	it('passes activityStatus ACTIVE to the search API by default', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				activityStatus: 'ACTIVE'
+			})
+		);
+	});
 });

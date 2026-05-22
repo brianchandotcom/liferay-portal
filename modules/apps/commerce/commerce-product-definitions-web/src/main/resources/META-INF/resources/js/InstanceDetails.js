@@ -124,9 +124,7 @@ function handlePublish({WORKFLOW_ACTION_PUBLISH, namespace}) {
 				document.getElementById(`${namespace}cpInstanceId`)?.value || 0
 			);
 
-			const isDuplicate = items.some(
-				({id, sku}) => id !== cpInstanceId && sku === skuInput.value
-			);
+			const isDuplicate = items.some(({id}) => id !== cpInstanceId);
 
 			if (!isDuplicate) {
 				handleSubmit();

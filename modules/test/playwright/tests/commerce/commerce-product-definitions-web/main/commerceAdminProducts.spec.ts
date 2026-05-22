@@ -429,7 +429,7 @@ test(
 		await commerceAdminProductDetailsSkusPage.skuAddButton.click();
 
 		await commerceAdminProductDetailsSkusPage.skuAddModalSkuInput.fill(
-			product1.skus[0].sku
+			product1.skus[0].sku.toUpperCase()
 		);
 
 		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPurchasableToggle.check();

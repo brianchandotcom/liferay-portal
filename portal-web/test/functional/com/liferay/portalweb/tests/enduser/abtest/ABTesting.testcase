@@ -546,33 +546,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-99421: The test is not removed when the delete action is canceled"
-	@priority = 3
-	test DeleteABTestCancel {
-		task ("Create AB test and a variant") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("try to Delete AB Test and click cancel button") {
-			Click(locator1 = "ABTest#KEBAB_AB_TEST");
-
-			MenuItem.clickNoError(menuItem = "Delete");
-
-			Button.clickCancel();
-		}
-
-		task ("Assert that the ABTest draft keeps appearing") {
-			AssertTextEquals(
-				key_title = "AB test title",
-				locator1 = "ABTest#AB_TEST_TITLE_DXP",
-				value1 = "AB test title");
-		}
-	}
-
 	@description = "LPS-145992 Bug: Run A/B Test with Click Goal of a deleted button"
 	@priority = 4
 	test DeleteButtonWarning {
@@ -777,36 +750,6 @@ definition {
 			Segmentation.deleteSegment(entry = "SegmentForABTest");
 
 			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
-		}
-	}
-
-	@description = "LPS-97195: Validate if the user not will delete a variant for A/B Test, if when he will delete and he presses the cancel button"
-	@priority = 4
-	test DeleteVariantCancel {
-		task ("Create AB test and create variant") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Try to delete variant") {
-			Click(
-				key_index = 1,
-				locator1 = "ABTest#VARIANT_DROPDOWN");
-
-			MenuItem.clickNoError(menuItem = "Delete");
-
-			Click(
-				key_text = "Cancel",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-		}
-
-		task ("Assert that variant is not deleted") {
-			AssertVisible(
-				key_variantName = "Variant name",
-				locator1 = "ABTest#VARIANT_TITLE");
 		}
 	}
 
@@ -1232,42 +1175,6 @@ definition {
 
 		task ("Assert the rename has been applied in terminated state") {
 			LexiconEntry.viewEntryName(rowEntry = "SegmentForABTest 3");
-		}
-	}
-
-	@description = "LPS-97196: Validate if when the user is in the "Review and Start Test" screen, all data is discarded after the user clicks on cancel button"
-	@priority = 4
-	test ReviewAndStartCancel {
-		task ("Create AB test and create variant") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Click on Review and Start Test Button and click cancel button") {
-			Button.click(button = "Review and Run Test");
-
-			Button.click(button = "Cancel");
-		}
-
-		task ("Assert the test status is not running") {
-			AssertVisible(
-				key_text = "Review and Run Test",
-				locator1 = "Button#ANY");
-		}
-
-		task ("Click on Review and Start Test Button and click close button") {
-			Button.click(button = "Review and Run Test");
-
-			Click(locator1 = "Modal#CLOSE_BUTTON");
-		}
-
-		task ("Assert the test status is not running") {
-			AssertVisible(
-				key_text = "Review and Run Test",
-				locator1 = "Button#ANY");
 		}
 	}
 

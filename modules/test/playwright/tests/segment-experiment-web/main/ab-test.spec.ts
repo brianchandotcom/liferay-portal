@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -185,6 +186,132 @@ test(
 						project.groupId
 					);
 				});
+			}
+		}
+	}
+);
+
+test(
+	'Cancelling delete, review, and delete-variant actions preserves the AB Test draft',
+	{tag: ['@LPS-97195', '@LPS-97196', '@LPS-99421']},
+	async ({apiHelpers, page, site}) => {
+		const abTestName = 'AB Test ' + getRandomString();
+
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({name: abTestName, page});
+
+			await createVariant({name: 'V1', page});
+
+			// Cancel the delete-variant action and assert the variant survives
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.locator('table', {hasText: 'V1'})
+					.locator('button.dropdown-toggle'),
+			});
+
+			await expect(page.getByText('Delete variant?')).toBeVisible();
+
+			await clickAndExpectToBeHidden({
+				target: page.getByText('Delete variant?'),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(page.locator('[data-title="V1"]')).toBeVisible();
+
+			// Cancel the Review and Run Test modal and assert the button is back
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'Review and Run Test',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Review and Run Test'})
+			).toBeVisible();
+
+			// Close the Review and Run Test modal and assert the button is back
+
+			await clickAndExpectToBeVisible({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page.getByRole('button', {
+					name: 'Review and Run Test',
+				}),
+			});
+
+			await clickAndExpectToBeHidden({
+				target: page.getByRole('heading', {
+					name: 'Review and Run Test',
+				}),
+				trigger: page
+					.locator('.modal-header')
+					.getByRole('button', {name: 'Close'}),
+			});
+
+			await expect(
+				page.getByRole('button', {name: 'Review and Run Test'})
+			).toBeVisible();
+
+			// Cancel the delete-AB-Test action and assert the draft survives
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('menuitem', {name: 'Delete'}),
+				trigger: page
+					.getByTestId('segments-experiments-drop-down')
+					.getByRole('button', {name: 'Show Actions'}),
+			});
+
+			await clickAndExpectToBeVisible({
+				target: page.getByText(abTestName),
+				trigger: page.locator('.modal-footer').getByText('Cancel'),
+			});
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
 			}
 		}
 	}

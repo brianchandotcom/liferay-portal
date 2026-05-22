@@ -61,11 +61,7 @@ const formatData = (
 	}));
 };
 
-function FrequencyChart({
-	isAnalyticsEnabled,
-}: {
-	isAnalyticsEnabled: boolean;
-}) {
+function FrequencyChart({isAnalyticsEnabled}: {isAnalyticsEnabled: boolean}) {
 	const [data, setData] = useState<IFrequencyChartItem[]>([]);
 	const [element, setElement] = useState<HTMLElement | null>(null);
 

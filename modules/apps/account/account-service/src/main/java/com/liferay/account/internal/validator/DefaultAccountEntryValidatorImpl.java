@@ -5,6 +5,7 @@
 
 package com.liferay.account.internal.validator;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
 import com.liferay.account.validator.AccountEntryValidatorResult;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,7 +36,8 @@ public class DefaultAccountEntryValidatorImpl implements AccountEntryValidator {
 
 	@Override
 	public AccountEntryValidatorResult validate(
-			Locale locale, Map<String, Object> values)
+			Locale locale, AccountEntry accountEntry,
+			Map<String, Object> context)
 		throws PortalException {
 
 		return new AccountEntryValidatorResult(true);

@@ -6,6 +6,7 @@
 package com.liferay.account.internal.validator;
 
 import com.liferay.account.internal.validator.comparator.AccountEntryValidatorServiceWrapperPriorityComparator;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.account.validator.AccountEntryValidator;
 import com.liferay.account.validator.AccountEntryValidatorRegistry;
 import com.liferay.account.validator.AccountEntryValidatorResult;
@@ -13,7 +14,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -85,32 +85,26 @@ public class AccountEntryValidatorRegistryImpl
 	}
 
 	@Override
-	public boolean isValid(Locale locale, Map<String, Object> values)
+	public List<AccountEntryValidatorResult> validate(
+			Locale locale, AccountEntry accountEntry,
+			Map<String, Object> values)
 		throws PortalException {
+
+		if (accountEntry == null) {
+			return Collections.emptyList();
+		}
 
 		List<AccountEntryValidatorResult> accountEntryValidatorResults =
-			validate(locale, values);
+			new ArrayList<>();
 
-		return accountEntryValidatorResults.isEmpty();
-	}
+		for (AccountEntryValidator accountEntryValidator :
+				getAccountEntryValidators()) {
 
-	@Override
-	public List<AccountEntryValidatorResult> validate(
-			Locale locale, Map<String, Object> values)
-		throws PortalException {
+			accountEntryValidatorResults.add(
+				accountEntryValidator.validate(locale, accountEntry, values));
+		}
 
-		return TransformUtil.transform(
-			getAccountEntryValidators(),
-			accountEntryValidator -> {
-				AccountEntryValidatorResult accountEntryValidatorResult =
-					accountEntryValidator.validate(locale, values);
-
-				if (!accountEntryValidatorResult.isValid()) {
-					return accountEntryValidatorResult;
-				}
-
-				return null;
-			});
+		return accountEntryValidatorResults;
 	}
 
 	@Activate

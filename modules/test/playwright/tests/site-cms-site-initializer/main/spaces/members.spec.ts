@@ -181,6 +181,49 @@ test(
 );
 
 test(
+	'A Space Administrator sees their own role list disabled in the View All Members list',
+	{tag: '@LPD-89984'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const spaceAdmin = await apiHelpers.headlessAdminUser.postUserAccount();
+		const spaceAdminFullName = `${spaceAdmin.givenName} ${spaceAdmin.familyName}`;
+
+		userData[spaceAdmin.alternateName] = {
+			name: spaceAdmin.givenName,
+			password: 'test',
+			surname: spaceAdmin.familyName,
+		};
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccount(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			spaceAdmin.externalReferenceCode
+		);
+
+		await apiHelpers.headlessAssetLibrary.putAssetLibraryUserAccountRoles(
+			SITE_CMS_SPACE_EXTERNAL_REFERENCE_CODE,
+			spaceAdmin.externalReferenceCode,
+			['Asset Library Administrator']
+		);
+
+		await performUserSwitchViaApi(page, spaceAdmin.alternateName);
+
+		await spaceSummaryPage.goto(SITE_CMS_SPACE_NAME);
+		await spaceSummaryPage.viewAllMembersLink.click();
+
+		const currentUserRow = page
+			.getByRole('listitem')
+			.filter({hasText: spaceAdminFullName});
+
+		await expect(
+			currentUserRow.locator('.permission-select-trigger-text')
+		).toHaveText('Space Administrator');
+
+		await expect(
+			currentUserRow.getByRole('button', {name: 'Space Administrator'})
+		).toBeDisabled();
+	}
+);
+
+test(
 	'A non-admin space member can search members in the space',
 	{tag: '@LPD-58201'},
 	async ({apiHelpers, page, spaceSummaryPage}) => {

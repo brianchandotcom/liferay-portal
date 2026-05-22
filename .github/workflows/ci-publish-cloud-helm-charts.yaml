@@ -35,7 +35,9 @@ jobs:
                     set -o pipefail
 
                     function main {
-                        local short_sha="${SHA:0:7}"
+                        local short_sha
+
+                        short_sha=$(git rev-parse --short HEAD)
 
                         local aws_infra_provider_version
                         local aws_infra_version

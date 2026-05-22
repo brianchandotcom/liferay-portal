@@ -2,6 +2,13 @@ import AccountsDataSet from '../AccountsDataSet';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
 import {LifecycleStages} from 'contacts/pages/account/utils/constants';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
+
+const defaultRangeSelectors = {
+	rangeEnd: null,
+	rangeKey: RangeKeyTimeRanges.Last30Days,
+	rangeStart: null
+};
 
 jest.unmock('react-dom');
 
@@ -20,20 +27,24 @@ type FakeCustomDataRenderers = {
 	}) => React.ReactElement;
 };
 
+let lastApiURL: string | undefined;
 let lastCustomDataRenderers: FakeCustomDataRenderers | undefined;
 let lastFilters: FakeFilter[] | undefined;
 
 jest.mock('@liferay/frontend-data-set-web', () => ({
 	...jest.requireActual('@liferay/frontend-data-set-web'),
 	FrontendDataSet: ({
+		apiURL,
 		customDataRenderers,
 		filters,
 		id
 	}: {
+		apiURL: string;
 		customDataRenderers: FakeCustomDataRenderers;
 		filters: FakeFilter[];
 		id: string;
 	}) => {
+		lastApiURL = apiURL;
 		lastCustomDataRenderers = customDataRenderers;
 		lastFilters = filters;
 
@@ -44,6 +55,7 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 describe('AccountsDataSet', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
+		lastApiURL = undefined;
 		lastCustomDataRenderers = undefined;
 		lastFilters = undefined;
 	});
@@ -52,7 +64,12 @@ describe('AccountsDataSet', () => {
 
 	it('should render the FrontendDataSet with id "accounts-list-dataset"', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
 		);
 
 		expect(screen.getByTestId('fds-component')).toHaveAttribute(
@@ -63,7 +80,12 @@ describe('AccountsDataSet', () => {
 
 	it('should leave country/industry/lifecycleStatus filters without preloadedData when no props are passed', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
 		);
 
 		const countryFilter = lastFilters?.find(f => f.id === 'country');
@@ -84,6 +106,7 @@ describe('AccountsDataSet', () => {
 				channelId='123'
 				countryFilter='US'
 				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
 			/>
 		);
 
@@ -102,6 +125,7 @@ describe('AccountsDataSet', () => {
 				channelId='123'
 				groupId='23'
 				industryFilter='Tech'
+				rangeSelectors={defaultRangeSelectors}
 			/>
 		);
 
@@ -120,6 +144,7 @@ describe('AccountsDataSet', () => {
 				channelId='123'
 				groupId='23'
 				lifecycleStageFilter={LifecycleStages.AT_RISK}
+				rangeSelectors={defaultRangeSelectors}
 			/>
 		);
 
@@ -135,7 +160,12 @@ describe('AccountsDataSet', () => {
 
 	it('should render the account name link with channelId in the href', () => {
 		render(
-			<AccountsDataSet apiURL='fake-url' channelId='123' groupId='23' />
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={defaultRangeSelectors}
+			/>
 		);
 
 		const {container} = render(
@@ -148,6 +178,42 @@ describe('AccountsDataSet', () => {
 		expect(container.querySelector('a')).toHaveAttribute(
 			'href',
 			'/workspace/23/123/contacts/accounts/abc'
+		);
+	});
+
+	it('should append rangeKey as query param when a preset range is provided', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={{
+					rangeEnd: null,
+					rangeKey: RangeKeyTimeRanges.Last30Days,
+					rangeStart: null
+				}}
+			/>
+		);
+
+		expect(lastApiURL).toBe('fake-url&rangeKey=30');
+	});
+
+	it('should append rangeStart and rangeEnd as query params when a custom range is provided', () => {
+		render(
+			<AccountsDataSet
+				apiURL='fake-url'
+				channelId='123'
+				groupId='23'
+				rangeSelectors={{
+					rangeEnd: '2024-01-31',
+					rangeKey: RangeKeyTimeRanges.CustomRange,
+					rangeStart: '2024-01-01'
+				}}
+			/>
+		);
+
+		expect(lastApiURL).toBe(
+			'fake-url&rangeKey=CUSTOM&rangeEnd=2024-01-31&rangeStart=2024-01-01'
 		);
 	});
 });

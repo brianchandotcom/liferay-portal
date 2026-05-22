@@ -3,9 +3,16 @@ import * as API from 'shared/api';
 import IndividualsList from '../IndividualsList';
 import React from 'react';
 import {createMemoryHistory} from 'history';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
 import {Router} from 'react-router';
 import {waitForLoadingToBeRemoved} from 'test/helpers';
+
+const defaultRangeSelectors = {
+	rangeEnd: null,
+	rangeKey: RangeKeyTimeRanges.Last30Days,
+	rangeStart: null
+};
 
 jest.unmock('react-dom');
 
@@ -77,7 +84,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList />
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
 			</Router>
 		);
 
@@ -97,7 +104,7 @@ describe('Individuals List', () => {
 
 		const {getByText} = render(
 			<Router history={history}>
-				<IndividualsList />
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
 			</Router>
 		);
 
@@ -114,5 +121,31 @@ describe('Individuals List', () => {
 		expect(
 			getByText('Access our documentation to learn more.')
 		).toBeInTheDocument();
+	});
+
+	it('passes range params to the search API', async () => {
+		// @ts-ignore
+		API.individuals.search.mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		// @ts-ignore
+		expect(API.individuals.search).toHaveBeenCalledWith(
+			expect.objectContaining({
+				rangeEnd: null,
+				rangeKey: 30,
+				rangeStart: null
+			})
+		);
 	});
 });

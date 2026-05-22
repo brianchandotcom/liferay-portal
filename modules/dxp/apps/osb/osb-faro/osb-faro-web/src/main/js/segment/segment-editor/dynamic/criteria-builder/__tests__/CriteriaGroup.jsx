@@ -5,7 +5,15 @@ import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 jest.mock('../Conjunction', () => () => <div />);
-jest.mock('../CriteriaRow', () => () => <div />);
+jest.mock(
+	'../CriteriaRow',
+	() => props =>
+		props.stepNumber !== undefined ? (
+			<span className='criteria-step-number'>{props.stepNumber}</span>
+		) : (
+			<div />
+		)
+);
 jest.mock('../DropZone', () => props => (
 	<div data-disabled={String(!!props.disabled)} data-testid='drop-zone' />
 ));
@@ -87,8 +95,7 @@ describe('CriteriaGroup', () => {
 				ALL_MESSAGES.filter(m => m !== expectedMessage).forEach(m => {
 					expect(screen.queryByText(m)).not.toBeInTheDocument();
 				});
-			}
-			else {
+			} else {
 				ALL_MESSAGES.forEach(m => {
 					expect(screen.queryByText(m)).not.toBeInTheDocument();
 				});
@@ -104,6 +111,111 @@ describe('CriteriaGroup', () => {
 			).toBeTrue();
 		}
 	);
+
+	it('should render numbered step stickers on each top-level criterion when root and sequential', () => {
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaGroup
+					criteria={makeCriteria('and', 3)}
+					criteriaGroupId='group'
+					onChange={() => {}}
+					onMove={() => {}}
+					root
+					sequential
+				/>
+			</DndProvider>
+		);
+
+		const stickers = container.querySelectorAll('.criteria-step-number');
+
+		expect(stickers.length).toBe(3);
+		expect(Array.from(stickers).map(s => s.textContent)).toEqual([
+			'1',
+			'2',
+			'3'
+		]);
+	});
+
+	it('should not render step stickers on a nested group', () => {
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaGroup
+					criteria={makeCriteria('and', 3)}
+					criteriaGroupId='group'
+					onChange={() => {}}
+					onMove={() => {}}
+					root={false}
+					sequential
+				/>
+			</DndProvider>
+		);
+
+		expect(container.querySelectorAll('.criteria-step-number').length).toBe(
+			0
+		);
+	});
+
+	it('should not render step stickers when sequential is disabled', () => {
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaGroup
+					criteria={makeCriteria('and', 3)}
+					criteriaGroupId='group'
+					onChange={() => {}}
+					onMove={() => {}}
+					root
+					sequential={false}
+				/>
+			</DndProvider>
+		);
+
+		expect(container.querySelectorAll('.criteria-step-number').length).toBe(
+			0
+		);
+	});
+
+	it('should propagate the parent step number to each row inside a nested top-level group', () => {
+		const nestedGroup = {
+			conjunctionName: 'or',
+			criteriaGroupId: 'nested',
+			items: [
+				{rowId: 'n0', valid: true},
+				{rowId: 'n1', valid: true}
+			]
+		};
+
+		const rootCriteria = {
+			conjunctionName: 'and',
+			criteriaGroupId: 'root',
+			items: [
+				{rowId: 'r0', valid: true},
+				nestedGroup,
+				{rowId: 'r2', valid: true}
+			]
+		};
+
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaGroup
+					criteria={rootCriteria}
+					criteriaGroupId='root'
+					onChange={() => {}}
+					onMove={() => {}}
+					root
+					sequential
+				/>
+			</DndProvider>
+		);
+
+		const stickers = container.querySelectorAll('.criteria-step-number');
+
+		expect(Array.from(stickers).map(s => s.textContent)).toEqual([
+			'1',
+			'2',
+			'2',
+			'3'
+		]);
+	});
 
 	it('should render both alerts when the root hits the sequential limit and contains a nested OR at its limit', () => {
 		const nestedOrGroup = {

@@ -7,6 +7,7 @@ export {default as AssetEntryListDropdownDefaultPropsTransformer} from './AssetE
 export {default as AssetListEntryVariationDefaultPropsTransformer} from './AssetListEntryVariationDefaultPropsTransformer';
 export {default as EditAssetListEntryManualDefaultPropsTransformer} from './EditAssetListEntryManualDefaultPropsTransformer';
 export {default as EmptyResultMessagePropsTransformer} from './EmptyResultMessagePropsTransformer';
+export {default as FilterVisibility} from './FilterVisibility';
 export {default as InfoCollectionProviderDropdownDefaultPropsTransformer} from './InfoCollectionProviderDropdownDefaultPropsTransformer';
 export {default as ListItemsDropdownPropsTransformer} from './ListItemsDropdownPropsTransformer';
 export {default as ManagementToolbarPropsTransformer} from './ManagementToolbarPropsTransformer';

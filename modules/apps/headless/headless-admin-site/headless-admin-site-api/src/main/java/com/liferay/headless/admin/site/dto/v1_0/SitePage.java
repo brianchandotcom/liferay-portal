@@ -747,7 +747,9 @@ public class SitePage implements Serializable {
 	@JsonIgnore
 	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The page type. As of LPD-76864, \"WidgetPage\" is deprecated; creating new widget pages is rejected with a 400 response on new installs where the LPD-76864 feature flag is disabled. Use \"ContentPage\" instead. Existing widget pages continue to render unchanged on upgraded installs where the flag is enabled."
+	)
 	@JsonGetter("type")
 	@Valid
 	public Type getType() {
@@ -792,7 +794,9 @@ public class SitePage implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(
+		description = "The page type. As of LPD-76864, \"WidgetPage\" is deprecated; creating new widget pages is rejected with a 400 response on new installs where the LPD-76864 feature flag is disabled. Use \"ContentPage\" instead. Existing widget pages continue to render unchanged on upgraded installs where the flag is enabled."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
@@ -1414,4 +1418,4 @@ public class SitePage implements Serializable {
 	private Map<String, Serializable> _extendedProperties;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1874935738
+// LIFERAY-REST-BUILDER-HASH:661579706

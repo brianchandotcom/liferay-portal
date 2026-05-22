@@ -522,6 +522,7 @@ module.exports = {
 			'Heading',
 			'Icon',
 			'IconSelector',
+			'KeyboardArrowsIndicator',
 			'LanguagePicker',
 			'Modal',
 			'ModalContext',

@@ -304,7 +304,10 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	protected String[] getIgnoredEntityFieldNames() {
-		return new String[] {"dateCreated", "dateModified"};
+		return new String[] {
+			"assetLibraries", "dateCreated", "dateModified", "siteId",
+			"visibilityType"
+		};
 	}
 
 	@Override

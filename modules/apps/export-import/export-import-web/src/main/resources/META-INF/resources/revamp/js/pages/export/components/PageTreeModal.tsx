@@ -11,7 +11,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {PagesTree} from 'staging-taglib';
 
-const NAMESPACE = '_exportPageTreeModal_';
+const PAGES_TREE_NAMESPACE = '_exportPageTreeModal_';
 
 const PATH_MAIN = Liferay.ThemeDisplay.getPathMain();
 const GET_LAYOUTS_TREE_URL = `${PATH_MAIN}/portal/get_layouts_tree`;
@@ -117,9 +117,9 @@ export default function PageTreeModal({
 		};
 	}, [liveGroupId, pageSize, privateLayout, treeId]);
 
-	const select = () => {
+	const handleSelect = () => {
 		const input = treeRef.current?.querySelector<HTMLInputElement>(
-			`input[name="${NAMESPACE}layoutIds"]`
+			`input[name="${PAGES_TREE_NAMESPACE}layoutIds"]`
 		);
 
 		const layoutIds = input
@@ -156,12 +156,12 @@ export default function PageTreeModal({
 									SESSION_TREE_JS_CLICK_URL,
 								loadMoreItemsURL: GET_LAYOUTS_TREE_URL,
 								maxPageSize: pageSize,
-								namespace: NAMESPACE,
+								namespace: PAGES_TREE_NAMESPACE,
 							}}
 							groupId={String(liveGroupId)}
 							items={items}
 							key={treeId}
-							portletNamespace={NAMESPACE}
+							portletNamespace={PAGES_TREE_NAMESPACE}
 							privateLayout={privateLayout}
 							selectedLayoutIds={initialSelectedIds.map(String)}
 							treeId={treeId}
@@ -177,7 +177,7 @@ export default function PageTreeModal({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton onClick={select}>
+						<ClayButton onClick={handleSelect}>
 							{Liferay.Language.get('select')}
 						</ClayButton>
 					</ClayButton.Group>

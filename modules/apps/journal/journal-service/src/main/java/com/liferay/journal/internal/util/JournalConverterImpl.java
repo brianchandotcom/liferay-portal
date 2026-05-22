@@ -768,7 +768,7 @@ public class JournalConverterImpl implements JournalConverter {
 			instanceId = StringUtil.randomString();
 		}
 
-		if (sb.length() > 0) {
+		if (sb.index() > 0) {
 			sb.append(StringPool.COMMA);
 		}
 

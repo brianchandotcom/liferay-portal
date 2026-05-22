@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 
@@ -51,20 +50,8 @@ public abstract class BaseCommerceMLRecommendationServiceImpl
 
 		Document document = toDocument(model);
 
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			indexName, document);
-
-		IndexDocumentResponse indexDocumentResponse =
-			searchEngineAdapter.execute(indexDocumentRequest);
-
-		if ((indexDocumentResponse.getStatus() < 200) ||
-			(indexDocumentResponse.getStatus() >= 300)) {
-
-			throw new PortalException(
-				String.format(
-					"Index request return status: %d",
-					indexDocumentResponse.getStatus()));
-		}
+		searchEngineAdapter.execute(
+			new IndexDocumentRequest(indexName, document));
 
 		return model;
 	}

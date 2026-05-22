@@ -12,4 +12,26 @@ describe('Conjunction', () => {
 
 		expect(container).toMatchSnapshot();
 	});
+
+	it('should render the button as disabled when the disabled prop is set', () => {
+		const {getByRole} = render(
+			<Conjunction conjunctionName='and' disabled />
+		);
+
+		expect(getByRole('button')).toBeDisabled();
+	});
+
+	it('should render the Then label for an AND conjunction in sequential mode', () => {
+		const {getByRole} = render(
+			<Conjunction conjunctionName='and' sequential />
+		);
+
+		expect(getByRole('button')).toHaveTextContent('Then');
+	});
+
+	it('should render the And label for an AND conjunction outside sequential mode', () => {
+		const {getByRole} = render(<Conjunction conjunctionName='and' />);
+
+		expect(getByRole('button')).toHaveTextContent('And');
+	});
 });

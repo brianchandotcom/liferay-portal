@@ -1,4 +1,3 @@
-import * as data from 'test/data';
 import CriteriaGroup from '../CriteriaGroup';
 import React from 'react';
 import {cleanup, render, screen} from '@testing-library/react';
@@ -7,13 +6,45 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 jest.mock('../Conjunction', () => () => <div />);
 jest.mock('../CriteriaRow', () => () => <div />);
-jest.mock('../DropZone', () => () => <div />);
+jest.mock('../DropZone', () => props => (
+	<div data-disabled={String(!!props.disabled)} data-testid='drop-zone' />
+));
 
 jest.unmock('react-dom');
 
 const LIMIT_MESSAGE = 'Maximum of 5 sequential criteria has been reached.';
 const EXCEEDED_MESSAGE =
 	'Maximum of 5 sequential criteria has been exceeded. Remove some criteria to save.';
+const OR_LIMIT_MESSAGE = 'Maximum of 2 OR conditions has been reached.';
+const OR_EXCEEDED_MESSAGE =
+	'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.';
+
+const ALL_MESSAGES = [
+	EXCEEDED_MESSAGE,
+	LIMIT_MESSAGE,
+	OR_EXCEEDED_MESSAGE,
+	OR_LIMIT_MESSAGE
+];
+
+const makeCriteria = (conjunction, count) => ({
+	conjunctionName: conjunction,
+	criteriaGroupId: 'group',
+	items: Array.from({length: count}, (_, i) => ({rowId: `r${i}`}))
+});
+
+const renderGroup = ({conjunction, count, root, sequential}) =>
+	render(
+		<DndProvider backend={HTML5Backend}>
+			<CriteriaGroup
+				criteria={makeCriteria(conjunction, count)}
+				criteriaGroupId='group'
+				onChange={() => {}}
+				onMove={() => {}}
+				root={root}
+				sequential={sequential}
+			/>
+		</DndProvider>
+	);
 
 describe('CriteriaGroup', () => {
 	afterEach(cleanup);
@@ -28,68 +59,89 @@ describe('CriteriaGroup', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render the limit alert when sequential and items.length >= 5', () => {
+	it.each`
+		conjunction | count | root     | sequential | expectedMessage        | expectedDropDisabled
+		${'and'}    | ${5}  | ${true}  | ${true}    | ${LIMIT_MESSAGE}       | ${'true'}
+		${'and'}    | ${6}  | ${true}  | ${true}    | ${EXCEEDED_MESSAGE}    | ${'true'}
+		${'or'}     | ${3}  | ${false} | ${true}    | ${OR_LIMIT_MESSAGE}    | ${'true'}
+		${'or'}     | ${4}  | ${false} | ${true}    | ${OR_EXCEEDED_MESSAGE} | ${'true'}
+		${'and'}    | ${4}  | ${true}  | ${true}    | ${null}                | ${'false'}
+		${'or'}     | ${2}  | ${false} | ${true}    | ${null}                | ${'false'}
+		${'and'}    | ${5}  | ${true}  | ${false}   | ${null}                | ${'false'}
+		${'or'}     | ${5}  | ${false} | ${false}   | ${null}                | ${'false'}
+	`(
+		'renders $expectedMessage and disabled=$expectedDropDisabled for $conjunction with $count items (root=$root, sequential=$sequential)',
+		({
+			conjunction,
+			count,
+			expectedDropDisabled,
+			expectedMessage,
+			root,
+			sequential
+		}) => {
+			renderGroup({conjunction, count, root, sequential});
+
+			if (expectedMessage) {
+				expect(screen.getByText(expectedMessage)).toBeInTheDocument();
+
+				ALL_MESSAGES.filter(m => m !== expectedMessage).forEach(m => {
+					expect(screen.queryByText(m)).not.toBeInTheDocument();
+				});
+			}
+			else {
+				ALL_MESSAGES.forEach(m => {
+					expect(screen.queryByText(m)).not.toBeInTheDocument();
+				});
+			}
+
+			const dropZones = screen.getAllByTestId('drop-zone');
+
+			expect(dropZones.length).toBeGreaterThan(0);
+			expect(
+				dropZones.every(
+					dz => dz.dataset.disabled === expectedDropDisabled
+				)
+			).toBeTrue();
+		}
+	);
+
+	it('should render both alerts when the root hits the sequential limit and contains a nested OR at its limit', () => {
+		const nestedOrGroup = {
+			conjunctionName: 'or',
+			criteriaGroupId: 'nested-or',
+			items: [
+				{rowId: 'n0', valid: true},
+				{rowId: 'n1', valid: true},
+				{rowId: 'n2', valid: true}
+			]
+		};
+
+		const rootWithNestedOr = {
+			conjunctionName: 'and',
+			criteriaGroupId: 'root',
+			items: [
+				{rowId: 'r0', valid: true},
+				nestedOrGroup,
+				{rowId: 'r2', valid: true},
+				{rowId: 'r3', valid: true},
+				{rowId: 'r4', valid: true}
+			]
+		};
+
 		render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaGroup
-					criteria={data.mockNewCriteria(5, {valid: true})}
-					criteriaGroupId='group-1'
+					criteria={rootWithNestedOr}
+					criteriaGroupId='root'
 					onChange={() => {}}
 					onMove={() => {}}
+					root
 					sequential
 				/>
 			</DndProvider>
 		);
 
 		expect(screen.getByText(LIMIT_MESSAGE)).toBeInTheDocument();
-	});
-
-	it('should not render the limit alert when sequential and items.length < 5', () => {
-		render(
-			<DndProvider backend={HTML5Backend}>
-				<CriteriaGroup
-					criteria={data.mockNewCriteria(4, {valid: true})}
-					criteriaGroupId='group-1'
-					onChange={() => {}}
-					onMove={() => {}}
-					sequential
-				/>
-			</DndProvider>
-		);
-
-		expect(screen.queryByText(LIMIT_MESSAGE)).not.toBeInTheDocument();
-	});
-
-	it('should not render the limit alert when not sequential even with 5 items', () => {
-		render(
-			<DndProvider backend={HTML5Backend}>
-				<CriteriaGroup
-					criteria={data.mockNewCriteria(5, {valid: true})}
-					criteriaGroupId='group-1'
-					onChange={() => {}}
-					onMove={() => {}}
-					sequential={false}
-				/>
-			</DndProvider>
-		);
-
-		expect(screen.queryByText(LIMIT_MESSAGE)).not.toBeInTheDocument();
-	});
-
-	it('should render the exceeded alert when sequential and items.length > 5', () => {
-		render(
-			<DndProvider backend={HTML5Backend}>
-				<CriteriaGroup
-					criteria={data.mockNewCriteria(6, {valid: true})}
-					criteriaGroupId='group-1'
-					onChange={() => {}}
-					onMove={() => {}}
-					sequential
-				/>
-			</DndProvider>
-		);
-
-		expect(screen.getByText(EXCEEDED_MESSAGE)).toBeInTheDocument();
-		expect(screen.queryByText(LIMIT_MESSAGE)).not.toBeInTheDocument();
+		expect(screen.getByText(OR_LIMIT_MESSAGE)).toBeInTheDocument();
 	});
 });

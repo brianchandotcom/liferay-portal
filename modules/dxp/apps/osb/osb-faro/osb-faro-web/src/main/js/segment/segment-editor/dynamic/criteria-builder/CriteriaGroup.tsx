@@ -9,6 +9,7 @@ import getCN from 'classnames';
 import React, {Fragment} from 'react';
 import {
 	Conjunctions,
+	NESTED_OR_LIMIT_ALERT,
 	SEQUENTIAL_LIMIT_ALERT,
 	SUPPORTED_CONJUNCTION_OPTIONS
 } from '../utils/constants';
@@ -23,6 +24,7 @@ import {
 	generateGroupId,
 	generateRowId,
 	getChildGroupIds,
+	getNestedOrLimitState,
 	getSequentialLimitState,
 	getSupportedOperatorsFromType,
 	isCriterionGroup,
@@ -223,15 +225,15 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		return criteria ? !criteria.items.length : true;
 	}
 
-	renderConjunction(index: number, atLimit: boolean) {
-		const {criteria, criteriaGroupId, id, onMove} = this.props;
+	renderConjunction(index: number, disabled: boolean) {
+		const {criteria, criteriaGroupId, id, onMove, sequential} = this.props;
 
 		return (
 			<>
 				<DropZone
 					before
 					criteriaGroupId={criteriaGroupId}
-					disabled={atLimit}
+					disabled={disabled}
 					dropIndex={index}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -240,12 +242,14 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 
 				<Conjunction
 					conjunctionName={criteria.conjunctionName}
+					disabled={!!sequential}
 					onClick={this.handleConjunctionClick}
+					sequential={sequential}
 				/>
 
 				<DropZone
 					criteriaGroupId={criteriaGroupId}
-					disabled={atLimit}
+					disabled={disabled}
 					dropIndex={index}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -258,10 +262,18 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 	renderCriterion(
 		criterion: Criterion | CriterionGroup,
 		index: number,
-		atLimit: boolean
+		disabled: boolean
 	) {
-		const {channelId, criteriaGroupId, groupId, id, onMove, segmentType} =
-			this.props;
+		const {
+			channelId,
+			criteriaGroupId,
+			groupId,
+			id,
+			onMove,
+			root,
+			segmentType,
+			sequential
+		} = this.props;
 
 		const criterionGroup = isCriterionGroup(criterion);
 
@@ -284,12 +296,15 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 						onChange={this.handleCriterionChange(index)}
 						onMove={onMove}
 						parentGroupId={criteriaGroupId}
+						segmentType={segmentType}
+						sequential={sequential}
 					/>
 				) : (
 					<CriteriaRow
 						channelId={channelId}
 						criteriaGroupId={criteriaGroupId}
 						criterion={criterion}
+						disabled={!root && !!sequential}
 						groupId={groupId}
 						id={id}
 						index={index}
@@ -298,12 +313,13 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 						onDelete={this.handleCriterionDelete}
 						onMove={onMove}
 						segmentType={segmentType}
+						sequential={sequential}
 					/>
 				)}
 
 				<DropZone
 					criteriaGroupId={criteriaGroupId}
-					disabled={atLimit}
+					disabled={disabled}
 					dropIndex={index + 1}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
@@ -326,12 +342,15 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			sequential
 		} = this.props;
 
-		const sequentialLimitState = getSequentialLimitState(
-			criteria,
-			sequential
-		);
+		const sequentialLimitState = root
+			? getSequentialLimitState(criteria, sequential, root)
+			: null;
+		const nestedOrLimitState =
+			sequential && !root ? getNestedOrLimitState(criteria) : null;
 		const alertConfig = sequentialLimitState
 			? SEQUENTIAL_LIMIT_ALERT[sequentialLimitState]
+			: nestedOrLimitState
+			? NESTED_OR_LIMIT_ALERT[nestedOrLimitState]
 			: null;
 		const atLimit = !!alertConfig;
 

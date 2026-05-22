@@ -8,7 +8,23 @@ export const HOURS = 'hours';
 
 export const HOURS_IN_A_DAY = 24;
 export const MAX_DAYS = 30;
+export const MAX_NESTED_OR_CRITERIA = 3;
 export const MAX_SEQUENTIAL_CRITERIA = 5;
+
+export const NESTED_OR_LIMIT_ALERT = {
+	exceedsLimit: {
+		color: 'danger',
+		text: Liferay.Language.get(
+			'maximum-of-2-or-conditions-has-been-exceeded-remove-some-criteria-to-save'
+		)
+	},
+	reachedLimit: {
+		color: 'warning',
+		text: Liferay.Language.get(
+			'maximum-of-2-or-conditions-has-been-reached'
+		)
+	}
+} as const;
 
 export const SEQUENTIAL_LIMIT_ALERT = {
 	exceedsLimit: {
@@ -24,6 +40,8 @@ export const SEQUENTIAL_LIMIT_ALERT = {
 		)
 	}
 } as const;
+
+export type NestedOrLimitState = keyof typeof NESTED_OR_LIMIT_ALERT;
 
 export type SequentialLimitState = keyof typeof SEQUENTIAL_LIMIT_ALERT;
 

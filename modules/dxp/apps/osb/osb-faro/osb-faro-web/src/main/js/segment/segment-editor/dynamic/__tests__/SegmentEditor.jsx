@@ -217,4 +217,72 @@ describe('validateSegmentEditor', () => {
 			undefined
 		);
 	});
+
+	it('should block save when sequential is enabled and a nested OR group has more than 3 items', () => {
+		const criteriaWithExceededNestedOr = {
+			conjunctionName: 'and',
+			criteriaGroupId: 'root',
+			items: [
+				{
+					conjunctionName: 'or',
+					criteriaGroupId: 'nested',
+					items: [
+						{rowId: 'r0', valid: true},
+						{rowId: 'r1', valid: true},
+						{rowId: 'r2', valid: true},
+						{rowId: 'r3', valid: true}
+					]
+				}
+			]
+		};
+
+		expect(validateSegmentEditor(criteriaWithExceededNestedOr, true)).toBe(
+			'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.'
+		);
+	});
+
+	it('should prioritize the OR error when both the root AND and a nested OR exceed their limits', () => {
+		const both = {
+			conjunctionName: 'and',
+			criteriaGroupId: 'root',
+			items: Array.from({length: 6}, (_, i) => ({
+				rowId: `r${i}`,
+				valid: true
+			})).concat({
+				conjunctionName: 'or',
+				criteriaGroupId: 'nested',
+				items: Array.from({length: 4}, (_, i) => ({
+					rowId: `n${i}`,
+					valid: true
+				}))
+			})
+		};
+
+		expect(validateSegmentEditor(both, true)).toBe(
+			'Maximum of 2 OR conditions has been exceeded. Remove some criteria to save.'
+		);
+	});
+
+	it('should allow save when a nested OR group exceeds the limit but sequential is disabled', () => {
+		const criteriaWithExceededNestedOr = {
+			conjunctionName: 'and',
+			criteriaGroupId: 'root',
+			items: [
+				{
+					conjunctionName: 'or',
+					criteriaGroupId: 'nested',
+					items: [
+						{rowId: 'r0', valid: true},
+						{rowId: 'r1', valid: true},
+						{rowId: 'r2', valid: true},
+						{rowId: 'r3', valid: true}
+					]
+				}
+			]
+		};
+
+		expect(validateSegmentEditor(criteriaWithExceededNestedOr, false)).toBe(
+			undefined
+		);
+	});
 });

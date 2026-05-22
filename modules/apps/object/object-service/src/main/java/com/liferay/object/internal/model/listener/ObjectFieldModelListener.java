@@ -92,8 +92,8 @@ public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectField.class.getName(),
-					objectField.getObjectFieldId(),
+					ObjectField.class.getName(), objectField.getObjectFieldId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(originalObjectField, objectField)));
 		}
 		catch (Exception exception) {
@@ -204,8 +204,8 @@ public class ObjectFieldModelListener extends BaseModelListener<ObjectField> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectField.class.getName(),
-				objectField.getObjectFieldId(), null);
+				ObjectField.class.getName(), objectField.getObjectFieldId(),
+				eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

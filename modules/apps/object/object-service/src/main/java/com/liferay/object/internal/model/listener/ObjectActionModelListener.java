@@ -50,8 +50,8 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectAction.class.getName(),
-					objectAction.getObjectActionId(),
+					ObjectAction.class.getName(),
+					objectAction.getObjectActionId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectAction, objectAction)));
 		}
@@ -78,8 +78,8 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectAction.class.getName(),
-				objectAction.getObjectActionId(), null);
+				ObjectAction.class.getName(), objectAction.getObjectActionId(),
+				eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

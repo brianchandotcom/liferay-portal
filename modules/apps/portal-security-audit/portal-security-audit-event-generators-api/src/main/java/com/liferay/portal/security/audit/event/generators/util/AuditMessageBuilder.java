@@ -28,17 +28,35 @@ import java.util.List;
 public class AuditMessageBuilder {
 
 	public static AuditMessage buildAuditMessage(
-		long groupId, long accountEntryId, String eventType, String className,
-		long classPK, String contextName, List<Attribute> attributes) {
+		ClassedModel classedModel, String eventType,
+		List<Attribute> attributes) {
+
+		long groupId = 0;
+
+		if (classedModel instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)classedModel;
+
+			groupId = groupedModel.getGroupId();
+		}
 
 		return buildAuditMessage(
-			groupId, accountEntryId, eventType, className,
-			String.valueOf(classPK), contextName, attributes);
+			groupId, 0, classedModel.getModelClassName(),
+			String.valueOf(classedModel.getPrimaryKeyObj()), null, eventType,
+			attributes);
 	}
 
 	public static AuditMessage buildAuditMessage(
-		long groupId, long accountEntryId, String eventType, String className,
-		String classPK, String contextName, List<Attribute> attributes) {
+		long groupId, long accountEntryId, String className, long classPK,
+		String contextName, String eventType, List<Attribute> attributes) {
+
+		return buildAuditMessage(
+			groupId, accountEntryId, className, String.valueOf(classPK),
+			contextName, eventType, attributes);
+	}
+
+	public static AuditMessage buildAuditMessage(
+		long groupId, long accountEntryId, String className, String classPK,
+		String contextName, String eventType, List<Attribute> attributes) {
 
 		long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -75,43 +93,26 @@ public class AuditMessageBuilder {
 		}
 
 		return new AuditMessage(
-			eventType, companyId, groupId, accountEntryId, realUserId,
-			realUserName, className, classPK, null, null,
-			additionalInfoJSONObject, contextName);
+			groupId, companyId, realUserId, realUserName, null, accountEntryId,
+			additionalInfoJSONObject, className, classPK, contextName,
+			eventType, null);
 	}
 
 	public static AuditMessage buildAuditMessage(
-		long accountEntryId, String eventType, String className, long classPK,
-		String contextName, List<Attribute> attributes) {
+		long accountEntryId, String className, long classPK, String contextName,
+		String eventType, List<Attribute> attributes) {
 
 		return buildAuditMessage(
-			0, accountEntryId, eventType, className, classPK, contextName,
+			0, accountEntryId, className, classPK, contextName, eventType,
 			attributes);
 	}
 
 	public static AuditMessage buildAuditMessage(
-		String eventType, ClassedModel classedModel,
-		List<Attribute> attributes) {
-
-		long groupId = 0;
-
-		if (classedModel instanceof GroupedModel) {
-			GroupedModel groupedModel = (GroupedModel)classedModel;
-
-			groupId = groupedModel.getGroupId();
-		}
-
-		return buildAuditMessage(
-			groupId, 0, eventType, classedModel.getModelClassName(),
-			String.valueOf(classedModel.getPrimaryKeyObj()), null, attributes);
-	}
-
-	public static AuditMessage buildAuditMessage(
-		String eventType, String className, long classPK,
+		String className, long classPK, String eventType,
 		List<Attribute> attributes) {
 
 		return buildAuditMessage(
-			0, 0, eventType, className, classPK, null, attributes);
+			0, 0, className, classPK, null, eventType, attributes);
 	}
 
 	private static JSONArray _getAttributesJSONArray(

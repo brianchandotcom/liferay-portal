@@ -52,8 +52,8 @@ public class ObjectViewColumnModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectViewColumn.class.getName(),
-					objectViewColumn.getObjectViewColumnId(),
+					ObjectViewColumn.class.getName(),
+					objectViewColumn.getObjectViewColumnId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectViewColumn, objectViewColumn)));
 		}
@@ -81,8 +81,8 @@ public class ObjectViewColumnModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectViewColumn.class.getName(),
-				objectViewColumn.getObjectViewColumnId(), null);
+				ObjectViewColumn.class.getName(),
+				objectViewColumn.getObjectViewColumnId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

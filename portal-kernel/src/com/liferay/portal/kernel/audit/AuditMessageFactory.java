@@ -15,61 +15,61 @@ import java.util.Date;
  */
 public class AuditMessageFactory {
 
-	public AuditMessage getAuditMessage(String message) throws JSONException {
-		return new AuditMessage(message);
-	}
-
 	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long groupId, long userId,
-		String userName, String className, String classPK, String message,
-		Date timestamp, JSONObject additionalInfoJSONObject) {
+		long groupId, long companyId, long userId, String userName,
+		Date timestamp, JSONObject additionalInfoJSONObject, String className,
+		String classPK, String eventType, String message) {
 
 		return new AuditMessage(
-			eventType, companyId, groupId, userId, userName, className, classPK,
-			message, timestamp, additionalInfoJSONObject);
+			groupId, companyId, userId, userName, timestamp,
+			additionalInfoJSONObject, className, classPK, eventType, message);
 	}
 
 	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long userId, String userName) {
-
-		return new AuditMessage(eventType, companyId, userId, userName);
-	}
-
-	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK) {
+		long companyId, long userId, String userName, Date timestamp,
+		JSONObject additionalInfoJSONObject, String className, String classPK,
+		String eventType, String message) {
 
 		return new AuditMessage(
-			eventType, companyId, userId, userName, className, classPK);
+			companyId, userId, userName, timestamp, additionalInfoJSONObject,
+			className, classPK, eventType, message);
 	}
 
 	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message) {
+		long companyId, long userId, String userName,
+		JSONObject additionalInfoJSONObject, String className, String classPK,
+		String eventType, String message) {
 
 		return new AuditMessage(
-			eventType, companyId, userId, userName, className, classPK,
+			companyId, userId, userName, additionalInfoJSONObject, className,
+			classPK, eventType, message);
+	}
+
+	public AuditMessage getAuditMessage(
+		long companyId, long userId, String userName, String eventType) {
+
+		return new AuditMessage(companyId, userId, userName, eventType);
+	}
+
+	public AuditMessage getAuditMessage(
+		long companyId, long userId, String userName, String className,
+		String classPK, String eventType) {
+
+		return new AuditMessage(
+			companyId, userId, userName, className, classPK, eventType);
+	}
+
+	public AuditMessage getAuditMessage(
+		long companyId, long userId, String userName, String className,
+		String classPK, String eventType, String message) {
+
+		return new AuditMessage(
+			companyId, userId, userName, className, classPK, eventType,
 			message);
 	}
 
-	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message, Date timestamp,
-		JSONObject additionalInfoJSONObject) {
-
-		return new AuditMessage(
-			eventType, companyId, userId, userName, className, classPK, message,
-			timestamp, additionalInfoJSONObject);
-	}
-
-	public AuditMessage getAuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message,
-		JSONObject additionalInfoJSONObject) {
-
-		return new AuditMessage(
-			eventType, companyId, userId, userName, className, classPK, message,
-			additionalInfoJSONObject);
+	public AuditMessage getAuditMessage(String message) throws JSONException {
+		return new AuditMessage(message);
 	}
 
 }

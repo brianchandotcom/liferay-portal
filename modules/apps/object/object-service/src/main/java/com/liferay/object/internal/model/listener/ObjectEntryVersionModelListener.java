@@ -178,7 +178,7 @@ public class ObjectEntryVersionModelListener
 		}
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-			EventTypes.DELETE, objectEntryVersion, null);
+			objectEntryVersion, EventTypes.DELETE, null);
 
 		JSONObject additionalInfoJSONObject = auditMessage.getAdditionalInfo();
 

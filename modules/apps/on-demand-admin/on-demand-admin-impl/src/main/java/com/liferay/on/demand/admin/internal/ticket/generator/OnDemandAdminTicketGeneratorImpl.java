@@ -71,9 +71,10 @@ public class OnDemandAdminTicketGeneratorImpl
 			requestorUser.getMale());
 
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+			User.class.getName(), requestorUser.getUserId(),
 			OnDemandAdminConstants.
 				AUDIT_EVENT_TYPE_ON_DEMAND_ADMIN_TICKET_GENERATED,
-			User.class.getName(), requestorUser.getUserId(), null);
+			null);
 
 		auditMessage.setAdditionalInfo(
 			JSONUtil.put(

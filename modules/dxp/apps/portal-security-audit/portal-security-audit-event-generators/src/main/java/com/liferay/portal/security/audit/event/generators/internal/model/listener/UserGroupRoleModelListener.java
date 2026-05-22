@@ -47,7 +47,7 @@ public class UserGroupRoleModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, User.class.getName(), userGroupRole.getUserId(),
+				User.class.getName(), userGroupRole.getUserId(), eventType,
 				null);
 
 			JSONObject additionalInfoJSONObject =

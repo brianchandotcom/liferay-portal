@@ -54,9 +54,9 @@ public class LogoutPostAction extends Action {
 		}
 
 		AuditMessage auditMessage = new AuditMessage(
-			EventTypes.LOGOUT, user.getCompanyId(), user.getUserId(),
-			user.getFullName(), User.class.getName(),
-			String.valueOf(user.getUserId()));
+			user.getCompanyId(), user.getUserId(), user.getFullName(),
+			User.class.getName(), String.valueOf(user.getUserId()),
+			EventTypes.LOGOUT);
 
 		_auditRouter.route(auditMessage);
 	}

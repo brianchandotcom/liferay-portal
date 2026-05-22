@@ -34,10 +34,9 @@ public interface AuditEventManager {
 
 	public List<AuditEvent> getAuditEvents(
 		long companyId, long groupId, long userId, String userName,
-		Date createDateGT, Date createDateLT, String eventType,
-		String className, String classPK, String clientHost, String clientIP,
-		String serverName, int serverPort, String sessionID, boolean andSearch,
-		int start, int end,
+		Date createDateGT, Date createDateLT, String className, String classPK,
+		String clientHost, String clientIP, String eventType, String serverName,
+		int serverPort, String sessionID, boolean andSearch, int start, int end,
 		OrderByComparator
 			<com.liferay.portal.security.audit.storage.model.AuditEvent>
 				orderByComparator);
@@ -46,8 +45,8 @@ public interface AuditEventManager {
 
 	public int getAuditEventsCount(
 		long companyId, long groupId, long userId, String userName,
-		Date createDateGT, Date createDateLT, String eventType,
-		String className, String classPK, String clientHost, String clientIP,
-		String serverName, int serverPort, String sessionID, boolean andSearch);
+		Date createDateGT, Date createDateLT, String className, String classPK,
+		String clientHost, String clientIP, String eventType, String serverName,
+		int serverPort, String sessionID, boolean andSearch);
 
 }

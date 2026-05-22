@@ -50,8 +50,8 @@ public class ObjectLayoutModelListener extends BaseModelListener<ObjectLayout> {
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectLayout.class.getName(),
-					objectLayout.getObjectLayoutId(),
+					ObjectLayout.class.getName(),
+					objectLayout.getObjectLayoutId(), EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectLayout, objectLayout)));
 		}
@@ -77,8 +77,8 @@ public class ObjectLayoutModelListener extends BaseModelListener<ObjectLayout> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectLayout.class.getName(),
-				objectLayout.getObjectLayoutId(), null);
+				ObjectLayout.class.getName(), objectLayout.getObjectLayoutId(),
+				eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

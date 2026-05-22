@@ -32,72 +32,37 @@ import java.util.Date;
  */
 public class AuditMessage implements Serializable {
 
-	public AuditMessage(String message) throws JSONException {
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(message);
+	public AuditMessage(
+		long groupId, long companyId, long userId, String userName,
+		Date timestamp, JSONObject additionalInfoJSONObject, String className,
+		String classPK, String eventType, String message) {
 
-		_accountEntryId = jsonObject.getLong(_ACCOUNT_ENTRY_ID);
-		_additionalInfoJSONObject = jsonObject.getJSONObject(_ADDITIONAL_INFO);
-		_className = jsonObject.getString(_CLASS_NAME);
-		_classPK = jsonObject.getString(_CLASS_PK);
-
-		if (jsonObject.has(_CLIENT_HOST)) {
-			_clientHost = jsonObject.getString(_CLIENT_HOST);
-		}
-
-		if (jsonObject.has(_CLIENT_IP)) {
-			_clientIP = jsonObject.getString(_CLIENT_IP);
-		}
-
-		_companyId = jsonObject.getLong(_COMPANY_ID);
-
-		if (jsonObject.has(_CONTEXT_NAME)) {
-			_contextName = jsonObject.getString(_CONTEXT_NAME);
-		}
-
-		_eventType = jsonObject.getString(_EVENT_TYPE);
-		_groupId = jsonObject.getLong(_GROUP_ID);
-		_message = jsonObject.getString(_MESSAGE);
-
-		if (jsonObject.has(_SERVER_NAME)) {
-			_serverName = jsonObject.getString(_SERVER_NAME);
-		}
-
-		if (jsonObject.has(_SERVER_PORT)) {
-			_serverPort = jsonObject.getInt(_SERVER_PORT);
-		}
-
-		if (jsonObject.has(_SESSION_ID)) {
-			_sessionID = jsonObject.getString(_SESSION_ID);
-		}
-
-		_timestamp = GetterUtil.getDate(
-			jsonObject.getString(_TIMESTAMP), _getDateFormat());
-		_userEmailAddress = jsonObject.getString(_USER_EMAIL_ADDRESS);
-		_userId = jsonObject.getLong(_USER_ID);
-		_userLogin = jsonObject.getString(_USER_LOGIN);
-		_userName = jsonObject.getString(_USER_NAME);
+		this(
+			groupId, companyId, userId, userName, timestamp, 0,
+			additionalInfoJSONObject, className, classPK, null, eventType,
+			message);
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long groupId, long accountEntryId,
-		long userId, String userName, String className, String classPK,
-		String message, Date timestamp, JSONObject additionalInfoJSONObject,
-		String contextName) {
+		long groupId, long companyId, long userId, String userName,
+		Date timestamp, long accountEntryId,
+		JSONObject additionalInfoJSONObject, String className, String classPK,
+		String contextName, String eventType, String message) {
 
-		_eventType = eventType;
-		_companyId = companyId;
 		_groupId = groupId;
-		_accountEntryId = accountEntryId;
+		_companyId = companyId;
 		_userId = userId;
 		_userName = userName;
-		_className = className;
-		_classPK = classPK;
-		_message = message;
 		_timestamp = (timestamp != null) ? timestamp : new Date();
+		_accountEntryId = accountEntryId;
 		_additionalInfoJSONObject =
 			(additionalInfoJSONObject != null) ? additionalInfoJSONObject :
 				JSONFactoryUtil.createJSONObject();
+		_className = className;
+		_classPK = classPK;
 		_contextName = contextName;
+		_eventType = eventType;
+		_message = message;
 
 		AuditRequestThreadLocal auditRequestThreadLocal =
 			AuditRequestThreadLocal.getAuditThreadLocal();
@@ -144,59 +109,96 @@ public class AuditMessage implements Serializable {
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long groupId, long userId,
-		String userName, String className, String classPK, String message,
-		Date timestamp, JSONObject additionalInfoJSONObject) {
+		long companyId, long userId, String userName, Date timestamp,
+		JSONObject additionalInfoJSONObject, String className, String classPK,
+		String eventType, String message) {
 
 		this(
-			eventType, companyId, groupId, 0, userId, userName, className,
-			classPK, message, timestamp, additionalInfoJSONObject, null);
+			0, companyId, userId, userName, timestamp, 0,
+			additionalInfoJSONObject, className, classPK, null, eventType,
+			message);
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long userId, String userName) {
+		long companyId, long userId, String userName,
+		JSONObject additionalInfoJSONObject, String className, String classPK,
+		String eventType, String message) {
 
 		this(
-			eventType, companyId, 0, 0, userId, userName, null, null, null,
-			null, null, null);
+			0, companyId, userId, userName, null, 0, additionalInfoJSONObject,
+			className, classPK, null, eventType, message);
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK) {
+		long companyId, long userId, String userName, String eventType) {
 
 		this(
-			eventType, companyId, 0, 0, userId, userName, className, classPK,
-			null, null, null, null);
+			0, companyId, userId, userName, null, 0, null, null, null, null,
+			eventType, null);
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message) {
+		long companyId, long userId, String userName, String className,
+		String classPK, String eventType) {
 
 		this(
-			eventType, companyId, 0, 0, userId, userName, className, classPK,
-			message, null, null, null);
+			0, companyId, userId, userName, null, 0, null, className, classPK,
+			null, eventType, null);
 	}
 
 	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message, Date timestamp,
-		JSONObject additionalInfoJSONObject) {
+		long companyId, long userId, String userName, String className,
+		String classPK, String eventType, String message) {
 
 		this(
-			eventType, companyId, 0, 0, userId, userName, className, classPK,
-			message, timestamp, additionalInfoJSONObject, null);
+			0, companyId, userId, userName, null, 0, null, className, classPK,
+			null, eventType, message);
 	}
 
-	public AuditMessage(
-		String eventType, long companyId, long userId, String userName,
-		String className, String classPK, String message,
-		JSONObject additionalInfoJSONObject) {
+	public AuditMessage(String message) throws JSONException {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(message);
 
-		this(
-			eventType, companyId, 0, 0, userId, userName, className, classPK,
-			message, null, additionalInfoJSONObject, null);
+		_accountEntryId = jsonObject.getLong(_ACCOUNT_ENTRY_ID);
+		_additionalInfoJSONObject = jsonObject.getJSONObject(_ADDITIONAL_INFO);
+		_className = jsonObject.getString(_CLASS_NAME);
+		_classPK = jsonObject.getString(_CLASS_PK);
+
+		if (jsonObject.has(_CLIENT_HOST)) {
+			_clientHost = jsonObject.getString(_CLIENT_HOST);
+		}
+
+		if (jsonObject.has(_CLIENT_IP)) {
+			_clientIP = jsonObject.getString(_CLIENT_IP);
+		}
+
+		_companyId = jsonObject.getLong(_COMPANY_ID);
+
+		if (jsonObject.has(_CONTEXT_NAME)) {
+			_contextName = jsonObject.getString(_CONTEXT_NAME);
+		}
+
+		_eventType = jsonObject.getString(_EVENT_TYPE);
+		_groupId = jsonObject.getLong(_GROUP_ID);
+		_message = jsonObject.getString(_MESSAGE);
+
+		if (jsonObject.has(_SERVER_NAME)) {
+			_serverName = jsonObject.getString(_SERVER_NAME);
+		}
+
+		if (jsonObject.has(_SERVER_PORT)) {
+			_serverPort = jsonObject.getInt(_SERVER_PORT);
+		}
+
+		if (jsonObject.has(_SESSION_ID)) {
+			_sessionID = jsonObject.getString(_SESSION_ID);
+		}
+
+		_timestamp = GetterUtil.getDate(
+			jsonObject.getString(_TIMESTAMP), _getDateFormat());
+		_userEmailAddress = jsonObject.getString(_USER_EMAIL_ADDRESS);
+		_userId = jsonObject.getLong(_USER_ID);
+		_userLogin = jsonObject.getString(_USER_LOGIN);
+		_userName = jsonObject.getString(_USER_NAME);
 	}
 
 	public long getAccountEntryId() {

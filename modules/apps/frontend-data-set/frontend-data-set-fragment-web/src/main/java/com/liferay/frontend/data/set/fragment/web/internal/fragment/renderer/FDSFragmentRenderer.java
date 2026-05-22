@@ -10,6 +10,11 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.renderer.FDSRenderer;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -358,7 +363,7 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		for (String tokenName : tokenNames) {
 			String tokenValue = _getTokenValue(
-				apiURLTokenValuesJSONObject, tokenName);
+				apiURLTokenValuesJSONObject, httpServletRequest, tokenName);
 
 			if (Validator.isNotNull(tokenValue)) {
 				tokenResolutionsJSONObject.put(
@@ -385,14 +390,15 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 
 		String fieldId = mappingJSONObject.getString("fieldId");
 
-			if (Objects.equals(fieldId, "externalReferenceCode")) {
-				return mappingJSONObject.getString("externalReferenceCode");
-			}
+		if (Objects.equals(mappingJSONObject.getString("source"), "context")) {
+			return _resolveContextValue(httpServletRequest, fieldId);
+		}
+
+		if (Objects.equals(fieldId, "externalReferenceCode")) {
+			return mappingJSONObject.getString("externalReferenceCode");
+		}
 
 		return mappingJSONObject.getString("classPK");
-	}
-
-		return apiURLTokenValuesJSONObject.getString(tokenName);
 	}
 
 	private boolean _hasTokens(
@@ -415,6 +421,35 @@ public class FDSFragmentRenderer implements FragmentRenderer {
 				tokenValuesJSONObject));
 
 		return !matcher.find();
+	}
+
+	private String _resolveContextValue(
+		HttpServletRequest httpServletRequest, String fieldId) {
+
+		InfoItemReference infoItemReference =
+			(InfoItemReference)httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM_REFERENCE);
+
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (Objects.equals(fieldId, "externalReferenceCode") &&
+			(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
+			return ((ERCInfoItemIdentifier)infoItemIdentifier).
+				getExternalReferenceCode();
+		}
+
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			return String.valueOf(
+				((ClassPKInfoItemIdentifier)infoItemIdentifier).getClassPK());
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

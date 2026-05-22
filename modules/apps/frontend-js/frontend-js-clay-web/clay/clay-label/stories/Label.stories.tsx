@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import React from 'react';
 
-import ClayLabel from '../src';
+import ClayLabel, {ContentLabel} from '../src';
 
 export default {
 	argTypes: {
@@ -39,16 +39,19 @@ export function Default(args: typeof Default.args) {
 	return (
 		<>
 			{displayTypes.map((displayType) => (
-				<ClayLabel
-					closeButtonProps={closeButtonProps}
-					displayType={displayType}
-					href={args.href}
-					inverse={args.inverse}
-					key={displayType}
-					large={args.large}
-				>
-					{args.label}
-				</ClayLabel>
+				<div className="mb-4" key={displayType}>
+					<p className="mb-0">{displayType}</p>
+
+					<ClayLabel
+						closeButtonProps={closeButtonProps}
+						displayType={displayType}
+						href={args.href}
+						inverse={args.inverse}
+						large={args.large}
+					>
+						{args.label}
+					</ClayLabel>
+				</div>
 			))}
 		</>
 	);
@@ -111,5 +114,51 @@ export function ContentBefore(args: typeof Default.args) {
 
 ContentBefore.args = {
 	inverse: false,
+	large: false,
+};
+
+const contentDisplayTypes = [
+	'content-0',
+	'content-1',
+	'content-2',
+	'content-3',
+	'content-4',
+	'content-5',
+	'content-6',
+	'content-7',
+	'content-8',
+] as const;
+
+export function ContentVariants(args: typeof ContentVariants.args) {
+	const closeButtonProps = args.closeable
+		? {
+				onClick: () => alert('close callback'),
+			}
+		: undefined;
+
+	return (
+		<>
+			{contentDisplayTypes.map((displayType) => (
+				<div className="mb-4" key={displayType}>
+					<p className="mb-0">{displayType}</p>
+
+					<ContentLabel
+						closeButtonProps={closeButtonProps}
+						displayType={displayType}
+						href={args.href}
+						large={args.large}
+					>
+						{args.label}
+					</ContentLabel>
+				</div>
+			))}
+		</>
+	);
+}
+
+ContentVariants.args = {
+	closeable: false,
+	href: '',
+	label: 'Label',
 	large: false,
 };

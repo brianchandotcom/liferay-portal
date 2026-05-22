@@ -27,14 +27,6 @@ type Props = {
 	'displayKeyboardArrowsIndicator'?: boolean;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	'keyboardArrowsIndicatorLabel'?: string;
-
-	/**
 	 * The maximum width allowed.
 	 */
 	'maxWidth': number;
@@ -75,7 +67,6 @@ let keyDownCounter = 0;
 export function ResizeHandle({
 	'aria-controls': ariaControls,
 	displayKeyboardArrowsIndicator = false,
-	keyboardArrowsIndicatorLabel,
 	maxWidth,
 	minWidth,
 	onWidthChange,
@@ -219,7 +210,6 @@ export function ResizeHandle({
 					<KeyboardArrowsIndicator
 						anchorRef={resizerRef}
 						direction="all"
-						label={keyboardArrowsIndicatorLabel}
 						placement="center"
 					/>
 				</ClayPortal>

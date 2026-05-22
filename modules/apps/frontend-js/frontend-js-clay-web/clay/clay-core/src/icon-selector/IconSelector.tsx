@@ -61,14 +61,6 @@ export type Props = {
 	displayKeyboardArrowsIndicator?: boolean;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * Messages for the Icon Selector.
 	 */
 	messages?: {
@@ -136,7 +128,6 @@ export function IconSelector({
 	defaultSelectedIcon,
 	direction = 'bottom',
 	displayKeyboardArrowsIndicator = false,
-	keyboardArrowsIndicatorLabel,
 	messages = defaultMessages,
 	selectedIcon: externalSelectedIcon,
 	onIconChange,
@@ -454,7 +445,6 @@ export function IconSelector({
 					<KeyboardArrowsIndicator
 						anchorRef={menuRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

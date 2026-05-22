@@ -676,7 +676,6 @@ export function KeyboardArrowsIndicator() {
 		<ClayDropDown
 			defaultActive
 			displayKeyboardArrowsIndicator
-			keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate menu items"
 			trigger={<ClayButton>Choose a fruit</ClayButton>}
 		>
 			<ClayDropDown.ItemList>

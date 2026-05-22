@@ -106,7 +106,6 @@ export function KeyboardArrowsIndicator() {
 				<ResizeHandle
 					aria-label="Resize region"
 					displayKeyboardArrowsIndicator
-					keyboardArrowsIndicatorLabel="Use arrow keys to resize"
 					maxWidth={MAX_WIDTH}
 					minWidth={MIN_WIDTH}
 					onWidthChange={setWidth}

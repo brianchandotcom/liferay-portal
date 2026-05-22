@@ -24,7 +24,6 @@ export function KeyboardArrowsIndicator() {
 			<IconSelector
 				defaultActive
 				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down arrow keys to step through the icons"
 				spritemap={spritemap}
 			/>
 		</div>

@@ -288,7 +288,6 @@ export function KeyboardArrowsIndicator() {
 		<ClayDatePickerWithState
 			defaultExpanded
 			displayKeyboardArrowsIndicator
-			keyboardArrowsIndicatorLabel="Use arrow keys to navigate the calendar"
 			placeholder="YYYY-MM-DD"
 			years={{
 				end: new Date().getFullYear(),

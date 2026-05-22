@@ -142,14 +142,6 @@ interface IProps
 	inputName?: string;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * The names of the months.
 	 */
 	months?: Array<string>;
@@ -284,7 +276,6 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			initialExpanded = false,
 			initialMonth,
 			inputName,
-			keyboardArrowsIndicatorLabel,
 			months = [
 				'January',
 				'February',
@@ -844,7 +835,6 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 								<KeyboardArrowsIndicator
 									anchorRef={menuElementRef}
 									direction="all"
-									label={keyboardArrowsIndicatorLabel}
 								/>
 							</ClayPortal>
 						)}

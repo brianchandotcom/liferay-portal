@@ -72,14 +72,6 @@ type Props = {
 	displayKeyboardArrowsIndicator?: boolean;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * Callback is called when the active state changes (controlled).
 	 */
 	onActiveChange?: InternalDispatch<React.Key | null>;
@@ -124,7 +116,6 @@ export function VerticalBar({
 	defaultActive = null,
 	defaultPanelWidth = 320,
 	displayKeyboardArrowsIndicator = false,
-	keyboardArrowsIndicatorLabel,
 	onActiveChange,
 	onPanelWidthChange,
 	panelWidth: externalPanelWidth,
@@ -197,7 +188,6 @@ export function VerticalBar({
 					<KeyboardArrowsIndicator
 						anchorRef={rootRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

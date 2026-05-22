@@ -96,14 +96,6 @@ type Props<T extends Record<string, any> | string> = {
 	'items'?: Array<T>;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	'keyboardArrowsIndicatorLabel'?: string;
-
-	/**
 	 * Flag to indicate if `menubar-vertical-expand-lg` class is applied.
 	 * @deprecated Use "size" to determine the desired breakpoint
 	 */
@@ -186,7 +178,6 @@ function VerticalNav<T extends Record<string, any> | string>({
 	'expandedKeys': externalExpandedKeys,
 	'itemAriaCurrent': ariaCurrent = true,
 	items,
-	keyboardArrowsIndicatorLabel,
 	large,
 	nestMargins,
 	onExpandedChange,
@@ -380,7 +371,6 @@ function VerticalNav<T extends Record<string, any> | string>({
 					<KeyboardArrowsIndicator
 						anchorRef={containerRef}
 						direction="all"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

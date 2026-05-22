@@ -112,14 +112,6 @@ interface IProps<T> extends DropDownHTMLAttributes {
 	items?: Array<T>;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * Prop to pass DOM element attributes to DropDown.Menu.
 	 */
 	menuElementAttrs?: React.HTMLAttributes<HTMLDivElement> &
@@ -200,7 +192,6 @@ function DropDown<T>({
 	hasLeftSymbols,
 	hasRightSymbols,
 	items,
-	keyboardArrowsIndicatorLabel,
 	menuElementAttrs,
 	menuHeight,
 	menuWidth,
@@ -433,7 +424,6 @@ function DropDown<T>({
 					<KeyboardArrowsIndicator
 						anchorRef={menuElementRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

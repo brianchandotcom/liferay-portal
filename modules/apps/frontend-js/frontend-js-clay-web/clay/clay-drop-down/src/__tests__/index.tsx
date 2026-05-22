@@ -582,28 +582,4 @@ describe('ClayDropDown', () => {
 			'clay-keyboard-arrows-indicator-floating'
 		);
 	});
-
-	it('uses the localized label on the keyboard arrows indicator', () => {
-		const {container} = render(
-			<DropDownWithState
-				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down to navigate menu items"
-			>
-				<ClayDropDown.ItemList>
-					<ClayDropDown.Item href="#one" spritemap="/foo/bar">
-						one
-					</ClayDropDown.Item>
-				</ClayDropDown.ItemList>
-			</DropDownWithState>
-		);
-
-		fireEvent.click(container.querySelector('.dropdown-toggle')!);
-
-		expect(
-			document.body.querySelector('.clay-keyboard-arrows-indicator')
-		).toHaveAttribute(
-			'aria-label',
-			'Use up and down to navigate menu items'
-		);
-	});
 });

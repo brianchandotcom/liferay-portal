@@ -72,8 +72,6 @@ public class AccountUserInvitationNotificationSenderImpl
 					"[%INVITE_SENDER_NAME%]", user.getFullName()
 				).put(
 					"[%TO%]", emailAddress
-				).put(
-					"currentUserId", user.getUserId()
 				).build()
 			).userId(
 				user.getUserId()

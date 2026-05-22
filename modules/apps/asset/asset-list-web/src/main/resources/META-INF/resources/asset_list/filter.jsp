@@ -40,9 +40,9 @@
 
 	<div id="<portlet:namespace />ConditionForm"></div>
 
-	<div>
-		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-74731") %>'>
+	<c:choose>
+		<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-74731") %>'>
+			<div id="<portlet:namespace />collectionFilterBuilderWrapper">
 				<react:component
 					module="{CollectionFilterBuilder} from asset-list-web"
 					props='<%=
@@ -65,33 +65,63 @@
 						).build()
 					%>'
 				/>
-			</c:when>
-			<c:otherwise>
-				<!-- Move AssetFilterBuilder here for FF LPD-74731 -->
-			</c:otherwise>
-		</c:choose>
-	</div>
+			</div>
 
-	<div>
-		<react:component
-			module="{AssetFilterBuilder} from asset-list-web"
-			props='<%=
-				HashMapBuilder.<String, Object>put(
-					"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
-				).put(
-					"disabled", editAssetListDisplayContext.isLiveGroup()
-				).put(
-					"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
-				).put(
-					"namespace", liferayPortletResponse.getNamespace()
-				).put(
-					"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
-				).put(
-					"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
-				).put(
-					"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
-				).build()
-			%>'
-		/>
-	</div>
+			<div id="<portlet:namespace />assetFilterBuilderWrapper">
+				<react:component
+					module="{AssetFilterBuilder} from asset-list-web"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
+						).put(
+							"disabled", editAssetListDisplayContext.isLiveGroup()
+						).put(
+							"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
+						).put(
+							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
+						).put(
+							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
+						).build()
+					%>'
+				/>
+			</div>
+
+			<liferay-frontend:component
+				context='<%=
+					HashMapBuilder.<String, Object>put(
+						"namespace", liferayPortletResponse.getNamespace()
+					).build()
+				%>'
+				module="{FilterVisibility} from asset-list-web"
+			/>
+		</c:when>
+		<c:otherwise>
+			<div>
+				<react:component
+					module="{AssetFilterBuilder} from asset-list-web"
+					props='<%=
+						HashMapBuilder.<String, Object>put(
+							"categorySelectorURL", editAssetListDisplayContext.getCategorySelectorURL()
+						).put(
+							"disabled", editAssetListDisplayContext.isLiveGroup()
+						).put(
+							"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
+						).put(
+							"namespace", liferayPortletResponse.getNamespace()
+						).put(
+							"rules", editAssetListDisplayContext.getAutoFieldRulesJSONArray()
+						).put(
+							"tagSelectorURL", editAssetListDisplayContext.getTagSelectorURL()
+						).put(
+							"vocabularyIds", editAssetListDisplayContext.getVocabularyIds()
+						).build()
+					%>'
+				/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 </liferay-frontend:fieldset>

@@ -124,6 +124,15 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	public List<LayoutPageTemplateEntry> getLayoutPageTemplateEntries(
 		int start, int end) {
 
+		if (!_isWidgetPageFeatureFlagEnabled()) {
+			return LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageTemplateEntriesByType(
+					_themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(),
+					LayoutPageTemplateEntryTypeConstants.BASIC, start, end,
+					null);
+		}
+
 		return LayoutPageTemplateEntryServiceUtil.getLayoutPageTemplateEntries(
 			_themeDisplay.getScopeGroupId(),
 			getLayoutPageTemplateCollectionId(),
@@ -131,6 +140,14 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 	}
 
 	public int getLayoutPageTemplateEntriesCount() {
+		if (!_isWidgetPageFeatureFlagEnabled()) {
+			return LayoutPageTemplateEntryServiceUtil.
+				getLayoutPageTemplateEntriesCountByType(
+					_themeDisplay.getScopeGroupId(),
+					getLayoutPageTemplateCollectionId(),
+					LayoutPageTemplateEntryTypeConstants.BASIC);
+		}
+
 		return LayoutPageTemplateEntryServiceUtil.
 			getLayoutPageTemplateEntriesCount(
 				_themeDisplay.getScopeGroupId(),
@@ -385,6 +402,11 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		}
 
 		return addLayoutURL.toString();
+	}
+
+	private boolean _isWidgetPageFeatureFlagEnabled() {
+		return FeatureFlagManagerUtil.isEnabled(
+			_themeDisplay.getCompanyId(), "LPD-76864");
 	}
 
 	private String _backURL;

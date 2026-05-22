@@ -41,8 +41,9 @@ public class OAuth2AuthorizationLocalServiceImpl
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #addOAuth2Authorization(long, long, String, long,long,
-	 *             String, Date, Date, String, String, String, Date, Date)}
+	 *             #addOAuth2Authorization(long, long, String, long, long,
+	 *             String, Date, Date, String, String, String, Date, Date,
+	 *             List)}
 	 */
 	@Deprecated
 	@Override
@@ -56,7 +57,7 @@ public class OAuth2AuthorizationLocalServiceImpl
 		return addOAuth2Authorization(
 			companyId, userId, userName, oAuth2ApplicationId,
 			oAuth2ApplicationScopeAliasesId, accessTokenContent,
-			accessTokenCreateDate, accessTokenExpirationDate, null,
+			accessTokenCreateDate, accessTokenExpirationDate, null, null,
 			remoteIPInfo, refreshTokenContent, refreshTokenCreateDate,
 			refreshTokenExpirationDate);
 	}
@@ -66,8 +67,9 @@ public class OAuth2AuthorizationLocalServiceImpl
 		long companyId, long userId, String userName, long oAuth2ApplicationId,
 		long oAuth2ApplicationScopeAliasesId, String accessTokenContent,
 		Date accessTokenCreateDate, Date accessTokenExpirationDate,
-		String remoteHostInfo, String remoteIPInfo, String refreshTokenContent,
-		Date refreshTokenCreateDate, Date refreshTokenExpirationDate) {
+		List<String> audiences, String remoteHostInfo, String remoteIPInfo,
+		String refreshTokenContent, Date refreshTokenCreateDate,
+		Date refreshTokenExpirationDate) {
 
 		long oAuth2AuthorizationId = counterLocalService.increment(
 			OAuth2Authorization.class.getName());
@@ -86,6 +88,11 @@ public class OAuth2AuthorizationLocalServiceImpl
 		oAuth2Authorization.setAccessTokenCreateDate(accessTokenCreateDate);
 		oAuth2Authorization.setAccessTokenExpirationDate(
 			accessTokenExpirationDate);
+
+		if (audiences != null) {
+			oAuth2Authorization.setAudiencesList(audiences);
+		}
+
 		oAuth2Authorization.setRemoteHostInfo(remoteHostInfo);
 		oAuth2Authorization.setRemoteIPInfo(remoteIPInfo);
 		oAuth2Authorization.setRefreshTokenContent(refreshTokenContent);

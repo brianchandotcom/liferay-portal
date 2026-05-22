@@ -439,24 +439,6 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			else {
 				portletURL.setParameter(
 					"continueAsGuest", Boolean.TRUE.toString());
-
-				Cookie cookie = new Cookie(
-					CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
-					Boolean.TRUE.toString());
-
-				String domain = CookiesManagerUtil.getDomain(
-					httpServletRequest);
-
-				if (Validator.isNotNull(domain)) {
-					cookie.setDomain(domain);
-				}
-
-				cookie.setMaxAge(CookiesConstants.MAX_AGE);
-
-				CookiesManagerUtil.addCookie(
-					CookiesConstants.CONSENT_TYPE_NECESSARY, cookie,
-					httpServletRequest, themeDisplay.getResponse());
-
 				portletURL.setParameter(
 					"redirect", checkoutPortletURL.toString());
 			}

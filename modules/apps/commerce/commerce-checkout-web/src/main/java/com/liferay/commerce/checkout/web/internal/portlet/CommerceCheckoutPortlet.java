@@ -20,18 +20,17 @@ import com.liferay.commerce.util.CommerceCheckoutStepRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
-import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.WorkflowInstanceLink;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -49,6 +48,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -112,10 +113,17 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 				HttpServletResponse httpServletResponse =
 					_portal.getHttpServletResponse(renderResponse);
 
-				boolean continueAsGuest = GetterUtil.getBoolean(
-					CookiesManagerUtil.getCookieValue(
-						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST,
-						httpServletRequest));
+				boolean continueAsGuest = ParamUtil.getBoolean(
+					renderRequest, "continueAsGuest",
+					Objects.equals(
+						commerceOrder.getUuid(),
+						StringUtil.extractFirst(
+							CookiesManagerUtil.getCookieValue(
+								CommerceOrder.class.getName() +
+									StringPool.POUND +
+										commerceOrder.getGroupId(),
+								httpServletRequest),
+							StringPool.PIPE)));
 
 				if (commerceOrder.isQuote() ||
 					ListUtil.exists(
@@ -148,11 +156,6 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 						httpServletRequest, httpServletResponse,
 						CommerceOrder.class.getName() + StringPool.POUND +
 							commerceOrder.getGroupId());
-
-					CookiesManagerUtil.deleteCookies(
-						CookiesManagerUtil.getDomain(httpServletRequest),
-						httpServletRequest, httpServletResponse,
-						CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST);
 				}
 			}
 

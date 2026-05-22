@@ -1761,7 +1761,7 @@ public class CompanyLocalServiceTest {
 		new CopyOnWriteArrayList<>();
 
 	@Inject
-	private static SystemEventLocalService _systemEventLocalService;
+	private SystemEventLocalService _systemEventLocalService;
 
 	private static final TransactionConfig _transactionConfig;
 

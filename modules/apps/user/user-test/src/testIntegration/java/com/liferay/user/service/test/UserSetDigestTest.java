@@ -119,6 +119,6 @@ public class UserSetDigestTest {
 	}
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 }

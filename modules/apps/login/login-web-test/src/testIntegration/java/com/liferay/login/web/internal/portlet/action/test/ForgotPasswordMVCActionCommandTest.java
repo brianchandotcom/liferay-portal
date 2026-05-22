@@ -254,7 +254,7 @@ public class ForgotPasswordMVCActionCommandTest {
 	}
 
 	@DeleteAfterTestRun
-	private static User _user;
+	private User _user;
 
 	@Inject(
 		filter = "mvc.command.name=/login/forgot_password",

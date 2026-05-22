@@ -946,7 +946,7 @@ public class BaseNotificationTypeTest {
 		_listTypeDefinitionLocalService;
 
 	@Inject
-	private static ListTypeEntryLocalService _listTypeEntryLocalService;
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;

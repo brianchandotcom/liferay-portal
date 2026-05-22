@@ -111,7 +111,7 @@ public class ModificationDeletionConflictTest {
 	}
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;

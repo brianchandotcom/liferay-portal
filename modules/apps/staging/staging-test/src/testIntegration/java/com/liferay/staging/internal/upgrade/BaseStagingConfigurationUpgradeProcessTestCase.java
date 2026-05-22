@@ -121,7 +121,7 @@ public abstract class BaseStagingConfigurationUpgradeProcessTestCase {
 	@Inject(
 		filter = "(&(component.name=com.liferay.staging.internal.upgrade.registry.StagingImplUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

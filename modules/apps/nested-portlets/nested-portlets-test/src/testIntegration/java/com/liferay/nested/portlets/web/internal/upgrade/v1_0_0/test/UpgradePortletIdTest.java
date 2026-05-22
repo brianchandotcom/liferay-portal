@@ -233,7 +233,7 @@ public class UpgradePortletIdTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.nested.portlets.web.internal.upgrade.registry.NestedPortletWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@DeleteAfterTestRun
 	private Group _group;

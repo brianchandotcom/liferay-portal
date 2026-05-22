@@ -320,9 +320,9 @@ public class UpgradeResourceBlockTest extends BaseUpgradeResourceBlock {
 	private static final long _USER_ID = -9;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
-	private static Connection _connection;
+	private Connection _connection;
 
 	private boolean _hasUserId;
 

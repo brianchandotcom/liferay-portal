@@ -204,7 +204,7 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 		_browserSnifferUtilMockedStatic.close();
 	}
 
-	private static MockedStatic<BrowserSnifferUtil>
+	private MockedStatic<BrowserSnifferUtil>
 		_browserSnifferUtilMockedStatic;
 
 }

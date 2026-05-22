@@ -249,7 +249,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfigurationTest {
 		SystemBundleUtil.getBundleContext();
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	private ServiceRegistration<AntivirusScanner>
 		_antivirusScannerServiceRegistration;

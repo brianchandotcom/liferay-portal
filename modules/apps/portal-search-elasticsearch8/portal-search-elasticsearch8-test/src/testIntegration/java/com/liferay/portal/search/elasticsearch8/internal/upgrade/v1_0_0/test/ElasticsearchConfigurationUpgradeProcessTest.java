@@ -157,7 +157,7 @@ public class ElasticsearchConfigurationUpgradeProcessTest {
 	@Inject(
 		filter = "component.name=com.liferay.portal.search.elasticsearch8.internal.upgrade.registry.ElasticsearchUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

@@ -502,7 +502,7 @@ public class JournalArticleFinderTest {
 	private static final long _USER_ID = 1234L;
 
 	@Inject
-	private static JournalArticleFinder _journalArticleFinder;
+	private JournalArticleFinder _journalArticleFinder;
 
 	private JournalArticle _article;
 	private final List<JournalArticle> _articles = new ArrayList<>();

@@ -152,6 +152,6 @@ public class SynonymsConfigurationUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.portal.search.tuning.synonyms.web.internal.upgrade.registry.SynonymsWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

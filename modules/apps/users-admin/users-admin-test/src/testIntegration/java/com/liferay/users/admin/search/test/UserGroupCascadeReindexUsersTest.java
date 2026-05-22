@@ -324,22 +324,22 @@ public class UserGroupCascadeReindexUsersTest {
 	private static final boolean _STRESS_MODE_10_MIN_TO_RUN_ALL_TESTS = false;
 
 	@Inject(filter = "indexer.class.name=com.liferay.portal.kernel.model.User")
-	private static Indexer<User> _indexer;
+	private Indexer<User> _indexer;
 
 	@Inject
-	private static OrganizationLocalService _organizationLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 	@Inject
-	private static Searcher _searcher;
+	private Searcher _searcher;
 
 	@Inject
-	private static SearchRequestBuilderFactory _searchRequestBuilderFactory;
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Inject
-	private static UserGroupLocalService _userGroupLocalService;
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
-	private static UserLocalService _userLocalService;
+	private UserLocalService _userLocalService;
 
 	private int _groupsCount;
 	private int _usersCount;

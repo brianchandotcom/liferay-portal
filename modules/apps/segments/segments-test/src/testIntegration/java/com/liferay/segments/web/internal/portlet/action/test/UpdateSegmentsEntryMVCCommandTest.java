@@ -239,7 +239,7 @@ public class UpdateSegmentsEntryMVCCommandTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

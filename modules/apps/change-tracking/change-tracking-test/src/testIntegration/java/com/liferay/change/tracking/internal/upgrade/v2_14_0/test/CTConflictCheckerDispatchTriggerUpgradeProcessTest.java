@@ -79,13 +79,13 @@ public class CTConflictCheckerDispatchTriggerUpgradeProcessTest {
 	}
 
 	@Inject
-	private static DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private DispatchTriggerLocalService _dispatchTriggerLocalService;
 
-	private static UpgradeProcess _upgradeProcess;
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.change.tracking.internal.upgrade.registry.ChangeTrackingServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

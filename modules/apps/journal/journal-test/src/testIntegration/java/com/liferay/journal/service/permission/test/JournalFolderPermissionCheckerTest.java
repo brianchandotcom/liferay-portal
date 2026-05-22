@@ -70,7 +70,7 @@ public class JournalFolderPermissionCheckerTest extends BasePermissionTestCase {
 	}
 
 	@Inject(filter = "model.class.name=com.liferay.journal.model.JournalFolder")
-	private static ModelResourcePermission<JournalFolder>
+	private ModelResourcePermission<JournalFolder>
 		_journalFolderModelResourcePermission;
 
 	private JournalFolder _folder;

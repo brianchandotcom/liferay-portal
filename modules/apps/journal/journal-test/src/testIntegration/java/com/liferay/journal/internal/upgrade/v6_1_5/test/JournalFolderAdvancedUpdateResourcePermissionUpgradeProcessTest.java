@@ -105,7 +105,7 @@ public class JournalFolderAdvancedUpdateResourcePermissionUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private EntityCache _entityCache;

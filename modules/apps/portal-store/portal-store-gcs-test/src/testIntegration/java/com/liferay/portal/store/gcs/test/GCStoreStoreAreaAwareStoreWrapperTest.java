@@ -150,7 +150,7 @@ public class GCStoreStoreAreaAwareStoreWrapperTest {
 		"com.liferay.portal.store.gcs.GCSStore";
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static final Snapshot<StoreAreaProcessor>
 		_storeAreaProcessorSnapshot = new Snapshot<>(

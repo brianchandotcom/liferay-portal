@@ -768,7 +768,7 @@ public class ContentTargetingUpgradeProcessTest {
 		"com.liferay.segments.content.targeting.upgrade.internal.upgrade." +
 			"v1_0_0.ContentTargetingUpgradeProcess";
 
-	private static DB _db;
+	private DB _db;
 
 	private UpgradeProcess _contentTargetingUpgradeProcess;
 

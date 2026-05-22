@@ -907,10 +907,10 @@ public class JournalConverterImplTest {
 	}
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
-	private static DDMFormDeserializer _jsonDDMFormDeserializer;
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
 
 	@Inject(filter = "ddm.form.deserializer.type=xsd")
-	private static DDMFormDeserializer _xsdDDMFormDeserializer;
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;

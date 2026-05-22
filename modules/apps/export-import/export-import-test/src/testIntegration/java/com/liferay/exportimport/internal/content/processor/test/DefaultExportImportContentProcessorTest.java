@@ -1292,7 +1292,7 @@ public class DefaultExportImportContentProcessorTest {
 		CharPool.SPACE
 	};
 
-	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
+	private String _oldLayoutFriendlyURLPrivateUserServletMapping;
 
 	private Locale _defaultLocale;
 	private ExportImportContentProcessor<String> _exportImportContentProcessor;

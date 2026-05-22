@@ -46,6 +46,6 @@ public class StyleBookEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

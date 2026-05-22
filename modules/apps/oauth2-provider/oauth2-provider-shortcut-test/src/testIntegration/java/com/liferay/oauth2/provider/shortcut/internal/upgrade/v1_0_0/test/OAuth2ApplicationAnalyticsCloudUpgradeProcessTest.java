@@ -68,7 +68,7 @@ public class OAuth2ApplicationAnalyticsCloudUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.oauth2.provider.shortcut.internal.upgrade.registry.OAuth2ProviderShortcutUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;

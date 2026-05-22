@@ -264,21 +264,21 @@ public class RolesAdminPortletTest {
 		}
 	}
 
-	private static CTCollection _ctCollection;
+	private CTCollection _ctCollection;
 
 	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
+	private CTEntryLocalService _ctEntryLocalService;
 
-	private static Group _group;
+	private Group _group;
 
 	@Inject
-	private static RoleLocalService _roleLocalService;
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
-	private static UserGroup _userGroup;
+	private UserGroup _userGroup;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

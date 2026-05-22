@@ -279,7 +279,7 @@ public class JournalFolderFinderTest {
 	}
 
 	@Inject
-	private static JournalFolderFinder _journalFolderFinder;
+	private JournalFolderFinder _journalFolderFinder;
 
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;

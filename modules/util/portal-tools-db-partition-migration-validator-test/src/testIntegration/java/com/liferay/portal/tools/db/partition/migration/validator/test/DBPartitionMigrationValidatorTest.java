@@ -201,7 +201,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	@Inject
 	private static CompanyLocalService _companyLocalService;
 
-	private static File _outputDirectory;
+	private File _outputDirectory;
 
 	private final ByteArrayOutputStream _errByteArrayOutputStream =
 		new ByteArrayOutputStream();

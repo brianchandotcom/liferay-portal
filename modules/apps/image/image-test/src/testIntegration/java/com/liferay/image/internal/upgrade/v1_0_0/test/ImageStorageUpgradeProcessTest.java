@@ -118,7 +118,7 @@ public class ImageStorageUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.image.internal.upgrade.registry.ImageServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private CounterLocalService _counterLocalService;

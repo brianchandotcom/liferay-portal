@@ -254,7 +254,7 @@ public class UpgradeProcessFactoryTest {
 	private static final String _TABLE_NAME_2 = "UpgradeProcessFactoryTest2";
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static Connection _connection;
 	private static DB _db;

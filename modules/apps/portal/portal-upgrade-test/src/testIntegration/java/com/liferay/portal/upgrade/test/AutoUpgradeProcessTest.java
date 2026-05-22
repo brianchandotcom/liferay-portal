@@ -139,7 +139,7 @@ public class AutoUpgradeProcessTest {
 	private static String _originalUpgradeDatabaseAutoRun;
 
 	@Inject
-	private static ReleaseLocalService _releaseLocalService;
+	private ReleaseLocalService _releaseLocalService;
 
 	private static boolean _upgradeProcessRun;
 

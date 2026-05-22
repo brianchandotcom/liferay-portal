@@ -150,7 +150,7 @@ public class KaleoDefinitionVersionUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.portal.workflow.kaleo.designer.web.internal.upgrade.registry.KaleoDesignerWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private DB _db;
 	private int _draftVersion = RandomTestUtil.randomInt();

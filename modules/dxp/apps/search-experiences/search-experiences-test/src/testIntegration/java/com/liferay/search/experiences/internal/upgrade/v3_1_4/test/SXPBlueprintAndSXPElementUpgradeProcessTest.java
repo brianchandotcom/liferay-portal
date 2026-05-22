@@ -200,7 +200,7 @@ public class SXPBlueprintAndSXPElementUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.search.experiences.internal.upgrade.registry.SXPServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private final Class<?> _clazz = getClass();
 

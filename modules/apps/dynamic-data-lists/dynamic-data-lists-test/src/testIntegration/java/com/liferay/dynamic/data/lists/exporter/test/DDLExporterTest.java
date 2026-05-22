@@ -739,7 +739,7 @@ public class DDLExporterTest {
 	}
 
 	@Inject
-	private static DDLExporterFactory _ddlExporterFactory;
+	private DDLExporterFactory _ddlExporterFactory;
 
 	private Set<Locale> _availableLocales;
 	private Map<DDMFormFieldType, String> _ddmFormFieldDataTypes;

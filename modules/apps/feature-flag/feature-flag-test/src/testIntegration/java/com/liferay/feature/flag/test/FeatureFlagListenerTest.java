@@ -237,7 +237,7 @@ public class FeatureFlagListenerTest {
 			featureFlagKey, enabled);
 	}
 
-	private static long _companyId;
+	private long _companyId;
 	private static FeatureFlagTestHelper _featureFlagTestHelper;
 
 	private BundleContext _bundleContext;

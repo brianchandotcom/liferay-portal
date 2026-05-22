@@ -4672,10 +4672,10 @@ public class BundleSiteInitializerTest {
 		BundleSiteInitializerTest.class);
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
-	private static PLOEntryLocalService _ploEntryLocalService;
+	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;

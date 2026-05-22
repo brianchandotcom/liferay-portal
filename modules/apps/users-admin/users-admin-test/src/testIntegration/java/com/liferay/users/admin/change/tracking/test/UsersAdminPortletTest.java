@@ -846,18 +846,18 @@ public class UsersAdminPortletTest {
 	}
 
 	@Inject
-	private static AddressLocalService _addressLocalService;
+	private AddressLocalService _addressLocalService;
 
-	private static CTCollection _ctCollection;
-
-	@Inject
-	private static CTCollectionLocalService _ctCollectionLocalService;
+	private CTCollection _ctCollection;
 
 	@Inject
-	private static CTEntryLocalService _ctEntryLocalService;
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@Inject
-	private static ListTypeLocalService _listTypeLocalService;
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private AnnouncementsDeliveryLocalService

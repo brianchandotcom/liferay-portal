@@ -58,9 +58,9 @@ public class StyleBookEntryVersionTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private static StyleBookEntry _styleBookEntry;
+	private StyleBookEntry _styleBookEntry;
 
 	@Inject
-	private static StyleBookEntryLocalService _styleBookEntryLocalService;
+	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 }

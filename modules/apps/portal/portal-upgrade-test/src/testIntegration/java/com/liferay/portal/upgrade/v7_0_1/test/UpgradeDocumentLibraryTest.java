@@ -164,7 +164,7 @@ public class UpgradeDocumentLibraryTest {
 	private static final Version _ORIGINAL_SCHEMA_VERSION = new Version(
 		7, 0, 0);
 
-	private static Version _currentSchemaVersion;
+	private Version _currentSchemaVersion;
 	private static StopWatch _originalStopWatch;
 
 	private boolean _upgrading;

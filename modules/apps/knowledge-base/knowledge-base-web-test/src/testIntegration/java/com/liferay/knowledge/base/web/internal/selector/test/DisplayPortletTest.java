@@ -228,7 +228,7 @@ public class DisplayPortletTest {
 		"KNOWLEDGE_BASE_SEARCH_KEYWORDS";
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private Company _company;
 

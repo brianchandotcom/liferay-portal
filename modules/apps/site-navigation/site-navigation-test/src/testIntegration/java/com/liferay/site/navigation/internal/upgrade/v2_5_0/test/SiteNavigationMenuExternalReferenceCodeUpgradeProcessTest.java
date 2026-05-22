@@ -66,7 +66,7 @@ public class SiteNavigationMenuExternalReferenceCodeUpgradeProcessTest
 	@Inject(
 		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private SiteNavigationMenuService _siteNavigationMenuService;

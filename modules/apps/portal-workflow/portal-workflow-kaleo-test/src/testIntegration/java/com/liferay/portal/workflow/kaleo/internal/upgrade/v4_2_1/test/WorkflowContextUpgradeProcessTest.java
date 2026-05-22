@@ -148,7 +148,7 @@ public class WorkflowContextUpgradeProcessTest {
 	@Inject(
 		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;

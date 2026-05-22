@@ -122,13 +122,13 @@ public class JournalFolderTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private static JournalFolderLocalService _journalFolderLocalService;
 
 	@Inject
-	private static Portal _portal;
+	private Portal _portal;
 
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;

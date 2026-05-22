@@ -1317,7 +1317,7 @@ public class JournalArticleServiceTest {
 	}
 
 	@Inject
-	private static JournalArticleLocalService _journalArticleLocalService;
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	private JournalArticle _article;
 

@@ -143,7 +143,7 @@ public class BlogsFriendlyURLFormatUpgradeProcessTest
 	@Inject(
 		filter = "(&(component.name=com.liferay.blogs.internal.upgrade.registry.BlogsServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private BlogsEntry _blogsEntry;
 

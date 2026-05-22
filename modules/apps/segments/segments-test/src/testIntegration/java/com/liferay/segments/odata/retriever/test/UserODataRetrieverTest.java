@@ -1148,12 +1148,12 @@ public class UserODataRetrieverTest {
 	private static Group _companyGuestGroup;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	private static User _companyUser;
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;

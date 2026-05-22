@@ -248,8 +248,8 @@ public class CompanyDataCleanupPreupgradeProcessTest
 		}
 	}
 
-	private static List<ClassName> _classNames;
-	private static List<ResourceAction> _resourceActions;
+	private List<ClassName> _classNames;
+	private List<ResourceAction> _resourceActions;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

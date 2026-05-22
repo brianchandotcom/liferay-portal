@@ -1141,9 +1141,9 @@ public class UserODataRetrieverCustomFieldsTest {
 	}
 
 	@Inject
-	private static ExpandoColumnLocalService _expandoColumnLocalService;
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
-	private static ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
+	private ServiceTracker<ODataRetriever<User>, ODataRetriever<User>>
 		_serviceTracker;
 
 	@DeleteAfterTestRun

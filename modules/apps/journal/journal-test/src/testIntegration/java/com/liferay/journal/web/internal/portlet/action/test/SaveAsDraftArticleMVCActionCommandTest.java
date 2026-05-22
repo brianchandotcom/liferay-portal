@@ -221,7 +221,7 @@ public class SaveAsDraftArticleMVCActionCommandTest {
 	}
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private AssetDisplayPageEntryLocalService

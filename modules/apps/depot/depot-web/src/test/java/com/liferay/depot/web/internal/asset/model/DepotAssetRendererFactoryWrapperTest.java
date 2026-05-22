@@ -381,7 +381,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 		);
 	}
 
-	private static MockedStatic<StagingGroupHelperUtil>
+	private MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic;
 
 	private final AssetRendererFactory<Object> _assetRendererFactory =

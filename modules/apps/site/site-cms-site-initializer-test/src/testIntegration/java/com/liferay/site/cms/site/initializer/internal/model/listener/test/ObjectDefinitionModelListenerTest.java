@@ -151,15 +151,15 @@ public class ObjectDefinitionModelListenerTest {
 		Assert.assertNull(layoutPageTemplateEntry);
 	}
 
-	private static Company _company;
+	private Company _company;
 
 	@Inject
-	private static CompanyLocalService _companyLocalService;
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private static GroupLocalService _groupLocalService;
+	private GroupLocalService _groupLocalService;
 
-	private static User _user;
+	private User _user;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

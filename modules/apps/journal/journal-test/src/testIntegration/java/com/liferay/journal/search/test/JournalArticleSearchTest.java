@@ -772,7 +772,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	@Inject(
 		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
 	)
-	private static Indexer<JournalArticle> _indexer;
+	private Indexer<JournalArticle> _indexer;
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;

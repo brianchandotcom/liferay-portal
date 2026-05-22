@@ -110,7 +110,7 @@ public class JournalUtilTest {
 		);
 	}
 
-	private static MockedStatic<JournalArticleServiceUtil>
+	private MockedStatic<JournalArticleServiceUtil>
 		_journalArticleServiceUtilMockedStatic;
 
 }

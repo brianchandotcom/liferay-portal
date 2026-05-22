@@ -110,6 +110,6 @@ public class MinifierUtilTest {
 			minifiedCss);
 	}
 
-	private static boolean _minifierEnabled;
+	private boolean _minifierEnabled;
 
 }

@@ -78,7 +78,7 @@ public class ConfigurationAdminTest {
 	}
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	private Configuration _configuration;
 

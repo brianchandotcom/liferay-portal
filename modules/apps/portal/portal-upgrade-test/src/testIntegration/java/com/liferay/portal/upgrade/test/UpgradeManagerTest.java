@@ -181,7 +181,7 @@ public class UpgradeManagerTest {
 	}
 
 	private static String _originalUpgradeDatabaseAutoRun;
-	private static Object _upgradeManager;
+	private Object _upgradeManager;
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;

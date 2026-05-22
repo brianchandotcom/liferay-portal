@@ -131,7 +131,7 @@ public class GroupItemSelectorProviderRegistryUtilTest {
 	private static BundleContext _bundleContext;
 	private static final MockedStatic<FrameworkUtil>
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
-	private static ServiceRegistration<GroupItemSelectorProvider>
+	private ServiceRegistration<GroupItemSelectorProvider>
 		_serviceRegistration;
 
 	private static class MockGroupItemSelectorProvider

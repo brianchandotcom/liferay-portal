@@ -455,7 +455,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 			preupgradeUnsafeRunnable, verifyUnsafeConsumer);
 	}
 
-	private static List<ClassName> _classNames;
+	private List<ClassName> _classNames;
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
 

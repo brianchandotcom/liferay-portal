@@ -318,7 +318,7 @@ public class PortalImplGroupFriendlyURLTest {
 	private static String _originalVirtualHostsDefaultSiteName;
 
 	@Inject
-	private static VirtualHostLocalService _virtualHostLocalService;
+	private VirtualHostLocalService _virtualHostLocalService;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -284,7 +284,7 @@ public class QuestionsConfigurationUpgradeProcessTest {
 	@Inject(
 		filter = "(&(component.name=com.liferay.questions.web.internal.upgrade.registry.QuestionsWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;

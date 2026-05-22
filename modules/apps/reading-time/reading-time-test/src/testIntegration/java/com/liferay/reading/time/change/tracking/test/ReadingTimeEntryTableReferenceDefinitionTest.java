@@ -63,7 +63,7 @@ public class ReadingTimeEntryTableReferenceDefinitionTest
 	}
 
 	@Inject
-	private static ReadingTimeEntryLocalService _readingTimeEntryLocalService;
+	private ReadingTimeEntryLocalService _readingTimeEntryLocalService;
 
 	private BlogsEntry _blogsEntry;
 

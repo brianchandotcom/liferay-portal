@@ -117,7 +117,7 @@ public class RedirectEntryPermissionPortalInstanceLifecycleListenerTest {
 	}
 
 	@Inject
-	private static ServiceComponentRuntime _serviceComponentRuntime;
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 	@DeleteAfterTestRun
 	private Company _company;

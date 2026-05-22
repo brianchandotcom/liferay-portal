@@ -41,6 +41,6 @@ public class UpgradePortletPreferencesTest
 	@Inject(
 		filter = "(&(component.name=com.liferay.site.navigation.breadcrumb.web.internal.upgrade.registry.SiteNavigationBreadcrumbWebUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

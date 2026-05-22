@@ -70,7 +70,7 @@ public class SuspendedSessionConnectionTest {
 	}
 
 	@Inject
-	private static CompanyPersistence _companyPersistence;
+	private CompanyPersistence _companyPersistence;
 
 	private static final TransactionConfig _innerTransactionConfig;
 	private static final TransactionConfig _outerTransactionConfig;

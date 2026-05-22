@@ -82,7 +82,7 @@ public class SegmentsEntryExternalReferenceCodeUpgradeProcessTest
 	@Inject(
 		filter = "(&(component.name=com.liferay.segments.internal.upgrade.registry.SegmentsServiceUpgradeStepRegistrator))"
 	)
-	private static UpgradeStepRegistrator _upgradeStepRegistrator;
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private SegmentsEntryLocalService _segmentsEntryLocalService;

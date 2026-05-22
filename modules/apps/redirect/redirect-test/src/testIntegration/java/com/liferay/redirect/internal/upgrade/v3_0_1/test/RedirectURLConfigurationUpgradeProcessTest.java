@@ -119,7 +119,7 @@ public class RedirectURLConfigurationUpgradeProcessTest {
 		return _configurationAdmin.listConfigurations(filterString);
 	}
 
-	private static UpgradeProcess _upgradeProcess;
+	private UpgradeProcess _upgradeProcess;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

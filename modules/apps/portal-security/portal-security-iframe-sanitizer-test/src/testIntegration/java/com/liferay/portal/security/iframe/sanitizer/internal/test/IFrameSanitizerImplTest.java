@@ -410,7 +410,7 @@ public class IFrameSanitizerImplTest {
 		"<iframe src=\"test\" sandbox=\"\"></iframe>";
 
 	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
+	private ConfigurationAdmin _configurationAdmin;
 
 	private long _companyId;
 

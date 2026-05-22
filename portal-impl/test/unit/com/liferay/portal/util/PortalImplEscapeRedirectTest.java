@@ -368,7 +368,7 @@ public class PortalImplEscapeRedirectTest {
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
-	private static ServiceRegistration<RedirectURLSettings>
+	private ServiceRegistration<RedirectURLSettings>
 		_serviceRegistration;
 
 	private final PortalImpl _portalImpl = new PortalImpl();

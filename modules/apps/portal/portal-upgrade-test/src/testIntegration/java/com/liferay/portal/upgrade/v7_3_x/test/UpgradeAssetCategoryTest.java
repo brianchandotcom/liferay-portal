@@ -97,10 +97,10 @@ public class UpgradeAssetCategoryTest {
 	}
 
 	@Inject
-	private static AssetCategoryLocalService _assetCategoryLocalService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@Inject
-	private static CounterLocalService _counterLocalService;
+	private CounterLocalService _counterLocalService;
 
 	@DeleteAfterTestRun
 	private final List<AssetCategory> _assetCategories = new ArrayList<>();

@@ -120,8 +120,8 @@ public class WorkflowHandlerRegistryUtilTest {
 	private static final String _CLASS_NAME = "TestWorkflowHandler";
 
 	private static BundleContext _bundleContext;
-	private static boolean _calledWorkflowHandler;
-	private static WorkflowHandler<?> _workflowHandler;
+	private boolean _calledWorkflowHandler;
+	private WorkflowHandler<?> _workflowHandler;
 
 	private ServiceRegistration<WorkflowHandler<?>> _serviceRegistration;
 

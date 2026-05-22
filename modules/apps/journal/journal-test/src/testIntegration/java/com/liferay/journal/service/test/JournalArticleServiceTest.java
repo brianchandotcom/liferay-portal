@@ -1316,9 +1316,6 @@ public class JournalArticleServiceTest {
 		}
 	}
 
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
 	private JournalArticle _article;
 
 	@Inject
@@ -1338,6 +1335,9 @@ public class JournalArticleServiceTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private JournalArticleService _journalArticleService;

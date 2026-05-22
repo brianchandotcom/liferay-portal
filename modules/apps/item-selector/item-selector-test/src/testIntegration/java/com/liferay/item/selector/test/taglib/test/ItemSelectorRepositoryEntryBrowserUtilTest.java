@@ -173,10 +173,10 @@ public class ItemSelectorRepositoryEntryBrowserUtilTest {
 		}
 	}
 
+	private Company _company;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private Company _company;
 
 	@Inject
 	private Language _language;

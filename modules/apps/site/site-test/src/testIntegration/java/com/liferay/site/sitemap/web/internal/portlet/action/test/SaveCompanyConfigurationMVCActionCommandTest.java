@@ -420,18 +420,12 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	private static CompanyLocalService _companyLocalService;
 
 	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
 	private static GroupLocalService _groupLocalService;
 
 	private static Layout _layout;
 
 	@Inject
 	private static LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	private static Long[] _originalCompanySitemapGroupIds;
 	private static Long[] _originalCompanySitemapObjectDefinitionIds;
@@ -444,9 +438,15 @@ public class SaveCompanyConfigurationMVCActionCommandTest {
 	@Inject
 	private static SitemapConfigurationManager _sitemapConfigurationManager;
 
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
 	@Inject(
 		filter = "mvc.command.name=/site_sitemap/save_company_configuration"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

@@ -108,11 +108,11 @@ public class UpgradeViewCountTest {
 		}
 	}
 
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
-
 	@DeleteAfterTestRun
 	private ClassName _className;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	private DB _db;
 

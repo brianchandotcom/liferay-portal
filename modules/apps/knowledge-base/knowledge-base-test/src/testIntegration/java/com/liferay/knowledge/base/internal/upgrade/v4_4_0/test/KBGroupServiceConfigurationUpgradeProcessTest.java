@@ -154,14 +154,14 @@ public class KBGroupServiceConfigurationUpgradeProcessTest {
 	private static final String _SERVICE_PID =
 		"com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.knowledge.base.internal.upgrade.registry.KnowledgeBaseServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
 	private Dictionary<String, Dictionary<String, Object>> _originalProperties;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.knowledge.base.internal.upgrade.registry.KnowledgeBaseServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

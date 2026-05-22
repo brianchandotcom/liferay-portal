@@ -466,12 +466,12 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			ddmStructure.getStructureKey(), null);
 	}
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private static String _originalName;
 
 	private Company _company;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private DDMFormDeserializer _ddmFormDeserializer;

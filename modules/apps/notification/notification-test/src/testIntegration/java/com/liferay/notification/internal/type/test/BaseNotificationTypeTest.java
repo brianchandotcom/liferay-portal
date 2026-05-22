@@ -946,9 +946,6 @@ public class BaseNotificationTypeTest {
 		_listTypeDefinitionLocalService;
 
 	@Inject
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Inject
 	private static ListTypeLocalService _listTypeLocalService;
 
 	private static String _originalName;
@@ -956,6 +953,9 @@ public class BaseNotificationTypeTest {
 
 	private Map<String, Object> _childAuthorTermValues;
 	private Map<String, Object> _generalTermValues;
+
+	@Inject
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Inject
 	private NotificationRecipientSettingLocalService

@@ -906,12 +906,6 @@ public class JournalConverterImplTest {
 		return fields;
 	}
 
-	@Inject(filter = "ddm.form.deserializer.type=json")
-	private DDMFormDeserializer _jsonDDMFormDeserializer;
-
-	@Inject(filter = "ddm.form.deserializer.type=xsd")
-	private DDMFormDeserializer _xsdDDMFormDeserializer;
-
 	private DDMStructure _ddmStructure;
 	private DDMStructureTestHelper _ddmStructureTestHelper;
 	private Locale _enLocale;
@@ -922,6 +916,12 @@ public class JournalConverterImplTest {
 	@Inject
 	private JournalConverter _journalConverter;
 
+	@Inject(filter = "ddm.form.deserializer.type=json")
+	private DDMFormDeserializer _jsonDDMFormDeserializer;
+
 	private Locale _ptLocale;
+
+	@Inject(filter = "ddm.form.deserializer.type=xsd")
+	private DDMFormDeserializer _xsdDDMFormDeserializer;
 
 }

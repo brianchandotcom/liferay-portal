@@ -147,11 +147,6 @@ public class KaleoLogUpgradeProcessTest {
 		"com.liferay.portal.workflow.kaleo.internal.upgrade.v4_3_0." +
 			"KaleoLogUpgradeProcess";
 
-	@Inject(
-		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private KaleoInstance _kaleoInstance;
 
 	@Inject
@@ -168,5 +163,10 @@ public class KaleoLogUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.workflow.kaleo.internal.upgrade.registry.KaleoServiceUpgradeStepRegistrator"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

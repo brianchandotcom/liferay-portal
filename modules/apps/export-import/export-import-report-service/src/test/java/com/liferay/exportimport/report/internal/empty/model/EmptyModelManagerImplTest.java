@@ -717,8 +717,6 @@ public class EmptyModelManagerImplTest {
 
 	private static final EmptyModelManager _emptyModelManager =
 		new EmptyModelManagerImpl();
-	private MockedStatic<StagingGroupHelperUtil>
-		_stagingGroupHelperUtilMockedStatic;
 
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
 		ClassNameLocalService.class);
@@ -728,6 +726,8 @@ public class EmptyModelManagerImplTest {
 	private final Group _group = Mockito.mock(Group.class);
 	private final GroupLocalService _groupLocalService = Mockito.mock(
 		GroupLocalService.class);
+	private MockedStatic<StagingGroupHelperUtil>
+		_stagingGroupHelperUtilMockedStatic;
 	private final User _user = Mockito.mock(User.class);
 
 }

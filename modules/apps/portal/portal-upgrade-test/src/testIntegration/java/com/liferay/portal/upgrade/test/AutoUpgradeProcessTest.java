@@ -137,11 +137,10 @@ public class AutoUpgradeProcessTest {
 		"com.liferay.portal.upgrade.test";
 
 	private static String _originalUpgradeDatabaseAutoRun;
+	private static boolean _upgradeProcessRun;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;
-
-	private static boolean _upgradeProcessRun;
 
 	private ServiceRegistration<UpgradeStepRegistrator> _serviceRegistration;
 

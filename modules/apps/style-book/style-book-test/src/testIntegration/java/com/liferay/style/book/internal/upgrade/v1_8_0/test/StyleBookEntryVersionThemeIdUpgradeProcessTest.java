@@ -130,11 +130,6 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 		"com.liferay.style.book.internal.upgrade.v1_8_0." +
 			"StyleBookEntryVersionThemeIdUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.style.book.internal.upgrade.registry.StyleBookServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -142,5 +137,10 @@ public class StyleBookEntryVersionThemeIdUpgradeProcessTest {
 
 	@Inject
 	private StyleBookEntryLocalService _styleBookEntryLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.style.book.internal.upgrade.registry.StyleBookServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

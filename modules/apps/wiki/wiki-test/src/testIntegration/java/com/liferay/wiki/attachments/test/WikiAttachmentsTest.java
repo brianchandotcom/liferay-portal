@@ -433,19 +433,19 @@ public class WikiAttachmentsTest {
 	@Inject
 	private FacetedSearcherManager _facetedSearcherManager;
 
+	@DeleteAfterTestRun
+	private Group _group;
+
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	private WikiNode _node;
+	private WikiPage _page;
 
 	@Inject
 	private WikiNodeLocalService _wikiNodeLocalService;
 
 	@Inject
 	private WikiPageLocalService _wikiPageLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	private WikiNode _node;
-	private WikiPage _page;
 
 }

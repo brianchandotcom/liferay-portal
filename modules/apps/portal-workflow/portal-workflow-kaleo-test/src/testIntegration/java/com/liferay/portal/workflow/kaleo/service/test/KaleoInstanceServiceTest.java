@@ -192,16 +192,16 @@ public class KaleoInstanceServiceTest {
 	}
 
 	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private WorkflowDefinitionManager _workflowDefinitionManager;
-
-	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 	@Inject
 	private WorkflowInstanceManager _workflowInstanceManager;

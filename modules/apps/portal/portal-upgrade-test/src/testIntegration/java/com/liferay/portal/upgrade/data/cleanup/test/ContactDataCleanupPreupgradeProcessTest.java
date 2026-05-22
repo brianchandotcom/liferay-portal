@@ -174,24 +174,24 @@ public class ContactDataCleanupPreupgradeProcessTest
 	@Inject
 	private AddressLocalService _addressLocalService;
 
-	private List<ClassName> _classNames;
-
-	@Inject
-	private ListTypeLocalService _listTypeLocalService;
-
-	private List<SystemEvent> _systemEvents;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private List<ClassName> _classNames;
+
 	@Inject
 	private EmailAddressLocalService _emailAddressLocalService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private PhoneLocalService _phoneLocalService;
 
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;
+
+	private List<SystemEvent> _systemEvents;
 
 	@Inject
 	private UserLocalService _userLocalService;

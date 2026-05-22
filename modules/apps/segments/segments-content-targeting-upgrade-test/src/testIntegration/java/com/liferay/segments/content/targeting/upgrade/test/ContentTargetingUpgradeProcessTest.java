@@ -768,12 +768,12 @@ public class ContentTargetingUpgradeProcessTest {
 		"com.liferay.segments.content.targeting.upgrade.internal.upgrade." +
 			"v1_0_0.ContentTargetingUpgradeProcess";
 
-	private DB _db;
-
 	private UpgradeProcess _contentTargetingUpgradeProcess;
 
 	@Inject
 	private CounterLocalService _counterLocalService;
+
+	private DB _db;
 
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;

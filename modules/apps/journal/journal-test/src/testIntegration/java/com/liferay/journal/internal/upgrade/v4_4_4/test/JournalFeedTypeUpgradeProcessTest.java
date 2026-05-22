@@ -149,11 +149,6 @@ public class JournalFeedTypeUpgradeProcessTest {
 		"com.liferay.journal.internal.upgrade.v4_4_4." +
 			"JournalFeedTypeUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
@@ -170,5 +165,10 @@ public class JournalFeedTypeUpgradeProcessTest {
 
 	@DeleteAfterTestRun
 	private Layout _layout;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

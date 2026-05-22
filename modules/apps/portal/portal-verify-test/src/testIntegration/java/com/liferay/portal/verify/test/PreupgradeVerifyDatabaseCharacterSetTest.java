@@ -313,13 +313,12 @@ public class PreupgradeVerifyDatabaseCharacterSetTest
 	private static DataSource _dataSource;
 	private static DB _db;
 	private static SafeCloseable _safeCloseable;
-
-	@Inject
-	private ServiceComponentLocalService _serviceComponentLocalService;
-
 	private static DataSource _unsupportedCharacterSetDataSource;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

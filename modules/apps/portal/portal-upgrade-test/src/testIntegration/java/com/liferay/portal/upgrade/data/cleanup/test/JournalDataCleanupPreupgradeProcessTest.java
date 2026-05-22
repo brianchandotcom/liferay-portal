@@ -128,10 +128,10 @@ public class JournalDataCleanupPreupgradeProcessTest
 		_groupLocalService.deleteGroup(group);
 	}
 
-	private List<ClassName> _classNames;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private List<ClassName> _classNames;
 
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;

@@ -1183,10 +1183,6 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
 
-	private ServiceTracker
-		<ODataRetriever<Organization>, ODataRetriever<Organization>>
-			_serviceTracker;
-
 	@DeleteAfterTestRun
 	private ExpandoTable _expandoTable;
 
@@ -1198,5 +1194,9 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
+
+	private ServiceTracker
+		<ODataRetriever<Organization>, ODataRetriever<Organization>>
+			_serviceTracker;
 
 }

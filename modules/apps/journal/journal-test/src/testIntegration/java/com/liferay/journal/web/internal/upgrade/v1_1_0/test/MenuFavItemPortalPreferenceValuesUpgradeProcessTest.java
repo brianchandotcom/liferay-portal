@@ -179,11 +179,6 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcessTest {
 		"com.liferay.journal.web.internal.upgrade.v1_1_0." +
 			"MenuFavItemPortalPreferenceValuesUpgradeProcess";
 
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.web.internal.upgrade.registry.JournalWebUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	@DeleteAfterTestRun
 	private DDMStructure _companyGroupDDMStructure;
 
@@ -201,5 +196,10 @@ public class MenuFavItemPortalPreferenceValuesUpgradeProcessTest {
 
 	@Inject
 	private PortletPreferencesFactory _portletPreferencesFactory;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.web.internal.upgrade.registry.JournalWebUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

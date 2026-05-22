@@ -521,6 +521,9 @@ public class CTCollectionServiceTest {
 	}
 
 	@Inject
+	private static JournalFolderLocalService _journalFolderLocalService;
+
+	@Inject
 	private BackgroundTaskDisplayFactory _backgroundTaskDisplayFactory;
 
 	@Inject
@@ -529,32 +532,10 @@ public class CTCollectionServiceTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	private CTCollection _ctCollection;
+
 	@Inject
 	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Inject
-	private CTCollectionService _ctCollectionService;
-
-	@Inject
-	private CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private CTProcessService _ctProcessService;
-
-	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject
-	private static JournalFolderLocalService _journalFolderLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService
-		_resourcePermissionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	private CTCollection _ctCollection;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.change.tracking.model.CTCollection"
@@ -565,10 +546,30 @@ public class CTCollectionServiceTest {
 	@DeleteAfterTestRun
 	private final List<CTCollection> _ctCollections = new ArrayList<>();
 
+	@Inject
+	private CTCollectionService _ctCollectionService;
+
+	@Inject
+	private CTEntryLocalService _ctEntryLocalService;
+
+	@Inject
+	private CTProcessService _ctProcessService;
+
 	private Group _group;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
 	private final JournalFolderFixture _journalFolderFixture =
 		new JournalFolderFixture(_journalFolderLocalService);
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@Inject
 	private Searcher _searcher;

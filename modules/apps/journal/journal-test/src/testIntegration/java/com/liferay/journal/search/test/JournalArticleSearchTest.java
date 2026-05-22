@@ -769,11 +769,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	}
 
-	@Inject(
-		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
-	)
-	private Indexer<JournalArticle> _indexer;
-
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -790,6 +785,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject(
+		filter = "indexer.class.name=com.liferay.journal.model.JournalArticle"
+	)
+	private Indexer<JournalArticle> _indexer;
 
 	private JournalServiceConfiguration _journalServiceConfiguration;
 	private String _originalPortalPreferencesXML;

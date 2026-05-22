@@ -253,10 +253,10 @@ public class SXPBlueprintLocalServiceTest {
 		return sxpBlueprint;
 	}
 
+	private static String _originalName;
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private static String _originalName;
 
 	@Inject
 	private SXPBlueprintLocalService _sxpBlueprintLocalService;

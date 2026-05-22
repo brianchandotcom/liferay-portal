@@ -108,13 +108,13 @@ public class JournalArticleResourceTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
+	private DDMStructure _ddmStructure;
+	private DDMTemplate _ddmTemplate;
+
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private Portal _portal;
-
-	private DDMStructure _ddmStructure;
-	private DDMTemplate _ddmTemplate;
 
 }

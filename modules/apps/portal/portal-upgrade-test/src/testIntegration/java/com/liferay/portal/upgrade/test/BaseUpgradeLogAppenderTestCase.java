@@ -1461,7 +1461,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		"com.liferay.test.SampleUpgradeProcess";
 
 	private static DB _db;
-	private Appender _logContextAppender;
 	private static final Pattern _logContextTablesInitialFinalRowsPattern =
 		Pattern.compile("(\\w+_?):(\\d+|-):(\\d+|-)");
 	private static boolean _originalNewRelease;
@@ -1469,14 +1468,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private static boolean _originalUpgradeLogContextEnabled;
 	private static final Pattern _pattern = Pattern.compile(
 		"(\\w+_?)\\s+(\\d+|-)\\s+(\\d+|-)\n");
-
-	@Inject(
-		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
-		type = Inject.NoType.class
-	)
-	private Object _upgradeRecorder;
-
-	private Logger _upgradeReportLogger;
 
 	@Inject(filter = "appender.name=UpgradeLogAppender")
 	private Appender _appender;
@@ -1488,6 +1479,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private CompanyLocalService _companyLocalService;
 
 	private String _diagnosticsReportContent;
+	private Appender _logContextAppender;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
@@ -1498,7 +1490,15 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private String _reportContent;
 	private final UnsyncStringWriter _unsyncStringWriter =
 		new UnsyncStringWriter();
+
+	@Inject(
+		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",
+		type = Inject.NoType.class
+	)
+	private Object _upgradeRecorder;
+
 	private String _upgradeReportDir = "";
+	private Logger _upgradeReportLogger;
 
 	private class TestDataCleanupPreupgradeProcess
 		extends DataCleanupPreupgradeProcess {

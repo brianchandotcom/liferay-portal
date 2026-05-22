@@ -97,10 +97,10 @@ public class GroupDataCleanupPreupgradeProcessTest
 		upgradeProcess.upgrade();
 	}
 
-	private List<ClassName> _classNames;
-
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private List<ClassName> _classNames;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

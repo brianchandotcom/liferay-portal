@@ -53,9 +53,9 @@ public class RatingsEntryTableReferenceDefinitionTest
 			_assetEntry.getClassName(), _assetEntry.getClassPK());
 	}
 
+	private AssetEntry _assetEntry;
+
 	@Inject
 	private RatingsStatsLocalService _ratingsStatsLocalService;
-
-	private AssetEntry _assetEntry;
 
 }

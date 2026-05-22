@@ -295,12 +295,6 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 	private static final String _FILE_NAME = "Title.txt";
 
 	@Inject
-	private DLAppService _dlAppService;
-
-	@Inject
-	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@DeleteAfterTestRun
@@ -317,7 +311,13 @@ public class DepotEntryDLAppServiceWhenCopyingWithDLFileEntryTypeTest {
 	@DeleteAfterTestRun
 	private Group _depotGroup;
 
+	@Inject
+	private DLAppService _dlAppService;
+
 	private DLFileEntryType _dlFileEntryType;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -130,11 +130,11 @@ public class UpgradeCompanyIdTest {
 
 	private static final String _TABLE_NAME = "UpgradeCompanyIdTest";
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private final UpgradeCompanyIdCustom _upgradeProcess =
 		new UpgradeCompanyIdCustom();

@@ -197,12 +197,12 @@ public class JournalArticleDDMStructureIndexerTest {
 	@DeleteAfterTestRun
 	protected List<User> users;
 
-	@Inject
-	private MessageBus _messageBus;
-
 	@Inject(
 		filter = "ddm.structure.indexer.class.name=com.liferay.journal.model.JournalArticle"
 	)
 	private DDMStructureIndexer _ddmStructureIndexer;
+
+	@Inject
+	private MessageBus _messageBus;
 
 }

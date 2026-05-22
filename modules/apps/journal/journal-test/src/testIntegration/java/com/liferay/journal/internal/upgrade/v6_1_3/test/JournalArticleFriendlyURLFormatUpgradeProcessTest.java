@@ -174,15 +174,6 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 		"com.liferay.journal.internal.upgrade.v6_1_3." +
 			"JournalArticleFriendlyURLFormatUpgradeProcess";
 
-	@Inject
-	private JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
 	private long _classNameId;
 	private JournalArticle _journalArticle;
 
@@ -190,6 +181,15 @@ public class JournalArticleFriendlyURLFormatUpgradeProcessTest
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
+	private JournalArticleResourceLocalService
+		_journalArticleResourceLocalService;
+
+	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

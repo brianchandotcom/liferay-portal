@@ -197,13 +197,13 @@ public class ViewCountEntryLocalServiceTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
+	@DeleteAfterTestRun
+	private ViewCountEntry _viewCountEntry;
+
 	@Inject
 	private ViewCountEntryFinder _viewCountEntryFinder;
 
 	@Inject
 	private ViewCountEntryLocalService _viewCountEntryLocalService;
-
-	@DeleteAfterTestRun
-	private ViewCountEntry _viewCountEntry;
 
 }

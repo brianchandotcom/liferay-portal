@@ -80,8 +80,7 @@ public class ListTypeDefinitionStaleUserIdUpgradeProcessTest
 	}
 
 	@Inject
-	private ListTypeDefinitionLocalService
-		_listTypeDefinitionLocalService;
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.list.type.internal.upgrade.registry.ListTypeServiceUpgradeStepRegistrator"

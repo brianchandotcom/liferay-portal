@@ -848,6 +848,13 @@ public class UsersAdminPortletTest {
 	@Inject
 	private AddressLocalService _addressLocalService;
 
+	@Inject
+	private AnnouncementsDeliveryLocalService
+		_announcementsDeliveryLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private CTCollection _ctCollection;
 
 	@Inject
@@ -855,16 +862,6 @@ public class UsersAdminPortletTest {
 
 	@Inject
 	private CTEntryLocalService _ctEntryLocalService;
-
-	@Inject
-	private ListTypeLocalService _listTypeLocalService;
-
-	@Inject
-	private AnnouncementsDeliveryLocalService
-		_announcementsDeliveryLocalService;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
@@ -878,6 +875,9 @@ public class UsersAdminPortletTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private ListTypeLocalService _listTypeLocalService;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;

@@ -370,6 +370,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	private static DataSource _dataSource;
 	private static DB _db;
 	private static SafeCloseable _safeCloseable;
+
 	private DataSource _testUserDataSource;
 
 }

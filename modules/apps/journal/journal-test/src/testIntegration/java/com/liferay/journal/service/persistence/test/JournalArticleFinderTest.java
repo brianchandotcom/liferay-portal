@@ -501,9 +501,6 @@ public class JournalArticleFinderTest {
 
 	private static final long _USER_ID = 1234L;
 
-	@Inject
-	private JournalArticleFinder _journalArticleFinder;
-
 	private JournalArticle _article;
 	private final List<JournalArticle> _articles = new ArrayList<>();
 	private DDMStructure _basicWebContentDDMStructure;
@@ -514,5 +511,8 @@ public class JournalArticleFinderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JournalArticleFinder _journalArticleFinder;
 
 }

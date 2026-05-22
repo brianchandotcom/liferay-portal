@@ -137,20 +137,20 @@ public class JournalArticleSmallImageSourceUpgradeProcessTest {
 			"JournalArticleSmallImageSourceUpgradeProcess";
 
 	@Inject
-	private JournalArticleLocalService _journalArticleLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
-	)
-	private UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
 	private CounterLocalService _counterLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.journal.internal.upgrade.registry.JournalServiceUpgradeStepRegistrator))"
+	)
+	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 }

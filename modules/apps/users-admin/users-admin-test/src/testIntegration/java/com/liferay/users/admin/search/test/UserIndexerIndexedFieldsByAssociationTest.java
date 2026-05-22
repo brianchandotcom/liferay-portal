@@ -339,15 +339,23 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
 
+	@DeleteAfterTestRun
+	private List<Address> _addresses = new ArrayList<>();
+
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@DeleteAfterTestRun
+	private List<Group> _groups;
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
+	@DeleteAfterTestRun
+	private List<Organization> _organizations;
+
 	@Inject
-	private ResourcePermissionLocalService
-		_resourcePermissionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private SearchEngineHelper _searchEngineHelper;
@@ -367,20 +375,11 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	@Inject
 	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
-	@Inject
-	private UserLocalService _userLocalService;
-
-	@DeleteAfterTestRun
-	private List<Address> _addresses = new ArrayList<>();
-
-	@DeleteAfterTestRun
-	private List<Group> _groups;
-
-	@DeleteAfterTestRun
-	private List<Organization> _organizations;
-
 	@DeleteAfterTestRun
 	private List<UserGroup> _userGroups;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private List<User> _users;

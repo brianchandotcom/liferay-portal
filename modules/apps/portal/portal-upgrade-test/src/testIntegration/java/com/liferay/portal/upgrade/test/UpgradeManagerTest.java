@@ -181,10 +181,11 @@ public class UpgradeManagerTest {
 	}
 
 	private static String _originalUpgradeDatabaseAutoRun;
-	private Object _upgradeManager;
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;
+
+	private Object _upgradeManager;
 
 	@Inject(
 		filter = "component.name=com.liferay.portal.upgrade.internal.recorder.UpgradeRecorder",

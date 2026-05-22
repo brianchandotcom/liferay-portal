@@ -264,6 +264,9 @@ public class RolesAdminPortletTest {
 		}
 	}
 
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
 	private CTCollection _ctCollection;
 
 	@Inject
@@ -274,20 +277,17 @@ public class RolesAdminPortletTest {
 
 	private Group _group;
 
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	@DeleteAfterTestRun
-	private UserGroup _userGroup;
-
-	@Inject
-	private CompanyLocalService _companyLocalService;
-
 	@Inject(
 		filter = "component.name=com.liferay.roles.admin.web.internal.portlet.RolesAdminPortlet"
 	)
 	private Portlet _portlet;
 
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@DeleteAfterTestRun
+	private UserGroup _userGroup;
 
 }

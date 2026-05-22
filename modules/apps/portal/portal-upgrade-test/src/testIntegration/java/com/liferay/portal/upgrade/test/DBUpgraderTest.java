@@ -581,13 +581,12 @@ public class DBUpgraderTest {
 	private static int _currentState;
 	private static String _moduleServiceLifecyclePortalInitialized;
 	private static String _moduleServiceLifecyclePortletsInitialized;
-
-	@Inject
-	private ServiceComponentRuntime _serviceComponentRuntime;
-
 	private static boolean _upgrading;
 
 	@Inject
 	private LPKGDeployer _lpkgDeployer;
+
+	@Inject
+	private ServiceComponentRuntime _serviceComponentRuntime;
 
 }

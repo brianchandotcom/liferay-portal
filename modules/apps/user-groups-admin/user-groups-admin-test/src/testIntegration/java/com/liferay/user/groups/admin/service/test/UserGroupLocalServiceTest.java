@@ -485,15 +485,17 @@ public class UserGroupLocalServiceTest {
 	}
 
 	private int _count;
-	private Role _role;
-	private UserGroup _userGroup1;
-	private UserGroup _userGroup2;
 
 	@Inject
 	private Portal _portal;
 
+	private Role _role;
+
 	@Inject
 	private SystemEventLocalService _systemEventLocalService;
+
+	private UserGroup _userGroup1;
+	private UserGroup _userGroup2;
 
 	@Inject
 	private UserGroupLocalService _userGroupLocalService;

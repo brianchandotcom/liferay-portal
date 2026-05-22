@@ -194,6 +194,15 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 	private static Company _company;
 
 	@Inject
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
+
+	@Inject
+	private MultiVMPool _multiVMPool;
+
+	@Inject
 	private SitemapConfigurationManager _sitemapConfigurationManager;
 
 	@Inject(
@@ -202,14 +211,5 @@ public class XMLSitemapIndexEnabledConfigurationUpgradeProcessTest {
 	private UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	private String _xmlSitemapIndexEnabled;
-
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private ConfigurationProvider _configurationProvider;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 }

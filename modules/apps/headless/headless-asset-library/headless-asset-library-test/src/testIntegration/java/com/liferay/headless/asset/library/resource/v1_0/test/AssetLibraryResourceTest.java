@@ -36,6 +36,9 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.EntityField;
@@ -191,6 +194,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		_testPostAssetLibrary(new MimeTypeLimit[0]);
 		_testPostAssetLibraryWithDuplicateExternalReferenceCode();
 		_testPostAssetLibraryWithExternalReferenceCode();
+		_testPostAssetLibraryWithMissingTrashEntriesMaxAge();
 		_testPostAssetLibraryWithNoSettings();
 
 		AssetLibrary randomAssetLibrary = randomAssetLibrary();
@@ -796,6 +800,28 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Assert.assertNotNull(
 			_groupLocalService.fetchGroupByExternalReferenceCode(
 				externalReferenceCode, testCompany.getCompanyId()));
+	}
+
+	private void _testPostAssetLibraryWithMissingTrashEntriesMaxAge()
+		throws Exception {
+
+		AssetLibrary randomAssetLibrary = randomAssetLibrary();
+
+		randomAssetLibrary.setSettings(new Settings());
+		randomAssetLibrary.setType(AssetLibrary.Type.SPACE);
+
+		AssetLibrary postedAssetLibrary = assetLibraryResource.postAssetLibrary(
+			randomAssetLibrary);
+
+		Settings settings = postedAssetLibrary.getSettings();
+
+		Assert.assertEquals(
+			Integer.valueOf(
+				PrefsPropsUtil.getInteger(
+					TestPropsValues.getCompanyId(),
+					PropsKeys.TRASH_ENTRIES_MAX_AGE,
+					PropsValues.TRASH_ENTRIES_MAX_AGE)),
+			settings.getTrashEntriesMaxAge());
 	}
 
 	private void _testPostAssetLibraryWithNoSettings() throws Exception {

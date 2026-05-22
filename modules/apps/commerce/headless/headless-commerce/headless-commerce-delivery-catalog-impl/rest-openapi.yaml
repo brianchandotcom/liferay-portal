@@ -930,6 +930,10 @@ components:
                     items:
                         $ref: "#/components/schemas/SkuOption"
                     type: array
+                skuUnitOfMeasures:
+                    items:
+                        $ref: "#/components/schemas/SkuUnitOfMeasure"
+                    type: array
                 thumbnail:
                     description:
                         Resolved URL of the referenced product's thumbnail image. Read-only.

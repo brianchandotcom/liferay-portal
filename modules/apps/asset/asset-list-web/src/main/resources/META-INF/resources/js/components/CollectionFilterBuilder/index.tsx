@@ -135,7 +135,7 @@ export default function CollectionFilterBuilder({
 		() =>
 			new Map(
 				propertiesWithAssetFields
-					.flatMap((group) => group.items)
+					.flatMap((group) => group.items ?? [])
 					.map((property) => [
 						getPropertyKey(
 							property.classNameId,

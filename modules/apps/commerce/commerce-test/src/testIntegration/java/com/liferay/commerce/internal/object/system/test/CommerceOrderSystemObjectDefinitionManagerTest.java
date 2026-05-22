@@ -159,18 +159,15 @@ public class CommerceOrderSystemObjectDefinitionManagerTest {
 		Assert.assertEquals(
 			String.valueOf(commerceOrder.getCommercePaymentMethodKey()),
 			variables.get("paymentMethod"));
-
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
 				commerceOrder.getShippingAmount(),
 				new BigDecimal(
 					String.valueOf(variables.get("shippingAmount")))));
-
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
 				commerceOrder.getTaxAmount(),
 				new BigDecimal(String.valueOf(variables.get("taxAmount")))));
-
 		Assert.assertTrue(
 			BigDecimalUtil.eq(
 				commerceOrder.getTotal(),

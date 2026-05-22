@@ -30,6 +30,15 @@
 
 			<aui:input name="preferences--enableAutomaticSiteMembership--" type="checkbox" value='<%= PrefsParamUtil.getBoolean(portletPreferences, request, "enableAutomaticSiteMembership", true) %>' />
 		</liferay-frontend:fieldset>
+
+		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-62272") %>'>
+			<liferay-frontend:fieldset
+				collapsed="<%= false %>"
+				label="invitation-notification-template-external-reference-code"
+			>
+				<aui:input helpMessage="invitation-notification-template-external-reference-code-description" label="invitation-notification-template-external-reference-code" name="preferences--invitationNotificationTemplateExternalReferenceCode--" type="text" value='<%= PrefsParamUtil.getString(portletPreferences, request, "invitationNotificationTemplateExternalReferenceCode") %>' />
+			</liferay-frontend:fieldset>
+		</c:if>
 	</liferay-frontend:edit-form-body>
 
 	<liferay-frontend:edit-form-footer>

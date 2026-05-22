@@ -269,6 +269,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 					'Use the calendar to choose a Date. Current selection {0}',
 				dialog: 'Choose date',
 				openCalendar: 'Open Calendar Picker',
+				outOfRange:
+					'The entered value is outside the allowed range and was not applied',
 				selectMonth: 'Select a month',
 				selectYear: 'Select a year',
 			},
@@ -511,6 +513,25 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		const triggerElementRef = useRef<HTMLDivElement | null>(null);
 
 		/**
+		 * Polite live region used to notify assistive technology when an
+		 * input or time edit is silently rejected because it falls outside
+		 * `[min, max]`. Clearing before assigning forces the announcement to
+		 * fire even when the same message would otherwise repeat.
+		 */
+		const liveRegionRef = useRef<HTMLDivElement | null>(null);
+
+		const announceOutOfRange = useCallback(() => {
+			const node = liveRegionRef.current;
+
+			if (!node || !ariaLabels.outOfRange) {
+				return;
+			}
+
+			node.textContent = '';
+			node.textContent = ariaLabels.outOfRange;
+		}, [ariaLabels.outOfRange]);
+
+		/**
 		 * Handles the change of the current month of the Date Picker
 		 * content and takes care of updating the weeks.
 		 */
@@ -701,6 +722,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 							: isDayDisabled(referenceEnd);
 
 						if (startOutOfRange || endOutOfRange) {
+							announceOutOfRange();
+
 							return;
 						}
 
@@ -732,6 +755,7 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 				yearsCheck,
 				isDayDisabled,
 				isDateTimeOutOfRange,
+				announceOutOfRange,
 			]
 		);
 
@@ -841,6 +865,8 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 				});
 
 				if (isDateTimeOutOfRange(dateTimeSelected)) {
+					announceOutOfRange();
+
 					return;
 				}
 			}
@@ -897,6 +923,13 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 		return (
 			<FocusScope arrowKeysUpDown={false}>
 				<div className="date-picker">
+					<div
+						aria-atomic="true"
+						aria-live="polite"
+						className="sr-only"
+						ref={liveRegionRef}
+					/>
+
 					<ClayInput.Group ref={triggerElementRef}>
 						<ClayInput.GroupItem className="input-group-item-focusable">
 							<InputDate

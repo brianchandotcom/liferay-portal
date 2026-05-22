@@ -1004,5 +1004,32 @@ describe('IncrementalInteractions', () => {
 				expect(Number(hh!.split(':')[0])).toBeGreaterThanOrEqual(10);
 			});
 		});
+
+		it('announces out-of-range rejections via a polite live region', () => {
+			const {container, getByLabelText} = render(
+				<ClayDatePicker
+					ariaLabels={{
+						...ariaLabels,
+						outOfRange: 'Out of range',
+					}}
+					defaultExpanded
+					defaultMonth={new Date(2019, 3, 18)}
+					min="2019-04-10"
+					spritemap={spritemap}
+					years={{end: 2019, start: 2019}}
+				/>
+			);
+
+			const liveRegion = container.querySelector('[aria-live="polite"]');
+
+			expect(liveRegion).not.toBeNull();
+			expect(liveRegion).toHaveTextContent('');
+
+			const input: any = getByLabelText(ariaLabels.input);
+
+			fireEvent.change(input, {target: {value: '2019-04-05'}});
+
+			expect(liveRegion).toHaveTextContent('Out of range');
+		});
 	});
 });

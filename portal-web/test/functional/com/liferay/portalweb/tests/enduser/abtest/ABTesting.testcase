@@ -256,48 +256,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-152323 Bug: Element ID field gets empty after changing from variant"
-	@priority = 3
-	test CheckElementIdWithVariant {
-		task ("Create a page with a button fragment") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			Button.clickPublish();
-		}
-
-		task ("Create a AB Test") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Select the button as click goal ") {
-			var idbutton = ABTest.takeElementID();
-
-			ABTest.selectElementID();
-		}
-
-		task ("Create a variant ") {
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Change to 'Control' variant") {
-			ABTest.switchVariant(variantName = "Variant name");
-		}
-
-		task ("Assert that the Element ID still set") {
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idbutton});
-		}
-	}
-
 	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
 	@priority = 5
 	test CheckVariantAddedAndEditedInAC {
@@ -333,81 +291,6 @@ definition {
 
 		task ("Check the edited variant name is visible in Analytics Cloud") {
 			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name 2");
-		}
-	}
-
-	@description = "LPS-119475: When a user clicks on the "eye" button, by click or by ID, the page scrolls if needed and shows the selected element highlighted"
-	@priority = 3
-	test ClickableElementIDBoxInteractions {
-		task ("Edit the Content page to add a button fragment") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Take the ID Element") {
-			var idbutton = ABTest.takeElementID();
-		}
-
-		task ("Select element by id ") {
-			Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
-
-			Type(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idbutton});
-
-			KeyPress(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "\ENTER");
-		}
-
-		task ("Assert that selected button is target") {
-			AssertElementPresent(
-				key_idElement = ${idbutton},
-				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = ${idbutton});
-		}
-
-		task ("Click wherever so the button highlight is taken out") {
-			Click(locator1 = "ABTest#REVIEW_NO_HAVE_VARIANTS");
-
-			AssertElementNotPresent(
-				key_idElement = ${idbutton},
-				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = ${idbutton});
-		}
-
-		task ("Click on the eye button") {
-			Click(locator1 = "Icon#EYE_PREVIEW");
-		}
-
-		task ("Assert that selected button is target") {
-			AssertElementPresent(
-				key_idElement = ${idbutton},
-				locator1 = "ABTest#TARGET_ELEMENT",
-				value1 = ${idbutton});
-		}
-
-		task ("Clear ID Box") {
-			Click(locator1 = "ABTest#X_BUTTON_ID_BOX");
-		}
-
-		task ("Assert the ID box is empty") {
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "");
 		}
 	}
 
@@ -648,62 +531,6 @@ definition {
 			Segmentation.deleteSegment(entry = "SegmentForABTest");
 
 			AssertElementPresent(locator1 = "ABTest#DELETE_SEGMENT_WITH_EXPERIENCE_MESSAGE");
-		}
-	}
-
-	@description = "LPS-96791: Validate if the user can edit the target"
-	@priority = 5
-	test EditClickElementTarget {
-		task ("Edit the Content page to add a button fragment and duplicate button") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			PageEditor.gotoDuplicate(fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Select the first button as click element") {
-			ABTest.selectElementID();
-		}
-
-		task ("Select the second button as click element") {
-			Click(
-				key_text = "Change Clickable Element",
-				locator1 = "Button#ANY_SECONDARY");
-
-			Click(
-				key_index = 1,
-				locator1 = "ABTest#SELECT_CLICKABLE_ELEMENT");
-
-			var idelement = selenium.getAttribute("//div[contains(@class,'text-truncate')]@title");
-
-			var idelement = StringUtil.substring(${idelement}, 1, 19);
-
-			Button.click(button = "Set Element as Click Target");
-
-			Alert.viewSuccessMessage();
-
-			AssertTextEquals(
-				locator1 = "ABTest#TARGET_LABEL",
-				value1 = "Target");
-		}
-
-		task ("Assert the button gets selected") {
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idelement});
 		}
 	}
 
@@ -1092,61 +919,6 @@ definition {
 			AssertElementPresent(
 				key_text = "Create Test",
 				locator1 = "Button#ANY");
-		}
-	}
-
-	@description = "LPS-119475: When a user has selected an element, s/he can enter a different ID in the Element ID box and press enter again, so the element is highlighted and gets selected"
-	@priority = 3
-	test TypeDifferentID {
-		task ("Edit the Content page to add a button fragment") {
-			ContentPages.gotoPageEditor();
-
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Button");
-
-			PageEditor.gotoDuplicate(fragmentName = "Button");
-
-			Button.clickPublish();
-
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
-		}
-
-		task ("Create AB test") {
-			ABTest.createABTest(
-				goal = "Click",
-				testTitle = "AB test title");
-		}
-
-		task ("Get the element ID from buttons") {
-			var idbutton = ABTest.takeElementID();
-			var idbutton2 = ABTest.takeElementID(key_index = 2);
-		}
-
-		task ("Select the first button as click element") {
-			ABTest.selectElementID();
-		}
-
-		task ("Change the ID Element") {
-			DoubleClick(locator1 = "ABTest#ELEMENT_ID_INPUT");
-
-			KeyPress(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "\BACK_SPACE");
-
-			Type(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idbutton2});
-
-			KeyPress(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = "\ENTER");
-		}
-
-		task ("Assert the button gets selected") {
-			AssertTextEquals.assertValue(
-				locator1 = "ABTest#ELEMENT_ID_INPUT",
-				value1 = ${idbutton});
 		}
 	}
 

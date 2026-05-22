@@ -411,7 +411,7 @@ public class AttachmentObjectFieldBusinessType
 	private String _getAspectRatio(
 		long imageLength, long imageWidth, Locale locale) {
 
-		if ((imageLength <= 0) && (imageWidth <= 0)) {
+		if ((imageLength <= 0) || (imageWidth <= 0)) {
 			return null;
 		}
 

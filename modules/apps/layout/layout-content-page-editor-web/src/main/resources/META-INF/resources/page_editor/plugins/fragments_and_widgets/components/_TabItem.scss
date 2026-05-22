@@ -19,11 +19,10 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			}
 		}
 
-		.card {
-			aspect-ratio: 1;
-		}
+		.aspect-ratio {
+			background-color: $cadmin-light;
+			padding-bottom: 70%;
 
-		.card-item-first {
 			.card-type-asset-icon {
 				width: 32px;
 			}
@@ -31,14 +30,9 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 			.lexicon-icon {
 				color: $cadmin-secondary;
 			}
-
-			background-color: $cadmin-light;
-			height: 70%;
 		}
 
 		.card-body {
-			height: 30%;
-
 			.card-title {
 				font-size: 12px;
 				width: 100%;
@@ -53,7 +47,19 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 		&.disabled {
 			cursor: default;
 
-			.image-card .card-item-first {
+			.card-type-asset {
+				&:hover {
+					transform: none;
+
+					.card {
+						border-color: $cadmin-card-border-color;
+						outline-color: transparent;
+						box-shadow: none;
+					}
+				}
+			}
+
+			.image-card .aspect-ratio {
 				opacity: 0.5;
 			}
 

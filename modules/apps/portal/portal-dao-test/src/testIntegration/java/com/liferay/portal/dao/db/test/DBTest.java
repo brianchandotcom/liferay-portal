@@ -832,7 +832,8 @@ public class DBTest {
 			SafeCloseable safeCloseable2 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_QUERY_MONITOR_LONG_RUNNING_THRESHOLD", 0L);
-			Connection lockingConnection = DataAccess.getConnection()) {
+			Connection lockingConnection = DataAccess.getConnection();
+			Connection pollingConnection = DataAccess.getConnection()) {
 
 			boolean autoCommit = lockingConnection.getAutoCommit();
 
@@ -846,10 +847,14 @@ public class DBTest {
 
 				futureTask = new FutureTask<>(
 					() -> {
-						db.runSQL(
-							connection,
-							"update " + TABLE_NAME_1 +
-								" set nilColumn = 'waiting' where id = 2");
+						try (Connection backgroundConnection =
+								DataAccess.getConnection()) {
+
+							db.runSQL(
+								backgroundConnection,
+								"update " + TABLE_NAME_1 +
+									" set nilColumn = 'waiting' where id = 2");
+						}
 
 						return null;
 					});
@@ -865,8 +870,12 @@ public class DBTest {
 				boolean foundInLocked = false;
 
 				while (System.currentTimeMillis() < endTime) {
+					if (futureTask.isDone()) {
+						futureTask.get();
+					}
+
 					for (DB.QueryInfo lockedQueryInfo :
-							db.getLockedQueryInfos(lockingConnection)) {
+							db.getLockedQueryInfos(pollingConnection)) {
 
 						String query = lockedQueryInfo.getQuery();
 
@@ -887,7 +896,7 @@ public class DBTest {
 				Assert.assertTrue(foundInLocked);
 
 				for (DB.QueryInfo queryInfo :
-						db.getLongRunningQueryInfos(lockingConnection)) {
+						db.getLongRunningQueryInfos(pollingConnection)) {
 
 					String query = queryInfo.getQuery();
 

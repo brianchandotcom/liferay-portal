@@ -447,7 +447,7 @@ Aggregated periodic report over UsageEvents.
 | `description` | string | |
 | `licenseKey` | longtext | The actual license XML/key payload |
 | `startDate` | datetime | |
-| `expirationDate` | datetime | |
+| `customExpirationDate` | datetime | |
 | `additionalInfo` | longtext | |
 | `complimentary` | boolean | |
 | `active` | boolean | |

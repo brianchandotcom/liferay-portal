@@ -14,6 +14,7 @@
 			"accountEntryRestricted": true,
 			"accountEntryRestrictedObjectFieldName": "r_accountEntryToAccountNote_accountEntryId",
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_ACCOUNT_NOTE",
 			"enableCategorization": true,
 			"enableComments": true,
 			"enableObjectEntryHistory": false,
@@ -478,6 +479,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_COMMON_LICENSE_KEY",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -786,6 +788,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_CONTRACT",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableObjectEntryHistory": true,
@@ -1503,6 +1506,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_ENTITLEMENT",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -1651,6 +1655,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_ENTITLEMENT_DEFINITION",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -1952,6 +1957,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_LICENSE_KEY",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -2117,7 +2123,7 @@
 					"label": {
 						"en_US": "Expiration Date"
 					},
-					"name": "expirationDate",
+					"name": "customExpirationDate",
 					"objectFieldSettings": [
 						{
 							"name": "timeStorage",
@@ -2988,6 +2994,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_PROPERTY",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -3998,6 +4005,7 @@
 		},
 		{
 			"active": true,
+			"className": "com.liferay.object.model.ObjectDefinition#C_SUBSCRIPTION_ENTRY",
 			"enableCategorization": false,
 			"enableComments": false,
 			"enableObjectEntryHistory": false,
@@ -4053,7 +4061,7 @@
 					"label": {
 						"en_US": "User ID"
 					},
-					"name": "userId",
+					"name": "customUserId",
 					"objectFieldSettings": [
 					],
 					"required": true,

@@ -1,371 +1,360 @@
 <html>
-    <head>
-        <style>
-            a:active, a:link, a:visited {
-                color: #0b5fff;
-                text-decoration: none;
-            }
+	<head>
+		<style>
+			a:active, a:link, a:visited {
+				color: #0b5fff;
+				text-decoration: none;
+			}
 
-            .activation-key {
-                border-radius: 4px;
-                margin-bottom: 16px;
-                margin-top: 16px;
-                padding: 0px;
-            }
+			.activation-key {
+				border-radius: 4px;
+				margin-bottom: 16px;
+				margin-top: 16px;
+				padding: 0px;
+			}
 
-            .activation-key-details-header {
-                color: #272833;
-                font-size: 24px;
-                font-weight: 700;
-                line-height: 117%;
-                margin-bottom: 16px;
-            }
+			.activation-key-details-header {
+				color: #272833;
+				font-size: 24px;
+				font-weight: 700;
+				line-height: 117%;
+				margin-bottom: 16px;
+			}
 
-            .body {
-                display: block;
-                font-family: 'Source Sans Pro', sans-serif;
-                font-style: normal;
-                padding: 0px;
-                position: relative;
-                width: 598px;
-            }
+			.body {
+				display: block;
+				font-family: 'Source Sans Pro', sans-serif;
+				font-style: normal;
+				padding: 0px;
+				position: relative;
+				width: 598px;
+			}
 
-            .button {
-                align-items: center;
-                background: #0b5fff;
-                border-radius: 8px;
-                height: 40px;
-                justify-content: center;
-                margin-bottom: 8px;
-                padding: 16px 16px;
-            }
+			.button {
+				align-items: center;
+				background: #0b5fff;
+				border-radius: 8px;
+				height: 40px;
+				justify-content: center;
+				margin-bottom: 8px;
+				padding: 16px 16px;
+			}
 
-            .button-text {
-                color: #fff;
-                font-size: 16px;
-                font-weight: 600;
-                line-height: 150%;
-            }
+			.button-text {
+				color: #fff;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 150%;
+			}
 
-            .contact-first-name {
-                color: #0b5fff;
-            }
+			.user-first-name {
+				color: #0b5fff;
+			}
 
-            .copy-paste-message {
-                color: #6b6c7e;
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 150%;
-                padding: 0px;
-            }
+			.copy-paste-message {
+				color: #6b6c7e;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 150%;
+				padding: 0px;
+			}
 
-            .copy-paste-message a:active,
-            .copy-paste-message a:link,
-            .copy-paste-message a:visited {
-                color: #6b6c7e;
-                text-decoration: underline;
-            }
+			.copy-paste-message a:active,
+			.copy-paste-message a:link,
+			.copy-paste-message a:visited {
+				color: #6b6c7e;
+				text-decoration: underline;
+			}
 
-            .divider {
-                background: #6b6c7e;
-                height: 1px;
-                margin-bottom: 16px;
-                margin-top: 16px;
-                width: 598px;
-            }
+			.divider {
+				background: #6b6c7e;
+				height: 1px;
+				margin-bottom: 16px;
+				margin-top: 16px;
+				width: 598px;
+			}
 
-            .end-message {
-                color: #000000;
-                font-size: 24px;
-                font-weight: 700;
-                line-height: 125%;
-            }
+			.end-message {
+				color: #000000;
+				font-size: 24px;
+				font-weight: 700;
+				line-height: 125%;
+			}
 
-            .end-message-box {
-                background: #f1f2f5;
-                border-radius: 4px;
-                margin-bottom: 8px;
-                margin-top: 8px;
-                padding: 40px 48px;
-                text-align: center;
-            }
+			.end-message-box {
+				background: #f1f2f5;
+				border-radius: 4px;
+				margin-bottom: 8px;
+				margin-top: 8px;
+				padding: 40px 48px;
+				text-align: center;
+			}
 
-            .environment-details {
-                border-radius: 4px;
-                display: block;
-                margin-bottom: 8px;
-                padding: 0px;
-            }
+			.environment-details {
+				border-radius: 4px;
+				display: block;
+				margin-bottom: 8px;
+				padding: 0px;
+			}
 
-            .environment-header {
-                color: #272833;
-                font-size: 20px;
-                font-weight: 600;
-                line-height: 140%;
-            }
+			.environment-header {
+				color: #272833;
+				font-size: 20px;
+				font-weight: 600;
+				line-height: 140%;
+			}
 
-            .environment-key {
-                color: #272833;
-                font-size: 16px;
-                font-weight: 600;
-                line-height: 150%;
-            }
+			.environment-key {
+				color: #272833;
+				font-size: 16px;
+				font-weight: 600;
+				line-height: 150%;
+			}
 
-            .environment-value {
-                color: #272833;
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 150%;
-            }
+			.environment-value {
+				color: #272833;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 150%;
+			}
 
-            .expired-key-message {
-                color: #272833;
-                font-size: 16px;
-                font-weight: 400;
-                line-height: 150%;
-                margin-bottom: 32px;
-                padding: 0px;
-            }
+			.expired-key-message {
+				color: #272833;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 150%;
+				margin-bottom: 32px;
+				padding: 0px;
+			}
 
-            .footer {
-                text-align: center;
-                padding: 0px 48px;
-                margin-top: 8px;
-            }
+			.footer {
+				text-align: center;
+				padding: 0px 48px;
+				margin-top: 8px;
+			}
 
-            .footer-message {
-                color: #6b6c7e;
-                font-size: 14px;
-                font-weight: 400;
-                line-height: 150%;
-                margin-bottom: 16px;
-                margin-top: 16px;
-            }
+			.footer-message {
+				color: #6b6c7e;
+				font-size: 14px;
+				font-weight: 400;
+				line-height: 150%;
+				margin-bottom: 16px;
+				margin-top: 16px;
+			}
 
-            .footer-navigation {
-                color: #6b6c7e;
-                display: inline-block;
-                font-size: 12px;
-                font-weight: 400;
-                line-height: 150%;
-                margin-bottom: 32px;
-                margin-top: 32px;
-                padding: 3px;
-                text-align: center;
-            }
+			.footer-navigation {
+				color: #6b6c7e;
+				display: inline-block;
+				font-size: 12px;
+				font-weight: 400;
+				line-height: 150%;
+				margin-bottom: 32px;
+				margin-top: 32px;
+				padding: 3px;
+				text-align: center;
+			}
 
-            .greeting-message {
-                border-radius: 4px;
-                color: #272833;
-                font-size: 32px;
-                font-weight: 700;
-                line-height: 112%;
-                margin-bottom: 16px;
-                padding: 0px;
-            }
+			.greeting-message {
+				border-radius: 4px;
+				color: #272833;
+				font-size: 32px;
+				font-weight: 700;
+				line-height: 112%;
+				margin-bottom: 16px;
+				padding: 0px;
+			}
 
-            .header {
-                margin-bottom: 16px;
-                text-align: center;
-                width: 598px;
-            }
+			.header {
+				margin-bottom: 16px;
+				text-align: center;
+				width: 598px;
+			}
 
-            .info-message-box {
-                background: #eef2fa;
-                border-radius: 10px;
-                color: #272833;
-                font-weight: 400;
-                font-size: 14px;
-                isolation: isolate;
-                line-height: 150%;
-                margin-bottom: 32px;
-                margin-top: 32px;
-                padding: 40px;
-            }
+			.info-message-box {
+				background: #eef2fa;
+				border-radius: 10px;
+				color: #272833;
+				font-weight: 400;
+				font-size: 14px;
+				isolation: isolate;
+				line-height: 150%;
+				margin-bottom: 32px;
+				margin-top: 32px;
+				padding: 40px;
+			}
 
-            .info-message-box a:active,
-            .info-message-box a:link,
-            .info-message-box a:visited {
-                text-decoration-line: underline;
-            }
+			.info-message-box a:active,
+			.info-message-box a:link,
+			.info-message-box a:visited {
+				text-decoration-line: underline;
+			}
 
-            tr {
-                background: #fbfcfe;
-                margin-bottom: 8px;
-                text-align: left;
-            }
+			tr {
+				background: #fbfcfe;
+				margin-bottom: 8px;
+				text-align: left;
+			}
 
-            td {
-                padding: 16px 0px;
-            }
-        </style>
-    </head>
-    <body>
-        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i&display=swap" rel="stylesheet">
+			td {
+				padding: 16px 0px;
+			}
+		</style>
+	</head>
 
-        <div class="body">
-            <div class="header">
-                <img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
-                     alt="Liferay"
-                     flex="none"
-                     height="65px"
-                     width="235px"
-                />
-            </div>
+	<body>
+		<div class="body">
+			<div class="header">
+			<img alt="Liferay" flex="none" height="65px" src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital" width="235px" />
+			</div>
 
-            <div class="divider"></div>
+			<div class="divider"></div>
 
-            <div class="activation-key">
-                <div class="greeting-message">
-                    Olá <span class="contact-first-name">[$CONTACT_FIRST_NAME$]</span>!
-                </div>
+			<div class="activation-key">
+				<div class="greeting-message">
+					Olá <span class="user-first-name">[%USER_FIRST_NAME%]</span>!
+				</div>
 
-                <div class="expired-key-message">
-                    [$LICENSE_KEY_EXPIRATION_MESSAGE$]
-                </div>
+				<div class="expired-key-message">
+					[%LICENSE_KEY_EXPIRATION_MESSAGE%]
+				</div>
 
-                <div class="activation-key-details">
-                    <div class="activation-key-details-header">
-                        Detalhes da chave de ativação
-                    </div>
+				<div class="activation-key-details">
+					<div class="activation-key-details-header">
+						Detalhes da chave de ativação
+					</div>
 
-                    <div class="environment-details">
-                        <div class="environment-header">
-                            Ambiente
-                        </div>
+					<div class="environment-details">
+						<div class="environment-header">
+							Ambiente
+						</div>
 
-                        <div class="environment-table">
-                            <table width="100%">
-                               <colgroup>
-                                   <col span="1" style="width: 40%; text-align: left;">
-                                   <col span="1" style="width: 60%; text-align: center;">
-                                </colgroup>
+						<div class="environment-table">
+							<table width="100%">
+							   <colgroup>
+								<col span="1" style="width: 40%; text-align: left;" />
+								<col span="1" style="width: 60%; text-align: center;" />
+								</colgroup>
 
-                                <tr>
-                                    <td class="environment-key">
-                                        Produto
-                                    </td>
-                                    <td class="environment-value">
-                                        [$LICENSE_KEY_PRODUCT_GROUP$]
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="environment-key">
-                                        Versão
-                                    </td>
-                                    <td class="environment-value">
-                                        [$LICENSE_KEY_PRODUCT_VERSION$]
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="environment-key">
-                                        Tipo
-                                    </td>
-                                    <td class="environment-value">
-                                        [$LICENSE_KEY_LICENSE_ENTRY_NAME$]
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="environment-key">
-                                        Tamanho da instância
-                                    </td>
-                                    <td class="environment-value">
-                                        [$LICENSE_KEY_SIZING$]
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+								<tr>
+									<td class="environment-key">
+										Produto
+									</td>
+									<td class="environment-value">
+										[%LICENSE_KEY_PRODUCT_GROUP%]
+									</td>
+								</tr>
+								<tr>
+									<td class="environment-key">
+										Versão
+									</td>
+									<td class="environment-value">
+										[%LICENSE_KEY_PRODUCT_VERSION%]
+									</td>
+								</tr>
+								<tr>
+									<td class="environment-key">
+										Tipo
+									</td>
+									<td class="environment-value">
+										[%LICENSE_KEY_LICENSE_NAME%]
+									</td>
+								</tr>
+								<tr>
+									<td class="environment-key">
+										Tamanho da instância
+									</td>
+									<td class="environment-value">
+										[%LICENSE_KEY_SIZING%]
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
 
-                <br />
+				<br />
 
-                <div class="button-message">
-                    <a class="button" href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]/activation/[$LICENSE_KEY_PRODUCT_GROUP$]">
-                        <span class="button-text">Ir para Ativação do produto →</span>
-                    </a>
-                </div>
+				<div class="button-message">
+					<a class="button" href="[%ACCOUNT_URL%]">
+						<span class="button-text">Ir para Ativação do produto →</span>
+					</a>
+				</div>
 
-                <div class="copy-paste-message">
-                    <p>
-                        OU copie e cole o link abaixo em seu navegador
-                    </p>
+				<div class="copy-paste-message">
+					<p>
+						OU copie e cole o link abaixo em seu navegador
+					</p>
 
-                    <p>
-                        <a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]/activation/[$LICENSE_KEY_PRODUCT_GROUP$]">
-                            https://support.liferay.com/project/#/[$ACCOUNT_KEY$]/activation/[$LICENSE_KEY_PRODUCT_GROUP$]
-                        </a>
-                    </p>
-                </div>
-            </div>
+					<p>
+						<a href="[%ACCOUNT_URL%]">
+							[%ACCOUNT_URL%]
+						</a>
+					</p>
+				</div>
+			</div>
 
-            <div class="end-message-box">
-                <div class="end-message">
-                    Estamos ansiosos para ver as experiências que você criará com a Liferay.
-                </div>
+			<div class="end-message-box">
+				<div class="end-message">
+					Estamos ansiosos para ver as experiências que você criará com a Liferay.
+				</div>
 
-                <br />
+				<br />
 
-                <div class="button-message">
-                    <a class="button" href="https://learn.liferay.com">
-                        <span class="button-text">Saiba mais →</span>
-                    </a>
-                </div>
+				<div class="button-message">
+					<a class="button" href="https://learn.liferay.com">
+						<span class="button-text">Saiba mais →</span>
+					</a>
+				</div>
 
-                <div class="copy-paste-message">
-                    <p>
-                        OU copie e cole o link abaixo em seu navegador
-                    </p>
+				<div class="copy-paste-message">
+					<p>
+						OU copie e cole o link abaixo em seu navegador
+					</p>
 
-                    <p>
-                        <a href="https://learn.liferay.com">
-                            https://learn.liferay.com
-                        </a>
-                    </p>
-                </div>
-            </div>
+					<p>
+						<a href="https://learn.liferay.com">
+							https://learn.liferay.com
+						</a>
+					</p>
+				</div>
+			</div>
 
-            <div class="info-message-box">
-                <p>
-                    Você recebeu este e-mail porque se inscreveu para receber notificações de expiração desta chave de ativação. Para modificar essas notificações, visite: Portal do cliente > Ativação do produto.
-                </p>
+			<div class="info-message-box">
+				<p>
+					Você recebeu este e-mail porque se inscreveu para receber notificações de expiração desta chave de ativação. Para modificar essas notificações, visite: Portal do cliente > Ativação do produto.
+				</p>
 
-                <a href="https://support.liferay.com/">Ir para Projetos</a><br />
-                <a href="https://support.liferay.com/project/#/[$ACCOUNT_KEY$]/activation/[$LICENSE_KEY_PRODUCT_GROUP$]">Ir para Chaves de Ativação do Produto</a>
+				<a href="https://support.liferay.com/">Ir para Projetos</a><br />
+				<a href="[%ACCOUNT_URL%]">Ir para Chaves de Ativação do Produto</a>
 
-                <p>
-                    Se você substituiu recentemente a chave de ativação desta instância, pode desconsiderar este e-mail ou desativar esses avisos de expiração, conforme descrito acima.
-                </p>
-            </div>
+				<p>
+					Se você substituiu recentemente a chave de ativação desta instância, pode desconsiderar este e-mail ou desativar esses avisos de expiração, conforme descrito acima.
+				</p>
+			</div>
 
-            <div class="divider"></div>
+			<div class="divider"></div>
 
-            <div class="footer">
-                <div class="footer-message">
-                    Este email foi enviado pela <a href="https://liferay.com">Liferay, Inc.</a>
-                </div>
+			<div class="footer">
+				<div class="footer-message">
+					Este email foi enviado pela <a href="https://liferay.com">Liferay, Inc.</a>
+				</div>
 
-                <img src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital"
-                     alt="Liferay"
-                     flex="none"
-                     height="57px"
-                     width="206px"
-                />
+			<img alt="Liferay" flex="none" height="57px" src="https://support.liferay.com/documents/d/customer-portal/liferay-logo_full-color-digital" width="206px" />
 
-                <div class="footer-message">
-                    Copyright © [$YEAR$] Liferay, Inc.<br />
-                    1400 Montefino Ave<br />
-                    Diamond Bar, CA 91765<br />
-                </div>
+				<div class="footer-message">
+					Copyright © [%YEAR%] Liferay, Inc.<br />
+					1400 Montefino Ave<br />
+					Diamond Bar, CA 91765<br />
+				</div>
 
-                <div class="footer-navigation">
-                    <a href="mailto:customer-service@liferay.com">Contatar Suporte</a> |
-                    <a href="https://learn.liferay.com/">Documentação</a> |
-                    <a href="https://support.liferay.com/">Portal do Cliente</a> |
-                    <a href="https://www.subscribepage.com/liferay">Anúncios</a> |
-                    <a href="https://status.liferay.cloud/">Status de disponibilidade</a>
-                </div>
-            </div>
-        </div>
-    </body>
+				<div class="footer-navigation">
+					<a href="mailto:customer-service@liferay.com">Contatar Suporte</a> |
+					<a href="https://learn.liferay.com/">Documentação</a> |
+					<a href="https://support.liferay.com/">Portal do Cliente</a> |
+					<a href="https://www.subscribepage.com/liferay">Anúncios</a> |
+					<a href="https://status.liferay.cloud/">Status de disponibilidade</a>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>

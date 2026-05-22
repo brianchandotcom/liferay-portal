@@ -4,6 +4,7 @@ apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
     annotations:
+        argocd.argoproj.io/sync-wave: "-25"
         {{- $search.annotations | toYaml | nindent 8 }}
     name: {{ include "elasticsearch.name" . }}
     namespace: {{ .Release.Namespace }}

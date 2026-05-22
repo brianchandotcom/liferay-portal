@@ -147,6 +147,7 @@ public class KaleoDesignerDisplayContextTest {
 		_isReadOnly(WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, true);
 		_isReadOnly(WorkflowDefinitionConstants.NAME_MAKE_LONGER, true);
 		_isReadOnly(WorkflowDefinitionConstants.NAME_MAKE_SHORTER, true);
+		_isReadOnly(WorkflowDefinitionConstants.NAME_PAGE_BUILDER, true);
 		_isReadOnly(WorkflowDefinitionConstants.NAME_SINGLE_APPROVER, false);
 	}
 

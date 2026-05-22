@@ -532,8 +532,8 @@ class CriteriaRow extends React.Component<
 
 						{stepNumber !== undefined && (
 							<ClaySticker
-								className='criteria-step-number mr-2'
-								displayType='outline'
+								className='mr-4'
+								displayType='secondary'
 								shape='circle'
 							>
 								{stepNumber}

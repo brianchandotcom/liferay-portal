@@ -104,11 +104,11 @@ function main() {
 			handleNav(panels[activePanel.index].key);
 		}
 		else {
-			handleNav(panels[0].key);
+			handleNav(panels[0]?.key);
 		}
 	}
 
-	accountSelectorDropdownNextButton.addEventListener('click', () => {
+	accountSelectorDropdownNextButton?.addEventListener('click', () => {
 		if (layoutMode === 'edit') {
 			const step = Number(accountSelectorDropdownHeader.dataset.step);
 
@@ -129,7 +129,7 @@ function main() {
 		}
 	});
 
-	accountSelectorDropdownPrevButton.addEventListener('click', () => {
+	accountSelectorDropdownPrevButton?.addEventListener('click', () => {
 		if (layoutMode === 'edit') {
 			const step = Number(accountSelectorDropdownHeader.dataset.step);
 

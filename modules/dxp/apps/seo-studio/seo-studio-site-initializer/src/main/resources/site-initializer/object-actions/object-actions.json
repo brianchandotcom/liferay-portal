@@ -1,0 +1,20 @@
+{
+	"object-actions": [
+		{
+			"active": true,
+			"errorMessage": {
+				"en_US": "PageSpeed scan failed. Please try again later or contact support."
+			},
+			"externalReferenceCode": "L_SEO_STUDIO_SCAN_PAGE_SPEED",
+			"label": {
+				"en_US": "PageSpeed Scan"
+			},
+			"name": "pageSpeedScan",
+			"objectActionExecutorKey": "function#liferay-seostudio-pagespeed-object-action-scan",
+			"objectActionTriggerKey": "onAfterAdd",
+			"parameters": {
+			}
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:SEOStudioScan$]"
+}

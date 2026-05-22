@@ -7,12 +7,30 @@ package com.liferay.one.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.problem.Problem;
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
+import com.liferay.one.constants.ClassNames;
+import com.liferay.one.constants.ProductGroupConstants;
+import com.liferay.one.model.LicenseKey;
 import com.liferay.one.model.SubscriptionEntry;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.time.Year;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +39,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -48,11 +70,11 @@ public class SubscriptionEntryService extends BaseService {
 		).put(
 			"classPK", classPK
 		).put(
-			"userId", userId
+			"customUserId", userId
 		);
 
 		String response = post(
-			getAuthorization(), subscriptionEntryJSONObject.toString(),
+			_getAuthorization(), subscriptionEntryJSONObject.toString(),
 			UriComponentsBuilder.fromPath(
 				"/o/c/subscriptionentries"
 			).build(
@@ -73,7 +95,7 @@ public class SubscriptionEntryService extends BaseService {
 		}
 
 		delete(
-			getAuthorization(), "",
+			_getAuthorization(), "",
 			UriComponentsBuilder.fromPath(
 				"/o/c/subscriptionentries/" +
 					subscriptionEntry.getSubscriptionEntryId()
@@ -88,7 +110,7 @@ public class SubscriptionEntryService extends BaseService {
 		List<SubscriptionEntry> subscriptionEntries = getSubscriptionEntries(
 			StringBundler.concat(
 				"(className eq '", className, "') and (classPK eq ", classPK,
-				") and (userId eq ", userId, ")"));
+				") and (customUserId eq ", userId, ")"));
 
 		if (subscriptionEntries.isEmpty()) {
 			return null;
@@ -108,7 +130,7 @@ public class SubscriptionEntryService extends BaseService {
 		}
 
 		String response = get(
-			getAuthorization(),
+			_getAuthorization(),
 			uriComponentsBuilder.build(
 			).toUri());
 
@@ -138,13 +160,149 @@ public class SubscriptionEntryService extends BaseService {
 	}
 
 	@Scheduled(cron = "0 0 0 * * *")
-	protected void doReceive(Message message) throws Exception {
-		_sendActivationKeyEmails(30);
-		_sendActivationKeyEmails(14);
-		_sendActivationKeyEmails(0);
+	protected void scheduledSendExpiringLicenseKeyEmails() throws Exception {
+		_sendExpiringLicenseKeyEmails(30);
+		_sendExpiringLicenseKeyEmails(14);
+		_sendExpiringLicenseKeyEmails(0);
 	}
 
-	private void _sendActivationKeyEmails(int licenseKeyExpirationDateOffset)
+	private Account _fetchAccount(long accountEntryId) throws Exception {
+		AccountResource accountResource = AccountResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-one-etc-spring-boot-oahs")
+		).build();
+
+		try {
+			return accountResource.getAccount(accountEntryId);
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			if ((problem != null) &&
+				(GetterUtil.getInteger(problem.getStatus()) ==
+					HttpStatus.NOT_FOUND.value())) {
+
+				return null;
+			}
+
+			throw problemException;
+		}
+	}
+
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-one-etc-spring-boot-oaua");
+	}
+
+	private String _getExpirationMessage(
+		String languageId, int days, String expirationDate,
+		String productGroup) {
+
+		if (days == 0) {
+			return _messageSource.getMessage(
+				"expiration-message-today",
+				new Object[] {expirationDate, productGroup},
+				_toLocale(languageId));
+		}
+
+		return _messageSource.getMessage(
+			"expiration-message-future",
+			new Object[] {expirationDate, productGroup}, _toLocale(languageId));
+	}
+
+	private String _getExpirationStatus(String languageId, int days) {
+		if (days == 0) {
+			return _messageSource.getMessage(
+				"expiration-status-today", null, _toLocale(languageId));
+		}
+
+		return _messageSource.getMessage(
+			"expiration-status-future", new Object[] {days},
+			_toLocale(languageId));
+	}
+
+	private String _getLanguageId(UserAccount userAccount) {
+		String languageId = userAccount.getLanguageId();
+
+		if ((languageId != null) &&
+			_supportedLanguageIds.contains(languageId)) {
+
+			return languageId;
+		}
+
+		return _DEFAULT_LANGUAGE_ID;
+	}
+
+	private UserAccount _getUserAccount(long userId) throws Exception {
+		UserAccountResource userAccountResource = UserAccountResource.builder(
+		).endpoint(
+			lxcDXPMainDomain, lxcDXPServerProtocol
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-one-etc-spring-boot-oahs")
+		).build();
+
+		return userAccountResource.getUserAccount(userId);
+	}
+
+	private void _sendExpiringLicenseKeyEmail(
+			LicenseKey licenseKey, long userId, int days)
+		throws Exception {
+
+		UserAccount userAccount = _getUserAccount(userId);
+
+		if ((userAccount == null) ||
+			Validator.isNull(userAccount.getEmailAddress())) {
+
+			return;
+		}
+
+		String languageId = _getLanguageId(userAccount);
+
+		// TODO "ACCOUNT_URL"
+
+		Map<String, String> placeholders = HashMapBuilder.put(
+			"EXPIRATION_STATUS", _getExpirationStatus(languageId, days)
+		).put(
+			"LICENSE_KEY_EXPIRATION_MESSAGE",
+			_getExpirationMessage(
+				languageId, days, licenseKey.getCustomExpirationDate(),
+				licenseKey.getProductName())
+		).put(
+			"LICENSE_KEY_LICENSE_NAME", licenseKey.getLicenseName()
+		).put(
+			"LICENSE_KEY_PRODUCT_GROUP",
+			ProductGroupConstants.getProductGroup(licenseKey.getProductName())
+		).put(
+			"LICENSE_KEY_PRODUCT_VERSION", licenseKey.getProductVersion()
+		).put(
+			"LICENSE_KEY_SIZING", licenseKey.getSizing()
+		).put(
+			"USER_FIRST_NAME", userAccount.getGivenName()
+		).put(
+			"YEAR",
+			Year.now(
+			).toString()
+		).build();
+
+		JSONObject processedTemplateJSONObject =
+			_notificationTemplateService.getAndProcessTemplateJSONObject(
+				"LICENSE-KEY-EXPIRATION-WARNING", languageId, placeholders);
+
+		_notificationQueueEntryService.addNotificationQueueEntry(
+			"customer-service@liferay.com", "Liferay Support",
+			userAccount.getEmailAddress(),
+			processedTemplateJSONObject.getString("subject"),
+			processedTemplateJSONObject.getString("body"));
+	}
+
+	private void _sendExpiringLicenseKeyEmails(
+			int licenseKeyExpirationDateOffset)
 		throws Exception {
 
 		Calendar expirationDateGTCalendar = Calendar.getInstance();
@@ -162,229 +320,61 @@ public class SubscriptionEntryService extends BaseService {
 		startDateLTCalendar.add(
 			Calendar.DATE, licenseKeyExpirationDateOffset - 60);
 
-		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
-
-		params.put("active", true);
-
-		List<LicenseKey> licenseKeys = _licenseKeyLocalService.search(
-			null, null, null, null, null, null, null, null, null, null,
-			startDateLTCalendar.getTime(), new long[0], new String[0], null,
-			null, new String[0], new long[0], null, null, null, null, null,
-			null, null, expirationDateGTCalendar.getTime(),
-			expirationDateLTCalendar.getTime(), params, true, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		List<LicenseKey> licenseKeys = _licenseKeyService.getLicenseKeys(
+			StringBundler.concat(
+				"(active eq true) and (customExpirationDate gt ",
+				expirationDateGTCalendar.toInstant(),
+				") and (customExpirationDate lt ",
+				expirationDateLTCalendar.toInstant(), ") and (startDate lt ",
+				startDateLTCalendar.toInstant(), ")"));
 
 		for (LicenseKey licenseKey : licenseKeys) {
-			if (Validator.isNull(licenseKey.getAccountKey())) {
-				continue;
-			}
-
-			Account account = _accountWebService.fetchAccount(
-				licenseKey.getAccountKey());
+			Account account = _fetchAccount(licenseKey.getAccountEntryId());
 
 			if (account == null) {
 				continue;
 			}
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				LicenseKey.class);
-
 			List<SubscriptionEntry> subscriptionEntries =
-				_subscriptionEntryLocalService.getSubscriptionEntries(
-					classNameId, licenseKey.getLicenseKeyId());
+				getSubscriptionEntries(
+					StringBundler.concat(
+						"(className eq '", ClassNames.LICENSE_KEY,
+						"') and (classPK eq ", licenseKey.getLicenseKeyId(),
+						")"));
 
 			for (SubscriptionEntry subscriptionEntry : subscriptionEntries) {
-				Contact contact = _contactWebService.fetchContactByUuid(
-					subscriptionEntry.getContactUuid());
-
-				_customerPortalRelease.sendContactAccountActivationKeyEmail(
-					contact, account, licenseKey);
+				_sendExpiringLicenseKeyEmail(
+					licenseKey, subscriptionEntry.getCustomUserId(),
+					licenseKeyExpirationDateOffset);
 			}
 		}
 	}
 
-	protected String getAuthorization() {
-		return _liferayOAuth2AccessTokenManager.getAuthorization(
-			"liferay-one-etc-spring-boot-oaua");
+	private Locale _toLocale(String languageId) {
+		return Locale.forLanguageTag(StringUtil.replace(languageId, '_', '-'));
 	}
 
-	public void sendContactAccountActivationKeyEmail(
-		Contact contact, Account account, LicenseKey licenseKey) {
+	private static final String _DEFAULT_LANGUAGE_ID = "en_US";
 
-		if ((contact == null) ||
-			!GetterUtil.getBoolean(contact.getEmailAddressVerified())) {
-
-			return;
-		}
-
-		String subscriptionState = _accountReader.getSubscriptionState(account);
-
-		if (!subscriptionState.equals(ProductPurchaseConstants.STATE_ACTIVE)) {
-			return;
-		}
-
-		if (!licenseKey.isActive()) {
-			return;
-		}
-
-		_sendContactAccountActivationKeyEmail(contact, licenseKey);
-	}
-
-	private String _getActivationKeyExpirationMessage(
-		long days, String expirationDate, String productGroup,
-		ResourceBundle resourceBundle) {
-
-		if (days == 0) {
-			return LanguageUtil.format(
-				resourceBundle,
-				"one-of-your-projects-activation-keys-expires-today-x",
-				new Object[] {expirationDate, productGroup}, false);
-		}
-
-		return LanguageUtil.format(
-			resourceBundle,
-			"one-of-your-projects-activation-keys-will-expire-on-x",
-			new Object[] {expirationDate, productGroup}, false);
-	}
-
-	private String _getActivationKeySubject(
-		long days, String productGroup, ResourceBundle resourceBundle) {
-
-		if (days == 0) {
-			return LanguageUtil.format(
-				resourceBundle, "liferay-x-activation-key-expires-today",
-				productGroup);
-		}
-
-		return LanguageUtil.format(
-			resourceBundle, "liferay-x-activation-key-will-expire-in-x-days",
-			new Object[] {productGroup, days}, false);
-	}
-
-	private String _getContactFullName(Contact contact) {
-		StringBundler sb = new StringBundler(5);
-
-		if (Validator.isNotNull(contact.getFirstName())) {
-			sb.append(contact.getFirstName());
-		}
-
-		if (Validator.isNotNull(contact.getMiddleName())) {
-			if (sb.length() > 0) {
-				sb.append(StringPool.SPACE);
-			}
-
-			sb.append(contact.getMiddleName());
-		}
-
-		if (Validator.isNotNull(contact.getLastName())) {
-			if (sb.length() > 0) {
-				sb.append(StringPool.SPACE);
-			}
-
-			sb.append(contact.getLastName());
-		}
-
-		return sb.toString();
-	}
-
-	private String _getEmailTemplate(
-		String templateName, String defaultTemplateName) {
-
-		ClassLoader classLoader =
-			CustomerPortalReleaseImpl.class.getClassLoader();
-
-		String templateDirName =
-			"com/liferay/osb/provisioning/internal/dependencies/";
-
-		URL url = classLoader.getResource(templateDirName + templateName);
-
-		if (url != null) {
-			return ContentUtil.get(classLoader, templateDirName + templateName);
-		}
-
-		return ContentUtil.get(
-			classLoader, templateDirName + defaultTemplateName);
-	}
-
-	private void _sendContactAccountActivationKeyEmail(
-		Contact contact, LicenseKey licenseKey) {
-
-		Date expirationDate = licenseKey.getExpirationDate();
-
-		long days = ChronoUnit.DAYS.between(
-			Instant.now(), expirationDate.toInstant());
-
-		if (days < 0) {
-			return;
-		}
-
-		String languageId = contact.getLanguageId();
-
-		if (Validator.isNull(languageId)) {
-			languageId = LocaleUtil.toLanguageId(LocaleUtil.US);
-		}
-
-		String body = _getEmailTemplate(
-			"email_provisioning_activation_key_body_" + languageId + ".tmpl",
-			"email_provisioning_activation_key_body.tmpl");
-
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
-
-		subscriptionSender.setBody(body);
-		subscriptionSender.setCompanyId(_portal.getDefaultCompanyId());
-
-		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"MMMM dd, yyyy");
-
-		String productGroup = ProductGroupConstants.getProductGroup(
-			licenseKey.getProductName());
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		Year year = Year.now();
-
-		subscriptionSender.setContextAttribute(
-			"[$ACCOUNT_KEY$]", licenseKey.getAccountKey());
-		subscriptionSender.setContextAttribute(
-			"[$CONTACT_FIRST_NAME$]", contact.getFirstName());
-		subscriptionSender.setContextAttribute(
-			"[$LICENSE_KEY_EXPIRATION_MESSAGE$]",
-			_getActivationKeyExpirationMessage(
-				days, dateFormat.format(expirationDate), productGroup,
-				resourceBundle));
-		subscriptionSender.setContextAttribute(
-			"[$LICENSE_KEY_LICENSE_ENTRY_NAME$]",
-			licenseKey.getLicenseEntryName());
-		subscriptionSender.setContextAttribute(
-			"[$LICENSE_KEY_PRODUCT_GROUP$]", productGroup);
-		subscriptionSender.setContextAttribute(
-			"[$LICENSE_KEY_PRODUCT_VERSION$]", licenseKey.getProductVersion());
-		subscriptionSender.setContextAttribute(
-			"[$LICENSE_KEY_SIZING$]",
-			LicenseSizing.getSizing(licenseKey.getSizing()));
-		subscriptionSender.setContextAttribute(
-			"[$YEAR$]", year.getValue(), false);
-		subscriptionSender.setFrom(
-			"customer-service@liferay.com", "Liferay Support");
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setMailId("provisioning");
-		subscriptionSender.setReplyToAddress("customer-service@liferay.com");
-		subscriptionSender.setSubject(
-			_getActivationKeySubject(days, productGroup, resourceBundle));
-
-		subscriptionSender.addRuntimeSubscribers(
-			contact.getEmailAddress(), _getContactFullName(contact));
-
-		subscriptionSender.flushNotificationsAsync();
-	}
-	
 	private static final Log _log = LogFactory.getLog(
 		SubscriptionEntryService.class);
 
+	private static final Set<String> _supportedLanguageIds = SetUtil.fromArray(
+		"en_US", "es_ES", "ja_JP", "pt_BR");
+
+	@Autowired
+	private LicenseKeyService _licenseKeyService;
+
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Autowired
+	private MessageSource _messageSource;
+
+	@Autowired
+	private NotificationQueueEntryService _notificationQueueEntryService;
+
+	@Autowired
+	private NotificationTemplateService _notificationTemplateService;
 
 }

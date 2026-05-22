@@ -73,174 +73,6 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 	}
 
 	@Test
-	public void testDoGetHostRootWellKnown() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		String hostRootURL = StringBundler.concat(
-			Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
-			":8080/.well-known/oauth-authorization-server");
-
-		HttpURLConnection notFoundHttpURLConnection = _openConnection(
-			hostRootURL, "GET");
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			notFoundHttpURLConnection.getResponseCode());
-
-		notFoundHttpURLConnection.disconnect();
-
-		String issuer =
-			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
-		String tokenEndpoint = issuer + "/o/oauth2/token";
-
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-			_oAuthClientASLocalMetadataLocalService.
-				addOAuthClientASLocalMetadata(
-					null, TestPropsValues.getUserId(), issuer, issuer, issuer,
-					false, issuer,
-					new String[] {"authorization_code", "client_credentials"},
-					new String[] {"openid"}, new String[] {"public"},
-					tokenEndpoint, issuer);
-
-		HttpURLConnection disabledHttpURLConnection = _openConnection(
-			hostRootURL, "GET");
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_NOT_FOUND,
-			disabledHttpURLConnection.getResponseCode());
-
-		disabledHttpURLConnection.disconnect();
-
-		_oAuthClientASLocalMetadataLocalService.
-			updateOAuthClientASLocalMetadata(
-				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
-				issuer, issuer, issuer, true, issuer,
-				new String[] {"authorization_code", "client_credentials"},
-				new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
-				issuer);
-
-		HttpURLConnection getHttpURLConnection = _openConnection(
-			hostRootURL, "GET");
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_OK,
-			getHttpURLConnection.getResponseCode());
-		Assert.assertEquals(
-			"*",
-			getHttpURLConnection.getHeaderField("Access-Control-Allow-Origin"));
-		Assert.assertEquals(
-			"public, max-age=300",
-			getHttpURLConnection.getHeaderField("Cache-Control"));
-
-		String getResponseBody = _readBody(getHttpURLConnection);
-
-		getHttpURLConnection.disconnect();
-
-		Assert.assertEquals(
-			oAuthClientASLocalMetadata.getOAuthASMetadataJSON(),
-			getResponseBody);
-
-		HttpURLConnection optionsHttpURLConnection = _openConnection(
-			hostRootURL, "OPTIONS");
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_NO_CONTENT,
-			optionsHttpURLConnection.getResponseCode());
-		Assert.assertEquals(
-			"*",
-			optionsHttpURLConnection.getHeaderField(
-				"Access-Control-Allow-Origin"));
-		Assert.assertEquals(
-			"GET, OPTIONS",
-			optionsHttpURLConnection.getHeaderField(
-				"Access-Control-Allow-Methods"));
-
-		optionsHttpURLConnection.disconnect();
-
-		HttpURLConnection postHttpURLConnection = _openConnection(
-			hostRootURL, "POST");
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
-			postHttpURLConnection.getResponseCode());
-		Assert.assertEquals(
-			"GET, OPTIONS",
-			postHttpURLConnection.getHeaderField("Allow"));
-
-		postHttpURLConnection.disconnect();
-	}
-
-	@Test
-	public void testDoGetIncludesRFC8414Fields() throws Exception {
-		Company company = _companyLocalService.getCompany(
-			TestPropsValues.getCompanyId());
-
-		String issuer =
-			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
-		String tokenEndpoint = issuer + "/o/oauth2/token";
-
-		_oAuthClientASLocalMetadataLocalService.addOAuthClientASLocalMetadata(
-			null, TestPropsValues.getUserId(), issuer, issuer, issuer, true,
-			issuer, new String[] {"authorization_code", "client_credentials"},
-			new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
-			issuer);
-
-		Http.Options options = new Http.Options();
-
-		options.setFollowRedirects(false);
-		options.setLocation(
-			StringBundler.concat(
-				Http.HTTP_WITH_SLASH, company.getVirtualHostname(),
-				":8080/o/.well-known/oauth-authorization-server/"));
-
-		String responseJSON = HttpUtil.URLtoString(options);
-
-		Assert.assertEquals(
-			HttpServletResponse.SC_OK,
-			options.getResponse().getResponseCode());
-
-		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
-			responseJSON);
-
-		Assert.assertEquals(
-			tokenEndpoint.substring(
-				0, tokenEndpoint.length() - "/token".length()) + "/introspect",
-			responseJSONObject.getString("introspection_endpoint"));
-
-		JSONArray codeChallengeMethodsJSONArray =
-			responseJSONObject.getJSONArray("code_challenge_methods_supported");
-
-		Assert.assertEquals(1, codeChallengeMethodsJSONArray.length());
-		Assert.assertEquals("S256", codeChallengeMethodsJSONArray.getString(0));
-
-		JSONArray responseTypesJSONArray = responseJSONObject.getJSONArray(
-			"response_types_supported");
-
-		Assert.assertEquals(1, responseTypesJSONArray.length());
-		Assert.assertEquals("code", responseTypesJSONArray.getString(0));
-
-		JSONArray tokenEndpointAuthMethodsJSONArray =
-			responseJSONObject.getJSONArray(
-				"token_endpoint_auth_methods_supported");
-
-		Assert.assertEquals(3, tokenEndpointAuthMethodsJSONArray.length());
-
-		List<String> tokenEndpointAuthMethods = new ArrayList<>();
-
-		for (int i = 0; i < tokenEndpointAuthMethodsJSONArray.length(); i++) {
-			tokenEndpointAuthMethods.add(
-				tokenEndpointAuthMethodsJSONArray.getString(i));
-		}
-
-		Assert.assertTrue(
-			tokenEndpointAuthMethods.contains("client_secret_basic"));
-		Assert.assertTrue(
-			tokenEndpointAuthMethods.contains("client_secret_post"));
-		Assert.assertTrue(tokenEndpointAuthMethods.contains("none"));
-	}
-
-	@Test
 	public void testDoGet() throws Exception {
 		Http.Options options = new Http.Options();
 
@@ -400,11 +232,186 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 			responseJSON, oAuthClientASLocalMetadata2.getOAuthASMetadataJSON());
 	}
 
+	@Test
+	public void testDoGetHostRootWellKnown() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String hostRootURL = StringBundler.concat(
+			Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
+			PortalUtil.getPortalServerPort(false),
+			"/.well-known/oauth-authorization-server");
+
+		HttpURLConnection notFoundHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			notFoundHttpURLConnection.getResponseCode());
+
+		notFoundHttpURLConnection.disconnect();
+
+		String issuer =
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+
+		String tokenEndpoint = issuer + "/o/oauth2/token";
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			_oAuthClientASLocalMetadataLocalService.
+				addOAuthClientASLocalMetadata(
+					null, TestPropsValues.getUserId(), issuer, issuer, issuer,
+					false, issuer,
+					new String[] {"authorization_code", "client_credentials"},
+					new String[] {"openid"}, new String[] {"public"},
+					tokenEndpoint, issuer);
+
+		HttpURLConnection disabledHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NOT_FOUND,
+			disabledHttpURLConnection.getResponseCode());
+
+		disabledHttpURLConnection.disconnect();
+
+		_oAuthClientASLocalMetadataLocalService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+				issuer, issuer, issuer, true, issuer,
+				new String[] {"authorization_code", "client_credentials"},
+				new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
+				issuer);
+
+		HttpURLConnection getHttpURLConnection = _openConnection(
+			hostRootURL, "GET");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, getHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"*",
+			getHttpURLConnection.getHeaderField("Access-Control-Allow-Origin"));
+		Assert.assertEquals(
+			"public, max-age=300",
+			getHttpURLConnection.getHeaderField("Cache-Control"));
+
+		String getResponseBody = _readBody(getHttpURLConnection);
+
+		getHttpURLConnection.disconnect();
+
+		Assert.assertEquals(
+			oAuthClientASLocalMetadata.getOAuthASMetadataJSON(),
+			getResponseBody);
+
+		HttpURLConnection optionsHttpURLConnection = _openConnection(
+			hostRootURL, "OPTIONS");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_NO_CONTENT,
+			optionsHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"*",
+			optionsHttpURLConnection.getHeaderField(
+				"Access-Control-Allow-Origin"));
+		Assert.assertEquals(
+			"GET, OPTIONS",
+			optionsHttpURLConnection.getHeaderField(
+				"Access-Control-Allow-Methods"));
+
+		optionsHttpURLConnection.disconnect();
+
+		HttpURLConnection postHttpURLConnection = _openConnection(
+			hostRootURL, "POST");
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_METHOD_NOT_ALLOWED,
+			postHttpURLConnection.getResponseCode());
+		Assert.assertEquals(
+			"GET, OPTIONS", postHttpURLConnection.getHeaderField("Allow"));
+
+		postHttpURLConnection.disconnect();
+	}
+
+	@Test
+	public void testDoGetIncludesRFC8414Fields() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		String issuer =
+			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+
+		String tokenEndpoint = issuer + "/o/oauth2/token";
+
+		_oAuthClientASLocalMetadataLocalService.addOAuthClientASLocalMetadata(
+			null, TestPropsValues.getUserId(), issuer, issuer, issuer, true,
+			issuer, new String[] {"authorization_code", "client_credentials"},
+			new String[] {"openid"}, new String[] {"public"}, tokenEndpoint,
+			issuer);
+
+		Http.Options options = new Http.Options();
+
+		options.setFollowRedirects(false);
+		options.setLocation(
+			StringBundler.concat(
+				Http.HTTP_WITH_SLASH, company.getVirtualHostname(), ":",
+				PortalUtil.getPortalServerPort(false),
+				"/o/.well-known/oauth-authorization-server/"));
+
+		String responseJSON = HttpUtil.URLtoString(options);
+
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK,
+			options.getResponse(
+			).getResponseCode());
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+			responseJSON);
+
+		String basePath = tokenEndpoint.substring(
+			0, tokenEndpoint.length() - "/token".length());
+
+		Assert.assertEquals(
+			basePath + "/introspect",
+			responseJSONObject.getString("introspection_endpoint"));
+
+		JSONArray codeChallengeMethodsJSONArray =
+			responseJSONObject.getJSONArray("code_challenge_methods_supported");
+
+		Assert.assertEquals(1, codeChallengeMethodsJSONArray.length());
+		Assert.assertEquals("S256", codeChallengeMethodsJSONArray.getString(0));
+
+		JSONArray responseTypesJSONArray = responseJSONObject.getJSONArray(
+			"response_types_supported");
+
+		Assert.assertEquals(1, responseTypesJSONArray.length());
+		Assert.assertEquals("code", responseTypesJSONArray.getString(0));
+
+		JSONArray tokenEndpointAuthMethodsJSONArray =
+			responseJSONObject.getJSONArray(
+				"token_endpoint_auth_methods_supported");
+
+		Assert.assertEquals(3, tokenEndpointAuthMethodsJSONArray.length());
+
+		List<String> tokenEndpointAuthMethods = new ArrayList<>();
+
+		for (int i = 0; i < tokenEndpointAuthMethodsJSONArray.length(); i++) {
+			tokenEndpointAuthMethods.add(
+				tokenEndpointAuthMethodsJSONArray.getString(i));
+		}
+
+		Assert.assertTrue(
+			tokenEndpointAuthMethods.contains("client_secret_basic"));
+		Assert.assertTrue(
+			tokenEndpointAuthMethods.contains("client_secret_post"));
+		Assert.assertTrue(tokenEndpointAuthMethods.contains("none"));
+	}
+
 	private HttpURLConnection _openConnection(String urlString, String method)
 		throws Exception {
 
-		HttpURLConnection httpURLConnection =
-			(HttpURLConnection)URI.create(urlString).toURL().openConnection();
+		HttpURLConnection httpURLConnection = (HttpURLConnection)URI.create(
+			urlString
+		).toURL(
+		).openConnection();
 
 		httpURLConnection.setInstanceFollowRedirects(false);
 		httpURLConnection.setRequestMethod(method);

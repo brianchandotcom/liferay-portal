@@ -5,10 +5,18 @@
 
 package com.liferay.ai.hub.internal.guardrail;
 
+import com.google.api.gax.rpc.NotFoundException;
+import com.google.cloud.modelarmor.v1.DataItem;
 import com.google.cloud.modelarmor.v1.DetectionConfidenceLevel;
+import com.google.cloud.modelarmor.v1.FilterMatchState;
 import com.google.cloud.modelarmor.v1.LocationName;
 import com.google.cloud.modelarmor.v1.ModelArmorClient;
 import com.google.cloud.modelarmor.v1.ModelArmorSettings;
+import com.google.cloud.modelarmor.v1.SanitizationResult;
+import com.google.cloud.modelarmor.v1.SanitizeModelResponseRequest;
+import com.google.cloud.modelarmor.v1.SanitizeModelResponseResponse;
+import com.google.cloud.modelarmor.v1.SanitizeUserPromptRequest;
+import com.google.cloud.modelarmor.v1.SanitizeUserPromptResponse;
 import com.google.cloud.modelarmor.v1.Template;
 import com.google.cloud.modelarmor.v1.TemplateName;
 import com.google.protobuf.FieldMask;
@@ -20,6 +28,8 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -79,6 +89,81 @@ public class ModelArmorTemplateHandlerImpl
 			TemplateName.of(
 				vertexAIConfiguration.projectId(), location,
 				externalReferenceCode));
+	}
+
+	@Override
+	public boolean isMatchFound(
+			long companyId, String externalReferenceCode, String location,
+			String guardrailType, String text)
+		throws Exception {
+
+		VertexAIConfiguration vertexAIConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				VertexAIConfiguration.class, companyId);
+
+		ModelArmorClient modelArmorClient = _getModelArmorClient(location);
+
+		Template template;
+
+		try {
+			template = modelArmorClient.getTemplate(
+				StringBundler.concat(
+					"projects/", vertexAIConfiguration.projectId(),
+					"/locations/", location, "/templates/",
+					externalReferenceCode));
+		}
+		catch (NotFoundException notFoundException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Model Armor template not found: " + externalReferenceCode,
+					notFoundException);
+			}
+
+			return false;
+		}
+
+		SanitizationResult sanitizationResult;
+
+		if (Objects.equals(guardrailType, "output")) {
+			SanitizeModelResponseResponse sanitizeModelResponseResponse =
+				modelArmorClient.sanitizeModelResponse(
+					SanitizeModelResponseRequest.newBuilder(
+					).setName(
+						template.getName()
+					).setModelResponseData(
+						DataItem.newBuilder(
+						).setText(
+							text
+						).build()
+					).build());
+
+			sanitizationResult =
+				sanitizeModelResponseResponse.getSanitizationResult();
+		}
+		else {
+			SanitizeUserPromptResponse sanitizeUserPromptResponse =
+				modelArmorClient.sanitizeUserPrompt(
+					SanitizeUserPromptRequest.newBuilder(
+					).setName(
+						template.getName()
+					).setUserPromptData(
+						DataItem.newBuilder(
+						).setText(
+							text
+						).build()
+					).build());
+
+			sanitizationResult =
+				sanitizeUserPromptResponse.getSanitizationResult();
+		}
+
+		if (sanitizationResult.getFilterMatchState() ==
+				FilterMatchState.MATCH_FOUND) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -206,6 +291,9 @@ public class ModelArmorTemplateHandlerImpl
 			throw new RuntimeException(jsonException);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ModelArmorTemplateHandlerImpl.class);
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

@@ -22,6 +22,11 @@ public interface ModelArmorTemplateHandler {
 			long companyId, String externalReferenceCode, String location)
 		throws Exception;
 
+	public boolean isMatchFound(
+			long companyId, String externalReferenceCode, String location,
+			String guardrailType, String text)
+		throws Exception;
+
 	public void updateModelArmorTemplate(
 			long companyId, String externalReferenceCode,
 			Map<String, Object> properties)

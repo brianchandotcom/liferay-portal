@@ -1,6 +1,7 @@
 dependencies {
 	testCompileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	testIntegrationImplementation project(":apps:launch:launch-api")
+	testIntegrationImplementation project(":apps:object:object-api")
 	testIntegrationImplementation project(":core:osgi-service-tracker-collections")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

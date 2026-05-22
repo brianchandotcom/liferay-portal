@@ -51,19 +51,19 @@ public class TestClassStaticVariableCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> variableDefDetailASTs = getAllChildTokens(
-			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 		List<DetailAST> staticMemberDefDetailASTs =
 			_getStaticMemberDefDetailASTs(objBlockDetailAST);
+		List<DetailAST> variableDefDetailASTs = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST staticVariableDefDetailAST :
 				staticVariableDefDetailASTs) {
 
 			String variableName = getName(staticVariableDefDetailAST);
 
-			if (_containsVariableName(variableDefDetailASTs, variableName) ||
-				_containsVariableName(
-					staticMemberDefDetailASTs, variableName)) {
+			if (_containsVariableName(
+					staticMemberDefDetailASTs, variableName) ||
+				_containsVariableName(variableDefDetailASTs, variableName)) {
 
 				continue;
 			}

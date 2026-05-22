@@ -266,9 +266,9 @@ public class PlaywrightBatchBuildTestrayCaseResult
 			return null;
 		}
 
-		String traceZipFilePath = matcher.group("traceZipFilePath");
-
 		BuildReport buildReport = getBuildReport();
+
+		String traceZipFilePath = matcher.group("traceZipFilePath");
 
 		URL traceZipURL = buildReport.getTestrayAttachmentURLBySuffix(
 			traceZipFilePath);

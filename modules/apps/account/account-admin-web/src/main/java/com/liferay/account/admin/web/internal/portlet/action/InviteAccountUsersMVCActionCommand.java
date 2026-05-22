@@ -6,24 +6,41 @@
 package com.liferay.account.admin.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
+import com.liferay.account.notification.AccountUserInvitationNotificationHelper;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelService;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+import jakarta.portlet.PortletMode;
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,9 +78,10 @@ public class InviteAccountUsersMVCActionCommand
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				User.class.getName(), actionRequest);
 
-			int count = ParamUtil.getInteger(actionRequest, "count");
+			for (int index = 0;
+				 index < ParamUtil.getInteger(actionRequest, "count");
+				 index++) {
 
-			for (int index = 0; index < count; index++) {
 				long[] accountRoleIds = ParamUtil.getLongValues(
 					actionRequest, "accountRoleIds" + index);
 				String[] emailAddresses = ParamUtil.getStringValues(
@@ -71,6 +89,10 @@ public class InviteAccountUsersMVCActionCommand
 
 				_inviteUsers(
 					accountEntryId, accountRoleIds, emailAddresses,
+					themeDisplay.getScopeGroupId(),
+					PrefsParamUtil.getString(
+						actionRequest.getPreferences(), actionRequest,
+						"invitationNotificationTemplateExternalReferenceCode"),
 					themeDisplay.getUser(), serviceContext);
 			}
 
@@ -86,8 +108,51 @@ public class InviteAccountUsersMVCActionCommand
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private String _getCallbackURL(
+			long companyId, long groupId, String ticketKey,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Layout layout = null;
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchDefaultLayoutUtilityPageEntry(
+					groupId,
+					LayoutUtilityPageEntryConstants.TYPE_CREATE_ACCOUNT);
+
+		if (layoutUtilityPageEntry != null) {
+			layout = _layoutLocalService.fetchLayout(
+				layoutUtilityPageEntry.getPlid());
+		}
+
+		if (layout == null) {
+			Group group = _groupLocalService.getGroup(
+				companyId, GroupConstants.GUEST);
+
+			layout = _layoutLocalService.fetchDefaultLayout(
+				group.getGroupId(), false);
+		}
+
+		return PortletURLBuilder.create(
+			PortletURLFactoryUtil.create(
+				serviceContext.getRequest(),
+				AccountPortletKeys.ACCOUNT_USERS_REGISTRATION, layout,
+				PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/account_admin/create_account_user"
+		).setParameter(
+			"ticketKey", ticketKey
+		).setPortletMode(
+			PortletMode.VIEW
+		).setWindowState(
+			WindowState.MAXIMIZED
+		).buildString();
+	}
+
 	private void _inviteUsers(
 			long accountEntryId, long[] accountRoleIds, String[] emailAddresses,
+			long groupId, String notificationTemplateExternalReferenceCode,
 			User user, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -99,9 +164,27 @@ public class InviteAccountUsersMVCActionCommand
 				continue;
 			}
 
-			_accountEntryUserRelService.inviteUser(
-				accountEntryId, accountRoleIds, emailAddress, user,
-				serviceContext);
+			if (Validator.isNotNull(
+					notificationTemplateExternalReferenceCode)) {
+
+				Ticket ticket =
+					_accountEntryUserRelService.addUserInvitationTicket(
+						accountEntryId, accountRoleIds, emailAddress, user,
+						serviceContext);
+
+				_accountUserInvitationNotificationHelper.sendNotification(
+					accountEntryId,
+					_getCallbackURL(
+						user.getCompanyId(), groupId, ticket.getKey(),
+						serviceContext),
+					emailAddress, notificationTemplateExternalReferenceCode,
+					user);
+			}
+			else {
+				_accountEntryUserRelService.inviteUser(
+					accountEntryId, accountRoleIds, emailAddress, user,
+					serviceContext);
+			}
 		}
 	}
 
@@ -112,7 +195,21 @@ public class InviteAccountUsersMVCActionCommand
 	private AccountEntryUserRelService _accountEntryUserRelService;
 
 	@Reference
+	private AccountUserInvitationNotificationHelper
+		_accountUserInvitationNotificationHelper;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

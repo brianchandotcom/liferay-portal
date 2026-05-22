@@ -2993,6 +2993,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		<attribute name="database.type" />
 		<attribute default="${database.@{database.type}.version}" name="database.version" />
 		<attribute default="" name="gcs.store.enabled" />
+		<attribute default="" name="generate.license.test.properties" />
 		<attribute default="" name="ibm.store.enabled" />
 		<attribute default="" name="refreshdependencies" />
 		<attribute default="true" name="setup.testable.tomcat" />
@@ -3032,6 +3033,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								<param name="database.partition.export.and.import" value="@{database.partition.export.and.import}" />
 								<param name="database.type" value="@{database.type}" />
 								<param name="gcs.store.enabled" value="@{gcs.store.enabled}" />
+								<param name="generate.license.test.properties" value="@{generate.license.test.properties}" />
 								<param name="ibm.store.enabled" value="@{ibm.store.enabled}" />
 							</antcall>
 
@@ -8577,6 +8579,14 @@ information. Make sure to commit in all format-javadoc results.
 				</tar>
 			</test-tear-down>
 		</run-batch-test>
+	</target>
+
+	<target name="integration-license-postgresql163">
+		<run-modules-integration-test
+			database.type="postgresql"
+			database.version="16.3"
+			generate.license.test.properties="true"
+		/>
 	</target>
 
 	<target name="javadoc-test">

@@ -13565,6 +13565,17 @@ outgoingSMTPPort="25000"
 
 		<prepare-portal-ext-properties-overrides />
 
+		<if>
+			<equals arg1="${generate.license.test.properties}" arg2="true" />
+			<then>
+				<ant antfile="build-developer.xml" dir="${release.tool.dir}" inheritAll="false" target="generate-license-test-properties">
+					<property name="properties.file" value="${project.dir}/portal-impl/src/portal-ext.properties" />
+					<property name="release.info.version.major" value="${release.info.version.major}" />
+					<property name="release.info.version.minor" value="${release.info.version.minor}" />
+				</ant>
+			</then>
+		</if>
+
 		<apply-portal-ext-properties />
 	</target>
 

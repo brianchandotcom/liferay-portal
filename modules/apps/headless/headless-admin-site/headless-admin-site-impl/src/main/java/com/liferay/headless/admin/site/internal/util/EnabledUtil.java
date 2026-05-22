@@ -15,6 +15,19 @@ import com.liferay.portal.kernel.model.Company;
  */
 public class EnabledUtil {
 
+	public static void checkAddWidgetPageEnabled(Company company) {
+		if (LazyReferencingThreadLocal.isEnabled() ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess()) {
+
+			return;
+		}
+
+		FeatureFlagManagerUtil.checkEnabled(
+			company.getCompanyId(), "LPD-76864");
+	}
+
 	public static void checkEnabled(Company company) {
 		checkEnabled(company, false);
 	}

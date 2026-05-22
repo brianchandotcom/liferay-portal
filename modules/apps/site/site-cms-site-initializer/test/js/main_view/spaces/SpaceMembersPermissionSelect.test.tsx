@@ -116,6 +116,20 @@ describe('SpaceMembersPermissionSelect', () => {
 		expect(spaceMemberCheckbox).toBeDisabled();
 	});
 
+	it('disables the trigger button but still shows the selected roles when disabled', () => {
+		render(
+			<SpaceMembersPermissionSelect
+				{...props}
+				disabled
+				selectedRoles={[SPACE_MEMBER_ROLE_NAME, 'Role 1']}
+			/>
+		);
+
+		const button = screen.getByRole('button');
+		expect(button).toBeDisabled();
+		expect(button).toHaveTextContent('Space Member US, Role 1 US');
+	});
+
 	it('calls onChange with the new role when a checkbox is checked', async () => {
 		render(<SpaceMembersPermissionSelect {...props} />);
 

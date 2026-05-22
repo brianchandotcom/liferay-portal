@@ -90,7 +90,7 @@ describe('VisitFrequencyChart component', () => {
 		expect(xAxisTick).toHaveTextContent('daily');
 	});
 
-	it('renders the not-configured message when analytics cloud is disabled', () => {
+	it('renders the not-configured message when analytics cloud is not configured', () => {
 		render(<FrequencyChart isAnalyticsEnabled={false} />);
 
 		expect(

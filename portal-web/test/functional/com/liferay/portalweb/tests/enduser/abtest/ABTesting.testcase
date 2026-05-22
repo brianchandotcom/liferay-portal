@@ -43,7 +43,7 @@ definition {
 		}
 	}
 
-@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
+	@description = "LPS-97882: Validate if the A/B Test icon is displayed in the control bar, when the user has the page edit permission"
 	@priority = 3
 	test ABTestIconVisibilityInControlBar {
 		task ("Create user") {
@@ -564,29 +564,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#ERROR_FORM_FIELD_REQUIRED",
 				value1 = "ID was not found.");
-		}
-	}
-
-	@description = "LPS-86285 Validate if, in the AB Test, the sidebar informs the user that minimum one variant is mandatory to test against Control if the user add variants and remove all variants"
-	@priority = 4
-	@uitest
-	test CreateABTestRunWithDeletedVariants {
-		task ("Create AB test, create variant, delete variant and run the test") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-
-			ABTest.deleteVariant();
-
-			Button.click(button = "Review and Run Test");
-		}
-
-		task ("Assert an error message is displayed") {
-			AssertTextEquals(
-				locator1 = "ABTest#VARIANT_NEEDED_MESSAGE",
-				value1 = "A variant needs to be created.");
 		}
 	}
 

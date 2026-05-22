@@ -11,7 +11,7 @@ import ClayLabel from '@clayui/label';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
 import {TranslationAdminSelector} from 'frontend-js-components-web';
-import {fetch, objectToFormData} from 'frontend-js-web';
+import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -171,7 +171,11 @@ function AssetVocabularyContextualSidebar({
 		const TitleCell = ({itemData}) => {
 			const {scopeName} = resolveScope(itemData, scopeContext);
 
-			return `${itemData.name} (${scopeName})`;
+			return sub(
+				Liferay.Language.get('x-group-x'),
+				itemData.name,
+				scopeName
+			);
 		};
 
 		openItemSelectorModal({

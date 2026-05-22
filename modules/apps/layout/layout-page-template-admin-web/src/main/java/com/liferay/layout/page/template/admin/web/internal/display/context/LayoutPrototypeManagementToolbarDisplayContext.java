@@ -15,6 +15,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -160,6 +161,12 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-76864")) {
+
+			return false;
+		}
 
 		if (PortalPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(),

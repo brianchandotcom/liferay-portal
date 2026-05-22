@@ -1580,6 +1580,8 @@ public class LayoutsAdminDisplayContext {
 					verticalNavItem.setLabel(name);
 				}
 			).add(
+				() -> FeatureFlagManagerUtil.isEnabled(
+					themeDisplay.getCompanyId(), "LPD-76864"),
 				verticalNavItem -> {
 					verticalNavItem.setActive(
 						selectLayoutPageTemplateEntryDisplayContext.
@@ -1597,6 +1599,9 @@ public class LayoutsAdminDisplayContext {
 				}
 			).build();
 
+		boolean widgetPageFeatureFlagEnabled = FeatureFlagManagerUtil.isEnabled(
+			themeDisplay.getCompanyId(), "LPD-76864");
+
 		for (LayoutPageTemplateCollection layoutPageTemplateCollection :
 				LayoutPageTemplateCollectionServiceUtil.
 					getLayoutPageTemplateCollections(
@@ -1613,6 +1618,20 @@ public class LayoutsAdminDisplayContext {
 
 			if (layoutPageTemplateEntriesCount <= 0) {
 				continue;
+			}
+
+			if (!widgetPageFeatureFlagEnabled) {
+				int basicLayoutPageTemplateEntriesCount =
+					LayoutPageTemplateEntryServiceUtil.
+						getLayoutPageTemplateEntriesCountByType(
+							themeDisplay.getScopeGroupId(),
+							layoutPageTemplateCollection.
+								getLayoutPageTemplateCollectionId(),
+							LayoutPageTemplateEntryTypeConstants.BASIC);
+
+				if (basicLayoutPageTemplateEntriesCount <= 0) {
+					continue;
+				}
 			}
 
 			String name = layoutPageTemplateCollection.getName();

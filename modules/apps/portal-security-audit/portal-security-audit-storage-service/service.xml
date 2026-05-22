@@ -16,24 +16,24 @@
 		<!-- Audit fields -->
 
 		<column name="companyId" type="long" />
-		<column name="accountEntryId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
 
 		<!-- Other fields -->
 
-		<column name="eventType" type="String" />
+		<column name="accountEntryId" type="long" />
+		<column name="additionalInfo" type="String" />
 		<column name="className" type="String" />
 		<column name="classPK" type="String" />
-		<column name="message" type="String" />
 		<column name="clientHost" type="String" />
 		<column name="clientIP" type="String" />
+		<column name="contextName" type="String" />
+		<column name="eventType" type="String" />
+		<column name="message" type="String" />
 		<column name="serverName" type="String" />
 		<column name="serverPort" type="int" />
 		<column name="sessionID" type="String" />
-		<column name="additionalInfo" type="String" />
-		<column name="contextName" type="String" />
 
 		<!-- Order -->
 

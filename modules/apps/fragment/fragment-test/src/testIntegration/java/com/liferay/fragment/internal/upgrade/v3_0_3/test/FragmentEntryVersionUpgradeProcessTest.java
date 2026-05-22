@@ -222,18 +222,18 @@ public class FragmentEntryVersionUpgradeProcessTest {
 	}
 
 	private void _testUpgradeSkipsCleanup() throws Exception {
-		int versionsToGenerate = 5;
+		int versionsCount = 5;
 
 		FragmentEntry fragmentEntry = _addFragmentEntry();
 
 		long initialCount = _countFragmentEntryVersions(fragmentEntry);
 
-		_insertFragmentEntryVersions(versionsToGenerate, fragmentEntry);
+		_insertFragmentEntryVersions(versionsCount, fragmentEntry);
 
 		_runUpgrade();
 
 		Assert.assertEquals(
-			versionsToGenerate + initialCount,
+			versionsCount + initialCount,
 			_countFragmentEntryVersions(fragmentEntry));
 	}
 

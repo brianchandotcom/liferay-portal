@@ -7,11 +7,15 @@ package com.liferay.depot.internal.upgrade.registry;
 
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.internal.upgrade.v2_2_0.util.DepotEntryPinTable;
+import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -56,6 +60,22 @@ public class DepotServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"update DepotEntryGroupRel set type_ = " +
 					DepotConstants.TYPE_ASSET_LIBRARY));
+
+		registry.register(
+			"2.3.0", "2.4.0",
+			new com.liferay.depot.internal.upgrade.v2_4_0.
+				TrashEntriesMaxAgeUpgradeProcess(
+					_companyLocalService, _depotEntryLocalService,
+					_groupLocalService));
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

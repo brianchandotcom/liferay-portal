@@ -373,6 +373,8 @@ public class PortletFileRepositoryTest {
 			fileEntry.getFileEntryId(), updatedFileEntry.getFileEntryId());
 		Assert.assertEquals(
 			fileEntry.getFolderId(), updatedFileEntry.getFolderId());
+		Assert.assertEquals(
+			fileEntry.getVersion(), updatedFileEntry.getVersion());
 
 		try (InputStream inputStream = updatedFileEntry.getContentStream()) {
 			Assert.assertArrayEquals(

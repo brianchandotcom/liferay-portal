@@ -215,9 +215,7 @@ public class JournalContentTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	private JournalArticle _addJournalArticleWithTemplate(String script)
-		throws Exception {
-
+	private JournalArticle _addJournalArticle(String script) throws Exception {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
@@ -247,6 +245,52 @@ public class JournalContentTest {
 			LocaleUtil.getSiteDefault());
 	}
 
+	private JournalArticleDisplay _getArticleDisplay(
+			JournalArticle journalArticle)
+		throws Exception {
+
+		return _getArticleDisplay(journalArticle, new MockHttpServletRequest());
+	}
+
+	private JournalArticleDisplay _getArticleDisplay(
+			JournalArticle journalArticle,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
+
+		MockRenderRequest mockRenderRequest = new MockRenderRequest();
+
+		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		httpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_REQUEST, mockRenderRequest);
+
+		PortletRequestModel portletRequestModel = new PortletRequestModel(
+			mockRenderRequest, new MockPortletResponse());
+
+		return _journalContent.getDisplay(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getDDMTemplateKey(), Constants.VIEW,
+			journalArticle.getDefaultLanguageId(), 1, portletRequestModel,
+			themeDisplay);
+	}
+
+	private JournalArticleDisplay _getArticleDisplay(
+			JournalArticle journalArticle, String nonce)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		return _getArticleDisplay(journalArticle, mockHttpServletRequest);
+	}
+
 	private CompanyConfigurationTemporarySwapper
 			_getCompanyConfigurationTemporarySwapper()
 		throws Exception {
@@ -264,39 +308,6 @@ public class JournalContentTest {
 			).put(
 				"reportOnly", false
 			).build());
-	}
-
-	private JournalArticleDisplay _getDisplay(
-			JournalArticle journalArticle, String nonce)
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		if (nonce != null) {
-			mockHttpServletRequest.setAttribute(
-				"com.liferay.portal.security.content.security.policy." +
-					"internal.ContentSecurityPolicyNonceManager#NONCE",
-				nonce);
-		}
-
-		ThemeDisplay themeDisplay = getThemeDisplay(mockHttpServletRequest);
-
-		MockRenderRequest mockRenderRequest = new MockRenderRequest();
-
-		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_REQUEST, mockRenderRequest);
-
-		PortletRequestModel portletRequestModel = new PortletRequestModel(
-			mockRenderRequest, new MockPortletResponse());
-
-		return _journalContent.getDisplay(
-			journalArticle.getGroupId(), journalArticle.getArticleId(),
-			journalArticle.getDDMTemplateKey(), Constants.VIEW,
-			journalArticle.getDefaultLanguageId(), 1, portletRequestModel,
-			themeDisplay);
 	}
 
 	private Map<Locale, String> _getLocalizedMap(Locale[] locales) {
@@ -389,24 +400,18 @@ public class JournalContentTest {
 				companyConfigurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper()) {
 
-			JournalArticle journalArticle = _addJournalArticleWithTemplate(
-				"<script ${nonceAttribute}>console.log(\"LPD-91677\");" +
-					"</script>");
+			JournalArticle journalArticle = _addJournalArticle(_SCRIPT);
 
 			String oldNonce = RandomTestUtil.randomString();
 
-			JournalArticleDisplay journalArticleDisplay = _getDisplay(
-				journalArticle, oldNonce);
-
-			String content = journalArticleDisplay.getContent();
-
-			Assert.assertTrue(content.contains(" nonce=\"" + oldNonce + "\""));
+			_getArticleDisplay(journalArticle, oldNonce);
 
 			String newNonce = RandomTestUtil.randomString();
 
-			journalArticleDisplay = _getDisplay(journalArticle, newNonce);
+			JournalArticleDisplay articleDisplay = _getArticleDisplay(
+				journalArticle, newNonce);
 
-			content = journalArticleDisplay.getContent();
+			String content = articleDisplay.getContent();
 
 			Assert.assertTrue(content.contains(" nonce=\"" + newNonce + "\""));
 			Assert.assertFalse(content.contains(" nonce=\"" + oldNonce + "\""));
@@ -420,16 +425,14 @@ public class JournalContentTest {
 				companyConfigurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper()) {
 
-			JournalArticle journalArticle = _addJournalArticleWithTemplate(
-				"<script ${nonceAttribute}>console.log(\"LPD-91677\");" +
-					"</script>");
+			JournalArticle journalArticle = _addJournalArticle(_SCRIPT);
 
-			_getDisplay(journalArticle, RandomTestUtil.randomString());
+			_getArticleDisplay(journalArticle, RandomTestUtil.randomString());
 
-			JournalArticleDisplay journalArticleDisplay = _getDisplay(
-				journalArticle, null);
+			JournalArticleDisplay articleDisplay = _getArticleDisplay(
+				journalArticle);
 
-			String content = journalArticleDisplay.getContent();
+			String content = articleDisplay.getContent();
 
 			Assert.assertTrue(content.contains("data-lfr-nonce-journal"));
 		}
@@ -440,20 +443,23 @@ public class JournalContentTest {
 				companyConfigurationTemporarySwapper =
 					_getCompanyConfigurationTemporarySwapper()) {
 
-			JournalArticle journalArticle = _addJournalArticleWithTemplate(
-				"<script>console.log(\"LPD-91677\");</script>");
+			JournalArticle journalArticle = _addJournalArticle(
+				"<script>console.log(\"test\");</script>");
 
-			_getDisplay(journalArticle, RandomTestUtil.randomString());
+			_getArticleDisplay(journalArticle, RandomTestUtil.randomString());
 
-			JournalArticleDisplay journalArticleDisplay = _getDisplay(
+			JournalArticleDisplay articleDisplay = _getArticleDisplay(
 				journalArticle, RandomTestUtil.randomString());
 
-			String content = journalArticleDisplay.getContent();
+			String content = articleDisplay.getContent();
 
 			Assert.assertFalse(content.contains("data-lfr-nonce-journal"));
 			Assert.assertFalse(content.contains(" nonce=\""));
 		}
 	}
+
+	private static final String _SCRIPT =
+		"<script ${nonceAttribute}>console.log(\"test\");</script>";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

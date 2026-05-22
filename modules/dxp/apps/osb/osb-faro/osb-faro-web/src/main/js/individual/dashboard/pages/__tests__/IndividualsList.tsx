@@ -1,8 +1,11 @@
 import * as API from 'shared/api';
+import * as useStatefulPaginationModule from 'shared/hooks/useStatefulPagination';
 
 import IndividualsList from '../IndividualsList';
 import React from 'react';
 import {createMemoryHistory} from 'history';
+import {createOrderIOMap, NAME} from 'shared/util/pagination';
+import {Map, Set} from 'immutable';
 import {RangeKeyTimeRanges} from 'shared/util/constants';
 import {render} from '@testing-library/react';
 import {Router} from 'react-router';
@@ -147,5 +150,68 @@ describe('Individuals List', () => {
 				rangeStart: null
 			})
 		);
+	});
+
+	it('passes activityStatus ACTIVE to the search API by default', async () => {
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		expect(API.individuals.search as jest.Mock).toHaveBeenCalledWith(
+			expect.objectContaining({
+				activityStatus: 'ACTIVE'
+			})
+		);
+	});
+
+	it('passes undefined activityStatus when both active and inactive are selected', async () => {
+		(API.individuals.search as jest.Mock).mockClear();
+		(API.individuals.search as jest.Mock).mockReturnValue(
+			Promise.resolve({items: [], total: 0})
+		);
+
+		const spy = jest
+			.spyOn(useStatefulPaginationModule, 'useStatefulPagination')
+			.mockReturnValue({
+				delta: 20,
+				filterBy: Map({
+					activityStatus: Set(['ACTIVE', 'INACTIVE'])
+				}) as any,
+				onDeltaChange: jest.fn(),
+				onFilterByChange: jest.fn(),
+				onOrderIOMapChange: jest.fn(),
+				onPageChange: jest.fn(),
+				onQueryChange: jest.fn(),
+				orderIOMap: createOrderIOMap(NAME),
+				page: 1,
+				query: '',
+				resetPage: jest.fn()
+			});
+
+		const history = createMemoryHistory();
+
+		render(
+			<Router history={history}>
+				<IndividualsList rangeSelectors={defaultRangeSelectors} />
+			</Router>
+		);
+
+		await waitForLoadingToBeRemoved(document.body);
+
+		const callArgs = (API.individuals.search as jest.Mock).mock.calls[0][0];
+
+		expect(callArgs.activityStatus).toBeUndefined();
+
+		spy.mockRestore();
 	});
 });

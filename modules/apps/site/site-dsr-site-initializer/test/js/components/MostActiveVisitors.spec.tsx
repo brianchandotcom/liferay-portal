@@ -75,7 +75,7 @@ describe('MostActiveVisitors', () => {
 		expect(screen.getByText('john.doe@liferay.com')).toBeInTheDocument();
 	});
 
-	it('renders the not-configured message when analytics cloud is disabled', () => {
+	it('renders the not-configured message when analytics cloud is not configured', () => {
 		render(
 			<MostActiveVisitors
 				isAnalyticsEnabled={false}

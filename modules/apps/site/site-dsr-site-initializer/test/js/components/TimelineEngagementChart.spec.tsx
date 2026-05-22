@@ -92,7 +92,7 @@ describe('EngagementTimelineChart component', () => {
 		expect(xAxisTick).toHaveTextContent('Feb 20');
 	});
 
-	it('renders the not-configured message when analytics cloud is disabled', () => {
+	it('renders the not-configured message when analytics cloud is not configured', () => {
 		render(<TimelineEngagementChart isAnalyticsEnabled={false} />);
 
 		expect(

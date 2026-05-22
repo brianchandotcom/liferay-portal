@@ -145,7 +145,7 @@ describe('ActivityLog Component', () => {
 		expect(screen.getByText('document_c')).toBeInTheDocument();
 	});
 
-	it('renders the not-configured message when analytics cloud is disabled', () => {
+	it('renders the not-configured message when analytics cloud is not configured', () => {
 		render(<ActivityLog isAnalyticsEnabled={false} />);
 
 		expect(

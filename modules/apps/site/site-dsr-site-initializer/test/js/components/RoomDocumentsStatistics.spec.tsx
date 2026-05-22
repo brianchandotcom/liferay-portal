@@ -116,7 +116,7 @@ describe('RoomDocumentsStatistics', () => {
 		expect(screen.getByText('2')).toBeInTheDocument();
 	});
 
-	it('renders the not-configured message when analytics cloud is disabled', () => {
+	it('renders the not-configured message when analytics cloud is not configured', () => {
 		render(
 			<DocumentsStatistics
 				isAnalyticsEnabled={false}

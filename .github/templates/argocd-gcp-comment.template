@@ -12,6 +12,10 @@ kubectl patch application liferay-infrastructure-provider --namespace "${ARGOCD_
   {"op":"replace","path":"/spec/sources/0/repoURL","value":"${REGISTRY}"},
   {"op":"replace","path":"/spec/sources/0/targetRevision","value":"${gcp_infra_provider_version}"}
 ]'
+kubectl patch application liferay-infrastructure-provider --namespace "${ARGOCD_NS}" --type=json --patch='[
+  {"op":"replace","path":"/spec/sources/1/repoURL","value":"oci://${REGISTRY}/liferay-gcp-infrastructure-provider"},
+  {"op":"replace","path":"/spec/sources/1/targetRevision","value":"${gcp_infra_provider_version}"}
+]'
 kubectl patch applicationset liferay-applicationset --namespace "${ARGOCD_NS}" --type=json --patch='[
   {"op":"replace","path":"/spec/template/spec/sources/0/repoURL","value":"${REGISTRY}"},
   {"op":"replace","path":"/spec/template/spec/sources/0/targetRevision","value":"${gcp_version}"}

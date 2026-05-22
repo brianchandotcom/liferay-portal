@@ -37,7 +37,7 @@ export default function LayoutSetControl({
 	const isAll = !!value && typeof value === 'object' && !selection.layoutIds;
 
 	return (
-		<>
+		<div className="p-3">
 			<ClayLayout.ContentRow className={className}>
 				<ClayLayout.ContentCol className="pr-2" expand={false}>
 					<ClayCheckbox
@@ -79,6 +79,6 @@ export default function LayoutSetControl({
 					}}
 				/>
 			)}
-		</>
+		</div>
 	);
 }

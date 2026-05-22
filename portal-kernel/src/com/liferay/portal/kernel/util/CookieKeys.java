@@ -21,9 +21,6 @@ import jakarta.servlet.http.HttpServletResponse;
 @Deprecated
 public class CookieKeys {
 
-	public static final String COMMERCE_CONTINUE_AS_GUEST =
-		"COMMERCE_CONTINUE_AS_GUEST";
-
 	public static final String COMPANY_ID = "COMPANY_ID";
 
 	public static final String COOKIE_SUPPORT = "COOKIE_SUPPORT";

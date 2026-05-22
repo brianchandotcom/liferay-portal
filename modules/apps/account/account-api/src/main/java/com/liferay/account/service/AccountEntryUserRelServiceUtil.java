@@ -76,6 +76,18 @@ public class AccountEntryUserRelServiceUtil {
 			jobTitle, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.model.Ticket
+			addUserInvitationTicket(
+				long accountEntryId, long[] accountRoleIds, String emailAddress,
+				com.liferay.portal.kernel.model.User inviter,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addUserInvitationTicket(
+			accountEntryId, accountRoleIds, emailAddress, inviter,
+			serviceContext);
+	}
+
 	public static void deleteAccountEntryUserRelByEmailAddress(
 			long accountEntryId, String emailAddress)
 		throws PortalException {
@@ -184,4 +196,4 @@ public class AccountEntryUserRelServiceUtil {
 			AccountEntryUserRelService.class);
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-783033485
+// LIFERAY-SERVICE-BUILDER-HASH:-1463414066

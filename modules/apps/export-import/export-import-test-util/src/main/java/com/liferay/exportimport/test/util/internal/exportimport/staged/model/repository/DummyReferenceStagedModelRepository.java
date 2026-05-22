@@ -317,18 +317,14 @@ public class DummyReferenceStagedModelRepository
 
 		public List<DummyReference> dynamicQuery(DynamicQuery dynamicQuery) {
 			try {
-				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
-					dynamicQuery, "_detachedCriteria");
+				List<Criterion> criterions = ReflectionTestUtil.getFieldValue(
+					dynamicQuery, "_criterions");
 
-				Object criteriaImpl = ReflectionTestUtil.invoke(
-					detachedCriteria, "getCriteriaImpl", new Class<?>[0]);
-
-				Iterator<?> iterator = ReflectionTestUtil.invoke(
-					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
-
-				if (!iterator.hasNext()) {
+				if (criterions.isEmpty()) {
 					return _dummyReferences;
 				}
+
+				Iterator<Criterion> iterator = criterions.iterator();
 
 				Predicate<DummyReference> predicate = getPredicate(
 					String.valueOf(iterator.next()));

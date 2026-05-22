@@ -331,18 +331,14 @@ public class DummyFolderStagedModelRepository
 
 		public List<DummyFolder> dynamicQuery(DynamicQuery dynamicQuery) {
 			try {
-				Object detachedCriteria = ReflectionTestUtil.getFieldValue(
-					dynamicQuery, "_detachedCriteria");
+				List<Criterion> criterions = ReflectionTestUtil.getFieldValue(
+					dynamicQuery, "_criterions");
 
-				Object criteriaImpl = ReflectionTestUtil.invoke(
-					detachedCriteria, "getCriteriaImpl", new Class<?>[0]);
-
-				Iterator<?> iterator = ReflectionTestUtil.invoke(
-					criteriaImpl, "iterateExpressionEntries", new Class<?>[0]);
-
-				if (!iterator.hasNext()) {
+				if (criterions.isEmpty()) {
 					return _dummyFolders;
 				}
+
+				Iterator<Criterion> iterator = criterions.iterator();
 
 				Predicate<DummyFolder> predicate = getPredicate(
 					String.valueOf(iterator.next()));

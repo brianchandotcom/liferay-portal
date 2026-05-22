@@ -22,7 +22,7 @@ import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.FragmentS
 import com.liferay.headless.admin.fragment.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.fragment.internal.util.EnabledUtil;
 import com.liferay.headless.admin.fragment.resource.v1_0.FragmentResource;
-import com.liferay.headless.common.spi.util.FileEntryUtil;
+import com.liferay.headless.admin.site.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.common.spi.util.GroupUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;

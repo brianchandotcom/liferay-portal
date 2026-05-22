@@ -6,9 +6,9 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
+import com.liferay.headless.admin.site.dto.v1_0.util.ThumbnailURLReferenceUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
-import com.liferay.headless.common.spi.util.ThumbnailURLReferenceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;

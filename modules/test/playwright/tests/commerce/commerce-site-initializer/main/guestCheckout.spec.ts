@@ -28,68 +28,94 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('LPD-35678 Guest can directly checkout a new order in B2B channel site', async ({
-	apiHelpers,
-	checkoutPage,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceMiniCartPage,
-	commerceThemeClassicCatalogPage,
-	page,
-}) => {
-	test.setTimeout(90000);
-
-	const {channel, site} = await classicCommerceSetUp(
+test(
+	'Guest can directly checkout a new order in B2B channel site',
+	{tag: ['@LPD-35678', '@LPD-84664']},
+	async ({
 		apiHelpers,
-		`B2B_${getRandomString()}`
-	);
-
-	await guestCheckoutSetUp(
-		channel,
+		checkoutPage,
 		commerceAdminChannelDetailsPage,
 		commerceAdminChannelsPage,
+		commerceMiniCartPage,
+		commerceThemeClassicCatalogPage,
 		page,
-		site
-	);
+	}) => {
+		test.setTimeout(90000);
 
-	try {
-		await commerceThemeClassicCatalogPage
-			.productCardAddToCartButton('Wear Sensors')
-			.click();
-
-		await page.waitForLoadState('networkidle');
-
-		await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
-			'has-badge mini-cart-opener'
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			`B2B_${getRandomString()}`
 		);
 
-		await commerceMiniCartPage.miniCartButton.click();
+		await guestCheckoutSetUp(
+			channel,
+			commerceAdminChannelDetailsPage,
+			commerceAdminChannelsPage,
+			page,
+			site
+		);
 
-		await commerceMiniCartPage.proceedAsGuest.click();
+		try {
+			await test.step('Add an item to the cart and open the mini cart', async () => {
+				await commerceThemeClassicCatalogPage
+					.productCardAddToCartButton('Wear Sensors')
+					.click();
 
-		await checkoutPage.performCheckout({
-			shippingAddress: {
-				asGuest: true,
-				city: 'testCity',
-				countryLabel: 'United States',
-				name: 'John Doe Guest',
-				regionLabel: 'Florida',
-				street: 'testStreet',
-				zip: '12345',
-			},
-		});
-	}
-	finally {
-		await performLoginViaApi({page, screenName: 'test'});
+				await page.waitForLoadState('networkidle');
 
-		const orders =
-			await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+				await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+					'has-badge mini-cart-opener'
+				);
 
-		if (orders.items[0]) {
-			apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+				await commerceMiniCartPage.miniCartButton.click();
+			});
+
+			await test.step('Open the order details and verify that no error alert is shown', async () => {
+				await commerceMiniCartPage.viewDetailsButton.click();
+
+				await page.waitForLoadState('networkidle');
+
+				await expect(page.locator('.alert-danger')).toHaveCount(0);
+			});
+
+			await test.step('Proceed as guest from the mini cart and verify the checkout survives a page reload', async () => {
+				await commerceMiniCartPage.miniCartButton.click();
+
+				await commerceMiniCartPage.proceedAsGuest.click();
+
+				await expect(checkoutPage.activeCheckoutStep).toBeVisible();
+
+				await page.reload();
+
+				await expect(checkoutPage.activeCheckoutStep).toBeVisible();
+			});
+
+			await test.step('Complete the checkout flow', async () => {
+				await checkoutPage.performCheckout({
+					shippingAddress: {
+						asGuest: true,
+						city: 'testCity',
+						countryLabel: 'United States',
+						name: 'John Doe Guest',
+						regionLabel: 'Florida',
+						street: 'testStreet',
+						zip: '12345',
+					},
+				});
+			});
+		}
+		finally {
+			await performLoginViaApi({page, screenName: 'test'});
+
+			const orders =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			if (orders.items[0]) {
+				apiHelpers.data.push({id: orders.items[0].id, type: 'order'});
+			}
 		}
 	}
-});
+);
 
 test(
 	'Guest can checkout a new order on sign-in in B2B channel site',

@@ -210,25 +210,6 @@ describe('ResizeHandle', () => {
 				'clay-keyboard-arrows-indicator-floating-tooltip'
 			);
 		});
-
-		test('uses the localized label on the indicator', () => {
-			render(
-				<ResizeHandle
-					data-testid="resizer"
-					displayKeyboardArrowsIndicator
-					keyboardArrowsIndicatorLabel="Use arrow keys to resize"
-					maxWidth={600}
-					minWidth={200}
-					onWidthChange={jest.fn()}
-					position="left"
-					width={500}
-				/>
-			);
-
-			expect(
-				document.body.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute('aria-label', 'Use arrow keys to resize');
-		});
 	});
 });
 

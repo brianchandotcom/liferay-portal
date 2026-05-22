@@ -161,14 +161,6 @@ export interface IProps<T extends Record<string, any> = Item>
 	items?: Array<T>;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * The off-screen live region informs screen reader users the result of
 	 * removing or adding a label.
 	 * @deprecated since v3.96.1 - use `messages` instead.
@@ -296,7 +288,6 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 		isLoading: _i,
 		isValid = true,
 		items: externalItems,
-		keyboardArrowsIndicatorLabel,
 		liveRegion,
 		locator = {
 			id: 'key',
@@ -636,7 +627,6 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 					<KeyboardArrowsIndicator
 						anchorRef={containerRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

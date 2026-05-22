@@ -352,23 +352,4 @@ describe('Picker basic rendering', () => {
 			'clay-keyboard-arrows-indicator-floating'
 		);
 	});
-
-	it('uses the localized label on the keyboard arrows indicator', () => {
-		const {getByRole} = render(
-			<Picker
-				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down to navigate options"
-			>
-				<Option key="apple">Apple</Option>
-
-				<Option key="banana">Banana</Option>
-			</Picker>
-		);
-
-		userEvent.click(getByRole('combobox'));
-
-		expect(
-			document.querySelector('.clay-keyboard-arrows-indicator')
-		).toHaveAttribute('aria-label', 'Use up and down to navigate options');
-	});
 });

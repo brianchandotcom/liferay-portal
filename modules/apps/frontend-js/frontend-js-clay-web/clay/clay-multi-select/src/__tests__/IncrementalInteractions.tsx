@@ -192,26 +192,5 @@ describe('MultiSelect incremental interactions', () => {
 				'clay-keyboard-arrows-indicator-floating'
 			);
 		});
-
-		it('uses the localized label on the indicator', () => {
-			const {getByRole} = render(
-				<MultiSelect
-					defaultItems={[labels[0]!]}
-					displayKeyboardArrowsIndicator
-					keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate suggestions"
-					sourceItems={labels}
-					spritemap="/foo/bar"
-				/>
-			);
-
-			userEvent.click(getByRole('combobox'));
-
-			expect(
-				document.body.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute(
-				'aria-label',
-				'Use up and down arrow keys to navigate suggestions'
-			);
-		});
 	});
 });

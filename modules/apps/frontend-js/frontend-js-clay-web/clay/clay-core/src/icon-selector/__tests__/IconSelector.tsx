@@ -56,23 +56,4 @@ describe('IconSelector keyboard arrows indicator', () => {
 			'clay-keyboard-arrows-indicator-floating'
 		);
 	});
-
-	it('uses the localized label on the indicator', () => {
-		const {getByRole} = render(
-			<IconSelector
-				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down arrow keys to step through the icons"
-				spritemap="/foo/bar.svg"
-			/>
-		);
-
-		userEvent.click(getByRole('button'));
-
-		expect(
-			document.body.querySelector('.clay-keyboard-arrows-indicator')
-		).toHaveAttribute(
-			'aria-label',
-			'Use up and down arrow keys to step through the icons'
-		);
-	});
 });

@@ -493,7 +493,6 @@ export function KeyboardArrowsIndicator() {
 				defaultActive
 				displayKeyboardArrowsIndicator
 				items={items}
-				keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate suggestions"
 				onChange={setValue}
 				onItemsChange={(val) => setItems(val as any)}
 				sourceItems={sourceItems}

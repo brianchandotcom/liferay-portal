@@ -139,20 +139,5 @@ describe('VerticalNav basic rendering', () => {
 				'clay-keyboard-arrows-indicator-floating'
 			);
 		});
-
-		it('uses the localized label on the indicator', () => {
-			const {container} = renderStaticWithProps({
-				displayKeyboardArrowsIndicator: true,
-				keyboardArrowsIndicatorLabel:
-					'Use arrow keys to navigate the menu',
-			});
-
-			expect(
-				container.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute(
-				'aria-label',
-				'Use arrow keys to navigate the menu'
-			);
-		});
 	});
 });

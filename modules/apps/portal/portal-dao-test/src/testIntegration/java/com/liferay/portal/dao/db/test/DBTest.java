@@ -661,7 +661,8 @@ public class DBTest {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"UPGRADE_QUERY_MONITOR_LOCK_THRESHOLD", 0L);
-			Connection lockingConnection = DataAccess.getConnection()) {
+			Connection lockingConnection = DataAccess.getConnection();
+			Connection pollingConnection = DataAccess.getConnection()) {
 
 			lockingConnection.setAutoCommit(false);
 
@@ -698,7 +699,7 @@ public class DBTest {
 				}
 
 				for (DB.QueryInfo lockedQueryInfo :
-						db.getLockedQueryInfos(lockingConnection)) {
+						db.getLockedQueryInfos(pollingConnection)) {
 
 					String query = lockedQueryInfo.getQuery();
 

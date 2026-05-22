@@ -64,6 +64,18 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Clob",
+			"businessType": "Encrypted",
+			"externalReferenceCode": "GOOGLE_PAGESPEED_API_KEY",
+			"indexed": false,
+			"label": {
+				"en_US": "Google PageSpeed API Key"
+			},
+			"name": "googlePageSpeedAPIKey",
+			"system": true,
+			"type": "Clob"
+		},
+		{
 			"DBType": "String",
 			"businessType": "Text",
 			"externalReferenceCode": "HOSTNAME",

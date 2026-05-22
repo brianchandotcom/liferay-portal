@@ -41,7 +41,7 @@ describe('CriteriaBuilder', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('should render the clear-all button when criteria has items', () => {
+	it('should not render the clear-all button when criteria has a single item', () => {
 		render(
 			<DndProvider backend={HTML5Backend}>
 				<CriteriaBuilder
@@ -49,6 +49,28 @@ describe('CriteriaBuilder', () => {
 						conjunctionName: Conjunctions.And,
 						criteriaGroupId: 'group',
 						items: [{rowId: 'r0', valid: true}]
+					}}
+					onChange={() => {}}
+				/>
+			</DndProvider>
+		);
+
+		expect(
+			screen.queryByRole('button', {name: /clear all/i})
+		).not.toBeInTheDocument();
+	});
+
+	it('should render the clear-all button when criteria has more than one item', () => {
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaBuilder
+					criteria={{
+						conjunctionName: Conjunctions.And,
+						criteriaGroupId: 'group',
+						items: [
+							{rowId: 'r0', valid: true},
+							{rowId: 'r1', valid: true}
+						]
 					}}
 					onChange={() => {}}
 				/>

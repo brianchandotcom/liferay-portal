@@ -156,6 +156,25 @@ describe('CriteriaGroup', () => {
 		);
 	});
 
+	it('should not render step stickers when sequential is enabled but only one top-level criterion exists', () => {
+		const {container} = render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaGroup
+					criteria={makeCriteria(Conjunctions.And, 1)}
+					criteriaGroupId='group'
+					onChange={() => {}}
+					onMove={() => {}}
+					root
+					sequential
+				/>
+			</DndProvider>
+		);
+
+		expect(container.querySelectorAll('.criteria-step-number').length).toBe(
+			0
+		);
+	});
+
 	it('should not render step stickers when sequential is disabled', () => {
 		const {container} = render(
 			<DndProvider backend={HTML5Backend}>

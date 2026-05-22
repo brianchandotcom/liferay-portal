@@ -28,6 +28,11 @@
 		width: 37.5rem;
 	}
 
+	&-description {
+		margin: 0 auto;
+		max-width: 650px;
+	}
+
 	&-icon {
 		color: #0b5fff;
 	}
@@ -67,6 +72,12 @@
 
 	&-text-bold {
 		font-weight: 600;
+	}
+
+	&-text-highlight {
+		color: #072252;
+		font-size: 23px;
+		font-weight: 600 !important;
 	}
 
 	&-title {
@@ -113,6 +124,33 @@
 		&:disabled {
 			background-color: #6d9fff;
 			cursor: not-allowed;
+		}
+	}
+
+	&-primary {
+		background-color: #0b5fff;
+		border: none;
+		border-radius: 0.5rem;
+		color: #fff;
+		height: 2.5rem;
+		padding: 0.5rem 1rem;
+
+		&:hover {
+			background-color: #0053f0;
+			color: #fff !important;
+		}
+	}
+
+	&-secondary {
+		border: 1px solid #2b3a4b;
+		border-radius: 0.5rem;
+		color: #2b3a4b;
+		height: 2.5rem;
+		padding: 0.5rem 1rem;
+
+		&:hover {
+			background-color: color-mix(in srgb, #2b3a4b, transparent 95%);
+			border: 1px solid #2b3a4b;
 		}
 	}
 }

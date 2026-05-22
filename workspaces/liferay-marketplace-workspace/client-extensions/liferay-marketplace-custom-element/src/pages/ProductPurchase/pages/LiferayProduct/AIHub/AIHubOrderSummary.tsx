@@ -106,8 +106,8 @@ const AIHubOrderSummary = () => {
 		await handlePurchase(productPurchase, {
 			...productPurchaseCart.cart,
 			billingAddress: paymentStore.billingAddress,
-			shippingAddress: paymentStore.billingAddress,
 			paymentMethod: 'money-order',
+			shippingAddress: paymentStore.billingAddress,
 		});
 	};
 

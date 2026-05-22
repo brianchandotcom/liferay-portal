@@ -820,9 +820,9 @@ describe('IncrementalInteractions', () => {
 				new Date('2019 04 11').toDateString()
 			);
 
-			expect(beforeMin).toBeDisabled();
-			expect(atMin).not.toBeDisabled();
-			expect(afterMin).not.toBeDisabled();
+			expect(beforeMin).toHaveAttribute('aria-disabled', 'true');
+			expect(atMin).not.toHaveAttribute('aria-disabled');
+			expect(afterMin).not.toHaveAttribute('aria-disabled');
 		});
 
 		it('disables days after max in the calendar grid', () => {
@@ -843,9 +843,29 @@ describe('IncrementalInteractions', () => {
 				new Date('2019 04 21').toDateString()
 			);
 
-			expect(beforeMax).not.toBeDisabled();
-			expect(atMax).not.toBeDisabled();
-			expect(afterMax).toBeDisabled();
+			expect(beforeMax).not.toHaveAttribute('aria-disabled');
+			expect(atMax).not.toHaveAttribute('aria-disabled');
+			expect(afterMax).toHaveAttribute('aria-disabled', 'true');
+		});
+
+		it('keeps out-of-range days focusable so the grid can navigate over them', () => {
+			const {getByLabelText} = render(
+				<DatePickerWithState
+					ariaLabels={ariaLabels}
+					defaultExpanded
+					min="2019-04-10"
+					spritemap={spritemap}
+				/>
+			);
+
+			const beforeMin = getByLabelText(
+				new Date('2019 04 09').toDateString()
+			);
+
+			// Native HTML disabled would block focus entirely; aria-disabled
+			// keeps the button focusable for arrow-key grid navigation.
+
+			expect(beforeMin).not.toBeDisabled();
 		});
 
 		it('does not commit a click on a disabled day', () => {
@@ -920,8 +940,8 @@ describe('IncrementalInteractions', () => {
 				new Date('2019 04 25').toDateString()
 			);
 
-			expect(beforeMin).not.toBeDisabled();
-			expect(afterMax).not.toBeDisabled();
+			expect(beforeMin).not.toHaveAttribute('aria-disabled');
+			expect(afterMax).not.toHaveAttribute('aria-disabled');
 
 			warnSpy.mockRestore();
 		});
@@ -940,10 +960,10 @@ describe('IncrementalInteractions', () => {
 
 			expect(
 				getByLabelText(new Date('2019 04 09').toDateString())
-			).toBeDisabled();
+			).toHaveAttribute('aria-disabled', 'true');
 			expect(
 				getByLabelText(new Date('2019 04 21').toDateString())
-			).toBeDisabled();
+			).toHaveAttribute('aria-disabled', 'true');
 		});
 
 		it('does not commit a time edit that falls outside min on the boundary day', () => {

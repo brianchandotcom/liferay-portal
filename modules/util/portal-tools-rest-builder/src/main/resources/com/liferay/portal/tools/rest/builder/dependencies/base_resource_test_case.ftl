@@ -135,7 +135,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
+
+<#if freeMarkerTool.isVersionCompatible(configYAML, 6)>
 import com.liferay.portal.search.test.rule.SearchTestRule;
+<#else>
+import com.liferay.portal.search.test.util.SearchTestRule;
+</#if>
+
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;

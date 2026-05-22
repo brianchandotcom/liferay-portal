@@ -835,7 +835,10 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 					}
 				}
 
-				const dateTimeSelected = setDate(day, {hours: hours24, minutes});
+				const dateTimeSelected = setDate(day, {
+					hours: hours24,
+					minutes,
+				});
 
 				if (isDateTimeOutOfRange(dateTimeSelected)) {
 					return;
@@ -990,16 +993,16 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 											<DayNumber
 												day={day}
 												daysSelected={daysSelected}
-												disabled={
-													disabled ||
-													isDayDisabled(day.date)
-												}
+												disabled={disabled}
 												index={key}
 												isFocused={calendarNavigation.isFocused(
 													day
 												)}
 												key={key}
 												onClick={handleDayClicked}
+												outOfRange={isDayDisabled(
+													day.date
+												)}
 												range={range}
 											/>
 										)}

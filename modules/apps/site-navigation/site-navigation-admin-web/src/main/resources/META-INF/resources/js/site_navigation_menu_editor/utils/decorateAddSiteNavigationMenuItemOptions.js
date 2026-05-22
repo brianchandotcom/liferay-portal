@@ -15,6 +15,7 @@ import {
 	fetch,
 	objectToFormData,
 	sessionStorage,
+	sub,
 } from 'frontend-js-web';
 
 const ASSET_VOCABULARY_TYPE = 'asset_vocabulary';
@@ -249,7 +250,11 @@ function openAssetVocabularyPicker({
 			return vocabulary.name;
 		}
 
-		return `${vocabulary.name} (${scopeName})`;
+		return sub(
+			Liferay.Language.get('x-group-x'),
+			vocabulary.name,
+			scopeName
+		);
 	};
 
 	openItemSelectorModal({

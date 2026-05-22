@@ -7,13 +7,20 @@ package com.liferay.fragment.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.constants.CTConstants;
+import com.liferay.change.tracking.model.CTCollection;
+import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.fragment.internal.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.test.util.FragmentEntryVersionTestUtil;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
@@ -94,6 +101,40 @@ public class FragmentEntryVersionModelListenerTest {
 			versions.size());
 		Assert.assertFalse(versions.contains(oldestVersion));
 	}
+
+	@Test
+	public void testOnAfterCreateInCtCollection() throws Throwable {
+		FragmentEntry fragmentEntry =
+			FragmentEntryVersionTestUtil.addFragmentEntry(_group.getGroupId());
+
+		FragmentEntryVersionTestUtil.insertFragmentEntryVersions(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT - 1,
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, fragmentEntry);
+
+		Assert.assertEquals(
+			FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT,
+			FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+				fragmentEntry));
+
+		CTCollection ctCollection = _ctCollectionLocalService.addCTCollection(
+			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			0, RandomTestUtil.randomString(), null);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollection.getCtCollectionId())) {
+
+			FragmentEntryVersionTestUtil.updateFragmentEntry(fragmentEntry);
+
+			Assert.assertEquals(
+				FragmentConstants.MAX_FRAGMENT_ENTRY_VERSION_COUNT + 1,
+				FragmentEntryVersionTestUtil.countFragmentEntryVersions(
+					fragmentEntry));
+		}
+	}
+
+	@Inject
+	private CTCollectionLocalService _ctCollectionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

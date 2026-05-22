@@ -38,6 +38,9 @@ import java.util.Set;
  */
 public class LayoutSetPrototypeSyncSessionManagerUtil {
 
+	public static final String KEY_HAS_PRE_VALIDATION_ERRORS =
+		"hasPreValidationErrors";
+
 	public static final String KEY_LAYOUT_SET_GROUP_IDS = "layoutSetGroupIds";
 
 	public static final String KEY_LAYOUT_SET_PROTOTYPE_ID =
@@ -58,6 +61,9 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 			backgroundTask.getTaskContextMap();
 
 		taskContextMap.put(
+			KEY_HAS_PRE_VALIDATION_ERRORS,
+			syncSessionContext._hasPreValidationErrors);
+		taskContextMap.put(
 			KEY_LAYOUT_SET_GROUP_IDS, syncSessionContext._layoutSetGroupIds);
 		taskContextMap.put(
 			KEY_LAYOUT_SET_PROTOTYPE_ID,
@@ -69,8 +75,8 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	}
 
 	public static SafeCloseable openSession(
-		List<LayoutSet> layoutSets, LayoutSetPrototype layoutSetPrototype,
-		long userId) {
+		boolean hasPreValidationErrors, List<LayoutSet> layoutSets,
+		LayoutSetPrototype layoutSetPrototype, long userId) {
 
 		if (layoutSets.isEmpty()) {
 			postNotification(
@@ -84,12 +90,21 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 
 		_syncSessionContext.set(
 			new SyncSessionContext(
+				hasPreValidationErrors,
 				TransformUtil.transformToArray(
 					layoutSets, LayoutSet::getGroupId, Long.class),
 				layoutSetPrototype.getLayoutSetPrototypeId(),
 				PortalUUIDUtil.generate(), userId));
 
 		return _syncSessionContext::remove;
+	}
+
+	public static void postFailureNotification(
+		Map<Locale, String> nameMap, long userId) {
+
+		postNotification(
+			Collections.singleton(BackgroundTaskConstants.STATUS_FAILED),
+			nameMap, userId);
 	}
 
 	public static void postNotification(
@@ -163,15 +178,17 @@ public class LayoutSetPrototypeSyncSessionManagerUtil {
 	private static class SyncSessionContext {
 
 		private SyncSessionContext(
-			Long[] layoutSetGroupIds, long layoutSetPrototypeId,
-			String syncSessionId, long userId) {
+			boolean hasPreValidationErrors, Long[] layoutSetGroupIds,
+			long layoutSetPrototypeId, String syncSessionId, long userId) {
 
+			_hasPreValidationErrors = hasPreValidationErrors;
 			_layoutSetGroupIds = layoutSetGroupIds;
 			_layoutSetPrototypeId = layoutSetPrototypeId;
 			_syncSessionId = syncSessionId;
 			_userId = userId;
 		}
 
+		private final boolean _hasPreValidationErrors;
 		private final Long[] _layoutSetGroupIds;
 		private final long _layoutSetPrototypeId;
 		private final String _syncSessionId;

@@ -12458,9 +12458,7 @@ send_user $expect_out(buffer)]]></echo>
 
 									String attributeValue = element.attributeValue("message");
 
-									String text = element.getText();
-
-									if (attributeValue.length() > maxTextSize) {
+									if ((attributeValue != null) && (attributeValue.length() > maxTextSize)) {
 										element.setAttributeValue("message", attributeValue.substring(0, maxTextSize));
 									}
 								}

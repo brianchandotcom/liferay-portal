@@ -109,6 +109,8 @@ export const PORTLET_URLS = {
 	segments:
 		'/~/control_panel/manage?p_p_id=com_liferay_segments_web_internal_portlet_SegmentsPortlet',
 	selectSites: '/~/control_panel/manage/-/sites/sites/select_site',
+	semanticSearchConfiguration:
+		'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.portal.search.configuration.SemanticSearchConfiguration',
 	serviceAccessPolicy:
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet&p_p_lifecycle=0&p_p_state=maximized',
 	siteMemberships: '/~/control_panel/manage/-/site_memberships',

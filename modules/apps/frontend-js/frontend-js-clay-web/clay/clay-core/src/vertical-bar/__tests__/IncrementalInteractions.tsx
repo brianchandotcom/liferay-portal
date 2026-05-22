@@ -261,20 +261,5 @@ describe('VerticalBar incremental interactions', () => {
 				document.body.querySelector('.clay-keyboard-arrows-indicator')
 			).toBeInTheDocument();
 		});
-
-		it('uses the localized label on the indicator', () => {
-			renderWithIndicator({
-				displayKeyboardArrowsIndicator: true,
-				keyboardArrowsIndicatorLabel:
-					'Use up and down arrow keys to navigate the bar items',
-			});
-
-			expect(
-				document.body.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute(
-				'aria-label',
-				'Use up and down arrow keys to navigate the bar items'
-			);
-		});
 	});
 });

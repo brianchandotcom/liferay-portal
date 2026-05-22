@@ -146,14 +146,6 @@ interface IProps
 	inputName?: string;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * The latest date that can be selected, formatted using `dateFormat` (and
 	 * `dateFormat` followed by a time when `time` is `true`). Dates after `max`
 	 * are disabled in the calendar; when `time` is `true`, the time picker is
@@ -307,7 +299,6 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 			initialExpanded = false,
 			initialMonth,
 			inputName,
-			keyboardArrowsIndicatorLabel,
 			max,
 			min,
 			months = [
@@ -1108,7 +1099,6 @@ const DatePicker = React.forwardRef<HTMLInputElement, IProps>(
 								<KeyboardArrowsIndicator
 									anchorRef={menuElementRef}
 									direction="all"
-									label={keyboardArrowsIndicatorLabel}
 								/>
 							</ClayPortal>
 						)}

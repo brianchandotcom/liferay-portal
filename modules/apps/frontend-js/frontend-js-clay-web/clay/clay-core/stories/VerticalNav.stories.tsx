@@ -719,7 +719,6 @@ export function KeyboardArrowsIndicator() {
 				defaultExpandedKeys={new Set(['about'])}
 				displayKeyboardArrowsIndicator
 				items={navItems}
-				keyboardArrowsIndicatorLabel="Use arrow keys to navigate the menu"
 			>
 				{(item: Item) => (
 					<VerticalNav.Item

@@ -842,28 +842,6 @@ describe('IncrementalInteractions', () => {
 				'clay-keyboard-arrows-indicator-floating'
 			);
 		});
-
-		it('uses the localized label on the indicator', () => {
-			const {getByTestId} = render(
-				<ClayDatePicker
-					defaultMonth={new Date(2019, 3, 18)}
-					displayKeyboardArrowsIndicator
-					keyboardArrowsIndicatorLabel="Use arrow keys to navigate the calendar"
-					placeholder="YYYY-MM-DD"
-					spritemap={spritemap}
-					years={{end: 2019, start: 2019}}
-				/>
-			);
-
-			fireEvent.click(getByTestId('date-button'));
-
-			expect(
-				document.body.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute(
-				'aria-label',
-				'Use arrow keys to navigate the calendar'
-			);
-		});
 	});
 
 	describe('min/max', () => {

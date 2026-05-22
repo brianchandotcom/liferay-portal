@@ -748,7 +748,6 @@ export function KeyboardArrowsIndicator() {
 						<ClayAutocomplete
 							defaultActive
 							displayKeyboardArrowsIndicator
-							keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate suggestions"
 							placeholder="Enter a number from One to Five"
 						>
 							{['one', 'two', 'three', 'four', 'five'].map(

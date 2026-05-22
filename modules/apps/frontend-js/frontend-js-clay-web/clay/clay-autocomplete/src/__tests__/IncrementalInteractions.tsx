@@ -906,30 +906,5 @@ describe('Autocomplete incremental interactions', () => {
 				'clay-keyboard-arrows-indicator-floating'
 			);
 		});
-
-		it('uses the localized label on the indicator', () => {
-			const {getByRole} = render(
-				<ClayAutocomplete
-					displayKeyboardArrowsIndicator
-					keyboardArrowsIndicatorLabel="Use up and down to navigate suggestions"
-					messages={messages}
-				>
-					{['one', 'two', 'three'].map((item) => (
-						<ClayAutocomplete.Item key={item}>
-							{item}
-						</ClayAutocomplete.Item>
-					))}
-				</ClayAutocomplete>
-			);
-
-			userEvent.type(getByRole('combobox'), 'o');
-
-			expect(
-				document.body.querySelector('.clay-keyboard-arrows-indicator')
-			).toHaveAttribute(
-				'aria-label',
-				'Use up and down to navigate suggestions'
-			);
-		});
 	});
 });

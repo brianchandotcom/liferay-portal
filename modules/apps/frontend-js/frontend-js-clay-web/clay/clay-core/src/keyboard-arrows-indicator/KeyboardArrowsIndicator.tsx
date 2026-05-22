@@ -38,13 +38,6 @@ export type Props = {
 	direction: Direction;
 
 	/**
-	 * Localized label announced by assistive technology. Defaults to an
-	 * English phrase derived from `direction`; pass an explicit string to
-	 * localize (e.g. via Liferay's `Liferay.Language.get`).
-	 */
-	label?: string;
-
-	/**
 	 * How the indicator is positioned relative to `anchorRef`. `tooltip`
 	 * (default) places it alongside the anchor with a directional arrow
 	 * that flips to fit the viewport. `center` overlays the indicator on
@@ -59,13 +52,7 @@ export type Props = {
 	 * is provided by an ancestor `Provider`.
 	 */
 	spritemap?: string;
-} & Omit<React.HTMLAttributes<HTMLDivElement>, 'aria-label' | 'role'>;
-
-const DEFAULT_LABELS: Record<Direction, string> = {
-	all: 'Use arrow keys to navigate',
-	horizontal: 'Use left and right arrow keys to navigate',
-	vertical: 'Use up and down arrow keys to navigate',
-};
+} & Omit<React.HTMLAttributes<HTMLDivElement>, 'aria-hidden' | 'role'>;
 
 // `alignmentPosition: 2` is `RightCenter` — anchor's center-right aligns
 // to the indicator's center-left. `autoBestAlign` flips to `LeftCenter`
@@ -101,7 +88,6 @@ export function KeyboardArrowsIndicator({
 	anchorRef,
 	className,
 	direction,
-	label,
 	placement = 'tooltip',
 	spritemap,
 	...otherProps
@@ -197,7 +183,7 @@ export function KeyboardArrowsIndicator({
 	return (
 		<div
 			{...otherProps}
-			aria-label={label ?? DEFAULT_LABELS[direction]}
+			aria-hidden="true"
 			className={classNames(
 				'clay-keyboard-arrows-indicator',
 				`clay-keyboard-arrows-${direction}`,
@@ -215,7 +201,6 @@ export function KeyboardArrowsIndicator({
 				className
 			)}
 			ref={indicatorRef}
-			role="img"
 		>
 			<ClayIcon spritemap={spritemap} symbol="arrows-all" />
 		</div>

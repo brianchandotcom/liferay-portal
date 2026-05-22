@@ -239,7 +239,6 @@ export function KeyboardArrowsIndicator(args: any) {
 			<VerticalBar
 				activation={args.activation}
 				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate the bar items"
 				position="left"
 				resize={args.enableResize}
 			>
@@ -289,7 +288,6 @@ export function KeyboardArrowsIndicator(args: any) {
 			<VerticalBar
 				activation={args.activation}
 				displayKeyboardArrowsIndicator
-				keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate the bar items"
 				position="right"
 				resize={args.enableResize}
 			>

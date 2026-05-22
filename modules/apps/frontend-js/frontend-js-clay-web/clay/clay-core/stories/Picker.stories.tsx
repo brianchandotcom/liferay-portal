@@ -468,7 +468,6 @@ export function KeyboardArrowsIndicator() {
 					defaultActive
 					displayKeyboardArrowsIndicator
 					id={pickerId}
-					keyboardArrowsIndicatorLabel="Use up and down arrow keys to navigate options"
 				>
 					<Option key="apple">Apple</Option>
 

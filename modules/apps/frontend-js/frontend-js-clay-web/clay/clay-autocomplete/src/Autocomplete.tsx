@@ -143,14 +143,6 @@ export interface IProps<T>
 	items?: Array<T> | null;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	keyboardArrowsIndicatorLabel?: string;
-
-	/**
 	 * The current state of Autocomplete current loading. Determines whether the
 	 * loading indicator should be shown or not.
 	 */
@@ -267,7 +259,6 @@ function AutocompleteInner<T extends Item>(
 		estimateSize,
 		filterKey,
 		items: externalItems,
-		keyboardArrowsIndicatorLabel,
 		loadingState,
 		menuTrigger = 'input',
 		messages: externalMessages,
@@ -812,7 +803,6 @@ function AutocompleteInner<T extends Item>(
 					<KeyboardArrowsIndicator
 						anchorRef={inputElementRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

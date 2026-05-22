@@ -133,14 +133,6 @@ type Props<T> = {
 	'id'?: string;
 
 	/**
-	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
-	 * to the indicator's built-in English string when omitted. Pass a
-	 * translated value (e.g. via `Liferay.Language.get`) when the host
-	 * page needs i18n.
-	 */
-	'keyboardArrowsIndicatorLabel'?: string;
-
-	/**
 	 * Messages for the Picker.
 	 */
 	'messages'?: Partial<PickerMessages>;
@@ -219,7 +211,6 @@ export function Picker<T extends Record<string, any> | string | number>({
 	filterKey,
 	id,
 	items,
-	keyboardArrowsIndicatorLabel,
 	messages: externalMessages,
 	native = false,
 	onActiveChange,
@@ -806,7 +797,6 @@ export function Picker<T extends Record<string, any> | string | number>({
 					<KeyboardArrowsIndicator
 						anchorRef={triggerRef}
 						direction="vertical"
-						label={keyboardArrowsIndicatorLabel}
 					/>
 				</ClayPortal>
 			)}

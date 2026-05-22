@@ -174,7 +174,7 @@ exports[`SegmentEditor should render 1`] = `
                   class="btn-group-item cancel"
                 >
                   <a
-                    class="button-root btn btn-secondary"
+                    class="button-root btn btn-sm btn-secondary"
                     href="/workspace/23/321/contacts/segments"
                   >
                     Cancel

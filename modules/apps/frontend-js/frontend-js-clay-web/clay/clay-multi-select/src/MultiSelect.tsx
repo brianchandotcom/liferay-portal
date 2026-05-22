@@ -8,8 +8,10 @@ import ACT, {
 	Item as AutocompleteItem,
 } from '@clayui/autocomplete';
 import {ClayButtonWithIcon} from '@clayui/button';
+import {KeyboardArrowsIndicator} from '@clayui/core';
 import {ClayInput} from '@clayui/form';
 import {
+	ClayPortal,
 	FocusScope,
 	InternalDispatch,
 	getLocatorValue,
@@ -116,6 +118,15 @@ export interface IProps<T extends Record<string, any> = Item>
 	disabledClearAll?: boolean;
 
 	/**
+	 * Flag to render the `KeyboardArrowsIndicator` alongside the MultiSelect
+	 * input, hinting that up and down arrow keys can be used to navigate
+	 * the suggestions list. The indicator floats to the right of the input
+	 * and flips to the left when it would overflow the viewport. It is
+	 * only rendered while the suggestions panel is open.
+	 */
+	displayKeyboardArrowsIndicator?: boolean;
+
+	/**
 	 * Defines the description of hotkeys for the component, use this
 	 * to handle internationalization.
 	 * @deprecated since v3.96.1 - use `messages` instead.
@@ -148,6 +159,14 @@ export interface IProps<T extends Record<string, any> = Item>
 	 * Values that display as label items (controlled).
 	 */
 	items?: Array<T>;
+
+	/**
+	 * Localized `aria-label` for the keyboard arrows indicator. Defaults
+	 * to the indicator's built-in English string when omitted. Pass a
+	 * translated value (e.g. via `Liferay.Language.get`) when the host
+	 * page needs i18n.
+	 */
+	keyboardArrowsIndicatorLabel?: string;
 
 	/**
 	 * The off-screen live region informs screen reader users the result of
@@ -270,12 +289,14 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 		defaultValue = '',
 		disabled,
 		disabledClearAll,
+		displayKeyboardArrowsIndicator = false,
 		hotkeysDescription,
 		inputName,
 		inputValue,
 		isLoading: _i,
 		isValid = true,
 		items: externalItems,
+		keyboardArrowsIndicatorLabel,
 		liveRegion,
 		locator = {
 			id: 'key',
@@ -468,6 +489,7 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 
 	return (
 		<Container {...containerProps}>
+			<>
 			<div
 				className={classNames(
 					'form-control form-control-tag-group input-group',
@@ -608,6 +630,17 @@ export const MultiSelect = React.forwardRef(function MultiSelectInner<
 					</span>
 				</div>
 			</div>
+
+			{active && displayKeyboardArrowsIndicator && (
+				<ClayPortal>
+					<KeyboardArrowsIndicator
+						anchorRef={containerRef}
+						direction="vertical"
+						label={keyboardArrowsIndicatorLabel}
+					/>
+				</ClayPortal>
+			)}
+			</>
 		</Container>
 	);
 }) as Component;

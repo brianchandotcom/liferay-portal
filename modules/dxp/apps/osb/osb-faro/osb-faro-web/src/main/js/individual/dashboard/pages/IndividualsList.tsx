@@ -88,7 +88,7 @@ interface IIndividualsList {
 	rangeSelectors: RangeSelectors;
 }
 
-const IndividualsList = ({rangeSelectors}: IIndividualsList) => {
+const IndividualsList: React.FC<IIndividualsList> = ({rangeSelectors}) => {
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;

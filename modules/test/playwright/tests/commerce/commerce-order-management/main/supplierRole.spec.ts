@@ -1667,6 +1667,245 @@ test(
 	}
 );
 
+test(
+	'Supplier user can manage the full workflow of an order from Accept to Delivered',
+	{tag: ['@COMMERCE-11888', '@LPD-88485', '@LPD-89343']},
+	async ({
+		apiHelpers,
+		commerceAdminOrderDetailsPage,
+		commerceAdminOrdersPage,
+		commerceAdminShipmentsPage,
+		page,
+	}) => {
+		const randomSuffix = getRandomString().slice(0, 8);
+
+		const {account: supplierAccount, supplierUser} =
+			await createAccountWithSupplierUser(apiHelpers, site.id);
+
+		const supplierCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				accountId: supplierAccount.id,
+				name: `Supplier Catalog ${randomSuffix}`,
+			});
+
+		const supplierChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `Supplier Channel ${randomSuffix}`,
+				siteGroupId: 0,
+			});
+
+		await apiHelpers.headlessCommerceAdminChannel.patchChannelWithAccountId(
+			supplierAccount.id,
+			supplierChannel
+		);
+
+		const customerChannel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: `Customer Channel ${randomSuffix}`,
+				siteGroupId: 0,
+			});
+
+		let supplierProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: supplierCatalog.id,
+				name: {en_US: `Supplier Product ${randomSuffix}`},
+			});
+
+		supplierProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.getProduct(
+				supplierProduct.productId
+			);
+
+		const supplierSku = supplierProduct.skus[0];
+
+		const otherCatalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: `Other Catalog ${randomSuffix}`,
+			});
+
+		let otherProduct =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: otherCatalog.id,
+				name: {en_US: `Other Product ${randomSuffix}`},
+			});
+
+		otherProduct = await apiHelpers.headlessCommerceAdminCatalog.getProduct(
+			otherProduct.productId
+		);
+
+		const otherSku = otherProduct.skus[0];
+
+		const warehouse =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+				{
+					active: true,
+					latitude: 10,
+					longitude: 0,
+					warehouseItems: [
+						{quantity: 100, sku: supplierSku.sku},
+						{quantity: 100, sku: otherSku.sku},
+					],
+				}
+			);
+
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			customerChannel.id
+		);
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			supplierChannel.id
+		);
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: commerceOrderDefinition} =
+			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
+				'L_COMMERCE_ORDER'
+			);
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectActionAPI);
+
+		const {body: objectAction} =
+			await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+				'L_COMMERCE_ORDER',
+				{
+					active: true,
+					conditionExpression: 'orderStatus = 10',
+					label: {en_US: 'Split order by catalog'},
+					name: `SplitOrderByCatalog${randomSuffix}`,
+					objectActionExecutorKey: 'split-commerce-order-by-catalog',
+					objectActionTriggerKey: 'liferay/commerce_order_status',
+					parameters: {
+						objectDefinitionId: commerceOrderDefinition.id,
+					},
+				}
+			);
+
+		apiHelpers.data.push({id: objectAction.id, type: 'objectAction'});
+
+		const buyerAccount = await apiHelpers.headlessAdminUser.postAccount({
+			name: `Buyer Account ${randomSuffix}`,
+			type: 'business',
+		});
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				buyerAccount.id,
+				{
+					city: 'Test City',
+					countryISOCode: 'US',
+					defaultBilling: true,
+					defaultShipping: true,
+					name: 'Test Address',
+					regionISOCode: 'CA',
+					street1: 'Test Street',
+					zip: '12345',
+				}
+			);
+
+		const customerOrder =
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: buyerAccount.id,
+				billingAddressId: address.id,
+				channelId: customerChannel.id,
+				orderItems: [
+					{quantity: 1, skuId: supplierSku.id},
+					{quantity: 1, skuId: otherSku.id},
+				],
+				orderStatus: '1',
+				paymentMethod: 'money-order',
+				paymentStatus: '2',
+				shippingAddressId: address.id,
+				shippingMethod: 'by-weight',
+				shippingOption: 'standard-option',
+			} as any);
+
+		await commerceAdminOrdersPage.goto();
+
+		await commerceAdminOrdersPage
+			.tableRowOrderIdLink(customerOrder.id)
+			.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.headerDetailsTitle
+		).toBeVisible();
+
+		await commerceAdminOrderDetailsPage.acceptOrderButton.click();
+
+		await waitForAlert(page);
+
+		let supplierSubOrderId: number;
+
+		await expect(async () => {
+			const ordersAfterSplit =
+				await apiHelpers.headlessCommerceAdminOrder.getOrdersPage();
+
+			const supplierSubOrder = (ordersAfterSplit.items ?? []).find(
+				(o: {channelId: number; id: number}) =>
+					o.channelId === supplierChannel.id
+			);
+
+			expect(supplierSubOrder).toBeDefined();
+
+			supplierSubOrderId = supplierSubOrder.id;
+		}).toPass({timeout: 15000});
+
+		await performUserSwitch(page, supplierUser.alternateName);
+
+		await commerceAdminOrdersPage.goto();
+
+		await commerceAdminOrdersPage
+			.tableRowOrderIdLink(supplierSubOrderId)
+			.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.headerDetailsTitle
+		).toBeVisible();
+
+		await commerceAdminOrderDetailsPage.createShipmentButton.click();
+
+		await expect(
+			commerceAdminOrderDetailsPage.orderStatusProcessing
+		).toBeVisible();
+
+		await commerceAdminShipmentsPage.addProductsToShipment.click();
+
+		await (
+			await commerceAdminShipmentsPage.shipmentItemsTableRowAction(
+				1,
+				supplierSku.sku
+			)
+		).check();
+		await commerceAdminShipmentsPage.shipmentsItemSubmitButton.click();
+		await commerceAdminShipmentsPage
+			.productsSkuLink(supplierSku.sku)
+			.click();
+		await commerceAdminShipmentsPage.addQuantityInShipment.fill('1');
+		await commerceAdminShipmentsPage.editProductSaveButton.click();
+
+		await waitForAlert(commerceAdminShipmentsPage.editProductFrame);
+
+		await commerceAdminShipmentsPage.editProductCloseButton.click();
+
+		await commerceAdminShipmentsPage
+			.shipmentStatusLink('Finish Processing')
+			.click();
+
+		await waitForAlert(page);
+
+		await commerceAdminShipmentsPage.shipmentStatusLink('Ship').click();
+
+		await waitForAlert(page);
+
+		await commerceAdminShipmentsPage.shipmentStatusLink('Deliver').click();
+
+		await waitForAlert(page);
+	}
+);
+
 for (const variant of [
 	{
 		baseSuffix: 'Base Price List',

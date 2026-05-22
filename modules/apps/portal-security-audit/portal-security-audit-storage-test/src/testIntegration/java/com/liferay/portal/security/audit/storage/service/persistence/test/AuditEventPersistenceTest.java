@@ -118,35 +118,35 @@ public class AuditEventPersistenceTest {
 
 		newAuditEvent.setCompanyId(RandomTestUtil.nextLong());
 
-		newAuditEvent.setAccountEntryId(RandomTestUtil.nextLong());
-
 		newAuditEvent.setUserId(RandomTestUtil.nextLong());
 
 		newAuditEvent.setUserName(RandomTestUtil.randomString());
 
 		newAuditEvent.setCreateDate(RandomTestUtil.nextDate());
 
-		newAuditEvent.setEventType(RandomTestUtil.randomString());
+		newAuditEvent.setAccountEntryId(RandomTestUtil.nextLong());
+
+		newAuditEvent.setAdditionalInfo(RandomTestUtil.randomString());
 
 		newAuditEvent.setClassName(RandomTestUtil.randomString());
 
 		newAuditEvent.setClassPK(RandomTestUtil.randomString());
 
-		newAuditEvent.setMessage(RandomTestUtil.randomString());
-
 		newAuditEvent.setClientHost(RandomTestUtil.randomString());
 
 		newAuditEvent.setClientIP(RandomTestUtil.randomString());
+
+		newAuditEvent.setContextName(RandomTestUtil.randomString());
+
+		newAuditEvent.setEventType(RandomTestUtil.randomString());
+
+		newAuditEvent.setMessage(RandomTestUtil.randomString());
 
 		newAuditEvent.setServerName(RandomTestUtil.randomString());
 
 		newAuditEvent.setServerPort(RandomTestUtil.nextInt());
 
 		newAuditEvent.setSessionID(RandomTestUtil.randomString());
-
-		newAuditEvent.setAdditionalInfo(RandomTestUtil.randomString());
-
-		newAuditEvent.setContextName(RandomTestUtil.randomString());
 
 		_auditEvents.add(_persistence.update(newAuditEvent));
 
@@ -161,9 +161,6 @@ public class AuditEventPersistenceTest {
 		Assert.assertEquals(
 			existingAuditEvent.getCompanyId(), newAuditEvent.getCompanyId());
 		Assert.assertEquals(
-			existingAuditEvent.getAccountEntryId(),
-			newAuditEvent.getAccountEntryId());
-		Assert.assertEquals(
 			existingAuditEvent.getUserId(), newAuditEvent.getUserId());
 		Assert.assertEquals(
 			existingAuditEvent.getUserName(), newAuditEvent.getUserName());
@@ -171,29 +168,32 @@ public class AuditEventPersistenceTest {
 			Time.getShortTimestamp(existingAuditEvent.getCreateDate()),
 			Time.getShortTimestamp(newAuditEvent.getCreateDate()));
 		Assert.assertEquals(
-			existingAuditEvent.getEventType(), newAuditEvent.getEventType());
+			existingAuditEvent.getAccountEntryId(),
+			newAuditEvent.getAccountEntryId());
+		Assert.assertEquals(
+			existingAuditEvent.getAdditionalInfo(),
+			newAuditEvent.getAdditionalInfo());
 		Assert.assertEquals(
 			existingAuditEvent.getClassName(), newAuditEvent.getClassName());
 		Assert.assertEquals(
 			existingAuditEvent.getClassPK(), newAuditEvent.getClassPK());
 		Assert.assertEquals(
-			existingAuditEvent.getMessage(), newAuditEvent.getMessage());
-		Assert.assertEquals(
 			existingAuditEvent.getClientHost(), newAuditEvent.getClientHost());
 		Assert.assertEquals(
 			existingAuditEvent.getClientIP(), newAuditEvent.getClientIP());
+		Assert.assertEquals(
+			existingAuditEvent.getContextName(),
+			newAuditEvent.getContextName());
+		Assert.assertEquals(
+			existingAuditEvent.getEventType(), newAuditEvent.getEventType());
+		Assert.assertEquals(
+			existingAuditEvent.getMessage(), newAuditEvent.getMessage());
 		Assert.assertEquals(
 			existingAuditEvent.getServerName(), newAuditEvent.getServerName());
 		Assert.assertEquals(
 			existingAuditEvent.getServerPort(), newAuditEvent.getServerPort());
 		Assert.assertEquals(
 			existingAuditEvent.getSessionID(), newAuditEvent.getSessionID());
-		Assert.assertEquals(
-			existingAuditEvent.getAdditionalInfo(),
-			newAuditEvent.getAdditionalInfo());
-		Assert.assertEquals(
-			existingAuditEvent.getContextName(),
-			newAuditEvent.getContextName());
 	}
 
 	@Test
@@ -229,11 +229,11 @@ public class AuditEventPersistenceTest {
 	protected OrderByComparator<AuditEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"Audit_AuditEvent", "auditEventId", true, "groupId", true,
-			"companyId", true, "accountEntryId", true, "userId", true,
-			"userName", true, "createDate", true, "eventType", true,
-			"className", true, "classPK", true, "message", true, "clientHost",
-			true, "clientIP", true, "serverName", true, "serverPort", true,
-			"sessionID", true, "contextName", true);
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "accountEntryId", true, "className", true, "classPK", true,
+			"clientHost", true, "clientIP", true, "contextName", true,
+			"eventType", true, "message", true, "serverName", true,
+			"serverPort", true, "sessionID", true);
 	}
 
 	@Test
@@ -454,35 +454,35 @@ public class AuditEventPersistenceTest {
 
 		auditEvent.setCompanyId(RandomTestUtil.nextLong());
 
-		auditEvent.setAccountEntryId(RandomTestUtil.nextLong());
-
 		auditEvent.setUserId(RandomTestUtil.nextLong());
 
 		auditEvent.setUserName(RandomTestUtil.randomString());
 
 		auditEvent.setCreateDate(RandomTestUtil.nextDate());
 
-		auditEvent.setEventType(RandomTestUtil.randomString());
+		auditEvent.setAccountEntryId(RandomTestUtil.nextLong());
+
+		auditEvent.setAdditionalInfo(RandomTestUtil.randomString());
 
 		auditEvent.setClassName(RandomTestUtil.randomString());
 
 		auditEvent.setClassPK(RandomTestUtil.randomString());
 
-		auditEvent.setMessage(RandomTestUtil.randomString());
-
 		auditEvent.setClientHost(RandomTestUtil.randomString());
 
 		auditEvent.setClientIP(RandomTestUtil.randomString());
+
+		auditEvent.setContextName(RandomTestUtil.randomString());
+
+		auditEvent.setEventType(RandomTestUtil.randomString());
+
+		auditEvent.setMessage(RandomTestUtil.randomString());
 
 		auditEvent.setServerName(RandomTestUtil.randomString());
 
 		auditEvent.setServerPort(RandomTestUtil.nextInt());
 
 		auditEvent.setSessionID(RandomTestUtil.randomString());
-
-		auditEvent.setAdditionalInfo(RandomTestUtil.randomString());
-
-		auditEvent.setContextName(RandomTestUtil.randomString());
 
 		_auditEvents.add(_persistence.update(auditEvent));
 
@@ -494,4 +494,4 @@ public class AuditEventPersistenceTest {
 	private ClassLoader _dynamicQueryClassLoader;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-168210506
+// LIFERAY-SERVICE-BUILDER-HASH:1831983958

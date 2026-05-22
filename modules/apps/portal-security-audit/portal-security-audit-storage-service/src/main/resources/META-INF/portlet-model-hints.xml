@@ -5,25 +5,29 @@
 		<field name="auditEventId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
-		<field name="accountEntryId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
 		</field>
 		<field name="createDate" type="Date" />
-		<field name="eventType" type="String" />
+		<field name="accountEntryId" type="long" />
+		<field name="additionalInfo" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="className" type="String">
 			<hint name="max-length">200</hint>
 		</field>
 		<field name="classPK" type="String" />
-		<field name="message" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
 		<field name="clientHost" type="String">
 			<hint name="max-length">255</hint>
 		</field>
 		<field name="clientIP" type="String">
 			<hint name="max-length">255</hint>
+		</field>
+		<field name="contextName" type="String" />
+		<field name="eventType" type="String" />
+		<field name="message" type="String">
+			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="serverName" type="String">
 			<hint name="max-length">255</hint>
@@ -32,9 +36,5 @@
 		<field name="sessionID" type="String">
 			<hint name="max-length">255</hint>
 		</field>
-		<field name="additionalInfo" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="contextName" type="String" />
 	</model>
 </model-hints>

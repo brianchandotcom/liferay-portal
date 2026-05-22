@@ -3,6 +3,7 @@ import autobind from 'autobind-decorator';
 import BehaviorInput from '../inputs/BehaviorInput';
 import BooleanInput from '../inputs/BooleanInput';
 import ClayIcon from '@clayui/icon';
+import ClaySticker from '@clayui/sticker';
 import CustomBooleanInput from '../inputs/CustomBooleanInput';
 import CustomDateInput from '../inputs/CustomDateInput';
 import CustomDateTimeInput from '../inputs/CustomDateTimeInput';
@@ -30,6 +31,13 @@ import {
 	withReferencedObjectsConsumer
 } from '../context/referencedObjects';
 import {compose} from 'redux';
+import {
+	Conjunctions,
+	isKnown,
+	isUnknown,
+	PropertyTypes,
+	RelationalOperators
+} from '../utils/constants';
 import {connect, ConnectedProps} from 'react-redux';
 import {
 	ConnectDragPreview,
@@ -50,13 +58,6 @@ import {
 import {Criterion, CriterionGroup, OnMove, Operator} from '../utils/types';
 import {DragTypes} from '../utils/drag-types';
 import {get} from 'lodash';
-import {
-	Conjunctions,
-	isKnown,
-	isUnknown,
-	PropertyTypes,
-	RelationalOperators
-} from '../utils/constants';
 import {Map} from 'immutable';
 import {Option, Picker} from '@clayui/core';
 import {Property} from 'shared/util/records';
@@ -225,6 +226,7 @@ interface ICriteriaRowProps extends PropsFromRedux {
 	referencedProperties: Map<string, Map<string, Property>>;
 	segmentType: SegmentTypes;
 	sequential?: boolean;
+	stepNumber?: number;
 	timeZoneId: string;
 }
 
@@ -499,7 +501,8 @@ class CriteriaRow extends React.Component<
 				connectDragSource,
 				connectDropTarget,
 				dragging,
-				hover
+				hover,
+				stepNumber
 			},
 			state: {selectedProperty}
 		} = this;
@@ -525,6 +528,16 @@ class CriteriaRow extends React.Component<
 							<div className='drag-icon'>
 								<ClayIcon className='icon-root' symbol='drag' />
 							</div>
+						)}
+
+						{stepNumber !== undefined && (
+							<ClaySticker
+								className='criteria-step-number mr-2'
+								displayType='outline'
+								shape='circle'
+							>
+								{stepNumber}
+							</ClaySticker>
 						)}
 
 						{selectedProperty ? (

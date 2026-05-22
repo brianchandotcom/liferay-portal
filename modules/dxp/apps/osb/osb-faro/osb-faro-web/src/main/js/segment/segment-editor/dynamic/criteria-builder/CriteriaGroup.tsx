@@ -95,6 +95,7 @@ interface ICriteriaGroupProps {
 	root?: boolean;
 	segmentType: SegmentTypes;
 	sequential: boolean;
+	stepNumber?: number;
 }
 
 class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
@@ -276,6 +277,10 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		} = this.props;
 
 		const criterionGroup = isCriterionGroup(criterion);
+		const isSequentialTopLevel = !!root && !!sequential;
+		const stepNumber = isSequentialTopLevel
+			? index + 1
+			: this.props.stepNumber;
 
 		const classes = getCN('criterion', {
 			'criterion-group': criterionGroup
@@ -298,6 +303,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 						parentGroupId={criteriaGroupId}
 						segmentType={segmentType}
 						sequential={sequential}
+						stepNumber={stepNumber}
 					/>
 				) : (
 					<CriteriaRow
@@ -314,6 +320,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 						onMove={onMove}
 						segmentType={segmentType}
 						sequential={sequential}
+						stepNumber={stepNumber}
 					/>
 				)}
 
@@ -352,7 +359,6 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			: nestedOrLimitState
 			? NESTED_OR_LIMIT_ALERT[nestedOrLimitState]
 			: null;
-		const atLimit = !!alertConfig;
 
 		const classes = getCN(
 			'sheet',
@@ -382,7 +388,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 				<>
 					<DropZone
 						criteriaGroupId={criteriaGroupId}
-						disabled={atLimit}
+						disabled={!!alertConfig}
 						dropIndex={0}
 						id={id}
 						onCriterionAdd={this.handleCriterionAdd}
@@ -407,12 +413,15 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 								}`}
 							>
 								{index !== 0 &&
-									this.renderConjunction(index, atLimit)}
+									this.renderConjunction(
+										index,
+										!!alertConfig
+									)}
 
 								{this.renderCriterion(
 									criterion,
 									index,
-									atLimit
+									!!alertConfig
 								)}
 							</Fragment>
 						))}

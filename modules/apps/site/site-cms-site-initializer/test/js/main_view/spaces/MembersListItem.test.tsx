@@ -100,6 +100,56 @@ describe('MemberListItem', () => {
 		expect(SpaceMembersPermissionSelect).toHaveBeenCalled();
 	});
 
+	it('passes disabled to SpaceMembersPermissionSelect when the user is the current user', () => {
+		render(
+			<MembersListItem
+				{...props}
+				itemType="user"
+				items={[testUserAccount]}
+			/>
+		);
+
+		expect(SpaceMembersPermissionSelect).toHaveBeenCalledWith(
+			expect.objectContaining({disabled: true}),
+			{}
+		);
+	});
+
+	it('passes disabled=false to SpaceMembersPermissionSelect when the user is not the current user', () => {
+		const anotherUser = {
+			emailAddress: 'another.user@example.com',
+			externalReferenceCode: 'ANOTHER_USER_ERC',
+			id: 'another-user-id',
+			name: 'Another User',
+			roles: [],
+		};
+
+		render(
+			<MembersListItem {...props} itemType="user" items={[anotherUser]} />
+		);
+
+		expect(SpaceMembersPermissionSelect).toHaveBeenCalledWith(
+			expect.objectContaining({disabled: false}),
+			{}
+		);
+	});
+
+	it('passes disabled=false to SpaceMembersPermissionSelect when the item is a group', () => {
+		render(
+			<MembersListItem
+				{...props}
+				currentUserId={testUserGroup.id}
+				itemType="group"
+				items={[testUserGroup]}
+			/>
+		);
+
+		expect(SpaceMembersPermissionSelect).toHaveBeenCalledWith(
+			expect.objectContaining({disabled: false}),
+			{}
+		);
+	});
+
 	it('renders a user with fallback image and without the (you) tag', () => {
 		const anotherUser = {
 			emailAddress: 'another.user@example.com',

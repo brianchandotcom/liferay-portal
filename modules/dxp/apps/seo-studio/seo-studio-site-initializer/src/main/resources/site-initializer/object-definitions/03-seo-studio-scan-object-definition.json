@@ -36,6 +36,21 @@
 			"type": "Clob"
 		},
 		{
+			"DBType": "String",
+			"businessType": "Picklist",
+			"externalReferenceCode": "NAME",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"label": {
+				"en_US": "Name"
+			},
+			"listTypeDefinitionExternalReferenceCode": "L_SEO_STUDIO_SCAN_NAMES",
+			"name": "name",
+			"required": true,
+			"system": true,
+			"type": "String"
+		},
+		{
 			"DBType": "DateTime",
 			"businessType": "DateTime",
 			"externalReferenceCode": "REQUEST_DATE",

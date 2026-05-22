@@ -95,6 +95,7 @@ export {
 	getProductMaxQuantity,
 	getProductMinQuantity,
 	getNumberOfDecimals,
+	getQuantity,
 	isMultiple,
 } from './utilities/quantities';
 export {default as slugify} from './utilities/slugify';

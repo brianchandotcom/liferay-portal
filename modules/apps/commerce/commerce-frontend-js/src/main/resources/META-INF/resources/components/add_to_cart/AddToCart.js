@@ -15,35 +15,13 @@ import {
 	CP_UNIT_OF_MEASURE_SELECTOR_CHANGED,
 } from '../../utilities/eventsDefinitions';
 import {useCommerceAccount, useCommerceCart} from '../../utilities/hooks';
-import {getMinQuantity, getMultipleQuantity} from '../../utilities/quantities';
+import {getQuantity} from '../../utilities/quantities';
 import QuantitySelector from '../quantity_selector/QuantitySelector';
 import UnitOfMeasureSelector from '../unit_of_measure_selector/UnitOfMeasureSelector';
 import AddToCartButton from './AddToCartButton';
 import {ALL} from './constants';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
-
-function getQuantity(settings, skuUnitOfMeasure) {
-	if (settings?.productConfiguration?.allowedOrderQuantities?.length) {
-		return Math.min(
-			...settings.productConfiguration.allowedOrderQuantities
-		);
-	}
-
-	return Number(
-		getMinQuantity(
-			skuUnitOfMeasure
-				? settings?.productConfiguration?.minOrderQuantity
-				: Math.ceil(settings?.productConfiguration?.minOrderQuantity),
-			getMultipleQuantity(
-				skuUnitOfMeasure?.incrementalOrderQuantity,
-				settings?.productConfiguration?.multipleOrderQuantity,
-				skuUnitOfMeasure?.precision || 0
-			),
-			skuUnitOfMeasure?.precision || 0
-		)
-	);
-}
 
 function AddToCart({
 	accountId: initialAccountId,
@@ -64,7 +42,10 @@ function AddToCart({
 	});
 	const [cpInstance, setCpInstance] = useState({
 		...initialCpInstance,
-		quantity: getQuantity(settings, initialCpInstance.skuUnitOfMeasure),
+		quantity: getQuantity(
+			settings?.productConfiguration,
+			initialCpInstance.skuUnitOfMeasure
+		),
 		validQuantity: true,
 	});
 	const inputRef = useRef(null);
@@ -97,7 +78,10 @@ function AddToCart({
 	useEffect(() => {
 		setCpInstance({
 			...initialCpInstance,
-			quantity: getQuantity(settings, initialCpInstance.skuUnitOfMeasure),
+			quantity: getQuantity(
+				settings?.productConfiguration,
+				initialCpInstance.skuUnitOfMeasure
+			),
 			validQuantity: true,
 		});
 	}, [initialCpInstance, settings]);

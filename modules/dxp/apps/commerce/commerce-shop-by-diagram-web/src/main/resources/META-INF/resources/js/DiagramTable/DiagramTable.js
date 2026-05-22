@@ -35,19 +35,23 @@ function formatCpInstances(cpInstances, quantities) {
 			return selectedCpInstances;
 		}
 
-		const skuOptions = formatProductOptions(
-			cpInstance.skuOptions,
-			cpInstance.productOptions
-		);
+		const quantity =
+			quantities[cpInstance.skuId] || cpInstance.initialQuantity;
+		const skuUnitOfMeasure = cpInstance.skuUnitOfMeasures?.[0];
 
 		return [
 			...selectedCpInstances,
 			{
 				inCart: false,
-				quantity:
-					quantities[cpInstance.skuId] || cpInstance.initialQuantity,
+				quantity: Number(
+					quantity.toFixed(skuUnitOfMeasure?.precision || 0)
+				),
 				skuId: cpInstance.skuId,
-				skuOptions,
+				skuOptions: formatProductOptions(
+					cpInstance.skuOptions,
+					cpInstance.productOptions
+				),
+				skuUnitOfMeasure,
 				validQuantity: true,
 			},
 		];

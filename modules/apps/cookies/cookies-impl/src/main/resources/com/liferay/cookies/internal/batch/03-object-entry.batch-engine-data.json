@@ -13,14 +13,6 @@
 	"items": [
 		{
 			"expiration": "365 Days",
-			"externalReferenceCode": "a01f9aa5-7f03-4600-8d96-0fba22ec891e",
-			"host": "Liferay",
-			"name": "COMMERCE_CONTINUE_AS_GUEST",
-			"purpose": "Stores the user's preference (true/false) to continue checking out an order as a guest. Strictly necessary.",
-			"type": "First Party"
-		},
-		{
-			"expiration": "365 Days",
 			"externalReferenceCode": "e640a012-4a2c-4413-ac2f-a4436080e637",
 			"host": "Liferay",
 			"name": "COMPANY_ID",

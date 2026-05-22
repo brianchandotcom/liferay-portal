@@ -22,9 +22,6 @@ public class CookiesConstants {
 
 	public static final int MAX_AGE = (int)(Time.YEAR / 1000);
 
-	public static final String NAME_COMMERCE_CONTINUE_AS_GUEST =
-		"COMMERCE_CONTINUE_AS_GUEST";
-
 	public static final String NAME_COMPANY_ID = "COMPANY_ID";
 
 	public static final String NAME_CONSENT_TYPE_FUNCTIONAL =

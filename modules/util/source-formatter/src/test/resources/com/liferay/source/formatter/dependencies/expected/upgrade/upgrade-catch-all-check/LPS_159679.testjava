@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
 public class LPS_159679 {
 
 	public void method() {
-		CookiesConstants.NAME_COMMERCE_CONTINUE_AS_GUEST;
 		CookiesConstants.NAME_ID;
 		CookiesConstants.NAME_USER_UUID;
 	}

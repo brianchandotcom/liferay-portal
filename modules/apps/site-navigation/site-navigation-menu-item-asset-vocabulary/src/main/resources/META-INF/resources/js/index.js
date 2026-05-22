@@ -50,10 +50,7 @@ function resolveScope(vocabulary, context) {
 		};
 	}
 
-	if (
-		vocabulary.siteId !== undefined &&
-		String(vocabulary.siteId) === context.companyGroupId
-	) {
+	if (String(vocabulary.siteId) === context.companyGroupId) {
 		return {
 			scopeExternalReferenceCode: context.companyExternalReferenceCode,
 			scopeName: Liferay.Language.get('global'),

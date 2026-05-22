@@ -9,6 +9,8 @@ import {
 	LifecycleStages,
 	lifecycleStagesLabelMap
 } from 'contacts/pages/account/utils/constants';
+import {RangeKeyTimeRanges} from 'shared/util/constants';
+import {RangeSelectors} from 'shared/types';
 import {Routes} from 'shared/util/router';
 import {toThousands} from 'shared/util/numbers';
 
@@ -26,6 +28,7 @@ interface IAccountsDataSetProps {
 	groupId: string;
 	industryFilter?: string;
 	lifecycleStageFilter?: LifecycleStages;
+	rangeSelectors?: RangeSelectors;
 }
 
 const buildSelectionPreloadedData = (value?: string, label?: string) =>
@@ -42,14 +45,31 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 	countryFilter,
 	groupId,
 	industryFilter,
-	lifecycleStageFilter
+	lifecycleStageFilter,
+	rangeSelectors = {
+		rangeEnd: null,
+		rangeKey: RangeKeyTimeRanges.Last30Days,
+		rangeStart: null
+	}
 }) => {
 	const snapshots = useSnapshots('accounts-list-dataset');
+
+	let rangeSelectorParams = `rangeKey=${rangeSelectors.rangeKey}`;
+
+	if (rangeSelectors.rangeEnd) {
+		rangeSelectorParams += `&rangeEnd=${rangeSelectors.rangeEnd}`;
+	}
+
+	if (rangeSelectors.rangeStart) {
+		rangeSelectorParams += `&rangeStart=${rangeSelectors.rangeStart}`;
+	}
+
+	const rangeApiURL = `${apiURL}&${rangeSelectorParams}`;
 
 	return (
 		<Card>
 			<FrontendDataSet
-				apiURL={apiURL}
+				apiURL={rangeApiURL}
 				configInURLBehavior={EConfigInURLBehavior.OFF}
 				customDataRenderers={{
 					accountLifecycleStageRenderer: ({
@@ -131,9 +151,12 @@ const AccountsDataSet: React.FC<IAccountsDataSetProps> = ({
 					}
 				]}
 				id='accounts-list-dataset'
-				key={`${countryFilter ?? ''}|${industryFilter ?? ''}|${
-					lifecycleStageFilter ?? ''
-				}`}
+				key={[
+					countryFilter,
+					industryFilter,
+					lifecycleStageFilter,
+					...Object.values(rangeSelectors)
+				].join()}
 				pagination={pagination}
 				showPagination
 				snapshots={snapshots}

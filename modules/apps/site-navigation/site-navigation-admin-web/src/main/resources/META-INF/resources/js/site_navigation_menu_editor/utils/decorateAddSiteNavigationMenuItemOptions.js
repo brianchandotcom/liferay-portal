@@ -51,10 +51,7 @@ function getVocabularyScopeName(vocabulary, companyGroupId) {
 		return assetLibrary.name;
 	}
 
-	if (
-		vocabulary.siteId !== undefined &&
-		String(vocabulary.siteId) === String(companyGroupId)
-	) {
+	if (String(vocabulary.siteId) === String(companyGroupId)) {
 		return Liferay.Language.get('global');
 	}
 

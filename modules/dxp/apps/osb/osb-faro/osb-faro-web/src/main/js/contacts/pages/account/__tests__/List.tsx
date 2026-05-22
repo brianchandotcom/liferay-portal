@@ -19,6 +19,10 @@ jest.mock('@liferay/frontend-data-set-web', () => ({
 	)
 }));
 
+jest.mock('shared/components/dropdown-range-key/DropdownRangeKey', () => ({
+	DropdownRangeKey: () => null
+}));
+
 jest.mock('shared/hooks/useRequest', () => ({
 	useRequest: jest.fn()
 }));

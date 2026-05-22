@@ -6,12 +6,20 @@
 package com.liferay.journal.example.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.journal.constants.JournalArticleConstants;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalContent;
+import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -25,6 +33,7 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ThemeLocalService;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.portlet.MockPortletResponse;
 import com.liferay.portal.kernel.test.portlet.MockRenderRequest;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -36,9 +45,11 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -50,7 +61,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -80,6 +90,8 @@ public class JournalContentTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -100,21 +112,10 @@ public class JournalContentTest {
 
 	@Test
 	public void testGetDisplay() throws Exception {
-		_journalArticle = JournalTestUtil.addArticleWithXMLContent(
-			getXML(), "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");
-
-		String defaultLanguageId = _journalArticle.getDefaultLanguageId();
-
-		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			Constants.VIEW, defaultLanguageId, _portletRequestModel);
-
-		Assert.assertEquals(
-			_journalArticle.getDescription(defaultLanguageId),
-			articleDisplay.getDescription());
-		Assert.assertEquals(
-			_journalArticle.getTitle(defaultLanguageId),
-			articleDisplay.getTitle());
+		_testGetDisplay();
+		_testGetDisplayWithCSPNonceTemplate();
+		_testGetDisplayWithCSPNonceTemplateWithBlankNonce();
+		_testGetDisplayWithoutCSPNonceTemplate();
 	}
 
 	protected static String getXML() {
@@ -128,14 +129,7 @@ public class JournalContentTest {
 	}
 
 	protected Company getCompany() throws PortalException {
-		return _companyLocalService.getCompany(TestPropsValues.getCompanyId());
-	}
-
-	protected Layout getLayout() throws PortalException {
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			TestPropsValues.getGroupId(), false, 0, 1, null);
-
-		return layouts.get(0);
+		return _companyLocalService.getCompany(_group.getCompanyId());
 	}
 
 	protected RenderRequest getRenderRequest(
@@ -157,7 +151,7 @@ public class JournalContentTest {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+				_group.getGroupId(), TestPropsValues.getUserId());
 
 		serviceContext.setRequest(httpServletRequest);
 
@@ -166,7 +160,7 @@ public class JournalContentTest {
 
 	protected Theme getTheme(LayoutSet layoutSet) throws PortalException {
 		return _themeLocalService.getTheme(
-			TestPropsValues.getCompanyId(), layoutSet.getThemeId());
+			_group.getCompanyId(), layoutSet.getThemeId());
 	}
 
 	protected ThemeDisplay getThemeDisplay(
@@ -176,10 +170,10 @@ public class JournalContentTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(getCompany());
-		themeDisplay.setLayout(getLayout());
+		themeDisplay.setLayout(_layout);
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
-			TestPropsValues.getGroupId(), false);
+			_group.getGroupId(), false);
 
 		themeDisplay.setLayoutSet(layoutSet);
 		themeDisplay.setLookAndFeel(getTheme(layoutSet), null);
@@ -187,8 +181,8 @@ public class JournalContentTest {
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setTimeZone(TimeZoneUtil.getDefault());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -221,6 +215,100 @@ public class JournalContentTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
+	private JournalArticle _addJournalArticle(String script) throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), JournalArticle.class.getName());
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
+			TemplateConstants.LANG_TYPE_FTL, script,
+			LocaleUtil.getSiteDefault());
+
+		ddmTemplate.setCacheable(true);
+
+		ddmTemplate = _ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
+
+		String xml = DDMStructureTestUtil.getSampleStructuredContent(
+			"content",
+			Collections.singletonList(
+				HashMapBuilder.put(
+					LocaleUtil.US, RandomTestUtil.randomString()
+				).build()),
+			LocaleUtil.toLanguageId(LocaleUtil.US));
+
+		return JournalTestUtil.addArticleWithXMLContent(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, xml,
+			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey(),
+			LocaleUtil.getSiteDefault());
+	}
+
+	private CompanyConfigurationTemporarySwapper
+			_getCompanyConfigurationTemporarySwapper()
+		throws Exception {
+
+		return new CompanyConfigurationTemporarySwapper(
+			_group.getCompanyId(),
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"configuration.ContentSecurityPolicyConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"enabled", true
+			).put(
+				"policy",
+				"default-src 'self'; script-src 'self' '[$NONCE$]'; " +
+					"style-src 'self' '[$NONCE$]'"
+			).put(
+				"reportOnly", false
+			).build());
+	}
+
+	private JournalArticleDisplay _getDisplay(JournalArticle journalArticle)
+		throws Exception {
+
+		return _getDisplay(journalArticle, new MockHttpServletRequest());
+	}
+
+	private JournalArticleDisplay _getDisplay(
+			JournalArticle journalArticle,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = getThemeDisplay(httpServletRequest);
+
+		MockRenderRequest mockRenderRequest = new MockRenderRequest();
+
+		mockRenderRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		httpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_REQUEST, mockRenderRequest);
+
+		PortletRequestModel portletRequestModel = new PortletRequestModel(
+			mockRenderRequest, new MockPortletResponse());
+
+		return _journalContent.getDisplay(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getDDMTemplateKey(), Constants.VIEW,
+			journalArticle.getDefaultLanguageId(), 1, portletRequestModel,
+			themeDisplay);
+	}
+
+	private JournalArticleDisplay _getDisplay(
+			JournalArticle journalArticle, String nonce)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			"com.liferay.portal.security.content.security.policy.internal." +
+				"ContentSecurityPolicyNonceManager#NONCE",
+			nonce);
+
+		return _getDisplay(journalArticle, mockHttpServletRequest);
+	}
+
 	private Map<Locale, String> _getLocalizedMap(Locale[] locales) {
 		Map<Locale, String> map = new HashMap<>();
 
@@ -235,7 +323,7 @@ public class JournalContentTest {
 		String englishContent = RandomTestUtil.randomString();
 		String spanishContent = RandomTestUtil.randomString();
 
-		_journalArticle = JournalTestUtil.addArticle(
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			_group.getGroupId(), 0,
 			_portal.getClassNameId(JournalArticle.class),
 			_getLocalizedMap(locales), _getLocalizedMap(locales),
@@ -251,7 +339,7 @@ public class JournalContentTest {
 
 		JournalArticleDisplay englishArticleDisplay =
 			_journalContent.getDisplay(
-				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
 				Constants.VIEW, englishLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(englishContent, englishArticleDisplay.getContent());
@@ -260,47 +348,133 @@ public class JournalContentTest {
 
 		JournalArticleDisplay spanishArticleDisplay =
 			_journalContent.getDisplay(
-				_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+				journalArticle.getGroupId(), journalArticle.getArticleId(),
 				Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(spanishContent, spanishArticleDisplay.getContent());
 
 		_journalArticleLocalService.removeArticleLocale(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			_journalArticle.getVersion(), spanishLanguageId);
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), spanishLanguageId);
 
 		_journalContent.clearCache(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
-			_journalArticle.getDDMTemplateKey());
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getDDMTemplateKey());
 
 		englishArticleDisplay = _journalContent.getDisplay(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			Constants.VIEW, englishLanguageId, _portletRequestModel);
 
 		Assert.assertEquals(englishContent, englishArticleDisplay.getContent());
 
 		spanishArticleDisplay = _journalContent.getDisplay(
-			_journalArticle.getGroupId(), _journalArticle.getArticleId(),
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
 			Constants.VIEW, spanishLanguageId, _portletRequestModel);
 
 		Assert.assertNotEquals(
 			spanishContent, spanishArticleDisplay.getContent());
 	}
 
+	private void _testGetDisplay() throws Exception {
+		JournalArticle journalArticle =
+			JournalTestUtil.addArticleWithXMLContent(
+				getXML(), "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");
+
+		String defaultLanguageId = journalArticle.getDefaultLanguageId();
+
+		JournalArticleDisplay articleDisplay = _journalContent.getDisplay(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			Constants.VIEW, defaultLanguageId, _portletRequestModel);
+
+		Assert.assertEquals(
+			journalArticle.getDescription(defaultLanguageId),
+			articleDisplay.getDescription());
+		Assert.assertEquals(
+			journalArticle.getTitle(defaultLanguageId),
+			articleDisplay.getTitle());
+	}
+
+	private void _testGetDisplayWithCSPNonceTemplate() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper()) {
+
+			JournalArticle journalArticle = _addJournalArticle(_SCRIPT);
+
+			String oldNonce = RandomTestUtil.randomString();
+
+			_getDisplay(journalArticle, oldNonce);
+
+			String newNonce = RandomTestUtil.randomString();
+
+			JournalArticleDisplay articleDisplay = _getDisplay(
+				journalArticle, newNonce);
+
+			String content = articleDisplay.getContent();
+
+			Assert.assertTrue(content.contains(" nonce=\"" + newNonce + "\""));
+			Assert.assertFalse(content.contains(" nonce=\"" + oldNonce + "\""));
+		}
+	}
+
+	private void _testGetDisplayWithCSPNonceTemplateWithBlankNonce()
+		throws Exception {
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper()) {
+
+			JournalArticle journalArticle = _addJournalArticle(_SCRIPT);
+
+			_getDisplay(journalArticle, RandomTestUtil.randomString());
+
+			JournalArticleDisplay articleDisplay = _getDisplay(journalArticle);
+
+			String content = articleDisplay.getContent();
+
+			Assert.assertTrue(content.contains("data-lfr-nonce-journal"));
+		}
+	}
+
+	private void _testGetDisplayWithoutCSPNonceTemplate() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					_getCompanyConfigurationTemporarySwapper()) {
+
+			JournalArticle journalArticle = _addJournalArticle(
+				"<script>console.log(\"test\");</script>");
+
+			_getDisplay(journalArticle, RandomTestUtil.randomString());
+
+			JournalArticleDisplay articleDisplay = _getDisplay(
+				journalArticle, RandomTestUtil.randomString());
+
+			String content = articleDisplay.getContent();
+
+			Assert.assertFalse(content.contains("data-lfr-nonce-journal"));
+			Assert.assertFalse(content.contains(" nonce=\""));
+		}
+	}
+
+	private static final String _SCRIPT =
+		"<script ${nonceAttribute}>console.log(\"test\");</script>";
+
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
-	private Group _group;
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 
 	@DeleteAfterTestRun
-	private JournalArticle _journalArticle;
+	private Group _group;
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Inject
 	private JournalContent _journalContent;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

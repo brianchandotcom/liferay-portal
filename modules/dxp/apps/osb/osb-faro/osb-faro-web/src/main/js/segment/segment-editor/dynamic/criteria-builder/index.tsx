@@ -1,10 +1,12 @@
 import autobind from 'autobind-decorator';
+import ClearAllButton from './ClearAllButton';
 import CriteriaGroup from './CriteriaGroup';
 import React from 'react';
 import {Criteria, Criterion, CriterionGroup} from '../utils/types';
 import {insertAtIndex, removeAtIndex, replaceAtIndex} from 'shared/util/array';
 import {isCriterionGroup} from '../utils/utils';
 import {SegmentTypes} from 'shared/util/constants';
+import {wrapInCriteriaGroup} from '../utils/odata';
 
 interface ICriteriaBuilderProps {
 	channelId: string;
@@ -74,6 +76,11 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const items = this.cleanCriteriaMapItems([newCriteria], true);
 
 		this.props.onChange(items[items.length - 1]);
+	}
+
+	@autobind
+	handleClearAll(): void {
+		this.props.onChange(wrapInCriteriaGroup([]));
 	}
 
 	/**
@@ -160,6 +167,8 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const {channelId, criteria, groupId, id, segmentType, sequential} =
 			this.props;
 
+		const hasCriteria = !!criteria?.items?.length;
+
 		return (
 			<div className='criteria-builder-root'>
 				<CriteriaGroup
@@ -177,6 +186,10 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 					segmentType={segmentType}
 					sequential={sequential}
 				/>
+
+				{hasCriteria && (
+					<ClearAllButton onClear={this.handleClearAll} />
+				)}
 			</div>
 		);
 	}

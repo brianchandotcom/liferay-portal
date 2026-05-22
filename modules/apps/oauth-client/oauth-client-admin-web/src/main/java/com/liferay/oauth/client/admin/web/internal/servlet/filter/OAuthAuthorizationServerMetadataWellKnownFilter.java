@@ -125,12 +125,16 @@ public class OAuthAuthorizationServerMetadataWellKnownFilter
 		String issuerPath = requestURI.substring(
 			index + _WELL_KNOWN_PATH.length());
 
-		if (issuerPath.isEmpty()) {
+		if (issuerPath.isEmpty() || issuerPath.equals(StringPool.SLASH)) {
 			return _oAuthClientASLocalMetadataLocalService.
 				fetchOAuthClientASLocalMetadata(companyId, true, null);
 		}
 
 		String issuer = _portal.getPortalURL(httpServletRequest) + issuerPath;
+
+		if (issuer.endsWith(StringPool.SLASH)) {
+			issuer = issuer.substring(0, issuer.length() - 1);
+		}
 
 		return _oAuthClientASLocalMetadataLocalService.
 			fetchOAuthClientASLocalMetadata(companyId, issuer);

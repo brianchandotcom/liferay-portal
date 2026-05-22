@@ -191,6 +191,68 @@ test(
 );
 
 test(
+	'AB Test by Click goal shows an error when the element ID is invalid',
+	{tag: '@LPS-119475'},
+	async ({apiHelpers, page, site}) => {
+		let channel;
+		let project;
+
+		try {
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'BASIC_COMPONENT-button',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			const result = await syncAnalyticsCloud({
+				apiHelpers,
+				channelName: 'My Property - ' + getRandomString(),
+				page,
+				siteName: site.name,
+			});
+
+			channel = result.channel;
+			project = result.project;
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await openABTesSidebar(page);
+
+			await createABTest({
+				goal: 'Click',
+				name: 'AB Test ' + getRandomString(),
+				page,
+			});
+
+			// Type an invalid ID and try to run the test
+
+			await page.locator('#clickableElement').fill('invalidID');
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByText('ID was not found.'),
+				trigger: page.getByText('Review and Run Test'),
+			});
+		}
+		finally {
+			if (channel && project) {
+				await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+					`[${channel.id}]`,
+					project.groupId
+				);
+			}
+		}
+	}
+);
+
+test(
 	'AB Test cannot be run when all variants have been deleted',
 	{tag: '@LPS-86285'},
 	async ({apiHelpers, page, site}) => {

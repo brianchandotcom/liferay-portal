@@ -52,8 +52,9 @@ public class ObjectValidationRuleModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectValidationRule.class.getName(),
+					ObjectValidationRule.class.getName(),
 					objectValidationRule.getObjectValidationRuleId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectValidationRule, objectValidationRule)));
 		}
@@ -84,8 +85,9 @@ public class ObjectValidationRuleModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectValidationRule.class.getName(),
-				objectValidationRule.getObjectValidationRuleId(), null);
+				ObjectValidationRule.class.getName(),
+				objectValidationRule.getObjectValidationRuleId(), eventType,
+				null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

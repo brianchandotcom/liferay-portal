@@ -253,8 +253,8 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					eventType, assetEntry.getClassName(),
-					assetEntry.getClassPK(), attributes));
+					assetEntry.getClassName(), assetEntry.getClassPK(),
+					eventType, attributes));
 		}
 	}
 

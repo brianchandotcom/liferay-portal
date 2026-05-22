@@ -75,8 +75,9 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
 					AuditMessageBuilder.buildAuditMessage(
-						EventTypes.UPDATE, Organization.class.getName(),
-						organization.getOrganizationId(), attributes);
+						Organization.class.getName(),
+						organization.getOrganizationId(), EventTypes.UPDATE,
+						attributes);
 
 				_auditRouter.route(auditMessage);
 			}
@@ -97,7 +98,7 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, associationClassName, (Long)associationClassPK,
+				associationClassName, (Long)associationClassPK, eventType,
 				null);
 
 			JSONObject additionalInfoJSONObject =
@@ -126,8 +127,8 @@ public class OrganizationModelListener extends BaseModelListener<Organization> {
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, Organization.class.getName(),
-				organization.getOrganizationId(), null);
+				Organization.class.getName(), organization.getOrganizationId(),
+				eventType, null);
 
 			_auditRouter.route(auditMessage);
 		}

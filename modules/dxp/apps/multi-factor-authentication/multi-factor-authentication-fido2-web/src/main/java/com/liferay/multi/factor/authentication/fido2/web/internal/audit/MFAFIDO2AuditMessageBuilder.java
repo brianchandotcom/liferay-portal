@@ -27,47 +27,48 @@ public class MFAFIDO2AuditMessageBuilder {
 		long companyId, long userId, String checkerClassName) {
 
 		return new AuditMessage(
-			MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE, companyId,
-			userId, "Nonexistent", checkerClassName, String.valueOf(userId),
-			null, JSONUtil.put("reason", "Nonexistent User"));
+			companyId, userId, "Nonexistent",
+			JSONUtil.put("reason", "Nonexistent User"), checkerClassName,
+			String.valueOf(userId),
+			MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE, null);
 	}
 
 	public AuditMessage buildNotVerifiedAuditMessage(
 		User user, String checkerClassName, String reason) {
 
 		return new AuditMessage(
-			MFAFIDO2EventTypes.MFA_FIDO2_NOT_VERIFIED, user.getCompanyId(),
-			user.getUserId(), user.getFullName(), checkerClassName,
-			String.valueOf(user.getPrimaryKey()), null,
-			JSONUtil.put("reason", reason));
+			user.getCompanyId(), user.getUserId(), user.getFullName(),
+			JSONUtil.put("reason", reason), checkerClassName,
+			String.valueOf(user.getPrimaryKey()),
+			MFAFIDO2EventTypes.MFA_FIDO2_NOT_VERIFIED, null);
 	}
 
 	public AuditMessage buildUnconfiguredUserVerificationFailureAuditMessage(
 		long companyId, User user, String checkerClassName) {
 
 		return new AuditMessage(
-			MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE, companyId,
-			user.getUserId(), "Unconfigured", checkerClassName, null, null,
-			JSONUtil.put("reason", "Unconfigured for User"));
+			companyId, user.getUserId(), "Unconfigured",
+			JSONUtil.put("reason", "Unconfigured for User"), checkerClassName,
+			null, MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE, null);
 	}
 
 	public AuditMessage buildVerificationFailureAuditMessage(
 		User user, String checkerClassName, String reason) {
 
 		return new AuditMessage(
-			MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE,
 			user.getCompanyId(), user.getUserId(), user.getFullName(),
-			checkerClassName, String.valueOf(user.getPrimaryKey()), null,
-			JSONUtil.put("reason", reason));
+			JSONUtil.put("reason", reason), checkerClassName,
+			String.valueOf(user.getPrimaryKey()),
+			MFAFIDO2EventTypes.MFA_FIDO2_VERIFICATION_FAILURE, null);
 	}
 
 	public AuditMessage buildVerifiedAuditMessage(
 		User user, String checkerClassName) {
 
 		return new AuditMessage(
-			MFAFIDO2EventTypes.MFA_FIDO2_VERIFIED, user.getCompanyId(),
-			user.getUserId(), user.getFullName(), checkerClassName,
-			String.valueOf(user.getPrimaryKey()), null, null);
+			user.getCompanyId(), user.getUserId(), user.getFullName(), null,
+			checkerClassName, String.valueOf(user.getPrimaryKey()),
+			MFAFIDO2EventTypes.MFA_FIDO2_VERIFIED, null);
 	}
 
 	public void routeAuditMessage(AuditMessage auditMessage) {

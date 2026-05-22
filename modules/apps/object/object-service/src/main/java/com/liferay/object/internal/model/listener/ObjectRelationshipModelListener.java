@@ -52,8 +52,9 @@ public class ObjectRelationshipModelListener
 		try {
 			_auditRouter.route(
 				AuditMessageBuilder.buildAuditMessage(
-					EventTypes.UPDATE, ObjectRelationship.class.getName(),
+					ObjectRelationship.class.getName(),
 					objectRelationship.getObjectRelationshipId(),
+					EventTypes.UPDATE,
 					_getModifiedAttributes(
 						originalObjectRelationship, objectRelationship)));
 		}
@@ -80,8 +81,8 @@ public class ObjectRelationshipModelListener
 
 		try {
 			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				eventType, ObjectRelationship.class.getName(),
-				objectRelationship.getObjectRelationshipId(), null);
+				ObjectRelationship.class.getName(),
+				objectRelationship.getObjectRelationshipId(), eventType, null);
 
 			JSONObject additionalInfoJSONObject =
 				auditMessage.getAdditionalInfo();

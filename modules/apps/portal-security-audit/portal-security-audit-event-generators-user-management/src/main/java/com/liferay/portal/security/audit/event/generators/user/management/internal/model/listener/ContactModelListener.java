@@ -39,8 +39,8 @@ public class ContactModelListener extends BaseModelListener<Contact> {
 			if (!attributes.isEmpty()) {
 				AuditMessage auditMessage =
 					AuditMessageBuilder.buildAuditMessage(
-						EventTypes.UPDATE, User.class.getName(),
-						contact.getClassPK(), attributes);
+						User.class.getName(), contact.getClassPK(),
+						EventTypes.UPDATE, attributes);
 
 				_auditRouter.route(auditMessage);
 			}

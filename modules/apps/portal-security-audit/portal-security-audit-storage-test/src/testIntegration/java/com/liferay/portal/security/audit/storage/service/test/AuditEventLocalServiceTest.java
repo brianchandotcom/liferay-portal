@@ -38,7 +38,7 @@ public class AuditEventLocalServiceTest {
 	public void testAddAuditEvent() {
 		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new ArrayList<>());
 
 		AuditEvent auditEvent = _auditEventLocalService.addAuditEvent(

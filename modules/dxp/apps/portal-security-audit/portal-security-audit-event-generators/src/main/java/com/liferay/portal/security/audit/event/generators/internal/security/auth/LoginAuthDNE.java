@@ -34,15 +34,15 @@ public class LoginAuthDNE implements AuthDNE {
 
 		try {
 			AuditMessage auditMessage = new AuditMessage(
-				EventTypes.LOGIN_DNE, companyId, 0, null, User.class.getName(),
-				"0", null,
+				companyId, 0, null,
 				JSONUtil.put(
 					"authType", authType
 				).put(
 					"headers", _jsonFactory.serialize(headerMap)
 				).put(
 					"reason", "User does not exist"
-				));
+				),
+				User.class.getName(), "0", EventTypes.LOGIN_DNE, null);
 
 			auditMessage.setUserLogin(login);
 

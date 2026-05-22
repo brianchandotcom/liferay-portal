@@ -32,7 +32,7 @@ import {
 } from '../../utils/productUtils';
 import {getSiteURL} from '../../utils/site';
 import {getAccountImage} from '../../utils/util';
-import AIHubNextSteps from '../ProductPurchase/pages/LiferayProduct/AIHubForm/AIHubNextSteps';
+import AIHubNextSteps from '../ProductPurchase/pages/LiferayProduct/AIHub/AIHubNextSteps';
 import LDPNextSteps from '../ProductPurchase/pages/LiferayProduct/LDPNextSteps';
 import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
 

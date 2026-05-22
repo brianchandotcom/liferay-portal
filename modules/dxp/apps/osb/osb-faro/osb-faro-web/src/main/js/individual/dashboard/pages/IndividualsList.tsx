@@ -19,7 +19,8 @@ import {
 	ProfileTypes,
 	RelationalOperators
 } from 'segment/segment-editor/dynamic/utils/constants';
-import {FilterOptionType} from 'shared/types';
+import {FilterOptionType, RangeSelectors} from 'shared/types';
+import {getSafeRangeSelectors} from 'shared/util/util';
 import {IndividualsListCDPColumns} from 'shared/util/table-columns';
 import {Sizes} from 'shared/util/constants';
 import {useParams} from 'react-router-dom';
@@ -83,11 +84,18 @@ function transformCountriesInQueryString(countries: string[]) {
 		.join(Conjunctions.Or);
 }
 
-const IndividualsList = () => {
+interface IIndividualsList {
+	rangeSelectors: RangeSelectors;
+}
+
+const IndividualsList = ({rangeSelectors}: IIndividualsList) => {
 	const {channelId = '', groupId = ''} = useParams<{
 		channelId: string;
 		groupId: string;
 	}>();
+
+	const {rangeEnd, rangeKey, rangeStart} =
+		getSafeRangeSelectors(rangeSelectors);
 
 	const paginationParams = useStatefulPagination(undefined, {
 		initialOrderIOMap: createOrderIOMap(NAME)
@@ -189,7 +197,10 @@ const IndividualsList = () => {
 							groupId,
 							profileTypes: selectedFilters.profileTypes.length
 								? selectedFilters.profileTypes
-								: undefined
+								: undefined,
+							rangeEnd,
+							rangeKey,
+							rangeStart
 						}}
 						filterByOptions={FILTER_BY_OPTIONS}
 						key='individuals-list-table'

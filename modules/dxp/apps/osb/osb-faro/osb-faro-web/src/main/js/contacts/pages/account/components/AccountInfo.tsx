@@ -91,7 +91,7 @@ const AccountInfo: React.FC<IAccountInfoProps> = ({
 
 	return (
 		<>
-			<Card className={classNames(className, 'p-3')} minHeight={284}>
+			<Card className={classNames(className, 'p-3')} minHeight={260}>
 				<Card.Title>
 					<Text size={4} weight='semi-bold'>
 						<span className='text-uppercase'>

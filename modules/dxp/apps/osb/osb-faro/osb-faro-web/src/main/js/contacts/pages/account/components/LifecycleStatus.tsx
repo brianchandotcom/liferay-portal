@@ -80,7 +80,7 @@ const LifecycleStatus: React.FC<LifecycleStatusProps> = ({className}) => {
 	const isEmpty = !isLoading && stages.length === 0;
 
 	return (
-		<Card className={classNames(className, 'p-3')} minHeight={284}>
+		<Card className={classNames(className, 'p-3')} minHeight={260}>
 			<Card.Title>
 				<Text weight='semi-bold'>
 					{Liferay.Language.get('lifecycle-status').toUpperCase()}

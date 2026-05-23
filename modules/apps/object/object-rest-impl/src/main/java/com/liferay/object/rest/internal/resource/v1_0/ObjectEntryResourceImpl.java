@@ -609,8 +609,8 @@ public class ObjectEntryResourceImpl
 			public boolean isHidden() {
 				if (FeatureFlagManagerUtil.isEnabled(
 						_objectDefinition.getCompanyId(), "LPD-69877") &&
-					_objectDefinition.isRootDescendantNode() &&
-					!_objectDefinition.isAllowStandaloneObjectEntry()) {
+					!_objectDefinition.isAllowStandaloneObjectEntry() &&
+					_objectDefinition.isRootDescendantNode()) {
 
 					return true;
 				}

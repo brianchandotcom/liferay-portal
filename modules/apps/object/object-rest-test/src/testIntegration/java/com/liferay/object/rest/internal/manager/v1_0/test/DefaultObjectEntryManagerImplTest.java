@@ -1438,11 +1438,20 @@ public class DefaultObjectEntryManagerImplTest
 	public void testAddObjectEntryWithAllowStandaloneObjectEntry()
 		throws Exception {
 
+		// Allow standalone object entry setting is disabled
+
+		_companyObjectDefinitionAA =
+			objectDefinitionLocalService.getObjectDefinition(
+				_companyObjectDefinitionAA.getObjectDefinitionId());
+
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				_companyObjectDefinitionAA.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
 					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+		String originalAllowStandaloneObjectEntryValue =
+			objectDefinitionSetting.getValue();
 
 		objectDefinitionSetting.setValue(StringPool.FALSE);
 
@@ -1450,19 +1459,17 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
 				objectDefinitionSetting);
 
-		ObjectDefinition childObjectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				_companyObjectDefinitionAA.getObjectDefinitionId());
-
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.NotAllowedStandaloneObjectEntry.class,
 			StringBundler.concat(
 				"Standalone object entry is not allowed for object definition ",
-				"\"", childObjectDefinition.getShortName(), "\""),
+				"\"", _companyObjectDefinitionAA.getShortName(), "\""),
 			() -> _addObjectEntry(
-				childObjectDefinition, Collections.emptyMap()));
+				objectDefinitionLocalService.getObjectDefinition(
+					_companyObjectDefinitionAA.getObjectDefinitionId()),
+				Collections.emptyMap()));
 
-		Assert.assertNotNull(
+		ObjectEntry relatedObjectEntry =
 			_defaultObjectEntryManager.addRelatedObjectEntry(
 				_simpleDTOConverterContext,
 				new ObjectEntry() {
@@ -1470,7 +1477,11 @@ public class DefaultObjectEntryManagerImplTest
 						properties = new HashMap<>();
 					}
 				},
-				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA));
+				_companyObjectEntryA.getId(), _companyObjectRelationshipA_AA);
+
+		Assert.assertNotNull(relatedObjectEntry);
+
+		// Allow standalone object entry setting is enabled
 
 		objectDefinitionSetting.setValue(StringPool.TRUE);
 
@@ -1478,20 +1489,21 @@ public class DefaultObjectEntryManagerImplTest
 			_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
 				objectDefinitionSetting);
 
-		Assert.assertNotNull(
-			_addObjectEntry(
-				objectDefinitionLocalService.getObjectDefinition(
-					_companyObjectDefinitionAA.getObjectDefinitionId()),
-				Collections.emptyMap()));
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinitionLocalService.getObjectDefinition(
+				_companyObjectDefinitionAA.getObjectDefinitionId()),
+			Collections.emptyMap());
 
-		_objectDefinitionSettingLocalService.deleteObjectDefinitionSetting(
+		Assert.assertNotNull(objectEntry);
+
+		objectDefinitionSetting.setValue(
+			originalAllowStandaloneObjectEntryValue);
+
+		_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
 			objectDefinitionSetting);
 
-		Assert.assertNotNull(
-			_addObjectEntry(
-				objectDefinitionLocalService.getObjectDefinition(
-					_companyObjectDefinitionAA.getObjectDefinitionId()),
-				Collections.emptyMap()));
+		_objectEntryLocalService.deleteObjectEntry(objectEntry.getId());
+		_objectEntryLocalService.deleteObjectEntry(relatedObjectEntry.getId());
 	}
 
 	@Test

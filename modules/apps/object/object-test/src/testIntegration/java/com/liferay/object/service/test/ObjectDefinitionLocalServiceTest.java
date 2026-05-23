@@ -3695,42 +3695,55 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Company scope
 
-		ObjectDefinition objectDefinitionA =
+		ObjectDefinition companyObjectDefinitionA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
-		ObjectDefinition objectDefinitionAA =
+		ObjectDefinition companyObjectDefinitionAA =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
 
 		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
+			companyObjectDefinitionA.getObjectDefinitionId(),
+			companyObjectDefinitionAA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
 
-		_testUpdateRootDescendantObjectDefinition(0, objectDefinitionAA);
+		_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
+			0, companyObjectDefinitionAA);
 
 		// Site scope
 
-		objectDefinitionA = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), StringUtil.randomId())),
-			ObjectDefinitionConstants.SCOPE_SITE);
-		objectDefinitionAA = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), StringUtil.randomId())),
-			ObjectDefinitionConstants.SCOPE_SITE);
+		ObjectDefinition siteObjectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				ObjectDefinitionConstants.SCOPE_SITE);
+		ObjectDefinition siteObjectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				ObjectDefinitionConstants.SCOPE_SITE);
 
 		TreeTestUtil.bind(
-			objectDefinitionA.getObjectDefinitionId(),
-			objectDefinitionAA.getObjectDefinitionId(),
+			siteObjectDefinitionA.getObjectDefinitionId(),
+			siteObjectDefinitionAA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
 
-		_testUpdateRootDescendantObjectDefinition(
-			TestPropsValues.getGroupId(), objectDefinitionAA);
+		_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
+			TestPropsValues.getGroupId(), siteObjectDefinitionAA);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				companyObjectDefinitionA.getName(),
+				companyObjectDefinitionAA.getName(),
+				siteObjectDefinitionA.getName(),
+				siteObjectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
 	@Test
@@ -4989,57 +5002,13 @@ public class ObjectDefinitionLocalServiceTest {
 		}
 	}
 
-	private void _testUpdateRootDescendantObjectDefinition(
-			long groupId, ObjectDefinition objectDefinition)
+	private void
+			_testUpdateRootDescendantObjectDefinitionWithAllowStandaloneObjectEntry(
+				long groupId, ObjectDefinition objectDefinition)
 		throws Exception {
 
-		String panelCategoryKey = RandomTestUtil.randomString();
-
-		objectDefinition.setPanelCategoryKey(panelCategoryKey);
-
-		objectDefinition = _updateCustomObjectDefinition(
-			objectDefinition.getClassName(), objectDefinition,
-			Collections.singletonList(
-				new ObjectDefinitionSettingBuilder(
-				).name(
-					ObjectDefinitionSettingConstants.
-						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
-				).value(
-					StringPool.TRUE
-				).build()));
-
-		Assert.assertEquals(
-			panelCategoryKey, objectDefinition.getPanelCategoryKey());
-
-		// Panel app is hidden when standalone object entry is not allowed
-
-		objectDefinition = _updateCustomObjectDefinition(
-			objectDefinition.getClassName(), objectDefinition,
-			Collections.singletonList(
-				new ObjectDefinitionSettingBuilder(
-				).name(
-					ObjectDefinitionSettingConstants.
-						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
-				).value(
-					StringPool.FALSE
-				).build()));
-
-		Assert.assertFalse(_isPanelAppRegistered(objectDefinition));
-
-		objectDefinition = _updateCustomObjectDefinition(
-			objectDefinition.getClassName(), objectDefinition,
-			Collections.singletonList(
-				new ObjectDefinitionSettingBuilder(
-				).name(
-					ObjectDefinitionSettingConstants.
-						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
-				).value(
-					StringPool.TRUE
-				).build()));
-
-		Assert.assertTrue(_isPanelAppRegistered(objectDefinition));
-
-		// Transition to false requires no existing standalone object entry
+		// Allow standalone object entry setting cannot be disabled while
+		// standalone object entries exist
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			groupId, TestPropsValues.getUserId(),
@@ -5081,6 +5050,40 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 
 		Assert.assertFalse(objectDefinition.isAllowStandaloneObjectEntry());
+
+		// Panel app is not visible when the allow standalone object entry
+		// setting is disabled
+
+		objectDefinition.setPanelCategoryKey(RandomTestUtil.randomString());
+
+		objectDefinition = _updateCustomObjectDefinition(
+			objectDefinition.getClassName(), objectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.FALSE
+				).build()));
+
+		Assert.assertFalse(_isPanelAppRegistered(objectDefinition));
+
+		// Panel app is visible when the allow standalone object entry setting
+		// is enabled
+
+		objectDefinition = _updateCustomObjectDefinition(
+			objectDefinition.getClassName(), objectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.TRUE
+				).build()));
+
+		Assert.assertTrue(_isPanelAppRegistered(objectDefinition));
 	}
 
 	private ObjectDefinition _updateCustomObjectDefinition(

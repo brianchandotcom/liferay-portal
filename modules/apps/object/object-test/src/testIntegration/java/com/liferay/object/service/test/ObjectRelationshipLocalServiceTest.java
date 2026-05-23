@@ -1107,31 +1107,33 @@ public class ObjectRelationshipLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateObjectRelationshipWithAllowStandaloneObjectEntry()
+	public void testUpdateObjectRelationshipWithAllowStandaloneObjectEntryDisabled()
 		throws Exception {
 
-		ObjectDefinition parentObjectDefinitionA =
+		// Unbind a parent object definition with related object entry
+
+		ObjectDefinition objectDefinitionA =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.emptyList());
-		ObjectDefinition parentObjectDefinitionB =
+		ObjectDefinition objectDefinitionB =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.emptyList());
-		ObjectDefinition childObjectDefinition =
+		ObjectDefinition objectDefinitionAA =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.emptyList());
 
-		ObjectRelationship objectRelationshipA = TreeTestUtil.bind(
-			parentObjectDefinitionA.getObjectDefinitionId(),
-			childObjectDefinition.getObjectDefinitionId(),
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
-		ObjectRelationship objectRelationshipB = TreeTestUtil.bind(
-			parentObjectDefinitionB.getObjectDefinitionId(),
-			childObjectDefinition.getObjectDefinitionId(),
+		ObjectRelationship objectRelationshipB_AA = TreeTestUtil.bind(
+			objectDefinitionB.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
 
 		ObjectDefinitionSetting objectDefinitionSetting =
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				childObjectDefinition.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
 					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
 
@@ -1140,28 +1142,27 @@ public class ObjectRelationshipLocalServiceTest {
 		_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
 			objectDefinitionSetting);
 
-		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntryA = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
-			parentObjectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionA.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null, Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
-		ObjectField parentObjectField = _objectFieldLocalService.getObjectField(
-			objectRelationshipA.getObjectFieldId2());
+		ObjectField objectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
 
-		_objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntryAA = _objectEntryLocalService.addObjectEntry(
 			0, TestPropsValues.getUserId(),
-			childObjectDefinition.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				parentObjectField.getName(),
-				parentObjectEntry.getObjectEntryId()
+				objectRelationshipA_AAObjectField2.getName(),
+				objectEntryA.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		// Disabling the edge with entries bound to it
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipEdgeException.class,
@@ -1170,36 +1171,119 @@ public class ObjectRelationshipLocalServiceTest {
 				"disable inheritance, you must first delete linked entries or ",
 				"enable standalone entries for this object."),
 			() -> TreeTestUtil.unbind(
-				objectRelationshipA, _objectRelationshipLocalService));
+				objectRelationshipA_AA, _objectRelationshipLocalService));
 
-		// Disabling the edge without entries bound to it
+		// Unbind a parent object definition without related object entry
 
 		TreeTestUtil.unbind(
-			objectRelationshipB, _objectRelationshipLocalService);
+			objectRelationshipB_AA, _objectRelationshipLocalService);
 
 		Assert.assertNotNull(
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				childObjectDefinition.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
 					NAME_ALLOW_STANDALONE_OBJECT_ENTRY));
 
-		// Disabling the last remaining edge
+		// Unbind the last parent object definition
 
 		TreeTestUtil.unbind(
-			objectRelationshipA, _objectRelationshipLocalService);
+			objectRelationshipA_AA, _objectRelationshipLocalService);
 
 		Assert.assertNull(
 			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				childObjectDefinition.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY));
+
+		objectDefinitionAA = _objectDefinitionLocalService.getObjectDefinition(
+			objectDefinitionAA.getObjectDefinitionId());
+
+		Assert.assertTrue(objectDefinitionAA.isAllowStandaloneObjectEntry());
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntryAA.getObjectEntryId()));
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {
+				objectDefinitionA.getName(), objectDefinitionB.getName(),
+				objectDefinitionAA.getName()
+			},
+			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
+	public void testUpdateObjectRelationshipWithAllowStandaloneObjectEntryEnabled()
+		throws Exception {
+
+		ObjectDefinition objectDefinitionA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+		ObjectDefinition objectDefinitionB =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+		ObjectDefinition objectDefinitionAA =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.emptyList());
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			objectDefinitionA.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		TreeTestUtil.bind(
+			objectDefinitionB.getObjectDefinitionId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		ObjectEntry objectEntryA = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinitionA.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectField objectRelationshipA_AAObjectField2 =
+			_objectFieldLocalService.getObjectField(
+				objectRelationshipA_AA.getObjectFieldId2());
+
+		ObjectEntry objectEntryAA = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(),
+			objectDefinitionAA.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				objectRelationshipA_AAObjectField2.getName(),
+				objectEntryA.getObjectEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		TreeTestUtil.unbind(
+			objectRelationshipA_AA, _objectRelationshipLocalService);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntryAA.getObjectEntryId()));
+
+		Map<String, Serializable> values = _objectEntryLocalService.getValues(
+			objectEntryAA.getObjectEntryId());
+
+		Assert.assertEquals(
+			Long.valueOf(objectEntryA.getObjectEntryId()),
+			values.get(objectRelationshipA_AAObjectField2.getName()));
+
+		Assert.assertNotNull(
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinitionAA.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
 					NAME_ALLOW_STANDALONE_OBJECT_ENTRY));
 
 		TreeTestUtil.deleteObjectDefinitionHierarchy(
 			_objectDefinitionLocalService,
 			new String[] {
-				parentObjectDefinitionA.getName(),
-				parentObjectDefinitionB.getName(),
-				childObjectDefinition.getName()
+				objectDefinitionA.getName(), objectDefinitionB.getName(),
+				objectDefinitionAA.getName()
 			},
 			_objectEntryLocalService, _objectRelationshipLocalService);
 	}

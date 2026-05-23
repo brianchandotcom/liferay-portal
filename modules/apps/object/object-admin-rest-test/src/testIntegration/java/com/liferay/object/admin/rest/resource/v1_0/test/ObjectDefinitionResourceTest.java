@@ -39,14 +39,17 @@ import com.liferay.object.constants.ObjectActionNameConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -2417,7 +2420,7 @@ public class ObjectDefinitionResourceTest
 	}
 
 	private ObjectDefinitionSetting[] _getObjectDefinitionSettings(
-		String settingValue) {
+		String allowStandaloneObjectEntryValue) {
 
 		return new ObjectDefinitionSetting[] {
 			new ObjectDefinitionSetting() {
@@ -2425,7 +2428,7 @@ public class ObjectDefinitionResourceTest
 					setName(
 						ObjectDefinitionSettingConstants.
 							NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
-					setValue(settingValue);
+					setValue(allowStandaloneObjectEntryValue);
 				}
 			}
 		};
@@ -2448,12 +2451,12 @@ public class ObjectDefinitionResourceTest
 	private Set<String> _getOpenAPIOperationIds(String restContextPath)
 		throws Exception {
 
+		Set<String> operationIds = new HashSet<>();
+
 		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null, restContextPath + "/openapi.json", Http.Method.GET);
 
 		JSONObject pathsJSONObject = openAPIJSONObject.getJSONObject("paths");
-
-		Set<String> operationIds = new HashSet<>();
 
 		for (String path : pathsJSONObject.keySet()) {
 			JSONObject pathJSONObject = pathsJSONObject.getJSONObject(path);
@@ -3379,6 +3382,8 @@ public class ObjectDefinitionResourceTest
 	private void _testPutObjectDefinitionWithAllowStandaloneObjectEntry()
 		throws Exception {
 
+		// Allow standalone object entry setting is disabled
+
 		ObjectDefinition parentObjectDefinition =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
@@ -3395,31 +3400,10 @@ public class ObjectDefinitionResourceTest
 			objectDefinitionResource.postObjectDefinitionPublish(
 				childObjectDefinition.getId());
 
-		TreeTestUtil.bind(
-			parentObjectDefinition.getId(), childObjectDefinition.getId(),
-			_objectRelationshipLocalService);
-
-		parentObjectDefinition.setObjectDefinitionSettings(
-			_getObjectDefinitionSettings("true"));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				parentObjectDefinition.toString(),
-				"object-admin/v1.0/object-definitions/" +
-					parentObjectDefinition.getId(),
-				Http.Method.PUT));
-
-		childObjectDefinition.setObjectDefinitionSettings(
-			_getObjectDefinitionSettings(RandomTestUtil.randomString()));
-
-		Assert.assertEquals(
-			400,
-			HTTPTestUtil.invokeToHttpCode(
-				childObjectDefinition.toString(),
-				"object-admin/v1.0/object-definitions/" +
-					childObjectDefinition.getId(),
-				Http.Method.PUT));
+		com.liferay.object.model.ObjectRelationship
+			serviceBuilderObjectRelationship = TreeTestUtil.bind(
+				parentObjectDefinition.getId(), childObjectDefinition.getId(),
+				_objectRelationshipLocalService);
 
 		childObjectDefinition.setObjectDefinitionSettings(
 			_getObjectDefinitionSettings("false"));
@@ -3432,12 +3416,36 @@ public class ObjectDefinitionResourceTest
 					childObjectDefinition.getId(),
 				Http.Method.PUT));
 
+		com.liferay.object.model.ObjectDefinition
+			serviceBuilderChildObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					childObjectDefinition.getId());
+
 		Assert.assertFalse(
-			_objectDefinitionLocalService.getObjectDefinition(
-				childObjectDefinition.getId()
-			).isAllowStandaloneObjectEntry());
+			serviceBuilderChildObjectDefinition.isAllowStandaloneObjectEntry());
+
+		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(), parentObjectDefinition.getId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		String restContextPath = StringUtil.removeFirst(
+			parentObjectDefinition.getRestContextPath(), "/o");
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				"{}",
+				StringBundler.concat(
+					restContextPath, "/", parentObjectEntry.getObjectEntryId(),
+					"/", serviceBuilderObjectRelationship.getName()),
+				Http.Method.POST));
+
+		_objectEntryLocalService.deleteObjectEntry(
+			parentObjectEntry.getObjectEntryId());
+
+		restContextPath = StringUtil.removeFirst(
 			childObjectDefinition.getRestContextPath(), "/o");
 
 		Assert.assertEquals(
@@ -3448,6 +3456,8 @@ public class ObjectDefinitionResourceTest
 		_assertObjectEntryCRUDOperationIds(
 			operationIds -> Assert.assertTrue(operationIds.isEmpty()),
 			restContextPath);
+
+		// Allow standalone object entry setting is enabled
 
 		childObjectDefinition.setObjectDefinitionSettings(
 			_getObjectDefinitionSettings("true"));
@@ -3460,10 +3470,12 @@ public class ObjectDefinitionResourceTest
 					childObjectDefinition.getId(),
 				Http.Method.PUT));
 
-		Assert.assertTrue(
+		serviceBuilderChildObjectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				childObjectDefinition.getId()
-			).isAllowStandaloneObjectEntry());
+				childObjectDefinition.getId());
+
+		Assert.assertTrue(
+			serviceBuilderChildObjectDefinition.isAllowStandaloneObjectEntry());
 
 		Assert.assertEquals(
 			200,
@@ -3473,6 +3485,63 @@ public class ObjectDefinitionResourceTest
 		_assertObjectEntryCRUDOperationIds(
 			operationIds -> Assert.assertFalse(operationIds.isEmpty()),
 			restContextPath);
+
+		// Invalid value
+
+		childObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings(RandomTestUtil.randomString()));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				childObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					childObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		// Object definition is not a root descendant node
+
+		parentObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings("true"));
+
+		Assert.assertEquals(
+			400,
+			HTTPTestUtil.invokeToHttpCode(
+				parentObjectDefinition.toString(),
+				"object-admin/v1.0/object-definitions/" +
+					parentObjectDefinition.getId(),
+				Http.Method.PUT));
+
+		// Standalone object entries already exist
+
+		ObjectEntry childObjectEntry = _objectEntryLocalService.addObjectEntry(
+			0, TestPropsValues.getUserId(), childObjectDefinition.getId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		childObjectDefinition.setObjectDefinitionSettings(
+			_getObjectDefinitionSettings("false"));
+
+		try {
+			objectDefinitionResource.putObjectDefinition(
+				childObjectDefinition.getId(), childObjectDefinition);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Standalone object entries already exist for object ",
+					"definition ", childObjectDefinition.getName(), "."),
+				problem.getTitle());
+		}
+
+		_objectEntryLocalService.deleteObjectEntry(
+			childObjectEntry.getObjectEntryId());
 
 		TreeTestUtil.unbind(
 			parentObjectDefinition.getId(), _objectRelationshipLocalService);
@@ -3663,6 +3732,9 @@ public class ObjectDefinitionResourceTest
 	@DeleteAfterTestRun
 	private final List<com.liferay.object.model.ObjectDefinition>
 		_objectDefinitions = new ArrayList<>();
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;

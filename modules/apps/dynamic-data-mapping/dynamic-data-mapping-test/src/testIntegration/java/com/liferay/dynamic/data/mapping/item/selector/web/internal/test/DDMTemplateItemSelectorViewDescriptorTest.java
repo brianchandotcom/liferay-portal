@@ -189,9 +189,6 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 	}
 
 	private void _setUpDepotEntry() throws Exception {
-		_group1 = GroupTestUtil.addGroup();
-		_group2 = GroupTestUtil.addGroup();
-
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -199,13 +196,18 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 			Collections.emptyMap(), DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), _group1.getGroupId());
-		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-			_depotEntry.getDepotEntryId(), _group2.getGroupId());
-
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			_depotEntry.getGroupId(), JournalArticle.class.getName());
+
+		_group1 = GroupTestUtil.addGroup();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group1.getGroupId());
+
+		_group2 = GroupTestUtil.addGroup();
+
+		_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
+			_depotEntry.getDepotEntryId(), _group2.getGroupId());
 	}
 
 	private static final String _SCRIPT = "${variable}";

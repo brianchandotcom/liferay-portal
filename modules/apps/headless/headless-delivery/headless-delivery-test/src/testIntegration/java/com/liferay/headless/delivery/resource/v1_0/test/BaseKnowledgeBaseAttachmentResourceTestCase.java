@@ -2726,4 +2726,4 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-2138594399
+// LIFERAY-REST-BUILDER-HASH:589176070

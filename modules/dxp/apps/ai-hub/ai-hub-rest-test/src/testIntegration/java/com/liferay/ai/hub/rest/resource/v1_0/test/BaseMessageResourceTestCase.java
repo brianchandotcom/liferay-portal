@@ -974,4 +974,4 @@ public abstract class BaseMessageResourceTestCase {
 		_messageResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:1954416726
+// LIFERAY-REST-BUILDER-HASH:-1692514399

@@ -2311,4 +2311,4 @@ public abstract class BaseUtilityPageResourceTestCase {
 		_utilityPageResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-541394019
+// LIFERAY-REST-BUILDER-HASH:1105558236

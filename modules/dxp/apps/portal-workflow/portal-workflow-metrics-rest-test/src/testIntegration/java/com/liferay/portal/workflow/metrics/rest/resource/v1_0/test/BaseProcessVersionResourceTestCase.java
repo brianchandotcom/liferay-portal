@@ -902,4 +902,4 @@ public abstract class BaseProcessVersionResourceTestCase {
 		ProcessVersionResource _processVersionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-214069663
+// LIFERAY-REST-BUILDER-HASH:-1937308752

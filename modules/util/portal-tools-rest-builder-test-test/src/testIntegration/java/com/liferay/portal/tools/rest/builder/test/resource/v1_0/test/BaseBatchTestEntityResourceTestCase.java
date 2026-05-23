@@ -2130,4 +2130,4 @@ public abstract class BaseBatchTestEntityResourceTestCase {
 		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1110755449
+// LIFERAY-REST-BUILDER-HASH:-1171780144

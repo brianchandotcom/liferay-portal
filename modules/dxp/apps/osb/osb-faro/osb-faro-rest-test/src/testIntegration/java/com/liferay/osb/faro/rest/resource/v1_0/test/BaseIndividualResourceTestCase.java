@@ -1695,4 +1695,4 @@ public abstract class BaseIndividualResourceTestCase {
 		_individualResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-466916587
+// LIFERAY-REST-BUILDER-HASH:-328042408

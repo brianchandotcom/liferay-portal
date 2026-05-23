@@ -887,4 +887,4 @@ public abstract class BaseLowStockActionResourceTestCase {
 		LowStockActionResource _lowStockActionResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:-1312491310
+// LIFERAY-REST-BUILDER-HASH:-1295992371

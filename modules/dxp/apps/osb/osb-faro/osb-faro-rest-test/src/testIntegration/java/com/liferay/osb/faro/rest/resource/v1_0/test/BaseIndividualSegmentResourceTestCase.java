@@ -1756,4 +1756,4 @@ public abstract class BaseIndividualSegmentResourceTestCase {
 		_individualSegmentResource;
 
 }
-// LIFERAY-REST-BUILDER-HASH:276908838
+// LIFERAY-REST-BUILDER-HASH:1993750183

@@ -3710,9 +3710,19 @@ public class ObjectDefinitionLocalServiceTest {
 		// Site scope
 
 		objectDefinitionA = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.emptyList(), ObjectDefinitionConstants.SCOPE_SITE);
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())),
+			ObjectDefinitionConstants.SCOPE_SITE);
 		objectDefinitionAA = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.emptyList(), ObjectDefinitionConstants.SCOPE_SITE);
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING,
+					RandomTestUtil.randomString(), StringUtil.randomId())),
+			ObjectDefinitionConstants.SCOPE_SITE);
 
 		TreeTestUtil.bind(
 			objectDefinitionA.getObjectDefinitionId(),
@@ -4988,7 +4998,15 @@ public class ObjectDefinitionLocalServiceTest {
 		objectDefinition.setPanelCategoryKey(panelCategoryKey);
 
 		objectDefinition = _updateCustomObjectDefinition(
-			objectDefinition.getClassName(), objectDefinition);
+			objectDefinition.getClassName(), objectDefinition,
+			Collections.singletonList(
+				new ObjectDefinitionSettingBuilder(
+				).name(
+					ObjectDefinitionSettingConstants.
+						NAME_ALLOW_STANDALONE_OBJECT_ENTRY
+				).value(
+					StringPool.TRUE
+				).build()));
 
 		Assert.assertEquals(
 			panelCategoryKey, objectDefinition.getPanelCategoryKey());
@@ -5037,7 +5055,7 @@ public class ObjectDefinitionLocalServiceTest {
 				StandaloneObjectEntriesAlreadyExist.class,
 			StringBundler.concat(
 				"Standalone object entries already exist for object ",
-				"definition \"", finalObjectDefinition.getShortName(), "\""),
+				"definition ", finalObjectDefinition.getShortName()),
 			() -> _updateCustomObjectDefinition(
 				finalObjectDefinition.getClassName(), finalObjectDefinition,
 				Collections.singletonList(

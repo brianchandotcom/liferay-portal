@@ -60,6 +60,50 @@ describe('CriteriaBuilder', () => {
 		).not.toBeInTheDocument();
 	});
 
+	it('should preserve the root conjunction when a nested group becomes the only root item', () => {
+		const onChange = jest.fn();
+
+		const ref = React.createRef();
+
+		render(
+			<DndProvider backend={HTML5Backend}>
+				<CriteriaBuilder
+					criteria={{
+						conjunctionName: Conjunctions.And,
+						criteriaGroupId: 'root',
+						items: [{rowId: 'r0', valid: true}]
+					}}
+					onChange={onChange}
+					ref={ref}
+				/>
+			</DndProvider>
+		);
+
+		ref.current.handleCriteriaChange({
+			conjunctionName: Conjunctions.And,
+			criteriaGroupId: 'root',
+			items: [
+				{
+					conjunctionName: Conjunctions.Or,
+					criteriaGroupId: 'nested',
+					items: [
+						{rowId: 'r0', valid: true},
+						{rowId: 'r1', valid: true}
+					]
+				}
+			]
+		});
+
+		expect(onChange).toHaveBeenCalledWith(
+			expect.objectContaining({
+				conjunctionName: Conjunctions.And,
+				items: expect.arrayContaining([
+					expect.objectContaining({conjunctionName: Conjunctions.Or})
+				])
+			})
+		);
+	});
+
 	it('should render the clear-all button when criteria has more than one item', () => {
 		render(
 			<DndProvider backend={HTML5Backend}>

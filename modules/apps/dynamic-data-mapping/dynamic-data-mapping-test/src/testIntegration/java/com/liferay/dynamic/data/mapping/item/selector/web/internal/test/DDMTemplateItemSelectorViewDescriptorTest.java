@@ -105,12 +105,9 @@ public class DDMTemplateItemSelectorViewDescriptorTest {
 		List<DDMTemplate> ddmTemplates = _getDDMTemplates(
 			0, _group1.getGroupId());
 
-		Assert.assertTrue(
-			ddmTemplates.toString(), ddmTemplates.contains(group1DDMTemplate));
-		Assert.assertFalse(
-			ddmTemplates.toString(), ddmTemplates.contains(depotDDMTemplate));
-		Assert.assertFalse(
-			ddmTemplates.toString(), ddmTemplates.contains(group2DDMTemplate));
+		Assert.assertTrue(ddmTemplates.contains(group1DDMTemplate));
+		Assert.assertFalse(ddmTemplates.contains(depotDDMTemplate));
+		Assert.assertFalse(ddmTemplates.contains(group2DDMTemplate));
 	}
 
 	@Test

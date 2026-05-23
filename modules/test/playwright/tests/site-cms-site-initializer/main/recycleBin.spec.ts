@@ -313,7 +313,7 @@ test(
 		await test.step('Login as CMS Administrator', async () => {
 			const user = await addCMSAdministrator(apiHelpers);
 
-			await performUserSwitch(page, user.alternateName);
+			await performUserSwitchViaApi(page, user.alternateName);
 		});
 
 		await test.step('Delete all the contents so they can go into the Recycle Bin', async () => {

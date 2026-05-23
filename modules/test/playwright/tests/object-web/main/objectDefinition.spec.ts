@@ -1809,6 +1809,68 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 		await expect(page.getByText('Required')).toBeVisible();
 	});
 
+	test('verify it is possible to update Custom Object when changing the localization on Instance Settings', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		localizationInstanceSettingsPage,
+		page,
+		restoreInstanceDefaultLanguage: _restoreInstanceDefaultLanguage,
+	}) => {
+		const newLabel = 'Objeto Personalizado ' + getRandomInt();
+		const newPluralLabel = 'Objetos Personalizados ' + getRandomInt();
+
+		let objectDefinition: ObjectDefinition;
+
+		await test.step('Create a custom object', async () => {
+			const objectFields = generateObjectFields({
+				objectFieldBusinessTypes: ['Text'],
+			});
+
+			objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectFields,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		});
+
+		await test.step('Change default language to Portuguese', async () => {
+			await localizationInstanceSettingsPage.goto('Language');
+
+			await localizationInstanceSettingsPage.defaultLanguageSelect.selectOption(
+				'pt_BR'
+			);
+
+			await localizationInstanceSettingsPage.saveSettings();
+		});
+
+		await test.step('Navigate to Object Admin and update the object label', async () => {
+			await editObjectDetailsPage.goto(objectDefinition.label['en_US']);
+
+			await editObjectDetailsPage.goToDetailsTab();
+
+			await editObjectDetailsPage.labelInput.fill(newLabel);
+			await editObjectDetailsPage.pluralLabelInput.fill(newPluralLabel);
+
+			await editObjectDetailsPage.saveObjectDefinition();
+
+			await waitForAlert(page, 'The object was saved successfully.');
+		});
+
+		await test.step('Assert the object label and plural label were updated', async () => {
+			await expect(editObjectDetailsPage.labelInput).toHaveValue(
+				newLabel
+			);
+			await expect(editObjectDetailsPage.pluralLabelInput).toHaveValue(
+				newPluralLabel
+			);
+		});
+	});
+
 	test(
 		'verify that the Access in Control Panel and View permissions control Object Admin portlet access and object visibility',
 		{tag: '@LPS-135390'},

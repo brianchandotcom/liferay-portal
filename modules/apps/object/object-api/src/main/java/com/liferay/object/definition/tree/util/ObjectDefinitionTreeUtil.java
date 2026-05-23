@@ -26,6 +26,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
@@ -122,6 +123,14 @@ public class ObjectDefinitionTreeUtil {
 				ObjectDefinition nodeObjectDefinition =
 					objectDefinitionPersistence.findByPrimaryKey(
 						node.getPrimaryKey());
+
+				if (FeatureFlagManagerUtil.isEnabled(
+						nodeObjectDefinition.getCompanyId(), "LPD-69877")) {
+
+					_addAllowStandaloneObjectEntrySetting(
+						nodeObjectDefinition,
+						objectDefinitionSettingLocalService);
+				}
 
 				_setRootObjectDefinitionIds(
 					objectDefinition1.getRootObjectDefinitionIds(),
@@ -301,6 +310,15 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence.findByPrimaryKey(
 				objectRelationship.getObjectDefinitionId2());
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectRelationship.getCompanyId(), "LPD-69877")) {
+
+			_deleteAllowStandaloneObjectEntrySetting(
+				objectDefinition2.getObjectDefinitionId(),
+				objectDefinitionSettingLocalService,
+				objectRelationshipPersistence);
+		}
+
 		long[] addRootObjectDefinitionIds = new long[0];
 		long[] removeRootObjectDefinitionIds =
 			actualObjectDefinition1RootObjectDefinitionIds;
@@ -354,27 +372,6 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionLocalService.deployObjectDefinition(
 				objectDefinition2);
 		}
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectRelationship.getCompanyId(), "LPD-69877")) {
-
-			count = objectRelationshipPersistence.countByODI2_E(
-				objectRelationship.getObjectDefinitionId2(), true);
-
-			if (count == 0) {
-				ObjectDefinitionSetting objectDefinitionSetting =
-					objectDefinitionSettingLocalService.
-						fetchObjectDefinitionSetting(
-							objectRelationship.getObjectDefinitionId2(),
-							ObjectDefinitionSettingConstants.
-								NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
-
-				if (objectDefinitionSetting != null) {
-					objectDefinitionSettingLocalService.
-						deleteObjectDefinitionSetting(objectDefinitionSetting);
-				}
-			}
-		}
 	}
 
 	public static void updateNodeObjectDefinition(
@@ -399,6 +396,57 @@ public class ObjectDefinitionTreeUtil {
 			objectDefinitionPersistence, objectDefinitionSettingLocalService,
 			objectRelationshipLocalService, objectRelationshipPersistence,
 			oldRootObjectDefinitionIds);
+	}
+
+	private static void _addAllowStandaloneObjectEntrySetting(
+			ObjectDefinition objectDefinition,
+			ObjectDefinitionSettingLocalService
+				objectDefinitionSettingLocalService)
+		throws PortalException {
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+		if (objectDefinitionSetting != null) {
+			return;
+		}
+
+		objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
+			StringPool.TRUE);
+	}
+
+	private static void _deleteAllowStandaloneObjectEntrySetting(
+			long objectDefinitionId,
+			ObjectDefinitionSettingLocalService
+				objectDefinitionSettingLocalService,
+			ObjectRelationshipPersistence objectRelationshipPersistence)
+		throws PortalException {
+
+		long count = objectRelationshipPersistence.countByODI2_E(
+			objectDefinitionId, true);
+
+		if (count != 0) {
+			return;
+		}
+
+		ObjectDefinitionSetting objectDefinitionSetting =
+			objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				objectDefinitionId,
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+		if (objectDefinitionSetting == null) {
+			return;
+		}
+
+		objectDefinitionSettingLocalService.deleteObjectDefinitionSetting(
+			objectDefinitionSetting);
 	}
 
 	private static void _performActions(

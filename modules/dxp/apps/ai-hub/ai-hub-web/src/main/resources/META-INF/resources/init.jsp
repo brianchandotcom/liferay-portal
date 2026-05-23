@@ -24,6 +24,7 @@ page import="com.liferay.ai.hub.web.internal.display.context.EditChatbotDisplayC
 page import="com.liferay.ai.hub.web.internal.display.context.EditContentRetrieverDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.EditInstructionDefinitionDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.HomeDashboardDisplayContext" %><%@
+page import="com.liferay.ai.hub.web.internal.display.context.ViewActivityDashboardDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewChatbotsDisplayContext" %><%@
 page import="com.liferay.ai.hub.web.internal.display.context.ViewContentRetrieversDisplayContext" %><%@

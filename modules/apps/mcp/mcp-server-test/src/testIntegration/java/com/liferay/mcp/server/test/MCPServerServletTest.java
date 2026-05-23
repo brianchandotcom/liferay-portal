@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -63,9 +62,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
  * @author Alejandro Tardín
  * @author Beni Herrero
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-63311"), @FeatureFlag("LPD-86164")}
-)
+@FeatureFlag("LPD-63311")
 @RunWith(Arquillian.class)
 public class MCPServerServletTest {
 

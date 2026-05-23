@@ -116,7 +116,14 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 	@After
 	public void tearDown() throws Exception {
-		DataAccess.cleanUp(_connection);
+		try {
+			_dropFragmentEntryLinkColumn("fragmentEntryId");
+
+			_dropFragmentEntryLinkColumn("originalFragmentEntryLinkId");
+		}
+		finally {
+			DataAccess.cleanUp(_connection);
+		}
 	}
 
 	@Test
@@ -335,19 +342,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 			true);
 	}
 
-	private void _addFragmentEntryLinkColumn(
-			String columnName, String columnType)
-		throws Exception {
-
-		if (_dbInspector.hasColumn("FragmentEntryLink", columnName)) {
-			_db.alterTableDropColumn(
-				_connection, "FragmentEntryLink", columnName);
-		}
-
-		_db.alterTableAddColumn(
-			_connection, "FragmentEntryLink", columnName, columnType);
-	}
-
 	private void _assertFragmentEntryLinks(
 			Map<Long, Map<String, Object>> expectedValuesMap,
 			List<Long> fragmentEntryLinkIds)
@@ -393,6 +387,15 @@ public class FragmentEntryLinkUpgradeProcessTest
 		Assert.assertFalse(
 			_dbInspector.hasColumn(
 				"FragmentEntryLink", "originalFragmentEntryLinkId"));
+	}
+
+	private void _dropFragmentEntryLinkColumn(String columnName)
+		throws Exception {
+
+		if (_dbInspector.hasColumn("FragmentEntryLink", columnName)) {
+			_db.alterTableDropColumn(
+				_connection, "FragmentEntryLink", columnName);
+		}
 	}
 
 	private Map<Long, Map<String, Object>> _getExpectedValues(
@@ -456,9 +459,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 	}
 
 	private void _updateFragmentEntryLinks() throws Exception {
-		_addFragmentEntryLinkColumn("originalFragmentEntryLinkId", "LONG");
-
-		_addFragmentEntryLinkColumn("fragmentEntryId", "LONG");
+		_db.alterTableAddColumn(
+			_connection, "FragmentEntryLink", "fragmentEntryId", "LONG");
+		_db.alterTableAddColumn(
+			_connection, "FragmentEntryLink", "originalFragmentEntryLinkId",
+			"LONG");
 
 		Group guestGroup = GroupLocalServiceUtil.getFriendlyURLGroup(
 			PortalUtil.getDefaultCompanyId(),

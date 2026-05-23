@@ -43,13 +43,22 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 						const soloItem: Criteria = item.items[0];
 
 						if (isCriterionGroup(soloItem)) {
-							cleanedItem = {
-								conjunctionName: soloItem.conjunctionName,
-								criteriaGroupId: soloItem.criteriaGroupId,
-								items: this.cleanCriteriaMapItems(
-									soloItem.items
-								)
-							};
+							cleanedItem = root
+								? {
+										...item,
+										items: this.cleanCriteriaMapItems(
+											item.items
+										)
+								  }
+								: {
+										conjunctionName:
+											soloItem.conjunctionName,
+										criteriaGroupId:
+											soloItem.criteriaGroupId,
+										items: this.cleanCriteriaMapItems(
+											soloItem.items
+										)
+								  };
 						} else {
 							cleanedItem = root ? item : soloItem;
 						}

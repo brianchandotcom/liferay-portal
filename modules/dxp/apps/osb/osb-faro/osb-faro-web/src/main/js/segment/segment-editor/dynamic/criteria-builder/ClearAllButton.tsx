@@ -2,6 +2,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import Modal, {useModal} from '@clayui/modal';
 import React from 'react';
+import {Text} from '@clayui/core';
 
 interface IClearAllButtonProps {
 	onClear: () => void;
@@ -18,14 +19,16 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 
 	return (
 		<>
-			<div className='criteria-builder-clear-all mt-3 text-center'>
+			<div className='criteria-builder-clear-all mt-5 text-center'>
 				<ClayButton
 					displayType='unstyled'
 					onClick={() => onOpenChange(true)}
 				>
-					<ClayIcon className='mr-2' symbol='times-circle' />
+					<Text color='secondary' weight='semi-bold'>
+						<ClayIcon className='mr-2' symbol='times-circle' />
 
-					{Liferay.Language.get('clear-all')}
+						{Liferay.Language.get('clear-all')}
+					</Text>
 				</ClayButton>
 			</div>
 
@@ -34,6 +37,7 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 					data-testid='clear-all-modal'
 					observer={observer}
 					size='sm'
+					status='warning'
 				>
 					<Modal.Header>
 						{Liferay.Language.get('clear-all')}
@@ -56,7 +60,7 @@ const ClearAllButton: React.FC<IClearAllButtonProps> = ({onClear}) => {
 								</ClayButton>
 
 								<ClayButton
-									displayType='danger'
+									displayType='warning'
 									onClick={handleConfirm}
 								>
 									{Liferay.Language.get('clear-all')}

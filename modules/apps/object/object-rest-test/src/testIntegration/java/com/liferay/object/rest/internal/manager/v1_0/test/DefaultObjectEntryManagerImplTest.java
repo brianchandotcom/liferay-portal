@@ -1439,12 +1439,16 @@ public class DefaultObjectEntryManagerImplTest
 		throws Exception {
 
 		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-				TestPropsValues.getUserId(),
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				_companyObjectDefinitionAA.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
-					NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
-				StringPool.FALSE);
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+		objectDefinitionSetting.setValue(StringPool.FALSE);
+
+		objectDefinitionSetting =
+			_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
+				objectDefinitionSetting);
 
 		ObjectDefinition childObjectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(

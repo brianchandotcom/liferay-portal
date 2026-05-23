@@ -1767,12 +1767,15 @@ public class BatchEnginePortletDataHandlerTest {
 			).isHidden());
 
 		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
-				TestPropsValues.getUserId(),
+			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
 				childObjectDefinition.getObjectDefinitionId(),
 				ObjectDefinitionSettingConstants.
-					NAME_ALLOW_STANDALONE_OBJECT_ENTRY,
-				StringPool.FALSE);
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY);
+
+		objectDefinitionSetting.setValue(StringPool.FALSE);
+
+		_objectDefinitionSettingLocalService.updateObjectDefinitionSetting(
+			objectDefinitionSetting);
 
 		_objectDefinitionLocalService.deployObjectDefinition(
 			_objectDefinitionLocalService.getObjectDefinition(

@@ -2782,6 +2782,14 @@ public class ObjectDefinitionResourceTest
 					{
 						name =
 							ObjectDefinitionSettingConstants.
+								NAME_ALLOW_STANDALONE_OBJECT_ENTRY;
+						value = StringPool.TRUE;
+					}
+				},
+				new ObjectDefinitionSetting() {
+					{
+						name =
+							ObjectDefinitionSettingConstants.
 								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES;
 						value =
 							objectDefinitionA.getExternalReferenceCode() + "," +

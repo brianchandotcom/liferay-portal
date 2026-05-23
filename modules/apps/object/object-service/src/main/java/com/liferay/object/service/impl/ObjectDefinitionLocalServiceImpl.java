@@ -3583,6 +3583,23 @@ public class ObjectDefinitionLocalServiceImpl
 			Map<String, String> objectDefinitionSettingsValuesMap)
 		throws PortalException {
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectDefinition.getCompanyId(), "LPD-69877") &&
+			!BatchEngineThreadLocal.isBatchImportInProcess() &&
+			objectDefinition.isRootDescendantNode() &&
+			!objectDefinitionSettingsValuesMap.containsKey(
+				ObjectDefinitionSettingConstants.
+					NAME_ALLOW_STANDALONE_OBJECT_ENTRY)) {
+
+			_handleException(
+				new ObjectDefinitionSettingNameException.RequiredNames(
+					objectDefinition.getShortName(),
+					Set.of(
+						ObjectDefinitionSettingConstants.
+							NAME_ALLOW_STANDALONE_OBJECT_ENTRY)),
+				"objectDefinitionSettings", null);
+		}
+
 		if (objectDefinitionSettingsValuesMap.isEmpty()) {
 			return;
 		}

@@ -49,7 +49,7 @@ public class ObjectDefinitionSettingValueException extends PortalException {
 			super(
 				String.format(
 					"Standalone object entries already exist for object " +
-						"definition \"%s\"",
+						"definition %s",
 					objectDefinitionName),
 				Collections.singletonList(objectDefinitionName),
 				"standalone-object-entries-already-exist-for-object-" +

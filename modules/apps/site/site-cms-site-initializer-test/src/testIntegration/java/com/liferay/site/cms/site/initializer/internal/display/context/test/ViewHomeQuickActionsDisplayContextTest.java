@@ -149,8 +149,6 @@ public class ViewHomeQuickActionsDisplayContextTest
 			"com.liferay.site.cms.site.initializer.internal.display.context." +
 				"ViewHomeQuickActionsDisplayContext");
 
-		Assert.assertNotNull(displayContext);
-
 		Map<String, Object> props = ReflectionTestUtil.invoke(
 			displayContext, "getProps", new Class<?>[0]);
 

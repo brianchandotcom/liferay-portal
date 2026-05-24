@@ -62,6 +62,7 @@ public class FragmentEntryVersionUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		_testUpgradeDeletesFragmentEntryVersions();
 		_testUpgradePreservesFragmentEntryVersions();
+		_testUpgradePreservesFragmentEntryVersionsPerCtCollection();
 	}
 
 	private List<Integer> _getFragmentEntryVersions(
@@ -169,6 +170,13 @@ public class FragmentEntryVersionUpgradeProcessTest {
 	private void _testUpgradePreservesFragmentEntryVersions() throws Exception {
 		_testUpgrade(0, 1, 0, 1);
 		_testUpgrade(0, 10, 0, 10);
+	}
+
+	private void _testUpgradePreservesFragmentEntryVersionsPerCtCollection()
+		throws Exception {
+
+		_testUpgrade(1, 1, 1, 1);
+		_testUpgrade(10, 10, 10, 10);
 	}
 
 	@Inject(

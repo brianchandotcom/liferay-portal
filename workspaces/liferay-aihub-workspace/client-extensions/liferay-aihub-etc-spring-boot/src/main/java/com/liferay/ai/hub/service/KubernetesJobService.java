@@ -20,8 +20,6 @@ import java.io.InputStream;
 
 import java.net.URI;
 
-import java.util.UUID;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -53,58 +51,47 @@ public class KubernetesJobService {
 		_kubernetesClient.close();
 	}
 
-	public String createJob(String indexName, String url) {
+	public Job createJob(String indexName, String url) {
 		URI uri = URI.create(url);
 
-		String suffix = UUID.randomUUID(
-		).toString(
-		).substring(
-			0, 8
-		);
-
-		String jobName = "aihub-crawler-" + suffix;
-
-		Job job = new JobBuilder(
-			_loadJobTemplate()
-		).editMetadata(
-		).withName(
-			jobName
-		).endMetadata(
-		).editSpec(
-		).editTemplate(
-		).editSpec(
-		).editFirstContainer(
-		).withImage(
-			_imageName
-		).withEnv(
-			_createEnvVar(
-				"CRAWLER_DOMAIN_URL",
-				uri.getScheme() + "://" + uri.getAuthority()),
-			_createEnvVar("CRAWLER_OUTPUT_INDEX", indexName),
-			_createEnvVar("CRAWLER_SEED_URL", url),
-			_createEnvVar("ELASTICSEARCH_HOST", _elasticsearchHost),
-			_createEnvVar(
-				"ELASTICSEARCH_PORT", String.valueOf(_elasticsearchPort))
-		).endContainer(
-		).endSpec(
-		).endTemplate(
-		).endSpec(
-		).build();
-
-		_kubernetesClient.batch(
+		Job job = _kubernetesClient.batch(
 		).v1(
 		).jobs(
 		).inNamespace(
 			_namespace
 		).resource(
-			job
+			new JobBuilder(
+				_loadJobTemplate()
+			).editSpec(
+			).editTemplate(
+			).editSpec(
+			).editFirstContainer(
+			).withImage(
+				_imageName
+			).withEnv(
+				_createEnvVar(
+					"CRAWLER_DOMAIN_URL",
+					uri.getScheme() + "://" + uri.getAuthority()),
+				_createEnvVar("CRAWLER_OUTPUT_INDEX", indexName),
+				_createEnvVar("CRAWLER_SEED_URL", url),
+				_createEnvVar("ELASTICSEARCH_HOST", _elasticsearchHost),
+				_createEnvVar(
+					"ELASTICSEARCH_PORT", String.valueOf(_elasticsearchPort))
+			).endContainer(
+			).endSpec(
+			).endTemplate(
+			).endSpec(
+			).build()
 		).create();
 
 		if (_log.isInfoEnabled()) {
+			String jobName = job.getMetadata(
+			).getName();
+
 			_log.info("Kubernetes job dispatched: " + jobName);
 		}
 
-		return jobName;
+		return job;
 	}
 
 	private EnvVar _createEnvVar(String name, String value) {

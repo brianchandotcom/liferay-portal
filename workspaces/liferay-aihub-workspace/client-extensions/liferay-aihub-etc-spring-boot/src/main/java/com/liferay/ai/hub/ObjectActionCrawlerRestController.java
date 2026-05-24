@@ -9,9 +9,9 @@ import com.liferay.ai.hub.service.KubernetesJobService;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
-import java.net.URI;
+import io.fabric8.kubernetes.api.model.batch.v1.Job;
 
-import java.util.Map;
+import java.net.URI;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,8 +19,6 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +38,7 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Map<String, String>> post(@RequestBody String json) {
+	public void post(@RequestBody String json) throws Exception {
 		if (_log.isDebugEnabled()) {
 			_log.debug(json);
 		}
@@ -53,47 +51,29 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 		JSONObject valuesJSONObject = objectEntryJSONObject.getJSONObject(
 			"values");
 
-		try {
-			String executionId = _kubernetesJobService.createJob(
-				valuesJSONObject.getString("indexName"),
-				valuesJSONObject.getString("url"));
+		Job job = _kubernetesJobService.createJob(
+			valuesJSONObject.getString("indexName"),
+			valuesJSONObject.getString("url"));
 
-			String body = post(
-				_liferayOAuth2AccessTokenManager.getAuthorization(
-					"liferay-aihub-etc-spring-boot-oahs"),
-				new JSONObject(
-				).put(
-					"crawlerJobStatus", "dispatched"
-				).put(
-					"executionId", executionId
-				).put(
-					"r_accountToAIHubCrawlerJobs_accountEntryId",
-					valuesJSONObject.getLong(
-						"r_accountToAIHubContentRetrievers_accountEntryId")
-				).put(
-					"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
-					objectEntryJSONObject.getLong("objectEntryId")
-				).toString(),
-				URI.create("/o/ai-hub/crawler-jobs"));
-
-			return ResponseEntity.accepted(
-			).body(
-				Map.of(
-					"executionId", executionId, "externalReferenceCode",
-					new JSONObject(
-						body
-					).getString(
-						"externalReferenceCode"
-					))
-			);
-		}
-		catch (Exception exception) {
-			_log.error("Crawler dispatch failed", exception);
-
-			return new ResponseEntity<>(
-				Map.of("error", String.valueOf(exception.getMessage())),
-				HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+		post(
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-aihub-etc-spring-boot-oahs"),
+			new JSONObject(
+			).put(
+				"crawlerJobStatus", "dispatched"
+			).put(
+				"executionId",
+				job.getMetadata(
+				).getName()
+			).put(
+				"r_accountToAIHubCrawlerJobs_accountEntryId",
+				valuesJSONObject.getLong(
+					"r_accountToAIHubContentRetrievers_accountEntryId")
+			).put(
+				"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+				objectEntryJSONObject.getLong("objectEntryId")
+			).toString(),
+			URI.create("/o/ai-hub/crawler-jobs"));
 	}
 
 	private static final Log _log = LogFactory.getLog(

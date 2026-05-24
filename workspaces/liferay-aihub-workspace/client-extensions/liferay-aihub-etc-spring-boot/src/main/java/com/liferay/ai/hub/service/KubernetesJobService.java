@@ -44,6 +44,8 @@ public class KubernetesJobService {
 		_elasticsearchPort = elasticsearchPort;
 		_imageName = imageName;
 		_namespace = namespace;
+
+		_jobTemplate = _loadJobTemplate();
 	}
 
 	@PreDestroy
@@ -61,7 +63,7 @@ public class KubernetesJobService {
 			_namespace
 		).resource(
 			new JobBuilder(
-				_loadJobTemplate()
+				_jobTemplate
 			).editSpec(
 			).editTemplate(
 			).editSpec(
@@ -121,6 +123,7 @@ public class KubernetesJobService {
 	private final String _elasticsearchHost;
 	private final int _elasticsearchPort;
 	private final String _imageName;
+	private final Job _jobTemplate;
 	private final KubernetesClient _kubernetesClient =
 		new KubernetesClientBuilder(
 		).build();

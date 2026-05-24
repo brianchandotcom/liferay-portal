@@ -108,8 +108,14 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 					"sseEventSinkKey", _agentContext.getSseEventSinkKey()
 				).put(
 					"userToken",
-					EncryptorUtil.encrypt(
-						company.getKeyObj(), _agentContext.getUserToken())
+					() -> {
+						if (_agentContext.getUserToken() == null) {
+							return null;
+						}
+
+						return EncryptorUtil.encrypt(
+							company.getKeyObj(), _agentContext.getUserToken());
+					}
 				).build();
 
 			for (AgentArgument agentArgument : arguments()) {

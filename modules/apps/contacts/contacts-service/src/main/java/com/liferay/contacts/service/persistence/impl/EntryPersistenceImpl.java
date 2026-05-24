@@ -75,7 +75,7 @@ public class EntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Entry>
+	private CollectionPersistenceFinder<Entry, NoSuchEntryException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -115,15 +115,8 @@ public class EntryPersistenceImpl
 			long userId, OrderByComparator<Entry> orderByComparator)
 		throws NoSuchEntryException {
 
-		Entry entry = fetchByUserId_First(userId, orderByComparator);
-
-		if (entry != null) {
-			return entry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -164,7 +157,8 @@ public class EntryPersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private UniquePersistenceFinder<Entry> _uniquePersistenceFinderByU_EA;
+	private UniquePersistenceFinder<Entry, NoSuchEntryException>
+		_uniquePersistenceFinderByU_EA;
 
 	/**
 	 * Returns the entry where userId = &#63; and emailAddress = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
@@ -178,22 +172,8 @@ public class EntryPersistenceImpl
 	public Entry findByU_EA(long userId, String emailAddress)
 		throws NoSuchEntryException {
 
-		Entry entry = fetchByU_EA(userId, emailAddress);
-
-		if (entry == null) {
-			String message =
-				_uniquePersistenceFinderByU_EA.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, emailAddress});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return entry;
+		return _uniquePersistenceFinderByU_EA.find(
+			finderCache, new Object[] {userId, emailAddress});
 	}
 
 	/**
@@ -539,4 +519,4 @@ public class EntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-93377920
+// LIFERAY-SERVICE-BUILDER-HASH:1241481255

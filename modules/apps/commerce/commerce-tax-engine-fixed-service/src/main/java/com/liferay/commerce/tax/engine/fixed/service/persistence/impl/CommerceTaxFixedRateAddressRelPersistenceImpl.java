@@ -76,8 +76,9 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
-		_collectionPersistenceFinderByCommerceTaxMethodId;
+	private CollectionPersistenceFinder
+		<CommerceTaxFixedRateAddressRel, NoSuchTaxFixedRateAddressRelException>
+			_collectionPersistenceFinderByCommerceTaxMethodId;
 
 	/**
 	 * Returns an ordered range of all the commerce tax fixed rate address rels where commerceTaxMethodId = &#63;.
@@ -118,19 +119,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws NoSuchTaxFixedRateAddressRelException {
 
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCommerceTaxMethodId_First(
-				commerceTaxMethodId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		throw new NoSuchTaxFixedRateAddressRelException(
-			_collectionPersistenceFinderByCommerceTaxMethodId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceTaxMethodId}));
+		return _collectionPersistenceFinderByCommerceTaxMethodId.findFirst(
+			finderCache, new Object[] {commerceTaxMethodId}, orderByComparator);
 	}
 
 	/**
@@ -172,8 +162,9 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			finderCache, new Object[] {commerceTaxMethodId});
 	}
 
-	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
-		_collectionPersistenceFinderByCPTaxCategoryId;
+	private CollectionPersistenceFinder
+		<CommerceTaxFixedRateAddressRel, NoSuchTaxFixedRateAddressRelException>
+			_collectionPersistenceFinderByCPTaxCategoryId;
 
 	/**
 	 * Returns an ordered range of all the commerce tax fixed rate address rels where CPTaxCategoryId = &#63;.
@@ -214,16 +205,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws NoSuchTaxFixedRateAddressRelException {
 
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCPTaxCategoryId_First(CPTaxCategoryId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		throw new NoSuchTaxFixedRateAddressRelException(
-			_collectionPersistenceFinderByCPTaxCategoryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPTaxCategoryId}));
+		return _collectionPersistenceFinderByCPTaxCategoryId.findFirst(
+			finderCache, new Object[] {CPTaxCategoryId}, orderByComparator);
 	}
 
 	/**
@@ -265,8 +248,9 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			finderCache, new Object[] {CPTaxCategoryId});
 	}
 
-	private CollectionPersistenceFinder<CommerceTaxFixedRateAddressRel>
-		_collectionPersistenceFinderByCountryId;
+	private CollectionPersistenceFinder
+		<CommerceTaxFixedRateAddressRel, NoSuchTaxFixedRateAddressRelException>
+			_collectionPersistenceFinderByCountryId;
 
 	/**
 	 * Returns an ordered range of all the commerce tax fixed rate address rels where countryId = &#63;.
@@ -307,16 +291,8 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 			OrderByComparator<CommerceTaxFixedRateAddressRel> orderByComparator)
 		throws NoSuchTaxFixedRateAddressRelException {
 
-		CommerceTaxFixedRateAddressRel commerceTaxFixedRateAddressRel =
-			fetchByCountryId_First(countryId, orderByComparator);
-
-		if (commerceTaxFixedRateAddressRel != null) {
-			return commerceTaxFixedRateAddressRel;
-		}
-
-		throw new NoSuchTaxFixedRateAddressRelException(
-			_collectionPersistenceFinderByCountryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {countryId}));
+		return _collectionPersistenceFinderByCountryId.findFirst(
+			finderCache, new Object[] {countryId}, orderByComparator);
 	}
 
 	/**
@@ -753,4 +729,4 @@ public class CommerceTaxFixedRateAddressRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2114951797
+// LIFERAY-SERVICE-BUILDER-HASH:1394649415

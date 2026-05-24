@@ -97,7 +97,7 @@ public class CPInstancePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -138,15 +138,8 @@ public class CPInstancePersistenceImpl
 			String uuid, OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByUuid_First(uuid, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -187,7 +180,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPInstance>
+	private UniquePersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -202,21 +195,8 @@ public class CPInstancePersistenceImpl
 	public CPInstance findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByUUID_G(uuid, groupId);
-
-		if (cpInstance == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceException(message);
-		}
-
-		return cpInstance;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -264,7 +244,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -308,16 +288,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -362,8 +334,9 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<CPInstance>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<CPInstance, NoSuchCPInstanceException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the cp instances where groupId = &#63;.
@@ -403,16 +376,8 @@ public class CPInstancePersistenceImpl
 			long groupId, OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -488,7 +453,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -529,16 +494,8 @@ public class CPInstancePersistenceImpl
 			long companyId, OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -579,7 +536,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
@@ -621,16 +578,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByCPDefinitionId_First(
-			CPDefinitionId, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -671,7 +620,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByCPInstanceUuid;
 
 	/**
@@ -713,16 +662,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByCPInstanceUuid_First(
-			CPInstanceUuid, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByCPInstanceUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceUuid}));
+		return _collectionPersistenceFinderByCPInstanceUuid.findFirst(
+			finderCache, new Object[] {CPInstanceUuid}, orderByComparator);
 	}
 
 	/**
@@ -764,8 +705,9 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPInstanceUuid});
 	}
 
-	private FilterCollectionPersistenceFinder<CPInstance>
-		_collectionPersistenceFinderByG_ST;
+	private FilterCollectionPersistenceFinder
+		<CPInstance, NoSuchCPInstanceException>
+			_collectionPersistenceFinderByG_ST;
 
 	/**
 	 * Returns an ordered range of all the cp instances where groupId = &#63; and status = &#63;.
@@ -808,16 +750,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByG_ST_First(
-			groupId, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByG_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_ST.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -899,7 +833,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -943,16 +877,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_S_First(
-			companyId, sku, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, sku}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, sku}, orderByComparator);
 	}
 
 	/**
@@ -997,7 +923,8 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {companyId, sku});
 	}
 
-	private UniquePersistenceFinder<CPInstance> _uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder<CPInstance, NoSuchCPInstanceException>
+		_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the cp instance where CPDefinitionId = &#63; and CPInstanceUuid = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -1011,22 +938,8 @@ public class CPInstancePersistenceImpl
 	public CPInstance findByC_C(long CPDefinitionId, String CPInstanceUuid)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_C(CPDefinitionId, CPInstanceUuid);
-
-		if (cpInstance == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionId, CPInstanceUuid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceException(message);
-		}
-
-		return cpInstance;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {CPDefinitionId, CPInstanceUuid});
 	}
 
 	/**
@@ -1075,7 +988,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, CPInstanceUuid});
 	}
 
-	private UniquePersistenceFinder<CPInstance>
+	private UniquePersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_uniquePersistenceFinderByCPDI_S;
 
 	/**
@@ -1090,22 +1003,8 @@ public class CPInstancePersistenceImpl
 	public CPInstance findByCPDI_S(long CPDefinitionId, String sku)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByCPDI_S(CPDefinitionId, sku);
-
-		if (cpInstance == null) {
-			String message =
-				_uniquePersistenceFinderByCPDI_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionId, sku});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceException(message);
-		}
-
-		return cpInstance;
+		return _uniquePersistenceFinderByCPDI_S.find(
+			finderCache, new Object[] {CPDefinitionId, sku});
 	}
 
 	/**
@@ -1153,7 +1052,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, sku});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByC_ST;
 
 	/**
@@ -1197,17 +1096,9 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_ST_First(
-			CPDefinitionId, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByC_ST.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPDefinitionId, status}));
+		return _collectionPersistenceFinderByC_ST.findFirst(
+			finderCache, new Object[] {CPDefinitionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1253,7 +1144,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, status});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByLtD_S;
 
 	/**
@@ -1353,16 +1244,8 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1407,7 +1290,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByC_LtD_S;
 
 	/**
@@ -1517,17 +1400,9 @@ public class CPInstancePersistenceImpl
 			OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByC_LtD_S_First(
-			CPDefinitionId, displayDate, status, orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByC_LtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPDefinitionId, displayDate, status}));
+		return _collectionPersistenceFinderByC_LtD_S.findFirst(
+			finderCache, new Object[] {CPDefinitionId, displayDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1580,7 +1455,7 @@ public class CPInstancePersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<CPInstance>
+	private CollectionPersistenceFinder<CPInstance, NoSuchCPInstanceException>
 		_collectionPersistenceFinderByR_R_S;
 
 	/**
@@ -1630,20 +1505,12 @@ public class CPInstancePersistenceImpl
 			int status, OrderByComparator<CPInstance> orderByComparator)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByR_R_S_First(
-			replacementCPInstanceUuid, replacementCProductId, status,
+		return _collectionPersistenceFinderByR_R_S.findFirst(
+			finderCache,
+			new Object[] {
+				replacementCPInstanceUuid, replacementCProductId, status
+			},
 			orderByComparator);
-
-		if (cpInstance != null) {
-			return cpInstance;
-		}
-
-		throw new NoSuchCPInstanceException(
-			_collectionPersistenceFinderByR_R_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					replacementCPInstanceUuid, replacementCProductId, status
-				}));
 	}
 
 	/**
@@ -1707,7 +1574,8 @@ public class CPInstancePersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<CPInstance> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<CPInstance, NoSuchCPInstanceException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the cp instance where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
@@ -1721,22 +1589,8 @@ public class CPInstancePersistenceImpl
 	public CPInstance findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchCPInstanceException {
 
-		CPInstance cpInstance = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (cpInstance == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceException(message);
-		}
-
-		return cpInstance;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -2674,4 +2528,4 @@ public class CPInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:807696229
+// LIFERAY-SERVICE-BUILDER-HASH:-903413265

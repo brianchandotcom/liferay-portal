@@ -82,7 +82,7 @@ public class DLContentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DLContent>
+	private CollectionPersistenceFinder<DLContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R;
 
 	/**
@@ -126,17 +126,9 @@ public class DLContentPersistenceImpl
 			OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DLContent dlContent = fetchByC_R_First(
-			companyId, repositoryId, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId}));
+		return _collectionPersistenceFinderByC_R.findFirst(
+			finderCache, new Object[] {companyId, repositoryId},
+			orderByComparator);
 	}
 
 	/**
@@ -182,7 +174,7 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId});
 	}
 
-	private CollectionPersistenceFinder<DLContent>
+	private CollectionPersistenceFinder<DLContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R_P;
 
 	/**
@@ -228,17 +220,9 @@ public class DLContentPersistenceImpl
 			OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DLContent dlContent = fetchByC_R_P_First(
-			companyId, repositoryId, path, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId, path}));
+		return _collectionPersistenceFinderByC_R_P.findFirst(
+			finderCache, new Object[] {companyId, repositoryId, path},
+			orderByComparator);
 	}
 
 	/**
@@ -287,7 +271,7 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
-	private CollectionPersistenceFinder<DLContent>
+	private CollectionPersistenceFinder<DLContent, NoSuchContentException>
 		_collectionPersistenceFinderByC_R_LikeP;
 
 	/**
@@ -395,17 +379,9 @@ public class DLContentPersistenceImpl
 			OrderByComparator<DLContent> orderByComparator)
 		throws NoSuchContentException {
 
-		DLContent dlContent = fetchByC_R_LikeP_First(
-			companyId, repositoryId, path, orderByComparator);
-
-		if (dlContent != null) {
-			return dlContent;
-		}
-
-		throw new NoSuchContentException(
-			_collectionPersistenceFinderByC_R_LikeP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, repositoryId, path}));
+		return _collectionPersistenceFinderByC_R_LikeP.findFirst(
+			finderCache, new Object[] {companyId, repositoryId, path},
+			orderByComparator);
 	}
 
 	/**
@@ -458,7 +434,7 @@ public class DLContentPersistenceImpl
 			finderCache, new Object[] {companyId, repositoryId, path});
 	}
 
-	private UniquePersistenceFinder<DLContent>
+	private UniquePersistenceFinder<DLContent, NoSuchContentException>
 		_uniquePersistenceFinderByC_R_P_V;
 
 	/**
@@ -476,23 +452,8 @@ public class DLContentPersistenceImpl
 			long companyId, long repositoryId, String path, String version)
 		throws NoSuchContentException {
 
-		DLContent dlContent = fetchByC_R_P_V(
-			companyId, repositoryId, path, version);
-
-		if (dlContent == null) {
-			String message =
-				_uniquePersistenceFinderByC_R_P_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, repositoryId, path, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchContentException(message);
-		}
-
-		return dlContent;
+		return _uniquePersistenceFinderByC_R_P_V.find(
+			finderCache, new Object[] {companyId, repositoryId, path, version});
 	}
 
 	/**
@@ -1008,4 +969,4 @@ public class DLContentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1934592299
+// LIFERAY-SERVICE-BUILDER-HASH:-1126737421

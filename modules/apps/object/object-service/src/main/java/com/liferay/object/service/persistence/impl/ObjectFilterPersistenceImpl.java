@@ -77,8 +77,9 @@ public class ObjectFilterPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectFilter>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectFilter, NoSuchObjectFilterException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object filters where uuid = &#63;.
@@ -118,15 +119,8 @@ public class ObjectFilterPersistenceImpl
 			String uuid, OrderByComparator<ObjectFilter> orderByComparator)
 		throws NoSuchObjectFilterException {
 
-		ObjectFilter objectFilter = fetchByUuid_First(uuid, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		throw new NoSuchObjectFilterException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -167,8 +161,9 @@ public class ObjectFilterPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectFilter>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectFilter, NoSuchObjectFilterException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object filters where uuid = &#63; and companyId = &#63;.
@@ -211,16 +206,8 @@ public class ObjectFilterPersistenceImpl
 			OrderByComparator<ObjectFilter> orderByComparator)
 		throws NoSuchObjectFilterException {
 
-		ObjectFilter objectFilter = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		throw new NoSuchObjectFilterException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -265,8 +252,9 @@ public class ObjectFilterPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectFilter>
-		_collectionPersistenceFinderByObjectFieldId;
+	private CollectionPersistenceFinder
+		<ObjectFilter, NoSuchObjectFilterException>
+			_collectionPersistenceFinderByObjectFieldId;
 
 	/**
 	 * Returns an ordered range of all the object filters where objectFieldId = &#63;.
@@ -307,16 +295,8 @@ public class ObjectFilterPersistenceImpl
 			OrderByComparator<ObjectFilter> orderByComparator)
 		throws NoSuchObjectFilterException {
 
-		ObjectFilter objectFilter = fetchByObjectFieldId_First(
-			objectFieldId, orderByComparator);
-
-		if (objectFilter != null) {
-			return objectFilter;
-		}
-
-		throw new NoSuchObjectFilterException(
-			_collectionPersistenceFinderByObjectFieldId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {objectFieldId}));
+		return _collectionPersistenceFinderByObjectFieldId.findFirst(
+			finderCache, new Object[] {objectFieldId}, orderByComparator);
 	}
 
 	/**
@@ -720,4 +700,4 @@ public class ObjectFilterPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:715349818
+// LIFERAY-SERVICE-BUILDER-HASH:1148152567

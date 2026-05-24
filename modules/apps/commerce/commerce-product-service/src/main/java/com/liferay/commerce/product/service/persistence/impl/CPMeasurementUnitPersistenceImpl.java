@@ -96,8 +96,9 @@ public class CPMeasurementUnitPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPMeasurementUnit>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp measurement units where uuid = &#63;.
@@ -137,16 +138,8 @@ public class CPMeasurementUnitPersistenceImpl
 			String uuid, OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		throw new NoSuchCPMeasurementUnitException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -187,8 +180,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPMeasurementUnit>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp measurement unit where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -202,21 +196,8 @@ public class CPMeasurementUnitPersistenceImpl
 	public CPMeasurementUnit findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByUUID_G(uuid, groupId);
-
-		if (cpMeasurementUnit == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPMeasurementUnitException(message);
-		}
-
-		return cpMeasurementUnit;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -264,8 +245,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPMeasurementUnit>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp measurement units where uuid = &#63; and companyId = &#63;.
@@ -308,16 +290,8 @@ public class CPMeasurementUnitPersistenceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		throw new NoSuchCPMeasurementUnitException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -362,8 +336,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CPMeasurementUnit>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the cp measurement units where companyId = &#63;.
@@ -404,16 +379,8 @@ public class CPMeasurementUnitPersistenceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		throw new NoSuchCPMeasurementUnitException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -455,8 +422,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<CPMeasurementUnit>
-		_uniquePersistenceFinderByC_K;
+	private UniquePersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_uniquePersistenceFinderByC_K;
 
 	/**
 	 * Returns the cp measurement unit where companyId = &#63; and key = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -470,21 +438,8 @@ public class CPMeasurementUnitPersistenceImpl
 	public CPMeasurementUnit findByC_K(long companyId, String key)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_K(companyId, key);
-
-		if (cpMeasurementUnit == null) {
-			String message =
-				_uniquePersistenceFinderByC_K.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, key});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPMeasurementUnitException(message);
-		}
-
-		return cpMeasurementUnit;
+		return _uniquePersistenceFinderByC_K.find(
+			finderCache, new Object[] {companyId, key});
 	}
 
 	/**
@@ -532,8 +487,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, key});
 	}
 
-	private CollectionPersistenceFinder<CPMeasurementUnit>
-		_collectionPersistenceFinderByC_T;
+	private CollectionPersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the cp measurement units where companyId = &#63; and type = &#63;.
@@ -576,16 +532,8 @@ public class CPMeasurementUnitPersistenceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_T_First(
-			companyId, type, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		throw new NoSuchCPMeasurementUnitException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {companyId, type}, orderByComparator);
 	}
 
 	/**
@@ -630,8 +578,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, type});
 	}
 
-	private CollectionPersistenceFinder<CPMeasurementUnit>
-		_collectionPersistenceFinderByC_P_T;
+	private CollectionPersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_collectionPersistenceFinderByC_P_T;
 
 	/**
 	 * Returns an ordered range of all the cp measurement units where companyId = &#63; and primary = &#63; and type = &#63;.
@@ -676,17 +625,9 @@ public class CPMeasurementUnitPersistenceImpl
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByC_P_T_First(
-			companyId, primary, type, orderByComparator);
-
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit;
-		}
-
-		throw new NoSuchCPMeasurementUnitException(
-			_collectionPersistenceFinderByC_P_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, primary, type}));
+		return _collectionPersistenceFinderByC_P_T.findFirst(
+			finderCache, new Object[] {companyId, primary, type},
+			orderByComparator);
 	}
 
 	/**
@@ -735,8 +676,9 @@ public class CPMeasurementUnitPersistenceImpl
 			finderCache, new Object[] {companyId, primary, type});
 	}
 
-	private UniquePersistenceFinder<CPMeasurementUnit>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CPMeasurementUnit, NoSuchCPMeasurementUnitException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the cp measurement unit where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPMeasurementUnitException</code> if it could not be found.
@@ -751,23 +693,8 @@ public class CPMeasurementUnitPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchCPMeasurementUnitException {
 
-		CPMeasurementUnit cpMeasurementUnit = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (cpMeasurementUnit == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPMeasurementUnitException(message);
-		}
-
-		return cpMeasurementUnit;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1468,4 +1395,4 @@ public class CPMeasurementUnitPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:833399243
+// LIFERAY-SERVICE-BUILDER-HASH:-1740914202

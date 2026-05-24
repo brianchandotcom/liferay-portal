@@ -75,7 +75,7 @@ public class ChangesetEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ChangesetEntry>
+	private CollectionPersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -116,16 +116,8 @@ public class ChangesetEntryPersistenceImpl
 			long groupId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -166,7 +158,7 @@ public class ChangesetEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetEntry>
+	private CollectionPersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -207,16 +199,8 @@ public class ChangesetEntryPersistenceImpl
 			long companyId, OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -257,7 +241,7 @@ public class ChangesetEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetEntry>
+	private CollectionPersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByChangesetCollectionId;
 
 	/**
@@ -299,18 +283,9 @@ public class ChangesetEntryPersistenceImpl
 			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByChangesetCollectionId_First(
-			changesetCollectionId, orderByComparator);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByChangesetCollectionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {changesetCollectionId}));
+		return _collectionPersistenceFinderByChangesetCollectionId.findFirst(
+			finderCache, new Object[] {changesetCollectionId},
+			orderByComparator);
 	}
 
 	/**
@@ -353,7 +328,7 @@ public class ChangesetEntryPersistenceImpl
 			finderCache, new Object[] {changesetCollectionId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetEntry>
+	private CollectionPersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -397,16 +372,9 @@ public class ChangesetEntryPersistenceImpl
 			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByG_C_First(
-			groupId, classNameId, orderByComparator);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -452,7 +420,7 @@ public class ChangesetEntryPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<ChangesetEntry>
+	private CollectionPersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -496,17 +464,9 @@ public class ChangesetEntryPersistenceImpl
 			OrderByComparator<ChangesetEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByC_C_First(
-			changesetCollectionId, classNameId, orderByComparator);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {changesetCollectionId, classNameId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {changesetCollectionId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -552,7 +512,7 @@ public class ChangesetEntryPersistenceImpl
 			finderCache, new Object[] {changesetCollectionId, classNameId});
 	}
 
-	private UniquePersistenceFinder<ChangesetEntry>
+	private UniquePersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByC_CERC_C;
 
 	/**
@@ -570,26 +530,11 @@ public class ChangesetEntryPersistenceImpl
 			long classNameId)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByC_CERC_C(
-			changesetCollectionId, classExternalReferenceCode, classNameId);
-
-		if (changesetEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_CERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						changesetCollectionId, classExternalReferenceCode,
-						classNameId
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return changesetEntry;
+		return _uniquePersistenceFinderByC_CERC_C.find(
+			finderCache,
+			new Object[] {
+				changesetCollectionId, classExternalReferenceCode, classNameId
+			});
 	}
 
 	/**
@@ -654,7 +599,7 @@ public class ChangesetEntryPersistenceImpl
 			});
 	}
 
-	private UniquePersistenceFinder<ChangesetEntry>
+	private UniquePersistenceFinder<ChangesetEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByC_C_C;
 
 	/**
@@ -671,23 +616,9 @@ public class ChangesetEntryPersistenceImpl
 			long changesetCollectionId, long classNameId, long classPK)
 		throws NoSuchEntryException {
 
-		ChangesetEntry changesetEntry = fetchByC_C_C(
-			changesetCollectionId, classNameId, classPK);
-
-		if (changesetEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {changesetCollectionId, classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return changesetEntry;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache,
+			new Object[] {changesetCollectionId, classNameId, classPK});
 	}
 
 	/**
@@ -1204,4 +1135,4 @@ public class ChangesetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-824511763
+// LIFERAY-SERVICE-BUILDER-HASH:1459427294

@@ -60,7 +60,7 @@ public class OrgLaborPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<OrgLabor>
+	private CollectionPersistenceFinder<OrgLabor, NoSuchOrgLaborException>
 		_collectionPersistenceFinderByOrganizationId;
 
 	/**
@@ -100,16 +100,9 @@ public class OrgLaborPersistenceImpl
 			long organizationId, OrderByComparator<OrgLabor> orderByComparator)
 		throws NoSuchOrgLaborException {
 
-		OrgLabor orgLabor = fetchByOrganizationId_First(
-			organizationId, orderByComparator);
-
-		if (orgLabor != null) {
-			return orgLabor;
-		}
-
-		throw new NoSuchOrgLaborException(
-			_collectionPersistenceFinderByOrganizationId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {organizationId}));
+		return _collectionPersistenceFinderByOrganizationId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {organizationId},
+			orderByComparator);
 	}
 
 	/**
@@ -378,4 +371,4 @@ public class OrgLaborPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1845012404
+// LIFERAY-SERVICE-BUILDER-HASH:-490700815

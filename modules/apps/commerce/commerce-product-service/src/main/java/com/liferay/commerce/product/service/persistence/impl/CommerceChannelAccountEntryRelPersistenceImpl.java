@@ -85,8 +85,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByAccountEntryId;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByAccountEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63;.
@@ -127,16 +128,8 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByAccountEntryId_First(accountEntryId, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByAccountEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId}));
+		return _collectionPersistenceFinderByAccountEntryId.findFirst(
+			finderCache, new Object[] {accountEntryId}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +171,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByCommerceChannelId;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByCommerceChannelId;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63;.
@@ -220,19 +214,8 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByCommerceChannelId_First(
-				commerceChannelId, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByCommerceChannelId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceChannelId}));
+		return _collectionPersistenceFinderByCommerceChannelId.findFirst(
+			finderCache, new Object[] {commerceChannelId}, orderByComparator);
 	}
 
 	/**
@@ -274,8 +257,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceChannelId});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByA_T;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByA_T;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and type = &#63;.
@@ -318,16 +302,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByA_T_First(accountEntryId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByA_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {accountEntryId, type}));
+		return _collectionPersistenceFinderByA_T.findFirst(
+			finderCache, new Object[] {accountEntryId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -373,8 +350,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {accountEntryId, type});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63;.
@@ -417,16 +395,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_C_First(classNameId, classPK, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -472,8 +443,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByC_T;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where commerceChannelId = &#63; and type = &#63;.
@@ -516,17 +488,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_T_First(commerceChannelId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commerceChannelId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			finderCache, new Object[] {commerceChannelId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -572,8 +536,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			finderCache, new Object[] {commerceChannelId, type});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByA_C_T;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByA_C_T;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where accountEntryId = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -619,18 +584,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByA_C_T_First(
-				accountEntryId, commerceChannelId, type, orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByA_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {accountEntryId, commerceChannelId, type}));
+		return _collectionPersistenceFinderByA_C_T.findFirst(
+			finderCache, new Object[] {accountEntryId, commerceChannelId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -685,8 +641,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			new Object[] {accountEntryId, commerceChannelId, type});
 	}
 
-	private CollectionPersistenceFinder<CommerceChannelAccountEntryRel>
-		_collectionPersistenceFinderByC_C_C_T;
+	private CollectionPersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_collectionPersistenceFinderByC_C_C_T;
 
 	/**
 	 * Returns an ordered range of all the commerce channel account entry rels where classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63;.
@@ -735,19 +692,10 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			OrderByComparator<CommerceChannelAccountEntryRel> orderByComparator)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByC_C_C_T_First(
-				classNameId, classPK, commerceChannelId, type,
-				orderByComparator);
-
-		if (commerceChannelAccountEntryRel != null) {
-			return commerceChannelAccountEntryRel;
-		}
-
-		throw new NoSuchChannelAccountEntryRelException(
-			_collectionPersistenceFinderByC_C_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, commerceChannelId, type}));
+		return _collectionPersistenceFinderByC_C_C_T.findFirst(
+			finderCache,
+			new Object[] {classNameId, classPK, commerceChannelId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -806,8 +754,9 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			new Object[] {classNameId, classPK, commerceChannelId, type});
 	}
 
-	private UniquePersistenceFinder<CommerceChannelAccountEntryRel>
-		_uniquePersistenceFinderByA_C_C_C_T;
+	private UniquePersistenceFinder
+		<CommerceChannelAccountEntryRel, NoSuchChannelAccountEntryRelException>
+			_uniquePersistenceFinderByA_C_C_C_T;
 
 	/**
 	 * Returns the commerce channel account entry rel where accountEntryId = &#63; and classNameId = &#63; and classPK = &#63; and commerceChannelId = &#63; and type = &#63; or throws a <code>NoSuchChannelAccountEntryRelException</code> if it could not be found.
@@ -826,27 +775,11 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 			long commerceChannelId, int type)
 		throws NoSuchChannelAccountEntryRelException {
 
-		CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-			fetchByA_C_C_C_T(
-				accountEntryId, classNameId, classPK, commerceChannelId, type);
-
-		if (commerceChannelAccountEntryRel == null) {
-			String message =
-				_uniquePersistenceFinderByA_C_C_C_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						accountEntryId, classNameId, classPK, commerceChannelId,
-						type
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchChannelAccountEntryRelException(message);
-		}
-
-		return commerceChannelAccountEntryRel;
+		return _uniquePersistenceFinderByA_C_C_C_T.find(
+			finderCache,
+			new Object[] {
+				accountEntryId, classNameId, classPK, commerceChannelId, type
+			});
 	}
 
 	/**
@@ -1607,4 +1540,4 @@ public class CommerceChannelAccountEntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1490662997
+// LIFERAY-SERVICE-BUILDER-HASH:1345898813

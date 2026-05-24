@@ -87,7 +87,7 @@ public class CalendarPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Calendar>
+	private CollectionPersistenceFinder<Calendar, NoSuchCalendarException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -127,15 +127,8 @@ public class CalendarPersistenceImpl
 			String uuid, OrderByComparator<Calendar> orderByComparator)
 		throws NoSuchCalendarException {
 
-		Calendar calendar = fetchByUuid_First(uuid, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		throw new NoSuchCalendarException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,7 +169,8 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<Calendar> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<Calendar, NoSuchCalendarException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the calendar where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCalendarException</code> if it could not be found.
@@ -190,21 +184,8 @@ public class CalendarPersistenceImpl
 	public Calendar findByUUID_G(String uuid, long groupId)
 		throws NoSuchCalendarException {
 
-		Calendar calendar = fetchByUUID_G(uuid, groupId);
-
-		if (calendar == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCalendarException(message);
-		}
-
-		return calendar;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -252,7 +233,7 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<Calendar>
+	private CollectionPersistenceFinder<Calendar, NoSuchCalendarException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -295,16 +276,8 @@ public class CalendarPersistenceImpl
 			OrderByComparator<Calendar> orderByComparator)
 		throws NoSuchCalendarException {
 
-		Calendar calendar = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		throw new NoSuchCalendarException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -349,7 +322,7 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<Calendar>
+	private FilterCollectionPersistenceFinder<Calendar, NoSuchCalendarException>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -392,17 +365,9 @@ public class CalendarPersistenceImpl
 			OrderByComparator<Calendar> orderByComparator)
 		throws NoSuchCalendarException {
 
-		Calendar calendar = fetchByG_C_First(
-			groupId, calendarResourceId, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		throw new NoSuchCalendarException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, calendarResourceId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			finderCache, new Object[] {groupId, calendarResourceId},
+			orderByComparator);
 	}
 
 	/**
@@ -485,7 +450,7 @@ public class CalendarPersistenceImpl
 			finderCache, new Object[] {groupId, calendarResourceId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<Calendar>
+	private FilterCollectionPersistenceFinder<Calendar, NoSuchCalendarException>
 		_collectionPersistenceFinderByG_C_D;
 
 	/**
@@ -532,17 +497,10 @@ public class CalendarPersistenceImpl
 			OrderByComparator<Calendar> orderByComparator)
 		throws NoSuchCalendarException {
 
-		Calendar calendar = fetchByG_C_D_First(
-			groupId, calendarResourceId, defaultCalendar, orderByComparator);
-
-		if (calendar != null) {
-			return calendar;
-		}
-
-		throw new NoSuchCalendarException(
-			_collectionPersistenceFinderByG_C_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, calendarResourceId, defaultCalendar}));
+		return _collectionPersistenceFinderByG_C_D.findFirst(
+			finderCache,
+			new Object[] {groupId, calendarResourceId, defaultCalendar},
+			orderByComparator);
 	}
 
 	/**
@@ -1149,4 +1107,4 @@ public class CalendarPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:452768375
+// LIFERAY-SERVICE-BUILDER-HASH:916592048

@@ -89,8 +89,8 @@ public class AccountEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<AccountEntry>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<AccountEntry, NoSuchEntryException> _collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the account entries where uuid = &#63;.
@@ -130,15 +130,8 @@ public class AccountEntryPersistenceImpl
 			String uuid, OrderByComparator<AccountEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -213,8 +206,9 @@ public class AccountEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<AccountEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<AccountEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the account entries where uuid = &#63; and companyId = &#63;.
@@ -257,16 +251,8 @@ public class AccountEntryPersistenceImpl
 			OrderByComparator<AccountEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -348,8 +334,9 @@ public class AccountEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AccountEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<AccountEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the account entries where companyId = &#63;.
@@ -389,16 +376,8 @@ public class AccountEntryPersistenceImpl
 			long companyId, OrderByComparator<AccountEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -474,8 +453,8 @@ public class AccountEntryPersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AccountEntry>
-		_collectionPersistenceFinderByC_S;
+	private FilterCollectionPersistenceFinder
+		<AccountEntry, NoSuchEntryException> _collectionPersistenceFinderByC_S;
 
 	/**
 	 * Returns an ordered range of all the account entries where companyId = &#63; and status = &#63;.
@@ -518,16 +497,8 @@ public class AccountEntryPersistenceImpl
 			OrderByComparator<AccountEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -609,8 +580,8 @@ public class AccountEntryPersistenceImpl
 			finderCache, new Object[] {companyId, status}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AccountEntry>
-		_collectionPersistenceFinderByU_T;
+	private FilterCollectionPersistenceFinder
+		<AccountEntry, NoSuchEntryException> _collectionPersistenceFinderByU_T;
 
 	/**
 	 * Returns an ordered range of all the account entries where userId = &#63; and type = &#63;.
@@ -653,16 +624,8 @@ public class AccountEntryPersistenceImpl
 			OrderByComparator<AccountEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByU_T_First(
-			userId, type, orderByComparator);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByU_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, type}));
+		return _collectionPersistenceFinderByU_T.findFirst(
+			finderCache, new Object[] {userId, type}, orderByComparator);
 	}
 
 	/**
@@ -744,7 +707,7 @@ public class AccountEntryPersistenceImpl
 			finderCache, new Object[] {userId, type});
 	}
 
-	private UniquePersistenceFinder<AccountEntry>
+	private UniquePersistenceFinder<AccountEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -760,23 +723,8 @@ public class AccountEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchEntryException {
 
-		AccountEntry accountEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (accountEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return accountEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1335,4 +1283,4 @@ public class AccountEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:438675145
+// LIFERAY-SERVICE-BUILDER-HASH:746446189

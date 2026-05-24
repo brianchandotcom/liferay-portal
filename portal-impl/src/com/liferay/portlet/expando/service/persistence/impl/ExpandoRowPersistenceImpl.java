@@ -76,7 +76,7 @@ public class ExpandoRowPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ExpandoRow>
+	private CollectionPersistenceFinder<ExpandoRow, NoSuchRowException>
 		_collectionPersistenceFinderByTableId;
 
 	/**
@@ -117,16 +117,9 @@ public class ExpandoRowPersistenceImpl
 			long tableId, OrderByComparator<ExpandoRow> orderByComparator)
 		throws NoSuchRowException {
 
-		ExpandoRow expandoRow = fetchByTableId_First(
-			tableId, orderByComparator);
-
-		if (expandoRow != null) {
-			return expandoRow;
-		}
-
-		throw new NoSuchRowException(
-			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
+		return _collectionPersistenceFinderByTableId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -168,7 +161,7 @@ public class ExpandoRowPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private CollectionPersistenceFinder<ExpandoRow>
+	private CollectionPersistenceFinder<ExpandoRow, NoSuchRowException>
 		_collectionPersistenceFinderByClassPK;
 
 	/**
@@ -209,16 +202,9 @@ public class ExpandoRowPersistenceImpl
 			long classPK, OrderByComparator<ExpandoRow> orderByComparator)
 		throws NoSuchRowException {
 
-		ExpandoRow expandoRow = fetchByClassPK_First(
-			classPK, orderByComparator);
-
-		if (expandoRow != null) {
-			return expandoRow;
-		}
-
-		throw new NoSuchRowException(
-			_collectionPersistenceFinderByClassPK.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classPK}));
+		return _collectionPersistenceFinderByClassPK.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -260,7 +246,8 @@ public class ExpandoRowPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {classPK});
 	}
 
-	private UniquePersistenceFinder<ExpandoRow> _uniquePersistenceFinderByT_C;
+	private UniquePersistenceFinder<ExpandoRow, NoSuchRowException>
+		_uniquePersistenceFinderByT_C;
 
 	/**
 	 * Returns the expando row where tableId = &#63; and classPK = &#63; or throws a <code>NoSuchRowException</code> if it could not be found.
@@ -274,21 +261,8 @@ public class ExpandoRowPersistenceImpl
 	public ExpandoRow findByT_C(long tableId, long classPK)
 		throws NoSuchRowException {
 
-		ExpandoRow expandoRow = fetchByT_C(tableId, classPK);
-
-		if (expandoRow == null) {
-			String message =
-				_uniquePersistenceFinderByT_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRowException(message);
-		}
-
-		return expandoRow;
+		return _uniquePersistenceFinderByT_C.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, classPK});
 	}
 
 	/**
@@ -700,4 +674,4 @@ public class ExpandoRowPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1325655061
+// LIFERAY-SERVICE-BUILDER-HASH:-1138474779

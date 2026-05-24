@@ -75,8 +75,9 @@ public class AssetTagGroupRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AssetTagGroupRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where uuid = &#63;.
@@ -116,16 +117,9 @@ public class AssetTagGroupRelPersistenceImpl
 			String uuid, OrderByComparator<AssetTagGroupRel> orderByComparator)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (assetTagGroupRel != null) {
-			return assetTagGroupRel;
-		}
-
-		throw new NoSuchTagGroupRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -167,8 +161,9 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<AssetTagGroupRel>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the asset tag group rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchTagGroupRelException</code> if it could not be found.
@@ -182,21 +177,8 @@ public class AssetTagGroupRelPersistenceImpl
 	public AssetTagGroupRel findByUUID_G(String uuid, long groupId)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByUUID_G(uuid, groupId);
-
-		if (assetTagGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTagGroupRelException(message);
-		}
-
-		return assetTagGroupRel;
+		return _uniquePersistenceFinderByUUID_G.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -245,8 +227,9 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetTagGroupRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where uuid = &#63; and companyId = &#63;.
@@ -289,16 +272,9 @@ public class AssetTagGroupRelPersistenceImpl
 			OrderByComparator<AssetTagGroupRel> orderByComparator)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (assetTagGroupRel != null) {
-			return assetTagGroupRel;
-		}
-
-		throw new NoSuchTagGroupRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -344,8 +320,9 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<AssetTagGroupRel>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where groupId = &#63;.
@@ -385,16 +362,9 @@ public class AssetTagGroupRelPersistenceImpl
 			long groupId, OrderByComparator<AssetTagGroupRel> orderByComparator)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (assetTagGroupRel != null) {
-			return assetTagGroupRel;
-		}
-
-		throw new NoSuchTagGroupRelException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -436,8 +406,9 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<AssetTagGroupRel>
-		_collectionPersistenceFinderByTagId;
+	private CollectionPersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_collectionPersistenceFinderByTagId;
 
 	/**
 	 * Returns an ordered range of all the asset tag group rels where tagId = &#63;.
@@ -477,16 +448,9 @@ public class AssetTagGroupRelPersistenceImpl
 			long tagId, OrderByComparator<AssetTagGroupRel> orderByComparator)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByTagId_First(
-			tagId, orderByComparator);
-
-		if (assetTagGroupRel != null) {
-			return assetTagGroupRel;
-		}
-
-		throw new NoSuchTagGroupRelException(
-			_collectionPersistenceFinderByTagId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tagId}));
+		return _collectionPersistenceFinderByTagId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tagId},
+			orderByComparator);
 	}
 
 	/**
@@ -528,8 +492,9 @@ public class AssetTagGroupRelPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tagId});
 	}
 
-	private UniquePersistenceFinder<AssetTagGroupRel>
-		_uniquePersistenceFinderByG_T;
+	private UniquePersistenceFinder
+		<AssetTagGroupRel, NoSuchTagGroupRelException>
+			_uniquePersistenceFinderByG_T;
 
 	/**
 	 * Returns the asset tag group rel where groupId = &#63; and tagId = &#63; or throws a <code>NoSuchTagGroupRelException</code> if it could not be found.
@@ -543,21 +508,8 @@ public class AssetTagGroupRelPersistenceImpl
 	public AssetTagGroupRel findByG_T(long groupId, long tagId)
 		throws NoSuchTagGroupRelException {
 
-		AssetTagGroupRel assetTagGroupRel = fetchByG_T(groupId, tagId);
-
-		if (assetTagGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByG_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, tagId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchTagGroupRelException(message);
-		}
-
-		return assetTagGroupRel;
+		return _uniquePersistenceFinderByG_T.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, tagId});
 	}
 
 	/**
@@ -1043,4 +995,4 @@ public class AssetTagGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1247011055
+// LIFERAY-SERVICE-BUILDER-HASH:-911713683

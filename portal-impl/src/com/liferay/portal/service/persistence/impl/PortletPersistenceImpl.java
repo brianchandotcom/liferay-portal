@@ -66,7 +66,7 @@ public class PortletPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Portlet>
+	private CollectionPersistenceFinder<Portlet, NoSuchPortletException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -106,15 +106,9 @@ public class PortletPersistenceImpl
 			long companyId, OrderByComparator<Portlet> orderByComparator)
 		throws NoSuchPortletException {
 
-		Portlet portlet = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (portlet != null) {
-			return portlet;
-		}
-
-		throw new NoSuchPortletException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -156,7 +150,8 @@ public class PortletPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<Portlet> _uniquePersistenceFinderByC_P;
+	private UniquePersistenceFinder<Portlet, NoSuchPortletException>
+		_uniquePersistenceFinderByC_P;
 
 	/**
 	 * Returns the portlet where companyId = &#63; and portletId = &#63; or throws a <code>NoSuchPortletException</code> if it could not be found.
@@ -170,22 +165,9 @@ public class PortletPersistenceImpl
 	public Portlet findByC_P(long companyId, String portletId)
 		throws NoSuchPortletException {
 
-		Portlet portlet = fetchByC_P(companyId, portletId);
-
-		if (portlet == null) {
-			String message =
-				_uniquePersistenceFinderByC_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, portletId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPortletException(message);
-		}
-
-		return portlet;
+		return _uniquePersistenceFinderByC_P.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, portletId});
 	}
 
 	/**
@@ -492,4 +474,4 @@ public class PortletPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1768889591
+// LIFERAY-SERVICE-BUILDER-HASH:1630849437

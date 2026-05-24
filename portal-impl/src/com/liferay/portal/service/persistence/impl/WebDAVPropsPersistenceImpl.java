@@ -62,7 +62,8 @@ public class WebDAVPropsPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<WebDAVProps> _uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder<WebDAVProps, NoSuchWebDAVPropsException>
+		_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the web dav props where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchWebDAVPropsException</code> if it could not be found.
@@ -76,22 +77,9 @@ public class WebDAVPropsPersistenceImpl
 	public WebDAVProps findByC_C(long classNameId, long classPK)
 		throws NoSuchWebDAVPropsException {
 
-		WebDAVProps webDAVProps = fetchByC_C(classNameId, classPK);
-
-		if (webDAVProps == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchWebDAVPropsException(message);
-		}
-
-		return webDAVProps;
+		return _uniquePersistenceFinderByC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -380,4 +368,4 @@ public class WebDAVPropsPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1202143229
+// LIFERAY-SERVICE-BUILDER-HASH:1987997469

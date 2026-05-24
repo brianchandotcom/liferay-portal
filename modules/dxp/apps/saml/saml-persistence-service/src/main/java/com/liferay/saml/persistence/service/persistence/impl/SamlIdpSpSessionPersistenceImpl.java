@@ -73,8 +73,9 @@ public class SamlIdpSpSessionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SamlIdpSpSession>
-		_collectionPersistenceFinderByLtCreateDate;
+	private CollectionPersistenceFinder
+		<SamlIdpSpSession, NoSuchIdpSpSessionException>
+			_collectionPersistenceFinderByLtCreateDate;
 
 	/**
 	 * Returns all the saml idp sp sessions where createDate &lt; &#63;.
@@ -168,16 +169,8 @@ public class SamlIdpSpSessionPersistenceImpl
 			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException {
 
-		SamlIdpSpSession samlIdpSpSession = fetchByLtCreateDate_First(
-			createDate, orderByComparator);
-
-		if (samlIdpSpSession != null) {
-			return samlIdpSpSession;
-		}
-
-		throw new NoSuchIdpSpSessionException(
-			_collectionPersistenceFinderByLtCreateDate.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {createDate}));
+		return _collectionPersistenceFinderByLtCreateDate.findFirst(
+			finderCache, new Object[] {createDate}, orderByComparator);
 	}
 
 	/**
@@ -219,8 +212,9 @@ public class SamlIdpSpSessionPersistenceImpl
 			finderCache, new Object[] {createDate});
 	}
 
-	private CollectionPersistenceFinder<SamlIdpSpSession>
-		_collectionPersistenceFinderBySamlIdpSsoSessionId;
+	private CollectionPersistenceFinder
+		<SamlIdpSpSession, NoSuchIdpSpSessionException>
+			_collectionPersistenceFinderBySamlIdpSsoSessionId;
 
 	/**
 	 * Returns an ordered range of all the saml idp sp sessions where samlIdpSsoSessionId = &#63;.
@@ -261,18 +255,8 @@ public class SamlIdpSpSessionPersistenceImpl
 			OrderByComparator<SamlIdpSpSession> orderByComparator)
 		throws NoSuchIdpSpSessionException {
 
-		SamlIdpSpSession samlIdpSpSession = fetchBySamlIdpSsoSessionId_First(
-			samlIdpSsoSessionId, orderByComparator);
-
-		if (samlIdpSpSession != null) {
-			return samlIdpSpSession;
-		}
-
-		throw new NoSuchIdpSpSessionException(
-			_collectionPersistenceFinderBySamlIdpSsoSessionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {samlIdpSsoSessionId}));
+		return _collectionPersistenceFinderBySamlIdpSsoSessionId.findFirst(
+			finderCache, new Object[] {samlIdpSsoSessionId}, orderByComparator);
 	}
 
 	/**
@@ -635,4 +619,4 @@ public class SamlIdpSpSessionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:469475018
+// LIFERAY-SERVICE-BUILDER-HASH:-1177118704

@@ -75,8 +75,9 @@ public class BatchPlannerMappingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<BatchPlannerMapping>
-		_collectionPersistenceFinderByBatchPlannerPlanId;
+	private CollectionPersistenceFinder
+		<BatchPlannerMapping, NoSuchMappingException>
+			_collectionPersistenceFinderByBatchPlannerPlanId;
 
 	/**
 	 * Returns an ordered range of all the batch planner mappings where batchPlannerPlanId = &#63;.
@@ -117,19 +118,8 @@ public class BatchPlannerMappingPersistenceImpl
 			OrderByComparator<BatchPlannerMapping> orderByComparator)
 		throws NoSuchMappingException {
 
-		BatchPlannerMapping batchPlannerMapping =
-			fetchByBatchPlannerPlanId_First(
-				batchPlannerPlanId, orderByComparator);
-
-		if (batchPlannerMapping != null) {
-			return batchPlannerMapping;
-		}
-
-		throw new NoSuchMappingException(
-			_collectionPersistenceFinderByBatchPlannerPlanId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {batchPlannerPlanId}));
+		return _collectionPersistenceFinderByBatchPlannerPlanId.findFirst(
+			finderCache, new Object[] {batchPlannerPlanId}, orderByComparator);
 	}
 
 	/**
@@ -171,7 +161,7 @@ public class BatchPlannerMappingPersistenceImpl
 			finderCache, new Object[] {batchPlannerPlanId});
 	}
 
-	private UniquePersistenceFinder<BatchPlannerMapping>
+	private UniquePersistenceFinder<BatchPlannerMapping, NoSuchMappingException>
 		_uniquePersistenceFinderByBPPI_EFN_IFN;
 
 	/**
@@ -189,25 +179,11 @@ public class BatchPlannerMappingPersistenceImpl
 			String internalFieldName)
 		throws NoSuchMappingException {
 
-		BatchPlannerMapping batchPlannerMapping = fetchByBPPI_EFN_IFN(
-			batchPlannerPlanId, externalFieldName, internalFieldName);
-
-		if (batchPlannerMapping == null) {
-			String message =
-				_uniquePersistenceFinderByBPPI_EFN_IFN.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						batchPlannerPlanId, externalFieldName, internalFieldName
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMappingException(message);
-		}
-
-		return batchPlannerMapping;
+		return _uniquePersistenceFinderByBPPI_EFN_IFN.find(
+			finderCache,
+			new Object[] {
+				batchPlannerPlanId, externalFieldName, internalFieldName
+			});
 	}
 
 	/**
@@ -604,4 +580,4 @@ public class BatchPlannerMappingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-259824018
+// LIFERAY-SERVICE-BUILDER-HASH:-1333385051

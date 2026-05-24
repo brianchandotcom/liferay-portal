@@ -87,8 +87,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPInstanceOptionValueRel>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp instance option value rels where uuid = &#63;.
@@ -129,16 +130,8 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpInstanceOptionValueRel != null) {
-			return cpInstanceOptionValueRel;
-		}
-
-		throw new NoSuchCPInstanceOptionValueRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -180,8 +173,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPInstanceOptionValueRel>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp instance option value rel where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -195,22 +189,8 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	public CPInstanceOptionValueRel findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByUUID_G(
-			uuid, groupId);
-
-		if (cpInstanceOptionValueRel == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceOptionValueRelException(message);
-		}
-
-		return cpInstanceOptionValueRel;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -259,8 +239,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPInstanceOptionValueRel>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp instance option value rels where uuid = &#63; and companyId = &#63;.
@@ -303,16 +284,8 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpInstanceOptionValueRel != null) {
-			return cpInstanceOptionValueRel;
-		}
-
-		throw new NoSuchCPInstanceOptionValueRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -357,8 +330,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CPInstanceOptionValueRel>
-		_collectionPersistenceFinderByCPDefinitionOptionRelId;
+	private CollectionPersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_collectionPersistenceFinderByCPDefinitionOptionRelId;
 
 	/**
 	 * Returns an ordered range of all the cp instance option value rels where CPDefinitionOptionRelId = &#63;.
@@ -399,19 +373,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel =
-			fetchByCPDefinitionOptionRelId_First(
-				CPDefinitionOptionRelId, orderByComparator);
-
-		if (cpInstanceOptionValueRel != null) {
-			return cpInstanceOptionValueRel;
-		}
-
-		throw new NoSuchCPInstanceOptionValueRelException(
-			_collectionPersistenceFinderByCPDefinitionOptionRelId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionOptionRelId}));
+		return _collectionPersistenceFinderByCPDefinitionOptionRelId.findFirst(
+			finderCache, new Object[] {CPDefinitionOptionRelId},
+			orderByComparator);
 	}
 
 	/**
@@ -454,8 +418,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {CPDefinitionOptionRelId});
 	}
 
-	private CollectionPersistenceFinder<CPInstanceOptionValueRel>
-		_collectionPersistenceFinderByCPInstanceId;
+	private CollectionPersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_collectionPersistenceFinderByCPInstanceId;
 
 	/**
 	 * Returns an ordered range of all the cp instance option value rels where CPInstanceId = &#63;.
@@ -496,16 +461,8 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel =
-			fetchByCPInstanceId_First(CPInstanceId, orderByComparator);
-
-		if (cpInstanceOptionValueRel != null) {
-			return cpInstanceOptionValueRel;
-		}
-
-		throw new NoSuchCPInstanceOptionValueRelException(
-			_collectionPersistenceFinderByCPInstanceId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceId}));
+		return _collectionPersistenceFinderByCPInstanceId.findFirst(
+			finderCache, new Object[] {CPInstanceId}, orderByComparator);
 	}
 
 	/**
@@ -547,8 +504,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {CPInstanceId});
 	}
 
-	private CollectionPersistenceFinder<CPInstanceOptionValueRel>
-		_collectionPersistenceFinderByCDORI_CII;
+	private CollectionPersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_collectionPersistenceFinderByCDORI_CII;
 
 	/**
 	 * Returns an ordered range of all the cp instance option value rels where CPDefinitionOptionRelId = &#63; and CPInstanceId = &#63;.
@@ -591,18 +549,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			OrderByComparator<CPInstanceOptionValueRel> orderByComparator)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel =
-			fetchByCDORI_CII_First(
-				CPDefinitionOptionRelId, CPInstanceId, orderByComparator);
-
-		if (cpInstanceOptionValueRel != null) {
-			return cpInstanceOptionValueRel;
-		}
-
-		throw new NoSuchCPInstanceOptionValueRelException(
-			_collectionPersistenceFinderByCDORI_CII.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPDefinitionOptionRelId, CPInstanceId}));
+		return _collectionPersistenceFinderByCDORI_CII.findFirst(
+			finderCache, new Object[] {CPDefinitionOptionRelId, CPInstanceId},
+			orderByComparator);
 	}
 
 	/**
@@ -652,8 +601,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			finderCache, new Object[] {CPDefinitionOptionRelId, CPInstanceId});
 	}
 
-	private UniquePersistenceFinder<CPInstanceOptionValueRel>
-		_uniquePersistenceFinderByCDOVRI_CII;
+	private UniquePersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_uniquePersistenceFinderByCDOVRI_CII;
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -668,23 +618,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			long CPDefinitionOptionValueRelId, long CPInstanceId)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel = fetchByCDOVRI_CII(
-			CPDefinitionOptionValueRelId, CPInstanceId);
-
-		if (cpInstanceOptionValueRel == null) {
-			String message =
-				_uniquePersistenceFinderByCDOVRI_CII.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionOptionValueRelId, CPInstanceId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceOptionValueRelException(message);
-		}
-
-		return cpInstanceOptionValueRel;
+		return _uniquePersistenceFinderByCDOVRI_CII.find(
+			finderCache,
+			new Object[] {CPDefinitionOptionValueRelId, CPInstanceId});
 	}
 
 	/**
@@ -740,8 +676,9 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			new Object[] {CPDefinitionOptionValueRelId, CPInstanceId});
 	}
 
-	private UniquePersistenceFinder<CPInstanceOptionValueRel>
-		_uniquePersistenceFinderByCDORI_CDOVRI_CII;
+	private UniquePersistenceFinder
+		<CPInstanceOptionValueRel, NoSuchCPInstanceOptionValueRelException>
+			_uniquePersistenceFinderByCDORI_CDOVRI_CII;
 
 	/**
 	 * Returns the cp instance option value rel where CPDefinitionOptionRelId = &#63; and CPDefinitionOptionValueRelId = &#63; and CPInstanceId = &#63; or throws a <code>NoSuchCPInstanceOptionValueRelException</code> if it could not be found.
@@ -758,29 +695,12 @@ public class CPInstanceOptionValueRelPersistenceImpl
 			long CPInstanceId)
 		throws NoSuchCPInstanceOptionValueRelException {
 
-		CPInstanceOptionValueRel cpInstanceOptionValueRel =
-			fetchByCDORI_CDOVRI_CII(
+		return _uniquePersistenceFinderByCDORI_CDOVRI_CII.find(
+			finderCache,
+			new Object[] {
 				CPDefinitionOptionRelId, CPDefinitionOptionValueRelId,
-				CPInstanceId);
-
-		if (cpInstanceOptionValueRel == null) {
-			String message =
-				_uniquePersistenceFinderByCDORI_CDOVRI_CII.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {
-							CPDefinitionOptionRelId,
-							CPDefinitionOptionValueRelId, CPInstanceId
-						});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPInstanceOptionValueRelException(message);
-		}
-
-		return cpInstanceOptionValueRel;
+				CPInstanceId
+			});
 	}
 
 	/**
@@ -1463,4 +1383,4 @@ public class CPInstanceOptionValueRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-982134323
+// LIFERAY-SERVICE-BUILDER-HASH:1250369451

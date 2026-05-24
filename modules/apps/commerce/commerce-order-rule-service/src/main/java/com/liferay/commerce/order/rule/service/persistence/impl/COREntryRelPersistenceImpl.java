@@ -75,7 +75,7 @@ public class COREntryRelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<COREntryRel>
+	private CollectionPersistenceFinder<COREntryRel, NoSuchCOREntryRelException>
 		_collectionPersistenceFinderByCOREntryId;
 
 	/**
@@ -116,16 +116,8 @@ public class COREntryRelPersistenceImpl
 			long COREntryId, OrderByComparator<COREntryRel> orderByComparator)
 		throws NoSuchCOREntryRelException {
 
-		COREntryRel corEntryRel = fetchByCOREntryId_First(
-			COREntryId, orderByComparator);
-
-		if (corEntryRel != null) {
-			return corEntryRel;
-		}
-
-		throw new NoSuchCOREntryRelException(
-			_collectionPersistenceFinderByCOREntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {COREntryId}));
+		return _collectionPersistenceFinderByCOREntryId.findFirst(
+			finderCache, new Object[] {COREntryId}, orderByComparator);
 	}
 
 	/**
@@ -166,7 +158,7 @@ public class COREntryRelPersistenceImpl
 			finderCache, new Object[] {COREntryId});
 	}
 
-	private CollectionPersistenceFinder<COREntryRel>
+	private CollectionPersistenceFinder<COREntryRel, NoSuchCOREntryRelException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -210,17 +202,9 @@ public class COREntryRelPersistenceImpl
 			OrderByComparator<COREntryRel> orderByComparator)
 		throws NoSuchCOREntryRelException {
 
-		COREntryRel corEntryRel = fetchByC_C_First(
-			classNameId, COREntryId, orderByComparator);
-
-		if (corEntryRel != null) {
-			return corEntryRel;
-		}
-
-		throw new NoSuchCOREntryRelException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, COREntryId}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, COREntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -266,7 +250,7 @@ public class COREntryRelPersistenceImpl
 			finderCache, new Object[] {classNameId, COREntryId});
 	}
 
-	private UniquePersistenceFinder<COREntryRel>
+	private UniquePersistenceFinder<COREntryRel, NoSuchCOREntryRelException>
 		_uniquePersistenceFinderByC_C_C;
 
 	/**
@@ -283,23 +267,8 @@ public class COREntryRelPersistenceImpl
 			long classNameId, long classPK, long COREntryId)
 		throws NoSuchCOREntryRelException {
 
-		COREntryRel corEntryRel = fetchByC_C_C(
-			classNameId, classPK, COREntryId);
-
-		if (corEntryRel == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK, COREntryId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCOREntryRelException(message);
-		}
-
-		return corEntryRel;
+		return _uniquePersistenceFinderByC_C_C.find(
+			finderCache, new Object[] {classNameId, classPK, COREntryId});
 	}
 
 	/**
@@ -691,4 +660,4 @@ public class COREntryRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2085641465
+// LIFERAY-SERVICE-BUILDER-HASH:-369054181

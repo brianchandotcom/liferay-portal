@@ -95,8 +95,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where uuid = &#63;.
@@ -137,16 +138,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		throw new NoSuchDataDefinitionFieldLinkException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -188,8 +181,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<DEDataDefinitionFieldLink>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the de data definition field link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.
@@ -203,22 +197,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	public DEDataDefinitionFieldLink findByUUID_G(String uuid, long groupId)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByUUID_G(
-			uuid, groupId);
-
-		if (deDataDefinitionFieldLink == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDataDefinitionFieldLinkException(message);
-		}
-
-		return deDataDefinitionFieldLink;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -267,8 +247,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where uuid = &#63; and companyId = &#63;.
@@ -311,16 +292,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		throw new NoSuchDataDefinitionFieldLinkException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -365,8 +338,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByDDMStructureId;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByDDMStructureId;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where ddmStructureId = &#63;.
@@ -407,16 +381,8 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByDDMStructureId_First(ddmStructureId, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		throw new NoSuchDataDefinitionFieldLinkException(
-			_collectionPersistenceFinderByDDMStructureId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ddmStructureId}));
+		return _collectionPersistenceFinderByDDMStructureId.findFirst(
+			finderCache, new Object[] {ddmStructureId}, orderByComparator);
 	}
 
 	/**
@@ -458,8 +424,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {ddmStructureId});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where classNameId = &#63; and classPK = &#63;.
@@ -502,16 +469,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		throw new NoSuchDataDefinitionFieldLinkException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -557,8 +517,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByC_DDMSI;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByC_DDMSI;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63;.
@@ -601,18 +562,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			OrderByComparator<DEDataDefinitionFieldLink> orderByComparator)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByC_DDMSI_First(
-				classNameId, ddmStructureId, orderByComparator);
-
-		if (deDataDefinitionFieldLink != null) {
-			return deDataDefinitionFieldLink;
-		}
-
-		throw new NoSuchDataDefinitionFieldLinkException(
-			_collectionPersistenceFinderByC_DDMSI.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, ddmStructureId}));
+		return _collectionPersistenceFinderByC_DDMSI.findFirst(
+			finderCache, new Object[] {classNameId, ddmStructureId},
+			orderByComparator);
 	}
 
 	/**
@@ -658,8 +610,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			finderCache, new Object[] {classNameId, ddmStructureId});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByDDMSI_F;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByDDMSI_F;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where ddmStructureId = &#63; and fieldName = &#63;.
@@ -812,8 +765,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			new Object[] {ddmStructureId, ArrayUtil.sortedUnique(fieldNames)});
 	}
 
-	private CollectionPersistenceFinder<DEDataDefinitionFieldLink>
-		_collectionPersistenceFinderByC_DDMSI_F;
+	private CollectionPersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_collectionPersistenceFinderByC_DDMSI_F;
 
 	/**
 	 * Returns an ordered range of all the de data definition field links where classNameId = &#63; and ddmStructureId = &#63; and fieldName = &#63;.
@@ -996,8 +950,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 	private FinderPath _finderPathWithPaginationCountByC_C_DDMSI_F;
-	private UniquePersistenceFinder<DEDataDefinitionFieldLink>
-		_uniquePersistenceFinderByC_C_DDMSI_F;
+	private UniquePersistenceFinder
+		<DEDataDefinitionFieldLink, NoSuchDataDefinitionFieldLinkException>
+			_uniquePersistenceFinderByC_C_DDMSI_F;
 
 	/**
 	 * Returns the de data definition field link where classNameId = &#63; and classPK = &#63; and ddmStructureId = &#63; and fieldName = &#63; or throws a <code>NoSuchDataDefinitionFieldLinkException</code> if it could not be found.
@@ -1015,25 +970,9 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 			String fieldName)
 		throws NoSuchDataDefinitionFieldLinkException {
 
-		DEDataDefinitionFieldLink deDataDefinitionFieldLink =
-			fetchByC_C_DDMSI_F(classNameId, classPK, ddmStructureId, fieldName);
-
-		if (deDataDefinitionFieldLink == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_DDMSI_F.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						classNameId, classPK, ddmStructureId, fieldName
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchDataDefinitionFieldLinkException(message);
-		}
-
-		return deDataDefinitionFieldLink;
+		return _uniquePersistenceFinderByC_C_DDMSI_F.find(
+			finderCache,
+			new Object[] {classNameId, classPK, ddmStructureId, fieldName});
 	}
 
 	/**
@@ -1904,4 +1843,4 @@ public class DEDataDefinitionFieldLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2008442801
+// LIFERAY-SERVICE-BUILDER-HASH:117063824

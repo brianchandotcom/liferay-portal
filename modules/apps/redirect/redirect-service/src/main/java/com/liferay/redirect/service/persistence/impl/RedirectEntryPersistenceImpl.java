@@ -88,7 +88,7 @@ public class RedirectEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<RedirectEntry>
+	private CollectionPersistenceFinder<RedirectEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -129,16 +129,8 @@ public class RedirectEntryPersistenceImpl
 			String uuid, OrderByComparator<RedirectEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,7 +171,7 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<RedirectEntry>
+	private UniquePersistenceFinder<RedirectEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByUUID_G;
 
 	/**
@@ -194,21 +186,8 @@ public class RedirectEntryPersistenceImpl
 	public RedirectEntry findByUUID_G(String uuid, long groupId)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByUUID_G(uuid, groupId);
-
-		if (redirectEntry == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return redirectEntry;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,7 +235,7 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<RedirectEntry>
+	private CollectionPersistenceFinder<RedirectEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -300,16 +279,8 @@ public class RedirectEntryPersistenceImpl
 			OrderByComparator<RedirectEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -354,8 +325,9 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<RedirectEntry>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<RedirectEntry, NoSuchEntryException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the redirect entries where groupId = &#63;.
@@ -395,16 +367,8 @@ public class RedirectEntryPersistenceImpl
 			long groupId, OrderByComparator<RedirectEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -480,8 +444,8 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<RedirectEntry>
-		_collectionPersistenceFinderByG_D;
+	private FilterCollectionPersistenceFinder
+		<RedirectEntry, NoSuchEntryException> _collectionPersistenceFinderByG_D;
 
 	/**
 	 * Returns an ordered range of all the redirect entries where groupId = &#63; and destinationURL = &#63;.
@@ -524,17 +488,9 @@ public class RedirectEntryPersistenceImpl
 			OrderByComparator<RedirectEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByG_D_First(
-			groupId, destinationURL, orderByComparator);
-
-		if (redirectEntry != null) {
-			return redirectEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_D.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, destinationURL}));
+		return _collectionPersistenceFinderByG_D.findFirst(
+			finderCache, new Object[] {groupId, destinationURL},
+			orderByComparator);
 	}
 
 	/**
@@ -617,7 +573,7 @@ public class RedirectEntryPersistenceImpl
 			finderCache, new Object[] {groupId, destinationURL}, groupId);
 	}
 
-	private UniquePersistenceFinder<RedirectEntry>
+	private UniquePersistenceFinder<RedirectEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByG_S;
 
 	/**
@@ -632,22 +588,8 @@ public class RedirectEntryPersistenceImpl
 	public RedirectEntry findByG_S(long groupId, String sourceURL)
 		throws NoSuchEntryException {
 
-		RedirectEntry redirectEntry = fetchByG_S(groupId, sourceURL);
-
-		if (redirectEntry == null) {
-			String message =
-				_uniquePersistenceFinderByG_S.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, sourceURL});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return redirectEntry;
+		return _uniquePersistenceFinderByG_S.find(
+			finderCache, new Object[] {groupId, sourceURL});
 	}
 
 	/**
@@ -1157,4 +1099,4 @@ public class RedirectEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:107033519
+// LIFERAY-SERVICE-BUILDER-HASH:3101255

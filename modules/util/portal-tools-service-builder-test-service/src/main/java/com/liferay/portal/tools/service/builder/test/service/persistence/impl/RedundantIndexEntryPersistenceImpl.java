@@ -59,8 +59,9 @@ public class RedundantIndexEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<RedundantIndexEntry>
-		_uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder
+		<RedundantIndexEntry, NoSuchRedundantIndexEntryException>
+			_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the redundant index entry where companyId = &#63; and name = &#63; or throws a <code>NoSuchRedundantIndexEntryException</code> if it could not be found.
@@ -74,21 +75,8 @@ public class RedundantIndexEntryPersistenceImpl
 	public RedundantIndexEntry findByC_N(long companyId, String name)
 		throws NoSuchRedundantIndexEntryException {
 
-		RedundantIndexEntry redundantIndexEntry = fetchByC_N(companyId, name);
-
-		if (redundantIndexEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRedundantIndexEntryException(message);
-		}
-
-		return redundantIndexEntry;
+		return _uniquePersistenceFinderByC_N.find(
+			finderCache, new Object[] {companyId, name});
 	}
 
 	/**
@@ -365,4 +353,4 @@ public class RedundantIndexEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1980813396
+// LIFERAY-SERVICE-BUILDER-HASH:927181522

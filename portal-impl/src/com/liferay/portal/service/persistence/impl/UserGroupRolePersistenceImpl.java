@@ -71,8 +71,9 @@ public class UserGroupRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<UserGroupRole>
-		_collectionPersistenceFinderByUserId;
+	private CollectionPersistenceFinder
+		<UserGroupRole, NoSuchUserGroupRoleException>
+			_collectionPersistenceFinderByUserId;
 
 	/**
 	 * Returns an ordered range of all the user group roles where userId = &#63;.
@@ -112,16 +113,9 @@ public class UserGroupRolePersistenceImpl
 			long userId, OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByUserId_First(
-			userId, orderByComparator);
-
-		if (userGroupRole != null) {
-			return userGroupRole;
-		}
-
-		throw new NoSuchUserGroupRoleException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId},
+			orderByComparator);
 	}
 
 	/**
@@ -163,8 +157,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<UserGroupRole>
-		_collectionPersistenceFinderByGroupId;
+	private CollectionPersistenceFinder
+		<UserGroupRole, NoSuchUserGroupRoleException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the user group roles where groupId = &#63;.
@@ -204,16 +199,9 @@ public class UserGroupRolePersistenceImpl
 			long groupId, OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (userGroupRole != null) {
-			return userGroupRole;
-		}
-
-		throw new NoSuchUserGroupRoleException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -255,8 +243,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<UserGroupRole>
-		_collectionPersistenceFinderByRoleId;
+	private CollectionPersistenceFinder
+		<UserGroupRole, NoSuchUserGroupRoleException>
+			_collectionPersistenceFinderByRoleId;
 
 	/**
 	 * Returns an ordered range of all the user group roles where roleId = &#63;.
@@ -296,16 +285,9 @@ public class UserGroupRolePersistenceImpl
 			long roleId, OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByRoleId_First(
-			roleId, orderByComparator);
-
-		if (userGroupRole != null) {
-			return userGroupRole;
-		}
-
-		throw new NoSuchUserGroupRoleException(
-			_collectionPersistenceFinderByRoleId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId}));
+		return _collectionPersistenceFinderByRoleId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {roleId},
+			orderByComparator);
 	}
 
 	/**
@@ -347,8 +329,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {roleId});
 	}
 
-	private CollectionPersistenceFinder<UserGroupRole>
-		_collectionPersistenceFinderByU_G;
+	private CollectionPersistenceFinder
+		<UserGroupRole, NoSuchUserGroupRoleException>
+			_collectionPersistenceFinderByU_G;
 
 	/**
 	 * Returns an ordered range of all the user group roles where userId = &#63; and groupId = &#63;.
@@ -391,16 +374,9 @@ public class UserGroupRolePersistenceImpl
 			OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByU_G_First(
-			userId, groupId, orderByComparator);
-
-		if (userGroupRole != null) {
-			return userGroupRole;
-		}
-
-		throw new NoSuchUserGroupRoleException(
-			_collectionPersistenceFinderByU_G.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, groupId}));
+		return _collectionPersistenceFinderByU_G.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, groupId},
+			orderByComparator);
 	}
 
 	/**
@@ -446,8 +422,9 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, groupId});
 	}
 
-	private CollectionPersistenceFinder<UserGroupRole>
-		_collectionPersistenceFinderByG_R;
+	private CollectionPersistenceFinder
+		<UserGroupRole, NoSuchUserGroupRoleException>
+			_collectionPersistenceFinderByG_R;
 
 	/**
 	 * Returns an ordered range of all the user group roles where groupId = &#63; and roleId = &#63;.
@@ -490,16 +467,9 @@ public class UserGroupRolePersistenceImpl
 			OrderByComparator<UserGroupRole> orderByComparator)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByG_R_First(
-			groupId, roleId, orderByComparator);
-
-		if (userGroupRole != null) {
-			return userGroupRole;
-		}
-
-		throw new NoSuchUserGroupRoleException(
-			_collectionPersistenceFinderByG_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, roleId}));
+		return _collectionPersistenceFinderByG_R.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {groupId, roleId},
+			orderByComparator);
 	}
 
 	/**
@@ -545,7 +515,7 @@ public class UserGroupRolePersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {groupId, roleId});
 	}
 
-	private UniquePersistenceFinder<UserGroupRole>
+	private UniquePersistenceFinder<UserGroupRole, NoSuchUserGroupRoleException>
 		_uniquePersistenceFinderByU_G_R;
 
 	/**
@@ -561,22 +531,9 @@ public class UserGroupRolePersistenceImpl
 	public UserGroupRole findByU_G_R(long userId, long groupId, long roleId)
 		throws NoSuchUserGroupRoleException {
 
-		UserGroupRole userGroupRole = fetchByU_G_R(userId, groupId, roleId);
-
-		if (userGroupRole == null) {
-			String message =
-				_uniquePersistenceFinderByU_G_R.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {userId, groupId, roleId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserGroupRoleException(message);
-		}
-
-		return userGroupRole;
+		return _uniquePersistenceFinderByU_G_R.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {userId, groupId, roleId});
 	}
 
 	/**
@@ -1056,4 +1013,4 @@ public class UserGroupRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-504404351
+// LIFERAY-SERVICE-BUILDER-HASH:-1221523386

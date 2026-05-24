@@ -88,8 +88,9 @@ public class PatcherBuildPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByPatcherFixId;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByPatcherFixId;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63;.
@@ -130,16 +131,8 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByPatcherFixId_First(
-			patcherFixId, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByPatcherFixId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {patcherFixId}));
+		return _collectionPersistenceFinderByPatcherFixId.findFirst(
+			finderCache, new Object[] {patcherFixId}, orderByComparator);
 	}
 
 	/**
@@ -215,8 +208,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {patcherFixId});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByPatcherProjectVersionId;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByPatcherProjectVersionId;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63;.
@@ -257,18 +251,9 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByPatcherProjectVersionId_First(
-			patcherProjectVersionId, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByPatcherProjectVersionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {patcherProjectVersionId}));
+		return _collectionPersistenceFinderByPatcherProjectVersionId.findFirst(
+			finderCache, new Object[] {patcherProjectVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -348,8 +333,9 @@ public class PatcherBuildPersistenceImpl
 			filterCount(finderCache, new Object[] {patcherProjectVersionId});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByKey;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByKey;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where key = &#63;.
@@ -389,15 +375,8 @@ public class PatcherBuildPersistenceImpl
 			String key, OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByKey_First(key, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key}));
+		return _collectionPersistenceFinderByKey.findFirst(
+			finderCache, new Object[] {key}, orderByComparator);
 	}
 
 	/**
@@ -472,8 +451,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {key});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByP_P;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByP_P;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where patcherAccountId = &#63; and patcherProductVersionId = &#63;.
@@ -517,17 +497,10 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByP_P_First(
-			patcherAccountId, patcherProductVersionId, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByP_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {patcherAccountId, patcherProductVersionId}));
+		return _collectionPersistenceFinderByP_P.findFirst(
+			finderCache,
+			new Object[] {patcherAccountId, patcherProductVersionId},
+			orderByComparator);
 	}
 
 	/**
@@ -619,8 +592,9 @@ public class PatcherBuildPersistenceImpl
 			new Object[] {patcherAccountId, patcherProductVersionId});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByP_C;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByP_C;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where patcherFixId = &#63; and childBuild = &#63;.
@@ -663,17 +637,9 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByP_C_First(
-			patcherFixId, childBuild, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByP_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {patcherFixId, childBuild}));
+		return _collectionPersistenceFinderByP_C.findFirst(
+			finderCache, new Object[] {patcherFixId, childBuild},
+			orderByComparator);
 	}
 
 	/**
@@ -756,7 +722,7 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {patcherFixId, childBuild});
 	}
 
-	private UniquePersistenceFinder<PatcherBuild>
+	private UniquePersistenceFinder<PatcherBuild, NoSuchPatcherBuildException>
 		_uniquePersistenceFinderByK_KV;
 
 	/**
@@ -771,21 +737,8 @@ public class PatcherBuildPersistenceImpl
 	public PatcherBuild findByK_KV(String key, double keyVersion)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByK_KV(key, keyVersion);
-
-		if (patcherBuild == null) {
-			String message =
-				_uniquePersistenceFinderByK_KV.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key, keyVersion});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherBuildException(message);
-		}
-
-		return patcherBuild;
+		return _uniquePersistenceFinderByK_KV.find(
+			finderCache, new Object[] {key, keyVersion});
 	}
 
 	/**
@@ -833,8 +786,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {key, keyVersion});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByK_GtKV;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByK_GtKV;
 
 	/**
 	 * Returns all the patcher builds where key = &#63; and keyVersion &gt; &#63;.
@@ -933,16 +887,8 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByK_GtKV_First(
-			key, keyVersion, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByK_GtKV.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key, keyVersion}));
+		return _collectionPersistenceFinderByK_GtKV.findFirst(
+			finderCache, new Object[] {key, keyVersion}, orderByComparator);
 	}
 
 	/**
@@ -1059,8 +1005,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {key, keyVersion});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByK_LtKV;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByK_LtKV;
 
 	/**
 	 * Returns all the patcher builds where key = &#63; and keyVersion &lt; &#63;.
@@ -1159,16 +1106,8 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByK_LtKV_First(
-			key, keyVersion, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByK_LtKV.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key, keyVersion}));
+		return _collectionPersistenceFinderByK_LtKV.findFirst(
+			finderCache, new Object[] {key, keyVersion}, orderByComparator);
 	}
 
 	/**
@@ -1285,8 +1224,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {key, keyVersion});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByK_L;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByK_L;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where key = &#63; and latestKeyBuild = &#63;.
@@ -1329,16 +1269,8 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByK_L_First(
-			key, latestKeyBuild, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByK_L.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {key, latestKeyBuild}));
+		return _collectionPersistenceFinderByK_L.findFirst(
+			finderCache, new Object[] {key, latestKeyBuild}, orderByComparator);
 	}
 
 	/**
@@ -1420,8 +1352,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {key, latestKeyBuild});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByL_S;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByL_S;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where latestSupportTicketBuild = &#63; and supportTicket = &#63;.
@@ -1464,17 +1397,9 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByL_S_First(
-			latestSupportTicketBuild, supportTicket, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByL_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {latestSupportTicketBuild, supportTicket}));
+		return _collectionPersistenceFinderByL_S.findFirst(
+			finderCache, new Object[] {latestSupportTicketBuild, supportTicket},
+			orderByComparator);
 	}
 
 	/**
@@ -1566,8 +1491,9 @@ public class PatcherBuildPersistenceImpl
 			new Object[] {latestSupportTicketBuild, supportTicket});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByS_GtS;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByS_GtS;
 
 	/**
 	 * Returns all the patcher builds where supportTicket = &#63; and supportTicketVersion &gt; &#63;.
@@ -1671,17 +1597,9 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByS_GtS_First(
-			supportTicket, supportTicketVersion, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByS_GtS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {supportTicket, supportTicketVersion}));
+		return _collectionPersistenceFinderByS_GtS.findFirst(
+			finderCache, new Object[] {supportTicket, supportTicketVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -1805,8 +1723,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {supportTicket, supportTicketVersion});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByS_LtS;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByS_LtS;
 
 	/**
 	 * Returns all the patcher builds where supportTicket = &#63; and supportTicketVersion &lt; &#63;.
@@ -1910,17 +1829,9 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByS_LtS_First(
-			supportTicket, supportTicketVersion, orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByS_LtS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {supportTicket, supportTicketVersion}));
+		return _collectionPersistenceFinderByS_LtS.findFirst(
+			finderCache, new Object[] {supportTicket, supportTicketVersion},
+			orderByComparator);
 	}
 
 	/**
@@ -2044,8 +1955,9 @@ public class PatcherBuildPersistenceImpl
 			finderCache, new Object[] {supportTicket, supportTicketVersion});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByLtM_N_S;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByLtM_N_S;
 
 	/**
 	 * Returns all the patcher builds where modifiedDate &lt; &#63; and notified = &#63; and status = &#63;.
@@ -2517,8 +2429,9 @@ public class PatcherBuildPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByP_NotP_C_NotT;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByP_NotP_C_NotT;
 
 	/**
 	 * Returns all the patcher builds where patcherFixId = &#63; and patcherProductVersionId &ne; &#63; and childBuild = &#63; and type &ne; &#63;.
@@ -2640,20 +2553,12 @@ public class PatcherBuildPersistenceImpl
 			int type, OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByP_NotP_C_NotT_First(
-			patcherFixId, patcherProductVersionId, childBuild, type,
+		return _collectionPersistenceFinderByP_NotP_C_NotT.findFirst(
+			finderCache,
+			new Object[] {
+				patcherFixId, patcherProductVersionId, childBuild, type
+			},
 			orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByP_NotP_C_NotT.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					patcherFixId, patcherProductVersionId, childBuild, type
-				}));
 	}
 
 	/**
@@ -2815,8 +2720,9 @@ public class PatcherBuildPersistenceImpl
 			});
 	}
 
-	private FilterCollectionPersistenceFinder<PatcherBuild>
-		_collectionPersistenceFinderByP_N_L_A;
+	private FilterCollectionPersistenceFinder
+		<PatcherBuild, NoSuchPatcherBuildException>
+			_collectionPersistenceFinderByP_N_L_A;
 
 	/**
 	 * Returns an ordered range of all the patcher builds where patcherProjectVersionId = &#63; and accountEntryCode = &#63; and latestKeyBuild = &#63; and name = &#63;.
@@ -2868,21 +2774,12 @@ public class PatcherBuildPersistenceImpl
 			OrderByComparator<PatcherBuild> orderByComparator)
 		throws NoSuchPatcherBuildException {
 
-		PatcherBuild patcherBuild = fetchByP_N_L_A_First(
-			patcherProjectVersionId, accountEntryCode, latestKeyBuild, name,
+		return _collectionPersistenceFinderByP_N_L_A.findFirst(
+			finderCache,
+			new Object[] {
+				patcherProjectVersionId, accountEntryCode, latestKeyBuild, name
+			},
 			orderByComparator);
-
-		if (patcherBuild != null) {
-			return patcherBuild;
-		}
-
-		throw new NoSuchPatcherBuildException(
-			_collectionPersistenceFinderByP_N_L_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					patcherProjectVersionId, accountEntryCode, latestKeyBuild,
-					name
-				}));
 	}
 
 	/**
@@ -4448,4 +4345,4 @@ public class PatcherBuildPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1346721903
+// LIFERAY-SERVICE-BUILDER-HASH:97905805

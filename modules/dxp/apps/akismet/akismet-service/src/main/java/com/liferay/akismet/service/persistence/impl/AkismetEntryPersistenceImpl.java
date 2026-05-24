@@ -78,8 +78,9 @@ public class AkismetEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<AkismetEntry>
-		_collectionPersistenceFinderByLtModifiedDate;
+	private CollectionPersistenceFinder
+		<AkismetEntry, NoSuchAkismetEntryException>
+			_collectionPersistenceFinderByLtModifiedDate;
 
 	/**
 	 * Returns all the akismet entries where modifiedDate &lt; &#63;.
@@ -173,16 +174,8 @@ public class AkismetEntryPersistenceImpl
 			OrderByComparator<AkismetEntry> orderByComparator)
 		throws NoSuchAkismetEntryException {
 
-		AkismetEntry akismetEntry = fetchByLtModifiedDate_First(
-			modifiedDate, orderByComparator);
-
-		if (akismetEntry != null) {
-			return akismetEntry;
-		}
-
-		throw new NoSuchAkismetEntryException(
-			_collectionPersistenceFinderByLtModifiedDate.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {modifiedDate}));
+		return _collectionPersistenceFinderByLtModifiedDate.findFirst(
+			finderCache, new Object[] {modifiedDate}, orderByComparator);
 	}
 
 	/**
@@ -223,7 +216,8 @@ public class AkismetEntryPersistenceImpl
 			finderCache, new Object[] {modifiedDate});
 	}
 
-	private UniquePersistenceFinder<AkismetEntry> _uniquePersistenceFinderByC_C;
+	private UniquePersistenceFinder<AkismetEntry, NoSuchAkismetEntryException>
+		_uniquePersistenceFinderByC_C;
 
 	/**
 	 * Returns the akismet entry where classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchAkismetEntryException</code> if it could not be found.
@@ -237,22 +231,8 @@ public class AkismetEntryPersistenceImpl
 	public AkismetEntry findByC_C(long classNameId, long classPK)
 		throws NoSuchAkismetEntryException {
 
-		AkismetEntry akismetEntry = fetchByC_C(classNameId, classPK);
-
-		if (akismetEntry == null) {
-			String message =
-				_uniquePersistenceFinderByC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchAkismetEntryException(message);
-		}
-
-		return akismetEntry;
+		return _uniquePersistenceFinderByC_C.find(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -607,4 +587,4 @@ public class AkismetEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1391246213
+// LIFERAY-SERVICE-BUILDER-HASH:-1741514568

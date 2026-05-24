@@ -78,8 +78,9 @@ public class ExpandoColumnPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<ExpandoColumn>
-		_collectionPersistenceFinderByTableId;
+	private FilterCollectionPersistenceFinder
+		<ExpandoColumn, NoSuchColumnException>
+			_collectionPersistenceFinderByTableId;
 
 	/**
 	 * Returns an ordered range of all the expando columns where tableId = &#63;.
@@ -119,16 +120,9 @@ public class ExpandoColumnPersistenceImpl
 			long tableId, OrderByComparator<ExpandoColumn> orderByComparator)
 		throws NoSuchColumnException {
 
-		ExpandoColumn expandoColumn = fetchByTableId_First(
-			tableId, orderByComparator);
-
-		if (expandoColumn != null) {
-			return expandoColumn;
-		}
-
-		throw new NoSuchColumnException(
-			_collectionPersistenceFinderByTableId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId}));
+		return _collectionPersistenceFinderByTableId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId},
+			orderByComparator);
 	}
 
 	/**
@@ -205,9 +199,10 @@ public class ExpandoColumnPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {tableId});
 	}
 
-	private FilterCollectionPersistenceFinder<ExpandoColumn>
-		_collectionPersistenceFinderByT_N;
-	private UniquePersistenceFinder<ExpandoColumn>
+	private FilterCollectionPersistenceFinder
+		<ExpandoColumn, NoSuchColumnException>
+			_collectionPersistenceFinderByT_N;
+	private UniquePersistenceFinder<ExpandoColumn, NoSuchColumnException>
 		_uniquePersistenceFinderByT_N;
 
 	/**
@@ -266,21 +261,8 @@ public class ExpandoColumnPersistenceImpl
 	public ExpandoColumn findByT_N(long tableId, String name)
 		throws NoSuchColumnException {
 
-		ExpandoColumn expandoColumn = fetchByT_N(tableId, name);
-
-		if (expandoColumn == null) {
-			String message =
-				_uniquePersistenceFinderByT_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {tableId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchColumnException(message);
-		}
-
-		return expandoColumn;
+		return _uniquePersistenceFinderByT_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {tableId, name});
 	}
 
 	/**
@@ -748,4 +730,4 @@ public class ExpandoColumnPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1843076136
+// LIFERAY-SERVICE-BUILDER-HASH:908037729

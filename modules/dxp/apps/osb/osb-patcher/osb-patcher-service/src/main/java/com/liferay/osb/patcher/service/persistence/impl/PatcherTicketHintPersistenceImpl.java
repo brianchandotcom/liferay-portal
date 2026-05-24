@@ -72,8 +72,9 @@ public class PatcherTicketHintPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<PatcherTicketHint>
-		_uniquePersistenceFinderByPatcherProductVersionId;
+	private UniquePersistenceFinder
+		<PatcherTicketHint, NoSuchPatcherTicketHintException>
+			_uniquePersistenceFinderByPatcherProductVersionId;
 
 	/**
 	 * Returns the patcher ticket hint where patcherProductVersionId = &#63; or throws a <code>NoSuchPatcherTicketHintException</code> if it could not be found.
@@ -87,24 +88,8 @@ public class PatcherTicketHintPersistenceImpl
 			long patcherProductVersionId)
 		throws NoSuchPatcherTicketHintException {
 
-		PatcherTicketHint patcherTicketHint = fetchByPatcherProductVersionId(
-			patcherProductVersionId);
-
-		if (patcherTicketHint == null) {
-			String message =
-				_uniquePersistenceFinderByPatcherProductVersionId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {patcherProductVersionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPatcherTicketHintException(message);
-		}
-
-		return patcherTicketHint;
+		return _uniquePersistenceFinderByPatcherProductVersionId.find(
+			finderCache, new Object[] {patcherProductVersionId});
 	}
 
 	/**
@@ -430,4 +415,4 @@ public class PatcherTicketHintPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:585746567
+// LIFERAY-SERVICE-BUILDER-HASH:-1798721459

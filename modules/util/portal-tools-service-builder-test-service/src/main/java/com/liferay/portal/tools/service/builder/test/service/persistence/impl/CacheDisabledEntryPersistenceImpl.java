@@ -57,8 +57,9 @@ public class CacheDisabledEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<CacheDisabledEntry>
-		_uniquePersistenceFinderByName;
+	private UniquePersistenceFinder
+		<CacheDisabledEntry, NoSuchCacheDisabledEntryException>
+			_uniquePersistenceFinderByName;
 
 	/**
 	 * Returns the cache disabled entry where name = &#63; or throws a <code>NoSuchCacheDisabledEntryException</code> if it could not be found.
@@ -71,21 +72,8 @@ public class CacheDisabledEntryPersistenceImpl
 	public CacheDisabledEntry findByName(String name)
 		throws NoSuchCacheDisabledEntryException {
 
-		CacheDisabledEntry cacheDisabledEntry = fetchByName(name);
-
-		if (cacheDisabledEntry == null) {
-			String message =
-				_uniquePersistenceFinderByName.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCacheDisabledEntryException(message);
-		}
-
-		return cacheDisabledEntry;
+		return _uniquePersistenceFinderByName.find(
+			dummyFinderCache, new Object[] {name});
 	}
 
 	/**
@@ -344,4 +332,4 @@ public class CacheDisabledEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1765215452
+// LIFERAY-SERVICE-BUILDER-HASH:-443209600

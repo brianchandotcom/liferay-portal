@@ -77,7 +77,7 @@ public class ModulePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -117,15 +117,8 @@ public class ModulePersistenceImpl
 			String uuid, OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByUuid_First(uuid, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -166,7 +159,7 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -209,15 +202,8 @@ public class ModulePersistenceImpl
 			OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -262,7 +248,7 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByAppId;
 
 	/**
@@ -302,15 +288,8 @@ public class ModulePersistenceImpl
 			long appId, OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByAppId_First(appId, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByAppId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {appId}));
+		return _collectionPersistenceFinderByAppId.findFirst(
+			finderCache, new Object[] {appId}, orderByComparator);
 	}
 
 	/**
@@ -351,7 +330,7 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {appId});
 	}
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByBundleSymbolicName;
 
 	/**
@@ -392,18 +371,8 @@ public class ModulePersistenceImpl
 			OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByBundleSymbolicName_First(
-			bundleSymbolicName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByBundleSymbolicName.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {bundleSymbolicName}));
+		return _collectionPersistenceFinderByBundleSymbolicName.findFirst(
+			finderCache, new Object[] {bundleSymbolicName}, orderByComparator);
 	}
 
 	/**
@@ -445,7 +414,7 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {bundleSymbolicName});
 	}
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByContextName;
 
 	/**
@@ -485,16 +454,8 @@ public class ModulePersistenceImpl
 			String contextName, OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByContextName_First(
-			contextName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByContextName.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {contextName}));
+		return _collectionPersistenceFinderByContextName.findFirst(
+			finderCache, new Object[] {contextName}, orderByComparator);
 	}
 
 	/**
@@ -535,7 +496,7 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {contextName});
 	}
 
-	private CollectionPersistenceFinder<Module>
+	private CollectionPersistenceFinder<Module, NoSuchModuleException>
 		_collectionPersistenceFinderByA_CN;
 
 	/**
@@ -578,16 +539,8 @@ public class ModulePersistenceImpl
 			OrderByComparator<Module> orderByComparator)
 		throws NoSuchModuleException {
 
-		Module module = fetchByA_CN_First(
-			appId, contextName, orderByComparator);
-
-		if (module != null) {
-			return module;
-		}
-
-		throw new NoSuchModuleException(
-			_collectionPersistenceFinderByA_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {appId, contextName}));
+		return _collectionPersistenceFinderByA_CN.findFirst(
+			finderCache, new Object[] {appId, contextName}, orderByComparator);
 	}
 
 	/**
@@ -632,7 +585,8 @@ public class ModulePersistenceImpl
 			finderCache, new Object[] {appId, contextName});
 	}
 
-	private UniquePersistenceFinder<Module> _uniquePersistenceFinderByA_BSN_BV;
+	private UniquePersistenceFinder<Module, NoSuchModuleException>
+		_uniquePersistenceFinderByA_BSN_BV;
 
 	/**
 	 * Returns the module where appId = &#63; and bundleSymbolicName = &#63; and bundleVersion = &#63; or throws a <code>NoSuchModuleException</code> if it could not be found.
@@ -648,23 +602,9 @@ public class ModulePersistenceImpl
 			long appId, String bundleSymbolicName, String bundleVersion)
 		throws NoSuchModuleException {
 
-		Module module = fetchByA_BSN_BV(
-			appId, bundleSymbolicName, bundleVersion);
-
-		if (module == null) {
-			String message =
-				_uniquePersistenceFinderByA_BSN_BV.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {appId, bundleSymbolicName, bundleVersion});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchModuleException(message);
-		}
-
-		return module;
+		return _uniquePersistenceFinderByA_BSN_BV.find(
+			finderCache,
+			new Object[] {appId, bundleSymbolicName, bundleVersion});
 	}
 
 	/**
@@ -1159,4 +1099,4 @@ public class ModulePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1274754694
+// LIFERAY-SERVICE-BUILDER-HASH:-1802077902

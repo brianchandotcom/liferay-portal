@@ -83,8 +83,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceNotificationAttachment>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceNotificationAttachment, NoSuchNotificationAttachmentException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63;.
@@ -125,16 +126,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
 		throws NoSuchNotificationAttachmentException {
 
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		throw new NoSuchNotificationAttachmentException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -176,8 +169,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CommerceNotificationAttachment>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CommerceNotificationAttachment, NoSuchNotificationAttachmentException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the commerce notification attachment where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchNotificationAttachmentException</code> if it could not be found.
@@ -192,22 +186,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			String uuid, long groupId)
 		throws NoSuchNotificationAttachmentException {
 
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByUUID_G(uuid, groupId);
-
-		if (commerceNotificationAttachment == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchNotificationAttachmentException(message);
-		}
-
-		return commerceNotificationAttachment;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -257,8 +237,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CommerceNotificationAttachment>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceNotificationAttachment, NoSuchNotificationAttachmentException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce notification attachments where uuid = &#63; and companyId = &#63;.
@@ -301,16 +282,8 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			OrderByComparator<CommerceNotificationAttachment> orderByComparator)
 		throws NoSuchNotificationAttachmentException {
 
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		throw new NoSuchNotificationAttachmentException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -355,8 +328,9 @@ public class CommerceNotificationAttachmentPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceNotificationAttachment>
-		_collectionPersistenceFinderByCommerceNotificationQueueEntryId;
+	private CollectionPersistenceFinder
+		<CommerceNotificationAttachment, NoSuchNotificationAttachmentException>
+			_collectionPersistenceFinderByCommerceNotificationQueueEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce notification attachments where commerceNotificationQueueEntryId = &#63;.
@@ -401,19 +375,10 @@ public class CommerceNotificationAttachmentPersistenceImpl
 					orderByComparator)
 		throws NoSuchNotificationAttachmentException {
 
-		CommerceNotificationAttachment commerceNotificationAttachment =
-			fetchByCommerceNotificationQueueEntryId_First(
-				commerceNotificationQueueEntryId, orderByComparator);
-
-		if (commerceNotificationAttachment != null) {
-			return commerceNotificationAttachment;
-		}
-
-		throw new NoSuchNotificationAttachmentException(
-			_collectionPersistenceFinderByCommerceNotificationQueueEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceNotificationQueueEntryId}));
+		return _collectionPersistenceFinderByCommerceNotificationQueueEntryId.
+			findFirst(
+				finderCache, new Object[] {commerceNotificationQueueEntryId},
+				orderByComparator);
 	}
 
 	/**
@@ -896,4 +861,4 @@ public class CommerceNotificationAttachmentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1625108548
+// LIFERAY-SERVICE-BUILDER-HASH:262382236

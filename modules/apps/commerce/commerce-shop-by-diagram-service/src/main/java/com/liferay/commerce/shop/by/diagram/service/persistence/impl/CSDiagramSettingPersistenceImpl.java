@@ -87,8 +87,9 @@ public class CSDiagramSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CSDiagramSetting>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CSDiagramSetting, NoSuchCSDiagramSettingException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cs diagram settings where uuid = &#63;.
@@ -128,16 +129,8 @@ public class CSDiagramSettingPersistenceImpl
 			String uuid, OrderByComparator<CSDiagramSetting> orderByComparator)
 		throws NoSuchCSDiagramSettingException {
 
-		CSDiagramSetting csDiagramSetting = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (csDiagramSetting != null) {
-			return csDiagramSetting;
-		}
-
-		throw new NoSuchCSDiagramSettingException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -178,8 +171,9 @@ public class CSDiagramSettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CSDiagramSetting>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CSDiagramSetting, NoSuchCSDiagramSettingException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cs diagram settings where uuid = &#63; and companyId = &#63;.
@@ -222,16 +216,8 @@ public class CSDiagramSettingPersistenceImpl
 			OrderByComparator<CSDiagramSetting> orderByComparator)
 		throws NoSuchCSDiagramSettingException {
 
-		CSDiagramSetting csDiagramSetting = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (csDiagramSetting != null) {
-			return csDiagramSetting;
-		}
-
-		throw new NoSuchCSDiagramSettingException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -276,8 +262,9 @@ public class CSDiagramSettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private UniquePersistenceFinder<CSDiagramSetting>
-		_uniquePersistenceFinderByCPDefinitionId;
+	private UniquePersistenceFinder
+		<CSDiagramSetting, NoSuchCSDiagramSettingException>
+			_uniquePersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns the cs diagram setting where CPDefinitionId = &#63; or throws a <code>NoSuchCSDiagramSettingException</code> if it could not be found.
@@ -290,22 +277,8 @@ public class CSDiagramSettingPersistenceImpl
 	public CSDiagramSetting findByCPDefinitionId(long CPDefinitionId)
 		throws NoSuchCSDiagramSettingException {
 
-		CSDiagramSetting csDiagramSetting = fetchByCPDefinitionId(
-			CPDefinitionId);
-
-		if (csDiagramSetting == null) {
-			String message =
-				_uniquePersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCSDiagramSettingException(message);
-		}
-
-		return csDiagramSetting;
+		return _uniquePersistenceFinderByCPDefinitionId.find(
+			finderCache, new Object[] {CPDefinitionId});
 	}
 
 	/**
@@ -793,4 +766,4 @@ public class CSDiagramSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1347531575
+// LIFERAY-SERVICE-BUILDER-HASH:1673980810

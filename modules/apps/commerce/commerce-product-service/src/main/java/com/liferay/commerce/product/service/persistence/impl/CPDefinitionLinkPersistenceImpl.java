@@ -88,8 +88,9 @@ public class CPDefinitionLinkPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where uuid = &#63;.
@@ -129,16 +130,8 @@ public class CPDefinitionLinkPersistenceImpl
 			String uuid, OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -179,8 +172,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionLink>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the cp definition link where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCPDefinitionLinkException</code> if it could not be found.
@@ -194,21 +188,8 @@ public class CPDefinitionLinkPersistenceImpl
 	public CPDefinitionLink findByUUID_G(String uuid, long groupId)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByUUID_G(uuid, groupId);
-
-		if (cpDefinitionLink == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionLinkException(message);
-		}
-
-		return cpDefinitionLink;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -256,8 +237,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where uuid = &#63; and companyId = &#63;.
@@ -300,16 +282,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -354,8 +328,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCPDefinitionId;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCPDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CPDefinitionId = &#63;.
@@ -396,16 +371,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCPDefinitionId_First(
-			CPDefinitionId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCPDefinitionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId}));
+		return _collectionPersistenceFinderByCPDefinitionId.findFirst(
+			finderCache, new Object[] {CPDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -447,8 +414,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCProductId;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCProductId;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CProductId = &#63;.
@@ -489,16 +457,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCProductId_First(
-			CProductId, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCProductId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId}));
+		return _collectionPersistenceFinderByCProductId.findFirst(
+			finderCache, new Object[] {CProductId}, orderByComparator);
 	}
 
 	/**
@@ -540,8 +500,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCPD_T;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCPD_T;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CPDefinitionId = &#63; and type = &#63;.
@@ -584,16 +545,9 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_T_First(
-			CPDefinitionId, type, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCPD_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPDefinitionId, type}));
+		return _collectionPersistenceFinderByCPD_T.findFirst(
+			finderCache, new Object[] {CPDefinitionId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -639,8 +593,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, type});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCPD_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCPD_S;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CPDefinitionId = &#63; and status = &#63;.
@@ -683,17 +638,9 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_S_First(
-			CPDefinitionId, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCPD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPDefinitionId, status}));
+		return _collectionPersistenceFinderByCPD_S.findFirst(
+			finderCache, new Object[] {CPDefinitionId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -739,8 +686,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, status});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCP_T;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCP_T;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CProductId = &#63; and type = &#63;.
@@ -783,16 +731,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCP_T_First(
-			CProductId, type, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCP_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId, type}));
+		return _collectionPersistenceFinderByCP_T.findFirst(
+			finderCache, new Object[] {CProductId, type}, orderByComparator);
 	}
 
 	/**
@@ -837,8 +777,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId, type});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCP_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCP_S;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CProductId = &#63; and status = &#63;.
@@ -881,16 +822,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCP_S_First(
-			CProductId, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCP_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CProductId, status}));
+		return _collectionPersistenceFinderByCP_S.findFirst(
+			finderCache, new Object[] {CProductId, status}, orderByComparator);
 	}
 
 	/**
@@ -935,8 +868,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CProductId, status});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByLtD_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByLtD_S;
 
 	/**
 	 * Returns all the cp definition links where displayDate &lt; &#63; and status = &#63;.
@@ -1035,16 +969,8 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -1089,8 +1015,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByLtE_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByLtE_S;
 
 	/**
 	 * Returns all the cp definition links where expirationDate &lt; &#63; and status = &#63;.
@@ -1189,17 +1116,9 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {expirationDate, status}));
+		return _collectionPersistenceFinderByLtE_S.findFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1245,8 +1164,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {expirationDate, status});
 	}
 
-	private UniquePersistenceFinder<CPDefinitionLink>
-		_uniquePersistenceFinderByC_C_T;
+	private UniquePersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_uniquePersistenceFinderByC_C_T;
 
 	/**
 	 * Returns the cp definition link where CPDefinitionId = &#63; and CProductId = &#63; and type = &#63; or throws a <code>NoSuchCPDefinitionLinkException</code> if it could not be found.
@@ -1262,23 +1182,8 @@ public class CPDefinitionLinkPersistenceImpl
 			long CPDefinitionId, long CProductId, String type)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByC_C_T(
-			CPDefinitionId, CProductId, type);
-
-		if (cpDefinitionLink == null) {
-			String message =
-				_uniquePersistenceFinderByC_C_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {CPDefinitionId, CProductId, type});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCPDefinitionLinkException(message);
-		}
-
-		return cpDefinitionLink;
+		return _uniquePersistenceFinderByC_C_T.find(
+			finderCache, new Object[] {CPDefinitionId, CProductId, type});
 	}
 
 	/**
@@ -1333,8 +1238,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, CProductId, type});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCPD_T_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCPD_T_S;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CPDefinitionId = &#63; and type = &#63; and status = &#63;.
@@ -1379,17 +1285,9 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCPD_T_S_First(
-			CPDefinitionId, type, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCPD_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPDefinitionId, type, status}));
+		return _collectionPersistenceFinderByCPD_T_S.findFirst(
+			finderCache, new Object[] {CPDefinitionId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1438,8 +1336,9 @@ public class CPDefinitionLinkPersistenceImpl
 			finderCache, new Object[] {CPDefinitionId, type, status});
 	}
 
-	private CollectionPersistenceFinder<CPDefinitionLink>
-		_collectionPersistenceFinderByCP_T_S;
+	private CollectionPersistenceFinder
+		<CPDefinitionLink, NoSuchCPDefinitionLinkException>
+			_collectionPersistenceFinderByCP_T_S;
 
 	/**
 	 * Returns an ordered range of all the cp definition links where CProductId = &#63; and type = &#63; and status = &#63;.
@@ -1484,17 +1383,9 @@ public class CPDefinitionLinkPersistenceImpl
 			OrderByComparator<CPDefinitionLink> orderByComparator)
 		throws NoSuchCPDefinitionLinkException {
 
-		CPDefinitionLink cpDefinitionLink = fetchByCP_T_S_First(
-			CProductId, type, status, orderByComparator);
-
-		if (cpDefinitionLink != null) {
-			return cpDefinitionLink;
-		}
-
-		throw new NoSuchCPDefinitionLinkException(
-			_collectionPersistenceFinderByCP_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CProductId, type, status}));
+		return _collectionPersistenceFinderByCP_T_S.findFirst(
+			finderCache, new Object[] {CProductId, type, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2324,4 +2215,4 @@ public class CPDefinitionLinkPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:836218008
+// LIFERAY-SERVICE-BUILDER-HASH:-1883015780

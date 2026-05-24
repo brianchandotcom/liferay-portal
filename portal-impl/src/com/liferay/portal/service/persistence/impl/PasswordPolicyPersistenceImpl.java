@@ -71,8 +71,9 @@ public class PasswordPolicyPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<PasswordPolicy>
-		_collectionPersistenceFinderByUuid;
+	private FilterCollectionPersistenceFinder
+		<PasswordPolicy, NoSuchPasswordPolicyException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the password policies where uuid = &#63;.
@@ -112,16 +113,9 @@ public class PasswordPolicyPersistenceImpl
 			String uuid, OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException {
 
-		PasswordPolicy passwordPolicy = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		throw new NoSuchPasswordPolicyException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -198,8 +192,9 @@ public class PasswordPolicyPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private FilterCollectionPersistenceFinder<PasswordPolicy>
-		_collectionPersistenceFinderByUuid_C;
+	private FilterCollectionPersistenceFinder
+		<PasswordPolicy, NoSuchPasswordPolicyException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the password policies where uuid = &#63; and companyId = &#63;.
@@ -242,16 +237,9 @@ public class PasswordPolicyPersistenceImpl
 			OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException {
 
-		PasswordPolicy passwordPolicy = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		throw new NoSuchPasswordPolicyException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -335,8 +323,9 @@ public class PasswordPolicyPersistenceImpl
 			companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<PasswordPolicy>
-		_collectionPersistenceFinderByCompanyId;
+	private FilterCollectionPersistenceFinder
+		<PasswordPolicy, NoSuchPasswordPolicyException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the password policies where companyId = &#63;.
@@ -376,16 +365,9 @@ public class PasswordPolicyPersistenceImpl
 			long companyId, OrderByComparator<PasswordPolicy> orderByComparator)
 		throws NoSuchPasswordPolicyException {
 
-		PasswordPolicy passwordPolicy = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (passwordPolicy != null) {
-			return passwordPolicy;
-		}
-
-		throw new NoSuchPasswordPolicyException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -463,8 +445,9 @@ public class PasswordPolicyPersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<PasswordPolicy>
-		_uniquePersistenceFinderByC_N;
+	private UniquePersistenceFinder
+		<PasswordPolicy, NoSuchPasswordPolicyException>
+			_uniquePersistenceFinderByC_N;
 
 	/**
 	 * Returns the password policy where companyId = &#63; and name = &#63; or throws a <code>NoSuchPasswordPolicyException</code> if it could not be found.
@@ -478,21 +461,8 @@ public class PasswordPolicyPersistenceImpl
 	public PasswordPolicy findByC_N(long companyId, String name)
 		throws NoSuchPasswordPolicyException {
 
-		PasswordPolicy passwordPolicy = fetchByC_N(companyId, name);
-
-		if (passwordPolicy == null) {
-			String message =
-				_uniquePersistenceFinderByC_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPasswordPolicyException(message);
-		}
-
-		return passwordPolicy;
+		return _uniquePersistenceFinderByC_N.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, name});
 	}
 
 	/**
@@ -895,4 +865,4 @@ public class PasswordPolicyPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1446991418
+// LIFERAY-SERVICE-BUILDER-HASH:1606651073

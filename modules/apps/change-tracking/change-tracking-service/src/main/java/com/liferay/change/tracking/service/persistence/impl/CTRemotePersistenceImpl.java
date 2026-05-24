@@ -72,7 +72,7 @@ public class CTRemotePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CTRemote>
+	private FilterCollectionPersistenceFinder<CTRemote, NoSuchRemoteException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -112,16 +112,8 @@ public class CTRemotePersistenceImpl
 			long companyId, OrderByComparator<CTRemote> orderByComparator)
 		throws NoSuchRemoteException {
 
-		CTRemote ctRemote = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (ctRemote != null) {
-			return ctRemote;
-		}
-
-		throw new NoSuchRemoteException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -479,4 +471,4 @@ public class CTRemotePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-819391125
+// LIFERAY-SERVICE-BUILDER-HASH:-842533305

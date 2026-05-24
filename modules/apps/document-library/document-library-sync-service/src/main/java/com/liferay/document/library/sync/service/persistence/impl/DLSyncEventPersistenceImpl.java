@@ -76,7 +76,7 @@ public class DLSyncEventPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<DLSyncEvent>
+	private CollectionPersistenceFinder<DLSyncEvent, NoSuchEventException>
 		_collectionPersistenceFinderByGtModifiedTime;
 
 	/**
@@ -170,16 +170,8 @@ public class DLSyncEventPersistenceImpl
 			long modifiedTime, OrderByComparator<DLSyncEvent> orderByComparator)
 		throws NoSuchEventException {
 
-		DLSyncEvent dlSyncEvent = fetchByGtModifiedTime_First(
-			modifiedTime, orderByComparator);
-
-		if (dlSyncEvent != null) {
-			return dlSyncEvent;
-		}
-
-		throw new NoSuchEventException(
-			_collectionPersistenceFinderByGtModifiedTime.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {modifiedTime}));
+		return _collectionPersistenceFinderByGtModifiedTime.findFirst(
+			finderCache, new Object[] {modifiedTime}, orderByComparator);
 	}
 
 	/**
@@ -220,7 +212,7 @@ public class DLSyncEventPersistenceImpl
 			finderCache, new Object[] {modifiedTime});
 	}
 
-	private UniquePersistenceFinder<DLSyncEvent>
+	private UniquePersistenceFinder<DLSyncEvent, NoSuchEventException>
 		_uniquePersistenceFinderByTypePK;
 
 	/**
@@ -232,21 +224,8 @@ public class DLSyncEventPersistenceImpl
 	 */
 	@Override
 	public DLSyncEvent findByTypePK(long typePK) throws NoSuchEventException {
-		DLSyncEvent dlSyncEvent = fetchByTypePK(typePK);
-
-		if (dlSyncEvent == null) {
-			String message =
-				_uniquePersistenceFinderByTypePK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {typePK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEventException(message);
-		}
-
-		return dlSyncEvent;
+		return _uniquePersistenceFinderByTypePK.find(
+			finderCache, new Object[] {typePK});
 	}
 
 	/**
@@ -574,4 +553,4 @@ public class DLSyncEventPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:249876538
+// LIFERAY-SERVICE-BUILDER-HASH:1847205405

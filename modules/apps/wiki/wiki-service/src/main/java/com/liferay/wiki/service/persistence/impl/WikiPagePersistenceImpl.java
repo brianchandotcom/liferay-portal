@@ -96,7 +96,7 @@ public class WikiPagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByResourcePrimKey;
 
 	/**
@@ -136,16 +136,8 @@ public class WikiPagePersistenceImpl
 			long resourcePrimKey, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByResourcePrimKey_First(
-			resourcePrimKey, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByResourcePrimKey.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {resourcePrimKey}));
+		return _collectionPersistenceFinderByResourcePrimKey.findFirst(
+			finderCache, new Object[] {resourcePrimKey}, orderByComparator);
 	}
 
 	/**
@@ -186,7 +178,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -226,15 +218,8 @@ public class WikiPagePersistenceImpl
 			String uuid, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByUuid_First(uuid, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -275,7 +260,8 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<WikiPage> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<WikiPage, NoSuchPageException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -289,21 +275,8 @@ public class WikiPagePersistenceImpl
 	public WikiPage findByUUID_G(String uuid, long groupId)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByUUID_G(uuid, groupId);
-
-		if (wikiPage == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageException(message);
-		}
-
-		return wikiPage;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -351,7 +324,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -394,16 +367,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -448,7 +413,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -488,16 +453,8 @@ public class WikiPagePersistenceImpl
 			long companyId, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -538,7 +495,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByNodeId;
 
 	/**
@@ -578,15 +535,8 @@ public class WikiPagePersistenceImpl
 			long nodeId, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByNodeId_First(nodeId, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByNodeId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId}));
+		return _collectionPersistenceFinderByNodeId.findFirst(
+			finderCache, new Object[] {nodeId}, orderByComparator);
 	}
 
 	/**
@@ -627,7 +577,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByFormat;
 
 	/**
@@ -667,15 +617,8 @@ public class WikiPagePersistenceImpl
 			String format, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByFormat_First(format, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByFormat.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {format}));
+		return _collectionPersistenceFinderByFormat.findFirst(
+			finderCache, new Object[] {format}, orderByComparator);
 	}
 
 	/**
@@ -716,7 +659,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {format});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByR_N;
 
 	/**
@@ -759,17 +702,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByR_N_First(
-			resourcePrimKey, nodeId, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByR_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, nodeId}));
+		return _collectionPersistenceFinderByR_N.findFirst(
+			finderCache, new Object[] {resourcePrimKey, nodeId},
+			orderByComparator);
 	}
 
 	/**
@@ -815,7 +750,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, nodeId});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByR_S;
 
 	/**
@@ -858,17 +793,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByR_S_First(
-			resourcePrimKey, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByR_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, status}));
+		return _collectionPersistenceFinderByR_S.findFirst(
+			finderCache, new Object[] {resourcePrimKey, status},
+			orderByComparator);
 	}
 
 	/**
@@ -914,7 +841,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, status});
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_ERC;
 
 	/**
@@ -957,17 +884,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_ERC_First(
-			groupId, externalReferenceCode, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_ERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, externalReferenceCode}));
+		return _collectionPersistenceFinderByG_ERC.findFirst(
+			finderCache, new Object[] {groupId, externalReferenceCode},
+			orderByComparator);
 	}
 
 	/**
@@ -1051,7 +970,7 @@ public class WikiPagePersistenceImpl
 			groupId);
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_T;
 
 	/**
@@ -1094,15 +1013,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_T_First(nodeId, title, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, title}));
+		return _collectionPersistenceFinderByN_T.findFirst(
+			finderCache, new Object[] {nodeId, title}, orderByComparator);
 	}
 
 	/**
@@ -1147,7 +1059,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, title});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H;
 
 	/**
@@ -1190,15 +1102,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_First(nodeId, head, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, head}));
+		return _collectionPersistenceFinderByN_H.findFirst(
+			finderCache, new Object[] {nodeId, head}, orderByComparator);
 	}
 
 	/**
@@ -1243,7 +1148,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_P;
 
 	/**
@@ -1286,16 +1191,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_P_First(
-			nodeId, parentTitle, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, parentTitle}));
+		return _collectionPersistenceFinderByN_P.findFirst(
+			finderCache, new Object[] {nodeId, parentTitle}, orderByComparator);
 	}
 
 	/**
@@ -1340,7 +1237,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, parentTitle});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_R;
 
 	/**
@@ -1383,17 +1280,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_R_First(
-			nodeId, redirectTitle, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, redirectTitle}));
+		return _collectionPersistenceFinderByN_R.findFirst(
+			finderCache, new Object[] {nodeId, redirectTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -1439,7 +1328,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, redirectTitle});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_S;
 
 	/**
@@ -1482,15 +1371,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_S_First(nodeId, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, status}));
+		return _collectionPersistenceFinderByN_S.findFirst(
+			finderCache, new Object[] {nodeId, status}, orderByComparator);
 	}
 
 	/**
@@ -1535,7 +1417,8 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, status});
 	}
 
-	private UniquePersistenceFinder<WikiPage> _uniquePersistenceFinderByR_N_V;
+	private UniquePersistenceFinder<WikiPage, NoSuchPageException>
+		_uniquePersistenceFinderByR_N_V;
 
 	/**
 	 * Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -1551,22 +1434,8 @@ public class WikiPagePersistenceImpl
 			long resourcePrimKey, long nodeId, double version)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByR_N_V(resourcePrimKey, nodeId, version);
-
-		if (wikiPage == null) {
-			String message =
-				_uniquePersistenceFinderByR_N_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {resourcePrimKey, nodeId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageException(message);
-		}
-
-		return wikiPage;
+		return _uniquePersistenceFinderByR_N_V.find(
+			finderCache, new Object[] {resourcePrimKey, nodeId, version});
 	}
 
 	/**
@@ -1620,7 +1489,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, nodeId, version});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByR_N_H;
 
 	/**
@@ -1665,17 +1534,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByR_N_H_First(
-			resourcePrimKey, nodeId, head, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByR_N_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, nodeId, head}));
+		return _collectionPersistenceFinderByR_N_H.findFirst(
+			finderCache, new Object[] {resourcePrimKey, nodeId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -1724,7 +1585,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, nodeId, head});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByR_N_S;
 
 	/**
@@ -1769,17 +1630,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByR_N_S_First(
-			resourcePrimKey, nodeId, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByR_N_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {resourcePrimKey, nodeId, status}));
+		return _collectionPersistenceFinderByR_N_S.findFirst(
+			finderCache, new Object[] {resourcePrimKey, nodeId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1828,7 +1681,8 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {resourcePrimKey, nodeId, status});
 	}
 
-	private UniquePersistenceFinder<WikiPage> _uniquePersistenceFinderByG_ERC_V;
+	private UniquePersistenceFinder<WikiPage, NoSuchPageException>
+		_uniquePersistenceFinderByG_ERC_V;
 
 	/**
 	 * Returns the wiki page where groupId = &#63; and externalReferenceCode = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -1844,23 +1698,9 @@ public class WikiPagePersistenceImpl
 			long groupId, String externalReferenceCode, double version)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_ERC_V(
-			groupId, externalReferenceCode, version);
-
-		if (wikiPage == null) {
-			String message =
-				_uniquePersistenceFinderByG_ERC_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, externalReferenceCode, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageException(message);
-		}
-
-		return wikiPage;
+		return _uniquePersistenceFinderByG_ERC_V.find(
+			finderCache,
+			new Object[] {groupId, externalReferenceCode, version});
 	}
 
 	/**
@@ -1918,7 +1758,7 @@ public class WikiPagePersistenceImpl
 			new Object[] {groupId, externalReferenceCode, version});
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_N_H;
 
 	/**
@@ -1963,17 +1803,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_N_H_First(
-			groupId, nodeId, head, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_N_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, nodeId, head}));
+		return _collectionPersistenceFinderByG_N_H.findFirst(
+			finderCache, new Object[] {groupId, nodeId, head},
+			orderByComparator);
 	}
 
 	/**
@@ -2061,7 +1893,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {groupId, nodeId, head}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_N_S;
 
 	/**
@@ -2106,17 +1938,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_N_S_First(
-			groupId, nodeId, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_N_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, nodeId, status}));
+		return _collectionPersistenceFinderByG_N_S.findFirst(
+			finderCache, new Object[] {groupId, nodeId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2204,7 +2028,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {groupId, nodeId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByU_N_S;
 
 	/**
@@ -2249,17 +2073,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByU_N_S_First(
-			userId, nodeId, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByU_N_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, nodeId, status}));
+		return _collectionPersistenceFinderByU_N_S.findFirst(
+			finderCache, new Object[] {userId, nodeId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2308,7 +2124,8 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {userId, nodeId, status});
 	}
 
-	private UniquePersistenceFinder<WikiPage> _uniquePersistenceFinderByN_T_V;
+	private UniquePersistenceFinder<WikiPage, NoSuchPageException>
+		_uniquePersistenceFinderByN_T_V;
 
 	/**
 	 * Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a <code>NoSuchPageException</code> if it could not be found.
@@ -2323,22 +2140,8 @@ public class WikiPagePersistenceImpl
 	public WikiPage findByN_T_V(long nodeId, String title, double version)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_T_V(nodeId, title, version);
-
-		if (wikiPage == null) {
-			String message =
-				_uniquePersistenceFinderByN_T_V.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {nodeId, title, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPageException(message);
-		}
-
-		return wikiPage;
+		return _uniquePersistenceFinderByN_T_V.find(
+			finderCache, new Object[] {nodeId, title, version});
 	}
 
 	/**
@@ -2389,7 +2192,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, title, version});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_T_H;
 
 	/**
@@ -2434,16 +2237,8 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_T_H_First(
-			nodeId, title, head, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_T_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, title, head}));
+		return _collectionPersistenceFinderByN_T_H.findFirst(
+			finderCache, new Object[] {nodeId, title, head}, orderByComparator);
 	}
 
 	/**
@@ -2491,7 +2286,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, title, head});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_T_S;
 
 	/**
@@ -2536,17 +2331,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_T_S_First(
-			nodeId, title, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, title, status}));
+		return _collectionPersistenceFinderByN_T_S.findFirst(
+			finderCache, new Object[] {nodeId, title, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2595,7 +2382,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, title, status});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_P;
 
 	/**
@@ -2640,17 +2427,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_P_First(
-			nodeId, head, parentTitle, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, parentTitle}));
+		return _collectionPersistenceFinderByN_H_P.findFirst(
+			finderCache, new Object[] {nodeId, head, parentTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -2699,7 +2478,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, parentTitle});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_R;
 
 	/**
@@ -2744,17 +2523,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_R_First(
-			nodeId, head, redirectTitle, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_R.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, redirectTitle}));
+		return _collectionPersistenceFinderByN_H_R.findFirst(
+			finderCache, new Object[] {nodeId, head, redirectTitle},
+			orderByComparator);
 	}
 
 	/**
@@ -2803,7 +2574,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, redirectTitle});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_S;
 
 	/**
@@ -2848,16 +2619,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_S_First(
-			nodeId, head, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, head, status}));
+		return _collectionPersistenceFinderByN_H_S.findFirst(
+			finderCache, new Object[] {nodeId, head, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2906,7 +2670,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, status});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_NotS;
 
 	/**
@@ -3012,16 +2776,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_NotS_First(
-			nodeId, head, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {nodeId, head, status}));
+		return _collectionPersistenceFinderByN_H_NotS.findFirst(
+			finderCache, new Object[] {nodeId, head, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3070,7 +2827,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, status});
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_U_N_S;
 
 	/**
@@ -3117,17 +2874,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_U_N_S_First(
-			groupId, userId, nodeId, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_U_N_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, nodeId, status}));
+		return _collectionPersistenceFinderByG_U_N_S.findFirst(
+			finderCache, new Object[] {groupId, userId, nodeId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3227,7 +2976,7 @@ public class WikiPagePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_N_T_H;
 
 	/**
@@ -3275,17 +3024,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_N_T_H_First(
-			groupId, nodeId, title, head, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_N_T_H.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, nodeId, title, head}));
+		return _collectionPersistenceFinderByG_N_T_H.findFirst(
+			finderCache, new Object[] {groupId, nodeId, title, head},
+			orderByComparator);
 	}
 
 	/**
@@ -3384,7 +3125,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {groupId, nodeId, title, head}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_N_H_S;
 
 	/**
@@ -3431,17 +3172,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_N_H_S_First(
-			groupId, nodeId, head, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_N_H_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, nodeId, head, status}));
+		return _collectionPersistenceFinderByG_N_H_S.findFirst(
+			finderCache, new Object[] {groupId, nodeId, head, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3540,7 +3273,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {groupId, nodeId, head, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_P_S;
 
 	/**
@@ -3588,17 +3321,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_P_S_First(
-			nodeId, head, parentTitle, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, parentTitle, status}));
+		return _collectionPersistenceFinderByN_H_P_S.findFirst(
+			finderCache, new Object[] {nodeId, head, parentTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3654,7 +3379,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, parentTitle, status});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_P_NotS;
 
 	/**
@@ -3770,17 +3495,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_P_NotS_First(
-			nodeId, head, parentTitle, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_P_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, parentTitle, status}));
+		return _collectionPersistenceFinderByN_H_P_NotS.findFirst(
+			finderCache, new Object[] {nodeId, head, parentTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3836,7 +3553,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, parentTitle, status});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_R_S;
 
 	/**
@@ -3884,17 +3601,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_R_S_First(
-			nodeId, head, redirectTitle, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_R_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, redirectTitle, status}));
+		return _collectionPersistenceFinderByN_H_R_S.findFirst(
+			finderCache, new Object[] {nodeId, head, redirectTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3950,7 +3659,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, redirectTitle, status});
 	}
 
-	private CollectionPersistenceFinder<WikiPage>
+	private CollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByN_H_R_NotS;
 
 	/**
@@ -4066,17 +3775,9 @@ public class WikiPagePersistenceImpl
 			OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByN_H_R_NotS_First(
-			nodeId, head, redirectTitle, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByN_H_R_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {nodeId, head, redirectTitle, status}));
+		return _collectionPersistenceFinderByN_H_R_NotS.findFirst(
+			finderCache, new Object[] {nodeId, head, redirectTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -4132,7 +3833,7 @@ public class WikiPagePersistenceImpl
 			finderCache, new Object[] {nodeId, head, redirectTitle, status});
 	}
 
-	private FilterCollectionPersistenceFinder<WikiPage>
+	private FilterCollectionPersistenceFinder<WikiPage, NoSuchPageException>
 		_collectionPersistenceFinderByG_N_H_P_S;
 
 	/**
@@ -4183,17 +3884,10 @@ public class WikiPagePersistenceImpl
 			int status, OrderByComparator<WikiPage> orderByComparator)
 		throws NoSuchPageException {
 
-		WikiPage wikiPage = fetchByG_N_H_P_S_First(
-			groupId, nodeId, head, parentTitle, status, orderByComparator);
-
-		if (wikiPage != null) {
-			return wikiPage;
-		}
-
-		throw new NoSuchPageException(
-			_collectionPersistenceFinderByG_N_H_P_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, nodeId, head, parentTitle, status}));
+		return _collectionPersistenceFinderByG_N_H_P_S.findFirst(
+			finderCache,
+			new Object[] {groupId, nodeId, head, parentTitle, status},
+			orderByComparator);
 	}
 
 	/**
@@ -5954,4 +5648,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:375270140
+// LIFERAY-SERVICE-BUILDER-HASH:309814450

@@ -81,8 +81,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<ObjectDefinitionSetting>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the object definition settings where uuid = &#63;.
@@ -123,16 +124,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		throw new NoSuchObjectDefinitionSettingException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -174,8 +167,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<ObjectDefinitionSetting>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the object definition settings where uuid = &#63; and companyId = &#63;.
@@ -218,16 +212,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		throw new NoSuchObjectDefinitionSettingException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -272,8 +258,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<ObjectDefinitionSetting>
-		_collectionPersistenceFinderByObjectDefinitionId;
+	private CollectionPersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_collectionPersistenceFinderByObjectDefinitionId;
 
 	/**
 	 * Returns an ordered range of all the object definition settings where objectDefinitionId = &#63;.
@@ -314,19 +301,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting =
-			fetchByObjectDefinitionId_First(
-				objectDefinitionId, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		throw new NoSuchObjectDefinitionSettingException(
-			_collectionPersistenceFinderByObjectDefinitionId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId}));
+		return _collectionPersistenceFinderByObjectDefinitionId.findFirst(
+			finderCache, new Object[] {objectDefinitionId}, orderByComparator);
 	}
 
 	/**
@@ -368,8 +344,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId});
 	}
 
-	private CollectionPersistenceFinder<ObjectDefinitionSetting>
-		_collectionPersistenceFinderByC_N;
+	private CollectionPersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_collectionPersistenceFinderByC_N;
 
 	/**
 	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63;.
@@ -412,16 +389,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByC_N_First(
-			companyId, name, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		throw new NoSuchObjectDefinitionSettingException(
-			_collectionPersistenceFinderByC_N.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, name}));
+		return _collectionPersistenceFinderByC_N.findFirst(
+			finderCache, new Object[] {companyId, name}, orderByComparator);
 	}
 
 	/**
@@ -466,8 +435,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			finderCache, new Object[] {companyId, name});
 	}
 
-	private UniquePersistenceFinder<ObjectDefinitionSetting>
-		_uniquePersistenceFinderByODI_N;
+	private UniquePersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_uniquePersistenceFinderByODI_N;
 
 	/**
 	 * Returns the object definition setting where objectDefinitionId = &#63; and name = &#63; or throws a <code>NoSuchObjectDefinitionSettingException</code> if it could not be found.
@@ -482,23 +452,8 @@ public class ObjectDefinitionSettingPersistenceImpl
 			long objectDefinitionId, String name)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByODI_N(
-			objectDefinitionId, name);
-
-		if (objectDefinitionSetting == null) {
-			String message =
-				_uniquePersistenceFinderByODI_N.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {objectDefinitionId, name});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchObjectDefinitionSettingException(message);
-		}
-
-		return objectDefinitionSetting;
+		return _uniquePersistenceFinderByODI_N.find(
+			finderCache, new Object[] {objectDefinitionId, name});
 	}
 
 	/**
@@ -549,8 +504,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			finderCache, new Object[] {objectDefinitionId, name});
 	}
 
-	private CollectionPersistenceFinder<ObjectDefinitionSetting>
-		_collectionPersistenceFinderByC_N_V;
+	private CollectionPersistenceFinder
+		<ObjectDefinitionSetting, NoSuchObjectDefinitionSettingException>
+			_collectionPersistenceFinderByC_N_V;
 
 	/**
 	 * Returns an ordered range of all the object definition settings where companyId = &#63; and name = &#63; and value = &#63;.
@@ -595,17 +551,9 @@ public class ObjectDefinitionSettingPersistenceImpl
 			OrderByComparator<ObjectDefinitionSetting> orderByComparator)
 		throws NoSuchObjectDefinitionSettingException {
 
-		ObjectDefinitionSetting objectDefinitionSetting = fetchByC_N_V_First(
-			companyId, name, value, orderByComparator);
-
-		if (objectDefinitionSetting != null) {
-			return objectDefinitionSetting;
-		}
-
-		throw new NoSuchObjectDefinitionSettingException(
-			_collectionPersistenceFinderByC_N_V.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, name, value}));
+		return _collectionPersistenceFinderByC_N_V.findFirst(
+			finderCache, new Object[] {companyId, name, value},
+			orderByComparator);
 	}
 
 	/**
@@ -1129,4 +1077,4 @@ public class ObjectDefinitionSettingPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2029309997
+// LIFERAY-SERVICE-BUILDER-HASH:1833621685

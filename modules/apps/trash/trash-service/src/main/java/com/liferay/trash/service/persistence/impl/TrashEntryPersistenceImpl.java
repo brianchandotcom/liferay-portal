@@ -83,7 +83,7 @@ public class TrashEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<TrashEntry>
+	private CollectionPersistenceFinder<TrashEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -124,16 +124,8 @@ public class TrashEntryPersistenceImpl
 			long groupId, OrderByComparator<TrashEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -174,7 +166,7 @@ public class TrashEntryPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<TrashEntry>
+	private CollectionPersistenceFinder<TrashEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -215,16 +207,8 @@ public class TrashEntryPersistenceImpl
 			long companyId, OrderByComparator<TrashEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -265,7 +249,7 @@ public class TrashEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<TrashEntry>
+	private CollectionPersistenceFinder<TrashEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_LtCD;
 
 	/**
@@ -365,16 +349,8 @@ public class TrashEntryPersistenceImpl
 			OrderByComparator<TrashEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByG_LtCD_First(
-			groupId, createDate, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_LtCD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, createDate}));
+		return _collectionPersistenceFinderByG_LtCD.findFirst(
+			finderCache, new Object[] {groupId, createDate}, orderByComparator);
 	}
 
 	/**
@@ -419,7 +395,7 @@ public class TrashEntryPersistenceImpl
 			finderCache, new Object[] {groupId, createDate});
 	}
 
-	private CollectionPersistenceFinder<TrashEntry>
+	private CollectionPersistenceFinder<TrashEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByG_CN;
 
 	/**
@@ -463,16 +439,9 @@ public class TrashEntryPersistenceImpl
 			OrderByComparator<TrashEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByG_CN_First(
-			groupId, classNameId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByG_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, classNameId}));
+		return _collectionPersistenceFinderByG_CN.findFirst(
+			finderCache, new Object[] {groupId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -518,7 +487,7 @@ public class TrashEntryPersistenceImpl
 			finderCache, new Object[] {groupId, classNameId});
 	}
 
-	private CollectionPersistenceFinder<TrashEntry>
+	private CollectionPersistenceFinder<TrashEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_CN;
 
 	/**
@@ -562,17 +531,9 @@ public class TrashEntryPersistenceImpl
 			OrderByComparator<TrashEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByC_CN_First(
-			companyId, classNameId, orderByComparator);
-
-		if (trashEntry != null) {
-			return trashEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_CN.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, classNameId}));
+		return _collectionPersistenceFinderByC_CN.findFirst(
+			finderCache, new Object[] {companyId, classNameId},
+			orderByComparator);
 	}
 
 	/**
@@ -618,7 +579,7 @@ public class TrashEntryPersistenceImpl
 			finderCache, new Object[] {companyId, classNameId});
 	}
 
-	private UniquePersistenceFinder<TrashEntry>
+	private UniquePersistenceFinder<TrashEntry, NoSuchEntryException>
 		_uniquePersistenceFinderByCN_CPK;
 
 	/**
@@ -633,22 +594,8 @@ public class TrashEntryPersistenceImpl
 	public TrashEntry findByCN_CPK(long classNameId, long classPK)
 		throws NoSuchEntryException {
 
-		TrashEntry trashEntry = fetchByCN_CPK(classNameId, classPK);
-
-		if (trashEntry == null) {
-			String message =
-				_uniquePersistenceFinderByCN_CPK.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {classNameId, classPK});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchEntryException(message);
-		}
-
-		return trashEntry;
+		return _uniquePersistenceFinderByCN_CPK.find(
+			finderCache, new Object[] {classNameId, classPK});
 	}
 
 	/**
@@ -1167,4 +1114,4 @@ public class TrashEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-724118085
+// LIFERAY-SERVICE-BUILDER-HASH:-1567468877

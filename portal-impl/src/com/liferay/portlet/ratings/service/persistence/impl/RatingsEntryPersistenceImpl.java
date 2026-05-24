@@ -84,7 +84,7 @@ public class RatingsEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<RatingsEntry>
+	private CollectionPersistenceFinder<RatingsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -125,15 +125,9 @@ public class RatingsEntryPersistenceImpl
 			String uuid, OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RatingsEntry ratingsEntry = fetchByUuid_First(uuid, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -175,7 +169,7 @@ public class RatingsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<RatingsEntry>
+	private CollectionPersistenceFinder<RatingsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -219,16 +213,9 @@ public class RatingsEntryPersistenceImpl
 			OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RatingsEntry ratingsEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -274,7 +261,7 @@ public class RatingsEntryPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<RatingsEntry>
+	private CollectionPersistenceFinder<RatingsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -319,16 +306,9 @@ public class RatingsEntryPersistenceImpl
 			OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RatingsEntry ratingsEntry = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK}, orderByComparator);
 	}
 
 	/**
@@ -996,7 +976,7 @@ public class RatingsEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_U_C_C_CLASSPK_7 =
 		"ratingsEntry.classPK IN (";
 
-	private CollectionPersistenceFinder<RatingsEntry>
+	private CollectionPersistenceFinder<RatingsEntry, NoSuchEntryException>
 		_collectionPersistenceFinderByC_C_S;
 
 	/**
@@ -1043,17 +1023,9 @@ public class RatingsEntryPersistenceImpl
 			OrderByComparator<RatingsEntry> orderByComparator)
 		throws NoSuchEntryException {
 
-		RatingsEntry ratingsEntry = fetchByC_C_S_First(
-			classNameId, classPK, score, orderByComparator);
-
-		if (ratingsEntry != null) {
-			return ratingsEntry;
-		}
-
-		throw new NoSuchEntryException(
-			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, score}));
+		return _collectionPersistenceFinderByC_C_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {classNameId, classPK, score}, orderByComparator);
 	}
 
 	/**
@@ -1586,4 +1558,4 @@ public class RatingsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:513823427
+// LIFERAY-SERVICE-BUILDER-HASH:1687761745

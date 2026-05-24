@@ -72,8 +72,9 @@ public class RegionLocalizationPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<RegionLocalization>
-		_collectionPersistenceFinderByRegionId;
+	private CollectionPersistenceFinder
+		<RegionLocalization, NoSuchRegionLocalizationException>
+			_collectionPersistenceFinderByRegionId;
 
 	/**
 	 * Returns an ordered range of all the region localizations where regionId = &#63;.
@@ -114,16 +115,9 @@ public class RegionLocalizationPersistenceImpl
 			OrderByComparator<RegionLocalization> orderByComparator)
 		throws NoSuchRegionLocalizationException {
 
-		RegionLocalization regionLocalization = fetchByRegionId_First(
-			regionId, orderByComparator);
-
-		if (regionLocalization != null) {
-			return regionLocalization;
-		}
-
-		throw new NoSuchRegionLocalizationException(
-			_collectionPersistenceFinderByRegionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {regionId}));
+		return _collectionPersistenceFinderByRegionId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {regionId},
+			orderByComparator);
 	}
 
 	/**
@@ -166,8 +160,9 @@ public class RegionLocalizationPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {regionId});
 	}
 
-	private UniquePersistenceFinder<RegionLocalization>
-		_uniquePersistenceFinderByRegionId_LanguageId;
+	private UniquePersistenceFinder
+		<RegionLocalization, NoSuchRegionLocalizationException>
+			_uniquePersistenceFinderByRegionId_LanguageId;
 
 	/**
 	 * Returns the region localization where regionId = &#63; and languageId = &#63; or throws a <code>NoSuchRegionLocalizationException</code> if it could not be found.
@@ -182,24 +177,9 @@ public class RegionLocalizationPersistenceImpl
 			long regionId, String languageId)
 		throws NoSuchRegionLocalizationException {
 
-		RegionLocalization regionLocalization = fetchByRegionId_LanguageId(
-			regionId, languageId);
-
-		if (regionLocalization == null) {
-			String message =
-				_uniquePersistenceFinderByRegionId_LanguageId.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {regionId, languageId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRegionLocalizationException(message);
-		}
-
-		return regionLocalization;
+		return _uniquePersistenceFinderByRegionId_LanguageId.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {regionId, languageId});
 	}
 
 	/**
@@ -577,4 +557,4 @@ public class RegionLocalizationPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1153572023
+// LIFERAY-SERVICE-BUILDER-HASH:-192880015

@@ -63,8 +63,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
-		_collectionPersistenceFinderByLvEntryLocalizationId;
+	private CollectionPersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_collectionPersistenceFinderByLvEntryLocalizationId;
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryLocalizationId = &#63;.
@@ -105,19 +106,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryLocalizationId_First(
-				lvEntryLocalizationId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		throw new NoSuchLVEntryLocalizationVersionException(
-			_collectionPersistenceFinderByLvEntryLocalizationId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {lvEntryLocalizationId}));
+		return _collectionPersistenceFinderByLvEntryLocalizationId.findFirst(
+			finderCache, new Object[] {lvEntryLocalizationId},
+			orderByComparator);
 	}
 
 	/**
@@ -160,8 +151,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryLocalizationId});
 	}
 
-	private UniquePersistenceFinder<LVEntryLocalizationVersion>
-		_uniquePersistenceFinderByLvEntryLocalizationId_Version;
+	private UniquePersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_uniquePersistenceFinderByLvEntryLocalizationId_Version;
 
 	/**
 	 * Returns the lv entry localization version where lvEntryLocalizationId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryLocalizationVersionException</code> if it could not be found.
@@ -176,25 +168,8 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			long lvEntryLocalizationId, int version)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryLocalizationId_Version(
-				lvEntryLocalizationId, version);
-
-		if (lvEntryLocalizationVersion == null) {
-			String message =
-				_uniquePersistenceFinderByLvEntryLocalizationId_Version.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {lvEntryLocalizationId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLVEntryLocalizationVersionException(message);
-		}
-
-		return lvEntryLocalizationVersion;
+		return _uniquePersistenceFinderByLvEntryLocalizationId_Version.find(
+			finderCache, new Object[] {lvEntryLocalizationId, version});
 	}
 
 	/**
@@ -247,8 +222,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryLocalizationId, version});
 	}
 
-	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
-		_collectionPersistenceFinderByLvEntryId;
+	private CollectionPersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_collectionPersistenceFinderByLvEntryId;
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63;.
@@ -289,16 +265,8 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_First(lvEntryId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		throw new NoSuchLVEntryLocalizationVersionException(
-			_collectionPersistenceFinderByLvEntryId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {lvEntryId}));
+		return _collectionPersistenceFinderByLvEntryId.findFirst(
+			finderCache, new Object[] {lvEntryId}, orderByComparator);
 	}
 
 	/**
@@ -340,8 +308,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId});
 	}
 
-	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
-		_collectionPersistenceFinderByLvEntryId_Version;
+	private CollectionPersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_collectionPersistenceFinderByLvEntryId_Version;
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and version = &#63;.
@@ -384,19 +353,8 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_Version_First(
-				lvEntryId, version, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		throw new NoSuchLVEntryLocalizationVersionException(
-			_collectionPersistenceFinderByLvEntryId_Version.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {lvEntryId, version}));
+		return _collectionPersistenceFinderByLvEntryId_Version.findFirst(
+			finderCache, new Object[] {lvEntryId, version}, orderByComparator);
 	}
 
 	/**
@@ -441,8 +399,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId, version});
 	}
 
-	private CollectionPersistenceFinder<LVEntryLocalizationVersion>
-		_collectionPersistenceFinderByLvEntryId_LanguageId;
+	private CollectionPersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_collectionPersistenceFinderByLvEntryId_LanguageId;
 
 	/**
 	 * Returns an ordered range of all the lv entry localization versions where lvEntryId = &#63; and languageId = &#63;.
@@ -485,19 +444,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			OrderByComparator<LVEntryLocalizationVersion> orderByComparator)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_LanguageId_First(
-				lvEntryId, languageId, orderByComparator);
-
-		if (lvEntryLocalizationVersion != null) {
-			return lvEntryLocalizationVersion;
-		}
-
-		throw new NoSuchLVEntryLocalizationVersionException(
-			_collectionPersistenceFinderByLvEntryId_LanguageId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {lvEntryId, languageId}));
+		return _collectionPersistenceFinderByLvEntryId_LanguageId.findFirst(
+			finderCache, new Object[] {lvEntryId, languageId},
+			orderByComparator);
 	}
 
 	/**
@@ -545,8 +494,9 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			finderCache, new Object[] {lvEntryId, languageId});
 	}
 
-	private UniquePersistenceFinder<LVEntryLocalizationVersion>
-		_uniquePersistenceFinderByLvEntryId_LanguageId_Version;
+	private UniquePersistenceFinder
+		<LVEntryLocalizationVersion, NoSuchLVEntryLocalizationVersionException>
+			_uniquePersistenceFinderByLvEntryId_LanguageId_Version;
 
 	/**
 	 * Returns the lv entry localization version where lvEntryId = &#63; and languageId = &#63; and version = &#63; or throws a <code>NoSuchLVEntryLocalizationVersionException</code> if it could not be found.
@@ -562,24 +512,8 @@ public class LVEntryLocalizationVersionPersistenceImpl
 			long lvEntryId, String languageId, int version)
 		throws NoSuchLVEntryLocalizationVersionException {
 
-		LVEntryLocalizationVersion lvEntryLocalizationVersion =
-			fetchByLvEntryId_LanguageId_Version(lvEntryId, languageId, version);
-
-		if (lvEntryLocalizationVersion == null) {
-			String message =
-				_uniquePersistenceFinderByLvEntryId_LanguageId_Version.
-					buildNoSuchKeyMessage(
-						_NO_SUCH_ENTITY_WITH_KEY,
-						new Object[] {lvEntryId, languageId, version});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLVEntryLocalizationVersionException(message);
-		}
-
-		return lvEntryLocalizationVersion;
+		return _uniquePersistenceFinderByLvEntryId_LanguageId_Version.find(
+			finderCache, new Object[] {lvEntryId, languageId, version});
 	}
 
 	/**
@@ -1051,4 +985,4 @@ public class LVEntryLocalizationVersionPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1044363967
+// LIFERAY-SERVICE-BUILDER-HASH:-1573302869

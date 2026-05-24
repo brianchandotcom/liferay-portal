@@ -76,8 +76,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CTAutoResolutionInfo>
-		_collectionPersistenceFinderByCtCollectionId;
+	private CollectionPersistenceFinder
+		<CTAutoResolutionInfo, NoSuchAutoResolutionInfoException>
+			_collectionPersistenceFinderByCtCollectionId;
 
 	/**
 	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63;.
@@ -118,16 +119,8 @@ public class CTAutoResolutionInfoPersistenceImpl
 			OrderByComparator<CTAutoResolutionInfo> orderByComparator)
 		throws NoSuchAutoResolutionInfoException {
 
-		CTAutoResolutionInfo ctAutoResolutionInfo = fetchByCtCollectionId_First(
-			ctCollectionId, orderByComparator);
-
-		if (ctAutoResolutionInfo != null) {
-			return ctAutoResolutionInfo;
-		}
-
-		throw new NoSuchAutoResolutionInfoException(
-			_collectionPersistenceFinderByCtCollectionId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {ctCollectionId}));
+		return _collectionPersistenceFinderByCtCollectionId.findFirst(
+			finderCache, new Object[] {ctCollectionId}, orderByComparator);
 	}
 
 	/**
@@ -169,8 +162,9 @@ public class CTAutoResolutionInfoPersistenceImpl
 			finderCache, new Object[] {ctCollectionId});
 	}
 
-	private CollectionPersistenceFinder<CTAutoResolutionInfo>
-		_collectionPersistenceFinderByC_MCNI_SMCPK;
+	private CollectionPersistenceFinder
+		<CTAutoResolutionInfo, NoSuchAutoResolutionInfoException>
+			_collectionPersistenceFinderByC_MCNI_SMCPK;
 
 	/**
 	 * Returns an ordered range of all the ct auto resolution infos where ctCollectionId = &#63; and modelClassNameId = &#63; and sourceModelClassPK = &#63;.
@@ -709,4 +703,4 @@ public class CTAutoResolutionInfoPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1402197601
+// LIFERAY-SERVICE-BUILDER-HASH:-592540143

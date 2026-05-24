@@ -91,8 +91,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63;.
@@ -134,16 +136,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByUuid_First(uuid, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -186,8 +180,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where uuid = &#63; and companyId = &#63;.
@@ -231,16 +227,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -286,8 +274,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByCommerceInventoryWarehouseId;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByCommerceInventoryWarehouseId;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where commerceInventoryWarehouseId = &#63;.
@@ -332,19 +322,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 					orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByCommerceInventoryWarehouseId_First(
-				commerceInventoryWarehouseId, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByCommerceInventoryWarehouseId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commerceInventoryWarehouseId}));
+		return _collectionPersistenceFinderByCommerceInventoryWarehouseId.
+			findFirst(
+				finderCache, new Object[] {commerceInventoryWarehouseId},
+				orderByComparator);
 	}
 
 	/**
@@ -394,8 +375,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {commerceInventoryWarehouseId});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByAvailabilityDate;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByAvailabilityDate;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63;.
@@ -437,17 +420,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByAvailabilityDate_First(availabilityDate, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByAvailabilityDate.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {availabilityDate}));
+		return _collectionPersistenceFinderByAvailabilityDate.findFirst(
+			finderCache, new Object[] {availabilityDate}, orderByComparator);
 	}
 
 	/**
@@ -490,8 +464,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {availabilityDate});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderBySku;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderBySku;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where sku = &#63;.
@@ -533,16 +509,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchBySku_First(sku, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderBySku.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {sku}));
+		return _collectionPersistenceFinderBySku.findFirst(
+			finderCache, new Object[] {sku}, orderByComparator);
 	}
 
 	/**
@@ -585,8 +553,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {sku});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByC_S_U;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByC_S_U;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where companyId = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -632,18 +602,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByC_S_U_First(
-				companyId, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByC_S_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, sku, unitOfMeasureKey}));
+		return _collectionPersistenceFinderByC_S_U.findFirst(
+			finderCache, new Object[] {companyId, sku, unitOfMeasureKey},
+			orderByComparator);
 	}
 
 	/**
@@ -697,8 +658,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			finderCache, new Object[] {companyId, sku, unitOfMeasureKey});
 	}
 
-	private CollectionPersistenceFinder<CommerceInventoryReplenishmentItem>
-		_collectionPersistenceFinderByAD_S_U;
+	private CollectionPersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_collectionPersistenceFinderByAD_S_U;
 
 	/**
 	 * Returns an ordered range of all the commerce inventory replenishment items where availabilityDate = &#63; and sku = &#63; and unitOfMeasureKey = &#63;.
@@ -745,18 +708,9 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 				orderByComparator)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByAD_S_U_First(
-				availabilityDate, sku, unitOfMeasureKey, orderByComparator);
-
-		if (commerceInventoryReplenishmentItem != null) {
-			return commerceInventoryReplenishmentItem;
-		}
-
-		throw new NoSuchInventoryReplenishmentItemException(
-			_collectionPersistenceFinderByAD_S_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {availabilityDate, sku, unitOfMeasureKey}));
+		return _collectionPersistenceFinderByAD_S_U.findFirst(
+			finderCache, new Object[] {availabilityDate, sku, unitOfMeasureKey},
+			orderByComparator);
 	}
 
 	/**
@@ -812,8 +766,10 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			new Object[] {availabilityDate, sku, unitOfMeasureKey});
 	}
 
-	private UniquePersistenceFinder<CommerceInventoryReplenishmentItem>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommerceInventoryReplenishmentItem,
+		 NoSuchInventoryReplenishmentItemException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce inventory replenishment item where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchInventoryReplenishmentItemException</code> if it could not be found.
@@ -828,23 +784,8 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchInventoryReplenishmentItemException {
 
-		CommerceInventoryReplenishmentItem commerceInventoryReplenishmentItem =
-			fetchByERC_C(externalReferenceCode, companyId);
-
-		if (commerceInventoryReplenishmentItem == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchInventoryReplenishmentItemException(message);
-		}
-
-		return commerceInventoryReplenishmentItem;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1563,4 +1504,4 @@ public class CommerceInventoryReplenishmentItemPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-174522631
+// LIFERAY-SERVICE-BUILDER-HASH:-1365950199

@@ -73,8 +73,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<CommercePaymentEntryAudit>
-		_collectionPersistenceFinderByCommercePaymentEntryId;
+	private FilterCollectionPersistenceFinder
+		<CommercePaymentEntryAudit, NoSuchPaymentEntryAuditException>
+			_collectionPersistenceFinderByCommercePaymentEntryId;
 
 	/**
 	 * Returns an ordered range of all the commerce payment entry audits where commercePaymentEntryId = &#63;.
@@ -115,19 +116,9 @@ public class CommercePaymentEntryAuditPersistenceImpl
 			OrderByComparator<CommercePaymentEntryAudit> orderByComparator)
 		throws NoSuchPaymentEntryAuditException {
 
-		CommercePaymentEntryAudit commercePaymentEntryAudit =
-			fetchByCommercePaymentEntryId_First(
-				commercePaymentEntryId, orderByComparator);
-
-		if (commercePaymentEntryAudit != null) {
-			return commercePaymentEntryAudit;
-		}
-
-		throw new NoSuchPaymentEntryAuditException(
-			_collectionPersistenceFinderByCommercePaymentEntryId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePaymentEntryId}));
+		return _collectionPersistenceFinderByCommercePaymentEntryId.findFirst(
+			finderCache, new Object[] {commercePaymentEntryId},
+			orderByComparator);
 	}
 
 	/**
@@ -516,4 +507,4 @@ public class CommercePaymentEntryAuditPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1999422423
+// LIFERAY-SERVICE-BUILDER-HASH:1356596571

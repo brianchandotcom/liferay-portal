@@ -73,8 +73,9 @@ public class CommerceOrderPaymentPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceOrderPayment>
-		_collectionPersistenceFinderByCommerceOrderId;
+	private CollectionPersistenceFinder
+		<CommerceOrderPayment, NoSuchOrderPaymentException>
+			_collectionPersistenceFinderByCommerceOrderId;
 
 	/**
 	 * Returns an ordered range of all the commerce order payments where commerceOrderId = &#63;.
@@ -115,16 +116,8 @@ public class CommerceOrderPaymentPersistenceImpl
 			OrderByComparator<CommerceOrderPayment> orderByComparator)
 		throws NoSuchOrderPaymentException {
 
-		CommerceOrderPayment commerceOrderPayment =
-			fetchByCommerceOrderId_First(commerceOrderId, orderByComparator);
-
-		if (commerceOrderPayment != null) {
-			return commerceOrderPayment;
-		}
-
-		throw new NoSuchOrderPaymentException(
-			_collectionPersistenceFinderByCommerceOrderId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {commerceOrderId}));
+		return _collectionPersistenceFinderByCommerceOrderId.findFirst(
+			finderCache, new Object[] {commerceOrderId}, orderByComparator);
 	}
 
 	/**
@@ -467,4 +460,4 @@ public class CommerceOrderPaymentPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-7331264
+// LIFERAY-SERVICE-BUILDER-HASH:-861690416

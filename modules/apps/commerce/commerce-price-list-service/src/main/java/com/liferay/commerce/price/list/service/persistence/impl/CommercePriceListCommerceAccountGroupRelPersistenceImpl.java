@@ -89,7 +89,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
 	private CollectionPersistenceFinder
-		<CommercePriceListCommerceAccountGroupRel>
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException>
 			_collectionPersistenceFinderByUuid;
 
 	/**
@@ -133,17 +134,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				orderByComparator)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByUuid_First(
-				uuid, orderByComparator);
-
-		if (commercePriceListCommerceAccountGroupRel != null) {
-			return commercePriceListCommerceAccountGroupRel;
-		}
-
-		throw new NoSuchPriceListCommerceAccountGroupRelException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -187,7 +179,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 	private CollectionPersistenceFinder
-		<CommercePriceListCommerceAccountGroupRel>
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException>
 			_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -233,17 +226,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 				orderByComparator)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByUuid_C_First(
-				uuid, companyId, orderByComparator);
-
-		if (commercePriceListCommerceAccountGroupRel != null) {
-			return commercePriceListCommerceAccountGroupRel;
-		}
-
-		throw new NoSuchPriceListCommerceAccountGroupRelException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -290,7 +274,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 	private CollectionPersistenceFinder
-		<CommercePriceListCommerceAccountGroupRel>
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException>
 			_collectionPersistenceFinderByCommercePriceListId;
 
 	/**
@@ -336,20 +321,8 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 					orderByComparator)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel =
-				fetchByCommercePriceListId_First(
-					commercePriceListId, orderByComparator);
-
-		if (commercePriceListCommerceAccountGroupRel != null) {
-			return commercePriceListCommerceAccountGroupRel;
-		}
-
-		throw new NoSuchPriceListCommerceAccountGroupRelException(
-			_collectionPersistenceFinderByCommercePriceListId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePriceListId}));
+		return _collectionPersistenceFinderByCommercePriceListId.findFirst(
+			finderCache, new Object[] {commercePriceListId}, orderByComparator);
 	}
 
 	/**
@@ -393,8 +366,10 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			finderCache, new Object[] {commercePriceListId});
 	}
 
-	private UniquePersistenceFinder<CommercePriceListCommerceAccountGroupRel>
-		_uniquePersistenceFinderByCAGI_CPI;
+	private UniquePersistenceFinder
+		<CommercePriceListCommerceAccountGroupRel,
+		 NoSuchPriceListCommerceAccountGroupRelException>
+			_uniquePersistenceFinderByCAGI_CPI;
 
 	/**
 	 * Returns the commerce price list commerce account group rel where commercePriceListId = &#63; and commerceAccountGroupId = &#63; or throws a <code>NoSuchPriceListCommerceAccountGroupRelException</code> if it could not be found.
@@ -409,24 +384,9 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 			long commercePriceListId, long commerceAccountGroupId)
 		throws NoSuchPriceListCommerceAccountGroupRelException {
 
-		CommercePriceListCommerceAccountGroupRel
-			commercePriceListCommerceAccountGroupRel = fetchByCAGI_CPI(
-				commercePriceListId, commerceAccountGroupId);
-
-		if (commercePriceListCommerceAccountGroupRel == null) {
-			String message =
-				_uniquePersistenceFinderByCAGI_CPI.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePriceListId, commerceAccountGroupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPriceListCommerceAccountGroupRelException(message);
-		}
-
-		return commercePriceListCommerceAccountGroupRel;
+		return _uniquePersistenceFinderByCAGI_CPI.find(
+			finderCache,
+			new Object[] {commercePriceListId, commerceAccountGroupId});
 	}
 
 	/**
@@ -1021,4 +981,4 @@ public class CommercePriceListCommerceAccountGroupRelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1619984725
+// LIFERAY-SERVICE-BUILDER-HASH:1010995551

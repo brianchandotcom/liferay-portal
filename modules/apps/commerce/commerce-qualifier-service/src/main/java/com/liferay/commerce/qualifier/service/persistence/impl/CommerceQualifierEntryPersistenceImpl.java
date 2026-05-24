@@ -79,8 +79,9 @@ public class CommerceQualifierEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommerceQualifierEntry>
-		_collectionPersistenceFinderByS_S;
+	private CollectionPersistenceFinder
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
+			_collectionPersistenceFinderByS_S;
 
 	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63;.
@@ -123,17 +124,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			OrderByComparator<CommerceQualifierEntry> orderByComparator)
 		throws NoSuchCommerceQualifierEntryException {
 
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_First(
-			sourceClassNameId, sourceClassPK, orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		throw new NoSuchCommerceQualifierEntryException(
-			_collectionPersistenceFinderByS_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {sourceClassNameId, sourceClassPK}));
+		return _collectionPersistenceFinderByS_S.findFirst(
+			finderCache, new Object[] {sourceClassNameId, sourceClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -179,8 +172,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {sourceClassNameId, sourceClassPK});
 	}
 
-	private CollectionPersistenceFinder<CommerceQualifierEntry>
-		_collectionPersistenceFinderByT_T;
+	private CollectionPersistenceFinder
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
+			_collectionPersistenceFinderByT_T;
 
 	/**
 	 * Returns an ordered range of all the commerce qualifier entries where targetClassNameId = &#63; and targetClassPK = &#63;.
@@ -223,17 +217,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			OrderByComparator<CommerceQualifierEntry> orderByComparator)
 		throws NoSuchCommerceQualifierEntryException {
 
-		CommerceQualifierEntry commerceQualifierEntry = fetchByT_T_First(
-			targetClassNameId, targetClassPK, orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		throw new NoSuchCommerceQualifierEntryException(
-			_collectionPersistenceFinderByT_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {targetClassNameId, targetClassPK}));
+		return _collectionPersistenceFinderByT_T.findFirst(
+			finderCache, new Object[] {targetClassNameId, targetClassPK},
+			orderByComparator);
 	}
 
 	/**
@@ -279,8 +265,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			finderCache, new Object[] {targetClassNameId, targetClassPK});
 	}
 
-	private CollectionPersistenceFinder<CommerceQualifierEntry>
-		_collectionPersistenceFinderByS_S_T;
+	private CollectionPersistenceFinder
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
+			_collectionPersistenceFinderByS_S_T;
 
 	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63;.
@@ -327,20 +314,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			OrderByComparator<CommerceQualifierEntry> orderByComparator)
 		throws NoSuchCommerceQualifierEntryException {
 
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_T_First(
-			sourceClassNameId, sourceClassPK, targetClassNameId,
+		return _collectionPersistenceFinderByS_S_T.findFirst(
+			finderCache,
+			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId},
 			orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		throw new NoSuchCommerceQualifierEntryException(
-			_collectionPersistenceFinderByS_S_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					sourceClassNameId, sourceClassPK, targetClassNameId
-				}));
 	}
 
 	/**
@@ -396,8 +373,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, sourceClassPK, targetClassNameId});
 	}
 
-	private CollectionPersistenceFinder<CommerceQualifierEntry>
-		_collectionPersistenceFinderByS_T_T;
+	private CollectionPersistenceFinder
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
+			_collectionPersistenceFinderByS_T_T;
 
 	/**
 	 * Returns an ordered range of all the commerce qualifier entries where sourceClassNameId = &#63; and targetClassNameId = &#63; and targetClassPK = &#63;.
@@ -444,20 +422,10 @@ public class CommerceQualifierEntryPersistenceImpl
 			OrderByComparator<CommerceQualifierEntry> orderByComparator)
 		throws NoSuchCommerceQualifierEntryException {
 
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_T_T_First(
-			sourceClassNameId, targetClassNameId, targetClassPK,
+		return _collectionPersistenceFinderByS_T_T.findFirst(
+			finderCache,
+			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK},
 			orderByComparator);
-
-		if (commerceQualifierEntry != null) {
-			return commerceQualifierEntry;
-		}
-
-		throw new NoSuchCommerceQualifierEntryException(
-			_collectionPersistenceFinderByS_T_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					sourceClassNameId, targetClassNameId, targetClassPK
-				}));
 	}
 
 	/**
@@ -513,8 +481,9 @@ public class CommerceQualifierEntryPersistenceImpl
 			new Object[] {sourceClassNameId, targetClassNameId, targetClassPK});
 	}
 
-	private UniquePersistenceFinder<CommerceQualifierEntry>
-		_uniquePersistenceFinderByS_S_T_T;
+	private UniquePersistenceFinder
+		<CommerceQualifierEntry, NoSuchCommerceQualifierEntryException>
+			_uniquePersistenceFinderByS_S_T_T;
 
 	/**
 	 * Returns the commerce qualifier entry where sourceClassNameId = &#63; and sourceClassPK = &#63; and targetClassNameId = &#63; and targetClassPK = &#63; or throws a <code>NoSuchCommerceQualifierEntryException</code> if it could not be found.
@@ -532,26 +501,12 @@ public class CommerceQualifierEntryPersistenceImpl
 			long targetClassPK)
 		throws NoSuchCommerceQualifierEntryException {
 
-		CommerceQualifierEntry commerceQualifierEntry = fetchByS_S_T_T(
-			sourceClassNameId, sourceClassPK, targetClassNameId, targetClassPK);
-
-		if (commerceQualifierEntry == null) {
-			String message =
-				_uniquePersistenceFinderByS_S_T_T.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						sourceClassNameId, sourceClassPK, targetClassNameId,
-						targetClassPK
-					});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchCommerceQualifierEntryException(message);
-		}
-
-		return commerceQualifierEntry;
+		return _uniquePersistenceFinderByS_S_T_T.find(
+			finderCache,
+			new Object[] {
+				sourceClassNameId, sourceClassPK, targetClassNameId,
+				targetClassPK
+			});
 	}
 
 	/**
@@ -1117,4 +1072,4 @@ public class CommerceQualifierEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1253922160
+// LIFERAY-SERVICE-BUILDER-HASH:1184218411

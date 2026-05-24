@@ -98,8 +98,9 @@ public class CommercePriceEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where uuid = &#63;.
@@ -140,16 +141,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -190,8 +183,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where uuid = &#63; and companyId = &#63;.
@@ -234,16 +228,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -288,8 +274,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByCompanyId;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByCompanyId;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where companyId = &#63;.
@@ -330,16 +317,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -381,8 +360,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByCommercePriceListId;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByCommercePriceListId;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where commercePriceListId = &#63;.
@@ -423,19 +403,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry =
-			fetchByCommercePriceListId_First(
-				commercePriceListId, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByCommercePriceListId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {commercePriceListId}));
+		return _collectionPersistenceFinderByCommercePriceListId.findFirst(
+			finderCache, new Object[] {commercePriceListId}, orderByComparator);
 	}
 
 	/**
@@ -477,8 +446,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {commercePriceListId});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByCPInstanceUuid;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByCPInstanceUuid;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where CPInstanceUuid = &#63;.
@@ -519,16 +489,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByCPInstanceUuid_First(
-			CPInstanceUuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByCPInstanceUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {CPInstanceUuid}));
+		return _collectionPersistenceFinderByCPInstanceUuid.findFirst(
+			finderCache, new Object[] {CPInstanceUuid}, orderByComparator);
 	}
 
 	/**
@@ -570,8 +532,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {CPInstanceUuid});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByC_C;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByC_C;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63;.
@@ -614,17 +577,9 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByC_C_First(
-			commercePriceListId, CPInstanceUuid, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commercePriceListId, CPInstanceUuid}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {commercePriceListId, CPInstanceUuid},
+			orderByComparator);
 	}
 
 	/**
@@ -670,8 +625,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {commercePriceListId, CPInstanceUuid});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByLtD_S;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByLtD_S;
 
 	/**
 	 * Returns all the commerce price entries where displayDate &lt; &#63; and status = &#63;.
@@ -770,16 +726,8 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByLtD_S_First(
-			displayDate, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByLtD_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {displayDate, status}));
+		return _collectionPersistenceFinderByLtD_S.findFirst(
+			finderCache, new Object[] {displayDate, status}, orderByComparator);
 	}
 
 	/**
@@ -824,8 +772,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {displayDate, status});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByLtE_S;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByLtE_S;
 
 	/**
 	 * Returns all the commerce price entries where expirationDate &lt; &#63; and status = &#63;.
@@ -926,17 +875,9 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByLtE_S_First(
-			expirationDate, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByLtE_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {expirationDate, status}));
+		return _collectionPersistenceFinderByLtE_S.findFirst(
+			finderCache, new Object[] {expirationDate, status},
+			orderByComparator);
 	}
 
 	/**
@@ -982,8 +923,9 @@ public class CommercePriceEntryPersistenceImpl
 			finderCache, new Object[] {expirationDate, status});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByC_C_S;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByC_C_S;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where commercePriceListId = &#63; and CPInstanceUuid = &#63; and status = &#63;.
@@ -1029,17 +971,10 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByC_C_S_First(
-			commercePriceListId, CPInstanceUuid, status, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {commercePriceListId, CPInstanceUuid, status}));
+		return _collectionPersistenceFinderByC_C_S.findFirst(
+			finderCache,
+			new Object[] {commercePriceListId, CPInstanceUuid, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1095,8 +1030,9 @@ public class CommercePriceEntryPersistenceImpl
 			new Object[] {commercePriceListId, CPInstanceUuid, status});
 	}
 
-	private CollectionPersistenceFinder<CommercePriceEntry>
-		_collectionPersistenceFinderByC_Q_U;
+	private CollectionPersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_collectionPersistenceFinderByC_Q_U;
 
 	/**
 	 * Returns an ordered range of all the commerce price entries where CPInstanceUuid = &#63; and quantity = &#63; and unitOfMeasureKey = &#63;.
@@ -1143,17 +1079,10 @@ public class CommercePriceEntryPersistenceImpl
 			OrderByComparator<CommercePriceEntry> orderByComparator)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByC_Q_U_First(
-			CPInstanceUuid, quantity, unitOfMeasureKey, orderByComparator);
-
-		if (commercePriceEntry != null) {
-			return commercePriceEntry;
-		}
-
-		throw new NoSuchPriceEntryException(
-			_collectionPersistenceFinderByC_Q_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey}));
+		return _collectionPersistenceFinderByC_Q_U.findFirst(
+			finderCache,
+			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey},
+			orderByComparator);
 	}
 
 	/**
@@ -1209,8 +1138,9 @@ public class CommercePriceEntryPersistenceImpl
 			new Object[] {CPInstanceUuid, quantity, unitOfMeasureKey});
 	}
 
-	private UniquePersistenceFinder<CommercePriceEntry>
-		_uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder
+		<CommercePriceEntry, NoSuchPriceEntryException>
+			_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the commerce price entry where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchPriceEntryException</code> if it could not be found.
@@ -1225,23 +1155,8 @@ public class CommercePriceEntryPersistenceImpl
 			String externalReferenceCode, long companyId)
 		throws NoSuchPriceEntryException {
 
-		CommercePriceEntry commercePriceEntry = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (commercePriceEntry == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchPriceEntryException(message);
-		}
-
-		return commercePriceEntry;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -2090,4 +2005,4 @@ public class CommercePriceEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:898658325
+// LIFERAY-SERVICE-BUILDER-HASH:-17688950

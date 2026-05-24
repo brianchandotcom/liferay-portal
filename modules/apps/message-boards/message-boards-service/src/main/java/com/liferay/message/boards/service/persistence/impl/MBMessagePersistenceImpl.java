@@ -100,7 +100,7 @@ public class MBMessagePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -141,15 +141,8 @@ public class MBMessagePersistenceImpl
 			String uuid, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByUuid_First(uuid, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -190,7 +183,8 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<MBMessage> _uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder<MBMessage, NoSuchMessageException>
+		_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the message-boards message where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -204,21 +198,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage findByUUID_G(String uuid, long groupId)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByUUID_G(uuid, groupId);
-
-		if (mbMessage == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMessageException(message);
-		}
-
-		return mbMessage;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -266,7 +247,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -310,16 +291,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -364,7 +337,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -405,15 +378,8 @@ public class MBMessagePersistenceImpl
 			long groupId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByGroupId_First(groupId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -489,7 +455,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -530,16 +496,8 @@ public class MBMessagePersistenceImpl
 			long companyId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -580,7 +538,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {companyId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByUserId;
 
 	/**
@@ -621,15 +579,8 @@ public class MBMessagePersistenceImpl
 			long userId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByUserId_First(userId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByUserId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId}));
+		return _collectionPersistenceFinderByUserId.findFirst(
+			finderCache, new Object[] {userId}, orderByComparator);
 	}
 
 	/**
@@ -670,7 +621,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {userId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByThreadId;
 
 	/**
@@ -711,16 +662,8 @@ public class MBMessagePersistenceImpl
 			long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByThreadId_First(
-			threadId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByThreadId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
+		return _collectionPersistenceFinderByThreadId.findFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -761,7 +704,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByThreadIdReplies;
 
 	/**
@@ -802,16 +745,8 @@ public class MBMessagePersistenceImpl
 			long threadId, OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByThreadIdReplies_First(
-			threadId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByThreadIdReplies.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId}));
+		return _collectionPersistenceFinderByThreadIdReplies.findFirst(
+			finderCache, new Object[] {threadId}, orderByComparator);
 	}
 
 	/**
@@ -852,7 +787,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByParentMessageId;
 
 	/**
@@ -894,16 +829,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByParentMessageId_First(
-			parentMessageId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByParentMessageId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {parentMessageId}));
+		return _collectionPersistenceFinderByParentMessageId.findFirst(
+			finderCache, new Object[] {parentMessageId}, orderByComparator);
 	}
 
 	/**
@@ -944,7 +871,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {parentMessageId});
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_U;
 
 	/**
@@ -988,16 +915,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_U_First(
-			groupId, userId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
+		return _collectionPersistenceFinderByG_U.findFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -1079,7 +998,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, userId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_C;
 
 	/**
@@ -1123,16 +1042,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_C_First(
-			groupId, categoryId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, categoryId}));
+		return _collectionPersistenceFinderByG_C.findFirst(
+			finderCache, new Object[] {groupId, categoryId}, orderByComparator);
 	}
 
 	/**
@@ -1214,7 +1125,8 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, categoryId}, groupId);
 	}
 
-	private UniquePersistenceFinder<MBMessage> _uniquePersistenceFinderByG_US;
+	private UniquePersistenceFinder<MBMessage, NoSuchMessageException>
+		_uniquePersistenceFinderByG_US;
 
 	/**
 	 * Returns the message-boards message where groupId = &#63; and urlSubject = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -1228,22 +1140,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage findByG_US(long groupId, String urlSubject)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_US(groupId, urlSubject);
-
-		if (mbMessage == null) {
-			String message =
-				_uniquePersistenceFinderByG_US.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, urlSubject});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMessageException(message);
-		}
-
-		return mbMessage;
+		return _uniquePersistenceFinderByG_US.find(
+			finderCache, new Object[] {groupId, urlSubject});
 	}
 
 	/**
@@ -1291,7 +1189,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, urlSubject});
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_S;
 
 	/**
@@ -1335,16 +1233,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_S_First(
-			groupId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, status}));
+		return _collectionPersistenceFinderByG_S.findFirst(
+			finderCache, new Object[] {groupId, status}, orderByComparator);
 	}
 
 	/**
@@ -1426,7 +1316,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByC_S;
 
 	/**
@@ -1470,16 +1360,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByC_S_First(
-			companyId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			finderCache, new Object[] {companyId, status}, orderByComparator);
 	}
 
 	/**
@@ -1524,7 +1406,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByU_C;
 
 	/**
@@ -1674,7 +1556,7 @@ public class MBMessagePersistenceImpl
 			new Object[] {userId, ArrayUtil.sortedUnique(classNameIds)});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByC_C;
 
 	/**
@@ -1718,16 +1600,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByC_C_First(
-			classNameId, classPK, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByC_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {classNameId, classPK}));
+		return _collectionPersistenceFinderByC_C.findFirst(
+			finderCache, new Object[] {classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -1773,7 +1648,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByT_P;
 
 	/**
@@ -1817,17 +1692,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByT_P_First(
-			threadId, parentMessageId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByT_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {threadId, parentMessageId}));
+		return _collectionPersistenceFinderByT_P.findFirst(
+			finderCache, new Object[] {threadId, parentMessageId},
+			orderByComparator);
 	}
 
 	/**
@@ -1873,7 +1740,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId, parentMessageId});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByT_A;
 
 	/**
@@ -1917,16 +1784,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByT_A_First(
-			threadId, answer, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByT_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, answer}));
+		return _collectionPersistenceFinderByT_A.findFirst(
+			finderCache, new Object[] {threadId, answer}, orderByComparator);
 	}
 
 	/**
@@ -1971,7 +1830,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId, answer});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByT_S;
 
 	/**
@@ -2015,16 +1874,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByT_S_First(
-			threadId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByT_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, status}));
+		return _collectionPersistenceFinderByT_S.findFirst(
+			finderCache, new Object[] {threadId, status}, orderByComparator);
 	}
 
 	/**
@@ -2069,7 +1920,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId, status});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByT_NotS;
 
 	/**
@@ -2169,16 +2020,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByT_NotS_First(
-			threadId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByT_NotS.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, status}));
+		return _collectionPersistenceFinderByT_NotS.findFirst(
+			finderCache, new Object[] {threadId, status}, orderByComparator);
 	}
 
 	/**
@@ -2223,7 +2066,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId, status});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByTR_S;
 
 	/**
@@ -2267,16 +2110,8 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByTR_S_First(
-			threadId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByTR_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {threadId, status}));
+		return _collectionPersistenceFinderByTR_S.findFirst(
+			finderCache, new Object[] {threadId, status}, orderByComparator);
 	}
 
 	/**
@@ -2321,7 +2156,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {threadId, status});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByP_S;
 
 	/**
@@ -2365,17 +2200,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByP_S_First(
-			parentMessageId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByP_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {parentMessageId, status}));
+		return _collectionPersistenceFinderByP_S.findFirst(
+			finderCache, new Object[] {parentMessageId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2421,7 +2248,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {parentMessageId, status});
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_U_S;
 
 	/**
@@ -2467,17 +2294,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_U_S_First(
-			groupId, userId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_U_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, userId, status}));
+		return _collectionPersistenceFinderByG_U_S.findFirst(
+			finderCache, new Object[] {groupId, userId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2565,7 +2384,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, userId, status}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_C_T;
 
 	/**
@@ -2611,17 +2430,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_C_T_First(
-			groupId, categoryId, threadId, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_C_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, categoryId, threadId}));
+		return _collectionPersistenceFinderByG_C_T.findFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId},
+			orderByComparator);
 	}
 
 	/**
@@ -2711,7 +2522,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, categoryId, threadId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_C_S;
 
 	/**
@@ -2757,17 +2568,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_C_S_First(
-			groupId, categoryId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, categoryId, status}));
+		return _collectionPersistenceFinderByG_C_S.findFirst(
+			finderCache, new Object[] {groupId, categoryId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -2855,7 +2658,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {groupId, categoryId, status}, groupId);
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByU_C_C;
 
 	/**
@@ -2901,17 +2704,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByU_C_C_First(
-			userId, classNameId, classPK, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByU_C_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, classNameId, classPK}));
+		return _collectionPersistenceFinderByU_C_C.findFirst(
+			finderCache, new Object[] {userId, classNameId, classPK},
+			orderByComparator);
 	}
 
 	/**
@@ -2960,7 +2755,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {userId, classNameId, classPK});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByU_C_S;
 
 	/**
@@ -3126,7 +2921,7 @@ public class MBMessagePersistenceImpl
 			});
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByC_C_S;
 
 	/**
@@ -3172,17 +2967,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByC_C_S_First(
-			classNameId, classPK, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByC_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {classNameId, classPK, status}));
+		return _collectionPersistenceFinderByC_C_S.findFirst(
+			finderCache, new Object[] {classNameId, classPK, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3231,7 +3018,7 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {classNameId, classPK, status});
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_C_T_A;
 
 	/**
@@ -3279,17 +3066,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_C_T_A_First(
-			groupId, categoryId, threadId, answer, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_C_T_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, categoryId, threadId, answer}));
+		return _collectionPersistenceFinderByG_C_T_A.findFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId, answer},
+			orderByComparator);
 	}
 
 	/**
@@ -3389,7 +3168,7 @@ public class MBMessagePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<MBMessage>
+	private FilterCollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByG_C_T_S;
 
 	/**
@@ -3437,17 +3216,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByG_C_T_S_First(
-			groupId, categoryId, threadId, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByG_C_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, categoryId, threadId, status}));
+		return _collectionPersistenceFinderByG_C_T_S.findFirst(
+			finderCache, new Object[] {groupId, categoryId, threadId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3547,7 +3318,7 @@ public class MBMessagePersistenceImpl
 			groupId);
 	}
 
-	private CollectionPersistenceFinder<MBMessage>
+	private CollectionPersistenceFinder<MBMessage, NoSuchMessageException>
 		_collectionPersistenceFinderByU_C_C_S;
 
 	/**
@@ -3595,17 +3366,9 @@ public class MBMessagePersistenceImpl
 			OrderByComparator<MBMessage> orderByComparator)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByU_C_C_S_First(
-			userId, classNameId, classPK, status, orderByComparator);
-
-		if (mbMessage != null) {
-			return mbMessage;
-		}
-
-		throw new NoSuchMessageException(
-			_collectionPersistenceFinderByU_C_C_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {userId, classNameId, classPK, status}));
+		return _collectionPersistenceFinderByU_C_C_S.findFirst(
+			finderCache, new Object[] {userId, classNameId, classPK, status},
+			orderByComparator);
 	}
 
 	/**
@@ -3661,7 +3424,8 @@ public class MBMessagePersistenceImpl
 			finderCache, new Object[] {userId, classNameId, classPK, status});
 	}
 
-	private UniquePersistenceFinder<MBMessage> _uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder<MBMessage, NoSuchMessageException>
+		_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the message-boards message where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
@@ -3675,22 +3439,8 @@ public class MBMessagePersistenceImpl
 	public MBMessage findByERC_G(String externalReferenceCode, long groupId)
 		throws NoSuchMessageException {
 
-		MBMessage mbMessage = fetchByERC_G(externalReferenceCode, groupId);
-
-		if (mbMessage == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchMessageException(message);
-		}
-
-		return mbMessage;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -5169,4 +4919,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1115605273
+// LIFERAY-SERVICE-BUILDER-HASH:-300669003

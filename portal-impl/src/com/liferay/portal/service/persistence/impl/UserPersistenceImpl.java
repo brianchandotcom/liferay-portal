@@ -98,7 +98,7 @@ public class UserPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByUuid;
 
 	/**
@@ -138,15 +138,9 @@ public class UserPersistenceImpl
 			String uuid, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByUuid_First(uuid, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid},
+			orderByComparator);
 	}
 
 	/**
@@ -188,7 +182,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByUuid_C;
 
 	/**
@@ -231,15 +225,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByUuid_C_First(uuid, companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -285,7 +273,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {uuid, companyId});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -325,15 +313,9 @@ public class UserPersistenceImpl
 			long companyId, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByCompanyId_First(companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -375,7 +357,8 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId});
 	}
 
-	private UniquePersistenceFinder<User> _uniquePersistenceFinderByContactId;
+	private UniquePersistenceFinder<User, NoSuchUserException>
+		_uniquePersistenceFinderByContactId;
 
 	/**
 	 * Returns the user where contactId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -386,21 +369,8 @@ public class UserPersistenceImpl
 	 */
 	@Override
 	public User findByContactId(long contactId) throws NoSuchUserException {
-		User user = fetchByContactId(contactId);
-
-		if (user == null) {
-			String message =
-				_uniquePersistenceFinderByContactId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {contactId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return user;
+		return _uniquePersistenceFinderByContactId.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {contactId});
 	}
 
 	/**
@@ -442,7 +412,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {contactId});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByEmailAddress;
 
 	/**
@@ -482,15 +452,9 @@ public class UserPersistenceImpl
 			String emailAddress, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByEmailAddress_First(emailAddress, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByEmailAddress.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {emailAddress}));
+		return _collectionPersistenceFinderByEmailAddress.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {emailAddress},
+			orderByComparator);
 	}
 
 	/**
@@ -532,7 +496,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {emailAddress});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByPortraitId;
 
 	/**
@@ -572,15 +536,9 @@ public class UserPersistenceImpl
 			long portraitId, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByPortraitId_First(portraitId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByPortraitId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {portraitId}));
+		return _collectionPersistenceFinderByPortraitId.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {portraitId},
+			orderByComparator);
 	}
 
 	/**
@@ -622,7 +580,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {portraitId});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByGtU_C;
 
 	/**
@@ -721,15 +679,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByGtU_C_First(userId, companyId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByGtU_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {userId, companyId}));
+		return _collectionPersistenceFinderByGtU_C.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {userId, companyId},
+			orderByComparator);
 	}
 
 	/**
@@ -775,7 +727,8 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {userId, companyId});
 	}
 
-	private UniquePersistenceFinder<User> _uniquePersistenceFinderByC_U;
+	private UniquePersistenceFinder<User, NoSuchUserException>
+		_uniquePersistenceFinderByC_U;
 
 	/**
 	 * Returns the user where companyId = &#63; and userId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -789,21 +742,8 @@ public class UserPersistenceImpl
 	public User findByC_U(long companyId, long userId)
 		throws NoSuchUserException {
 
-		User user = fetchByC_U(companyId, userId);
-
-		if (user == null) {
-			String message =
-				_uniquePersistenceFinderByC_U.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, userId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return user;
+		return _uniquePersistenceFinderByC_U.find(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, userId});
 	}
 
 	/**
@@ -852,7 +792,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, userId});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByC_CD;
 
 	/**
@@ -896,16 +836,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_CD_First(companyId, createDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_CD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, createDate}));
+		return _collectionPersistenceFinderByC_CD.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, createDate}, orderByComparator);
 	}
 
 	/**
@@ -953,7 +886,7 @@ public class UserPersistenceImpl
 			new Object[] {companyId, createDate});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByC_MD;
 
 	/**
@@ -997,17 +930,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_MD_First(
-			companyId, modifiedDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_MD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, modifiedDate}));
+		return _collectionPersistenceFinderByC_MD.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, modifiedDate}, orderByComparator);
 	}
 
 	/**
@@ -1055,7 +980,8 @@ public class UserPersistenceImpl
 			new Object[] {companyId, modifiedDate});
 	}
 
-	private UniquePersistenceFinder<User> _uniquePersistenceFinderByC_SN;
+	private UniquePersistenceFinder<User, NoSuchUserException>
+		_uniquePersistenceFinderByC_SN;
 
 	/**
 	 * Returns the user where companyId = &#63; and screenName = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1069,22 +995,9 @@ public class UserPersistenceImpl
 	public User findByC_SN(long companyId, String screenName)
 		throws NoSuchUserException {
 
-		User user = fetchByC_SN(companyId, screenName);
-
-		if (user == null) {
-			String message =
-				_uniquePersistenceFinderByC_SN.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, screenName});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return user;
+		return _uniquePersistenceFinderByC_SN.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, screenName});
 	}
 
 	/**
@@ -1134,7 +1047,8 @@ public class UserPersistenceImpl
 			new Object[] {companyId, screenName});
 	}
 
-	private UniquePersistenceFinder<User> _uniquePersistenceFinderByC_EA;
+	private UniquePersistenceFinder<User, NoSuchUserException>
+		_uniquePersistenceFinderByC_EA;
 
 	/**
 	 * Returns the user where companyId = &#63; and emailAddress = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1148,22 +1062,9 @@ public class UserPersistenceImpl
 	public User findByC_EA(long companyId, String emailAddress)
 		throws NoSuchUserException {
 
-		User user = fetchByC_EA(companyId, emailAddress);
-
-		if (user == null) {
-			String message =
-				_uniquePersistenceFinderByC_EA.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {companyId, emailAddress});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return user;
+		return _uniquePersistenceFinderByC_EA.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, emailAddress});
 	}
 
 	/**
@@ -1213,7 +1114,7 @@ public class UserPersistenceImpl
 			new Object[] {companyId, emailAddress});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByC_FID;
 
 	/**
@@ -1257,17 +1158,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_FID_First(
-			companyId, facebookId, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_FID.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, facebookId}));
+		return _collectionPersistenceFinderByC_FID.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, facebookId}, orderByComparator);
 	}
 
 	/**
@@ -1315,7 +1208,8 @@ public class UserPersistenceImpl
 			new Object[] {companyId, facebookId});
 	}
 
-	private CollectionPersistenceFinder<User> _collectionPersistenceFinderByC_T;
+	private CollectionPersistenceFinder<User, NoSuchUserException>
+		_collectionPersistenceFinderByC_T;
 
 	/**
 	 * Returns an ordered range of all the users where companyId = &#63; and type = &#63;.
@@ -1356,15 +1250,9 @@ public class UserPersistenceImpl
 			long companyId, int type, OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_T_First(companyId, type, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_T.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, type}));
+		return _collectionPersistenceFinderByC_T.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type},
+			orderByComparator);
 	}
 
 	/**
@@ -1409,7 +1297,8 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, type});
 	}
 
-	private CollectionPersistenceFinder<User> _collectionPersistenceFinderByC_S;
+	private CollectionPersistenceFinder<User, NoSuchUserException>
+		_collectionPersistenceFinderByC_S;
 
 	/**
 	 * Returns an ordered range of all the users where companyId = &#63; and status = &#63;.
@@ -1451,15 +1340,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_S_First(companyId, status, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId, status}));
+		return _collectionPersistenceFinderByC_S.findFirst(
+			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status},
+			orderByComparator);
 	}
 
 	/**
@@ -1504,7 +1387,7 @@ public class UserPersistenceImpl
 			FinderCacheUtil.getFinderCache(), new Object[] {companyId, status});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByC_CD_MD;
 
 	/**
@@ -1550,17 +1433,10 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_CD_MD_First(
-			companyId, createDate, modifiedDate, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_CD_MD.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, createDate, modifiedDate}));
+		return _collectionPersistenceFinderByC_CD_MD.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, createDate, modifiedDate},
+			orderByComparator);
 	}
 
 	/**
@@ -1616,7 +1492,7 @@ public class UserPersistenceImpl
 			new Object[] {companyId, createDate, modifiedDate});
 	}
 
-	private CollectionPersistenceFinder<User>
+	private CollectionPersistenceFinder<User, NoSuchUserException>
 		_collectionPersistenceFinderByC_T_S;
 
 	/**
@@ -1662,17 +1538,9 @@ public class UserPersistenceImpl
 			OrderByComparator<User> orderByComparator)
 		throws NoSuchUserException {
 
-		User user = fetchByC_T_S_First(
-			companyId, type, status, orderByComparator);
-
-		if (user != null) {
-			return user;
-		}
-
-		throw new NoSuchUserException(
-			_collectionPersistenceFinderByC_T_S.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, type, status}));
+		return _collectionPersistenceFinderByC_T_S.findFirst(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {companyId, type, status}, orderByComparator);
 	}
 
 	/**
@@ -1723,7 +1591,8 @@ public class UserPersistenceImpl
 			new Object[] {companyId, type, status});
 	}
 
-	private UniquePersistenceFinder<User> _uniquePersistenceFinderByERC_C;
+	private UniquePersistenceFinder<User, NoSuchUserException>
+		_uniquePersistenceFinderByERC_C;
 
 	/**
 	 * Returns the user where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
@@ -1737,22 +1606,9 @@ public class UserPersistenceImpl
 	public User findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchUserException {
 
-		User user = fetchByERC_C(externalReferenceCode, companyId);
-
-		if (user == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchUserException(message);
-		}
-
-		return user;
+		return _uniquePersistenceFinderByERC_C.find(
+			FinderCacheUtil.getFinderCache(),
+			new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -4364,4 +4220,4 @@ public class UserPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1638989884
+// LIFERAY-SERVICE-BUILDER-HASH:217105595

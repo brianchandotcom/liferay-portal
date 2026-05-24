@@ -100,8 +100,9 @@ public class SegmentsExperiencePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByUuid;
+	private CollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByUuid;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where uuid = &#63;.
@@ -142,16 +143,8 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByUuid_First(
-			uuid, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByUuid.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid}));
+		return _collectionPersistenceFinderByUuid.findFirst(
+			finderCache, new Object[] {uuid}, orderByComparator);
 	}
 
 	/**
@@ -192,8 +185,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {uuid});
 	}
 
-	private UniquePersistenceFinder<SegmentsExperience>
-		_uniquePersistenceFinderByUUID_G;
+	private UniquePersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_uniquePersistenceFinderByUUID_G;
 
 	/**
 	 * Returns the segments experience where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -207,21 +201,8 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience findByUUID_G(String uuid, long groupId)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByUUID_G(uuid, groupId);
-
-		if (segmentsExperience == null) {
-			String message =
-				_uniquePersistenceFinderByUUID_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExperienceException(message);
-		}
-
-		return segmentsExperience;
+		return _uniquePersistenceFinderByUUID_G.find(
+			finderCache, new Object[] {uuid, groupId});
 	}
 
 	/**
@@ -269,8 +250,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {uuid, groupId});
 	}
 
-	private CollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByUuid_C;
+	private CollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByUuid_C;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where uuid = &#63; and companyId = &#63;.
@@ -313,16 +295,8 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByUuid_C_First(
-			uuid, companyId, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByUuid_C.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {uuid, companyId}));
+		return _collectionPersistenceFinderByUuid_C.findFirst(
+			finderCache, new Object[] {uuid, companyId}, orderByComparator);
 	}
 
 	/**
@@ -367,8 +341,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {uuid, companyId});
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByGroupId;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByGroupId;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63;.
@@ -409,16 +384,8 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -494,8 +461,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_P;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_P;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63;.
@@ -538,16 +506,8 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_P_First(
-			groupId, plid, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_P.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, plid}));
+		return _collectionPersistenceFinderByG_P.findFirst(
+			finderCache, new Object[] {groupId, plid}, orderByComparator);
 	}
 
 	/**
@@ -629,8 +589,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, plid}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_A;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_A;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and active = &#63;.
@@ -857,8 +818,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupIds, active}, groupIds);
 	}
 
-	private CollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderBySEERC_SESERC;
+	private CollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderBySEERC_SESERC;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
@@ -901,17 +863,9 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchBySEERC_SESERC_First(
-			segmentsEntryERC, segmentsEntryScopeERC, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderBySEERC_SESERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {segmentsEntryERC, segmentsEntryScopeERC}));
+		return _collectionPersistenceFinderBySEERC_SESERC.findFirst(
+			finderCache, new Object[] {segmentsEntryERC, segmentsEntryScopeERC},
+			orderByComparator);
 	}
 
 	/**
@@ -963,8 +917,9 @@ public class SegmentsExperiencePersistenceImpl
 			new Object[] {segmentsEntryERC, segmentsEntryScopeERC});
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_SEERC_SESERC;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_SEERC_SESERC;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63;.
@@ -1011,20 +966,10 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_SEERC_SESERC_First(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC,
+		return _collectionPersistenceFinderByG_SEERC_SESERC.findFirst(
+			finderCache,
+			new Object[] {groupId, segmentsEntryERC, segmentsEntryScopeERC},
 			orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_SEERC_SESERC.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {
-					groupId, segmentsEntryERC, segmentsEntryScopeERC
-				}));
 	}
 
 	/**
@@ -1125,8 +1070,9 @@ public class SegmentsExperiencePersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<SegmentsExperience>
-		_uniquePersistenceFinderByG_SEK_P;
+	private UniquePersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_uniquePersistenceFinderByG_SEK_P;
 
 	/**
 	 * Returns the segments experience where groupId = &#63; and segmentsExperienceKey = &#63; and plid = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -1142,23 +1088,8 @@ public class SegmentsExperiencePersistenceImpl
 			long groupId, String segmentsExperienceKey, long plid)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_SEK_P(
-			groupId, segmentsExperienceKey, plid);
-
-		if (segmentsExperience == null) {
-			String message =
-				_uniquePersistenceFinderByG_SEK_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, segmentsExperienceKey, plid});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExperienceException(message);
-		}
-
-		return segmentsExperience;
+		return _uniquePersistenceFinderByG_SEK_P.find(
+			finderCache, new Object[] {groupId, segmentsExperienceKey, plid});
 	}
 
 	/**
@@ -1215,8 +1146,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, segmentsExperienceKey, plid});
 	}
 
-	private UniquePersistenceFinder<SegmentsExperience>
-		_uniquePersistenceFinderByG_P_P;
+	private UniquePersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_uniquePersistenceFinderByG_P_P;
 
 	/**
 	 * Returns the segments experience where groupId = &#63; and plid = &#63; and priority = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -1231,23 +1163,8 @@ public class SegmentsExperiencePersistenceImpl
 	public SegmentsExperience findByG_P_P(long groupId, long plid, int priority)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_P_P(
-			groupId, plid, priority);
-
-		if (segmentsExperience == null) {
-			String message =
-				_uniquePersistenceFinderByG_P_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {groupId, plid, priority});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExperienceException(message);
-		}
-
-		return segmentsExperience;
+		return _uniquePersistenceFinderByG_P_P.find(
+			finderCache, new Object[] {groupId, plid, priority});
 	}
 
 	/**
@@ -1301,8 +1218,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, plid, priority});
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_P_GtP;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_P_GtP;
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63; and plid = &#63; and priority &gt; &#63;.
@@ -1409,17 +1327,9 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_P_GtP_First(
-			groupId, plid, priority, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_P_GtP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, plid, priority}));
+		return _collectionPersistenceFinderByG_P_GtP.findFirst(
+			finderCache, new Object[] {groupId, plid, priority},
+			orderByComparator);
 	}
 
 	/**
@@ -1545,8 +1455,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, plid, priority}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_P_LtP;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_P_LtP;
 
 	/**
 	 * Returns all the segments experiences where groupId = &#63; and plid = &#63; and priority &lt; &#63;.
@@ -1653,17 +1564,9 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_P_LtP_First(
-			groupId, plid, priority, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_P_LtP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, plid, priority}));
+		return _collectionPersistenceFinderByG_P_LtP.findFirst(
+			finderCache, new Object[] {groupId, plid, priority},
+			orderByComparator);
 	}
 
 	/**
@@ -1789,8 +1692,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, plid, priority}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_P_A;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_P_A;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and plid = &#63; and active = &#63;.
@@ -1835,17 +1739,9 @@ public class SegmentsExperiencePersistenceImpl
 			OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_P_A_First(
-			groupId, plid, active, orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_P_A.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {groupId, plid, active}));
+		return _collectionPersistenceFinderByG_P_A.findFirst(
+			finderCache, new Object[] {groupId, plid, active},
+			orderByComparator);
 	}
 
 	/**
@@ -1933,8 +1829,9 @@ public class SegmentsExperiencePersistenceImpl
 			finderCache, new Object[] {groupId, plid, active}, groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_SEERC_SESERC_P;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_SEERC_SESERC_P;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63;.
@@ -1985,21 +1882,12 @@ public class SegmentsExperiencePersistenceImpl
 			long plid, OrderByComparator<SegmentsExperience> orderByComparator)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByG_SEERC_SESERC_P_First(
-			groupId, segmentsEntryERC, segmentsEntryScopeERC, plid,
+		return _collectionPersistenceFinderByG_SEERC_SESERC_P.findFirst(
+			finderCache,
+			new Object[] {
+				groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
+			},
 			orderByComparator);
-
-		if (segmentsExperience != null) {
-			return segmentsExperience;
-		}
-
-		throw new NoSuchExperienceException(
-			_collectionPersistenceFinderByG_SEERC_SESERC_P.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {
-						groupId, segmentsEntryERC, segmentsEntryScopeERC, plid
-					}));
 	}
 
 	/**
@@ -2118,8 +2006,9 @@ public class SegmentsExperiencePersistenceImpl
 			groupId);
 	}
 
-	private FilterCollectionPersistenceFinder<SegmentsExperience>
-		_collectionPersistenceFinderByG_SEERC_SESERC_P_A;
+	private FilterCollectionPersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_collectionPersistenceFinderByG_SEERC_SESERC_P_A;
 
 	/**
 	 * Returns an ordered range of all the segments experiences where groupId = &#63; and segmentsEntryERC = &#63; and segmentsEntryScopeERC = &#63; and plid = &#63; and active = &#63;.
@@ -2446,8 +2335,9 @@ public class SegmentsExperiencePersistenceImpl
 			groupId);
 	}
 
-	private UniquePersistenceFinder<SegmentsExperience>
-		_uniquePersistenceFinderByERC_G;
+	private UniquePersistenceFinder
+		<SegmentsExperience, NoSuchExperienceException>
+			_uniquePersistenceFinderByERC_G;
 
 	/**
 	 * Returns the segments experience where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchExperienceException</code> if it could not be found.
@@ -2462,23 +2352,8 @@ public class SegmentsExperiencePersistenceImpl
 			String externalReferenceCode, long groupId)
 		throws NoSuchExperienceException {
 
-		SegmentsExperience segmentsExperience = fetchByERC_G(
-			externalReferenceCode, groupId);
-
-		if (segmentsExperience == null) {
-			String message =
-				_uniquePersistenceFinderByERC_G.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, groupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchExperienceException(message);
-		}
-
-		return segmentsExperience;
+		return _uniquePersistenceFinderByERC_G.find(
+			finderCache, new Object[] {externalReferenceCode, groupId});
 	}
 
 	/**
@@ -3546,4 +3421,4 @@ public class SegmentsExperiencePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-401865078
+// LIFERAY-SERVICE-BUILDER-HASH:494888539

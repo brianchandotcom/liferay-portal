@@ -85,7 +85,7 @@ public class AccountRolePersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByCompanyId;
 
 	/**
@@ -126,16 +126,8 @@ public class AccountRolePersistenceImpl
 			long companyId, OrderByComparator<AccountRole> orderByComparator)
 		throws NoSuchRoleException {
 
-		AccountRole accountRole = fetchByCompanyId_First(
-			companyId, orderByComparator);
-
-		if (accountRole != null) {
-			return accountRole;
-		}
-
-		throw new NoSuchRoleException(
-			_collectionPersistenceFinderByCompanyId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {companyId}));
+		return _collectionPersistenceFinderByCompanyId.findFirst(
+			finderCache, new Object[] {companyId}, orderByComparator);
 	}
 
 	/**
@@ -211,7 +203,7 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {companyId}, companyId, 0);
 	}
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByAccountEntryId;
 
 	/**
@@ -420,7 +412,7 @@ public class AccountRolePersistenceImpl
 			new Object[] {ArrayUtil.sortedUnique(accountEntryIds)});
 	}
 
-	private UniquePersistenceFinder<AccountRole>
+	private UniquePersistenceFinder<AccountRole, NoSuchRoleException>
 		_uniquePersistenceFinderByRoleId;
 
 	/**
@@ -432,21 +424,8 @@ public class AccountRolePersistenceImpl
 	 */
 	@Override
 	public AccountRole findByRoleId(long roleId) throws NoSuchRoleException {
-		AccountRole accountRole = fetchByRoleId(roleId);
-
-		if (accountRole == null) {
-			String message =
-				_uniquePersistenceFinderByRoleId.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {roleId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return accountRole;
+		return _uniquePersistenceFinderByRoleId.find(
+			finderCache, new Object[] {roleId});
 	}
 
 	/**
@@ -487,7 +466,7 @@ public class AccountRolePersistenceImpl
 			finderCache, new Object[] {roleId});
 	}
 
-	private FilterCollectionPersistenceFinder<AccountRole>
+	private FilterCollectionPersistenceFinder<AccountRole, NoSuchRoleException>
 		_collectionPersistenceFinderByC_A;
 
 	/**
@@ -715,7 +694,7 @@ public class AccountRolePersistenceImpl
 			companyId, 0);
 	}
 
-	private UniquePersistenceFinder<AccountRole>
+	private UniquePersistenceFinder<AccountRole, NoSuchRoleException>
 		_uniquePersistenceFinderByERC_C;
 
 	/**
@@ -730,23 +709,8 @@ public class AccountRolePersistenceImpl
 	public AccountRole findByERC_C(String externalReferenceCode, long companyId)
 		throws NoSuchRoleException {
 
-		AccountRole accountRole = fetchByERC_C(
-			externalReferenceCode, companyId);
-
-		if (accountRole == null) {
-			String message =
-				_uniquePersistenceFinderByERC_C.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {externalReferenceCode, companyId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchRoleException(message);
-		}
-
-		return accountRole;
+		return _uniquePersistenceFinderByERC_C.find(
+			finderCache, new Object[] {externalReferenceCode, companyId});
 	}
 
 	/**
@@ -1206,4 +1170,4 @@ public class AccountRolePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1155574028
+// LIFERAY-SERVICE-BUILDER-HASH:-15170479

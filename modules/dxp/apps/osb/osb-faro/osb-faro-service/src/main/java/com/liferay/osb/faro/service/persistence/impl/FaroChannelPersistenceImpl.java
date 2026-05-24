@@ -72,7 +72,7 @@ public class FaroChannelPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<FaroChannel>
+	private CollectionPersistenceFinder<FaroChannel, NoSuchFaroChannelException>
 		_collectionPersistenceFinderByGroupId;
 
 	/**
@@ -113,16 +113,8 @@ public class FaroChannelPersistenceImpl
 			long groupId, OrderByComparator<FaroChannel> orderByComparator)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = fetchByGroupId_First(
-			groupId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		throw new NoSuchFaroChannelException(
-			_collectionPersistenceFinderByGroupId.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId}));
+		return _collectionPersistenceFinderByGroupId.findFirst(
+			finderCache, new Object[] {groupId}, orderByComparator);
 	}
 
 	/**
@@ -163,7 +155,7 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {groupId});
 	}
 
-	private CollectionPersistenceFinder<FaroChannel>
+	private CollectionPersistenceFinder<FaroChannel, NoSuchFaroChannelException>
 		_collectionPersistenceFinderByWorkspaceGroupId;
 
 	/**
@@ -205,17 +197,8 @@ public class FaroChannelPersistenceImpl
 			OrderByComparator<FaroChannel> orderByComparator)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = fetchByWorkspaceGroupId_First(
-			workspaceGroupId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		throw new NoSuchFaroChannelException(
-			_collectionPersistenceFinderByWorkspaceGroupId.
-				buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY, new Object[] {workspaceGroupId}));
+		return _collectionPersistenceFinderByWorkspaceGroupId.findFirst(
+			finderCache, new Object[] {workspaceGroupId}, orderByComparator);
 	}
 
 	/**
@@ -257,7 +240,7 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {workspaceGroupId});
 	}
 
-	private CollectionPersistenceFinder<FaroChannel>
+	private CollectionPersistenceFinder<FaroChannel, NoSuchFaroChannelException>
 		_collectionPersistenceFinderByG_U;
 
 	/**
@@ -301,16 +284,8 @@ public class FaroChannelPersistenceImpl
 			OrderByComparator<FaroChannel> orderByComparator)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = fetchByG_U_First(
-			groupId, userId, orderByComparator);
-
-		if (faroChannel != null) {
-			return faroChannel;
-		}
-
-		throw new NoSuchFaroChannelException(
-			_collectionPersistenceFinderByG_U.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {groupId, userId}));
+		return _collectionPersistenceFinderByG_U.findFirst(
+			finderCache, new Object[] {groupId, userId}, orderByComparator);
 	}
 
 	/**
@@ -355,7 +330,8 @@ public class FaroChannelPersistenceImpl
 			finderCache, new Object[] {groupId, userId});
 	}
 
-	private UniquePersistenceFinder<FaroChannel> _uniquePersistenceFinderByC_W;
+	private UniquePersistenceFinder<FaroChannel, NoSuchFaroChannelException>
+		_uniquePersistenceFinderByC_W;
 
 	/**
 	 * Returns the faro channel where channelId = &#63; and workspaceGroupId = &#63; or throws a <code>NoSuchFaroChannelException</code> if it could not be found.
@@ -369,22 +345,8 @@ public class FaroChannelPersistenceImpl
 	public FaroChannel findByC_W(String channelId, long workspaceGroupId)
 		throws NoSuchFaroChannelException {
 
-		FaroChannel faroChannel = fetchByC_W(channelId, workspaceGroupId);
-
-		if (faroChannel == null) {
-			String message =
-				_uniquePersistenceFinderByC_W.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {channelId, workspaceGroupId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchFaroChannelException(message);
-		}
-
-		return faroChannel;
+		return _uniquePersistenceFinderByC_W.find(
+			finderCache, new Object[] {channelId, workspaceGroupId});
 	}
 
 	/**
@@ -769,4 +731,4 @@ public class FaroChannelPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1983546209
+// LIFERAY-SERVICE-BUILDER-HASH:940610052

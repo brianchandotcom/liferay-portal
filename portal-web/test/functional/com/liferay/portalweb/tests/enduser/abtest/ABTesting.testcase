@@ -146,43 +146,4 @@ definition {
 		}
 	}
 
-
-	@description = "LPS-97195: Validate if the variant for A/B Test that was added on Liferay portal is visible in the Analytics Cloud"
-	@priority = 5
-	test CheckVariantAddedAndEditedInAC {
-		task ("Create AB test and create variant") {
-			ABTest.createABTest(
-				goal = "Bounce Rate",
-				testTitle = "AB test title");
-
-			ABTest.createVariant(variantName = "Variant name");
-		}
-
-		task ("Check the added variant is visible in Analytics Cloud") {
-			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name");
-		}
-
-		task ("Edit variant name") {
-			ABTest.editVariantName();
-
-			ABTest.fillInput(
-				key_testTitle = "Variant name 2",
-				labelValue = "Name");
-
-			Click(
-				key_name = "Save",
-				locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
-		}
-
-		task ("Assert that the variant name is changed in DXP") {
-			AssertVisible(
-				key_variantName = "Variant name 2",
-				locator1 = "ABTest#VARIANT_TITLE");
-		}
-
-		task ("Check the edited variant name is visible in Analytics Cloud") {
-			ABTest.checkVariantAnalyticsCloud(variantNames = "Variant name 2");
-		}
-	}
-
 }

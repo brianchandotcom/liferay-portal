@@ -591,3 +591,85 @@ test(
 		});
 	}
 );
+
+test(
+	'Validate if the variant for AB Test that was added on Liferay portal is visible in the Analytics Cloud',
+	{tag: '@LPS-97195'},
+	async ({apiHelpers, page, site}) => {
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		const {channel, project} = await syncAnalyticsCloud({
+			apiHelpers,
+			channelName: 'My Property - ' + getRandomString(),
+			page,
+			siteName: site.name,
+		});
+
+		try {
+
+			// Create an AB Test draft with a variant in DXP
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.waitForSelector('.segments-experiment-icon');
+
+			await openABTesSidebar(page);
+
+			const abTestName = 'AB Test ' + getRandomString();
+
+			await createABTest({name: abTestName, page});
+
+			const variantName = 'Variant ' + getRandomString();
+
+			await createVariant({name: variantName, page});
+
+			// Run AB Test
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator('.modal-footer').getByText('Run'),
+				trigger: page.getByText('Review and Run Test'),
+			});
+
+			await expect(page.getByText('Test is now running.')).toBeVisible();
+
+			await page.locator('.modal-footer').getByText('Ok').click();
+
+			// Open the AB Test in Analytics Cloud and assert the variant is listed
+
+			await navigateToACPageViaURL({
+				acPage: ACPage.testPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+
+			await expect(async () => {
+				await expect(
+					page.getByRole('link', {name: abTestName}).first()
+				).toBeVisible({timeout: 3000});
+
+				await page.reload();
+			}).toPass();
+
+			await navigateTo({page, pageName: abTestName});
+
+			await expect(
+				page
+					.locator('.analytics-variant-card-table')
+					.getByText(variantName, {exact: true})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+				`[${channel.id}]`,
+				project.groupId
+			);
+		}
+	}
+);

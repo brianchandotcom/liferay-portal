@@ -54,7 +54,16 @@ public class KubernetesJobService {
 	}
 
 	public Job createJob(String indexName, String url) {
-		URI uri = URI.create(url);
+		URI uri;
+
+		try {
+			uri = URI.create(url);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			throw new IllegalArgumentException(
+				"Invalid crawler URL \"" + url + "\"",
+				illegalArgumentException);
+		}
 
 		Job job = _kubernetesClient.batch(
 		).v1(

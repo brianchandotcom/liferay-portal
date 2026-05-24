@@ -1075,18 +1075,6 @@ public class DDMDataProviderInstancePersistenceImpl
 				_SQL_COUNT_DDMDATAPROVIDERINSTANCE_WHERE,
 				DDMDataProviderInstanceModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMDataProviderInstanceImpl.class,
-					DDMDataProviderInstance.class, "ddmDataProviderInstance",
-					"DDMDataProviderInstance",
-					"ddmDataProviderInstance.dataProviderInstanceId",
-					"SELECT DISTINCT {ddmDataProviderInstance.*} FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ",
-					"SELECT {DDMDataProviderInstance.*} FROM (SELECT DISTINCT ddmDataProviderInstance.dataProviderInstanceId FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ",
-					") TEMP_TABLE INNER JOIN DDMDataProviderInstance ON TEMP_TABLE.dataProviderInstanceId = DDMDataProviderInstance.dataProviderInstanceId",
-					"SELECT COUNT(DISTINCT ddmDataProviderInstance.dataProviderInstanceId) AS COUNT_VALUE FROM DDMDataProviderInstance ddmDataProviderInstance WHERE ",
-					DDMDataProviderInstanceModelImpl.ORDER_BY_SQL,
-					DDMDataProviderInstanceModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmDataProviderInstance.", "groupId",
 					FinderColumn.Type.LONG, "=", false, true, true,
@@ -1192,4 +1180,4 @@ public class DDMDataProviderInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1491037943
+// LIFERAY-SERVICE-BUILDER-HASH:-438766936

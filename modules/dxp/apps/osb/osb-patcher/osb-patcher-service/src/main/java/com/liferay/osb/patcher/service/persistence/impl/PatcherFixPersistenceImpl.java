@@ -3319,15 +3319,6 @@ public class PatcherFixPersistenceImpl
 					new String[] {"patcherProjectVersionId"}, false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3370,15 +3361,6 @@ public class PatcherFixPersistenceImpl
 					false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3418,15 +3400,6 @@ public class PatcherFixPersistenceImpl
 					false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3461,15 +3434,6 @@ public class PatcherFixPersistenceImpl
 					new String[] {"key_", "keyVersion", "type_"}, false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
 					true, PatcherFix::getKey),
@@ -3503,15 +3467,6 @@ public class PatcherFixPersistenceImpl
 					new String[] {"key_", "keyVersion", "type_"}, false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
 					true, PatcherFix::getKey),
@@ -3544,15 +3499,6 @@ public class PatcherFixPersistenceImpl
 					new String[] {"key_", "latestFix", "type_"}, false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "key", FinderColumn.Type.STRING, "=", true,
 					true, PatcherFix::getKey),
@@ -3591,15 +3537,6 @@ public class PatcherFixPersistenceImpl
 					false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "modifiedDate", FinderColumn.Type.DATE, "<",
 					true, true, PatcherFix::getModifiedDate),
@@ -3641,15 +3578,6 @@ public class PatcherFixPersistenceImpl
 					false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3694,15 +3622,6 @@ public class PatcherFixPersistenceImpl
 					false),
 				_SQL_SELECT_PATCHERFIX_WHERE, _SQL_COUNT_PATCHERFIX_WHERE,
 				PatcherFixModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherFixImpl.class, PatcherFix.class, "patcherFix",
-					"OSBPatcher_PatcherFix", "patcherFix.patcherFixId",
-					"SELECT DISTINCT {patcherFix.*} FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					"SELECT {OSBPatcher_PatcherFix.*} FROM (SELECT DISTINCT patcherFix.patcherFixId FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherFix ON TEMP_TABLE.patcherFixId = OSBPatcher_PatcherFix.patcherFixId",
-					"SELECT COUNT(DISTINCT patcherFix.patcherFixId) AS COUNT_VALUE FROM OSBPatcher_PatcherFix patcherFix WHERE ",
-					PatcherFixModelImpl.ORDER_BY_SQL,
-					PatcherFixModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherFix.", "patcherProjectVersionId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -3801,4 +3720,4 @@ public class PatcherFixPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-785204945
+// LIFERAY-SERVICE-BUILDER-HASH:455905469

@@ -98,6 +98,9 @@ public class SavedContentEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "savedContentEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"savedContentEntry.savedContentEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY savedContentEntry.savedContentEntryId ASC";
 
@@ -1063,4 +1066,4 @@ public class SavedContentEntryModelImpl
 	private SavedContentEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2051169650
+// LIFERAY-SERVICE-BUILDER-HASH:-1740636520

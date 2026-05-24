@@ -116,6 +116,9 @@ public class NotificationTemplateModelImpl
 
 	public static final String ENTITY_ALIAS = "notificationTemplate";
 
+	public static final String FILTER_PK_COLUMN =
+		"notificationTemplate.notificationTemplateId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY notificationTemplate.notificationTemplateId ASC";
 
@@ -1677,4 +1680,4 @@ public class NotificationTemplateModelImpl
 	private NotificationTemplate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-5402302
+// LIFERAY-SERVICE-BUILDER-HASH:-699832196

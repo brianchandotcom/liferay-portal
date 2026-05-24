@@ -112,6 +112,9 @@ public class DLFileShortcutModelImpl
 
 	public static final String ENTITY_ALIAS = "dlFileShortcut";
 
+	public static final String FILTER_PK_COLUMN =
+		"dlFileShortcut.fileShortcutId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileShortcut.fileShortcutId ASC";
 
@@ -1522,4 +1525,4 @@ public class DLFileShortcutModelImpl
 	private DLFileShortcut _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:320474575
+// LIFERAY-SERVICE-BUILDER-HASH:346654157

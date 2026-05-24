@@ -222,6 +222,9 @@ public class CommerceOrderModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceOrder";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceOrder.commerceOrderId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrder.createDate ASC";
 
@@ -3620,4 +3623,4 @@ public class CommerceOrderModelImpl
 	private CommerceOrder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1537789144
+// LIFERAY-SERVICE-BUILDER-HASH:1500965384

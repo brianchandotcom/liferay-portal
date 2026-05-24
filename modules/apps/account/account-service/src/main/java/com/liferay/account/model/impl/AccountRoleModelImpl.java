@@ -83,6 +83,8 @@ public class AccountRoleModelImpl
 
 	public static final String ENTITY_ALIAS = "accountRole";
 
+	public static final String FILTER_PK_COLUMN = "accountRole.accountRoleId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountRole.accountRoleId ASC";
 
@@ -740,4 +742,4 @@ public class AccountRoleModelImpl
 	private AccountRole _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1584537519
+// LIFERAY-SERVICE-BUILDER-HASH:875287839

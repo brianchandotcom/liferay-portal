@@ -109,6 +109,9 @@ public class SegmentsExperimentModelImpl
 
 	public static final String ENTITY_ALIAS = "segmentsExperiment";
 
+	public static final String FILTER_PK_COLUMN =
+		"segmentsExperiment.segmentsExperimentId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY segmentsExperiment.createDate DESC";
 
@@ -1290,4 +1293,4 @@ public class SegmentsExperimentModelImpl
 	private SegmentsExperiment _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:646814068
+// LIFERAY-SERVICE-BUILDER-HASH:-46722246

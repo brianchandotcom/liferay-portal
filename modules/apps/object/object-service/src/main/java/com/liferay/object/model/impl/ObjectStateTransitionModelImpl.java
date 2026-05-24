@@ -1001,4 +1001,4 @@ public class ObjectStateTransitionModelImpl
 	private ObjectStateTransition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-452450752
+// LIFERAY-SERVICE-BUILDER-HASH:-1147063216

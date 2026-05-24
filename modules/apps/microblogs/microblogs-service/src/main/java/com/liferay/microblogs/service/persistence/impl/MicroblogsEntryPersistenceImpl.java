@@ -2409,16 +2409,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, MicroblogsEntry::getCompanyId));
@@ -2446,16 +2436,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MicroblogsEntry::getUserId));
@@ -2487,16 +2467,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MicroblogsEntry::getUserId),
@@ -2531,16 +2501,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "creatorClassNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2577,16 +2537,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "creatorClassNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2622,16 +2572,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "type", FinderColumn.Type.INTEGER, "=",
 					true, true, MicroblogsEntry::getType),
@@ -2681,16 +2621,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, MicroblogsEntry::getCompanyId),
@@ -2737,16 +2667,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, MicroblogsEntry::getCompanyId),
@@ -2799,16 +2719,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "creatorClassNameId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -2866,16 +2776,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, MicroblogsEntry::getCompanyId),
@@ -2930,16 +2830,6 @@ public class MicroblogsEntryPersistenceImpl
 				_SQL_COUNT_MICROBLOGSENTRY_WHERE,
 				MicroblogsEntryModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MicroblogsEntryImpl.class, MicroblogsEntry.class,
-					"microblogsEntry", "MicroblogsEntry",
-					"microblogsEntry.microblogsEntryId",
-					"SELECT DISTINCT {microblogsEntry.*} FROM MicroblogsEntry microblogsEntry WHERE ",
-					"SELECT {MicroblogsEntry.*} FROM (SELECT DISTINCT microblogsEntry.microblogsEntryId FROM MicroblogsEntry microblogsEntry WHERE ",
-					") TEMP_TABLE INNER JOIN MicroblogsEntry ON TEMP_TABLE.microblogsEntryId = MicroblogsEntry.microblogsEntryId",
-					"SELECT COUNT(DISTINCT microblogsEntry.microblogsEntryId) AS COUNT_VALUE FROM MicroblogsEntry microblogsEntry WHERE ",
-					MicroblogsEntryModelImpl.ORDER_BY_SQL,
-					MicroblogsEntryModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"microblogsEntry.", "userId", FinderColumn.Type.LONG, "=",
 					true, true, MicroblogsEntry::getUserId),
@@ -3020,4 +2910,4 @@ public class MicroblogsEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1570165328
+// LIFERAY-SERVICE-BUILDER-HASH:822266618

@@ -88,6 +88,9 @@ public class PermissionCheckFinderEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "permissionCheckFinderEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"permissionCheckFinderEntry.permissionCheckFinderEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY permissionCheckFinderEntry.integer ASC, permissionCheckFinderEntry.type ASC";
 
@@ -815,4 +818,4 @@ public class PermissionCheckFinderEntryModelImpl
 	private PermissionCheckFinderEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:650458417
+// LIFERAY-SERVICE-BUILDER-HASH:425819627

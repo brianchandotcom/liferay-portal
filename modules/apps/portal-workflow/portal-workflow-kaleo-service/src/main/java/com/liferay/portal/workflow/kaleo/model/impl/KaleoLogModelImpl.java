@@ -1795,4 +1795,4 @@ public class KaleoLogModelImpl
 	private KaleoLog _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2037058261
+// LIFERAY-SERVICE-BUILDER-HASH:-2102332571

@@ -843,4 +843,4 @@ public class PatcherTicketHintModelImpl
 	private PatcherTicketHint _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1757320710
+// LIFERAY-SERVICE-BUILDER-HASH:-194747090

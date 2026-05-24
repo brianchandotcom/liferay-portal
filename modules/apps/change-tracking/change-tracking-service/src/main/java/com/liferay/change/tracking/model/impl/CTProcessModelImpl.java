@@ -90,6 +90,8 @@ public class CTProcessModelImpl
 
 	public static final String ENTITY_ALIAS = "ctProcess";
 
+	public static final String FILTER_PK_COLUMN = "ctProcess.ctProcessId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctProcess.createDate DESC";
 
@@ -801,4 +803,4 @@ public class CTProcessModelImpl
 	private CTProcess _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-715307174
+// LIFERAY-SERVICE-BUILDER-HASH:1940544916

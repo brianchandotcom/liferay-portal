@@ -798,4 +798,4 @@ public class PluginSettingModelImpl
 	private PluginSetting _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1349301076
+// LIFERAY-SERVICE-BUILDER-HASH:-1647079354

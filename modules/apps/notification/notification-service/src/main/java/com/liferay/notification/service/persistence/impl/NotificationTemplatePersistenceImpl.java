@@ -882,16 +882,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, NotificationTemplate::getUuid));
@@ -919,16 +909,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, NotificationTemplate::getUuid),
@@ -960,16 +940,6 @@ public class NotificationTemplatePersistenceImpl
 				_SQL_COUNT_NOTIFICATIONTEMPLATE_WHERE,
 				NotificationTemplateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationTemplateImpl.class, NotificationTemplate.class,
-					"notificationTemplate", "NotificationTemplate",
-					"notificationTemplate.notificationTemplateId",
-					"SELECT DISTINCT {notificationTemplate.*} FROM NotificationTemplate notificationTemplate WHERE ",
-					"SELECT {NotificationTemplate.*} FROM (SELECT DISTINCT notificationTemplate.notificationTemplateId FROM NotificationTemplate notificationTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationTemplate ON TEMP_TABLE.notificationTemplateId = NotificationTemplate.notificationTemplateId",
-					"SELECT COUNT(DISTINCT notificationTemplate.notificationTemplateId) AS COUNT_VALUE FROM NotificationTemplate notificationTemplate WHERE ",
-					NotificationTemplateModelImpl.ORDER_BY_SQL,
-					NotificationTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationTemplate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1063,4 +1033,4 @@ public class NotificationTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1287262656
+// LIFERAY-SERVICE-BUILDER-HASH:-121701740

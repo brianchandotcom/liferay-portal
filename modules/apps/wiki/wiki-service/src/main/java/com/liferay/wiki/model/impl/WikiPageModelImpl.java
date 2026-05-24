@@ -121,6 +121,8 @@ public class WikiPageModelImpl
 
 	public static final String ENTITY_ALIAS = "wikiPage";
 
+	public static final String FILTER_PK_COLUMN = "wikiPage.resourcePrimKey";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY wikiPage.nodeId ASC, wikiPage.title ASC, wikiPage.version DESC";
 
@@ -1839,4 +1841,4 @@ public class WikiPageModelImpl
 	private WikiPage _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1633011730
+// LIFERAY-SERVICE-BUILDER-HASH:-565507123

@@ -119,6 +119,9 @@ public class ClientExtensionEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "clientExtensionEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"clientExtensionEntry.clientExtensionEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY clientExtensionEntry.clientExtensionEntryId ASC";
 
@@ -1654,4 +1657,4 @@ public class ClientExtensionEntryModelImpl
 	private ClientExtensionEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1103721382
+// LIFERAY-SERVICE-BUILDER-HASH:-2003708288

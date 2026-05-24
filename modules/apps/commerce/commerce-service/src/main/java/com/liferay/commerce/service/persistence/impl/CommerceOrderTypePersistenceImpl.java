@@ -1467,16 +1467,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceOrderType::getUuid));
@@ -1504,16 +1494,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceOrderType::getUuid),
@@ -1544,16 +1524,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderType::getCompanyId));
@@ -1585,16 +1555,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceOrderType::getCompanyId),
@@ -1624,16 +1584,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "displayDate", FinderColumn.Type.DATE,
 					"<", true, true, CommerceOrderType::getDisplayDate),
@@ -1663,16 +1613,6 @@ public class CommerceOrderTypePersistenceImpl
 				_SQL_COUNT_COMMERCEORDERTYPE_WHERE,
 				CommerceOrderTypeModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceOrderTypeImpl.class, CommerceOrderType.class,
-					"commerceOrderType", "CommerceOrderType",
-					"commerceOrderType.commerceOrderTypeId",
-					"SELECT DISTINCT {commerceOrderType.*} FROM CommerceOrderType commerceOrderType WHERE ",
-					"SELECT {CommerceOrderType.*} FROM (SELECT DISTINCT commerceOrderType.commerceOrderTypeId FROM CommerceOrderType commerceOrderType WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceOrderType ON TEMP_TABLE.commerceOrderTypeId = CommerceOrderType.commerceOrderTypeId",
-					"SELECT COUNT(DISTINCT commerceOrderType.commerceOrderTypeId) AS COUNT_VALUE FROM CommerceOrderType commerceOrderType WHERE ",
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL,
-					CommerceOrderTypeModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceOrderType.", "expirationDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -1769,4 +1709,4 @@ public class CommerceOrderTypePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-595504501
+// LIFERAY-SERVICE-BUILDER-HASH:2054522699

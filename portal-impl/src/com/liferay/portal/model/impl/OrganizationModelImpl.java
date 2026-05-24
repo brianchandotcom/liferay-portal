@@ -111,6 +111,8 @@ public class OrganizationModelImpl
 
 	public static final String ENTITY_ALIAS = "organization";
 
+	public static final String FILTER_PK_COLUMN = "organization.organizationId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY organization.name ASC";
 
@@ -1420,4 +1422,4 @@ public class OrganizationModelImpl
 	private Organization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1808265963
+// LIFERAY-SERVICE-BUILDER-HASH:1597896923

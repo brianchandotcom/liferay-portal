@@ -735,19 +735,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class,
-					"commerceAvailabilityEstimate",
-					"CommerceAvailabilityEstimate",
-					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
-					CommerceAvailabilityEstimateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -776,19 +763,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class,
-					"commerceAvailabilityEstimate",
-					"CommerceAvailabilityEstimate",
-					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
-					CommerceAvailabilityEstimateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "uuid",
 					FinderColumn.Type.STRING, "=", true, true,
@@ -821,19 +795,6 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 				_SQL_COUNT_COMMERCEAVAILABILITYESTIMATE_WHERE,
 				CommerceAvailabilityEstimateModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceAvailabilityEstimateImpl.class,
-					CommerceAvailabilityEstimate.class,
-					"commerceAvailabilityEstimate",
-					"CommerceAvailabilityEstimate",
-					"commerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT DISTINCT {commerceAvailabilityEstimate.*} FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					"SELECT {CommerceAvailabilityEstimate.*} FROM (SELECT DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceAvailabilityEstimate ON TEMP_TABLE.commerceAvailabilityEstimateId = CommerceAvailabilityEstimate.commerceAvailabilityEstimateId",
-					"SELECT COUNT(DISTINCT commerceAvailabilityEstimate.commerceAvailabilityEstimateId) AS COUNT_VALUE FROM CommerceAvailabilityEstimate commerceAvailabilityEstimate WHERE ",
-					CommerceAvailabilityEstimateModelImpl.ORDER_BY_SQL,
-					CommerceAvailabilityEstimateModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceAvailabilityEstimate.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -906,4 +867,4 @@ public class CommerceAvailabilityEstimatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-322806539
+// LIFERAY-SERVICE-BUILDER-HASH:-1231070257

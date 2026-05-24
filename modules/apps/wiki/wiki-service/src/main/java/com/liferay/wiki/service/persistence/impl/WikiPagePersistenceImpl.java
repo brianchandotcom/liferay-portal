@@ -4923,15 +4923,6 @@ public class WikiPagePersistenceImpl
 					false, null),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5220,15 +5211,6 @@ public class WikiPagePersistenceImpl
 					new String[] {"groupId", "nodeId", "head"}, false),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5267,15 +5249,6 @@ public class WikiPagePersistenceImpl
 					new String[] {"groupId", "nodeId", "status"}, false),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5591,15 +5564,6 @@ public class WikiPagePersistenceImpl
 					false),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5643,15 +5607,6 @@ public class WikiPagePersistenceImpl
 					false, null),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5694,15 +5649,6 @@ public class WikiPagePersistenceImpl
 					false),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -5920,15 +5866,6 @@ public class WikiPagePersistenceImpl
 					8, 8, false, null),
 				_SQL_SELECT_WIKIPAGE_WHERE, _SQL_COUNT_WIKIPAGE_WHERE,
 				WikiPageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					WikiPageImpl.class, WikiPage.class, "wikiPage", "WikiPage",
-					"wikiPage.resourcePrimKey",
-					"SELECT DISTINCT {wikiPage.*} FROM WikiPage wikiPage WHERE ",
-					"SELECT {WikiPage.*} FROM (SELECT DISTINCT wikiPage.pageId FROM WikiPage wikiPage WHERE ",
-					") TEMP_TABLE INNER JOIN WikiPage ON TEMP_TABLE.pageId = WikiPage.pageId",
-					"SELECT COUNT(DISTINCT wikiPage.pageId) AS COUNT_VALUE FROM WikiPage wikiPage WHERE ",
-					WikiPageModelImpl.ORDER_BY_SQL,
-					WikiPageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"wikiPage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, WikiPage::getGroupId),
@@ -6017,4 +5954,4 @@ public class WikiPagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1324846163
+// LIFERAY-SERVICE-BUILDER-HASH:375270140

@@ -1004,4 +1004,4 @@ public class FaroNotificationModelImpl
 	private FaroNotification _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1646137283
+// LIFERAY-SERVICE-BUILDER-HASH:-280455303

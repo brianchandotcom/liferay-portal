@@ -1038,16 +1038,6 @@ public class DDMFormInstancePersistenceImpl
 				_SQL_COUNT_DDMFORMINSTANCE_WHERE,
 				DDMFormInstanceModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					DDMFormInstanceImpl.class, DDMFormInstance.class,
-					"ddmFormInstance", "DDMFormInstance",
-					"ddmFormInstance.formInstanceId",
-					"SELECT DISTINCT {ddmFormInstance.*} FROM DDMFormInstance ddmFormInstance WHERE ",
-					"SELECT {DDMFormInstance.*} FROM (SELECT DISTINCT ddmFormInstance.formInstanceId FROM DDMFormInstance ddmFormInstance WHERE ",
-					") TEMP_TABLE INNER JOIN DDMFormInstance ON TEMP_TABLE.formInstanceId = DDMFormInstance.formInstanceId",
-					"SELECT COUNT(DISTINCT ddmFormInstance.formInstanceId) AS COUNT_VALUE FROM DDMFormInstance ddmFormInstance WHERE ",
-					DDMFormInstanceModelImpl.ORDER_BY_SQL,
-					DDMFormInstanceModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new ArrayableFinderColumn<>(
 					"ddmFormInstance.", "groupId", FinderColumn.Type.LONG, "=",
 					false, true, true, DDMFormInstance::getGroupId));
@@ -1136,4 +1126,4 @@ public class DDMFormInstancePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-930715967
+// LIFERAY-SERVICE-BUILDER-HASH:-1160876288

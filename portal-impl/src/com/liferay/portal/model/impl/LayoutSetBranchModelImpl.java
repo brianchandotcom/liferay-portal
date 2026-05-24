@@ -106,6 +106,9 @@ public class LayoutSetBranchModelImpl
 
 	public static final String ENTITY_ALIAS = "layoutSetBranch";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutSetBranch.layoutSetBranchId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutSetBranch.name ASC";
 
@@ -1305,4 +1308,4 @@ public class LayoutSetBranchModelImpl
 	private LayoutSetBranch _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-980021524
+// LIFERAY-SERVICE-BUILDER-HASH:1856753898

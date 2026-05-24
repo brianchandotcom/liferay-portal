@@ -115,6 +115,9 @@ public class CPSpecificationOptionModelImpl
 
 	public static final String ENTITY_ALIAS = "cpSpecificationOption";
 
+	public static final String FILTER_PK_COLUMN =
+		"cpSpecificationOption.CPSpecificationOptionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY cpSpecificationOption.priority DESC";
 
@@ -1586,4 +1589,4 @@ public class CPSpecificationOptionModelImpl
 	private CPSpecificationOption _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1167781641
+// LIFERAY-SERVICE-BUILDER-HASH:86424105

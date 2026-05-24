@@ -773,4 +773,4 @@ public class CTermEntryLocalizationModelImpl
 	private CTermEntryLocalization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:355155657
+// LIFERAY-SERVICE-BUILDER-HASH:1436513201

@@ -1075,4 +1075,4 @@ public class CommerceInventoryBookedQuantityModelImpl
 	private CommerceInventoryBookedQuantity _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2086593426
+// LIFERAY-SERVICE-BUILDER-HASH:-88205764

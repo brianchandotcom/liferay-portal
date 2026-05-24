@@ -914,4 +914,4 @@ public class UserNotificationDeliveryModelImpl
 	private UserNotificationDelivery _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:66469042
+// LIFERAY-SERVICE-BUILDER-HASH:-1812128488

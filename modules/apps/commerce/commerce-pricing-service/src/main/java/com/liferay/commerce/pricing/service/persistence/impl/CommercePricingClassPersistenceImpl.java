@@ -964,16 +964,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CommercePricingClass::getUuid));
@@ -1001,16 +991,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "uuid", FinderColumn.Type.STRING,
 					"=", true, true, CommercePricingClass::getUuid),
@@ -1042,16 +1022,6 @@ public class CommercePricingClassPersistenceImpl
 				_SQL_COUNT_COMMERCEPRICINGCLASS_WHERE,
 				CommercePricingClassModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommercePricingClassImpl.class, CommercePricingClass.class,
-					"commercePricingClass", "CommercePricingClass",
-					"commercePricingClass.commercePricingClassId",
-					"SELECT DISTINCT {commercePricingClass.*} FROM CommercePricingClass commercePricingClass WHERE ",
-					"SELECT {CommercePricingClass.*} FROM (SELECT DISTINCT commercePricingClass.commercePricingClassId FROM CommercePricingClass commercePricingClass WHERE ",
-					") TEMP_TABLE INNER JOIN CommercePricingClass ON TEMP_TABLE.commercePricingClassId = CommercePricingClass.commercePricingClassId",
-					"SELECT COUNT(DISTINCT commercePricingClass.commercePricingClassId) AS COUNT_VALUE FROM CommercePricingClass commercePricingClass WHERE ",
-					CommercePricingClassModelImpl.ORDER_BY_SQL,
-					CommercePricingClassModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commercePricingClass.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1148,4 +1118,4 @@ public class CommercePricingClassPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:954609613
+// LIFERAY-SERVICE-BUILDER-HASH:-358323855

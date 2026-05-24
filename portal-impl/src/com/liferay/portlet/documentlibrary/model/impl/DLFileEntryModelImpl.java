@@ -134,6 +134,8 @@ public class DLFileEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "dlFileEntry";
 
+	public static final String FILTER_PK_COLUMN = "dlFileEntry.fileEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 
@@ -2099,4 +2101,4 @@ public class DLFileEntryModelImpl
 	private DLFileEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1510284659
+// LIFERAY-SERVICE-BUILDER-HASH:-1614322715

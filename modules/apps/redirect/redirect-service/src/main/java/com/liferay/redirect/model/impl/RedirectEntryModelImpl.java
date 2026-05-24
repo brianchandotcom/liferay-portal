@@ -101,6 +101,9 @@ public class RedirectEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "redirectEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"redirectEntry.redirectEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY redirectEntry.redirectEntryId ASC";
 
@@ -1116,4 +1119,4 @@ public class RedirectEntryModelImpl
 	private RedirectEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1194907485
+// LIFERAY-SERVICE-BUILDER-HASH:-241807463

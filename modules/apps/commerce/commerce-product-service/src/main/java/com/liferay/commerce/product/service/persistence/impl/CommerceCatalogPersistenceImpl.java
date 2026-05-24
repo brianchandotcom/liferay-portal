@@ -1220,16 +1220,6 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceCatalogImpl.class, CommerceCatalog.class,
-					"commerceCatalog", "CommerceCatalog",
-					"commerceCatalog.commerceCatalogId",
-					"SELECT DISTINCT {commerceCatalog.*} FROM CommerceCatalog commerceCatalog WHERE ",
-					"SELECT {CommerceCatalog.*} FROM (SELECT DISTINCT commerceCatalog.commerceCatalogId FROM CommerceCatalog commerceCatalog WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceCatalog ON TEMP_TABLE.commerceCatalogId = CommerceCatalog.commerceCatalogId",
-					"SELECT COUNT(DISTINCT commerceCatalog.commerceCatalogId) AS COUNT_VALUE FROM CommerceCatalog commerceCatalog WHERE ",
-					CommerceCatalogModelImpl.ORDER_BY_SQL,
-					CommerceCatalogModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceCatalog::getUuid));
@@ -1257,16 +1247,6 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceCatalogImpl.class, CommerceCatalog.class,
-					"commerceCatalog", "CommerceCatalog",
-					"commerceCatalog.commerceCatalogId",
-					"SELECT DISTINCT {commerceCatalog.*} FROM CommerceCatalog commerceCatalog WHERE ",
-					"SELECT {CommerceCatalog.*} FROM (SELECT DISTINCT commerceCatalog.commerceCatalogId FROM CommerceCatalog commerceCatalog WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceCatalog ON TEMP_TABLE.commerceCatalogId = CommerceCatalog.commerceCatalogId",
-					"SELECT COUNT(DISTINCT commerceCatalog.commerceCatalogId) AS COUNT_VALUE FROM CommerceCatalog commerceCatalog WHERE ",
-					CommerceCatalogModelImpl.ORDER_BY_SQL,
-					CommerceCatalogModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceCatalog.", "uuid", FinderColumn.Type.STRING, "=",
 					true, true, CommerceCatalog::getUuid),
@@ -1297,16 +1277,6 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceCatalogImpl.class, CommerceCatalog.class,
-					"commerceCatalog", "CommerceCatalog",
-					"commerceCatalog.commerceCatalogId",
-					"SELECT DISTINCT {commerceCatalog.*} FROM CommerceCatalog commerceCatalog WHERE ",
-					"SELECT {CommerceCatalog.*} FROM (SELECT DISTINCT commerceCatalog.commerceCatalogId FROM CommerceCatalog commerceCatalog WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceCatalog ON TEMP_TABLE.commerceCatalogId = CommerceCatalog.commerceCatalogId",
-					"SELECT COUNT(DISTINCT commerceCatalog.commerceCatalogId) AS COUNT_VALUE FROM CommerceCatalog commerceCatalog WHERE ",
-					CommerceCatalogModelImpl.ORDER_BY_SQL,
-					CommerceCatalogModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId));
@@ -1336,16 +1306,6 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceCatalogImpl.class, CommerceCatalog.class,
-					"commerceCatalog", "CommerceCatalog",
-					"commerceCatalog.commerceCatalogId",
-					"SELECT DISTINCT {commerceCatalog.*} FROM CommerceCatalog commerceCatalog WHERE ",
-					"SELECT {CommerceCatalog.*} FROM (SELECT DISTINCT commerceCatalog.commerceCatalogId FROM CommerceCatalog commerceCatalog WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceCatalog ON TEMP_TABLE.commerceCatalogId = CommerceCatalog.commerceCatalogId",
-					"SELECT COUNT(DISTINCT commerceCatalog.commerceCatalogId) AS COUNT_VALUE FROM CommerceCatalog commerceCatalog WHERE ",
-					CommerceCatalogModelImpl.ORDER_BY_SQL,
-					CommerceCatalogModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceCatalog.", "accountEntryId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1378,16 +1338,6 @@ public class CommerceCatalogPersistenceImpl
 				_SQL_COUNT_COMMERCECATALOG_WHERE,
 				CommerceCatalogModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					CommerceCatalogImpl.class, CommerceCatalog.class,
-					"commerceCatalog", "CommerceCatalog",
-					"commerceCatalog.commerceCatalogId",
-					"SELECT DISTINCT {commerceCatalog.*} FROM CommerceCatalog commerceCatalog WHERE ",
-					"SELECT {CommerceCatalog.*} FROM (SELECT DISTINCT commerceCatalog.commerceCatalogId FROM CommerceCatalog commerceCatalog WHERE ",
-					") TEMP_TABLE INNER JOIN CommerceCatalog ON TEMP_TABLE.commerceCatalogId = CommerceCatalog.commerceCatalogId",
-					"SELECT COUNT(DISTINCT commerceCatalog.commerceCatalogId) AS COUNT_VALUE FROM CommerceCatalog commerceCatalog WHERE ",
-					CommerceCatalogModelImpl.ORDER_BY_SQL,
-					CommerceCatalogModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"commerceCatalog.", "companyId", FinderColumn.Type.LONG,
 					"=", true, true, CommerceCatalog::getCompanyId),
@@ -1485,4 +1435,4 @@ public class CommerceCatalogPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:146113794
+// LIFERAY-SERVICE-BUILDER-HASH:-229107470

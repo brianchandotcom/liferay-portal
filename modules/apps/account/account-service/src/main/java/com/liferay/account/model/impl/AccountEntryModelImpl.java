@@ -122,6 +122,8 @@ public class AccountEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "accountEntry";
 
+	public static final String FILTER_PK_COLUMN = "accountEntry.accountEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY accountEntry.name ASC";
 
@@ -1691,4 +1693,4 @@ public class AccountEntryModelImpl
 	private AccountEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-2079740540
+// LIFERAY-SERVICE-BUILDER-HASH:2137533630

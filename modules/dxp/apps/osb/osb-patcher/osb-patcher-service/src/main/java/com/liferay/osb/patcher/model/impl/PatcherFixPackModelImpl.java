@@ -99,6 +99,9 @@ public class PatcherFixPackModelImpl
 
 	public static final String ENTITY_ALIAS = "patcherFixPack";
 
+	public static final String FILTER_PK_COLUMN =
+		"patcherFixPack.patcherFixPackId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherFixPack.patcherFixPackId ASC";
 
@@ -1127,4 +1130,4 @@ public class PatcherFixPackModelImpl
 	private PatcherFixPack _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1184299678
+// LIFERAY-SERVICE-BUILDER-HASH:-150702568

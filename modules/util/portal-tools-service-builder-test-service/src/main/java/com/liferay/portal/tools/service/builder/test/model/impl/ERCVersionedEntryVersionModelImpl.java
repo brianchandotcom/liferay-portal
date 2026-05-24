@@ -871,4 +871,4 @@ public class ERCVersionedEntryVersionModelImpl
 	private ERCVersionedEntryVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1160237269
+// LIFERAY-SERVICE-BUILDER-HASH:1636105583

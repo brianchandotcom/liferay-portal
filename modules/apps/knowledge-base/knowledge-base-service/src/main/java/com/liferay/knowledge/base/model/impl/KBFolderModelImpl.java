@@ -110,6 +110,8 @@ public class KBFolderModelImpl
 
 	public static final String ENTITY_ALIAS = "kbFolder";
 
+	public static final String FILTER_PK_COLUMN = "kbFolder.kbFolderId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY kbFolder.kbFolderId ASC";
 
@@ -1483,4 +1485,4 @@ public class KBFolderModelImpl
 	private KBFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1704257678
+// LIFERAY-SERVICE-BUILDER-HASH:1898761260

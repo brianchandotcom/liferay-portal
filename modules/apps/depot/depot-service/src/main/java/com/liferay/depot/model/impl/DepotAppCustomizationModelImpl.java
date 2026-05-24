@@ -769,4 +769,4 @@ public class DepotAppCustomizationModelImpl
 	private DepotAppCustomization _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1237674731
+// LIFERAY-SERVICE-BUILDER-HASH:2129503407

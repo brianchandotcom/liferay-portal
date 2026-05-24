@@ -105,6 +105,9 @@ public class AssetListEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "assetListEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"assetListEntry.assetListEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY assetListEntry.assetListEntryId ASC";
 
@@ -1298,4 +1301,4 @@ public class AssetListEntryModelImpl
 	private AssetListEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-427402719
+// LIFERAY-SERVICE-BUILDER-HASH:2143415931

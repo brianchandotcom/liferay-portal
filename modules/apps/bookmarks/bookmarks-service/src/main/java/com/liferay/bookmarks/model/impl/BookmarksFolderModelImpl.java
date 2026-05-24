@@ -109,6 +109,8 @@ public class BookmarksFolderModelImpl
 
 	public static final String ENTITY_ALIAS = "bookmarksFolder";
 
+	public static final String FILTER_PK_COLUMN = "bookmarksFolder.folderId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY bookmarksFolder.parentFolderId ASC, bookmarksFolder.name ASC";
 
@@ -1459,4 +1461,4 @@ public class BookmarksFolderModelImpl
 	private BookmarksFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1919579837
+// LIFERAY-SERVICE-BUILDER-HASH:2144429694

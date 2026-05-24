@@ -116,6 +116,8 @@ public class SXPBlueprintModelImpl
 
 	public static final String ENTITY_ALIAS = "sxpBlueprint";
 
+	public static final String FILTER_PK_COLUMN = "sxpBlueprint.sxpBlueprintId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY sxpBlueprint.sxpBlueprintId ASC";
 
@@ -1669,4 +1671,4 @@ public class SXPBlueprintModelImpl
 	private SXPBlueprint _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1353858031
+// LIFERAY-SERVICE-BUILDER-HASH:-1632768823

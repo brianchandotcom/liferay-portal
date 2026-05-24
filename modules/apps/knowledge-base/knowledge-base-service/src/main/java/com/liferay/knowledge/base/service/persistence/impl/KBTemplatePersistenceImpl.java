@@ -890,15 +890,6 @@ public class KBTemplatePersistenceImpl
 					new String[] {"groupId"}, false),
 				_SQL_SELECT_KBTEMPLATE_WHERE, _SQL_COUNT_KBTEMPLATE_WHERE,
 				KBTemplateModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					KBTemplateImpl.class, KBTemplate.class, "kbTemplate",
-					"KBTemplate", "kbTemplate.kbTemplateId",
-					"SELECT DISTINCT {kbTemplate.*} FROM KBTemplate kbTemplate WHERE ",
-					"SELECT {KBTemplate.*} FROM (SELECT DISTINCT kbTemplate.kbTemplateId FROM KBTemplate kbTemplate WHERE ",
-					") TEMP_TABLE INNER JOIN KBTemplate ON TEMP_TABLE.kbTemplateId = KBTemplate.kbTemplateId",
-					"SELECT COUNT(DISTINCT kbTemplate.kbTemplateId) AS COUNT_VALUE FROM KBTemplate kbTemplate WHERE ",
-					KBTemplateModelImpl.ORDER_BY_SQL,
-					KBTemplateModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"kbTemplate.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, KBTemplate::getGroupId));
@@ -975,4 +966,4 @@ public class KBTemplatePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-524308472
+// LIFERAY-SERVICE-BUILDER-HASH:-2036632004

@@ -1513,4 +1513,4 @@ public class CommerceNotificationQueueEntryModelImpl
 	private CommerceNotificationQueueEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-913549724
+// LIFERAY-SERVICE-BUILDER-HASH:-647199620

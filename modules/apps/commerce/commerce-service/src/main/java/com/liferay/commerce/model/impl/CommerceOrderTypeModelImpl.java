@@ -119,6 +119,9 @@ public class CommerceOrderTypeModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceOrderType";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceOrderType.commerceOrderTypeId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceOrderType.createDate DESC";
 
@@ -1772,4 +1775,4 @@ public class CommerceOrderTypeModelImpl
 	private CommerceOrderType _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-508876164
+// LIFERAY-SERVICE-BUILDER-HASH:-2077428008

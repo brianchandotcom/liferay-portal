@@ -125,6 +125,9 @@ public class LayoutPageTemplateEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "layoutPageTemplateEntry";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutPageTemplateEntry.layoutPageTemplateEntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPageTemplateEntry.name ASC";
 
@@ -1873,4 +1876,4 @@ public class LayoutPageTemplateEntryModelImpl
 	private LayoutPageTemplateEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-12402828
+// LIFERAY-SERVICE-BUILDER-HASH:1691804460

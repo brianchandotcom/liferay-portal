@@ -90,6 +90,9 @@ public class PatcherAccountModelImpl
 
 	public static final String ENTITY_ALIAS = "patcherAccount";
 
+	public static final String FILTER_PK_COLUMN =
+		"patcherAccount.patcherAccountId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherAccount.patcherAccountId ASC";
 
@@ -861,4 +864,4 @@ public class PatcherAccountModelImpl
 	private PatcherAccount _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1861107474
+// LIFERAY-SERVICE-BUILDER-HASH:-952508040

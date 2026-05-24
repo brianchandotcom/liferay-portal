@@ -95,6 +95,8 @@ public class CTRemoteModelImpl
 
 	public static final String ENTITY_ALIAS = "ctRemote";
 
+	public static final String FILTER_PK_COLUMN = "ctRemote.ctRemoteId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY ctRemote.createDate ASC";
 
@@ -912,4 +914,4 @@ public class CTRemoteModelImpl
 	private CTRemote _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:713498640
+// LIFERAY-SERVICE-BUILDER-HASH:878300298

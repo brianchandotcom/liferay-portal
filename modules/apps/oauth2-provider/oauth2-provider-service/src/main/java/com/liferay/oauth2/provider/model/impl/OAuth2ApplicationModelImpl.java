@@ -121,6 +121,9 @@ public class OAuth2ApplicationModelImpl
 
 	public static final String ENTITY_ALIAS = "oAuth2Application";
 
+	public static final String FILTER_PK_COLUMN =
+		"oAuth2Application.oAuth2ApplicationId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY oAuth2Application.oAuth2ApplicationId ASC";
 
@@ -1676,4 +1679,4 @@ public class OAuth2ApplicationModelImpl
 	private OAuth2Application _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:144604396
+// LIFERAY-SERVICE-BUILDER-HASH:909868448

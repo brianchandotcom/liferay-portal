@@ -140,6 +140,8 @@ public class PatcherBuildModelImpl
 
 	public static final String ENTITY_ALIAS = "patcherBuild";
 
+	public static final String FILTER_PK_COLUMN = "patcherBuild.patcherBuildId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY patcherBuild.patcherBuildId ASC";
 
@@ -2303,4 +2305,4 @@ public class PatcherBuildModelImpl
 	private PatcherBuild _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:821809038
+// LIFERAY-SERVICE-BUILDER-HASH:1114638868

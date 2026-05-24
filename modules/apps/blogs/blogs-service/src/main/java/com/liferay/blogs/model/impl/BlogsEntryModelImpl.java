@@ -130,6 +130,8 @@ public class BlogsEntryModelImpl
 
 	public static final String ENTITY_ALIAS = "blogsEntry";
 
+	public static final String FILTER_PK_COLUMN = "blogsEntry.entryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 
@@ -1935,4 +1937,4 @@ public class BlogsEntryModelImpl
 	private BlogsEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2044629755
+// LIFERAY-SERVICE-BUILDER-HASH:-1293344218

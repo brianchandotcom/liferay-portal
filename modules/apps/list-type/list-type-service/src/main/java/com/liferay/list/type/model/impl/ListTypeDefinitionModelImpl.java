@@ -106,6 +106,9 @@ public class ListTypeDefinitionModelImpl
 
 	public static final String ENTITY_ALIAS = "listTypeDefinition";
 
+	public static final String FILTER_PK_COLUMN =
+		"listTypeDefinition.listTypeDefinitionId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY listTypeDefinition.listTypeDefinitionId ASC";
 
@@ -1211,4 +1214,4 @@ public class ListTypeDefinitionModelImpl
 	private ListTypeDefinition _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1056242697
+// LIFERAY-SERVICE-BUILDER-HASH:1552803889

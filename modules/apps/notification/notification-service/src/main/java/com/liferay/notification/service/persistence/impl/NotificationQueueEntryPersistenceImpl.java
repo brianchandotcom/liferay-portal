@@ -931,18 +931,6 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, "notificationQueueEntry",
-					"NotificationQueueEntry",
-					"notificationQueueEntry.notificationQueueEntryId",
-					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
-					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "companyId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -974,18 +962,6 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, "notificationQueueEntry",
-					"NotificationQueueEntry",
-					"notificationQueueEntry.notificationQueueEntryId",
-					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
-					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "notificationTemplateId",
 					FinderColumn.Type.LONG, "=", true, true,
@@ -1011,18 +987,6 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, "notificationQueueEntry",
-					"NotificationQueueEntry",
-					"notificationQueueEntry.notificationQueueEntryId",
-					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
-					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "sentDate",
 					FinderColumn.Type.DATE, "<", true, true,
@@ -1055,18 +1019,6 @@ public class NotificationQueueEntryPersistenceImpl
 				_SQL_COUNT_NOTIFICATIONQUEUEENTRY_WHERE,
 				NotificationQueueEntryModelImpl.ORDER_BY_JPQL,
 				_ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					NotificationQueueEntryImpl.class,
-					NotificationQueueEntry.class, "notificationQueueEntry",
-					"NotificationQueueEntry",
-					"notificationQueueEntry.notificationQueueEntryId",
-					"SELECT DISTINCT {notificationQueueEntry.*} FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					"SELECT {NotificationQueueEntry.*} FROM (SELECT DISTINCT notificationQueueEntry.notificationQueueEntryId FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					") TEMP_TABLE INNER JOIN NotificationQueueEntry ON TEMP_TABLE.notificationQueueEntryId = NotificationQueueEntry.notificationQueueEntryId",
-					"SELECT COUNT(DISTINCT notificationQueueEntry.notificationQueueEntryId) AS COUNT_VALUE FROM NotificationQueueEntry notificationQueueEntry WHERE ",
-					NotificationQueueEntryModelImpl.ORDER_BY_SQL,
-					NotificationQueueEntryModelImpl.
-						ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"notificationQueueEntry.", "type", FinderColumn.Type.STRING,
 					"=", true, true, NotificationQueueEntry::getType),
@@ -1141,4 +1093,4 @@ public class NotificationQueueEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1188826341
+// LIFERAY-SERVICE-BUILDER-HASH:-222112677

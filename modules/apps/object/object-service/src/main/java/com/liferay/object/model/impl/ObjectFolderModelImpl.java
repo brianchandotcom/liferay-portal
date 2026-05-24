@@ -105,6 +105,8 @@ public class ObjectFolderModelImpl
 
 	public static final String ENTITY_ALIAS = "objectFolder";
 
+	public static final String FILTER_PK_COLUMN = "objectFolder.objectFolderId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY objectFolder.objectFolderId ASC";
 
@@ -1187,4 +1189,4 @@ public class ObjectFolderModelImpl
 	private ObjectFolder _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:814653538
+// LIFERAY-SERVICE-BUILDER-HASH:2023344668

@@ -1423,4 +1423,4 @@ public class TranslationEntryModelImpl
 	private TranslationEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:880784415
+// LIFERAY-SERVICE-BUILDER-HASH:121862147

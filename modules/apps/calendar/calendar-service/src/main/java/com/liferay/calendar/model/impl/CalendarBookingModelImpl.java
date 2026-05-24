@@ -2266,4 +2266,4 @@ public class CalendarBookingModelImpl
 	private CalendarBooking _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:336139028
+// LIFERAY-SERVICE-BUILDER-HASH:1458784720

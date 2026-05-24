@@ -113,6 +113,8 @@ public class COREntryModelImpl
 
 	public static final String ENTITY_ALIAS = "corEntry";
 
+	public static final String FILTER_PK_COLUMN = "corEntry.COREntryId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY corEntry.priority DESC";
 
@@ -1542,4 +1544,4 @@ public class COREntryModelImpl
 	private COREntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:2087706043
+// LIFERAY-SERVICE-BUILDER-HASH:-1836989579

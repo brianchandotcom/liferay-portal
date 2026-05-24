@@ -1296,15 +1296,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"uuid_"}, 0, 1, false, null),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, SXPElement::getUuid));
@@ -1330,15 +1321,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"uuid_", "companyId"}, 0, 1, false, null),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "uuid", FinderColumn.Type.STRING, "=", true,
 					true, SXPElement::getUuid),
@@ -1367,15 +1349,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"companyId"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId));
@@ -1405,15 +1378,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"companyId", "readOnly"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1446,15 +1410,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"companyId", "type_"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1490,15 +1445,6 @@ public class SXPElementPersistenceImpl
 					new String[] {"companyId", "type_", "status"}, false),
 				_SQL_SELECT_SXPELEMENT_WHERE, _SQL_COUNT_SXPELEMENT_WHERE,
 				SXPElementModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					SXPElementImpl.class, SXPElement.class, "sxpElement",
-					"SXPElement", "sxpElement.sxpElementId",
-					"SELECT DISTINCT {sxpElement.*} FROM SXPElement sxpElement WHERE ",
-					"SELECT {SXPElement.*} FROM (SELECT DISTINCT sxpElement.sxpElementId FROM SXPElement sxpElement WHERE ",
-					") TEMP_TABLE INNER JOIN SXPElement ON TEMP_TABLE.sxpElementId = SXPElement.sxpElementId",
-					"SELECT COUNT(DISTINCT sxpElement.sxpElementId) AS COUNT_VALUE FROM SXPElement sxpElement WHERE ",
-					SXPElementModelImpl.ORDER_BY_SQL,
-					SXPElementModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"sxpElement.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, SXPElement::getCompanyId),
@@ -1596,4 +1542,4 @@ public class SXPElementPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1730673964
+// LIFERAY-SERVICE-BUILDER-HASH:906539284

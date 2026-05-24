@@ -105,6 +105,9 @@ public class CommerceAvailabilityEstimateModelImpl
 
 	public static final String ENTITY_ALIAS = "commerceAvailabilityEstimate";
 
+	public static final String FILTER_PK_COLUMN =
+		"commerceAvailabilityEstimate.commerceAvailabilityEstimateId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commerceAvailabilityEstimate.title ASC";
 
@@ -1157,4 +1160,4 @@ public class CommerceAvailabilityEstimateModelImpl
 	private CommerceAvailabilityEstimate _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-288312442
+// LIFERAY-SERVICE-BUILDER-HASH:1722654636

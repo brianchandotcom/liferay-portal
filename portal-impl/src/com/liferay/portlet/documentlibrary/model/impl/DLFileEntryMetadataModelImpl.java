@@ -935,4 +935,4 @@ public class DLFileEntryMetadataModelImpl
 	private DLFileEntryMetadata _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:681437443
+// LIFERAY-SERVICE-BUILDER-HASH:1883637741

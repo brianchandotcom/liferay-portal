@@ -1313,4 +1313,4 @@ public class DDLRecordVersionModelImpl
 	private DDLRecordVersion _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-475177858
+// LIFERAY-SERVICE-BUILDER-HASH:4634642

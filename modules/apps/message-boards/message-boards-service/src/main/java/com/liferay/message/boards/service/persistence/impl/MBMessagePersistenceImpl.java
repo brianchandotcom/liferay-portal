@@ -4225,15 +4225,6 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbMessage.categoryId != -1",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId));
@@ -4394,15 +4385,6 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4431,15 +4413,6 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "categoryId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4489,15 +4462,6 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"mbMessage.categoryId != -1",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4779,15 +4743,6 @@ public class MBMessagePersistenceImpl
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX,
 				"(mbMessage.categoryId != -1) AND (mbMessage.anonymous = [$FALSE$])",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4826,15 +4781,6 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "categoryId", "threadId"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -4873,15 +4819,6 @@ public class MBMessagePersistenceImpl
 					new String[] {"groupId", "categoryId", "status"}, false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -5037,15 +4974,6 @@ public class MBMessagePersistenceImpl
 					false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -5096,15 +5024,6 @@ public class MBMessagePersistenceImpl
 					false),
 				_SQL_SELECT_MBMESSAGE_WHERE, _SQL_COUNT_MBMESSAGE_WHERE,
 				MBMessageModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					MBMessageImpl.class, MBMessage.class, "mbMessage",
-					"MBMessage", "mbMessage.rootMessageId",
-					"SELECT DISTINCT {mbMessage.*} FROM MBMessage mbMessage WHERE ",
-					"SELECT {MBMessage.*} FROM (SELECT DISTINCT mbMessage.messageId FROM MBMessage mbMessage WHERE ",
-					") TEMP_TABLE INNER JOIN MBMessage ON TEMP_TABLE.messageId = MBMessage.messageId",
-					"SELECT COUNT(DISTINCT mbMessage.messageId) AS COUNT_VALUE FROM MBMessage mbMessage WHERE ",
-					MBMessageModelImpl.ORDER_BY_SQL,
-					MBMessageModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"mbMessage.", "groupId", FinderColumn.Type.LONG, "=", true,
 					true, MBMessage::getGroupId),
@@ -5250,4 +5169,4 @@ public class MBMessagePersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-836260740
+// LIFERAY-SERVICE-BUILDER-HASH:-1115605273

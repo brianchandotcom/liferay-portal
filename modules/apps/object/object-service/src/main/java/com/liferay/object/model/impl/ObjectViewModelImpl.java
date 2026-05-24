@@ -1126,4 +1126,4 @@ public class ObjectViewModelImpl
 	private ObjectView _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1059088694
+// LIFERAY-SERVICE-BUILDER-HASH:60843576

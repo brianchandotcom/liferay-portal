@@ -109,6 +109,9 @@ public class CommercePaymentMethodGroupRelModelImpl
 
 	public static final String ENTITY_ALIAS = "commercePaymentMethodGroupRel";
 
+	public static final String FILTER_PK_COLUMN =
+		"commercePaymentMethodGroupRel.CPaymentMethodGroupRelId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY commercePaymentMethodGroupRel.priority ASC";
 
@@ -1442,4 +1445,4 @@ public class CommercePaymentMethodGroupRelModelImpl
 	private CommercePaymentMethodGroupRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:509537058
+// LIFERAY-SERVICE-BUILDER-HASH:-1901712872

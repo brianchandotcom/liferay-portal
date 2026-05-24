@@ -1075,16 +1075,6 @@ public class PatcherAccountPersistenceImpl
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherAccountImpl.class, PatcherAccount.class,
-					"patcherAccount", "OSBPatcher_PatcherAccount",
-					"patcherAccount.patcherAccountId",
-					"SELECT DISTINCT {patcherAccount.*} FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					"SELECT {OSBPatcher_PatcherAccount.*} FROM (SELECT DISTINCT patcherAccount.patcherAccountId FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherAccount ON TEMP_TABLE.patcherAccountId = OSBPatcher_PatcherAccount.patcherAccountId",
-					"SELECT COUNT(DISTINCT patcherAccount.patcherAccountId) AS COUNT_VALUE FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					PatcherAccountModelImpl.ORDER_BY_SQL,
-					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId));
@@ -1122,16 +1112,6 @@ public class PatcherAccountPersistenceImpl
 				_SQL_SELECT_PATCHERACCOUNT_WHERE,
 				_SQL_COUNT_PATCHERACCOUNT_WHERE,
 				PatcherAccountModelImpl.ORDER_BY_JPQL, _ENTITY_ALIAS_PREFIX, "",
-				new FilterCollectionPersistenceFinder.FilterMetadata<>(
-					PatcherAccountImpl.class, PatcherAccount.class,
-					"patcherAccount", "OSBPatcher_PatcherAccount",
-					"patcherAccount.patcherAccountId",
-					"SELECT DISTINCT {patcherAccount.*} FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					"SELECT {OSBPatcher_PatcherAccount.*} FROM (SELECT DISTINCT patcherAccount.patcherAccountId FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					") TEMP_TABLE INNER JOIN OSBPatcher_PatcherAccount ON TEMP_TABLE.patcherAccountId = OSBPatcher_PatcherAccount.patcherAccountId",
-					"SELECT COUNT(DISTINCT patcherAccount.patcherAccountId) AS COUNT_VALUE FROM OSBPatcher_PatcherAccount patcherAccount WHERE ",
-					PatcherAccountModelImpl.ORDER_BY_SQL,
-					PatcherAccountModelImpl.ORDER_BY_SQL_INLINE_DISTINCT),
 				new FinderColumn<>(
 					"patcherAccount.", "companyId", FinderColumn.Type.LONG, "=",
 					true, true, PatcherAccount::getCompanyId),
@@ -1212,4 +1192,4 @@ public class PatcherAccountPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:376982841
+// LIFERAY-SERVICE-BUILDER-HASH:1570008853

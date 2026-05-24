@@ -809,4 +809,4 @@ public class CPSpecificationOptionListTypeDefinitionRelModelImpl
 	private CPSpecificationOptionListTypeDefinitionRel _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-559309016
+// LIFERAY-SERVICE-BUILDER-HASH:1279389746

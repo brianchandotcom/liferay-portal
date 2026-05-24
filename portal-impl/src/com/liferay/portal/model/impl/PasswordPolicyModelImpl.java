@@ -132,6 +132,9 @@ public class PasswordPolicyModelImpl
 
 	public static final String ENTITY_ALIAS = "passwordPolicy";
 
+	public static final String FILTER_PK_COLUMN =
+		"passwordPolicy.passwordPolicyId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY passwordPolicy.passwordPolicyId ASC";
 
@@ -1797,4 +1800,4 @@ public class PasswordPolicyModelImpl
 	private PasswordPolicy _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1866654999
+// LIFERAY-SERVICE-BUILDER-HASH:1822242269

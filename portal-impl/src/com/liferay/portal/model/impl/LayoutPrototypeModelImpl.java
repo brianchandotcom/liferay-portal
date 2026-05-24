@@ -106,6 +106,9 @@ public class LayoutPrototypeModelImpl
 
 	public static final String ENTITY_ALIAS = "layoutPrototype";
 
+	public static final String FILTER_PK_COLUMN =
+		"layoutPrototype.layoutPrototypeId";
+
 	public static final String ORDER_BY_JPQL =
 		" ORDER BY layoutPrototype.layoutPrototypeId ASC";
 
@@ -1341,4 +1344,4 @@ public class LayoutPrototypeModelImpl
 	private LayoutPrototype _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1910635681
+// LIFERAY-SERVICE-BUILDER-HASH:1973677017

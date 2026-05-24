@@ -714,4 +714,4 @@ public class LocalizedEntryModelImpl
 	private LocalizedEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:126027529
+// LIFERAY-SERVICE-BUILDER-HASH:-1091887963

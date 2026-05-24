@@ -984,4 +984,4 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private Lock _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:950096806
+// LIFERAY-SERVICE-BUILDER-HASH:-2045270898

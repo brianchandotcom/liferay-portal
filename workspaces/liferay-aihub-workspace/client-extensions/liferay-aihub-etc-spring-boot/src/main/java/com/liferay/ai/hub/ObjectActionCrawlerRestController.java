@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,9 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 	}
 
 	@PostMapping
-	public void post(@RequestBody String json) throws Exception {
+	public ResponseEntity<String> post(@RequestBody String json)
+		throws Exception {
+
 		if (_log.isDebugEnabled()) {
 			_log.debug(json);
 		}
@@ -55,25 +58,26 @@ public class ObjectActionCrawlerRestController extends BaseRestController {
 			valuesJSONObject.getString("indexName"),
 			valuesJSONObject.getString("url"));
 
-		post(
-			_liferayOAuth2AccessTokenManager.getAuthorization(
-				"liferay-aihub-etc-spring-boot-oahs"),
-			new JSONObject(
-			).put(
-				"crawlerJobStatus", "dispatched"
-			).put(
-				"executionId",
-				job.getMetadata(
-				).getName()
-			).put(
-				"r_accountToAIHubCrawlerJobs_accountEntryId",
-				valuesJSONObject.getLong(
-					"r_accountToAIHubContentRetrievers_accountEntryId")
-			).put(
-				"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
-				objectEntryJSONObject.getLong("objectEntryId")
-			).toString(),
-			URI.create("/o/ai-hub/crawler-jobs"));
+		return ResponseEntity.ok(
+			post(
+				_liferayOAuth2AccessTokenManager.getAuthorization(
+					"liferay-aihub-etc-spring-boot-oahs"),
+				new JSONObject(
+				).put(
+					"crawlerJobStatus", "dispatched"
+				).put(
+					"executionId",
+					job.getMetadata(
+					).getName()
+				).put(
+					"r_accountToAIHubCrawlerJobs_accountEntryId",
+					valuesJSONObject.getLong(
+						"r_accountToAIHubContentRetrievers_accountEntryId")
+				).put(
+					"r_contentRetrieverToCrawlerJobs_aiHubContentRetrieverId",
+					objectEntryJSONObject.getLong("objectEntryId")
+				).toString(),
+				URI.create("/o/ai-hub/crawler-jobs")));
 	}
 
 	private static final Log _log = LogFactory.getLog(

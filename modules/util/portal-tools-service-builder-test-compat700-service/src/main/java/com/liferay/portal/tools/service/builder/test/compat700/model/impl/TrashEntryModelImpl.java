@@ -947,4 +947,4 @@ public class TrashEntryModelImpl
 	private TrashEntry _escapedModel;
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1782661907
+// LIFERAY-SERVICE-BUILDER-HASH:492425597

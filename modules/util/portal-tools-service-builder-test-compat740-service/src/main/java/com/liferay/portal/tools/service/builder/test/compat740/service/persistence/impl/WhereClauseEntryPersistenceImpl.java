@@ -69,8 +69,9 @@ public class WhereClauseEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private CollectionPersistenceFinder<WhereClauseEntry>
-		_collectionPersistenceFinderByName_Nickname;
+	private CollectionPersistenceFinder
+		<WhereClauseEntry, NoSuchWhereClauseEntryException>
+			_collectionPersistenceFinderByName_Nickname;
 
 	/**
 	 * Returns an ordered range of all the where clause entries where name = &#63;.
@@ -110,16 +111,8 @@ public class WhereClauseEntryPersistenceImpl
 			String name, OrderByComparator<WhereClauseEntry> orderByComparator)
 		throws NoSuchWhereClauseEntryException {
 
-		WhereClauseEntry whereClauseEntry = fetchByName_Nickname_First(
-			name, orderByComparator);
-
-		if (whereClauseEntry != null) {
-			return whereClauseEntry;
-		}
-
-		throw new NoSuchWhereClauseEntryException(
-			_collectionPersistenceFinderByName_Nickname.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY, new Object[] {name}));
+		return _collectionPersistenceFinderByName_Nickname.findFirst(
+			finderCache, new Object[] {name}, orderByComparator);
 	}
 
 	/**
@@ -428,4 +421,4 @@ public class WhereClauseEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:1285341243
+// LIFERAY-SERVICE-BUILDER-HASH:-1608019542

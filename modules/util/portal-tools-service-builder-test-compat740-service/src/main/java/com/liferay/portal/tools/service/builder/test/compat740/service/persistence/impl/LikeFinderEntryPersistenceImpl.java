@@ -73,8 +73,9 @@ public class LikeFinderEntryPersistenceImpl
 	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
 		FINDER_CLASS_NAME_ENTITY + ".List2";
 
-	private UniquePersistenceFinder<LikeFinderEntry>
-		_uniquePersistenceFinderByO_O_P;
+	private UniquePersistenceFinder
+		<LikeFinderEntry, NoSuchLikeFinderEntryException>
+			_uniquePersistenceFinderByO_O_P;
 
 	/**
 	 * Returns the like finder entry where ownerId = &#63; and ownerType = &#63; and portletId = &#63; or throws a <code>NoSuchLikeFinderEntryException</code> if it could not be found.
@@ -90,23 +91,8 @@ public class LikeFinderEntryPersistenceImpl
 			long ownerId, int ownerType, String portletId)
 		throws NoSuchLikeFinderEntryException {
 
-		LikeFinderEntry likeFinderEntry = fetchByO_O_P(
-			ownerId, ownerType, portletId);
-
-		if (likeFinderEntry == null) {
-			String message =
-				_uniquePersistenceFinderByO_O_P.buildNoSuchKeyMessage(
-					_NO_SUCH_ENTITY_WITH_KEY,
-					new Object[] {ownerId, ownerType, portletId});
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(message);
-			}
-
-			throw new NoSuchLikeFinderEntryException(message);
-		}
-
-		return likeFinderEntry;
+		return _uniquePersistenceFinderByO_O_P.find(
+			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
 	/**
@@ -160,8 +146,9 @@ public class LikeFinderEntryPersistenceImpl
 			finderCache, new Object[] {ownerId, ownerType, portletId});
 	}
 
-	private CollectionPersistenceFinder<LikeFinderEntry>
-		_collectionPersistenceFinderByC_O_O_LikeP;
+	private CollectionPersistenceFinder
+		<LikeFinderEntry, NoSuchLikeFinderEntryException>
+			_collectionPersistenceFinderByC_O_O_LikeP;
 
 	/**
 	 * Returns all the like finder entries where companyId = &#63; and ownerId = &#63; and ownerType = &#63; and portletId LIKE &#63;.
@@ -279,17 +266,10 @@ public class LikeFinderEntryPersistenceImpl
 			OrderByComparator<LikeFinderEntry> orderByComparator)
 		throws NoSuchLikeFinderEntryException {
 
-		LikeFinderEntry likeFinderEntry = fetchByC_O_O_LikeP_First(
-			companyId, ownerId, ownerType, portletId, orderByComparator);
-
-		if (likeFinderEntry != null) {
-			return likeFinderEntry;
-		}
-
-		throw new NoSuchLikeFinderEntryException(
-			_collectionPersistenceFinderByC_O_O_LikeP.buildNoSuchKeyMessage(
-				_NO_SUCH_ENTITY_WITH_KEY,
-				new Object[] {companyId, ownerId, ownerType, portletId}));
+		return _collectionPersistenceFinderByC_O_O_LikeP.findFirst(
+			finderCache,
+			new Object[] {companyId, ownerId, ownerType, portletId},
+			orderByComparator);
 	}
 
 	/**
@@ -657,4 +637,4 @@ public class LikeFinderEntryPersistenceImpl
 	}
 
 }
-// LIFERAY-SERVICE-BUILDER-HASH:-1214718037
+// LIFERAY-SERVICE-BUILDER-HASH:50304035

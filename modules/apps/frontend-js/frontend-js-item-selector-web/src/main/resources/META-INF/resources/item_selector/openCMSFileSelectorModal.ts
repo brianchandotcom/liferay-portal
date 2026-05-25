@@ -46,19 +46,21 @@ type CMSFileItemSelectorModalConfig = {
 function urlBuilder({
 	base = location.origin,
 	filters = [],
+	folderId,
 	resource = '/o/search/v1.0/search',
 }: {
 	base?: string;
 	filters?: string[];
+	folderId?: number | null;
 	resource?: string;
 }) {
 	const finalURL = new URL(resource, base);
 
-	const filter = [
-		"(cmsKind eq 'object')",
-		"(cmsSection eq 'files')",
-		'(status in (0, 2, 3))',
-	]
+	const scopePredicates = folderId
+		? [`(folderId eq ${folderId})`]
+		: ["(cmsSection eq 'files')"];
+
+	const filter = [...scopePredicates, '(status in (0, 2, 3))']
 		.concat(filters.filter(Boolean))
 		.join(' and ');
 
@@ -215,7 +217,7 @@ function normalizeExtensions(allowedExtensions: string) {
 
 	const extensions = cleanExtensions.map((item) => `'${item}'`).join(',');
 
-	return `(extension in (${extensions}))`;
+	return `(extension in (${extensions}) or cmsKind eq 'folder')`;
 }
 
 export default function openCMSFileSelectorModal({

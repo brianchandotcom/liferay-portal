@@ -14,7 +14,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Stefano Motta
  */
 @ProviderType
-public interface AccountUserInvitationNotificationHelper {
+public interface AccountUserInvitationNotificationSender {
 
 	public void sendNotification(
 			long accountEntryId, String callbackURL, String emailAddress,

@@ -661,7 +661,7 @@ describe('ConnectorOverview', () => {
 			});
 
 			expect(container.querySelectorAll('.list-group-item')).toHaveLength(
-				1
+				3
 			);
 			expect(getByText('Events')).toBeTruthy();
 			expect(getByText('Unconfigured')).toBeTruthy();

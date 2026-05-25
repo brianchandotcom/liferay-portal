@@ -506,6 +506,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public Hits search(
+		long companyId, long[] groupIds, long userId, long[] classNameIds,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end, Sort[] sorts) {
+
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
+				showNonindexable, statuses, false, start, end, sorts);
+
+			return doSearch(classNameIds, searchContext);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	@Override
+	public Hits search(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, boolean showNonindexable, int status,
 		int start, int end) {
@@ -544,6 +562,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			SearchContext searchContext = buildSearchContext(
 				companyId, groupIds, userId, classTypeId, keywords, null, null,
 				showNonindexable, statuses, false, start, end, sort);
+
+			return doSearch(companyId, className, searchContext);
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+	}
+
+	@Override
+	public Hits search(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String keywords, boolean showNonindexable,
+		int[] statuses, int start, int end, Sort[] sorts) {
+
+		try {
+			SearchContext searchContext = buildSearchContext(
+				companyId, groupIds, userId, classTypeId, keywords, null, null,
+				showNonindexable, statuses, false, start, end, sorts);
 
 			return doSearch(companyId, className, searchContext);
 		}
@@ -1060,13 +1096,24 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		return buildSearchContext(
 			companyId, groupIds, userId, classTypeId, assetCategoryIds,
 			assetTagNames, showNonindexable, statuses, andSearch, start, end,
-			null);
+			(Sort)null);
 	}
 
 	protected SearchContext buildSearchContext(
 		long companyId, long[] groupIds, long userId, long classTypeId,
 		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
 		int[] statuses, boolean andSearch, int start, int end, Sort sort) {
+
+		return buildSearchContext(
+			companyId, groupIds, userId, classTypeId, assetCategoryIds,
+			assetTagNames, showNonindexable, statuses, andSearch, start, end,
+			(sort == null) ? null : new Sort[] {sort});
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, long userId, long classTypeId,
+		String assetCategoryIds, String assetTagNames, boolean showNonindexable,
+		int[] statuses, boolean andSearch, int start, int end, Sort[] sorts) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -1089,7 +1136,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(groupIds);
-		searchContext.setSorts(sort);
+		searchContext.setSorts(sorts);
 		searchContext.setStart(start);
 		searchContext.setUserId(userId);
 
@@ -1121,6 +1168,22 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			companyId, groupIds, userId, classTypeId, assetCategoryIds,
 			assetTagNames, showNonindexable, statuses, andSearch, start, end,
 			sort);
+
+		searchContext.setKeywords(keywords);
+
+		return searchContext;
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long[] groupIds, long userId, long classTypeId,
+		String keywords, String assetCategoryIds, String assetTagNames,
+		boolean showNonindexable, int[] statuses, boolean andSearch, int start,
+		int end, Sort[] sorts) {
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, groupIds, userId, classTypeId, assetCategoryIds,
+			assetTagNames, showNonindexable, statuses, andSearch, start, end,
+			sorts);
 
 		searchContext.setKeywords(keywords);
 

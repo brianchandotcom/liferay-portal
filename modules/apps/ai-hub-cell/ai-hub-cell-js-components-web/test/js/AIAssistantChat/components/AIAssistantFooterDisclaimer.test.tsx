@@ -15,9 +15,7 @@ describe('AIAssistantFooterDisclaimer', () => {
 		render(<AIAssistantFooterDisclaimer />);
 
 		expect(
-			screen.getByText(
-				'ai-generated-responses-may-be-inaccurate-please-review-carefully'
-			)
+			screen.getByText('ai-generated-responses-can-be-inaccurate')
 		).toBeInTheDocument();
 	});
 });

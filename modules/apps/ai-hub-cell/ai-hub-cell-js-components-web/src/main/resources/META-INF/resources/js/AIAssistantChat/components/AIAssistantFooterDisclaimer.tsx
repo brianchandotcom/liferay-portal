@@ -10,7 +10,7 @@ export default function AIAssistantFooterDisclaimer() {
 		<div className="ai-assistant-chat__footer-disclaimer">
 			<span className="ai-assistant-chat__footer-disclaimer-text">
 				{Liferay.Language.get(
-					'ai-generated-responses-may-be-inaccurate-please-review-carefully'
+					'ai-generated-responses-can-be-inaccurate'
 				)}
 			</span>
 		</div>

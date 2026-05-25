@@ -181,6 +181,9 @@ public class SharingModelResourcePermissionConfiguratorImpl
 				return null;
 			}
 
+			// See LPD-90975. ObjectEntry implements GroupedModel,
+			// but can be instance scoped.
+
 			SharingConfiguration sharingConfiguration = null;
 
 			if (model.getGroupId() > 0) {

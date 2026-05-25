@@ -6,7 +6,7 @@
 package com.liferay.account.notification.test;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.notification.AccountUserInvitationNotificationHelper;
+import com.liferay.account.notification.AccountUserInvitationNotificationSender;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.notification.constants.NotificationConstants;
@@ -34,7 +34,7 @@ import org.junit.runner.RunWith;
  * @author Stefano Motta
  */
 @RunWith(Arquillian.class)
-public class AccountUserInvitationNotificationHelperTest {
+public class AccountUserInvitationNotificationSenderTest {
 
 	@ClassRule
 	@Rule
@@ -50,7 +50,7 @@ public class AccountUserInvitationNotificationHelperTest {
 	@Test
 	public void testSendUserInvitationNotification() throws Exception {
 		try {
-			_accountUserInvitationNotificationHelper.sendNotification(
+			_accountUserInvitationNotificationSender.sendNotification(
 				_accountEntry.getAccountEntryId(),
 				RandomTestUtil.randomString(),
 				"A" + RandomTestUtil.randomString() + "@liferay.com",
@@ -81,7 +81,7 @@ public class AccountUserInvitationNotificationHelperTest {
 			_notificationQueueEntryLocalService.
 				getNotificationQueueEntriesCount();
 
-		_accountUserInvitationNotificationHelper.sendNotification(
+		_accountUserInvitationNotificationSender.sendNotification(
 			_accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			"A" + RandomTestUtil.randomString() + "@liferay.com",
 			notificationTemplate.getExternalReferenceCode(),
@@ -96,8 +96,8 @@ public class AccountUserInvitationNotificationHelperTest {
 	private AccountEntry _accountEntry;
 
 	@Inject
-	private AccountUserInvitationNotificationHelper
-		_accountUserInvitationNotificationHelper;
+	private AccountUserInvitationNotificationSender
+		_accountUserInvitationNotificationSender;
 
 	@Inject
 	private NotificationQueueEntryLocalService

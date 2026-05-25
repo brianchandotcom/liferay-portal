@@ -47,7 +47,6 @@ import com.liferay.segments.service.SegmentsEntryService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import jakarta.portlet.PortletRequest;
 import jakarta.portlet.RenderResponse;
@@ -100,7 +99,7 @@ public class ContentPageEditorDisplayContextProvider {
 				new SegmentsExperienceManager(_segmentsExperienceLocalService),
 				_segmentsExperienceLocalService,
 				_segmentsExperimentRelLocalService, _segmentsEntryService,
-				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
+				_staging, _stagingGroupHelper,
 				_workflowDefinitionLinkLocalService);
 		}
 
@@ -121,7 +120,7 @@ public class ContentPageEditorDisplayContextProvider {
 				new SegmentsExperienceManager(_segmentsExperienceLocalService),
 				_segmentsExperienceLocalService,
 				_segmentsExperimentRelLocalService, _segmentsEntryService,
-				_staging, _stagingGroupHelper, _styleBookEntryLocalService,
+				_staging, _stagingGroupHelper,
 				_workflowDefinitionLinkLocalService);
 		}
 
@@ -156,7 +155,7 @@ public class ContentPageEditorDisplayContextProvider {
 			new SegmentsExperienceManager(_segmentsExperienceLocalService),
 			_segmentsExperienceLocalService, _segmentsExperimentRelLocalService,
 			_segmentsEntryService, _staging, _stagingGroupHelper,
-			_styleBookEntryLocalService, _workflowDefinitionLinkLocalService);
+			_workflowDefinitionLinkLocalService);
 	}
 
 	@Activate
@@ -275,9 +274,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;
-
-	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private WorkflowDefinitionLinkLocalService

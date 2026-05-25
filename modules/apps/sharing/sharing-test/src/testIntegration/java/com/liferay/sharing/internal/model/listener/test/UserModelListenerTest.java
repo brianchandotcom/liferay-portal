@@ -7,6 +7,7 @@ package com.liferay.sharing.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -71,6 +73,7 @@ public class UserModelListenerTest {
 		_group1 = GroupTestUtil.addGroup();
 	}
 
+	@FeatureFlag("LPD-52006")
 	@Test
 	@TestInfo("LPD-48130")
 	public void testOnAfterCreate() throws Exception {
@@ -256,38 +259,31 @@ public class UserModelListenerTest {
 	}
 
 	private void _testOnAfterCreateWithInvalidEmailAddress() throws Exception {
-		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
-
 		Ticket ticket1 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), null);
 
-		SharingEntry sharingEntry1 = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket1.getTicketId());
+		try {
+			_addTicketSharingEntry(_group1.getGroupId(), ticket1.getTicketId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof EmailAddressException);
+		}
 
 		Ticket ticket2 = _addInviteCollaboratorTicket(
 			_group1.getGroupId(), "not-an-email");
 
-		SharingEntry sharingEntry2 = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket2.getTicketId());
+		try {
+			_addTicketSharingEntry(_group1.getGroupId(), ticket2.getTicketId());
 
-		Ticket ticket3 = _addInviteCollaboratorTicket(
-			_group1.getGroupId(), emailAddress);
-
-		SharingEntry sharingEntry3 = _addTicketSharingEntry(
-			_group1.getGroupId(), ticket3.getTicketId());
-
-		User user = _addUser(emailAddress);
-
-		Assert.assertNotNull(
-			_ticketLocalService.fetchTicket(ticket1.getTicketId()));
-		Assert.assertNotNull(
-			_ticketLocalService.fetchTicket(ticket2.getTicketId()));
-		Assert.assertNull(
-			_ticketLocalService.fetchTicket(ticket3.getTicketId()));
-
-		_assertSharingEntryToTicketId(sharingEntry1, ticket1);
-		_assertSharingEntryToTicketId(sharingEntry2, ticket2);
-		_assertSharingEntryToUserId(sharingEntry3, user);
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				exception.getCause() instanceof EmailAddressException);
+		}
 	}
 
 	private void _testOnAfterCreateWithInviteCollaboratorTickets()

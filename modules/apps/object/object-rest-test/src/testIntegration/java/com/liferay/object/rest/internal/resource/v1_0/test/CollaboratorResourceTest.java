@@ -644,7 +644,7 @@ public class CollaboratorResourceTest {
 				objectEntry.getObjectEntryId(), "/collaborators"),
 			Http.Method.GET);
 
-		Assert.assertEquals(4, jsonObject.getInt("totalCount"));
+		Assert.assertEquals(3, jsonObject.getInt("totalCount"));
 	}
 
 	@Test
@@ -1409,7 +1409,7 @@ public class CollaboratorResourceTest {
 			TicketConstants.TYPE_INVITE_COLLABORATOR);
 
 		for (Ticket ticket : tickets) {
-			if (Objects.equals(emailAddress, ticket.getExtraInfo())) {
+			if (Objects.equals(emailAddress, ticket.getEmailAddress())) {
 				return ticket;
 			}
 		}

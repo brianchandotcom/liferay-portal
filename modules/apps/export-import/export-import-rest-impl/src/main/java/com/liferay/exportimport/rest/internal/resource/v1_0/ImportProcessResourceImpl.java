@@ -265,10 +265,16 @@ public class ImportProcessResourceImpl extends BaseImportProcessResourceImpl {
 					parameterMap, contextAcceptLanguage.getPreferredLocale(),
 					contextUser.getTimeZone());
 
+		String name = importRequest.getName();
+
+		if (Validator.isBlank(name)) {
+			name = fileEntry.getFileName();
+		}
+
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					contextUser.getUserId(), fileEntry.getFileName(),
+					contextUser.getUserId(), name,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 					settingsMap);
 

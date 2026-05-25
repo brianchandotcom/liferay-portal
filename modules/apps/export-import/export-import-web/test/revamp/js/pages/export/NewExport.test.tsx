@@ -37,10 +37,10 @@ describe('NewExport', () => {
 	it('renders the export form', async () => {
 		const {container} = renderComponent();
 
-		const fileNameInput = await screen.findByRole('textbox', {
-			name: /file-name/,
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
 		});
-		expect(fileNameInput).toBeInTheDocument();
+		expect(nameInput).toBeInTheDocument();
 
 		expect(screen.getByText('filter-content-by')).toBeInTheDocument();
 
@@ -66,15 +66,15 @@ describe('NewExport', () => {
 		expect(await screen.findByText('boom')).toBeInTheDocument();
 	});
 
-	it('shows a required error on filename when blurred empty', async () => {
+	it('shows a required error on name when blurred empty', async () => {
 		renderComponent();
 
-		const fileNameInput = await screen.findByRole('textbox', {
-			name: /file-name/,
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
 		});
 
-		await userEvent.click(fileNameInput);
-		fileNameInput.blur();
+		await userEvent.click(nameInput);
+		nameInput.blur();
 
 		await screen.findByText('this-field-is-required');
 	});
@@ -94,10 +94,10 @@ describe('NewExport', () => {
 	it('shows and clears the selection error as contentSelection toggles', async () => {
 		renderComponent();
 
-		const fileNameInput = await screen.findByRole('textbox', {
-			name: /file-name/,
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
 		});
-		await userEvent.type(fileNameInput, 'test-file');
+		await userEvent.type(nameInput, 'test-file');
 
 		const dataSelectionGroup = screen.getByRole('group', {
 			name: 'data-selection',
@@ -127,10 +127,10 @@ describe('NewExport', () => {
 	it('keeps form values after applying a filter', async () => {
 		renderComponent();
 
-		const fileNameInput = await screen.findByRole('textbox', {
-			name: /file-name/,
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
 		});
-		await userEvent.type(fileNameInput, 'test-file');
+		await userEvent.type(nameInput, 'test-file');
 
 		const filterSelect = screen.getByRole('combobox', {
 			name: 'filter-content-by',
@@ -145,19 +145,19 @@ describe('NewExport', () => {
 			expect(fetch).toHaveBeenCalledTimes(2);
 		});
 
-		expect(screen.getByRole('textbox', {name: /file-name/})).toHaveValue(
+		expect(screen.getByRole('textbox', {name: /^name/i})).toHaveValue(
 			'test-file'
 		);
 	});
 
-	it('enables the export button once filename and contentSelection are set', async () => {
+	it('enables the export button once name and contentSelection are set', async () => {
 		renderComponent();
 
-		const fileNameInput = await screen.findByRole('textbox', {
-			name: /file-name/,
+		const nameInput = await screen.findByRole('textbox', {
+			name: /^name/i,
 		});
 
-		await userEvent.type(fileNameInput, 'test-file');
+		await userEvent.type(nameInput, 'test-file');
 
 		const dataSelectionGroup = screen.getByRole('group', {
 			name: 'data-selection',

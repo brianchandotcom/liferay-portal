@@ -90,6 +90,7 @@ export function NewImport({
 						importRequest: {
 							dataStrategy: values.dataStrategy as DataStrategy,
 							deletions: !!values.deletions,
+							name: values.name,
 							permissions: !!values.permissions,
 							requestPortletDataHandlers:
 								toRequestPortletDataHandlers(
